@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="During this mother&#8217;s day, Winnie &amp; I had a great vacation with my mom and dad.   1st Destination: We had a one day Macau tour on May 12th &hellip;">
+  <meta name="description" content="When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,7 +70,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/05/19/short-trip-with-mom-and-dad-for-mothers-day/">Short Trip With Mom and Dad for Mother&#8217;s Day</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library References&#8221;</a></h1>
     
     
       <p class="meta">
@@ -86,68 +86,34 @@
   
 
 
-<time datetime="2006-05-19T07:12:12+08:00" pubdate data-updated="true">May 19<span>th</span>, 2006</time>
+<time datetime="2012-02-04T17:07:35+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>During this mother&#8217;s day, Winnie &amp; I had a great vacation with my mom and dad.</p>
+  <div class="entry-content"><p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
+
+<blockquote><p>weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for &#8220;ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p<br/>
+ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl<br/>
+, Specification-Version: 1.2, exact-match: true]</p></blockquote>
+
+<p>It looks strange from the error message that the EAR is referring to some jars but cannot be resolved.</p>
+
+<p>I remember that these two jars have been set as shared library in Weblogic since the very beginning and why the problems occur when I am deploying it to the newly created server but not ADMIN.</p>
+
+<p>I wonder around by using Google and happened to see this website.</p>
+
+<p><a href="http://middlewaremagic.com/weblogic/?p=2938">http://middlewaremagic.com/weblogic/?p=2938</a></p>
+
+<p>It&#8217;s also said that the directory having the Shared Library should be included when you are calling weblogic.appc to compile your EAR.</p>
+
+<p>I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.</p>
+
+<p><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg?w=574" alt="Image" /></a><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg?w=614" alt="Image" /></a></p>
 
 <p> </p>
-
-<p><strong>1st Destination:</strong></p>
-
-<p>We had a one day Macau tour on May 12th.  This was the first tour for my family.  When I was still in school, we have never go somewhere.  What is more, my dad prefers watching TV than going out.  He can lay on the sofa all day without moving! <img src="http://spaces.msn.com/rte/emoticons/smile_confused.gif" alt="" />  If this trip hasn&#8217;t been planned to go gambling in Casino Lisboa in Macau.  I guess he would probably not coming to ZH.</p>
-
-<p> </p>
-
-<p>Anyway, We arrived at Macau around 11AM.  My mom didn&#8217;t feel very well because of bus-sick and Vomiting serveral times.  (FYI.  It tooks about 3 hours from Huizhou to Zhuhai;  It tooks about 1 hour from where I live to the Customs between Zhuhai and Macau).  We quickly find a place for lunch first so that my mom can have a rest.  After lunch (noodle &amp; pork bread), we went sight-seeing around Avenida de Almeida Ribeiro (亞美打利庇？大馬路), Senado Square (議事亭前地), Rua de S. Paulo(大三巴街), Fortaleza do Monte Monte Fortress(大炮台).</p>
-
-<p> </p>
-
-<p>About 4:30PM, we decided to go to the Casino Lisboa.  I think my dad has already waited such a long time for this moment came.  Before entering the casino, we made a decision that we have to enter the casino through back door in order to win.<img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" />  I have exchanged 4 chips (100MOP each) to play &#8220;big &amp; small&#8221;.  2 chips for my dad, 1 for my mom and 1 for winnie.</p>
-
-<p> </p>
-
-<p>Why none for me?  Because I always believe that I have no this kind of luck for gambling.  You don&#8217;t believe?  Let me tell you this.  For the first round, we all had no idea what to bet and then winnie decided to took the first step for us.  She asked me, &#8220;what do you bet?  Big or small?&#8221;.  I thought for a while and said, &#8220;Big.&#8221;  Then winnie said loudly, &#8220;OK, I bet small&#8221; and put 1 chip at the side for small.  I was stun by her.  &#8220;Ding, ding, ding&#8221;, desk clear and nobody was allowed to change anymore.  &#8220;Small!!&#8221;  Can you feel what my feeling at that time?<img src="http://spaces.msn.com/rte/emoticons/smile_confused.gif" alt="" />  To be angry, or to be happy?  haha, both.</p>
-
-<p> </p>
-
-<p>After that, my mom and dad became active and discussed with winnie about what should bet next.  Another unbelievable thing is when I asked my dad to take a shot and try, but he said no, it&#8217;s better to let your mom gamble, she&#8217;s more lucky than me.  Can you believe it?  I can&#8217;t!  The one who want to gamble most doesn&#8217;t gamble after he&#8217;s there.<img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" /></p>
-
-<p> </p>
-
-<p>At the end, we counted the chips and found that winnie won 350MOP, my mom won 100MOP, and my dad won 200MOP.  Haha, we won a free trip to Macau.</p>
-
-<p> </p>
-
-<p><strong>2nd Destination:</strong></p>
-
-<p>After a busy day in Macau, we felt very tired and slept until 9AM on the next morning.  The next day&#8217;s destination is the imperial-hotspring in order to take a rest.   But it&#8217;s about 2 hours car from my dorm.  It would more than 3 hours if we take the bus.</p>
-
-<p> </p>
-
-<p>We decided to go to Wanzi to have a seafood lunch and shop for dried seafood first.  You have to respect my mom&#8217;s bargain ability.  We only use 350RMB to buy several bags of those stuffs.  Besides, I still have to thank Cindy to introduce her familiar supplier to me so that we can get lower price.</p>
-
-<p> </p>
-
-<p>After buying the dried seafood, we bought the fresh seafood for our lunch.  This time, the seafood is not as cheap as before, maybe near the Fishing moratorium duration.  But we tried something new, the Sea urchins.  You can take a look at the picture of its shell after I have done with it.<img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" /></p>
-
-<p> </p>
-
-<p>We arrived the hotspring after lunch.  Nothing special.  Just one word:&#8221;Relax&#8221;.</p>
-
-<p> </p>
-
-<p>Ending:</p>
-
-<p>I lost about 2000RMB during this trip.  But for 4 people, it&#8217;s not expensive indeed.  What is more, it&#8217;s quite worthy because I can have such a great time with my parent.  I will make more money and go to other places with them!!  Yeah!.</p>
-
-<p> </p>
-
-<p>After words - A strange phenomenon: my mom didn&#8217;t feel bus-sick and vomit anymore after winning in Casino.  haha<img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" /></p>
 
 <p> </p>
 </div>
@@ -162,7 +128,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/05/19/e5b08fe88cb9e8afade5bd95keep-updating/">小茹语录(Keep Updating)</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/12/17/9-things-that-motivate-employee-more-than-money/">9种比钱更好的激励员工的方法</a></h1>
     
     
       <p class="meta">
@@ -178,38 +144,47 @@
   
 
 
-<time datetime="2006-05-19T03:18:28+08:00" pubdate data-updated="true">May 19<span>th</span>, 2006</time>
+<time datetime="2011-12-17T08:24:26+08:00" pubdate data-updated="true">Dec 17<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><strong>以下是小茹经典的语录。都不明她的语言点解可以甘搞笑。<img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" /></strong></p>
+  <div class="entry-content"><p>激励员工的士气</p>
 
-<p> </p>
+<p>最近看到篇文章：“<a href="http://goo.gl/ushlH">9种比钱更好的激励员工的方法</a> (9 Things That Motivate Employees More Than Money)”。</p>
 
-<p><em>回气荡肠</em></p>
+<p>第1、6点，展示了公司的高层有没有真正的关心过下属，是真的把他们做的事都看在眼里，放在心上，还是只是说说而已。表扬不应该是空泛的，应该很具体，让下属知道，原来我的老板真的看在眼里，知道我在做什么的，还肯特意抽时间和他吃饭，谈话。如果真的关心，员工是感觉的到的。很多别的都是浮云。说到底，还是有没有心，就像关心自己朋友，家人一样。</p>
 
-<p>  －意思：荡气回肠</p>
+<p>第2、3、9，其实还是让员工有“当家做主”的感觉，把他和公司联系在一起。生死共存。尽量减少中间层管理人员，也是希望减少一种被命令的感觉。</p>
 
-<p>  －情景：一晚，茹因吃得太饱，肚子发出“咕”一声。然后她就笑笑口甘爆出呢个词。</p>
+<p>下面是译文：</p>
 
-<p> </p>
+<p><strong>别简单的向他们展示钱(即使你有). 下面有9种更好的方法来提升士气.</strong></p>
 
-<p><em>双按</em></p>
+<p><strong>激励员工的能力</strong>是一个企业家需要具备的最重要的能力之一. 两年前, 我认识到我并不具备这种能力. 所以,我请了一个有这种能力的CEO.</p>
 
-<p>  －意思：双击、double click</p>
+<p>Josh在企业界已经有12年的经验, 包括在Comcast公司运营一个重要的部门. 我知道他已经很老练, 但一开始的时候我还是对他有点怀疑. 当时我们正在经历一些成长的危机, 我认为我们并不充足的现金非常难提高公司和员工的士气.</p>
 
-<p>  －情景：一晚准备放工，她要关UltraEdit的一个Tag，发现关不了，就话：“点解双按关唔到嘎？”。</p>
+<p>我错了.</p>
 
-<p> </p>
+<p>在他和他任命的团队领袖的帮助下, Josh不单单重建了公司的文化, 还打造了一个充满激情, 奋力拼搏的团队. 而这正是我希望致力于为发展和改善公司想做的.</p>
 
-<p><em>人地有压力嘎</em></p>
+<p>下面是我从他身上学到的9件事:</p>
 
-<p>  －情景：一晚，茹搽完药膏，大叫：“个盖呢？”。我就话：“是不是不在厅啊？”。茹答：“是啊。”后来她回到房，发现原来个盖系房。我就笑啦，点知她就爆出呢句。因为刚看完“巴士阿叔”，所以狂笑。</p>
+<ol>
+<li><p><strong>不要吝惜表扬.</strong> 每一个人都渴望得到表扬, 而这也是最容易做到的一件事情. 再说, 从一个CEO那得到表扬, 比你想像的要有效得多. 为你的团队成员取得的任何改进提出表扬. 当你适应了一对一下为员工提出表扬, 你可以尝试在其他所有人的面前表扬那些值得表扬的人.</p></li>
+<li><p><strong>把管理人员都去掉.</strong> 项目里没有项目经理? 不对吧! 请试一下. 我明白把项目经理或管理人员去掉, 让你的员工以一个团队的形式紧紧的工作而不是向某一个人汇报的做法会有点让人怀疑. 请想一想. 比让你的管理人员失望更糟糕的事情是什么? 是让你的团队失望! 让一个团队的人平等的于同事一起工作, 项目通常会做得更好更快. 他们会很早来到办公室, 留得很晚, 并把他们所有的精力集中在解决问题上面来.</p></li>
+<li><p><strong>把你的想法变成是他们的.</strong> 人们都不愿意被人命令做事. 与其告诉别人你想做不什么出来; 通过一些方式让他们觉得你提出的要求好像是他们自己想出来的一样. “我想你这样做”可以说成”你不觉得如果我们这样做的话更好吗?”</p></li>
+<li><p><strong>绝不批评或纠正.</strong> 任何人, 是的, 我说的是任何人, 都不愿意听到别人说他们做错了. 如果你在找一个打压士气的人, 这就是了. 要尝试一种委婉的方式让人们去提高, 从他们的错误中学习, 并解决问题. 你可以问:”这是解决问题的最好办法吗?” 这种情况下,你们是在谈论解决方案的对话中, 而不是互相指责.</p></li>
+<li><p><strong>让所有的人成为领袖.</strong> 指出你下面的最出色人员的强项, 并让他们知道正是因为他们的出色表现, 你希望他们成为其它人的榜样. 这样, 定出高标准, 那他们自然而然得被激励并为了保持作为一名领袖的名声而努力.</p></li>
+<li><p><strong>一星期带一名员工出吃午饭.</strong> 让他们得到惊喜. 别发公告来说明制定出这样一个政策. 走到一名员工面前, 然后邀请他和你共进午餐. 这是非常简单的方法让他们知道你有关注和感激他们的辛勤工作.</p></li>
+<li><p><strong>认可并给于奖励.</strong> 这两件事有很多形式: 大声在公司会议点名说出他成功的为公司做了什么事情. 比赛或举办游戏并把结果记录在白板上,让任何人都可以看到. 有形的奖励也行, 但别太昂贵了. 尝试一些事情像晚餐, 奖杯, spa服务和牌匾等.</p></li>
+<li><p><strong>举办公司派队.</strong> 以一个团队来做事情可以维系一个团队很长时间. 举办公司郊游活动, 生日派队, 快乐时光时间. 别只是等到节假日才举办公司活动. 一年内不间断的举办活动可以让你的员工知道所有人都在一起.</p></li>
+<li><p><strong>分享荣誉和痛苦.</strong> 当你的公司表现好的时候,庆祝. 这是最好的时间来让所以人知道你感激他们每一个人的辛勤劳动. 当人们帮助你的公司成功的时候, 尽你的最大努力让人们知道你是会怎么来感激他们的. 如果有什么让人失望的事情, 同样于所有人分享. 当你期望有很好的表现的时候, 你的团队应该知道公司当前的位置. 要坦白和透明.</p></li>
+</ol>
 
-<p> </p>
 </div>
   
   
@@ -222,7 +197,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/03/29/bangkok-trip/">BangKok Trip</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/10/14/six-steps-to-be-good-programmer/">通过艰难的六步让你成长为一名出色的程序员</a></h1>
     
     
       <p class="meta">
@@ -238,46 +213,93 @@
   
 
 
-<time datetime="2006-03-29T08:09:59+08:00" pubdate data-updated="true">Mar 29<span>th</span>, 2006</time>
+<time datetime="2011-10-14T22:53:26+08:00" pubdate data-updated="true">Oct 14<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>At 2:30PM on Mar 24, 2006, I was in the <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" /> from Macau to BangKok.  I was going to have a three-days&#8217; trip in BangKok with some colleagues.  This was a company event rewarding the staffs worked for one year.</p>
+  <div class="entry-content"><p>在我决定要在技术上，下狠功夫时，看到一篇非常好的文章。</p>
 
-<p> </p>
+<h2>以下是我的译文，期望与大家共勉：</h2>
 
-<p>This is not the first time I took <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" />, but the first time I crossed my country&#8217;s boundary.  At the end of the three-hours&#8217; <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" />, our <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" /> kept cycling in the sky for five times.  Maybe the airport had no place to let it land on at that time, but it was really a signal indicating an unforgetable trip.</p>
+<h2><a href="http://www.gamedev.net/blog/355/entry-2250592-become-a-good-programmer-in-six-really-hard-steps/">通过艰难的六步让你成长为一名优秀程序员</a></h2>
 
-<p> </p>
+<p>05 September 2011</p>
 
-<p>We finally had our dinner at 7:00PM that night.  We all were like starving wolfs.  Although the Thai food was a little spicy, it was very delicious.  Especially the fruit, the pineapple, watermelon, were as sweet as sugar.  Our table had had 3 dishes.<img src="http://spaces.msn.com/rte/emoticons/smile_shades.gif" alt="" />  We had tried our best to tasted and finished all the courses.  However, there were too many dishes to eat them all.</p>
+<p>Posted by <strong><a href="http://www.gamedev.net/index.php?showuser=33873">ApochPiQ</a></strong> <a href="http://www.gamedev.net/index.php?showuser=33873&amp;f="><img src="http://public.gamedev.net/public/style_images/master/user_popup.png" alt="" /></a></p>
 
-<p> </p>
+<p>在GDNet论坛里，其中一类比较常见到的是像这样的一些主题：“你好，我刚 [ 买了台电脑 | 写了一个简单的游戏 | 发现了一个游戏引擎 ] ，我想知道从这起步的话，可以走到哪？如果说我想要最终能实现某个特定目标的话，我需要学习什么东西呢？”首先，你必须明白，Peter Norvig 很久以前就已经非常清楚的知道: <a href="http://norvig.com/21-days.html">成为一名程序员要花费10年时间</a>。现在市面上充斥大量的&#8221;短时间内学会X&#8221; 类型的书; 还有一大堆博客教你 &#8220;如何通过一些简单的方法提高编程水平&#8221;; 总的来说，很多人总是在寻找一些能够让他们通过最少的努力来成为专家的方法。</p>
 
-<p>The hotel is really wonderful.  This was the first time I stayed in five-star hotel.  The room is clean, comfortable and has necessary facilities.  However, it has one strange design that the bath room and the main room is separated by glass and shutter.  That means people outside the bath room can see the inside of the bathroom!  I still can&#8217;t understand it.</p>
+<p>我在这里想把标准调高一点。与其告诉你5种容易的方法来在21天内写出令人惊艳的代码, 我将要告诉你的是事实是怎么样的。请看如何通过艰难的六步让你成长为一名出色的程序员。_
+_</p>
 
-<p> </p>
+<p><strong>第一步：坚持。沉下心，深吸一口气。如果做不到就一边去观鸟算了。</strong>
+当然, 你可以反复折腾，写一些小巧的Shell脚本或者几个小游戏。到这里，如果你已经满足于你已经拥有的技能，那么只管通过最快和最容易的方法去解决你遇到的问题就可以了。 我不想忽视这个选择的合理性，有些人没有时间（或者甚至没有意愿）成为一个编程高手。如果你并不为你将训练你的手艺上十年直至你精通它为止的想法而津津乐道的话，那就别那么干。但是不要被迷惑了，你将一直只能被局限在你以前能做什么和能把什么做好。如果你几经权衡，认为那已经足够。好，那么你就没有必要继续阅读下去了。</p>
 
-<p>The meals, activities during this trip were great, especially the breakfast in the hotel and the night show (SIAM NIRAMIT).  The night show is Thai&#8217;s traditional dancing.  We watched it in a beautiful decorated hall.  The lights, scenes, dancing were fantastic.  It is much much better than the Renyao show.</p>
+<p>对于继续阅读下来的我们，其实还是有这么一些东西吸引我们，让我们真真正正精通编程技巧。我们想成为专家，忍者，领袖级人物 - 任何超高级的冲击你幻想的名词。对于我们来说，10年看上去是合理的投资。可能看上去有那么点沉重，但如果这本身就是值得你去做的事情，就值得你做对，不是吗？</p>
 
-<p> </p>
+<p>所以，要想成为出色的程序员的第一步，就是吞下苦水。接受现实，这不是十年的过程，而是一辈子的过程。 像Norvig说的那样，这样做只是因为你想去做。如果不是自己愿意去做的话，没有人会在那方面变得异常出色。世界纪录保持者不会因为那天他恰巧吃下最多的热狗被纪录下来，而一定是因为那天他也确实是感到饿的。</p>
 
-<p>Another unforgettable thing is the Thai Massage we had.  Before being massaged by the Massage people, I was very afraid to die in the joints twisting.  However, I really wanted to had it another time after massage.  Although it&#8217;s a little ached during their pressing and twisting, the massage people really got to the points where your muscle and joints are tight.  You will feel kind of released and light after massage.  I just think it would be great if I can have Thai massage while I am working.  <img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" /></p>
+<p><strong>第二步：不断写代码</strong>
+并不是说一定说写出来的，都要是很优秀的代码。而且，在很长的一段时间里，它也不会是很优秀的代码。只管写，能实现功能就好了。任何情况下，如果发觉你每天用电脑都会遇到同一个烦人的问题，想想你是不是可以写个程序来处理它。任何时候，如果你发现什么有趣的东西你想尝试一下，那么你就去做。尽可能多得去体验新的概念，工具和语言。</p>
 
-<p> </p>
+<p>学习的过程永远也不会停止，所以，如果在一段时间里，你秉持通过不断的解决问题的同时来学习和进步的态度来前进的话，你将可以走的很远。要认识到，如果在一天、一星期、一个月内如果没有学到有趣的东西，其实是一种失败。每天，其实都有足够多的事情让你能从中学习到一点有益的东西。当然这从15年左右作为一个标记来看的话会很难，但也是完全可能的。没有一个凡人可以完全吸收这世界上关于编程的所有知识，所以，如果你感觉到你没什么东西要学习了，开始一个新的项目，写更多的代码。</p>
 
-<p>The last unbelievable and unforgettable thing is how crazy the HK colleagues can be.  At the second night in the hotel, I was invited to have a drink with some HK colleagues.  Playing games and drinking wine, we gradually became a little drunk and crazy.  We drank, tried every means to wake up other colleagues and wandered in hotel.  I can&#8217;t believe how I could do that but I actually did it.  <strong><em>When play, play crazily; when work, work hard.</em></strong>  I can finally feel that after that night.  When will another crazy night come?  <img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" /></p>
+<p>当你这样做的时候，请留心。寻找一些模式 - 一些你经常做的，可能可以变成自动处理的东西，或者说一些你经常写的，可以被分出来放在共享包里的代码。寻找那些非常容易处理特定任务的语言，同时也找出那些处理同样任务，却不太容易的语言，并想想为什么他们有什么不同。</p>
 
-<p> </p>
+<p>但最重要的是：不断写代码。每天，即使那只是一个简单的正则表达式来搜查你的邮件历史或别的什么。尽可能经常的用编程的手法来处理事情。记住，如果什么时候你觉得你做的事情不再显得有趣，那么，去做别的事。做一些你本身并不享受的事情没有一点意义。</p>
 
-<p>There were two small add-ons at the end of this trip.  One is that I left my worn clothes in the travel bus and realized this in the plane back to Macau from BangKok!<img src="http://spaces.msn.com/rte/emoticons/smile_confused.gif" alt="" />  Luckily the HK colleagues found it and bring them back to me.<img src="http://spaces.msn.com/rte/emoticons/smile_embaressed.gif" alt="" />  The other one is that it&#8217;s required to pay extra money if we use the luggage case in taxi.  We knew that after being cheated by one taxi driver in Macau.<img src="http://spaces.msn.com/rte/emoticons/smile_angry.gif" alt="" />  We in fact didn&#8217;t have much luggage and didn&#8217;t need to put them there.</p>
+<p><strong>第三步: 读更多的代码</strong>
+一旦你已经积累下一点项目代码后，你可以尝试去阅读别人的代码。一开始，可能有点困难。因为他们并不是你看过，或者熟悉的风格，或者用你学习过的语言去做一些事情。如果你认为那很有趣，尝试阅读完它全部的代码。别因为要深入分析任何项目而恐惧，至少别在一开始的时候。其实它可以像你做全职工作，去理解那些庞大的项目的代码库一样。选择一两件你认为你可以学会怎么去做的事，并掌握它们是如何实现的。</p>
 
-<p> </p>
+<p>阅读新的代码为你展示出新的思维方式，并帮助你延展思维极限。延展对保持进步异常重要，而且也确保你能不断发现新的事物来学习。</p>
 
-<p>This BangKok is also a UAT - unforgettable, adorable and treasurable.  I am looking forward for another one next year.</p>
+<p>一定要和别的程序员交流。问他们为什么和怎么做到某些事。问他们如果可以重新来过的话，是否会用不同的方式来做。问他们对你的代码有没有任何建议。(请要有礼貌。很多出色的程序员都极度繁忙，并不都有这样的时间和意愿来免费为别人的工作疏通整理和提出意见。 尊敬可以把你引领得更远。这个世界很小，声望很重要。)</p>
+
+<p><strong>第四步: 学多门语言，掌握几 门 .</strong>
+你不会有足够多的时间同时掌握多门语言，除非你非常幸运。因此，浅度学习尽量多的语言 － 了解怎么让它们运行起来，为什么它们擅长于特定某些工作，它们的缺点是什么。延展在这里很重要。不要死守于命令式语言，像C，或面向对象语言，像Java，或别的。同时也要扩展到函数式语言，或声明式语言。</p>
+
+<p>学习一种Lisp方言。<a href="http://www.gamedev.net/topic/479651-anyone-else-using-common-lisp-in-their-game/page__view__findpost__p__4141855">原因在这</a> 它不会对你的日常编程有什么直接影响，因为你不需要使用它。但是它会让你拥有更好的思维方式，并让你深入了解简单的递归系统的优美之处。坚持到你发出“啊哈”那一瞬间。因为在那以前，它看起来都会是古怪的语法和风格搅和在一起了。但一旦你看破以后，它将一直保留在你的职业生涯内其中之一由种人类设计出来的最重要的优美的理念。</p>
+
+<p>然后学习一种纯函数式语言。我推荐Haskell, 因为它强迫你去纯粹使用函数到别的函数式语言都无法相比的程度 (包括大部分Lisp方言) 。你必须要把你的思维扭曲到一定程度，但是一但又到了那个“啊哈”的瞬间(从我的经验来看，大概在了解到使用monads的原因所在的时候)，你会再一次把你的思维和设计出优美的系统的能力再推进一步。</p>
+
+<p>最后，学习一种声明式语言。SQL也算，虽然单单学习SQL好像弱了点。Prolog是多数人会推荐的语言，但不是太可能会接触到。实践领域上看，XAML, XSLT和XQuery是好的学习工具, 并且它会让你了解到声明式语言背后的概念。(简单来说, 你告诉电脑你想做什么，然后它自己想办法做出来。这完全是和命令式编程反过来的，因为命令式编程是你告诉电脑怎么做然后希望它做到你想要的做的事情。而函数式语言是你要去描述数据和类型的转换。)</p>
+
+<p>况且，在你学习Lisp方言后去学习XML工具会让你非常明显得感觉到为什么XML想重新发明s-expressions是多么的难，并且它现在是做得那么的差劲。</p>
+
+<p><strong>第五步: 创造一门语言.</strong>
+它不需要有多复杂，或包含多丰富的特性，或多抽象，或甚至有多优雅。它甚至不需要是原创的。我经常建议写一个Lisp解释器(为一种Lisp方言来做这件事是值得奖励的)来作为一种好的学习语言基础的方式。重要的是，这样你可以得到计算机语言设计的基本感觉：词法，解析，编译，解释，虚拟机，和无数的语言设计基本理念，以至于它是如何影响到它在处理不同任务时是否更有效率。</p>
+
+<p>这样做会让你有以下三种收获：</p>
+
+<ul>
+<li><p>你会更深入的理解到你的工具是如何工作的，那么你在使用它们的时候会更有效率。</p></li>
+<li><p>你会慢慢看到那些吸引你的或让你觉得很不舒服的主流语言和工具的设计理念。这样，你在今后开始新项目的时候，就能更有效的选择你的工具。</p></li>
+<li><p>你将可以留意到那些可供开发的新语言和工具的处女地，为你打开前所未有的视野去学习和尝试新的东西。</p></li>
+</ul>
+
+
+<p><strong>第六步: 学习一些没有别的人学习过的东西</strong>
+这是最难也是最后一步。到目前为止，你已经习得那些已知的东西，那些能从别的人代码，或书，或学术文章获得的东西。那些东西值得学习，但并不是标新立异的东西。</p>
+
+<p>现在是时候打破僵界，真正上升到大师级别的时候的。现在是时候在没有别的人冒险进入过的领域开创一条血路的时候了。</p>
+
+<p>别误会。这并不会是你真正拥有10年经验前你会尝试去做的事情。因为只有你真的走到那里，你才有可能创造出新的东西，而不是在重新发明轮子。但是，一但你精通了某一领域，其实并不是那么难去发掘出计算机的未知领域。</p>
+
+<p>这很有可能还要再花你另外10年时间，如果不是永远的话。别放弃。记住，这应该对你来说还是非常有趣的事情。如果在任何时候，你发现你已经不在热爱你手上做的事情，去做别的事。生命太短暂了，你不应该浪费任何时间去做任何你不再想做的事情。</p>
+
+<p>并不是所有的人都能成功走完这一步，但任何曾经尝试过的人都会受益非浅。不要让任何事情击败你。即便你没能获得图灵奖，你也应当在你的程序员生涯不断前行，向着你的终极领域进发。而这一切，都需要靠着你不断挑战难题，延展你的大脑。</p>
+
+<p><strong>恭喜! 你已经成为一名出色的程序员了!</strong>
+等等&#8230; 事实上，你可能已经因为年纪太大而离去了。对不起，下辈子再来一遍吧，可能会好运点!</p>
+
+<p>哈哈，玩笑话。话说回来，别认为会有结束的那天。在你在成长旅途中一但开始停滞不前，你实际已经开始死亡，而变得无关了。我在编程世界里见过的最让人觉得悲伤的失败是那些选择在这领域开始并前行一段后，决定放弃，不再学习了。作为一个人，他们现在肯定完全已经对软件世界来说是毫无相干的了，也几乎可以说他们再也走不出他们目前的处境，除非，他们再继续学习前进。</p>
+
+<p>现在就开始前进吧，写代码! 可能某一天你就会成为一名出色的程序员，然后告诉我你是怎么做的。</p>
+
+<p>我非常热爱学习。</p>
 </div>
   
   
@@ -290,7 +312,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2006/03/29/my-e5b08fe9bb91/">My 小黑</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/08/04/10-mistakes-software-team-lead/">开发团队领袖可能会犯的十个错误</a></h1>
     
     
       <p class="meta">
@@ -306,24 +328,150 @@
   
 
 
-<time datetime="2006-03-29T06:39:12+08:00" pubdate data-updated="true">Mar 29<span>th</span>, 2006</time>
+<time datetime="2011-08-04T19:18:37+08:00" pubdate data-updated="true">Aug 4<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I finally had my laptop.  It costs all my procession earned during these two years, but it&#8217;s still worth the lost of money.</p>
+  <div class="entry-content"><p>昨天看到一篇文章不错。写出很多之前我在公司看到了一些团队的情况。</p>
 
-<p>For someone that doesn&#8217;t know what is 小黑, let me brief here.  小黑 is IBM Thinkpad.  My 小黑 is IBM T43 2668 BH4.</p>
+<p>作为Team Lead，我觉得我做的最不够的就是Protect them from project manager。</p>
 
-<p>When I opened the case, I was shocked by the compactly arranged 小黑 and its accessories.  Although my 小黑 is black and has no fancy appearance, that is the style I love.  It&#8217;s black, compact and professional.  It&#8217;s like a professional dressed in a smart black suit with insight vision and in depth knowledge.</p>
+<p>下面是翻译过来的文章。省略了开头一点玩笑话。</p>
 
-<p>小黑, my dream.  It came true and it will come true.</p>
+<p>Adam Roy开场通过提出以下几个团队领袖可能有的一些疑问带出主题。这些疑问是:</p>
 
-<p><a href="http://blufiles.storage.live.com/y1m11_8HmfikYjDWqaj_gDvvexnmwLefe_R0vV5vUSMzvqO3eZcPsJA-cxMCX_yqmWHbkvx-uleTPLU3E-plsHu07Zc8o9-HQCRFz4aDgl_5AJ_vI_Wbhgn2iDhpJwLwH2CUPjUOpUU-tY"><img src="http://blufiles.storage.live.com/y1m11_8HmfikYjDWqaj_gDvvexnmwLefe_R0vV5vUSMzvqO3eZcPsJA-cxMCX_yqmWHbkvx-uleTPLU3E-plsHu0ywUCiYUX_EcqZ_8hDpoZlIo5iiJQ8UyfNBeJztkIQ1tDqUzgda6bRk" alt="" /></a></p>
+<ol>
+<li><p>我如何说服的我团队做xxx</p></li>
+<li><p>我该拿团队里的那个专门搞事 的家伙怎么办?</p></li>
+<li><p>我该如何做一个团队领袖呢?</p></li>
+<li><p>我们为什么无法远离无谓的争吵呢?</p></li>
+<li><p>我会不会失去朋友呢?</p></li>
+<li><p>…</p></li>
+</ol>
 
-<p><a href="http://blufiles.storage.live.com/y1mvNAS6Iw_gkeNZGC-mBLw16p3ekT4OS95zpm3tXYDswl3GaHzCpXzwiFVyu-F4onyRGdmbmk6Lkr8eZu4gIjiGadAQD_6hIL64OmgxChrslOlLWt94UOQq8RS1S3v34WJDfjG__Nnk88"><img src="http://blufiles.storage.live.com/y1mvNAS6Iw_gkeNZGC-mBLw16p3ekT4OS95zpm3tXYDswl3GaHzCpXzwiFVyu-F4onyRGdmbmk6Lkr8eZu4gIjiGVT0x9JWyGsXoFiYQ4q9yWryGNQFJ17N5t5AR-4hIh22bmNF9Rqd5Fg" alt="" /></a></p>
+
+<p>他说这些问题其实缠绕他多年，而在接下来的讲座，他也逐一做出解答。他正在写一 本叫《开发团队领袖手记》的书，里面也涵盖这些方面的内容。</p>
+
+<p>下面就来说说这十个错误:</p>
+
+<p><strong>#1 </strong><strong>没有</strong><strong>认识</strong><strong>到</strong><strong>团队</strong><strong>的成熟度</strong>****</p>
+
+<p>这点是首要注意的地方因为后面谈到的问题都是回顾到团队成熟度。Roy说，可以从3个层面来评价一个敏捷团队的成熟度。</p>
+
+<ol>
+<li><p>混乱</p></li>
+<li><p>学习</p></li>
+<li><p>自我引导</p></li>
+</ol>
+
+
+<p><strong>混乱</strong></p>
+
+<p>一个混乱的团队就是哪都觉得很忙。  可能他们总是在争吵，或一直都被要求在非常有限的时间做太多的事情。但其实结果都一样－－混乱。没有人有任何时间变得有条理，没有人有任何时间学习新的知识因为他们一直都在忙这忙那。  如果你问我的话，这个团队明显成熟度不高。因为所有人，要么耗尽精力，要么感到沮丧因为缺乏机会学习，而最终好的人都会离开。但是，Roy说这种混乱其实非常常见，而我也很赞同。如果你是在这么一个混乱的团队里当领袖，秘诀就是要正确的行动起来。你必须自信和强势。</p>
+
+<p><em>      <strong>当船快要沉的</strong>时<strong>候，你需要的是一个</strong>发<strong>号施令的</strong>领<strong>袖，而不是开会。</strong></em></p>
+
+<p>一个混乱的团队里的领袖，必须坚定立场，而且可能必须要和领导层说清楚，整个团队并不能把他们要求的所有的事情都完成的了。这是一个艰难的角色。他必须坚定的做出一些艰难的决定。</p>
+
+<p><em>       <strong>管理要做得</strong>对<strong>，做得好是一件很</strong>艰难<strong>的工作。</strong></em></p>
+
+<p>但为什么作为一个团队领袖，你必须自己做出这些艰难的决定，而不是和团队商讨呢？ 答案很简单，因为没有足够的时间。 通过你自己做出这些执行上的决定，你让你的团队得到一些喘息的空间，可能也就是这些空间让他们把手上的事做完。当然，可能有些你做的决定是错的。这没关系，人生就是这样。但这是为了更重要的正确的事情，也就是让你的团队有成长到另一个层次的空间，一个不断学习的团队。</p>
+
+<p><strong>学</strong><strong>习</strong>****</p>
+
+<p>这个层面的成熟度是团队自我管理的升华，但是团队成员还是有需要得到指导的。 一个团队领袖必须持续不断的为他的团队成员带来一些挑战，和质疑，甚至可能是功课。 目标就是让团队里的成员每周都有进步，开始学会解决自己遇到的问题。</p>
+
+<p><em>       <strong>所以，你要怎么做？</strong></em></p>
+
+<p>作为一个学习成长的团队里的领袖，你要让团队里的成员学会以解决自己遇到的问题，然而成长为自我引导的团队。 如果某一个人带善一个问题来找你，你应该鼓励他们自己想办法解决，并问“你会怎么来处理这个问题？” 来强迫他们思考。</p>
+
+<p><strong>自我引</strong><strong>导</strong>****</p>
+
+<p>成熟的第三个层次就是自我引导型的团队。  这是我们所有人都想去到的地方。 在这样的团队里面，领袖更像是一个导师。他不需要像在一个混乱的团队里那样为团队做各种执行方面的决定或告诉人们该做什么。但即使是在一个自我引导的团队里，团队领袖还是需要最少50%的时间在团队上面。</p>
+
+<p>所以，第一个错误就是不能正确认识到你的团队是在什么成熟度，也因此不能够正确的领导你的团队。如果你当他们是自我引导型的团队在运作，但其实他们事实上还是在混乱的状态，那么不久你就会在一条河上像没有浆似的乱窜。</p>
+
+<p><strong>#2 </strong><strong>惧怕下放</strong><strong>责</strong><strong>任</strong>****</p>
+
+<p>如果你常常习惯自己一手包办，可能要你下放责任给其它人是比较不容易接受，尤其是你觉得其它人并不能把事情做好的时候。</p>
+
+<p><em>如果每个人都<strong>对</strong>目前手上做的事情都感到很舒服，没什么挑<strong>战</strong>的<strong>时</strong>候，就是你做的不<strong>对</strong>的<strong>时</strong>候了。</em>__</p>
+
+<p>当你要下放责任的时候，你必须习惯让他人去承担那些本是你自己做的事情的责任。 这些外加的责任，会把他们拉出那个安全区，这是一件很好的事情。 适时挑战一下你的团队和拉他们出安全区才可以让他们成长。</p>
+
+<p><strong>#3 </strong><strong>惧怕参于</strong>****</p>
+
+<p>这一般来说是沟通不够有效，但Roy谈得更深入。</p>
+
+<p><strong>#4 </strong><strong>安</strong><strong>抚</strong>****</p>
+
+<p>公共要素(Bus Factor) － 这是什么？ 公共要素指的就是那些会导致整个项目停滞不动的人员的数量，假如他们同时被公车撞了的话。这其实说的就是某些个体掌握太多信息。我看到太多地方有这种情况，无论是好的还是坏的项目。 所以我觉得这很正常。但Roy提到的是你不应该只安抚这些个体就因为他们掌握了大量重要的对项目的了解。 你对待一个公共要素为1 (也就是说他一个人如果被公车撞了的话，项目就倒了) 的人应该和别的任何一个人一样。 我非常喜欢在人身上定义一个公共要素的主意，因为它让我注意到六度分离理论值(Kevin Bacon Number)。</p>
+
+<p><strong>#</strong><strong>5</strong><strong> </strong><strong>疏远</strong>****</p>
+
+<p>这个应该是说由于太多的会议或邮件等烦杂事情要处理，导致基本上和整个团队实际的工作脱节了，最终疏远了。这个和六度分离理论没有关系。</p>
+
+<p><strong>#</strong><strong>6</strong><strong> </strong><strong>太合理了</strong>****</p>
+
+<p>不确定我是否同意这个术语但Roy的意思是认为所有人都能清楚明白你说的意思但实际上你并没有把自己的观点阐明是太合理了。我想这点的关键是说当你和一群人相处，尤其是对一个敏捷团队来说，假定他们拥有和你同样的知识水平和理解力是不正确的。你应该用最合适的方式去沟通，而不能做太多的假设。</p>
+
+<p><strong>#</strong><strong>7</strong><strong> </strong><strong>责备</strong>****</p>
+
+<p>如果你认为某个人是垃圾，那你就会有意无意的以这个为借口，不让他参与到团队的事务上来。这世界上总有这样的垃圾人物，但你所要做的是了解他们的短处，并把他们提升到整个团队的水平，而不是疏远他们，因为这样就意味着一直背负这些沉重的包袱。</p>
+
+<p><strong>#</strong><strong>8</strong><strong> </strong><strong>忽略影响行为因素的力量</strong>****</p>
+
+<p>你必须认识到那些会作用到个人身上的行为因素的力量和知道它们是如何影响个人的。主要有这么三种行为因素：</p>
+
+<ul>
+<li><p>个人</p></li>
+<li><p>群体</p></li>
+<li><p>外界环境</p></li>
+</ul>
+
+
+<p>所有这些因素都会影响到一个团队是否能够成功。所以你必须找到有没有什么因素正在影响团队的敏捷度。其中一个外界环境的因素可能是硬件设备不足够支撑你所需。比如说你没有预算添置一台持续集成的服务器，那你几乎永远无法变得敏捷起来。</p>
+
+<p><strong>#</strong><strong>9</strong><strong> </strong><strong>惧怕</strong><strong>太独断</strong></p>
+
+<p>很明显这在英国和挪威是很普遍的，但在丹麦不适用。我敢打赌你不知道。但这据称是真的。独断，就是坚定自己的立场并拒绝任何你感觉不能接受的事情。如果你是在一个处于混乱状态下的一个团队里面，那你必须非常独断。在一个处于混乱状态下的一个团队里面，惧怕独断是致命的。</p>
+
+<p><strong>#</strong><strong>10 </strong><strong>散播不做承诺的风气</strong></p>
+
+<p>这里说的是模糊其词。Roy说你应该任何时候都对项目期限负责。当你对团队谈论的时候，确保他们也告诉你每个任务的具体完成时间。很明显，让他们作出承诺，他们会更有激情的完成任务。Roy的建议是当你开会结束的时候，并问每一个人他们下一步要做的事情是什么，确保他们的回复是什么时候前做完什么事情。但是，任何人都只应该承诺他控制范围内可以完成的事情。承诺一些要别人替你完成的事情是没有意义的。还有，一但你发现你无法按时交货时，让整个团队的人都知道，他们可能有办法帮忙并让你及时完成任务。</p>
+
+<p><strong>问题和解答</strong></p>
+
+<p>下面这些问题和解答其实持续很长时间才得出。我用bullet表单总结了一下，因为bullet的样式非常好。</p>
+
+<ul>
+<li><p>你需要认识到你什么时候需要转换领导形式 ―― 你必须停止用一个在混乱模式的团队下的领袖角色来领导一个成长型的团队。</p></li>
+<li><p>没有一个所谓的既混乱又成长型的团队。这两者是不可共存的，但是一个团队会从一种形式，转换为另一种形式。</p></li>
+<li><p>跨不同地域的团队不能像在同一地方的团队表现好。如果你是这样的事实情况下，你要做的是改变现实。</p></li>
+<li><p>敏捷团队应该是两个Pizza的团队。也就是说，只够两个Pizza可以喂饱的团队。</p></li>
+<li><p>好的团队是成长起来的，不是雇佣来的。</p></li>
+<li><p>Scrum有时并不适用于一些混乱模式下的团队。</p></li>
+<li><p>团队领袖和经理其实并没有不同如果他们是同一个人。其实他们也可以是同一个人。</p></li>
+<li><p>如果你的团队处在混乱模式，你从项目经理应该保护他们。</p></li>
+</ul>
+
+
+<p><strong>相关书籍</strong></p>
+
+<p>Managing Teams Congruently – Gerald M Weinberg</p>
+
+<p>Behind Closed Doors – Johanna Rothman</p>
+
+<p>Influencer (The Power To Change Anything) – Patterson et al</p>
+
+<p>Succeeding With Agile – Mike Cohn</p>
+
+<p>原文链接: <a href="http://agile.dzone.com/news/10-mistakes-software-team">http://agile.dzone.com/news/10-mistakes-software-team</a></p>
+
+<p>By Roy Osherove</p>
 </div>
   
   
@@ -336,7 +484,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2005/11/15/many-things-happened-all-unhappy/">Many Things Happened. All &#8220;Unhappy&#8221;.</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/07/28/e79c8be4ba86e8aea9e68891e69c89e782b9e89b8be796bce79a84e69687e7aba0e6a087e9a298/">看了让我有点蛋疼的文章标题</a></h1>
     
     
       <p class="meta">
@@ -352,428 +500,30 @@
   
 
 
-<time datetime="2005-11-15T07:04:59+08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2005</time>
+<time datetime="2011-07-28T02:45:34+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>In this shortly two months, many unhappy things happened around me.  Actually, I can&#8217;t say those are all unhappy.  They just made me worried and greatly drew my attention.</p>
+  <div class="entry-content"><p>这两篇文章都是<a href="http://www.ifanr.com/author/kkk/">李楠</a>写的：</p>
 
-<p> </p>
+<h1><a href="http://www.ifanr.com/47183">为何 G+ 的圈子是倒退？</a></h1>
 
-<p>In fact, these &#8220;unhappy&#8221; things were all about the healthy condition of the ones I love and myself.  Suddenly, I realize that health is very important, but because of many kinds of reasons (endeavor to work, neglect, unwareness, etc.), its prominent role slips down to almost the most trivial one.  I think this was just the time it showed its anger and irritation.  <img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" /></p>
+<h1><a href="http://www.ifanr.com/47332">为何 G+ 的圈子是进步?</a></h1>
 
-<p> </p>
+<p>怎么样？ 有点感觉没有？初看标题我就不知道他对G+是持何种的观点。假定两篇都是成立的，那必然应该说的是两个不同的方面。那应该在标题上更写清楚点。</p>
 
-<p>Bear its announcement in mind, I will pay attention to my health and remind my friends &amp; relatives more.  It&#8217;s always easier to cure an disease at the most earliest stage.</p>
+<p>我先看了说G+的圈子是倒退的那篇，主要说的是G+的圈子使用上是对人进行分类(Category)，对比Tag，Category这种单一的分类，其实并不符合实际，已经被Tag取代。核心的观点也就是说对事物的特性，我们是应该可以打上多个而不是单个标记。但G+的圈子,其实是可以把同一个人放入不同的圈子里的，也就是打上多个标记。也就是说一个人，你可以把他标记为高中同学，也可以标记为死党，没有冲突。所以，如果从人员分类来说G+的圈子其实是Category，单一的标记，是错误的。</p>
 
-<p> </p>
+<p>当然，文章里还提到信息传播方向的问题（也就是下一篇说G+的圈子是进步的文章的主题），如发相到什么高中同学，G+的圈子是可以，也是需要你定向的（把他们都放在一个圈子），如果你真的介意不想让别的任何人看到。我觉得从你发觉有需要定向传播信息的时候，你就得找到那群人，而G+给的，就是那个圈子。它只是让你重用那一个圈子的人，不会你每次选啊选。我没觉得，并没什么退步的地方。对于说这个圈人的方式，是否合理，我觉得还行，因为一开始，你只要把他放一个比较适合的圈子，或哪个圈子都不放。到有特别需要的时候，再拖过去。当然，不否定以后可能有更好的方式，但我觉得这并没有退步之说。</p>
 
-<p>In point of fact, it&#8217;s quite lucky that these &#8220;unhappy&#8221; things happened.  Some diseases are discovered at the first stage before it get worse;  those made me alert to the importance of the body condition and more mature.  <img src="http://spaces.msn.com/rte/emoticons/smile_wink.gif" alt="" /></p>
+<p>再看说G+的圈子是进步的那篇，主要说的就是信息传播和产生的影响方面的。里面说到，Twitter的影响，由别人决定，要看follow你的人的多少，和愿意为你传声的有多少。而G+，我觉得也一样，只是多了一个定向传声功能，你不做广播，只和一群人说而已。再退一步，你也还是可以做广播的，发到Public就可以了。至于你的影响力，最少可以是某一群人，后面的，就看那群人中，会不会，或怎么样帮你传声了。从这个角度来说，G+是Twitter私密增强版，进步了一点。</p>
 
-<p> </p>
+<p>写这篇东西，感觉自己也有点蛋疼，因为也没什么结论出来。</p>
 
-<p> </p>
-
-<p>Wish everybody healthy and happy.  <img src="http://spaces.msn.com/rte/emoticons/smile_party.gif" alt="" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2005/10/19/e695ace88081e999a2e5a299e4b88ae58f91e78eb0e79a84e4b880e7af87e69687e7aba0-e8bdace8bdbd/">敬老院墙上发现的一篇文章 (转载)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2005-10-19T21:00:30+08:00" pubdate data-updated="true">Oct 19<span>th</span>, 2005</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>孩子！当你还很小的时候，我花了很多时间，教你慢慢用汤匙、用筷子吃东西。教你系鞋带、扣扣子、溜滑梯、教你穿衣服、梳头发、拧鼻涕。这些和你在一起的点点滴滴，是多么的令我怀念不已。所以，当我想不起来，接不上话时，请给我一点时间，等我一下，让我再想一想……极可能最后连要说什么，我也一并忘记。孩子！你忘记我们练习了好几百回，才学会的第一首娃娃歌吗？是否还记得每天总要我绞尽脑汁，去回答不知道你从哪里冒出来的吗？所以，当我重复又重复说着老掉牙的故事，哼着我孩提时代的儿歌时，体谅我。让我继续沉醉在这些回忆中吧！切望你，也能陪着我闲话家常吧！孩子，现在我常忘了扣扣子、系鞋带。吃饭时，会弄脏衣服，梳头发时手还会不停的抖，不要催促我，要对我多一点耐心和温柔，只要有你在一起，就会有很多的温暖涌上心头。</p>
-
-<p>孩子！如今，我的脚站也站不稳，走也走不动。所以，请你紧紧的握着我的手，陪着我，慢慢的。就像当年一样，我带着你一步一步地走。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2005/10/18/mom-and-dad-get-old-already/">Mom and Dad Get Old Already.</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2005-10-18T21:18:38+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2005</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>Suddenly</strong>, I feel that my dear mom and dad get older already.  I didn&#8217;t have this feeling before because they look young and I heard almost no sickness news from them.  However, this is not always the truth.</p>
-
-<p> </p>
-
-<p>A bad news that my mom suffers an aura of one terrible disease brought me back to the reality on last Friday.  I was stun at that moment.  I can&#8217;t believe that at all because she lives a quite disciplinary life:  sleep early, get up early and jog, and dance with some friends at night. </p>
-
-<p> </p>
-
-<p>However, she has a lot of work to do as our family&#8217;s master.  She does the cooking, laundries, cleaning everyday and she has to take care of dad, her parents, me and almost all relatives.  I know she&#8217;s carrying too many responsibilities but I can&#8217;t help her much.  The only thing I can do is to be her good boy, to be healthier so that she doesn&#8217;t need to worry about me, to be excellent to make her proud of me, to save more money so that I can give her some, to buy some gifts to make her happy, to have a talk with her about once a month&#8230;</p>
-
-<p> </p>
-
-<p>Suddenly, to me, what I have done seems so minor in front of this.  I can&#8217;t imagine my life without her.  I am feared to think about that.  I feel that I can do nothing now.  I can just support her and try my best to make her happy and stay with her when free.</p>
-
-<p> </p>
-
-<p>Her symptom and condition is not that bad now but already make us feel the darkness even though we don&#8217;t want to.  She had insomnia and black eyes these days.  Although she also told me that it should be OK and I know that is also what she is trying to console herself with, I can still feel her fear inside.  However, I know she is strong enough to fight with that disease and can finally win it with our support and good wishes.</p>
-
-<p> </p>
-
-<p>One doesn&#8217;t feel the pain until he&#8217;s the victim.  I can finally feel that my parents get old already and I have done so little for them.  Now I only hope my mom can recover soon and be happy and healthy again.</p>
-
-<p> </p>
-
-<p><a href="http://blufiles.storage.live.com/y1mFL0R98ZOn9oan2XOOfPfb71ulwnxfli-2u6g4BN0BUoI8NISXXO3LzCFUQxZlfsoM72DZcklV1YOhb5zG25-OJrr20T118vOw-LGrHovaYlO5orpSzlXnRG7M1mmH_O7YX9oPJ9M_o8"><img src="http://blufiles.storage.live.com/y1mFL0R98ZOn9oan2XOOfPfb71ulwnxfli-2u6g4BN0BUoI8NISXXO3LzCFUQxZlfsoM72DZcklV1YOhb5zG25-OJrr20T118vOPMxUEQDkztXgF7Fbxi9hnUO9-_XT6kus6ohCJ59kDVw" alt="" /></a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2005/10/13/e4b880e5ae9ae8a681e78f8de6839ce79a84e4babaefbd9e/">一定要珍惜的人～</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2005-10-13T04:38:09+08:00" pubdate data-updated="true">Oct 13<span>th</span>, 2005</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>。。。当你遇到下面的人一定要珍 惜 !!!</p>
-
-<p> </p>
-
-<p><strong>一、自己的真爱</strong></p>
-
-<hr />
-
-<p>遇到自己真正喜欢的人时, 要努力争取与之相伴一生的机会。<br/>
-因为错过一时也就会错过一世。</p>
-
-<p> </p>
-
-<p><strong>二、信赖的朋友</strong></p>
-
-<hr />
-
-<p>遇到自己可信赖的朋友时，要好好与之相处下去。<br/>
-因为在人的一生中遇到知己不容易。</p>
-
-<p> </p>
-
-<p><strong>三、生命中的贵人</strong></p>
-
-<hr />
-
-<p>遇到自己生命中的贵人时，要记得好好感激，<br/>
-因为此人往往是你人生的转折点。</p>
-
-<p> </p>
-
-<p><strong>四、曾经的尾追者</strong><strong> </strong></p>
-
-<hr />
-
-<p>遇到曾经喜欢过你的人时，记得向其投去感激的微笑，<br/>
-因为此人是使你更加自信的人。</p>
-
-<p> </p>
-
-<p> </p>
-
-<p><strong>五、曾经的“敌人</strong><strong>”</strong></p>
-
-<hr />
-
-<p>遇到曾经伤害过你的人时，要微笑着向其打招呼，<br/>
-因为此人让你更加坚强。</p>
-
-<p> </p>
-
-<p><strong>六、弃信背义者</strong><strong> </strong></p>
-
-<hr />
-
-<p>遇到曾经背叛过你的人时，要与之好好聊一聊，<br/>
-因为此人能让你真正懂了这个世界。</p>
-
-<p> </p>
-
-<p><strong>七、匆匆过客</strong></p>
-
-<hr />
-
-<p>遇到自己生命中的匆匆过客，要谢谢此人经过你的人生，<br/>
-因为此人使你的生活更丰富多采</p>
-
-<p> </p>
-
-<p><strong>八、误会过你的人</strong></p>
-
-<hr />
-
-<p>遇到曾经和你有误会的人时，要尽快趁现在解清误会，</p>
-
-<p>因为解释的机会也许就只有这一次。</p>
-
-<p> </p>
-
-<p><strong>九、钟情过的人</strong></p>
-
-<hr />
-
-<p>遇到自己曾经钟情过的人时，要祝其幸福！</p>
-
-<p>既然喜欢此人，难道不希望此人幸福快乐吗？</p>
-
-<p> </p>
-
-<p><strong>十、相伴一生的人</strong></p>
-
-<hr />
-
-<p>对待现在和你相伴一生的爱人要百分百地珍惜哟，<br/>
-因为此人是你的另一半，是你一生幸福之所在。</p>
-
-<p> </p>
-
-<p>以上转载自 ☜ ☞ wHo&#8217;s wHoSe WhO?oоО⌒ </p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2005/10/13/travel-to-da-jiao-wan-e5a4a7e8a792e6b9be-in-yang-jiang/">Travel to Da Jiao Wan (大角湾) in Yang Jiang</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2005-10-13T03:39:47+08:00" pubdate data-updated="true">Oct 13<span>th</span>, 2005</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>On Sep 23rd, 2005 morning 8:00 AM, I was in the bus way to Yang Chun with Winnie&#8217;s family, indicating the beginning of the travel to Da Jiao Wan.</p>
-
-<p> </p>
-
-<p>This travel is the first long-distance one planned by us.  In fact, it&#8217;s mostly planned by Winnie because most of the contact and booking was handled by her.  What a shame!  <img src="http://spaces.msn.com/rte/emoticons/smile_embaressed.gif" alt="" />  I have to plan for our next trip.</p>
-
-<p> </p>
-
-<p>We have been to Da Jiao Wan at noon and have had a nap in the hotel after one seafood meal.  Can you bellieve that a standard double room only costs 100 RMB one night?  Again, Winnie made this bargain.  <img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" />  You may wonder why we waste several hours on sleeping, but WHO swims at noon!  What is more, the 4 hours&#8217; bus trip makes most of us tired, but me.  <img src="http://spaces.msn.com/rte/emoticons/smile_shades.gif" alt="" /></p>
-
-<p> </p>
-
-<p> Anyway, we went to the seashore and planned to swim at about 4PM.  Because the typhoon &#8220;Da Wei&#8221; was approaching Yang Jiang, it&#8217;s cloudy and the sea had not small wave.  Again, my dream <img src="http://spaces.msn.com/rte/emoticons/island.gif" alt="" /> that in the <img src="http://spaces.msn.com/rte/emoticons/sun.gif" alt="" />, I lay on a hammock under two coconut trees by the blue and lucid ocean, having a <img src="http://spaces.msn.com/rte/emoticons/coffee.gif" alt="" /> nearby, and some little crabs creep on the soft seashore on which colorful shells lying didn&#8217;t come true.  <img src="http://spaces.msn.com/rte/emoticons/smile_confused.gif" alt="" /></p>
-
-<p> </p>
-
-<p> Even though that was not exactly my dreamy ocean, I was still very excited to see it and could &#8220;swim&#8221; in it.  &#8220;Swim&#8221;  is quoted here because technically I only floated with the help of the life buoy instead of swimmed. <img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" />  On the one hand, I admit that my swiming ability is not good enough to swim in the ocean.  On the other hand, you know, the typhoon &#8220;Da Wei&#8221; was approaching and the sea had &#8220;big&#8221; waves.  At that time, I could really feel the unlimited power of the ocean.  No wonder the latest tsunami in Indian Ocean caused that kind of disaster and dilapidation.   Suddently, I feel that I am so small in this planet, in this universe.  Praying&#8230;&#8230;</p>
-
-<p>To enjoy my life!  Eager for my next wonder trip!<img src="http://spaces.msn.com/rte/emoticons/lightbulb.gif" alt="" /></p>
-
-<p><a href="http://blufiles.storage.live.com/y1mU494rqb2Y5u6XyeVOI6DJxSm3QZ9fO2p0ghuLKULWRvTEO94fKDhlY4ekozYz17xm_urlfy7M7lQzyMsqZCqaoyR7diEicseiPhm-yTa0iNedNLPn3jwHQIM-hI0zkn2gLab9dNcXwo"><img src="http://blufiles.storage.live.com/y1mU494rqb2Y5u6XyeVOI6DJxSm3QZ9fO2p0ghuLKULWRvTEO94fKDhlY4ekozYz17xm_urlfy7M7lQzyMsqZCqaoyR7diEicseUR53a-GyS9pL85BtxdGLSgaQUqHtZep6TtufwDyFP8I" alt="" /></a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2005/07/28/manugistics-consultant-the-beginning/">Manugistics Consultant - the Beginning</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2005-07-28T17:13:50+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2005</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>Role changed:</strong></p>
-
-<p> </p>
-
-<p>I don&#8217;t remember the exact date when my role has changed to be a Manugistics Consultant.  Maybe there is no one because it changed gradually.  As we all know, many of the Corbians are of multi-tasking role.</p>
-
-<p> </p>
-
-<p><strong>Process - TOUGH:</strong></p>
-
-<p> </p>
-
-<p><strong>Fighting against Schick alone, almost:</strong></p>
-
-<p> </p>
-
-<p>After backed from the wonderful trip in HK, a trip having delicious and dear food, exciting and horrifying games in Ocean Park, and wonderful sightseeing, I was nominated to be one of the key fighters against Schick Manugistics, although luckily with the help of other fighters, Connie and Sam.</p>
-
-<p> </p>
-
-<p><strong>Tough Fighting:</strong></p>
-
-<p> </p>
-
-<p><em>Reason 1: Superficial knowledge background in Manugistics</em></p>
-
-<p> </p>
-
-<p>This is the main reason.  Roughly, the time I learned this system is only one and a half month.  I even don&#8217;t know how to use this system right after being assigned this task and <strong>classroom guide</strong> is still needed.  Don&#8217;t mention that the documents about the project background, design, implementation to read and the complexity of this powerful SCM system.</p>
-
-<p> </p>
-
-<p>The questions from Schick are unpredictable (Of course, even idiot knows it) and spread around any modules and any functionalities in Manugistics.  The difficulty is I have to find out the relative pieces to gradually build up the whole picture for the immense puzzle of Manugistics.</p>
-
-<p> </p>
-
-<p>It&#8217;s kind of weird that you have to do the support even if you don&#8217;t know anything about it.  <img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" />  It&#8217;s really difficult to feel confident about the words to say, the actions to take.  You know, you have to be responsible for them.</p>
-
-<p> </p>
-
-<p><em>Reason 2: The rival and the missions are tough</em></p>
-
-<p> </p>
-
-<p>This is the first time I have to fight against customer.  Before, as a programmer, I just need to fight against the bugs, enhancement.  Those things are dead, while the rivals now are the living creatures with great experience to fight against their customers.</p>
-
-<p> </p>
-
-<p>Sometime, the tasks are not to resolve the problems that generate the problems that CR raised for, but to accept the causes and find out other solutions to fulfill the CR.  To fix the problems at the end of the flow, leaving the problems at the source, seems ridiculous.</p>
-
-<p> </p>
-
-<p><strong>Future - BRIGHT:</strong></p>
-
-<p> </p>
-
-<p><em>For Schick Project:</em></p>
-
-<p> </p>
-
-<p>I can see some sunshine because I am more and more familiar with Manugistics although that is still limited AND the approach for the CR might be towards the expected and correct direction.</p>
-
-<p> </p>
-
-<p><em>For me:</em></p>
-
-<p> </p>
-
-<p>Although I am not sure whether I will mainly be a Manugistics consultant in the future or not (You know, sometimes that is decided by others), certainly I have learned and will learn much from this project till the end.</p>
-
-<p> </p>
-
-<p><em>Hope for the Best!</em>  <img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" /></p>
+<p>我也不是批驳作者，只是觉得那两篇文章有点标题党了，不太爽。</p>
 </div>
   
   
@@ -817,11 +567,85 @@
         <a href="/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">ExtJS, Jasmine, Maven - Why I am working on them?</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2012/07/22/i18n-extjs-and-jawr/">i18n, ExtJS and JAWR</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/16/stay-in-good-or-change-to-be-good/">待在优秀的地方，还是把所在的地方改变的优秀</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e/">曾经，最后</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library references&#8221;</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/05/forward-or-backward/">到底是前进还是后退？</a>
+      </li>
+    
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/kenspirit">@kenspirit</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'kenspirit',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("kenspirit", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/kenspirit" class="twitter-follow-button" data-show-count="false">Follow @kenspirit</a>
+  
 </section>
 
 
 
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/chengusky@gmail.com?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
 
 
 
@@ -838,9 +662,39 @@
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'thinkingincrowd';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
 
 
 

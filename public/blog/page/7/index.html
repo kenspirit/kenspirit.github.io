@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>ExtJS, Jasmine, Maven - Why I am working on them? - Thinking in Crowd / 鹄思乱想</title>
+  <title>Thinking in Crowd / 鹄思乱想</title>
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="Before going into how to setup Jasmine to do Unit Test for ExtJS, I think I should describe why I am doing this. I have been using ExtJS for around 4 &hellip;">
+  <meta name="description" content="&#8211; In SCB B2Bex UAT project     User Acceptance Test for a big B2Bex project in Standard Charter Bank.  Luckily, I was ZH testing team lead &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">
+  <link rel="canonical" href="http://www.thinkingincrowd.me/blog/page/7/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -62,12 +62,15 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">ExtJS, Jasmine, Maven - Why I Am Working on Them?</h1>
+      <h1 class="entry-title"><a href="/blog/2005/06/24/life-in-core-part-2/">Life in CORE - Part 2</a></h1>
     
     
       <p class="meta">
@@ -83,107 +86,113 @@
   
 
 
-<time datetime="2012-08-05T23:52:24+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2012</time>
+<time datetime="2005-06-24T04:02:43+08:00" pubdate data-updated="true">Jun 24<span>th</span>, 2005</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Before going into how to setup <a href="http://pivotal.github.com/jasmine/">Jasmine</a> to do Unit Test for <a href="www.sencha.com/products/extjs">ExtJS</a>, I think I should describe why I am doing this.</p>
+  <div class="entry-content"><p>&#8211; In SCB B2Bex UAT project</p>
 
-<p>I have been using ExtJS for around 4 years.  My first company used HTML + ExtJS to build the UI while the current one use ExtJS completely to do that.  I have encountered lots of cases that well-tested behavior failed after some new features introduced in.</p>
+<p>    User Acceptance Test for a big B2Bex project in Standard Charter Bank.  Luckily, I was ZH testing team lead responsible for UCA (User and Customer Administration) module.</p>
 
-<p>Everyone knows that it&#8217;s because there lacks Unit Test.  However, there have never been any Unit Test done for Javascript in any project.  There are many of the reasons behind that, such as tight schedule, not enough attention etc.  But the most important reason that outweights or strengthens others is that Unit Test for Javascript is way too difficult than Java, especially when Javascript is used intensively to build the UI and implement business logics.</p>
+<p>    That was a really great experience to me because that was my:</p>
 
-<p>One of the reason makes Javascript hard to do Unit Test is due to good tools unavailability;  the other one is that most developers tend to not separating business logic from UI code quite clearly.</p>
+<p>    <em>- 1st time involved in a complete UAT flow.</em></p>
 
-<p>After the emergence of <a href="http://seleniumhq.org/">Selenium</a>, I have once thought it should be the right tool to address this issue.  However, after reading Selenium Doc and seeing what my previous colleagues did for recording &amp; playing, I think Selenium should be used mainly for Integration Test, not in Unit Test level.  My opinion is further strenghten after watching a video from Google Testing Expert and reading the blog from Martin Fowler:</p>
+<p><em>    - 1st time to be a leader to communicate with other parties, to organize and distribute assignment to team members.</em></p>
 
-<blockquote><p><a href="http://www.infoq.com/cn/presentations/duannian-agile-test">让测试也敏捷起来</a> by 段念</p></blockquote>
+<p>    <strong>The experience of being a leader is a great treasure. </strong></p>
 
-<p><a href="http://martinfowler.com/bliki/TestPyramid.html">TestPyramid</a> by Martin Fowler</p>
+<p>    When I am only a member:</p>
 
-<p><strong>The main points in TestPyramid are:</strong></p>
+<p><em>    - Mostly think about what I should do, how I should do for it and when I should finish it and report status.</em></p>
 
-<blockquote><ol>
-<li><p><strong>Low-level unit test should be many more than high level end-to-end testing through GUI.</strong></p></li>
-<li><p><strong>Testing through UI is slow, brittle, expensive to write.</strong></p></li>
-<li><p><strong>A rich javascript UI should have most of its UI behavior tested with javascript unit tests using something like Jasmine.</strong></p></li>
-</ol>
-</blockquote>
+<p><em>    - Try to do everything by myself and do it well.</em></p>
 
-<p>Above is a long long purpose briefing, I hope it worthes to let you know the background and also agree with me on this.  I heard about Jasmine before reading the post by Martin Fowler, however, I kept thinking that it&#8217;s quite difficult or even impossible to use Jasmine to test those ExtJS UI components.</p>
+<p>    While it would be a different case if the role is changed:</p>
 
-<p>Until I did sit down and really tried to use Jasmine to test the ExtJS code, I can say that Unit Test against ExtJS by Jasmine can be achieved at some level once we know what to test for.</p>
+<p><em>    - To make decision on what members should do, who should do it, how they should do for it and when they should finish it.  The role of arrangement is taken up as leader.</em></p>
 
-<p>In next post, I will show you the steps to bind ExtJS, Jasmine, Maven together to do the Unit Test and what I think we should test against.</p>
+<p>    - The less leader do, the better.  Leader is not responsible to do everything, but to arrange properly.  That is learned from my leader.   <img src="http://spaces.msn.com/mmm2005-05-13_18.28/RTE/emoticons/smile_teeth.gif" alt="" />   After the role changes, sometimes I just can&#8217;t help to do everything and can&#8217;t dedicate some tasks to members while those should be, because I think that will be more effective if I do it myself.  Even I assign some of my work to my members, however I often expect them to do the job by the way I think is better.  This is what I still need to improve.</p>
+
+<p><strong>    &#8221;Bonus&#8221; got from this project:</strong></p>
+
+<p><strong>    </strong>I feel very lucky to make many new friends: William, Jenny, Ming and Sze Wing.  Thanks for their help on my work, the snack they brought from HK, the preparation and guide for us on the HK trip.</p>
 </div>
+  
+  
 
 
-  <footer>
-    <p class="meta">
+    </article>
+  
+  
+    <article>
       
-  
-
-<span class="byline author vcard">Posted by <span class="fn">鹄思乱想</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-05T23:52:24+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2012</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/悟/'>悟</a>, <a class='category' href='/blog/categories/技/'>技</a>
-  
-</span>
-
-
-    </p>
+  <header>
     
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/" data-via="kenspirit" data-counturl="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+      <h1 class="entry-title"><a href="/blog/2005/06/09/life-in-core-part-1/">Life in CORE - Part 1</a></h1>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2012/07/22/i18n-extjs-and-jawr/" title="Previous Post: i18n, ExtJS and JAWR">&laquo; i18n, ExtJS and JAWR</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2012/08/07/extjs-jasmine-maven-integration/" title="Next Post: ExtJS, Jasmine, Maven - Integration">ExtJS, Jasmine, Maven - Integration &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
+    
+      <p class="meta">
+        
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-06-09T04:14:39+08:00" pubdate data-updated="true">Jun 9<span>th</span>, 2005</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>&#8211; Background:</p>
+
+<p>    Majored in Information Engineering in College and dreamed to be a programmer in the future.  Don&#8217;t know why, but has this dream since high school.  Just know I want and have to do that.  Just like a destiny set in my mind by god, although I don&#8217;t believe him temporarily.  :P</p>
+
+<p>&#8211; Real fate after graduation</p>
+
+<p>    Joined CORE (<a href="http://www.coresolutions.com/">www.coresolutions.com</a>) and have been a programmer for about one year.</p>
+
+<p>    Really excited and happy to be one member of Dev team for our core product, iDEX.</p>
+
+<p>    Faint right after getting an assignment of using JS DOM to implement client sorting of table from leader, Charles.  At that time, I knew nothing about HTML, JS, anything about web programming.</p>
+
+<p>    Ecstatic after implementing it.  :D</p>
+
+<p>    Stressful, confused, clearer, stressful, released, excited&#8230;  An endless cycle after getting spec and bugz.</p>
+
+<p>&#8211; Sentiment:</p>
+
+<p>    Very happy to have many opportunities to learn a lot about web programming, JAVA, XML, JS, HTML, etc.  And also have the chance to review bugz and perform QA Testing.</p>
+
+<p>    Many thanks to all the colleagues (Jacky, Zee, Thomas, Sinba, Philip, Kenny, Tonny, Dan, etc.) that have helped me a lot and the leaders that have taught me a lot, like Charles, Alex, Ivy, CY, etc.</p>
+
+<p>    It&#8217;s really difficult for me to express all my thanks to them for their willingness of sharing their knowledge and experience to me.  I feel that I am just in a warm and cozy family, but of course there is much pressure of growing up.  :P</p>
 </div>
-  </section>
+  
+  
 
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/6/">Newer &rarr;</a>
+    
+  </div>
 </div>
-
 <aside class="sidebar">
   
     <section>
@@ -223,7 +232,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"</a>
+        <a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library references&#8221;</a>
       </li>
     
       <li class="post">
@@ -236,7 +245,7 @@
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   
   <a href="https://github.com/kenspirit">@kenspirit</a> on GitHub
@@ -266,7 +275,7 @@
 <section>
   <h1>Latest Tweets</h1>
   <ul id="tweets">
-    <li class="loading">Status updating...</li>
+    <li class="loading">Status updating&#8230;</li>
   </ul>
   <script type="text/javascript">
     $.domReady(function(){
@@ -295,7 +304,6 @@
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -310,10 +318,7 @@
       var disqus_shortname = 'thinkingincrowd';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/';
-        var disqus_url = 'http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

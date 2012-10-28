@@ -237,11 +237,85 @@
         <a href="/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">ExtJS, Jasmine, Maven - Why I am working on them?</a>
       </li>
     
+      <li class="post">
+        <a href="/blog/2012/07/22/i18n-extjs-and-jawr/">i18n, ExtJS and JAWR</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/16/stay-in-good-or-change-to-be-good/">待在优秀的地方，还是把所在的地方改变的优秀</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e/">曾经，最后</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/05/forward-or-backward/">到底是前进还是后退？</a>
+      </li>
+    
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/kenspirit">@kenspirit</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'kenspirit',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("kenspirit", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/kenspirit" class="twitter-follow-button" data-show-count="false">Follow @kenspirit</a>
+  
 </section>
 
 
 
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/chengusky@gmail.com?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
 
 
 
@@ -259,9 +333,39 @@
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'thinkingincrowd';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
 
 
 
