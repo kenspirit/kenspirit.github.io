@@ -2,10 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://yoursite.com
-title: My Octopress Blog
-subtitle: A blogging framework for hackers.
-author: Your Name
+url: http://www.thinkingincrowd.me
+title: Thinking in Crowd / 鹄思乱想
+subtitle: Swan flying in the immense sky
+author: 鹄思乱想
 simple_search: http://google.com/search
 description:
 
