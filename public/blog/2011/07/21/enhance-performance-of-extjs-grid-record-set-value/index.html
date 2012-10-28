@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Enhance Performance of ExtJs Grid Record set value operation - Thinking in Crowd / 鹄思乱想</title>
+  <meta name="author" content="鹄思乱想">
+
+  
+  <meta name="description" content="When implementing a feature for the project, I encounter one Javascript method that takes around 9 seconds to finish.  Clearly, there is some &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.thinkingincrowd.me/blog/2011/07/21/enhance-performance-of-extjs-grid-record-set-value/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Thinking in Crowd / 鹄思乱想</a></h1>
+  
+    <h2>Swan flying in the immense sky</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.thinkingincrowd.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Enhance Performance of ExtJs Grid Record Set Value Operation</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-21T07:25:39+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>When implementing a feature for the project, I encounter one Javascript method that takes around 9 seconds to finish.  Clearly, there is some performance issue in it.</p>
+
+<p>The method logic is simple.  Take below table&#8217;s data as an example:</p>
+
+<pre><code>Measurement         XS     S     M     L      XL   XXL
+ Sleeve             1      1     0     2      2     2
+</code></pre>
+
+<p>Consider above row &#8220;Sleeve&#8221; is a Record in ExtJs Grid.  When deleting size S &amp; L column, the figure should change to be:</p>
+
+<pre><code>Measurement         XS     M     XL      XXL
+ Sleeve             2      0      4      4
+</code></pre>
+
+<p>The intent is to accumulate the figure of the deleted size to the remained ones in one direction from the Standard size M.  Hence, this method requires intensive call on Record.set();  Below is the sudo code.</p>
+
+<pre><code>    var recalculatedGridData = [];
+    var colSearchCount = 0;
+    for (var rowNo = 0; rowNo &lt; gridStoreLength; rowNo++) {
+        ...
+        // Calculation logic here to get all the correct data first.
+        ...
+        recalculatedGridData.push(recordData); // Store the data
+    }
+    // Reset recalculated data to record
+    for (var rowNo = 0; rowNo &lt; recalculatedGridData.length; rowNo++) {
+        var recordData = recalculatedGridData[rowNo];
+        var record = store.virtualGetAt(recordData.rowNo);
+        for (var colNo = 0; colNo &lt; recordData.cells.length; colNo++) {
+            var cell = recordData.cells[colNo];
+            record.set(cell.name, cell.value);
+        }
+        // record.batchSet(recordData.cells); // Enhanced version to batch set
+    }
+</code></pre>
+
+<p>The performance tuning rule is first to find out the part where the bigger portion of the time used in.  This method contains two major for loop.  One is the first for calculation logic and the second is just purely setting data to the right cell.</p>
+
+<p>The total time of the method takes around 9 seconds when the involved number of records are 42 and each have 5 cells affected.  It&#8217;s found that 99% of the time spent on the second for loop.</p>
+
+<p>After testing more intensively, each record.set() takes around 0.05 second.  That is why operation on around 42 * 5 = 210 cells takes 9 seconds.</p>
+
+<p>OK.  Root cause is found and it&#8217;s time to see why it takes so long to call record.set().  After checking on the source of ExtJs Record and Store object.</p>
+
+<p>In Record.js:</p>
+
+<pre><code>set : function(name, value){
+        var encode = Ext.isPrimitive(value) ? String : Ext.encode;
+        if(encode(this.data[name]) == encode(value)) {
+            return;
+        }
+        this.dirty = true;
+        if(!this.modified){
+            this.modified = {};
+        }
+        if(this.modified[name] === undefined){
+            this.modified[name] = this.data[name];
+        }
+        this.data[name] = value;
+        if(!this.editing){
+            this.afterEdit();
+        }
+    },
+
+    // private
+    afterEdit : function(){
+        if (this.store != undefined &amp;&amp; typeof this.store.afterEdit == "function") {
+            this.store.afterEdit(this);
+        }
+    },
+</code></pre>
+
+<p>In Store.js:</p>
+
+<pre><code>    afterEdit : function(record){
+        if(this.modified.indexOf(record) == -1){
+            this.modified.push(record);
+        }
+        this.fireEvent('update', this, record, Ext.data.Record.EDIT);
+    },
+</code></pre>
+
+<p>You can find that each Record.set() will call store.afterEdit() with its own as parameter.  Hence, I am considering batch update all cells in one record and then trigger Record.afterEdit() method.  Below is the &#8220;cracked&#8221; method added for batch set data.</p>
+
+<pre><code>batchSet : function(cells){
+        for (var i = cells.length; i--;) {
+            var name = cells[i].name;
+            var value = cells[i].value;
+            var encode = Ext.isPrimitive(value) ? String : Ext.encode;
+            if(encode(this.data[name]) == encode(value)) {
+                return;
+            }
+            this.dirty = true;
+            if(!this.modified){
+                this.modified = {};
+            }
+            if(this.modified[name] === undefined){
+                this.modified[name] = this.data[name];
+            }
+            this.data[name] = value;
+        }
+        if(!this.editing){
+            this.afterEdit();
+        }
+    },
+</code></pre>
+
+<p>After testing, operation based on the same data set takes around 3.5 seconds now.  Suddenly drops 60%!</p>
+
+<p>Kind of satisfied on what I have changed on this.  However, I think there should be room to improve.  Any Comment?</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">鹄思乱想</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-21T07:25:39+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/技/'>技</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.thinkingincrowd.me/blog/2011/07/21/enhance-performance-of-extjs-grid-record-set-value/" data-via="" data-counturl="http://www.thinkingincrowd.me/blog/2011/07/21/enhance-performance-of-extjs-grid-record-set-value/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/07/21/valueofstone/" title="Previous Post: 一个石头值多少钱">&laquo; 一个石头值多少钱</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/07/28/e79c8be4ba86e8aea9e68891e69c89e782b9e89b8be796bce79a84e69687e7aba0e6a087e9a298/" title="Next Post: 看了让我有点蛋疼的文章标题">看了让我有点蛋疼的文章标题 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/28/db-design-for-multi-dimension-data/">一个多维度数据匹配的RDBMS数据库表设计的想法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/31/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/14/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/07/extjs-jasmine-maven-integration/">ExtJS, Jasmine, Maven - Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">ExtJS, Jasmine, Maven - Why I am working on them?</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 鹄思乱想 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

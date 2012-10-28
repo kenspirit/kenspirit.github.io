@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store) - Thinking in Crowd / 鹄思乱想</title>
+  <meta name="author" content="鹄思乱想">
+
+  
+  <meta name="description" content="After the integration for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.thinkingincrowd.me/blog/2012/08/14/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Thinking in Crowd / 鹄思乱想</a></h1>
+  
+    <h2>Swan flying in the immense sky</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:www.thinkingincrowd.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-14T07:02:18+08:00" pubdate data-updated="true">Aug 14<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>After the <a href="http://thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
+
+<p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it&#8217;s difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
+
+<p>Assuming I need to introduce JS Unit Test to a system without any Unit Test covered, what should the general JS Unit Test principles to be firstly considered?  My opinions are:</p>
+
+<blockquote><ol>
+<li><p>To test external contract against each ExtJS Component or JS function.  The external contract is where changes often take place.</p></li>
+<li><p>To test business logic (data calculation/validation, etc.) because this is where the real value in the business.</p></li>
+<li><p>Not to test the UI behavior (Window popup, Panel/Tree collapse/expand, Drap/Drop, Animation, etc.).  It&#8217;s quite difficult to mimic and verify the UI behavior because you have to twist your mind somehow to &#8220;tranform&#8221; the UI behavior to manual control the &#8220;movement&#8221; and then verify it.  It&#8217;s just writing even more UI logic to control other UI logic.</p></li>
+<li><p>Not to test all Ajax requests because it&#8217;s slow and actually should be considered as Integration Test.  It&#8217;s better to mock the interface data to test the Ajax caller &amp; response handler.</p></li>
+</ol>
+</blockquote>
+
+<p>Let&#8217;s see some real Unit Test example.  (Here some assumptions are made on how the components are generated and used in System: UI are completely built by ExtJS Designer.  It may not be the best practice, but it&#8217;s the way I think the real practice can be applied.)</p>
+
+<p><strong>Ext.data.Store</strong></p>
+
+<p>You might first wonder why Unit Test need to be done for Store component?  I got to tell you that I have met many bugs that are introduced because of fields&#8217; definition changed.  This is the major contract bound the Store with the caller.</p>
+
+<p>Below is a typical xxx.Datastore.js file generated by Ext Designer.</p>
+
+<pre><code>Ext.ns('xxx');
+xxx.DataStore = Ext.extend(Ext.data.JsonStore, {
+    constructor: function(cfg) {
+        cfg = cfg || {};
+        xxx.DataStore.superclass.constructor.call(this, Ext.apply({
+            storeId: 'xxx.DataStore',
+            url: 'http://www.foo.com/stub',
+            root: 'data.rows',
+            totalProperty: 'data.totalCount',
+            autoLoad: true,
+            fields: [
+                {
+                    name: 'code'
+                },
+                {
+                    name: 'name'
+                }
+            ]
+        }, cfg));
+    }
+});
+new xxx.DataStore();
+</code></pre>
+
+<p>How should we test it?  This is an autoLoad Store.  As a JS source file to be linked in for testing, I cannot use Jasmine spyOn to stub it.  That is because JS source file is loaded before Jasmine spyOn in Spec can ever be run.  The only thing I can think of is to override the Ext Ajax lib to not doing actual request call.</p>
+
+<p>Code in file globalTestStub.js to override the Ajax lib:</p>
+
+<pre><code>Ext.lib.Ajax.request = function() {
+  return {success: true};
+};
+</code></pre>
+
+<p>Configuration in POM.xml</p>
+
+<pre><code>&lt;configuration&gt;
+    &lt;preloadSources&gt;
+        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
+        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
+        &lt;source&gt;${project.basedir}/Resources/test/js/globalTestStub.js&lt;/source&gt;
+    &lt;/preloadSources&gt;
+    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
+    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
+    &lt;sourceIncludes&gt;
+        &lt;include&gt;xxx.DataStore.js&lt;/include&gt;
+...
+&lt;/configuration&gt;
+</code></pre>
+
+<p>ExtJS source and the globalTestStub.js are included in <em>preloadSources</em> so that all Stub/Mock code required for Unit Test can be initialized correctly before other JS sources and Test Spec files without polluting real production code.</p>
+
+<p>How to write a Test Spec then?  Actually, there is no fixed way, but just a simple rule: to test the contract.</p>
+
+<pre><code>describe('xxx.Datastore', function() {
+    it('should be able to initialized', function() {
+        var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
+        expect(oStore).toBeTruthy();
+    });
+
+    it('should load data correctly', function() {
+        var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
+        oStore.loadData({
+            data: {
+                rows: [
+                    {
+                        code: 'C1',
+                        name: 'N1'
+                    },
+                    {
+                        code: 'C2',
+                        name: 'N2'
+                    }
+                ],
+                totalCount: 2
+            }
+        });
+
+        expect(oStore.getTotalCount()).toEqual(2);
+        var oRecord = oStore.getAt(0);
+        expect(oRecord.get('code')).toEqual('C1');
+        expect(oRecord.get('name')).toEqual('N1');
+    });
+});
+</code></pre>
+
+<p>Unit Test for non-autoload Store would be similar but easier.</p>
+
+<p>Beside how the Test is written, I would like to draw your attention to how I wrote the description for the Suite and the Spec.  I am not sure whether I understood the <a href="http://dannorth.net/introducing-bdd/">Behavior Driven Development</a> comprehensively because I am still learning it.  However, I think this simple mind change helps me to think about how the behavior should be more than just simply how to write Test to meet coverage.  It can even helps us to review our design whether particular code belongs to the right place.</p>
+
+<p>Let&#8217;s explore how Unit Test can be achieved more for ExtJS later.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">鹄思乱想</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-14T07:02:18+08:00" pubdate data-updated="true">Aug 14<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/技/'>技</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.thinkingincrowd.me/blog/2012/08/14/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/" data-via="" data-counturl="http://www.thinkingincrowd.me/blog/2012/08/14/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/07/extjs-jasmine-maven-integration/" title="Previous Post: ExtJS, Jasmine, Maven - Integration">&laquo; ExtJS, Jasmine, Maven - Integration</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/08/31/extjs-jasmine-unit-test-part-2-ajax-behavior-2/" title="Next Post: ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)">ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/10/28/db-design-for-multi-dimension-data/">一个多维度数据匹配的RDBMS数据库表设计的想法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/31/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/14/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/07/extjs-jasmine-maven-integration/">ExtJS, Jasmine, Maven - Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">ExtJS, Jasmine, Maven - Why I am working on them?</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - 鹄思乱想 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
