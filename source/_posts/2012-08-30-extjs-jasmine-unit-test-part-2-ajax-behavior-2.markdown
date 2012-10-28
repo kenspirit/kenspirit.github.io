@@ -24,7 +24,7 @@ That is the simplest way but cannot fulfill the requirement to test real product
 
 **How real production code might look like if the application is built entirely by ExtJS?**
 
-    
+```javascript    
     xxx.UiImpl = Ext.extend(xxx.Ui, {
         initComponent: function() {
             xxx.UiImpl.superclass.initComponent.call(this);
@@ -65,7 +65,7 @@ That is the simplest way but cannot fulfill the requirement to test real product
             });
         }
     });
-
+```
 
 Above is a simple UI implementation class which extends from an UI class.  You can safely guess that this UI class simply has one name field which is bound with a Blur Event.  The Blur Event handler triggers an Ajax calls to validate whether the typed-in name is empty or duplicated within the system.  Pretty straightforward, right?
 
@@ -78,44 +78,44 @@ Here are some examples:
 	
   1. Contract between user and our system (blur event).  I would expect there would some code like this in my Jasmine Spec:
 
-    
+```javascript 
     oUI.nameField.fireEvent('blur');
-
+```
 
 
 
 	
   2. Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the _responseText_ from Ajax call to be not empty, the _nameField_ in UI should be marked as invalid and show the _oUI.duplicateNameWarningMsg_.  Say, the response can be stub as:
 
-    
+```javascript 
     Ext.lib.Ajax.response({
         status: 200,
         responseText: 'Duplicate'	
     });
-
+```
 
 
 
 	
   3. Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that _nameField_ in UI should be marked as invalid and show the _oUI.duplicateNameWarningMsg_ or _oUI.emptyNameWarningMsg_ under different situations__.__ Sample Spec code might be:
 
-    
+```javascript 
     oUI.nameField.fireEvent('blur');
     expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-    
+
     oUI.nameField.setValue('Ken');
     oUI.nameField.fireEvent('blur');
     expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-
+```
 
 
 
 	
   4. Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it's very difficult to be aware of.  Sample Spec code might be:
 
-    
+```javascript 
     var oUI = Ext.getCmp('kentest');
-
+```
 
 
 
@@ -130,7 +130,7 @@ How should I include this helper class to use Jasmine to test the Ajax in ExtJS?
 
 Configuration in POM.xml
 
-    
+```xml 
     <configuration>
         <preloadSources>
             <source>adapter/ext/ext-base-debug.js</source>
@@ -140,17 +140,17 @@ Configuration in POM.xml
         </preloadSources>
     ...
     <configuration>
-
+```
 
 Code in file globalTestStub.js change to be:
 
-    
+```javascript 
     jasmine.Ajax.installMock();
-
+```
 
 How to write the Test Spec?
 
-    
+```javascript 
     describe('Test Maintenance UI', function() {
         beforeEach(function() {
             jasmine.Ajax.useMock();
@@ -176,6 +176,6 @@ How to write the Test Spec?
             expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
         });
     });
-
+```
 
 Can you see how all above works now?  Please take it a trial and share your comment with me.

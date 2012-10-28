@@ -121,17 +121,24 @@
 
 <p>Normally, i18n text file is built with property file (e.g. msg_en_UI.properties) in which an entry is represented as:</p>
 
-<p>msgkey=msgText in i18n</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">msgkey</span><span class="o">=</span><span class="s">msgText in i18n</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This kind of file is very common in JAVA and <a href="http://jawr.java.net">JAWR</a> can be used to interpret this kind of property file and built code for i18n.  It&#8217;s quite easy to setup JAWR and I am not going to brief it here.  In a word, if your i18n text entry built like this:</p>
 
-<blockquote><pre><code>main.hello.world=Hello world!
-</code></pre></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">main.hello.world</span><span class="o">=</span><span class="s">Hello world!</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Then you can get the translated text by:</p>
 
-<blockquote><pre><code>messages.main.hello.world(); // Hello world!
-</code></pre></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">messages</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">hello</span><span class="p">.</span><span class="nx">world</span><span class="p">();</span> <span class="c1">// Hello world!</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Actually, JAWR build the text to Javascript data structure (messages is default prefix) to make a function call to get the actual text (i18n is based on which property file loaded depending on your locale resolver).</p>
 
@@ -148,9 +155,14 @@
 </ol>
 
 
-<blockquote><p> jawr.custom.generators=xxx.MyResourceBundleMessagesGenerator</p></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">jawr.custom.generators</span><span class="o">=</span><span class="s">xxx.MyResourceBundleMessagesGenerator</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">jawr.js.bundle.lib.mappings</span><span class="o">=</span><span class="s">**mymessages**:com.myapp.messages(mynamespace)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>jawr.js.bundle.lib.mappings=<strong>mymessages</strong>:com.myapp.messages(mynamespace)</p>
 
 <ol>
 <li><p>Build the customized generator.  How? The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.ResourceBundleMessagesGenerator</em> and overrides its <em>public Reader createResource(GeneratorContext context)</em> to use our own generator and overrides its <em>public String getMappingPrefix()</em> to return our own mapping <strong>mymessages</strong>.</p></li>
@@ -160,84 +172,162 @@
 
 <p>Below is the sample code in my <em>xxx.MyResourceBundleMessagesGenerator</em>:</p>
 
-<pre><code>@Override
-public Reader createResource(GeneratorContext context) {
-  MyMessageBundleScriptCreator creator = new MyMessageBundleScriptCreator(context);
-  return creator.createScript(context.getCharset());
-}
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Reader</span> <span class="nf">createResource</span><span class="o">(</span><span class="n">GeneratorContext</span> <span class="n">context</span><span class="o">)</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="n">MyMessageBundleScriptCreator</span> <span class="n">creator</span> <span class="o">=</span><span class="err"> </span><span class="k">new</span> <span class="n">MyMessageBundleScriptCreator</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">creator</span><span class="o">.</span><span class="na">createScript</span><span class="o">(</span><span class="n">context</span><span class="o">.</span><span class="na">getCharset</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">getMappingPrefix</span><span class="o">()</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s">&quot;mymessages&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-@Override
-public String getMappingPrefix() {
-  return "mymessages";
-}
-</code></pre>
+
+<p></p>
 
 <p>Below is the sample code in my <em>xxx.MyMessageBundleScriptCreator</em>:</p>
 
-<pre><code>private StringBuffer loadScriptTemplate() {
-  StringWriter sw = new StringWriter();
-  InputStream is = null;
-  try {
-    is = ClassLoaderResourceUtils.getResourceAsStream("/xxx/messages.js", this);
-    IOUtils.copy(is, sw);
-  } catch (IOException e) {
-    throw new BundlingProcessException("Fail to load the message template. ", e);
-  } finally {
-    IOUtils.close(is);
-  }
-  return sw.getBuffer();
-}
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">StringBuffer</span> <span class="nf">loadScriptTemplate</span><span class="o">()</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>  <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">is</span> <span class="o">=</span> <span class="n">ClassLoaderResourceUtils</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;/xxx/messages.js&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">copy</span><span class="o">(</span><span class="n">is</span><span class="o">,</span> <span class="n">sw</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="k">new</span> <span class="nf">BundlingProcessException</span><span class="o">(</span><span class="s">&quot;Fail to load the message template. &quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">close</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">sw</span><span class="o">.</span><span class="na">getBuffer</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">protected</span> <span class="n">Reader</span> <span class="nf">doCreateScript</span><span class="o">(</span><span class="n">Properties</span> <span class="n">props</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">script</span> <span class="o">=</span> <span class="n">loadScriptTemplate</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">Set</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="na">stringPropertyNames</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">StringBuffer</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">(</span><span class="s">&quot;{&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">key</span> <span class="o">:</span> <span class="n">keys</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">messages</span><span class="o">.</span><span class="na">append</span><span class="o">(</span>
+</span><span class='line'><span class="s">&quot;\&quot;&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">StringUtils</span><span class="o">.</span><span class="na">defaultString</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">).</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;\&quot;&quot;</span><span class="o">,</span> <span class="s">&quot;\\\\\&quot;&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;\&quot;,\n&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">messages</span><span class="o">.</span><span class="na">deleteCharAt</span><span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="n">messages</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;}&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">script</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;@namespace&quot;</span><span class="o">,</span> <span class="n">RegexUtil</span><span class="o">.</span><span class="na">adaptReplacementToMatcher</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">namespace</span><span class="o">));</span>
+</span><span class='line'>  <span class="n">script</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="na">replaceFirst</span><span class="o">(</span><span class="s">&quot;@messages&quot;</span><span class="o">,</span> <span class="n">RegexUtil</span><span class="o">.</span><span class="na">adaptReplacementToMatcher</span><span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span>
+</span><span class='line'>  <span class="k">return</span> <span class="k">new</span> <span class="nf">StringReader</span><span class="o">(</span><span class="n">script</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-@Override
-protected Reader doCreateScript(Properties props) {
-  String script = loadScriptTemplate().toString();
-  Set keys = props.stringPropertyNames();
-  StringBuffer messages = new StringBuffer("{");
-  for (String key : keys) {
-    String value = props.getProperty(key);
-    messages.append(
-"\"" + key + "\": \"" + StringUtils.defaultString(value, "").replaceAll("\"", "\\\\\"") + "\",\n");
-  }
-  if (messages.length() &gt; 1) {
-    messages.deleteCharAt(messages.length() - 1);
-  }
-  messages.append("}");
-  script = script.replace("@namespace", RegexUtil.adaptReplacementToMatcher(this.namespace));
-  script = script.replaceFirst("@messages", RegexUtil.adaptReplacementToMatcher(messages.toString()));
-  return new StringReader(script);
-}
-</code></pre>
+
+<p></p>
 
 <p>Finally, let&#8217;s see what is in my message.js:</p>
 
-<pre><code>if (!window.MultilingualMessageMgr) {
-  window.MultilingualMessageMgr = (function(){
-    var msgMap = {};
-    return {
-      getMsg: function(namespace, msgKey) {
-        var argLen = arguments.length;
-        if (argLen &lt; 2) {
-          return null;
-        }
-        var msg = null;
-        if (argLen === 2) {
-          msg = msgMap[namespace][msgKey];
-        }
-        if (argLen &gt; 2) {
-          for (var i = 2; i &lt; argLen; i++) {
-            msg = msg.replace("{" + (i - 2) + "}", arguments[i]);
-          }
-        }
-        return msg;
-      },
-      putMsgs: function(namespace, msgObj) {
-        msgMap[namespace] = msgObj;
-      }
-    };
-  })();
-}
-window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">msgMap</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">getMsg</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgKey</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">argLen</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">===</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">msg</span> <span class="o">=</span> <span class="nx">msgMap</span><span class="p">[</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">msgKey</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">argLen</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">msg</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">putMsgs</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgObj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">msgMap</span><span class="p">[</span><span class="nx">namespace</span><span class="p">]</span> <span class="o">=</span> <span class="nx">msgObj</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>  <span class="p">})();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span><span class="p">.</span><span class="nx">putMsgs</span><span class="p">(</span><span class="s2">&quot;@namespace&quot;</span><span class="p">,</span> <span class="err">@</span><span class="nx">messages</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
 
 <p>Let me explain a bit on what the <em>MultilingualMessageMgr</em> does here.</p>
 
@@ -245,7 +335,10 @@ window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
 
 <p>With this <em>MultilingualMessageMgr,</em> multilingual message translation can be done by sample call like:</p>
 
-<blockquote><p>MultilingualMessageMgr.getMsg(namespace, msgKey);</p></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MultilingualMessageMgr</span><span class="p">.</span><span class="nx">getMsg</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgKey</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Now, centralizing i18n logic to dynamically replace all ExtJs UI components can be realized by building the property file with component id as message key and iterating all components to replace them.</p>
 
@@ -330,7 +423,7 @@ window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e/">曾经，最后</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/02/15/ever-never/">曾经，最后</a></h1>
     
     
       <p class="meta">
@@ -354,64 +447,6 @@ window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
 
 
   <div class="entry-content"><p>曾经真心相待，换来质疑无奈。只能痛心离去，送上最后祝福。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library References&#8221;</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-15T08:12:55+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
-
-<blockquote><p>weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for &#8220;ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p<br/>
-ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl<br/>
-, Specification-Version: 1.2, exact-match: true]</p></blockquote>
-
-<p>It looks strange from the error message that the EAR is referring to some jars but cannot be resolved.</p>
-
-<p>I remember that these two jars have been set as shared library in Weblogic since the very beginning and why the problems occur when I am deploying it to the newly created server but not ADMIN.</p>
-
-<p>I wonder around by using Google and happened to see this website.</p>
-
-<p><a href="http://middlewaremagic.com/weblogic/?p=2938">http://middlewaremagic.com/weblogic/?p=2938</a></p>
-
-<p>It&#8217;s also said that the directory having the Shared Library should be included when you are calling weblogic.appc to compile your EAR.</p>
-
-<p>I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.</p>
-
-<p><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg?w=574" alt="Image" /></a><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg?w=614" alt="Image" /></a></p>
-
-<p> </p>
-
-<p> </p>
 </div>
   
   
@@ -496,6 +531,64 @@ ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Na
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library References&#8221;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-04T17:07:35+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
+
+<blockquote><p>weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for &#8220;ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p<br/>
+ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl<br/>
+, Specification-Version: 1.2, exact-match: true]</p></blockquote>
+
+<p>It looks strange from the error message that the EAR is referring to some jars but cannot be resolved.</p>
+
+<p>I remember that these two jars have been set as shared library in Weblogic since the very beginning and why the problems occur when I am deploying it to the newly created server but not ADMIN.</p>
+
+<p>I wonder around by using Google and happened to see this website.</p>
+
+<p><a href="http://middlewaremagic.com/weblogic/?p=2938">http://middlewaremagic.com/weblogic/?p=2938</a></p>
+
+<p>It&#8217;s also said that the directory having the Shared Library should be included when you are calling weblogic.appc to compile your EAR.</p>
+
+<p>I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.</p>
+
+<p><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg?w=574" alt="Image" /></a><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg?w=614" alt="Image" /></a></p>
+
+<p> </p>
+
+<p> </p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -541,15 +634,15 @@ ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Na
       </li>
     
       <li class="post">
-        <a href="/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e/">曾经，最后</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library references&#8221;</a>
+        <a href="/blog/2012/02/15/ever-never/">曾经，最后</a>
       </li>
     
       <li class="post">
         <a href="/blog/2012/02/05/forward-or-backward/">到底是前进还是后退？</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library references&#8221;</a>
       </li>
     
   </ul>

@@ -98,51 +98,93 @@
 
 <p>Let&#8217;s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
 
-<pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
-    &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0.0&lt;/version&gt;
-    &lt;extensions&gt;true&lt;/extensions&gt;
-    &lt;executions&gt;
-        &lt;execution&gt;
-            &lt;goals&gt;
-              &lt;goal&gt;test&lt;/goal&gt;
-            &lt;/goals&gt;
-        &lt;/execution&gt;
-    &lt;/executions&gt;
-    &lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-            &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
-        &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/sourceIncludes&gt;
-    &lt;specIncludes&gt;
-        &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/specIncludes&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>com.github.searls<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>jasmine-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>1.2.0.0<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;extensions&gt;</span>true<span class="nt">&lt;/extensions&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;executions&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;execution&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;goals&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;goal&gt;</span>test<span class="nt">&lt;/goal&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/goals&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/execution&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/executions&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;preloadSources&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;source&gt;</span>${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/preloadSources&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;jsSrcDir&gt;</span>${project.basedir}/Resources/js<span class="nt">&lt;/jsSrcDir&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;jsTestSrcDir&gt;</span>${project.basedir}/Resources/test/js<span class="nt">&lt;/jsTestSrcDir&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;sourceIncludes&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;include&gt;</span>[TO_BE_TESTED_JS_FILES_GOES_HERE]<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;include&gt;</span>[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/sourceIncludes&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;specIncludes&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;include&gt;</span>[SPEC_JS_FOLDER_GOES_HERE]/*.js<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/specIncludes&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plugin&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type &#8220;mvn test&#8221; in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
 
-<pre><code>[INFO] Executing Jasmine Specs
--------------------------------------------------------
- J A S M I N E   S P E C S
--------------------------------------------------------
-[INFO]
-Test Suite Name 1
-  Spec 1
-  Spec 2
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>INFO<span class="o">]</span> Executing Jasmine Specs
+</span><span class='line'>-------------------------------------------------------
+</span><span class='line'> J A S M I N E   S P E C S
+</span><span class='line'>-------------------------------------------------------
+</span><span class='line'><span class="o">[</span>INFO<span class="o">]</span>
+</span><span class='line'>Test Suite Name 1
+</span><span class='line'>  Spec 1
+</span><span class='line'>  Spec 2
+</span><span class='line'>
+</span><span class='line'>Test Suite Name 2
+</span><span class='line'>  Spec 3
+</span><span class='line'>
+</span><span class='line'>Results: 3 specs, 0 failures
+</span></code></pre></td></tr></table></div></figure>
 
-Test Suite Name 2
-  Spec 3
-
-Results: 3 specs, 0 failures
-</code></pre>
 
 <p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
 
@@ -250,15 +292,15 @@ Results: 3 specs, 0 failures
       </li>
     
       <li class="post">
-        <a href="/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e/">曾经，最后</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"</a>
+        <a href="/blog/2012/02/15/ever-never/">曾经，最后</a>
       </li>
     
       <li class="post">
         <a href="/blog/2012/02/05/forward-or-backward/">到底是前进还是后退？</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"</a>
       </li>
     
   </ul>

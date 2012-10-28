@@ -100,47 +100,88 @@
 
 <p><strong>How real production code might look like if the application is built entirely by ExtJS?</strong></p>
 
-<pre><code>xxx.UiImpl = Ext.extend(xxx.Ui, {
-    initComponent: function() {
-        xxx.UiImpl.superclass.initComponent.call(this);
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">xxx</span><span class="p">.</span><span class="nx">UiImpl</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">xxx</span><span class="p">.</span><span class="nx">Ui</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">initComponent</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">xxx</span><span class="p">.</span><span class="nx">UiImpl</span><span class="p">.</span><span class="nx">superclass</span><span class="p">.</span><span class="nx">initComponent</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span> <span class="o">=</span> <span class="s1">&#39;Name is empty!&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span> <span class="o">=</span> <span class="s1">&#39;Name has been in used!&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;xxx.name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">initEventHandlers</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">initEventHandlers</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">validateName</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">validateName</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">sName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getValue</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">sName</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">markInvalid</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">Ext</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+</span><span class='line'>            <span class="nx">url</span> <span class="o">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">appName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/foo/validateName&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">method</span> <span class="o">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">params</span> <span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">name</span> <span class="o">:</span> <span class="nx">sName</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nx">success</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">responseText</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">markInvalid</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nx">failure</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+</span><span class='line'>                <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;validate failure!&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nx">scope</span><span class="o">:</span> <span class="k">this</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
-        this.emptyNameWarningMsg = 'Name is empty!';
-        this.duplicateNameWarningMsg = 'Name has been in used!';
-        this.nameField = Ext.getCmp('xxx.name');
-
-        this.initEventHandlers();
-    },
-
-    initEventHandlers : function() {
-        this.nameField.on('blur', this.validateName, this);
-    },
-
-    validateName: function(){
-        var sName = this.nameField.getValue();
-        if (sName == '') {
-            this.nameField.markInvalid(this.emptyNameWarningMsg);
-            return;
-        }
-
-        Ext.Ajax.request({
-            url : config.appName() + "/foo/validateName",
-            method : 'GET',
-            params : {
-                name : sName
-            },
-            success : function(data){
-                if (data.responseText != '') {
-                    this.nameField.markInvalid(this.duplicateNameWarningMsg);
-                }
-            },
-            failure : function(data){
-                alert("validate failure!");
-            },
-            scope: this
-        });
-    }
-});
-</code></pre>
 
 <p>Above is a simple UI implementation class which extends from an UI class.  You can safely guess that this UI class simply has one name field which is bound with a Blur Event.  The Blur Event handler triggers an Ajax calls to validate whether the typed-in name is empty or duplicated within the system.  Pretty straightforward, right?</p>
 
@@ -153,40 +194,56 @@
 </ol>
 
 
-<pre><code>oUI.nameField.fireEvent('blur');
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the <em>responseText</em> from Ajax call to be not empty, the <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em>.  Say, the response can be stub as:</li>
 </ol>
 
 
-<pre><code>Ext.lib.Ajax.response({
-    status: 200,
-    responseText: 'Duplicate'   
-});
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">lib</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">response</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">status</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">responseText</span><span class="o">:</span> <span class="s1">&#39;Duplicate&#39;</span>  
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em> or <em>oUI.emptyNameWarningMsg</em> under different situations<strong>.</strong> Sample Spec code might be:</li>
 </ol>
 
 
-<pre><code>oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">setValue</span><span class="p">(</span><span class="s1">&#39;Ken&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-oUI.nameField.setValue('Ken');
-oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-</code></pre>
 
 <ol>
 <li>Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it&#8217;s very difficult to be aware of.  Sample Spec code might be:</li>
 </ol>
 
 
-<pre><code>var oUI = Ext.getCmp('kentest');
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">oUI</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;kentest&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><strong>The Test Spec is already in mind but how can I use it to test against the production code?  </strong></p>
 
@@ -198,50 +255,88 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
 
 <p>Configuration in POM.xml</p>
 
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/mock-ajax.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/global.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-...
-&lt;configuration&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;preloadSources&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>adapter/ext/ext-base-debug.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>ext/ext-all-debug-w-comments.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>${project.basedir}/Resources/test/js/mock-ajax.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>${project.basedir}/Resources/test/js/global.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/preloadSources&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;configuration&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Code in file globalTestStub.js change to be:</p>
 
-<pre><code>jasmine.Ajax.installMock();
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">installMock</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>How to write the Test Spec?</p>
 
-<pre><code>describe('Test Maintenance UI', function() {
-    beforeEach(function() {
-        jasmine.Ajax.useMock();
-    });
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;Test Maintenance UI&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">useMock</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Maintenance UI should be initialized successfully&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oUI</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">UI</span><span class="p">({});</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;kentest&#39;</span><span class="p">)).</span><span class="nx">toBeTruthy</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Focus leaving name field should trigger unique validation.&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">Ext</span><span class="p">.</span><span class="nx">lib</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">response</span><span class="p">({</span>
+</span><span class='line'>            <span class="nx">status</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">responseText</span><span class="o">:</span> <span class="s1">&#39;Duplicate&#39;</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oUI</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;kentest&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">setValue</span><span class="p">(</span><span class="s1">&#39;Ken&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
-    it('Maintenance UI should be initialized successfully', function() {
-        var oUI = new xxx.UI({});
-        expect(Ext.getCmp('kentest')).toBeTruthy();
-    });
-
-    it('Focus leaving name field should trigger unique validation.', function() {
-        Ext.lib.Ajax.response({
-            status: 200,
-            responseText: 'Duplicate'
-        });
-
-        var oUI = Ext.getCmp('kentest');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-
-        oUI.nameField.setValue('Ken');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-    });
-});
-</code></pre>
 
 <p>Can you see how all above works now?  Please take it a trial and share your comment with me.</p>
 </div>
@@ -345,15 +440,15 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
       </li>
     
       <li class="post">
-        <a href="/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e/">曾经，最后</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/">Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"</a>
+        <a href="/blog/2012/02/15/ever-never/">曾经，最后</a>
       </li>
     
       <li class="post">
         <a href="/blog/2012/02/05/forward-or-backward/">到底是前进还是后退？</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"</a>
       </li>
     
   </ul>

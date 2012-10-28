@@ -45,31 +45,25 @@ In order to avoid violation of separation of concern principle, I would like to 
 **How to use JAWR to implement i18n**
 
 Normally, i18n text file is built with property file (e.g. msg_en_UI.properties) in which an entry is represented as:
-
-msgkey=msgText in i18n
-
+```ini
+    msgkey=msgText in i18n
+```
 This kind of file is very common in JAVA and [JAWR](http://jawr.java.net) can be used to interpret this kind of property file and built code for i18n.  It's quite easy to setup JAWR and I am not going to brief it here.  In a word, if your i18n text entry built like this:
 
 
-> 
-
->     
->     main.hello.world=Hello world!
-> 
-> 
+```ini
+    main.hello.world=Hello world!
+```
 
 
 
 Then you can get the translated text by:
 
 
-> 
-
->     
->     messages.main.hello.world(); // Hello world!
-> 
-> 
-
+ 
+```javascript 
+    messages.main.hello.world(); // Hello world!
+```
 
 
 Actually, JAWR build the text to Javascript data structure (messages is default prefix) to make a function call to get the actual text (i18n is based on which property file loaded depending on your locale resolver).
@@ -87,11 +81,11 @@ Luckily, I am able to do this because JAWR provides flexibility to use a customi
 	
   1. Set below sample lines in jawr.properties file:
 
+```ini
+    jawr.custom.generators=xxx.MyResourceBundleMessagesGenerator
 
->  jawr.custom.generators=xxx.MyResourceBundleMessagesGenerator
-
-jawr.js.bundle.lib.mappings=**mymessages**:com.myapp.messages(mynamespace)
-
+    jawr.js.bundle.lib.mappings=**mymessages**:com.myapp.messages(mynamespace)
+```
 
 
 
@@ -105,7 +99,7 @@ jawr.js.bundle.lib.mappings=**mymessages**:com.myapp.messages(mynamespace)
 Below is the sample code in my _xxx.MyResourceBundleMessagesGenerator_:
 
     
-    
+```java    
     @Override
     public Reader createResource(GeneratorContext context) {
       MyMessageBundleScriptCreator creator = new MyMessageBundleScriptCreator(context);
@@ -116,13 +110,13 @@ Below is the sample code in my _xxx.MyResourceBundleMessagesGenerator_:
     public String getMappingPrefix() {
       return "mymessages";
     }
-    
+```    
 
 
 Below is the sample code in my _xxx.MyMessageBundleScriptCreator_:
 
     
-    
+```java    
     private StringBuffer loadScriptTemplate() {
       StringWriter sw = new StringWriter();
       InputStream is = null;
@@ -155,13 +149,13 @@ Below is the sample code in my _xxx.MyMessageBundleScriptCreator_:
       script = script.replaceFirst("@messages", RegexUtil.adaptReplacementToMatcher(messages.toString()));
       return new StringReader(script);
     }
-    
+```    
 
 
 Finally, let's see what is in my message.js:
 
     
-    
+```javascript    
     if (!window.MultilingualMessageMgr) {
       window.MultilingualMessageMgr = (function(){
         var msgMap = {};
@@ -189,7 +183,7 @@ Finally, let's see what is in my message.js:
       })();
     }
     window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
-    
+```    
 
 
 
@@ -199,9 +193,9 @@ It's an object which is returned by anonymous function.  This object has a _get
 
 With this _MultilingualMessageMgr,_ multilingual message translation can be done by sample call like:
 
-
-> MultilingualMessageMgr.getMsg(namespace, msgKey);
-
+```javascript
+    MultilingualMessageMgr.getMsg(namespace, msgKey);
+```
 
 Now, centralizing i18n logic to dynamically replace all ExtJs UI components can be realized by building the property file with component id as message key and iterating all components to replace them.
 

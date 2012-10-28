@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-10-28T21:47:17+08:00</updated>
+  <updated>2012-10-28T22:43:10+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -154,47 +154,88 @@ REQUIREMENTS:
 
 <p><strong>How real production code might look like if the application is built entirely by ExtJS?</strong></p>
 
-<pre><code>xxx.UiImpl = Ext.extend(xxx.Ui, {
-    initComponent: function() {
-        xxx.UiImpl.superclass.initComponent.call(this);
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">xxx</span><span class="p">.</span><span class="nx">UiImpl</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">xxx</span><span class="p">.</span><span class="nx">Ui</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">initComponent</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">xxx</span><span class="p">.</span><span class="nx">UiImpl</span><span class="p">.</span><span class="nx">superclass</span><span class="p">.</span><span class="nx">initComponent</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span> <span class="o">=</span> <span class="s1">&#39;Name is empty!&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span> <span class="o">=</span> <span class="s1">&#39;Name has been in used!&#39;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;xxx.name&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">initEventHandlers</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">initEventHandlers</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">validateName</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">validateName</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">sName</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getValue</span><span class="p">();</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">sName</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">markInvalid</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">Ext</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span>
+</span><span class='line'>            <span class="nx">url</span> <span class="o">:</span> <span class="nx">config</span><span class="p">.</span><span class="nx">appName</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/foo/validateName&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">method</span> <span class="o">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">params</span> <span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">name</span> <span class="o">:</span> <span class="nx">sName</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nx">success</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">responseText</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">markInvalid</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nx">failure</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+</span><span class='line'>                <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;validate failure!&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nx">scope</span><span class="o">:</span> <span class="k">this</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
-        this.emptyNameWarningMsg = 'Name is empty!';
-        this.duplicateNameWarningMsg = 'Name has been in used!';
-        this.nameField = Ext.getCmp('xxx.name');
-
-        this.initEventHandlers();
-    },
-
-    initEventHandlers : function() {
-        this.nameField.on('blur', this.validateName, this);
-    },
-
-    validateName: function(){
-        var sName = this.nameField.getValue();
-        if (sName == '') {
-            this.nameField.markInvalid(this.emptyNameWarningMsg);
-            return;
-        }
-
-        Ext.Ajax.request({
-            url : config.appName() + "/foo/validateName",
-            method : 'GET',
-            params : {
-                name : sName
-            },
-            success : function(data){
-                if (data.responseText != '') {
-                    this.nameField.markInvalid(this.duplicateNameWarningMsg);
-                }
-            },
-            failure : function(data){
-                alert("validate failure!");
-            },
-            scope: this
-        });
-    }
-});
-</code></pre>
 
 <p>Above is a simple UI implementation class which extends from an UI class.  You can safely guess that this UI class simply has one name field which is bound with a Blur Event.  The Blur Event handler triggers an Ajax calls to validate whether the typed-in name is empty or duplicated within the system.  Pretty straightforward, right?</p>
 
@@ -207,40 +248,56 @@ REQUIREMENTS:
 </ol>
 
 
-<pre><code>oUI.nameField.fireEvent('blur');
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the <em>responseText</em> from Ajax call to be not empty, the <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em>.  Say, the response can be stub as:</li>
 </ol>
 
 
-<pre><code>Ext.lib.Ajax.response({
-    status: 200,
-    responseText: 'Duplicate'   
-});
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">lib</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">response</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">status</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">responseText</span><span class="o">:</span> <span class="s1">&#39;Duplicate&#39;</span>  
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ol>
 <li>Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em> or <em>oUI.emptyNameWarningMsg</em> under different situations<strong>.</strong> Sample Spec code might be:</li>
 </ol>
 
 
-<pre><code>oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">setValue</span><span class="p">(</span><span class="s1">&#39;Ken&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
 
-oUI.nameField.setValue('Ken');
-oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-</code></pre>
 
 <ol>
 <li>Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it&#8217;s very difficult to be aware of.  Sample Spec code might be:</li>
 </ol>
 
 
-<pre><code>var oUI = Ext.getCmp('kentest');
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">oUI</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;kentest&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p><strong>The Test Spec is already in mind but how can I use it to test against the production code?  </strong></p>
 
@@ -252,50 +309,88 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
 
 <p>Configuration in POM.xml</p>
 
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/mock-ajax.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/global.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-...
-&lt;configuration&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;preloadSources&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>adapter/ext/ext-base-debug.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>ext/ext-all-debug-w-comments.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>${project.basedir}/Resources/test/js/mock-ajax.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>${project.basedir}/Resources/test/js/global.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/preloadSources&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;configuration&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Code in file globalTestStub.js change to be:</p>
 
-<pre><code>jasmine.Ajax.installMock();
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">installMock</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>How to write the Test Spec?</p>
 
-<pre><code>describe('Test Maintenance UI', function() {
-    beforeEach(function() {
-        jasmine.Ajax.useMock();
-    });
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;Test Maintenance UI&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">jasmine</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">useMock</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Maintenance UI should be initialized successfully&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oUI</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">UI</span><span class="p">({});</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;kentest&#39;</span><span class="p">)).</span><span class="nx">toBeTruthy</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Focus leaving name field should trigger unique validation.&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">Ext</span><span class="p">.</span><span class="nx">lib</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">response</span><span class="p">({</span>
+</span><span class='line'>            <span class="nx">status</span><span class="o">:</span> <span class="mi">200</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">responseText</span><span class="o">:</span> <span class="s1">&#39;Duplicate&#39;</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oUI</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">getCmp</span><span class="p">(</span><span class="s1">&#39;kentest&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">emptyNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">setValue</span><span class="p">(</span><span class="s1">&#39;Ken&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;blur&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">nameField</span><span class="p">.</span><span class="nx">getActiveError</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">oUI</span><span class="p">.</span><span class="nx">duplicateNameWarningMsg</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
-    it('Maintenance UI should be initialized successfully', function() {
-        var oUI = new xxx.UI({});
-        expect(Ext.getCmp('kentest')).toBeTruthy();
-    });
-
-    it('Focus leaving name field should trigger unique validation.', function() {
-        Ext.lib.Ajax.response({
-            status: 200,
-            responseText: 'Duplicate'
-        });
-
-        var oUI = Ext.getCmp('kentest');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-
-        oUI.nameField.setValue('Ken');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-    });
-});
-</code></pre>
 
 <p>Can you see how all above works now?  Please take it a trial and share your comment with me.</p>
 ]]></content>
@@ -328,90 +423,161 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
 
 <p>Below is a typical xxx.Datastore.js file generated by Ext Designer.</p>
 
-<pre><code>Ext.ns('xxx');
-xxx.DataStore = Ext.extend(Ext.data.JsonStore, {
-    constructor: function(cfg) {
-        cfg = cfg || {};
-        xxx.DataStore.superclass.constructor.call(this, Ext.apply({
-            storeId: 'xxx.DataStore',
-            url: 'http://www.foo.com/stub',
-            root: 'data.rows',
-            totalProperty: 'data.totalCount',
-            autoLoad: true,
-            fields: [
-                {
-                    name: 'code'
-                },
-                {
-                    name: 'name'
-                }
-            ]
-        }, cfg));
-    }
-});
-new xxx.DataStore();
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">ns</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">JsonStore</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">cfg</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">cfg</span> <span class="o">=</span> <span class="nx">cfg</span> <span class="o">||</span> <span class="p">{};</span>
+</span><span class='line'>        <span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span><span class="p">.</span><span class="nx">superclass</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">apply</span><span class="p">({</span>
+</span><span class='line'>            <span class="nx">storeId</span><span class="o">:</span> <span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://www.foo.com/stub&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">root</span><span class="o">:</span> <span class="s1">&#39;data.rows&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">totalProperty</span><span class="o">:</span> <span class="s1">&#39;data.totalCount&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">autoLoad</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>            <span class="nx">fields</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;code&#39;</span>
+</span><span class='line'>                <span class="p">},</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;name&#39;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">]</span>
+</span><span class='line'>        <span class="p">},</span> <span class="nx">cfg</span><span class="p">));</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="k">new</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>How should we test it?  This is an autoLoad Store.  As a JS source file to be linked in for testing, I cannot use Jasmine spyOn to stub it.  That is because JS source file is loaded before Jasmine spyOn in Spec can ever be run.  The only thing I can think of is to override the Ext Ajax lib to not doing actual request call.</p>
 
 <p>Code in file globalTestStub.js to override the Ajax lib:</p>
 
-<pre><code>Ext.lib.Ajax.request = function() {
-  return {success: true};
-};
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">lib</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">request</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span><span class="nx">success</span><span class="o">:</span> <span class="kc">true</span><span class="p">};</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Configuration in POM.xml</p>
 
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/globalTestStub.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-        &lt;include&gt;xxx.DataStore.js&lt;/include&gt;
-...
-&lt;/configuration&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;preloadSources&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>adapter/ext/ext-base-debug.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>ext/ext-all-debug-w-comments.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;source&gt;</span>${project.basedir}/Resources/test/js/globalTestStub.js<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/preloadSources&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;jsSrcDir&gt;</span>${project.basedir}/Resources/js<span class="nt">&lt;/jsSrcDir&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;jsTestSrcDir&gt;</span>${project.basedir}/Resources/test/js<span class="nt">&lt;/jsTestSrcDir&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;sourceIncludes&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;include&gt;</span>xxx.DataStore.js<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;/configuration&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>ExtJS source and the globalTestStub.js are included in <em>preloadSources</em> so that all Stub/Mock code required for Unit Test can be initialized correctly before other JS sources and Test Spec files without polluting real production code.</p>
 
 <p>How to write a Test Spec then?  Actually, there is no fixed way, but just a simple rule: to test the contract.</p>
 
-<pre><code>describe('xxx.Datastore', function() {
-    it('should be able to initialized', function() {
-        var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
-        expect(oStore).toBeTruthy();
-    });
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;xxx.Datastore&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should be able to initialized&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">StoreMgr</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oStore</span><span class="p">).</span><span class="nx">toBeTruthy</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should load data correctly&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">StoreMgr</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">oStore</span><span class="p">.</span><span class="nx">loadData</span><span class="p">({</span>
+</span><span class='line'>            <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">code</span><span class="o">:</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span>
+</span><span class='line'>                        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;N1&#39;</span>
+</span><span class='line'>                    <span class="p">},</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">code</span><span class="o">:</span> <span class="s1">&#39;C2&#39;</span><span class="p">,</span>
+</span><span class='line'>                        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;N2&#39;</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                <span class="p">],</span>
+</span><span class='line'>                <span class="nx">totalCount</span><span class="o">:</span> <span class="mi">2</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oStore</span><span class="p">.</span><span class="nx">getTotalCount</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">oRecord</span> <span class="o">=</span> <span class="nx">oStore</span><span class="p">.</span><span class="nx">getAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oRecord</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oRecord</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">&#39;N1&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
-    it('should load data correctly', function() {
-        var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
-        oStore.loadData({
-            data: {
-                rows: [
-                    {
-                        code: 'C1',
-                        name: 'N1'
-                    },
-                    {
-                        code: 'C2',
-                        name: 'N2'
-                    }
-                ],
-                totalCount: 2
-            }
-        });
-
-        expect(oStore.getTotalCount()).toEqual(2);
-        var oRecord = oStore.getAt(0);
-        expect(oRecord.get('code')).toEqual('C1');
-        expect(oRecord.get('name')).toEqual('N1');
-    });
-});
-</code></pre>
 
 <p>Unit Test for non-autoload Store would be similar but easier.</p>
 
@@ -434,51 +600,93 @@ new xxx.DataStore();
 
 <p>Let&#8217;s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
 
-<pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
-    &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0.0&lt;/version&gt;
-    &lt;extensions&gt;true&lt;/extensions&gt;
-    &lt;executions&gt;
-        &lt;execution&gt;
-            &lt;goals&gt;
-              &lt;goal&gt;test&lt;/goal&gt;
-            &lt;/goals&gt;
-        &lt;/execution&gt;
-    &lt;/executions&gt;
-    &lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-            &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
-        &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/sourceIncludes&gt;
-    &lt;specIncludes&gt;
-        &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/specIncludes&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>com.github.searls<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>jasmine-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>1.2.0.0<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;extensions&gt;</span>true<span class="nt">&lt;/extensions&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;executions&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;execution&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;goals&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;goal&gt;</span>test<span class="nt">&lt;/goal&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/goals&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/execution&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/executions&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;preloadSources&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;source&gt;</span>${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/preloadSources&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;jsSrcDir&gt;</span>${project.basedir}/Resources/js<span class="nt">&lt;/jsSrcDir&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;jsTestSrcDir&gt;</span>${project.basedir}/Resources/test/js<span class="nt">&lt;/jsTestSrcDir&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;sourceIncludes&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;include&gt;</span>[TO_BE_TESTED_JS_FILES_GOES_HERE]<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;include&gt;</span>[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/sourceIncludes&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;specIncludes&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;include&gt;</span>[SPEC_JS_FOLDER_GOES_HERE]/*.js<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/specIncludes&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plugin&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type &#8220;mvn test&#8221; in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
 
-<pre><code>[INFO] Executing Jasmine Specs
--------------------------------------------------------
- J A S M I N E   S P E C S
--------------------------------------------------------
-[INFO]
-Test Suite Name 1
-  Spec 1
-  Spec 2
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>INFO<span class="o">]</span> Executing Jasmine Specs
+</span><span class='line'>-------------------------------------------------------
+</span><span class='line'> J A S M I N E   S P E C S
+</span><span class='line'>-------------------------------------------------------
+</span><span class='line'><span class="o">[</span>INFO<span class="o">]</span>
+</span><span class='line'>Test Suite Name 1
+</span><span class='line'>  Spec 1
+</span><span class='line'>  Spec 2
+</span><span class='line'>
+</span><span class='line'>Test Suite Name 2
+</span><span class='line'>  Spec 3
+</span><span class='line'>
+</span><span class='line'>Results: 3 specs, 0 failures
+</span></code></pre></td></tr></table></div></figure>
 
-Test Suite Name 2
-  Spec 3
-
-Results: 3 specs, 0 failures
-</code></pre>
 
 <p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
 
@@ -557,17 +765,24 @@ Results: 3 specs, 0 failures
 
 <p>Normally, i18n text file is built with property file (e.g. msg_en_UI.properties) in which an entry is represented as:</p>
 
-<p>msgkey=msgText in i18n</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">msgkey</span><span class="o">=</span><span class="s">msgText in i18n</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>This kind of file is very common in JAVA and <a href="http://jawr.java.net">JAWR</a> can be used to interpret this kind of property file and built code for i18n.  It&#8217;s quite easy to setup JAWR and I am not going to brief it here.  In a word, if your i18n text entry built like this:</p>
 
-<blockquote><pre><code>main.hello.world=Hello world!
-</code></pre></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">main.hello.world</span><span class="o">=</span><span class="s">Hello world!</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Then you can get the translated text by:</p>
 
-<blockquote><pre><code>messages.main.hello.world(); // Hello world!
-</code></pre></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">messages</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">hello</span><span class="p">.</span><span class="nx">world</span><span class="p">();</span> <span class="c1">// Hello world!</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Actually, JAWR build the text to Javascript data structure (messages is default prefix) to make a function call to get the actual text (i18n is based on which property file loaded depending on your locale resolver).</p>
 
@@ -584,9 +799,14 @@ Results: 3 specs, 0 failures
 </ol>
 
 
-<blockquote><p> jawr.custom.generators=xxx.MyResourceBundleMessagesGenerator</p></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">jawr.custom.generators</span><span class="o">=</span><span class="s">xxx.MyResourceBundleMessagesGenerator</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">jawr.js.bundle.lib.mappings</span><span class="o">=</span><span class="s">**mymessages**:com.myapp.messages(mynamespace)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>jawr.js.bundle.lib.mappings=<strong>mymessages</strong>:com.myapp.messages(mynamespace)</p>
 
 <ol>
 <li><p>Build the customized generator.  How? The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.ResourceBundleMessagesGenerator</em> and overrides its <em>public Reader createResource(GeneratorContext context)</em> to use our own generator and overrides its <em>public String getMappingPrefix()</em> to return our own mapping <strong>mymessages</strong>.</p></li>
@@ -596,84 +816,162 @@ Results: 3 specs, 0 failures
 
 <p>Below is the sample code in my <em>xxx.MyResourceBundleMessagesGenerator</em>:</p>
 
-<pre><code>@Override
-public Reader createResource(GeneratorContext context) {
-  MyMessageBundleScriptCreator creator = new MyMessageBundleScriptCreator(context);
-  return creator.createScript(context.getCharset());
-}
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Reader</span> <span class="nf">createResource</span><span class="o">(</span><span class="n">GeneratorContext</span> <span class="n">context</span><span class="o">)</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="n">MyMessageBundleScriptCreator</span> <span class="n">creator</span> <span class="o">=</span><span class="err"> </span><span class="k">new</span> <span class="n">MyMessageBundleScriptCreator</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">creator</span><span class="o">.</span><span class="na">createScript</span><span class="o">(</span><span class="n">context</span><span class="o">.</span><span class="na">getCharset</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">getMappingPrefix</span><span class="o">()</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s">&quot;mymessages&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-@Override
-public String getMappingPrefix() {
-  return "mymessages";
-}
-</code></pre>
+
+<p></p>
 
 <p>Below is the sample code in my <em>xxx.MyMessageBundleScriptCreator</em>:</p>
 
-<pre><code>private StringBuffer loadScriptTemplate() {
-  StringWriter sw = new StringWriter();
-  InputStream is = null;
-  try {
-    is = ClassLoaderResourceUtils.getResourceAsStream("/xxx/messages.js", this);
-    IOUtils.copy(is, sw);
-  } catch (IOException e) {
-    throw new BundlingProcessException("Fail to load the message template. ", e);
-  } finally {
-    IOUtils.close(is);
-  }
-  return sw.getBuffer();
-}
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">StringBuffer</span> <span class="nf">loadScriptTemplate</span><span class="o">()</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>  <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">is</span> <span class="o">=</span> <span class="n">ClassLoaderResourceUtils</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;/xxx/messages.js&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">copy</span><span class="o">(</span><span class="n">is</span><span class="o">,</span> <span class="n">sw</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="k">new</span> <span class="nf">BundlingProcessException</span><span class="o">(</span><span class="s">&quot;Fail to load the message template. &quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">close</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">sw</span><span class="o">.</span><span class="na">getBuffer</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">protected</span> <span class="n">Reader</span> <span class="nf">doCreateScript</span><span class="o">(</span><span class="n">Properties</span> <span class="n">props</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">script</span> <span class="o">=</span> <span class="n">loadScriptTemplate</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">Set</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="na">stringPropertyNames</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">StringBuffer</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">(</span><span class="s">&quot;{&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">key</span> <span class="o">:</span> <span class="n">keys</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">messages</span><span class="o">.</span><span class="na">append</span><span class="o">(</span>
+</span><span class='line'><span class="s">&quot;\&quot;&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">StringUtils</span><span class="o">.</span><span class="na">defaultString</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">).</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;\&quot;&quot;</span><span class="o">,</span> <span class="s">&quot;\\\\\&quot;&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;\&quot;,\n&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">messages</span><span class="o">.</span><span class="na">deleteCharAt</span><span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="n">messages</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;}&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">script</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;@namespace&quot;</span><span class="o">,</span> <span class="n">RegexUtil</span><span class="o">.</span><span class="na">adaptReplacementToMatcher</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">namespace</span><span class="o">));</span>
+</span><span class='line'>  <span class="n">script</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="na">replaceFirst</span><span class="o">(</span><span class="s">&quot;@messages&quot;</span><span class="o">,</span> <span class="n">RegexUtil</span><span class="o">.</span><span class="na">adaptReplacementToMatcher</span><span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span>
+</span><span class='line'>  <span class="k">return</span> <span class="k">new</span> <span class="nf">StringReader</span><span class="o">(</span><span class="n">script</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-@Override
-protected Reader doCreateScript(Properties props) {
-  String script = loadScriptTemplate().toString();
-  Set keys = props.stringPropertyNames();
-  StringBuffer messages = new StringBuffer("{");
-  for (String key : keys) {
-    String value = props.getProperty(key);
-    messages.append(
-"\"" + key + "\": \"" + StringUtils.defaultString(value, "").replaceAll("\"", "\\\\\"") + "\",\n");
-  }
-  if (messages.length() &gt; 1) {
-    messages.deleteCharAt(messages.length() - 1);
-  }
-  messages.append("}");
-  script = script.replace("@namespace", RegexUtil.adaptReplacementToMatcher(this.namespace));
-  script = script.replaceFirst("@messages", RegexUtil.adaptReplacementToMatcher(messages.toString()));
-  return new StringReader(script);
-}
-</code></pre>
+
+<p></p>
 
 <p>Finally, let&#8217;s see what is in my message.js:</p>
 
-<pre><code>if (!window.MultilingualMessageMgr) {
-  window.MultilingualMessageMgr = (function(){
-    var msgMap = {};
-    return {
-      getMsg: function(namespace, msgKey) {
-        var argLen = arguments.length;
-        if (argLen &lt; 2) {
-          return null;
-        }
-        var msg = null;
-        if (argLen === 2) {
-          msg = msgMap[namespace][msgKey];
-        }
-        if (argLen &gt; 2) {
-          for (var i = 2; i &lt; argLen; i++) {
-            msg = msg.replace("{" + (i - 2) + "}", arguments[i]);
-          }
-        }
-        return msg;
-      },
-      putMsgs: function(namespace, msgObj) {
-        msgMap[namespace] = msgObj;
-      }
-    };
-  })();
-}
-window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">msgMap</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">getMsg</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgKey</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">argLen</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">===</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">msg</span> <span class="o">=</span> <span class="nx">msgMap</span><span class="p">[</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">msgKey</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">argLen</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">msg</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">putMsgs</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgObj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">msgMap</span><span class="p">[</span><span class="nx">namespace</span><span class="p">]</span> <span class="o">=</span> <span class="nx">msgObj</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>  <span class="p">})();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span><span class="p">.</span><span class="nx">putMsgs</span><span class="p">(</span><span class="s2">&quot;@namespace&quot;</span><span class="p">,</span> <span class="err">@</span><span class="nx">messages</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
 
 <p>Let me explain a bit on what the <em>MultilingualMessageMgr</em> does here.</p>
 
@@ -681,7 +979,10 @@ window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
 
 <p>With this <em>MultilingualMessageMgr,</em> multilingual message translation can be done by sample call like:</p>
 
-<blockquote><p>MultilingualMessageMgr.getMsg(namespace, msgKey);</p></blockquote>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MultilingualMessageMgr</span><span class="p">.</span><span class="nx">getMsg</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgKey</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Now, centralizing i18n logic to dynamically replace all ExtJs UI components can be realized by building the property file with component id as message key and iterating all components to replace them.</p>
 
@@ -732,41 +1033,10 @@ window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
   
   <entry>
     <title type="html"><![CDATA[曾经，最后]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/02/15/ever-never/"/>
     <updated>2012-02-15T11:42:33+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/02/15/e69bbee7bb8fefbc8ce69c80e5908e</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/02/15/ever-never</id>
     <content type="html"><![CDATA[<p>曾经真心相待，换来质疑无奈。只能痛心离去，送上最后祝福。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2/"/>
-    <updated>2012-02-15T08:12:55+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/02/15/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references-2</id>
-    <content type="html"><![CDATA[<p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
-
-<blockquote><p>weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for &#8220;ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p<br/>
-ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl<br/>
-, Specification-Version: 1.2, exact-match: true]</p></blockquote>
-
-<p>It looks strange from the error message that the EAR is referring to some jars but cannot be resolved.</p>
-
-<p>I remember that these two jars have been set as shared library in Weblogic since the very beginning and why the problems occur when I am deploying it to the newly created server but not ADMIN.</p>
-
-<p>I wonder around by using Google and happened to see this website.</p>
-
-<p><a href="http://middlewaremagic.com/weblogic/?p=2938">http://middlewaremagic.com/weblogic/?p=2938</a></p>
-
-<p>It&#8217;s also said that the directory having the Shared Library should be included when you are calling weblogic.appc to compile your EAR.</p>
-
-<p>I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.</p>
-
-<p><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg?w=574" alt="Image" /></a><a href="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg"><img src="http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg?w=614" alt="Image" /></a></p>
-
-<p> </p>
-
-<p> </p>
 ]]></content>
   </entry>
   
@@ -1128,9 +1398,9 @@ _</p>
   
   <entry>
     <title type="html"><![CDATA[看了让我有点蛋疼的文章标题]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/07/28/e79c8be4ba86e8aea9e68891e69c89e782b9e89b8be796bce79a84e69687e7aba0e6a087e9a298/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2011/07/28/annoying-titles-of-two-articles/"/>
     <updated>2011-07-28T02:45:34+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/07/28/e79c8be4ba86e8aea9e68891e69c89e782b9e89b8be796bce79a84e69687e7aba0e6a087e9a298</id>
+    <id>http://www.thinkingincrowd.me/blog/2011/07/28/annoying-titles-of-two-articles</id>
     <content type="html"><![CDATA[<p>这两篇文章都是<a href="http://www.ifanr.com/author/kkk/">李楠</a>写的：</p>
 
 <h1><a href="http://www.ifanr.com/47183">为何 G+ 的圈子是倒退？</a></h1>
@@ -1474,6 +1744,71 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
 <p>Thanks to all those different kinds of RSS feeds, books, about news, human rights, tech, economics, etc.</p>
 
 <p>Thanks to my kindle.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Short trip with Mom and Dad for Mother's Day]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2006/05/19/short-trip-with-mom-and-dad-for-mothers-day/"/>
+    <updated>2006-05-19T07:12:12+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2006/05/19/short-trip-with-mom-and-dad-for-mothers-day</id>
+    <content type="html"><![CDATA[<p>During this mother&#8217;s day, Winnie &amp; I had a great vacation with my mom and dad.</p>
+
+<p> </p>
+
+<p><strong>1st Destination:</strong></p>
+
+<p>We had a one day Macau tour on May 12th.  This was the first tour for my family.  When I was still in school, we have never go somewhere.  What is more, my dad prefers watching TV than going out.  He can lay on the sofa all day without moving! <img src="http://spaces.msn.com/rte/emoticons/smile_confused.gif" alt="" />  If this trip hasn&#8217;t been planned to go gambling in Casino Lisboa in Macau.  I guess he would probably not coming to ZH.</p>
+
+<p> </p>
+
+<p>Anyway, We arrived at Macau around 11AM.  My mom didn&#8217;t feel very well because of bus-sick and Vomiting serveral times.  (FYI.  It tooks about 3 hours from Huizhou to Zhuhai;  It tooks about 1 hour from where I live to the Customs between Zhuhai and Macau).  We quickly find a place for lunch first so that my mom can have a rest.  After lunch (noodle &amp; pork bread), we went sight-seeing around Avenida de Almeida Ribeiro (亞美打利庇？大馬路), Senado Square (議事亭前地), Rua de S. Paulo(大三巴街), Fortaleza do Monte Monte Fortress(大炮台).</p>
+
+<p> </p>
+
+<p>About 4:30PM, we decided to go to the Casino Lisboa.  I think my dad has already waited such a long time for this moment came.  Before entering the casino, we made a decision that we have to enter the casino through back door in order to win.<img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" />  I have exchanged 4 chips (100MOP each) to play &#8220;big &amp; small&#8221;.  2 chips for my dad, 1 for my mom and 1 for winnie.</p>
+
+<p> </p>
+
+<p>Why none for me?  Because I always believe that I have no this kind of luck for gambling.  You don&#8217;t believe?  Let me tell you this.  For the first round, we all had no idea what to bet and then winnie decided to took the first step for us.  She asked me, &#8220;what do you bet?  Big or small?&#8221;.  I thought for a while and said, &#8220;Big.&#8221;  Then winnie said loudly, &#8220;OK, I bet small&#8221; and put 1 chip at the side for small.  I was stun by her.  &#8220;Ding, ding, ding&#8221;, desk clear and nobody was allowed to change anymore.  &#8220;Small!!&#8221;  Can you feel what my feeling at that time?<img src="http://spaces.msn.com/rte/emoticons/smile_confused.gif" alt="" />  To be angry, or to be happy?  haha, both.</p>
+
+<p> </p>
+
+<p>After that, my mom and dad became active and discussed with winnie about what should bet next.  Another unbelievable thing is when I asked my dad to take a shot and try, but he said no, it&#8217;s better to let your mom gamble, she&#8217;s more lucky than me.  Can you believe it?  I can&#8217;t!  The one who want to gamble most doesn&#8217;t gamble after he&#8217;s there.<img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" /></p>
+
+<p> </p>
+
+<p>At the end, we counted the chips and found that winnie won 350MOP, my mom won 100MOP, and my dad won 200MOP.  Haha, we won a free trip to Macau.</p>
+
+<p> </p>
+
+<p><strong>2nd Destination:</strong></p>
+
+<p>After a busy day in Macau, we felt very tired and slept until 9AM on the next morning.  The next day&#8217;s destination is the imperial-hotspring in order to take a rest.   But it&#8217;s about 2 hours car from my dorm.  It would more than 3 hours if we take the bus.</p>
+
+<p> </p>
+
+<p>We decided to go to Wanzi to have a seafood lunch and shop for dried seafood first.  You have to respect my mom&#8217;s bargain ability.  We only use 350RMB to buy several bags of those stuffs.  Besides, I still have to thank Cindy to introduce her familiar supplier to me so that we can get lower price.</p>
+
+<p> </p>
+
+<p>After buying the dried seafood, we bought the fresh seafood for our lunch.  This time, the seafood is not as cheap as before, maybe near the Fishing moratorium duration.  But we tried something new, the Sea urchins.  You can take a look at the picture of its shell after I have done with it.<img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" /></p>
+
+<p> </p>
+
+<p>We arrived the hotspring after lunch.  Nothing special.  Just one word:&#8221;Relax&#8221;.</p>
+
+<p> </p>
+
+<p>Ending:</p>
+
+<p>I lost about 2000RMB during this trip.  But for 4 people, it&#8217;s not expensive indeed.  What is more, it&#8217;s quite worthy because I can have such a great time with my parent.  I will make more money and go to other places with them!!  Yeah!.</p>
+
+<p> </p>
+
+<p>After words - A strange phenomenon: my mom didn&#8217;t feel bus-sick and vomit anymore after winning in Casino.  haha<img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" /></p>
+
+<p> </p>
 ]]></content>
   </entry>
   
