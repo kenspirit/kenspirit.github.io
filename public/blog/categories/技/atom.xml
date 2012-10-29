@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 技 | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/blog/categories/技/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-10-28T22:43:10+08:00</updated>
+  <updated>2012-10-29T21:43:36+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -227,7 +227,7 @@ REQUIREMENTS:
 
 <pre><code>Ext.lib.Ajax.response({
     status: 200,
-    responseText: 'Duplicate'   
+    responseText: 'Duplicate'
 });
 </code></pre>
 
@@ -266,7 +266,7 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
 
 <p>I googled around and found one useful helper API - <a href="http://github.com/pivotal/jasmine-ajax">Jasmine-Ajax</a> : a set of helpers for testing AJAX requests under the Jasmine BDD framework for JavaScript.  However, now it only supports Prototype.js and jQuery.</p>
 
-<p>I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   <a href="http://thinkingincrowd.me/wp-content/uploads/2012/08/mock-ajax.js">mock-ajax</a></p>
+<p>I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   <a href="https://dl.dropbox.com/u/17182499/blog/2012/08/mock-ajax.js">mock-ajax</a></p>
 
 <p>How should I include this helper class to use Jasmine to test the Ajax in ExtJS?</p>
 

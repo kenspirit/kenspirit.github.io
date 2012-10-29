@@ -24,29 +24,29 @@ That is the simplest way but cannot fulfill the requirement to test real product
 
 **How real production code might look like if the application is built entirely by ExtJS?**
 
-```javascript    
+```javascript
     xxx.UiImpl = Ext.extend(xxx.Ui, {
         initComponent: function() {
             xxx.UiImpl.superclass.initComponent.call(this);
-    
+
             this.emptyNameWarningMsg = 'Name is empty!';
             this.duplicateNameWarningMsg = 'Name has been in used!';
             this.nameField = Ext.getCmp('xxx.name');
-    
+
             this.initEventHandlers();
         },
-    
+
         initEventHandlers : function() {
             this.nameField.on('blur', this.validateName, this);
         },
-    
+
         validateName: function(){
             var sName = this.nameField.getValue();
             if (sName == '') {
                 this.nameField.markInvalid(this.emptyNameWarningMsg);
                 return;
             }
-    
+
             Ext.Ajax.request({
                 url : config.appName() + "/foo/validateName",
                 method : 'GET',
@@ -75,31 +75,31 @@ Here are some examples:
 
 
 
-	
+
   1. Contract between user and our system (blur event).  I would expect there would some code like this in my Jasmine Spec:
 
-```javascript 
+```javascript
     oUI.nameField.fireEvent('blur');
 ```
 
 
 
-	
+
   2. Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the _responseText_ from Ajax call to be not empty, the _nameField_ in UI should be marked as invalid and show the _oUI.duplicateNameWarningMsg_.  Say, the response can be stub as:
 
-```javascript 
+```javascript
     Ext.lib.Ajax.response({
         status: 200,
-        responseText: 'Duplicate'	
+        responseText: 'Duplicate'
     });
 ```
 
 
 
-	
+
   3. Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that _nameField_ in UI should be marked as invalid and show the _oUI.duplicateNameWarningMsg_ or _oUI.emptyNameWarningMsg_ under different situations__.__ Sample Spec code might be:
 
-```javascript 
+```javascript
     oUI.nameField.fireEvent('blur');
     expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
 
@@ -110,10 +110,10 @@ Here are some examples:
 
 
 
-	
+
   4. Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it's very difficult to be aware of.  Sample Spec code might be:
 
-```javascript 
+```javascript
     var oUI = Ext.getCmp('kentest');
 ```
 
@@ -124,13 +124,13 @@ Here are some examples:
 
 I googled around and found one useful helper API - [Jasmine-Ajax](http://github.com/pivotal/jasmine-ajax) : a set of helpers for testing AJAX requests under the Jasmine BDD framework for JavaScript.  However, now it only supports Prototype.js and jQuery.
 
-I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   [mock-ajax](http://thinkingincrowd.me/wp-content/uploads/2012/08/mock-ajax.js)
+I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   [mock-ajax](https://dl.dropbox.com/u/17182499/blog/2012/08/mock-ajax.js)
 
 How should I include this helper class to use Jasmine to test the Ajax in ExtJS?
 
 Configuration in POM.xml
 
-```xml 
+```xml
     <configuration>
         <preloadSources>
             <source>adapter/ext/ext-base-debug.js</source>
@@ -144,33 +144,33 @@ Configuration in POM.xml
 
 Code in file globalTestStub.js change to be:
 
-```javascript 
+```javascript
     jasmine.Ajax.installMock();
 ```
 
 How to write the Test Spec?
 
-```javascript 
+```javascript
     describe('Test Maintenance UI', function() {
         beforeEach(function() {
             jasmine.Ajax.useMock();
         });
-    
+
         it('Maintenance UI should be initialized successfully', function() {
             var oUI = new xxx.UI({});
             expect(Ext.getCmp('kentest')).toBeTruthy();
         });
-    
+
         it('Focus leaving name field should trigger unique validation.', function() {
             Ext.lib.Ajax.response({
                 status: 200,
                 responseText: 'Duplicate'
             });
-    
+
             var oUI = Ext.getCmp('kentest');
             oUI.nameField.fireEvent('blur');
             expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-    
+
             oUI.nameField.setValue('Ken');
             oUI.nameField.fireEvent('blur');
             expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);

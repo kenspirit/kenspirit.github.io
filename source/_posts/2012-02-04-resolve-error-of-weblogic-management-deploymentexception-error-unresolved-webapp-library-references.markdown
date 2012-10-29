@@ -14,8 +14,8 @@ tags:
 
 When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.
 
-> weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for "ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p  
-ath:/wls_prs_doc spec-version:2.5]", defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl  
+> weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for "ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p
+ath:/wls_prs_doc spec-version:2.5]", defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl
 , Specification-Version: 1.2, exact-match: true]
 
 It looks strange from the error message that the EAR is referring to some jars but cannot be resolved.
@@ -30,7 +30,7 @@ It's also said that the directory having the Shared Library should be included w
 
 I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.
 
-[![Image](http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg?w=574)](http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/1.jpg)[![Image](http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg?w=614)](http://thinkingincrowd.bitnamiapp.com/wordpress/wp-content/uploads/2012/02/2.jpg)
+[![Image](https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg?w=574)](https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg)[![Image](https://dl.dropbox.com/u/17182499/blog/2012/02/2.jpg?w=614)](https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg)
 
  
 
