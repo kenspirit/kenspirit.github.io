@@ -6,7 +6,7 @@ slug: life-in-core-part-2
 title: Life in CORE - Part 2
 wordpress_id: 16
 categories:
-- 悟
+- Think
 tags:
 - Retrospect
 ---

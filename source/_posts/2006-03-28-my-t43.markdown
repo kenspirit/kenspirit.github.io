@@ -6,7 +6,7 @@ slug: my-%e5%b0%8f%e9%bb%91
 title: My 小黑
 wordpress_id: 9
 categories:
-- 悟
+- Life
 tags:
 - Mood
 ---

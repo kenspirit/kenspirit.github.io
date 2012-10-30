@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-10-29T21:43:36+08:00</updated>
+  <updated>2012-10-30T22:17:57+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -38,7 +38,7 @@
 
 <p>那么, 假设一个喜欢红色半框设计眼镜的男人来找眼镜, 根据输入来查寻数据的SQL就会是类似:</p>
 
-<pre><code>SELECT * FROM GLASSES 
+<pre><code>SELECT * FROM GLASSES
 WHERE 设计 = '半框' AND 颜色 = '红' AND 面向性别 = '男';
 </code></pre>
 
@@ -46,16 +46,16 @@ WHERE 设计 = '半框' AND 颜色 = '红' AND 面向性别 = '男';
 
 <p>比如说, 很可能GLASSES表里有些眼镜, 它的某些属性列为空, 假设有一款眼镜并不指定面向性别.  你可能会说SQL就要变成这个样子:</p>
 
-<pre><code>SELECT * FROM GLASSES 
-WHERE (设计 = '半框' OR 设计 IS NULL) 
-AND (颜色 = '红' OR 颜色 IS NULL) 
+<pre><code>SELECT * FROM GLASSES
+WHERE (设计 = '半框' OR 设计 IS NULL)
+AND (颜色 = '红' OR 颜色 IS NULL)
 AND (面向性别 = '男' OR 面向性别 IS NULL);
 </code></pre>
 
 <p>但是, 也有可能这个人对设计没什么偏好.  如果是这样的话, 那可能你就要动态生成SQL, 也就是这个人如果哪个条件没有要求, 哪个条件就不加到SQL里面, 比如对设计没偏好:</p>
 
-<pre><code>SELECT * FROM GLASSES 
-WHERE (颜色 = '红' OR 颜色 IS NULL) 
+<pre><code>SELECT * FROM GLASSES
+WHERE (颜色 = '红' OR 颜色 IS NULL)
 AND (面向性别 = '男' OR 面向性别 IS NULL);
 </code></pre>
 
@@ -83,7 +83,7 @@ WHERE NOT EXISTS (
               AND (
                     （维度类别 = '颜色‘ AND 维度值 &lt;&gt; '红色')
                      OR
-                    （维度类别 = '面向性别‘ AND 维度值 &lt;&gt; '男')   
+                    （维度类别 = '面向性别‘ AND 维度值 &lt;&gt; '男')
                     )
 );
 </code></pre>
@@ -839,8 +839,6 @@ REQUIREMENTS:
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p></p>
-
 <p>Below is the sample code in my <em>xxx.MyMessageBundleScriptCreator</em>:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -910,8 +908,6 @@ REQUIREMENTS:
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p></p>
-
 <p>Finally, let&#8217;s see what is in my message.js:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -970,8 +966,6 @@ REQUIREMENTS:
 </span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span><span class="p">.</span><span class="nx">putMsgs</span><span class="p">(</span><span class="s2">&quot;@namespace&quot;</span><span class="p">,</span> <span class="err">@</span><span class="nx">messages</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p></p>
 
 <p>Let me explain a bit on what the <em>MultilingualMessageMgr</em> does here.</p>
 

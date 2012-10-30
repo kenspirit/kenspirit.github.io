@@ -6,9 +6,9 @@ slug: short-trip-with-mom-and-dad-for-mothers-day
 title: Short trip with Mom and Dad for Mother's Day
 wordpress_id: 8
 categories:
-- 游
+- Life
 tags:
-- 游
+- Trip
 ---
 
 During this mother's day, Winnie & I had a great vacation with my mom and dad.

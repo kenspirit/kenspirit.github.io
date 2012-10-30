@@ -6,8 +6,8 @@ slug: extjs-jasmine-maven-why-i-am-working-on-them
 title: ExtJS, Jasmine, Maven - Why I am working on them?
 wordpress_id: 311
 categories:
-- 悟
-- 技
+- Think
+- Sword
 tags:
 - ExtJs
 - Jasmine
@@ -33,17 +33,17 @@ After the emergence of [Selenium](http://seleniumhq.org/), I have once thought i
 
 **The main points in TestPyramid are:**
 
-> 
-> 
-	
+>
+>
+
 >   1. **Low-level unit test should be many more than high level end-to-end testing through GUI.**
-> 
-	
+>
+
 >   2. **Testing through UI is slow, brittle, expensive to write.**
-> 
-	
+>
+
 >   3. **A rich javascript UI should have most of its UI behavior tested with javascript unit tests using something like Jasmine.**
-> 
+>
 
 
 

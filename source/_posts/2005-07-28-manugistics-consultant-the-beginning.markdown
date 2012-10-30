@@ -6,7 +6,7 @@ slug: manugistics-consultant-the-beginning
 title: Manugistics Consultant - The beginning
 wordpress_id: 15
 categories:
-- 悟
+- Think
 tags:
 - Retrospect
 ---

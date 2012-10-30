@@ -6,7 +6,7 @@ slug: extjs-jasmine-maven-integration
 title: ExtJS, Jasmine, Maven - Integration
 wordpress_id: 317
 categories:
-- 技
+- Sword
 tags:
 - Jasmine
 - Javascript
@@ -23,7 +23,7 @@ The other reason I decided not integrating Jasmine in NodeJS in our project is b
 
 Let's see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup [jasmine-maven-plugin](https://github.com/searls/jasmine-maven-plugin) in your POM.xml like below.
 
-```xml    
+```xml
     <plugin>
         <groupId>com.github.searls</groupId>
         <artifactId>jasmine-maven-plugin</artifactId>
@@ -55,7 +55,7 @@ Let's see how it can be done.  Here, I assume you already know what Maven is an
 
 After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type "mvn test" in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:
 
-```bash    
+```bash
     [INFO] Executing Jasmine Specs
     -------------------------------------------------------
      J A S M I N E   S P E C S
@@ -64,10 +64,10 @@ After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can 
     Test Suite Name 1
       Spec 1
       Spec 2
-    
+
     Test Suite Name 2
       Spec 3
-    
+
     Results: 3 specs, 0 failures
 ```
 

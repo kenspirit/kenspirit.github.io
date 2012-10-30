@@ -113,7 +113,7 @@
 
 <p>那么, 假设一个喜欢红色半框设计眼镜的男人来找眼镜, 根据输入来查寻数据的SQL就会是类似:</p>
 
-<pre><code>SELECT * FROM GLASSES 
+<pre><code>SELECT * FROM GLASSES
 WHERE 设计 = '半框' AND 颜色 = '红' AND 面向性别 = '男';
 </code></pre>
 
@@ -121,16 +121,16 @@ WHERE 设计 = '半框' AND 颜色 = '红' AND 面向性别 = '男';
 
 <p>比如说, 很可能GLASSES表里有些眼镜, 它的某些属性列为空, 假设有一款眼镜并不指定面向性别.  你可能会说SQL就要变成这个样子:</p>
 
-<pre><code>SELECT * FROM GLASSES 
-WHERE (设计 = '半框' OR 设计 IS NULL) 
-AND (颜色 = '红' OR 颜色 IS NULL) 
+<pre><code>SELECT * FROM GLASSES
+WHERE (设计 = '半框' OR 设计 IS NULL)
+AND (颜色 = '红' OR 颜色 IS NULL)
 AND (面向性别 = '男' OR 面向性别 IS NULL);
 </code></pre>
 
 <p>但是, 也有可能这个人对设计没什么偏好.  如果是这样的话, 那可能你就要动态生成SQL, 也就是这个人如果哪个条件没有要求, 哪个条件就不加到SQL里面, 比如对设计没偏好:</p>
 
-<pre><code>SELECT * FROM GLASSES 
-WHERE (颜色 = '红' OR 颜色 IS NULL) 
+<pre><code>SELECT * FROM GLASSES
+WHERE (颜色 = '红' OR 颜色 IS NULL)
 AND (面向性别 = '男' OR 面向性别 IS NULL);
 </code></pre>
 
@@ -158,7 +158,7 @@ WHERE NOT EXISTS (
               AND (
                     （维度类别 = '颜色‘ AND 维度值 &lt;&gt; '红色')
                      OR
-                    （维度类别 = '面向性别‘ AND 维度值 &lt;&gt; '男')   
+                    （维度类别 = '面向性别‘ AND 维度值 &lt;&gt; '男')
                     )
 );
 </code></pre>
@@ -973,6 +973,37 @@ REQUIREMENTS:
         <a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library references&#8221;</a>
       </li>
     
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (10)</a></li><li><a href='/blog/categories/think'>Think (17)</a></li></ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+  <ul class="tag-cloud">
+    <li><a style="font-size: 93%" href="//coding/">Coding</a></li>
+<li><a style="font-size: 60%" href="//db/">DB</a></li>
+<li><a style="font-size: 60%" href="//design/">Design</a></li>
+<li><a style="font-size: 60%" href="//excel/">Excel</a></li>
+<li><a style="font-size: 137%" href="//extjs/">ExtJs</a></li>
+<li><a style="font-size: 60%" href="//health/">Health</a></li>
+<li><a style="font-size: 60%" href="//jawr/">JAWR</a></li>
+<li><a style="font-size: 126%" href="//jasmine/">Jasmine</a></li>
+<li><a style="font-size: 146%" href="//javascript/">Javascript</a></li>
+<li><a style="font-size: 126%" href="//management/">Management</a></li>
+<li><a style="font-size: 93%" href="//maven/">Maven</a></li>
+<li><a style="font-size: 126%" href="//mood/">Mood</a></li>
+<li><a style="font-size: 60%" href="//nodejs/">NodeJS</a></li>
+<li><a style="font-size: 60%" href="//poi/">POI</a></li>
+<li><a style="font-size: 60%" href="//performance/">Performance</a></li>
+<li><a style="font-size: 165%" href="//retrospect/">Retrospect</a></li>
+<li><a style="font-size: 60%" href="//stuff/">Stuff</a></li>
+<li><a style="font-size: 112%" href="//trip/">Trip</a></li>
+<li><a style="font-size: 126%" href="//unittest/">UnitTest</a></li>
+<li><a style="font-size: 60%" href="//weblogic/">Weblogic</a></li>
+<li><a style="font-size: 60%" href="//i18n/">i18n</a></li>
+
   </ul>
 </section>
 

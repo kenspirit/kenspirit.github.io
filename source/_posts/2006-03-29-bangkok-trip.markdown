@@ -6,9 +6,9 @@ slug: bangkok-trip
 title: BangKok Trip
 wordpress_id: 10
 categories:
-- 游
+- Life
 tags:
-- 游
+- Trip
 ---
 
 At 2:30PM on Mar 24, 2006, I was in the ![](http://spaces.msn.com/rte/emoticons/airplane.gif) from Macau to BangKok.  I was going to have a three-days' trip in BangKok with some colleagues.  This was a company event rewarding the staffs worked for one year.

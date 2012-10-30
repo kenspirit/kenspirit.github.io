@@ -6,9 +6,9 @@ slug: marching-on
 title: Marching On
 wordpress_id: 18
 categories:
-- 悟
+- Think
 tags:
-- 感悟
+- Mood
 ---
 
 Suddenly feel that my mind is trying to move a step further.

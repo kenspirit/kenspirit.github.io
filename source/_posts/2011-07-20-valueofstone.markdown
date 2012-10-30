@@ -6,9 +6,9 @@ slug: valueofstone
 title: 一个石头值多少钱
 wordpress_id: 39
 categories:
-- 悟
+- Think
 tags:
-- 感悟
+- Retrospect
 ---
 
 公司的前General Manager Tim Shee给我看了如下一篇文章：

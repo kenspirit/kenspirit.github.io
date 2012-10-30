@@ -6,7 +6,7 @@ slug: excelavoidvaliationlostafterpoi
 title: 如何避免Microsoft Excel在Cell上定义好的Named Validation的下拉选项在POI写值后丢失
 wordpress_id: 35
 categories:
-- 技
+- Sword
 tags:
 - Excel
 - POI

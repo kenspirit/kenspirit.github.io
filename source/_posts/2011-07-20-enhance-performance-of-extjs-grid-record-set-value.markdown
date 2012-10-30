@@ -6,27 +6,27 @@ slug: enhance-performance-of-extjs-grid-record-set-value
 title: Enhance Performance of ExtJs Grid Record set value operation
 wordpress_id: 54
 categories:
-- 技
+- Sword
 tags:
 - ExtJs
 - Javascript
-- Performance Tuning
+- Performance
 ---
 
 When implementing a feature for the project, I encounter one Javascript method that takes around 9 seconds to finish.  Clearly, there is some performance issue in it.
 
 The method logic is simple.  Take below table's data as an example:
-    
+
     Measurement         XS     S     M     L      XL   XXL
      Sleeve             1      1     0     2      2     2
 
 Consider above row "Sleeve" is a Record in ExtJs Grid.  When deleting size S & L column, the figure should change to be:
-    
+
     Measurement         XS     M     XL      XXL
      Sleeve             2      0      4      4
 
 The intent is to accumulate the figure of the deleted size to the remained ones in one direction from the Standard size M.  Hence, this method requires intensive call on Record.set();  Below is the sudo code.
-    
+
         var recalculatedGridData = [];
         var colSearchCount = 0;
         for (var rowNo = 0; rowNo < gridStoreLength; rowNo++) {
@@ -55,7 +55,7 @@ After testing more intensively, each record.set() takes around 0.05 second.  Th
 OK.  Root cause is found and it's time to see why it takes so long to call record.set().  After checking on the source of ExtJs Record and Store object.
 
 In Record.js:
-    
+
     set : function(name, value){
             var encode = Ext.isPrimitive(value) ? String : Ext.encode;
             if(encode(this.data[name]) == encode(value)) {
@@ -73,7 +73,7 @@ In Record.js:
                 this.afterEdit();
             }
         },
-    
+
         // private
         afterEdit : function(){
             if (this.store != undefined && typeof this.store.afterEdit == "function") {
@@ -82,7 +82,7 @@ In Record.js:
         },
 
 In Store.js:
-    
+
         afterEdit : function(record){
             if(this.modified.indexOf(record) == -1){
                 this.modified.push(record);
@@ -91,7 +91,7 @@ In Store.js:
         },
 
 You can find that each Record.set() will call store.afterEdit() with its own as parameter.  Hence, I am considering batch update all cells in one record and then trigger Record.afterEdit() method.  Below is the "cracked" method added for batch set data.
-    
+
     batchSet : function(cells){
             for (var i = cells.length; i--;) {
                 var name = cells[i].name;

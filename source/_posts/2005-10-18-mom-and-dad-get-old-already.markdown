@@ -6,9 +6,9 @@ slug: mom-and-dad-get-old-already
 title: Mom and dad get old already.
 wordpress_id: 13
 categories:
-- 悟
+- Think
 tags:
-- Mood
+- Retrospect
 ---
 
 **Suddenly**, I feel that my dear mom and dad get older already.  I didn't have this feeling before because they look young and I heard almost no sickness news from them.  However, this is not always the truth.
@@ -21,7 +21,7 @@ tags:
 
 
 
-A bad news that my mom suffers an aura of one terrible disease brought me back to the reality on last Friday.  I was stun at that moment.  I can't believe that at all because she lives a quite disciplinary life:  sleep early, get up early and jog, and dance with some friends at night.  
+A bad news that my mom suffers an aura of one terrible disease brought me back to the reality on last Friday.  I was stun at that moment.  I can't believe that at all because she lives a quite disciplinary life:  sleep early, get up early and jog, and dance with some friends at night. 
 
 
 

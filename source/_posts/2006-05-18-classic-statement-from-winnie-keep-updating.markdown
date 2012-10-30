@@ -5,6 +5,8 @@ layout: post
 slug: '%e5%b0%8f%e8%8c%b9%e8%af%ad%e5%bd%95keep-updating'
 title: 小茹语录(Keep updating)
 wordpress_id: 6
+categories:
+- Life
 tags:
 - Mood
 ---

@@ -6,10 +6,10 @@ slug: db-design-for-multi-dimension-data
 title: 一个多维度数据匹配的RDBMS数据库表设计的想法
 wordpress_id: 362
 categories:
-- 技
+- Sword
 tags:
-- DB
 - Design
+- DB
 ---
 
 首先, 我先要说明一下, 这里的“多维度”可能并不太准确.  这里说的并不是数据仓库里的维度, 而只是数据的属性.
@@ -32,8 +32,8 @@ tags:
 
 那么, 假设一个喜欢红色半框设计眼镜的男人来找眼镜, 根据输入来查寻数据的SQL就会是类似:
 
-    
-    SELECT * FROM GLASSES 
+
+    SELECT * FROM GLASSES
     WHERE 设计 = '半框' AND 颜色 = '红' AND 面向性别 = '男';
 
 
@@ -41,18 +41,18 @@ tags:
 
 比如说, 很可能GLASSES表里有些眼镜, 它的某些属性列为空, 假设有一款眼镜并不指定面向性别.  你可能会说SQL就要变成这个样子:
 
-    
-    SELECT * FROM GLASSES 
-    WHERE (设计 = '半框' OR 设计 IS NULL) 
-    AND (颜色 = '红' OR 颜色 IS NULL) 
+
+    SELECT * FROM GLASSES
+    WHERE (设计 = '半框' OR 设计 IS NULL)
+    AND (颜色 = '红' OR 颜色 IS NULL)
     AND (面向性别 = '男' OR 面向性别 IS NULL);
 
 
 但是, 也有可能这个人对设计没什么偏好.  如果是这样的话, 那可能你就要动态生成SQL, 也就是这个人如果哪个条件没有要求, 哪个条件就不加到SQL里面, 比如对设计没偏好:
 
-    
-    SELECT * FROM GLASSES 
-    WHERE (颜色 = '红' OR 颜色 IS NULL) 
+
+    SELECT * FROM GLASSES
+    WHERE (颜色 = '红' OR 颜色 IS NULL)
     AND (面向性别 = '男' OR 面向性别 IS NULL);
 
 
@@ -60,10 +60,10 @@ tags:
 
 
 
-	
+
   * 如果以后要添加或者删除属性, 表结构要不断改变, 代码也要不断改变来生成各种组合的动态SQL.
 
-	
+
   * 从SQL的特性 (条件不确定, 维度组合多) 来看, 并且如果维度或者说列多的话, 为每一个维度创建index也不太可行, 查询效率也不高.
 
 
@@ -75,7 +75,7 @@ tags:
 
 这样的话, 上面的SQL就转换成:
 
-    
+
     SELECT * FROM GLASSES G
     WHERE NOT EXISTS (
         SELECT 1
@@ -84,7 +84,7 @@ tags:
                   AND (
                         （维度类别 = '颜色‘ AND 维度值 <> '红色')
                          OR
-                        （维度类别 = '面向性别‘ AND 维度值 <> '男')   
+                        （维度类别 = '面向性别‘ AND 维度值 <> '男')
                         )
     );
 
@@ -95,10 +95,10 @@ tags:
 
 
 
-	
+
   * 虽然SQL也要动态生成, 但是变化的部份从表的列名, 转换成数据值, 逻辑会相当简单, 减少一些Hardcode的成份.
 
-	
+
   * 数据库表GLASSES_ATTRIBUTES可以创建一个维度类别+维度值的复合index就可以了
 
 
@@ -110,26 +110,26 @@ tags:
 
 这里呢, 会有3个表:
 
-	
+
   * 主表 - 这里的每一条记录, 代表一份要求
 
-	
+
   * 维度子表 (CONDITIONS) - 存的是归到这份要求, 男的情况是什么, 如年龄30以上, 不帅
 
-	
+
   * 需求子表 (REQUIREMENTS) - 存的是归到这份要求, 男的要准备什么, 女的才会嫁他, 如车30W以上, 房要50W以上等
 
 
 系统的行为, 就是当把一个男的所有情况输入进去, 就会找到所有女方的需求是什么, 都组合在一起, 作为总的要求.  这种情况下, 系统就复杂了.  比如主表有三条记录A, B, C.  维度和需求分别是:
 
-    
+
     CONDITIONS:
-    
+
     | A | 年龄 | 30以上 |
     | B | 相貌 | 不帅 |
     | C | 相貌 | 不帅 |
     | C | 宠物 | 不讨厌 |
-    
+
     REQUIREMENTS:
     | A | 车 | 20W以上 |
     | B | 房 | 50W以上 |

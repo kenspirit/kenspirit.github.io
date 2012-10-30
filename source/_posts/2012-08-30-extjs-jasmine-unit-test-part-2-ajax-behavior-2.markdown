@@ -6,7 +6,7 @@ slug: extjs-jasmine-unit-test-part-2-ajax-behavior-2
 title: ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)
 wordpress_id: 340
 categories:
-- 技
+- Sword
 tags:
 - ExtJs
 - Jasmine

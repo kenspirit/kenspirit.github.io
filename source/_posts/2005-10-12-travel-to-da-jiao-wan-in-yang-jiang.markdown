@@ -6,9 +6,9 @@ slug: travel-to-da-jiao-wan-%e5%a4%a7%e8%a7%92%e6%b9%be-in-yang-jiang
 title: Travel to Da Jiao Wan (大角湾) in Yang Jiang
 wordpress_id: 7
 categories:
-- 游
+- Life
 tags:
-- 游
+- Trip
 ---
 
 On Sep 23rd, 2005 morning 8:00 AM, I was in the bus way to Yang Chun with Winnie's family, indicating the beginning of the travel to Da Jiao Wan.

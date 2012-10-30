@@ -6,7 +6,7 @@ slug: i18n-extjs-and-jawr
 title: i18n, ExtJS and JAWR
 wordpress_id: 225
 categories:
-- 技
+- Sword
 tags:
 - ExtJs
 - i18n
@@ -24,19 +24,19 @@ In order to implement i18 in UI page purely built by ExtJS, it's inevitable to t
 
 
 
-	
+
   1. Use the translated text directly in the UI components during construction
 
-	
+
   2. Use separate JS to replace the text before rendering, say in initComponent method or beforeRender event handler.
 
 
 There are pros and cons for each approach:
 
-	
+
   1. Approach #1 is easy, but injecting logic for i18n text translation into the UI components construction is just like adding event handler into the HTML directly and it makes the code for text translation spread all around the code building UI.
 
-	
+
   2. Approach #2 separates the i18n implementation detail which makes it easier to change.  The benefit got from this can be easier prototyping, unit testing, and future enhancement if i18n implementation changed.
 
 
@@ -60,8 +60,8 @@ This kind of file is very common in JAVA and [JAWR](http://jawr.java.net) can be
 Then you can get the translated text by:
 
 
- 
-```javascript 
+
+```javascript
     messages.main.hello.world(); // Hello world!
 ```
 
@@ -78,7 +78,7 @@ Luckily, I am able to do this because JAWR provides flexibility to use a customi
 
 
 
-	
+
   1. Set below sample lines in jawr.properties file:
 
 ```ini
@@ -89,34 +89,34 @@ Luckily, I am able to do this because JAWR provides flexibility to use a customi
 
 
 
-	
+
   2. Build the customized generator.  How? The simplest way is to extends the _net.jawr.web.resource.bundle.locale.ResourceBundleMessagesGenerator_ and overrides its _public Reader createResource(GeneratorContext context)_ to use our own generator and overrides its _public String getMappingPrefix()_ to return our own mapping **mymessages**.
 
-	
+
   3. Build the customized creator.  How?  The simplest way is to extends the _net.jawr.web.resource.bundle.locale.message.MessageBundleScriptCreator_ and overrides its _protected Reader doCreateScript(Properties props)_ to write our own script generation code.
 
 
 Below is the sample code in my _xxx.MyResourceBundleMessagesGenerator_:
 
-    
-```java    
+
+```java
     @Override
     public Reader createResource(GeneratorContext context) {
       MyMessageBundleScriptCreator creator = new MyMessageBundleScriptCreator(context);
       return creator.createScript(context.getCharset());
     }
-    
+
     @Override
     public String getMappingPrefix() {
       return "mymessages";
     }
-```    
+```
 
 
 Below is the sample code in my _xxx.MyMessageBundleScriptCreator_:
 
-    
-```java    
+
+```java
     private StringBuffer loadScriptTemplate() {
       StringWriter sw = new StringWriter();
       InputStream is = null;
@@ -130,7 +130,7 @@ Below is the sample code in my _xxx.MyMessageBundleScriptCreator_:
       }
       return sw.getBuffer();
     }
-    
+
     @Override
     protected Reader doCreateScript(Properties props) {
       String script = loadScriptTemplate().toString();
@@ -149,13 +149,13 @@ Below is the sample code in my _xxx.MyMessageBundleScriptCreator_:
       script = script.replaceFirst("@messages", RegexUtil.adaptReplacementToMatcher(messages.toString()));
       return new StringReader(script);
     }
-```    
+```
 
 
 Finally, let's see what is in my message.js:
 
-    
-```javascript    
+
+```javascript
     if (!window.MultilingualMessageMgr) {
       window.MultilingualMessageMgr = (function(){
         var msgMap = {};
@@ -183,7 +183,7 @@ Finally, let's see what is in my message.js:
       })();
     }
     window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
-```    
+```
 
 
 

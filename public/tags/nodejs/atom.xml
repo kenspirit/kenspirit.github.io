@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: NodeJS | Thinking in Crowd / 鹄思乱想]]></title>
+  <link href="http://www.thinkingincrowd.me/tags/nodejs/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2012-10-30T22:17:57+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
+  <author>
+    <name><![CDATA[鹄思乱想]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Integration]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/07/extjs-jasmine-maven-integration/"/>
+    <updated>2012-08-07T06:59:31+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/07/extjs-jasmine-maven-integration</id>
+    <content type="html"><![CDATA[<p>After briefing <a href="http://thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
+
+<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
+
+<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project's build management.</p>
+
+<p>Let's see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
+
+<p>```xml</p>
+
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
+    &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.2.0.0&lt;/version&gt;
+    &lt;extensions&gt;true&lt;/extensions&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;test&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+    &lt;configuration&gt;
+    &lt;preloadSources&gt;
+        &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
+    &lt;/preloadSources&gt;
+    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
+    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
+    &lt;sourceIncludes&gt;
+            &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
+        &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    &lt;/sourceIncludes&gt;
+    &lt;specIncludes&gt;
+        &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    &lt;/specIncludes&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type "mvn test" in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
+
+<p>```bash</p>
+
+<pre><code>[INFO] Executing Jasmine Specs
+-------------------------------------------------------
+ J A S M I N E   S P E C S
+-------------------------------------------------------
+[INFO]
+Test Suite Name 1
+  Spec 1
+  Spec 2
+
+Test Suite Name 2
+  Spec 3
+
+Results: 3 specs, 0 failures
+</code></pre>
+
+<p>```</p>
+
+<p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
+
+<p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
+
+<p>OK, now preparation for Unit Test is done.  Let's see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
+]]></content>
+  </entry>
+  
+</feed>

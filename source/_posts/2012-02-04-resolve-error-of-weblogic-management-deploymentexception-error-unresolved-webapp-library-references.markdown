@@ -7,7 +7,7 @@ title: 'Resolve Error of "weblogic.management.DeploymentException: Error: Unreso
   Webapp Library references"'
 wordpress_id: 198
 categories:
-- 技
+- Sword
 tags:
 - Weblogic
 ---

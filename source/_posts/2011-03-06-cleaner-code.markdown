@@ -6,9 +6,11 @@ slug: cleaner-code
 title: Cleaner Code
 wordpress_id: 26
 categories:
-- 悟
+- Think
+- Sword
 tags:
 - Coding
+- Retrospect
 ---
 
 Finished reading Robert Martin's "Clean Code" these days, I suddenly feel more passionate to write code, to write better and more descriptive code.
@@ -21,13 +23,13 @@ The most important points I do remember after reading it are:
 
 
 
-	
+
   1. Longer descriptive name, smaller function
 
-	
+
   2. Boy Scout Rule
 
-	
+
   3. Know your algorithm
 
 
@@ -37,11 +39,11 @@ Now, I feel the passion of writing code as I am writing a diary, an article.  I
 
 Just take below function as an example.  You might not easily figure out what it's for.
 
-    
+
     function groupingFieldFormat(value, p, r, rowIndex, i, ds) {
         var cGrid = ds.cGrid;
         var cGridIsReadonly = (cGrid && cGrid.isReadonly()) ? true : false;
-    
+
         if (rowIndex === 0) {
             if (cGrid.id === 'shipmentPackDetail'
                    && p.id === 'packCount') {
@@ -51,12 +53,12 @@ Just take below function as an example.  You might not easily figure out what i
             return value;
         }
         var lastRecord = ds.getAt(rowIndex - 1);
-    
+
         if (lastRecord.data['lineNo'] == r.data['lineNo']
                 &&  lastRecord.data[p.id] === value) {
             return '';
         }
-    
+
         if (cGrid.id === 'shipmentPackDetail'
                 && p.id === 'packCount') {
             Core.FieldFormat.addCellEditableIndicator(
@@ -68,7 +70,7 @@ Just take below function as an example.  You might not easily figure out what i
 
 Below is the my modified version.  Which version is better is quite obvious although it still has room to improve.
 
-    
+
     /**
      * Used by Color, Pack Name, Pack Count in two grids
      */
@@ -77,19 +79,19 @@ Below is the my modified version.  Which version is better is quite obvious alt
             showPackCountEditableIfNeeded(colMeta, dataStore);
             return value;
         }
-    
+
         // Always show value for the first row in grid
         // even though not the first line in one pack,
         // so that user is easier to check the group value
         return rowIndex === 0 ? value : '';
     }
-    
+
     function isFirstLineInOneGroup(dataStore, record, rowIndex, fieldId) {
         var cGrid = dataStore.cGrid;
         if (cGrid.id === 'shipmentPackDetail') {
             return isFirstLineInOnePack(record);
         }
-    
+
         var lastRecord = dataStore.getAt(rowIndex - 1);
         if (lastRecord
                 && lastRecord.data[fieldId] !== record.data[fieldId]) {
@@ -97,14 +99,14 @@ Below is the my modified version.  Which version is better is quite obvious alt
         }
         return false;
     }
-    
+
     function isFirstLineInOnePack(record) {
         if (record.data['packSeq'] === 1) {
             return true;
         }
         return false;
     }
-    
+
     function showPackCountEditableIfNeeded(colMeta, dataStore) {
         var cGrid = dataStore.cGrid;
         if (cGrid.id === 'shipmentPackDetail'

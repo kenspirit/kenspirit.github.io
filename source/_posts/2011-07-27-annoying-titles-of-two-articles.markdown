@@ -6,9 +6,9 @@ slug: '%e7%9c%8b%e4%ba%86%e8%ae%a9%e6%88%91%e6%9c%89%e7%82%b9%e8%9b%8b%e7%96%bc%
 title: 看了让我有点蛋疼的文章标题
 wordpress_id: 65
 categories:
-- 悟
+- Think
 tags:
-- 蛋疼
+- Stuff
 ---
 
 这两篇文章都是[李楠](http://www.ifanr.com/author/kkk/)写的：
