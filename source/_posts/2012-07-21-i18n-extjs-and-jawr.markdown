@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-07-21 17:19:57
+date: 2012-07-21 9:19:57
 layout: post
 slug: i18n-extjs-and-jawr
 title: i18n, ExtJS and JAWR

@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-10-27 23:48:37
+date: 2012-10-27 15:48:37
 layout: post
 slug: db-design-for-multi-dimension-data
 title: 一个多维度数据匹配的RDBMS数据库表设计的想法

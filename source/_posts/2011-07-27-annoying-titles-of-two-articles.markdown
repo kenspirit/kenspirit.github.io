@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-07-27 18:45:34
+date: 2011-07-27 10:45:34
 layout: post
 slug: '%e7%9c%8b%e4%ba%86%e8%ae%a9%e6%88%91%e6%9c%89%e7%82%b9%e8%9b%8b%e7%96%bc%e7%9a%84%e6%96%87%e7%ab%a0%e6%a0%87%e9%a2%98'
 title: 看了让我有点蛋疼的文章标题

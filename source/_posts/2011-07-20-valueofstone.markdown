@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-07-20 17:49:13
+date: 2011-07-20 09:49:13
 layout: post
 slug: valueofstone
 title: 一个石头值多少钱

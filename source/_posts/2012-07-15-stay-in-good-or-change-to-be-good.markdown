@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-07-15 17:31:25
+date: 2012-07-15 9:31:25
 layout: post
 slug: stay-in-good-or-change-to-be-good
 title: 待在优秀的地方，还是把所在的地方改变的优秀

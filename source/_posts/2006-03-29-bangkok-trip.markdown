@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2006-03-29 00:09:59
+date: 2006-03-28 16:09:59
 layout: post
 slug: bangkok-trip
 title: BangKok Trip

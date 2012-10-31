@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-08-06 22:59:31
+date: 2012-08-06 14:59:31
 layout: post
 slug: extjs-jasmine-maven-integration
 title: ExtJS, Jasmine, Maven - Integration

@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2006-05-18 19:18:28
+date: 2006-05-18 11:18:28
 layout: post
 slug: '%e5%b0%8f%e8%8c%b9%e8%af%ad%e5%bd%95keep-updating'
 title: 小茹语录(Keep updating)

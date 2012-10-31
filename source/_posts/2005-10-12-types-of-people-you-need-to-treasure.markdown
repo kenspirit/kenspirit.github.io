@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2005-10-12 20:38:09
+date: 2005-10-12 12:38:09
 layout: post
 slug: '%e4%b8%80%e5%ae%9a%e8%a6%81%e7%8f%8d%e6%83%9c%e7%9a%84%e4%ba%ba%ef%bd%9e'
 title: 一定要珍惜的人～

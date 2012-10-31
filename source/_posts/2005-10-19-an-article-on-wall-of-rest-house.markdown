@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2005-10-19 13:00:30
+date: 2005-10-19 05:00:30
 layout: post
 slug: '%e6%95%ac%e8%80%81%e9%99%a2%e5%a2%99%e4%b8%8a%e5%8f%91%e7%8e%b0%e7%9a%84%e4%b8%80%e7%af%87%e6%96%87%e7%ab%a0-%e8%bd%ac%e8%bd%bd'
 title: 敬老院墙上发现的一篇文章 (转载)

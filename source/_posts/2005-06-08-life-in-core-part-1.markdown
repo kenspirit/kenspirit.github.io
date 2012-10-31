@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2005-06-08 20:14:39
+date: 2005-06-08 12:14:39
 layout: post
 slug: life-in-core-part-1
 title: Life in CORE - Part 1

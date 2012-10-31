@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2005-06-23 20:02:43
+date: 2005-06-23 12:02:43
 layout: post
 slug: life-in-core-part-2
 title: Life in CORE - Part 2

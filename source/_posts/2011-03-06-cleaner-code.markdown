@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-03-06 21:23:04
+date: 2011-03-06 13:23:04
 layout: post
 slug: cleaner-code
 title: Cleaner Code

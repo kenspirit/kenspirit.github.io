@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-08-13 23:02:18
+date: 2012-08-13 15:02:18
 layout: post
 slug: extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store
 title: ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)

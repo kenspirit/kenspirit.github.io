@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-07-20 23:25:39
+date: 2011-07-20 15:25:39
 layout: post
 slug: enhance-performance-of-extjs-grid-record-set-value
 title: Enhance Performance of ExtJs Grid Record set value operation

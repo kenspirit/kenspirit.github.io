@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-10-14 14:53:26
+date: 2011-10-14 6:53:26
 layout: post
 slug: six-steps-to-be-good-programmer
 title: 通过艰难的六步让你成长为一名出色的程序员

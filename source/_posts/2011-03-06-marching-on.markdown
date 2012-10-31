@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-03-06 17:38:09
+date: 2011-03-06 09:38:09
 layout: post
 slug: marching-on
 title: Marching On

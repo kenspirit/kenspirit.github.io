@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2005-07-28 09:13:50
+date: 2005-07-28 01:13:50
 layout: post
 slug: manugistics-consultant-the-beginning
 title: Manugistics Consultant - The beginning

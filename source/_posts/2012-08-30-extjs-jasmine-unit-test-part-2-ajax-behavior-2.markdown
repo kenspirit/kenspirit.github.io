@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-08-30 23:04:06
+date: 2012-08-30 15:04:06
 layout: post
 slug: extjs-jasmine-unit-test-part-2-ajax-behavior-2
 title: ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)

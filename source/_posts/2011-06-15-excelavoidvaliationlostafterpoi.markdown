@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-06-15 13:54:07
+date: 2011-06-15 05:54:07
 layout: post
 slug: excelavoidvaliationlostafterpoi
 title: 如何避免Microsoft Excel在Cell上定义好的Named Validation的下拉选项在POI写值后丢失

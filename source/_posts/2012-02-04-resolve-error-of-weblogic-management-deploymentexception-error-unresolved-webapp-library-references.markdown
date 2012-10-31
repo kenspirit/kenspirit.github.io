@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-02-04 09:07:35
+date: 2012-02-04 01:07:35
 layout: post
 slug: resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references
 title: 'Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved

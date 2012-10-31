@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2006-05-18 23:12:12
+date: 2006-05-18 15:12:12
 layout: post
 slug: short-trip-with-mom-and-dad-for-mothers-day
 title: Short trip with Mom and Dad for Mother's Day

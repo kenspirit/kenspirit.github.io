@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-08-05 15:52:24
+date: 2012-08-05 7:52:24
 layout: post
 slug: extjs-jasmine-maven-why-i-am-working-on-them
 title: ExtJS, Jasmine, Maven - Why I am working on them?

@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2012-02-05 02:07:56
+date: 2012-02-04 18:07:56
 layout: post
 slug: forward-or-backward
 title: 到底是前进还是后退？

@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2011-08-04 11:18:37
+date: 2011-08-04 03:18:37
 layout: post
 slug: 10-mistakes-software-team-lead
 title: 开发团队领袖可能会犯的十个错误

@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2005-10-18 13:18:38
+date: 2005-10-18 05:18:38
 layout: post
 slug: mom-and-dad-get-old-already
 title: Mom and dad get old already.

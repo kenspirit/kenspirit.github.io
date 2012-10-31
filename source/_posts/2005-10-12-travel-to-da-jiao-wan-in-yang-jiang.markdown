@@ -1,6 +1,6 @@
 ---
 comments: true
-date: 2005-10-12 19:39:47
+date: 2005-10-12 11:39:47
 layout: post
 slug: travel-to-da-jiao-wan-%e5%a4%a7%e8%a7%92%e6%b9%be-in-yang-jiang
 title: Travel to Da Jiao Wan (大角湾) in Yang Jiang
