@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Retrospect | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/retrospect/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-10-30T22:17:57+08:00</updated>
+  <updated>2012-10-31T14:16:28+00:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[待在优秀的地方，还是把所在的地方改变的优秀]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/07/16/stay-in-good-or-change-to-be-good/"/>
-    <updated>2012-07-16T01:31:25+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/07/16/stay-in-good-or-change-to-be-good</id>
+    <link href="http://www.thinkingincrowd.me/blog/2012/07/15/stay-in-good-or-change-to-be-good/"/>
+    <updated>2012-07-15T17:31:25+00:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2012/07/15/stay-in-good-or-change-to-be-good</id>
     <content type="html"><![CDATA[<p>已经换了工作差不多一年，期间还有幸被派去美国学习所做的系统后台开发，趁着本博客重新启航，是时候回顾一下了。</p>
 
 <p><strong>小公司 vs 大公司</strong></p>
@@ -57,7 +57,7 @@
   <entry>
     <title type="html"><![CDATA[曾经，最后]]></title>
     <link href="http://www.thinkingincrowd.me/blog/2012/02/15/ever-never/"/>
-    <updated>2012-02-15T11:42:33+08:00</updated>
+    <updated>2012-02-15T03:42:33+00:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2012/02/15/ever-never</id>
     <content type="html"><![CDATA[<p>曾经真心相待，换来质疑无奈。只能痛心离去，送上最后祝福。</p>
 ]]></content>
@@ -65,9 +65,9 @@
   
   <entry>
     <title type="html"><![CDATA[一个石头值多少钱]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/07/21/valueofstone/"/>
-    <updated>2011-07-21T01:49:13+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/07/21/valueofstone</id>
+    <link href="http://www.thinkingincrowd.me/blog/2011/07/20/valueofstone/"/>
+    <updated>2011-07-20T17:49:13+00:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2011/07/20/valueofstone</id>
     <content type="html"><![CDATA[<p>公司的前General Manager Tim Shee给我看了如下一篇文章：</p>
 
 <p>小和尚的大石頭值多少錢？</p>
@@ -129,9 +129,9 @@
   
   <entry>
     <title type="html"><![CDATA[Cleaner Code]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/03/07/cleaner-code/"/>
-    <updated>2011-03-07T05:23:04+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/03/07/cleaner-code</id>
+    <link href="http://www.thinkingincrowd.me/blog/2011/03/06/cleaner-code/"/>
+    <updated>2011-03-06T21:23:04+00:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2011/03/06/cleaner-code</id>
     <content type="html"><![CDATA[<p>Finished reading Robert Martin's "Clean Code" these days, I suddenly feel more passionate to write code, to write better and more descriptive code.</p>
 
 <p>Before, I do think my coding style is not bad and stick to it every time when I am writing Java, Javascript, SQL, etc.</p>
@@ -236,7 +236,7 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
   <entry>
     <title type="html"><![CDATA[敬老院墙上发现的一篇文章 (转载)]]></title>
     <link href="http://www.thinkingincrowd.me/blog/2005/10/19/an-article-on-wall-of-rest-house/"/>
-    <updated>2005-10-19T21:00:30+08:00</updated>
+    <updated>2005-10-19T13:00:30+00:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2005/10/19/an-article-on-wall-of-rest-house</id>
     <content type="html"><![CDATA[<p>孩子！当你还很小的时候，我花了很多时间，教你慢慢用汤匙、用筷子吃东西。教你系鞋带、扣扣子、溜滑梯、教你穿衣服、梳头发、拧鼻涕。这些和你在一起的点点滴滴，是多么的令我怀念不已。所以，当我想不起来，接不上话时，请给我一点时间，等我一下，让我再想一想……极可能最后连要说什么，我也一并忘记。孩子！你忘记我们练习了好几百回，才学会的第一首娃娃歌吗？是否还记得每天总要我绞尽脑汁，去回答不知道你从哪里冒出来的吗？所以，当我重复又重复说着老掉牙的故事，哼着我孩提时代的儿歌时，体谅我。让我继续沉醉在这些回忆中吧！切望你，也能陪着我闲话家常吧！孩子，现在我常忘了扣扣子、系鞋带。吃饭时，会弄脏衣服，梳头发时手还会不停的抖，不要催促我，要对我多一点耐心和温柔，只要有你在一起，就会有很多的温暖涌上心头。</p>
 

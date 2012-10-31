@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Weblogic | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/weblogic/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-10-30T22:17:57+08:00</updated>
+  <updated>2012-10-31T14:16:28+00:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"]]></title>
     <link href="http://www.thinkingincrowd.me/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/"/>
-    <updated>2012-02-04T17:07:35+08:00</updated>
+    <updated>2012-02-04T09:07:35+00:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references</id>
     <content type="html"><![CDATA[<p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
 

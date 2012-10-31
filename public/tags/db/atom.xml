@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: DB | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/db/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-10-30T22:17:57+08:00</updated>
+  <updated>2012-10-31T14:16:28+00:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[一个多维度数据匹配的RDBMS数据库表设计的想法]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/10/28/db-design-for-multi-dimension-data/"/>
-    <updated>2012-10-28T07:48:37+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/10/28/db-design-for-multi-dimension-data</id>
+    <link href="http://www.thinkingincrowd.me/blog/2012/10/27/db-design-for-multi-dimension-data/"/>
+    <updated>2012-10-27T23:48:37+00:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2012/10/27/db-design-for-multi-dimension-data</id>
     <content type="html"><![CDATA[<p>首先, 我先要说明一下, 这里的“多维度”可能并不太准确.  这里说的并不是数据仓库里的维度, 而只是数据的属性.</p>
 
 <p>举个例子可能就比较好明白了.</p>

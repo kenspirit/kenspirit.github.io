@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Jasmine | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/jasmine/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-10-30T22:17:57+08:00</updated>
+  <updated>2012-10-31T14:16:28+00:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/08/31/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
-    <updated>2012-08-31T07:04:06+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/08/31/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
+    <updated>2012-08-30T23:04:06+00:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
     <content type="html"><![CDATA[<p>Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.</p>
 
 <p>ExtJS has been adopted in the two companies I worked and am working for.  Hence, here I only show you how to test Ajax in ExtJS built application.</p>
@@ -209,9 +209,9 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/08/14/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
-    <updated>2012-08-14T07:02:18+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/08/14/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
+    <updated>2012-08-13T23:02:18+00:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
     <content type="html"><![CDATA[<p>After the <a href="http://thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
 
 <p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it's difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
@@ -345,9 +345,9 @@ new xxx.DataStore();
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Integration]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/08/07/extjs-jasmine-maven-integration/"/>
-    <updated>2012-08-07T06:59:31+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/08/07/extjs-jasmine-maven-integration</id>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
+    <updated>2012-08-06T22:59:31+00:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration</id>
     <content type="html"><![CDATA[<p>After briefing <a href="http://thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 
 <p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
@@ -421,7 +421,7 @@ Results: 3 specs, 0 failures
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Why I am working on them?]]></title>
     <link href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"/>
-    <updated>2012-08-05T23:52:24+08:00</updated>
+    <updated>2012-08-05T15:52:24+00:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them</id>
     <content type="html"><![CDATA[<p>Before going into how to setup <a href="http://pivotal.github.com/jasmine/">Jasmine</a> to do Unit Test for <a href="www.sencha.com/products/extjs">ExtJS</a>, I think I should describe why I am doing this.</p>
 
