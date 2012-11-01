@@ -20,8 +20,8 @@ Please free to get in touch with me using any of the method below.
 
 ##Contacts##
 * __Email__: chengusky (at) gmail.com
-* __Twitter__: [kenspirit](twitter.com/kenspirit)
-* __Weibo__: [鹄思乱想](weibo.com/kenspirit)
+* __Twitter__: [kenspirit](http://twitter.com/kenspirit)
+* __Weibo__: [鹄思乱想](http://weibo.com/kenspirit)
 
 
 ##About this blog##
