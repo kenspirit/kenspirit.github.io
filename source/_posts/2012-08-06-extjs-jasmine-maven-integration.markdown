@@ -15,7 +15,7 @@ tags:
 - UnitTest
 ---
 
-After briefing [Why I am working on them](http://thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/), let me show you how they can be integrated all together first.
+After briefing [Why I am working on them](http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/), let me show you how they can be integrated all together first.
 
 [Jasmine](http://pivotal.github.com/jasmine/) is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with [NodeJS](http://nodejs.org/) which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.
 

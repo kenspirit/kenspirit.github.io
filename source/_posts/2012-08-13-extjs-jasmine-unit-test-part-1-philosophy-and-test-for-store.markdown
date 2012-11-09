@@ -14,7 +14,7 @@ tags:
 - UnitTest
 ---
 
-After the [integration](http://thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/) for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.
+After the [integration](http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/) for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.
 
 My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it's difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)
 

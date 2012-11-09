@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: UnitTest | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/unittest/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-11-05T21:31:03+08:00</updated>
+  <updated>2012-11-10T07:22:37+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -22,7 +22,7 @@
 
 <p>ExtJS has been adopted in the two companies I worked and am working for.  Hence, here I only show you how to test Ajax in ExtJS built application.</p>
 
-<p>In my previous post <a href="http://thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test – Part 1 (Philosophy and Test for Store)</a>, the part on how to test Autoload <em>Ext.data.Store</em> simply override <em>Ext.lib.Ajax</em> so that it does nothing and <em>Ext.data.Store</em> is tested through manual loading data.</p>
+<p>In my previous post <a href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test – Part 1 (Philosophy and Test for Store)</a>, the part on how to test Autoload <em>Ext.data.Store</em> simply override <em>Ext.lib.Ajax</em> so that it does nothing and <em>Ext.data.Store</em> is tested through manual loading data.</p>
 
 <p>That is the simplest way but cannot fulfill the requirement to test real production code which uses Ajax feature.</p>
 
@@ -212,7 +212,7 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
     <link href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
     <updated>2012-08-13T23:02:18+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
-    <content type="html"><![CDATA[<p>After the <a href="http://thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
+    <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
 
 <p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it's difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
 
@@ -348,7 +348,7 @@ new xxx.DataStore();
     <link href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
     <updated>2012-08-06T22:59:31+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration</id>
-    <content type="html"><![CDATA[<p>After briefing <a href="http://thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
+    <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 
 <p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
 

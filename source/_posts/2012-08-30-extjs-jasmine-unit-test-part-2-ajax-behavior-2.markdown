@@ -18,7 +18,7 @@ Ajax is a pretty common used feature now for every JS Rich application. How to t
 
 ExtJS has been adopted in the two companies I worked and am working for.  Hence, here I only show you how to test Ajax in ExtJS built application.
 
-In my previous post [ExtJS, Jasmine, Unit Test – Part 1 (Philosophy and Test for Store)](http://thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/), the part on how to test Autoload _Ext.data.Store_ simply override _Ext.lib.Ajax_ so that it does nothing and _Ext.data.Store_ is tested through manual loading data.
+In my previous post [ExtJS, Jasmine, Unit Test – Part 1 (Philosophy and Test for Store)](http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/), the part on how to test Autoload _Ext.data.Store_ simply override _Ext.lib.Ajax_ so that it does nothing and _Ext.data.Store_ is tested through manual loading data.
 
 That is the simplest way but cannot fulfill the requirement to test real production code which uses Ajax feature.
 
