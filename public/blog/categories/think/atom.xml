@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Think | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/blog/categories/think/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2012-12-05T21:52:28+08:00</updated>
+  <updated>2012-12-24T06:44:12+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[My practices on Time Management]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/"/>
+    <updated>2012-12-24T06:22:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management</id>
+    <content type="html"><![CDATA[<h2>The 101</h2>
+
+<blockquote><p>Time Management is the act or process of planning and exercising conscious control over the amount of time spent on specific activities, especially to increase effectiveness, efficiency or productivity.</p></blockquote>
+
+<p>Everyone who cares about their time should be familiar with this concept and knows its goal - to increase effectiveness.  The <a href="http://en.wikipedia.org/wiki/Time_management">Wiki</a> site covers different aspects of it.</p>
+
+<p>Here I would like to share my understandings and what my choices are to make good use of my time.<br/>
+1. Planning &amp; Prioritizing<br/>
+2. Protecting thy time<br/>
+3. Identifying waste</p>
+
+<h2>Planning &amp; Prioritizing</h2>
+
+<p>Planning &amp; Prioritizing is a must.  It helps us not losing any task we have to do but also makes sure we do the most urgent &amp; important ones first.  <a href="http://en.wikipedia.org/wiki/Getting_Things_Done">Getting Things Done</a> is a great methodology.  However, <strong>DON'T SPEND TOO MUCH TIME ON THE LIST.</strong>  You cannot prioritize or categorize your tasks if the list fills with tons of items especially if you have some level of <a href="http://en.wikipedia.org/wiki/Obsessive%E2%80%93compulsive_disorder">Obsessive-compulsive disorder</a>.</p>
+
+<p>I have the same issue stated in <a href="http://simpleprogrammer.com/2012/10/28/my-15-minute-rule-to-productivity/">My 15 Minute Rule to Productivity</a>:</p>
+
+<blockquote><p>I’ll delay doing something that I know is important until the last moment that it needs to be done.</p></blockquote>
+
+<p>Hence, my rule on making a list is: <strong>Make a task list only for the tasks I need to do TODAY and come up an estimated time on how long to take it.</strong>  How if I have something important to do in the future? Put it to calendar/reminder and also include an estimated time so that this task will go into my future TODAY task list.</p>
+
+<p>And then the rule of picking the task from a list is: <strong>Scan the tasks and their estimated time; Pick the one I MUST start it.</strong>  This action is to take out the most IMPORTANT and URGENT task which is actually prioritizing.  The estimated time made in the first step helps me know when it is the right time to pick which task.</p>
+
+<h2>Protecting thy time</h2>
+
+<p>What does this mean?  It means avoid distraction.  Distraction is the major time killer which makes us ineffective.  <a href="http://en.wikipedia.org/wiki/Pomodoro_Technique">Pomodoro Technique</a> is the one I like.  It imposes an external mechanism (a timer here) to keep us focus on work for a short period (generally 25 mins) and also have some rest inbetween.  The rest in between the working period can be used to reply your email, IM or actually relaxing your mind.  Its working style is like marathon which needs constant pacing.</p>
+
+<p>However, this mechanism might have an issue to some knowledge worker.  Here is the view in one of <a href="http://www.joelonsoftware.com/articles/fog0000000068.html">Joel Spolsky' article</a> with which I totally agree:</p>
+
+<blockquote><p>We all know that knowledge workers work best by getting into "flow", also known as being "in the zone", where they are fully concentrated on their work and fully tuned out of their environment. They lose track of time and produce great stuff through absolute concentration.<br/>
+...<br/>
+The trouble is, getting into "the zone" is not easy. When you try to measure it, it looks like it takes an average of 15 minutes to start working at maximum productivity.  Sometimes, if you're tired or have already done a lot of creative work that day, you just can't get into the zone and you spend the rest of your work day fiddling around, reading the web, playing Tetris.</p></blockquote>
+
+<p>Hence, the Pomodoro Technique might knock you out of the zone and you should choose your own timer based on the average time you can maintain your flow state instead of 25 minutes.  Or you can just let your flow flows until you think you need to get a break.  The point is to try to maintain some continuous period to get uninterrupted.</p>
+
+<p>But generally, Pomodoro is helpful under certain circumstances like management level people who don't even have continous time more than 25 minutes or some working environment has interruption often or someone whose productive time shorter than 25 minutes and want to extend their flow state.</p>
+
+<h2>Identifying waste</h2>
+
+<p>Planning is the starting process of time management, while identifying the waste is the retrospect process.  Sometimes, it's even more important than the planning.  That is because planning is working on something uncertain, while retrospect is based on reality and intended to make improvement.  History and fact can tells us more on the our regular time usage pattern.</p>
+
+<p>How to identify waste?  Track the time and see where your time spends.  Our memory is unreliable to keep track of how long we spend on the things done.  We need to actually write it down and write it down when it happens (at the beginning or the end of the task).</p>
+
+<p>By tracking where the time we spend, we can find out where the waste is and try to eliminate it.  Also we can consolidate those discretionary time slots to a continuous unit for more effective usage.  There is a wonderful chapter "Know Thy Time" in <a href="http://www.amazon.com/Effective-Executive-Drucker-Series-Peter/dp/0750643900/ref=sr_1_2?ie=UTF8&amp;qid=1356302486&amp;sr=8-2&amp;keywords=The+Effective+Executive">The Effective Executive</a> by <em>Peter F. Drucker</em> describing how to make good use of time.  Highly recommend.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Why I am working on them?]]></title>
@@ -146,48 +198,6 @@
 <p>里面其实说的都是为什么这样会更尊重员工，减少公司成本，激起员工工作热情，还可以从中找出积极向上的人。其实想起来何尝不是呢？想起我们平时不是有很多假期都没有放，要堆到年后才清吗？放个长一点的假，其实也是觉得无聊，想干活了。其实有些时候，放松了，可能更好管。</p>
 
 <p>本来既然已经离开，就不好再说什么，但是看到这种情况，还是忍不住要发泄一下。也不知道那些那么另人不爽的政策，是不是又是那个人想出来的。真是“成也萧何 败也萧何”。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[9种比钱更好的激励员工的方法]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/12/17/9-things-that-motivate-employee-more-than-money/"/>
-    <updated>2011-12-17T00:24:26+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/12/17/9-things-that-motivate-employee-more-than-money</id>
-    <content type="html"><![CDATA[<p>激励员工的士气</p>
-
-<p>最近看到篇文章：“<a href="http://goo.gl/ushlH">9种比钱更好的激励员工的方法</a> (9 Things That Motivate Employees More Than Money)”。</p>
-
-<p>第1、6点，展示了公司的高层有没有真正的关心过下属，是真的把他们做的事都看在眼里，放在心上，还是只是说说而已。表扬不应该是空泛的，应该很具体，让下属知道，原来我的老板真的看在眼里，知道我在做什么的，还肯特意抽时间和他吃饭，谈话。如果真的关心，员工是感觉的到的。很多别的都是浮云。说到底，还是有没有心，就像关心自己朋友，家人一样。</p>
-
-<p>第2、3、9，其实还是让员工有“当家做主”的感觉，把他和公司联系在一起。生死共存。尽量减少中间层管理人员，也是希望减少一种被命令的感觉。</p>
-
-<p>下面是译文：</p>
-
-<p><strong>别简单的向他们展示钱(即使你有). 下面有9种更好的方法来提升士气.</strong></p>
-
-<p><strong>激励员工的能力</strong>是一个企业家需要具备的最重要的能力之一. 两年前, 我认识到我并不具备这种能力. 所以,我请了一个有这种能力的CEO.</p>
-
-<p>Josh在企业界已经有12年的经验, 包括在Comcast公司运营一个重要的部门. 我知道他已经很老练, 但一开始的时候我还是对他有点怀疑. 当时我们正在经历一些成长的危机, 我认为我们并不充足的现金非常难提高公司和员工的士气.</p>
-
-<p>我错了.</p>
-
-<p>在他和他任命的团队领袖的帮助下, Josh不单单重建了公司的文化, 还打造了一个充满激情, 奋力拼搏的团队. 而这正是我希望致力于为发展和改善公司想做的.</p>
-
-<p>下面是我从他身上学到的9件事:</p>
-
-<ol>
-<li><p><strong>不要吝惜表扬.</strong> 每一个人都渴望得到表扬, 而这也是最容易做到的一件事情. 再说, 从一个CEO那得到表扬, 比你想像的要有效得多. 为你的团队成员取得的任何改进提出表扬. 当你适应了一对一下为员工提出表扬, 你可以尝试在其他所有人的面前表扬那些值得表扬的人.</p></li>
-<li><p><strong>把管理人员都去掉.</strong> 项目里没有项目经理? 不对吧! 请试一下. 我明白把项目经理或管理人员去掉, 让你的员工以一个团队的形式紧紧的工作而不是向某一个人汇报的做法会有点让人怀疑. 请想一想. 比让你的管理人员失望更糟糕的事情是什么? 是让你的团队失望! 让一个团队的人平等的于同事一起工作, 项目通常会做得更好更快. 他们会很早来到办公室, 留得很晚, 并把他们所有的精力集中在解决问题上面来.</p></li>
-<li><p><strong>把你的想法变成是他们的.</strong> 人们都不愿意被人命令做事. 与其告诉别人你想做不什么出来; 通过一些方式让他们觉得你提出的要求好像是他们自己想出来的一样. “我想你这样做”可以说成”你不觉得如果我们这样做的话更好吗?”</p></li>
-<li><p><strong>绝不批评或纠正.</strong> 任何人, 是的, 我说的是任何人, 都不愿意听到别人说他们做错了. 如果你在找一个打压士气的人, 这就是了. 要尝试一种委婉的方式让人们去提高, 从他们的错误中学习, 并解决问题. 你可以问:”这是解决问题的最好办法吗?” 这种情况下,你们是在谈论解决方案的对话中, 而不是互相指责.</p></li>
-<li><p><strong>让所有的人成为领袖.</strong> 指出你下面的最出色人员的强项, 并让他们知道正是因为他们的出色表现, 你希望他们成为其它人的榜样. 这样, 定出高标准, 那他们自然而然得被激励并为了保持作为一名领袖的名声而努力.</p></li>
-<li><p><strong>一星期带一名员工出吃午饭.</strong> 让他们得到惊喜. 别发公告来说明制定出这样一个政策. 走到一名员工面前, 然后邀请他和你共进午餐. 这是非常简单的方法让他们知道你有关注和感激他们的辛勤工作.</p></li>
-<li><p><strong>认可并给于奖励.</strong> 这两件事有很多形式: 大声在公司会议点名说出他成功的为公司做了什么事情. 比赛或举办游戏并把结果记录在白板上,让任何人都可以看到. 有形的奖励也行, 但别太昂贵了. 尝试一些事情像晚餐, 奖杯, spa服务和牌匾等.</p></li>
-<li><p><strong>举办公司派队.</strong> 以一个团队来做事情可以维系一个团队很长时间. 举办公司郊游活动, 生日派队, 快乐时光时间. 别只是等到节假日才举办公司活动. 一年内不间断的举办活动可以让你的员工知道所有人都在一起.</p></li>
-<li><p><strong>分享荣誉和痛苦.</strong> 当你的公司表现好的时候,庆祝. 这是最好的时间来让所以人知道你感激他们每一个人的辛勤劳动. 当人们帮助你的公司成功的时候, 尽你的最大努力让人们知道你是会怎么来感激他们的. 如果有什么让人失望的事情, 同样于所有人分享. 当你期望有很好的表现的时候, 你的团队应该知道公司当前的位置. 要坦白和透明.</p></li>
-</ol>
-
 ]]></content>
   </entry>
   
