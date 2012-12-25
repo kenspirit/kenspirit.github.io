@@ -9,7 +9,7 @@ footer: true
 
 My Name is Ken Chen.
 
-![](https://dl.dropbox.com/u/17182499/blog/logo.png)
+![](https://dl.dropbox.com/u/17182499/blog/logo_medium.png)
 
 I keep learning to be a good father, husband, son and web developer.
 

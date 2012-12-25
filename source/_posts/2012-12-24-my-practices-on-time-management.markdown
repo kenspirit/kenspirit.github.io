@@ -6,11 +6,10 @@ comments: true
 categories:
 - Think
 tags:
-- Management
-- Time
+- Time Management
+- Productivity
 - GTD
 - Pomodoro
-- Effective
 ---
 
 [Wiki]: http://en.wikipedia.org/wiki/Time_management
