@@ -4,6 +4,10 @@ title: "为什么开始写技术博客, 并且还是用英语?"
 date: 2013-01-01 22:00
 comments: true
 categories: 
+- Think
+tags:
+- Blogging
+- Retrospect
 ---
 
 [博客]: http://www.iamhukai.com/

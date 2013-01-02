@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Think | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/blog/categories/think/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-01-01T22:45:55+08:00</updated>
+  <updated>2013-01-03T06:09:25+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[为什么开始写技术博客, 并且还是用英语?]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english/"/>
+    <updated>2013-01-01T22:00:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english</id>
+    <content type="html"><![CDATA[<p>一些朋友发现我最近在写一些博客，而且还多数是英语的，都在好奇我在搞什么。那我就写一篇博客来解释一下吧。</p>
+
+<p>写技术博客好处很多，很多牛人也提到过, 这是我出来刚工作时的一位同事的<a href="http://www.iamhukai.com/">博客</a>, 现在他在Thoughworks, 里面有好几篇文章说到为什么要写和怎么写。</p>
+
+<h2>写技术博客的原因</h2>
+
+<ul>
+<li><p><strong>写博客可以积累总结自己的一些想法，见证技术学习过程和成长的经历</strong>。所以，我博客里的内容，一般应该会是技术类文章多一点，当然也会有一些开发过程和管理的想法及吐槽。写博客就是一种总结的手段，对自己知识的回顾和梳理。</p></li>
+<li><p><strong>博客是一种对外沟通交友，甚至是宣扬思想和文化的平台，说点实际的还可以为自己打广告</strong>。人生在世，总希望找到些志同道合的朋友。这些朋友有生活上的，情感上的，也有事业上的。博客也可以说是为我寻找事业上的朋友的地方之一。</p></li>
+<li><p><strong>为后来人积累一些财富，帮助他人解决一些问题</strong>。我已经习惯在Google和别人的博客上索取了那么长时间了，是时候贡献自己的力量的时候了。把自己遇到的一些问题，最终的解决方案，想法分享出来，应该可以帮助一些后来人。也许有人觉得自己遇到的困难和解决方法太微不足道了，说出来让人笑话。其实不然，每个人都有成长过程，像我们也要去获取别人的智慧一样，我们要帮助的就是那些还没有起来的人。而且，也别太小看自己了。</p></li>
+</ul>
+
+
+<h2>用英语的原因</h2>
+
+<p>也许有不少人觉得我在装13，卖弄自己的英语水平。而且我觉得, 用英语写博客, 可能会使得博客流量不高, 正如我那位旧同事所说。那么，我为什么还这么做呢？</p>
+
+<ul>
+<li><p>我确实英语水平比中文好，我也喜欢英语多过中文。很多人看到这可能会说我卖国贼，呵呵。其实为什么呢？我从小语文水平都不高，60到70分左右吧，作文也差。对以前的语文课，我完全感受不到语言的美丽。各种什么作者观点分析，文言文等，搞得我对语文很反感，遇到的语文老师，又没几个好的，反正学习语文对我来说充满了挫折感。</p>
+
+<p>  我是在六年级就开始学英语，但那时是用中文来模拟发音和死记的。我记得刚上初中的时候，第一次测验才40多分的。但后来水平一直都不算差，我也不知道为什么。不过使我喜欢上英语的，是因为在大学梦想出国留学，疯狂学英语，考TOEFL和GRE，才喜欢上了，也使得自己水平比附近的人要高。学英语对我来说，充满了成功和优越感。所以，培养成功的感觉，可能真的很重要。为什么同样是语言，学英语我会比学语文好？可能TOEFL和GRE考试都强调的是事实和逻辑推理，不像语文那些什么观点分析那么狗屁吧。</p>
+
+<p>  至于现在，我还那么喜欢英语，我想是延续之前的情结，以及从事IT的缘故吧。所有先进的技术，一开始都从国外发源起来，不懂英语，怎么行呢？</p></li>
+<li><p>我现在主要的工作，还是编程。编程用什么语言？废话，当然是英语。大家看过<a href="http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882">Clean Code</a>这本书吗？ 什么叫做<em>Self-Documentary</em>的代码？ 不知道的，看书去。为了能写出清晰，优雅，具有自我说明能力的代码，命名一个变量，一个方法，都是有讲究的，如果一段代码，读起来像读文章一样，那就成功了一大半了。</p>
+
+<p>  而且，在<a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/B002KE5SLU/ref=sr_1_1?ie=UTF8&amp;qid=1357050792&amp;sr=8-1&amp;keywords=More+Joel+on+Software">More Joel on Software</a>, 也就是<a href="http://book.douban.com/subject/4163938/">软件随想录</a> 这本书里面，在<em>Learn how to write before graduating</em>这一节里面说到：</p></li>
+</ul>
+
+
+<blockquote><p>the programmers with the most power and influence are the ones who can write and speaks in English clearly, convincingly, and comfortably,</p>
+
+<p>...</p>
+
+<p>The difference between a tolerable programmer and a great programmer is not how many languages they know, and it's not whether they prefer Python or Java.  It's whether they can communicate their ideas.</p></blockquote>
+
+<p>所以，锻炼用英语来写博客，主要是提高自己的代码编写能力和成为一名好的程序员。</p>
+
+<p>好了, 我已经起航了, 你们是否也考虑考虑写写博客?</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[My practices on Time Management]]></title>
@@ -148,56 +194,6 @@ The trouble is, getting into "the zone" is not easy. When you try to measure it,
     <updated>2012-02-15T02:42:33+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2012/02/15/ever-never</id>
     <content type="html"><![CDATA[<p>曾经真心相待，换来质疑无奈。只能痛心离去，送上最后祝福。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[到底是前进还是后退？]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/02/05/forward-or-backward/"/>
-    <updated>2012-02-05T02:07:56+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/02/05/forward-or-backward</id>
-    <content type="html"><![CDATA[<p>自从我离开旧公司以来，都有旧同事问我新公司这边有没有什么好的职位。</p>
-
-<p>一开始，其实都系正常，因为问我的人，都已经在那做了和我差不多那么多年，甚至都还是第一份工作。所以，希望出去闯闯也理所当然。但是近来，好像人数还有增多的倾向，而且是服役多长时间的都有，有扩散的倾向。这还不是让我最担心的，更重要的是，从每个人身上，我都听到些怨言。这样，感觉情况就不妙了。</p>
-
-<p>我走的时候，就听说公司，上至大老板开始更加重视起和员工的沟通，员工培养上面来。</p>
-
-<p>本想我走了后，可能还真是做了件好事，但为什么所谓“更加重视员工”的做法还会引起那么多怨言和激发人员要走的想法呢？</p>
-
-<p>拿我听到的两点来说吧:</p>
-
-<p><strong>1.  加薪方面</strong></p>
-
-<p>本来人员流失后，加薪是正常和需要的，尤其是我之前还在职并还能发表一下意见的时候，已经和上层说过这个问题了。公司开发部中层方面（3年左右）的人员，薪酬水平有点偏低的。但我听到的很多怨言，都说这次加薪幅度，很多人都不满意。估计主要是中层加的不多。像一些做了5年以上的，公司里非常重视的少数，好像并没太大声音听到，因为我也知道有一些加的好像真不少，我也和他们说其实公司对他们已经很不薄，不要以为外面真的高很多而跟风轻率跳槽。</p>
-
-<p>所以我感觉，可能中层普遍加的都并不多，薪酬集中到某些人上面去了。这里是一个问题，因为感觉公司以前一直有一个想法就是，最重要的那么年资老的，能干活的人，保住就行了。其它人就无所谓了。反正有老员工带着干。</p>
-
-<p>其实这样的想法是错误的，会引起下面的问题。要保住和发展公司，不是只要有老员工就行的了。</p>
-
-<ul>
-<li><p>新员工感觉不受重视，没发挥空间。因为上层，也只认得老员工，有事也找他们。新员工Turn over太快。其实这也和上层缺乏和下面的员工进行沟通有关。我就听一个新员工说过：“我们这些新人，其实都不重要，都是堆砖头的，老员工在就行了。”</p></li>
-<li><p>老员工经常要带新员工，但因为他们流动太快，老员工都有培训疲劳症了。公司的产品本来是有一个比较好的框架的，做的事情，一部份是重复性劳动，一部份是业务逻辑或复杂的customization。如果一直要老员工培训新人来做重复性的劳动，老员工就会很烦，而且因为项目紧还要忙于处理剩下的部分，还没有时间去改进框架和产品。框架很快就被毁了。</p></li>
-<li><p>公司总不招一些有经验的人，这样，老员工学习新知识，新文化只能靠上层，或者自学了。可是，因为忙，基本哪还有时间，有时周末都还要加班。上层也少和下面的沟通，更不要说创造培训的机会了。这样，久而久之，老员工感觉学不到东西了，你工资又不比别人有吸引力，那为什么还要留着呢，更何况连本来保留着的一些感情，还被一些人，一点一点的摧毁了。老员工的流失也成了必然。听一个老员工说，他临走前问上层为什么不招有经验的人，那个竟然答，我们不需要有经验的，进来还不是要教他？我真是无语了。</p></li>
-</ul>
-
-
-<p>还有另一方面是，有人说这次加薪幅度不高，但是搞了个什么类似奖金的东西，就是做满一年后，会再拿到双薪外可能多一个月左右的工资吧。但据他们算过以后，觉得如果分摊到每一个月现拿，才差不多达到他们觉得理想的水平。所以普遍让人觉得，又想让人留下，又一点诚意都没有。</p>
-
-<p>其实这种压后拿钱，和别人给个什么期权是一样道理，是有用的，但要看什么时候。如果别人都很不爽了，或者觉得你没有前途了，还要来干什么呢？所谓乱世用重典，重要时候，一定要用让人一击即倒的手段，让人无法拒绝，而不是还谈什么感情，理想的。过年那段时间，我刚好看了一本关于人脑学习特性的书(Brain Bugs)里面有说到，人普遍来说是比较看重眼前利益的，你说现在得到20元，或者一个月后拿到40元。基本都是选现拿的。因为远期目标并不多多少，而且还要看你说话算话不。所以，如果真如我听到的，要等上一年，而且即使现在分摊出来，才是理想的价格，可以说是没有多少吸引力的。</p>
-
-<p><strong>2.  请假方面</strong></p>
-
-<p>听说现在请假很不容易，要提前一个有，还真有人被reject了，可能多是一两天那种情况吧，我不知道是真的那么忙呢，还是专门出这种政策来防人出去面试找工作的。如果真是后一种情况，还真是脑残做法。所谓上有政策，肯定下有对策，请个病假不就行了，还不用提前说呢。退一步说，如果真是那么忙，据我所知，以前一起工作的同事，基本和我熟悉的，每个人工作都是很负责任的。有需要的话，晚上周末自觉加班，过年过节被点名要开电话或加班，最多抱怨一下，也还是这样。到真有事要请假，相信也是有急事，事后也会补回来。再退一步说，现在公司那么多怨言的情况下，还出这样的政策，真是还怕不够多吗？想走的人，真不爽了，没找到新工作，也会走。真搞不懂他们是怎么想的。</p>
-
-<p>之前，我在LinkedIn里还看了两篇文章：</p>
-
-<p><a href="http://www.linkedin.com/news?actionBar=&amp;articleID=5562842806801670153&amp;ids=cPATdjAPe3wSdj0PczkMd3oRdiMPczcNd3AMdz0Sd30MdjsOdzkRb34Me30Rdj8Scj8Uej0Vej8SdjkIcj8Td3gRej0UdzoOc3AQczoRdiMPdj4MdPoNc3wSc3wOd3wOdzkR&amp;aag=true&amp;freq=weekly&amp;trk=eml-tod2-b-ttl-0&amp;ut=2yCqJXsKqFql41">Six Reason Why You Should Give Your Employee a 4-Day Week</a></p>
-
-<p><a href="http://www.linkedin.com/news?actionBar=&amp;articleID=1026708525&amp;ids=cPsOdzoVdj8MciMTdzcScPoVdzATe3wTcj4NdzkRb34Tdj8PcjgOc34Idj8Re30Tdz8MciMPcPsMe3sMcz0N&amp;aag=true&amp;freq=weekly&amp;trk=eml-tod2-b-ttl-1&amp;ut=0D2UlrYgjNgR41">Why You Should Give Your Employee Unlimited Vacation</a></p>
-
-<p>里面其实说的都是为什么这样会更尊重员工，减少公司成本，激起员工工作热情，还可以从中找出积极向上的人。其实想起来何尝不是呢？想起我们平时不是有很多假期都没有放，要堆到年后才清吗？放个长一点的假，其实也是觉得无聊，想干活了。其实有些时候，放松了，可能更好管。</p>
-
-<p>本来既然已经离开，就不好再说什么，但是看到这种情况，还是忍不住要发泄一下。也不知道那些那么另人不爽的政策，是不是又是那个人想出来的。真是“成也萧何 败也萧何”。</p>
 ]]></content>
   </entry>
   
