@@ -7,7 +7,7 @@ categories:
 - Sword
 tags:
 - Javascript
-- Node.js
+- NodeJS
 - MongoDB
 - Connect
 ---
