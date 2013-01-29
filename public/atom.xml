@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-01-03T21:21:31+08:00</updated>
+  <updated>2013-01-30T07:12:49+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,203 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS ]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
+    <updated>2013-01-30T07:02:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
+    <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;task-{\{task.type}}&quot;</span><span class="nt">&gt;</span>{\{task.type}}<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;task.type&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Do you see what is the difference between the one below and above?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;&#39;task-&#39; + task.type&quot;</span><span class="nt">&gt;</span>{\{task.type}}<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;task.type&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Yes yes yes, String interpolation doesn&#8217;t constain the extra &#92;.  I don&#8217;t know how to escape the god damn double curly brace correctly in Backtick code block in octopress.  Please forgive me now and help is appreciated.</strong></p>
+
+<p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
+
+<p>Before furher reading, it&#8217;s better if you have read the Developer Guide, <a href="http://docs.angularjs.org/guide/directive">Directive</a> section which explains the concept of <strong>String interpolation</strong> and <strong>Compilation process, and directive matching</strong>, although honestly, it doesn&#8217;t quite clearly say how the String interpolation should or can be used.  Before, I just have the rough idea that it can be evaluated and replaced in String and also reflect the change from model.</p>
+
+<p>If you use the first code snippet to create sample AngularJS page and bind an <em>task</em> model to it, you can see that the String Interpolation &#8221;<em>works</em>&#8221;: the ng-class attribute and the content of the span tag can be replaced correctly with model value.  Even if you change the model value through the input field, they can be updated accordingly.  However, the CSS is not applied as expected.</p>
+
+<p>Why?  Let&#8217;s take a look at AngularJS source:</p>
+
+<p>In function <em>collectDirectives</em>, when it checks the element&#8217;s attribute, it calls <em>addAttrInterpolateDirective</em> before <em>addDirective</em>.  In <em>addAttrInterpolateDirective</em>, the <a href="http://docs.angularjs.org/guide/expression">Expression</a> in String interpolation will be converted to a new directive with compile function to watch the change and set new value to the attribute which is the class directive in this case.  There are two important things need to be aware of:</p>
+
+<ol>
+<li>A new directive is ad-hoc created before the class directive it&#8217;s inspecting.</li>
+<li>The new directive&#8217;s linking function is watching the expression change to update the class directive value itself.</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">collectDirectives</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">directives</span><span class="p">,</span> <span class="nx">attrs</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">nodeType</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">nodeType</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">attrsMap</span> <span class="o">=</span> <span class="nx">attrs</span><span class="p">.</span><span class="nx">$attr</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">match</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">className</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">switch</span><span class="p">(</span><span class="nx">nodeType</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="cm">/* Element */</span>
+</span><span class='line'>      <span class="c1">// use the node name: &lt;directive&gt;</span>
+</span><span class='line'>      <span class="nx">addDirective</span><span class="p">(</span><span class="nx">directives</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">nodeName_</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">()),</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// iterate over the attributes</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">attr</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">nName</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">nAttrs</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">attributes</span><span class="p">,</span>
+</span><span class='line'>               <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">jj</span> <span class="o">=</span> <span class="nx">nAttrs</span> <span class="o">&amp;&amp;</span> <span class="nx">nAttrs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">jj</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">attr</span> <span class="o">=</span> <span class="nx">nAttrs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">specified</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">name</span> <span class="o">=</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>          <span class="nx">nName</span> <span class="o">=</span> <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">());</span>
+</span><span class='line'>          <span class="p">...</span>
+</span><span class='line'>          <span class="nx">addAttrInterpolateDirective</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">directives</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">nName</span><span class="p">);</span>
+</span><span class='line'>          <span class="nx">addDirective</span><span class="p">(</span><span class="nx">directives</span><span class="p">,</span> <span class="nx">nName</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">addAttrInterpolateDirective</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">directives</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">interpolateFn</span> <span class="o">=</span> <span class="nx">$interpolate</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// no interpolation found -&gt; ignore</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">interpolateFn</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">directives</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">priority</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">compile</span><span class="o">:</span> <span class="nx">valueFn</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">$$observers</span> <span class="o">=</span> <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span> <span class="o">||</span> <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span> <span class="o">=</span> <span class="p">{}));</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="nx">attr</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">(</span><span class="nx">$$observers</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">||</span> <span class="p">(</span><span class="nx">$$observers</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[])).</span><span class="nx">$$inter</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span> <span class="o">&amp;&amp;</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">$$scope</span> <span class="o">||</span> <span class="nx">scope</span><span class="p">).</span>
+</span><span class='line'>        <span class="nx">$watch</span><span class="p">(</span><span class="nx">interpolateFn</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">attr</span><span class="p">.</span><span class="nx">$set</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s see how class directive works now.  It&#8217;s at function <em>classDirective</em>.  If you put an expression in class directive, it will watch that.  Once there is any value change, it adds/removes class from element.  Hence, the second example above works correctly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">classDirective</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">selector</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;ngClass&#39;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">ngDirective</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="nx">attr</span><span class="p">[</span><span class="nx">name</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newVal</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">selector</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">||</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">$index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="nx">selector</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">oldVal</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">newVal</span> <span class="o">!==</span> <span class="nx">oldVal</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>           <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">))</span>
+</span><span class='line'>             <span class="nx">oldVal</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="k">return</span> <span class="nx">k</span> <span class="p">});</span>
+</span><span class='line'>           <span class="nx">element</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">)</span> <span class="o">?</span> <span class="nx">oldVal</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">:</span> <span class="nx">oldVal</span><span class="p">);</span>
+</span><span class='line'>         <span class="p">}</span>
+</span><span class='line'>         <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">newVal</span><span class="p">))</span>
+</span><span class='line'>            <span class="nx">newVal</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">newVal</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="k">return</span> <span class="nx">k</span> <span class="p">});</span>
+</span><span class='line'>         <span class="k">if</span> <span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="nx">element</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="o">?</span> <span class="nx">newVal</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">:</span> <span class="nx">newVal</span><span class="p">);</span>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, if you put String interpolation into it, it will be watching <strong>undefined</strong>.  Why?  Remember what <em>addAttrInterpolateDirective</em> does?  An extra directive is added before this class directive and so its linking function runs before the one for class directive.  And one more thing I omit above: its linking function explicitly sets <strong>attr[name] = undefined;</strong>.  Hence, when the linking functions run sequentially, the class directive&#8217;s linking function doesn&#8217;t watch the expression in String interpolation or the value derived although the String interpolation itself works correctly to set the value to class directive.</p>
+
+<p>Hence, in order to set CSS class on HTML element dynamically, we should either use:</p>
+
+<ul>
+<li>ng-class / ng-class-odd / ng-class-even without String interpolation by directly using model value or Expression.</li>
+</ul>
+
+
+<p>or</p>
+
+<ul>
+<li>HTML class attribute directly with String interpolation.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[被广泛误解的匈牙利命名法]]></title>
@@ -1912,124 +2109,6 @@ _</p>
 <p>写这篇东西，感觉自己也有点蛋疼，因为也没什么结论出来。</p>
 
 <p>我也不是批驳作者，只是觉得那两篇文章有点标题党了，不太爽。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Enhance Performance of ExtJs Grid Record set value operation]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/07/20/enhance-performance-of-extjs-grid-record-set-value/"/>
-    <updated>2011-07-20T23:25:39+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/07/20/enhance-performance-of-extjs-grid-record-set-value</id>
-    <content type="html"><![CDATA[<p>When implementing a feature for the project, I encounter one Javascript method that takes around 9 seconds to finish.  Clearly, there is some performance issue in it.</p>
-
-<p>The method logic is simple.  Take below table&#8217;s data as an example:</p>
-
-<pre><code>Measurement         XS     S     M     L      XL   XXL
- Sleeve             1      1     0     2      2     2
-</code></pre>
-
-<p>Consider above row &#8220;Sleeve&#8221; is a Record in ExtJs Grid.  When deleting size S &amp; L column, the figure should change to be:</p>
-
-<pre><code>Measurement         XS     M     XL      XXL
- Sleeve             2      0      4      4
-</code></pre>
-
-<p>The intent is to accumulate the figure of the deleted size to the remained ones in one direction from the Standard size M.  Hence, this method requires intensive call on Record.set();  Below is the sudo code.</p>
-
-<pre><code>    var recalculatedGridData = [];
-    var colSearchCount = 0;
-    for (var rowNo = 0; rowNo &lt; gridStoreLength; rowNo++) {
-        ...
-        // Calculation logic here to get all the correct data first.
-        ...
-        recalculatedGridData.push(recordData); // Store the data
-    }
-    // Reset recalculated data to record
-    for (var rowNo = 0; rowNo &lt; recalculatedGridData.length; rowNo++) {
-        var recordData = recalculatedGridData[rowNo];
-        var record = store.virtualGetAt(recordData.rowNo);
-        for (var colNo = 0; colNo &lt; recordData.cells.length; colNo++) {
-            var cell = recordData.cells[colNo];
-            record.set(cell.name, cell.value);
-        }
-        // record.batchSet(recordData.cells); // Enhanced version to batch set
-    }
-</code></pre>
-
-<p>The performance tuning rule is first to find out the part where the bigger portion of the time used in.  This method contains two major for loop.  One is the first for calculation logic and the second is just purely setting data to the right cell.</p>
-
-<p>The total time of the method takes around 9 seconds when the involved number of records are 42 and each have 5 cells affected.  It&#8217;s found that 99% of the time spent on the second for loop.</p>
-
-<p>After testing more intensively, each record.set() takes around 0.05 second.  That is why operation on around 42 * 5 = 210 cells takes 9 seconds.</p>
-
-<p>OK.  Root cause is found and it&#8217;s time to see why it takes so long to call record.set().  After checking on the source of ExtJs Record and Store object.</p>
-
-<p>In Record.js:</p>
-
-<pre><code>set : function(name, value){
-        var encode = Ext.isPrimitive(value) ? String : Ext.encode;
-        if(encode(this.data[name]) == encode(value)) {
-            return;
-        }
-        this.dirty = true;
-        if(!this.modified){
-            this.modified = {};
-        }
-        if(this.modified[name] === undefined){
-            this.modified[name] = this.data[name];
-        }
-        this.data[name] = value;
-        if(!this.editing){
-            this.afterEdit();
-        }
-    },
-
-    // private
-    afterEdit : function(){
-        if (this.store != undefined &amp;&amp; typeof this.store.afterEdit == "function") {
-            this.store.afterEdit(this);
-        }
-    },
-</code></pre>
-
-<p>In Store.js:</p>
-
-<pre><code>    afterEdit : function(record){
-        if(this.modified.indexOf(record) == -1){
-            this.modified.push(record);
-        }
-        this.fireEvent('update', this, record, Ext.data.Record.EDIT);
-    },
-</code></pre>
-
-<p>You can find that each Record.set() will call store.afterEdit() with its own as parameter.  Hence, I am considering batch update all cells in one record and then trigger Record.afterEdit() method.  Below is the &#8220;cracked&#8221; method added for batch set data.</p>
-
-<pre><code>batchSet : function(cells){
-        for (var i = cells.length; i--;) {
-            var name = cells[i].name;
-            var value = cells[i].value;
-            var encode = Ext.isPrimitive(value) ? String : Ext.encode;
-            if(encode(this.data[name]) == encode(value)) {
-                return;
-            }
-            this.dirty = true;
-            if(!this.modified){
-                this.modified = {};
-            }
-            if(this.modified[name] === undefined){
-                this.modified[name] = this.data[name];
-            }
-            this.data[name] = value;
-        }
-        if(!this.editing){
-            this.afterEdit();
-        }
-    },
-</code></pre>
-
-<p>After testing, operation based on the same data set takes around 3.5 seconds now.  Suddenly drops 60%!</p>
-
-<p>Kind of satisfied on what I have changed on this.  However, I think there should be room to improve.  Any Comment?</p>
 ]]></content>
   </entry>
   

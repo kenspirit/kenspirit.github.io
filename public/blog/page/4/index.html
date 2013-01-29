@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="激励员工的士气 最近看到篇文章：“9种比钱更好的激励员工的方法 (9 Things That Motivate Employees More Than Money)”。 第1、6点，展示了公司的高层有没有真正的关心过下属，是真的把他们做的事都看在眼里，放在心上，还是只是说说而已。表扬不应该是空泛的 &hellip;">
+  <meta name="description" content="When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library References&#8221;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-04T09:07:35+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
+
+<blockquote><p>weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for &#8220;ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p
+ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl
+, Specification-Version: 1.2, exact-match: true]</p></blockquote>
+
+<p>It looks strange from the error message that the EAR is referring to some jars but cannot be resolved.</p>
+
+<p>I remember that these two jars have been set as shared library in Weblogic since the very beginning and why the problems occur when I am deploying it to the newly created server but not ADMIN.</p>
+
+<p>I wonder around by using Google and happened to see this website.</p>
+
+<p><a href="http://middlewaremagic.com/weblogic/?p=2938">http://middlewaremagic.com/weblogic/?p=2938</a></p>
+
+<p>It&#8217;s also said that the directory having the Shared Library should be included when you are calling weblogic.appc to compile your EAR.</p>
+
+<p>I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.</p>
+
+<p><a href="https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg"><img src="https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg?w=574" alt="Image" /></a><a href="https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg"><img src="https://dl.dropbox.com/u/17182499/blog/2012/02/2.jpg?w=614" alt="Image" /></a></p>
+
+<p> </p>
+
+<p> </p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -486,151 +544,6 @@ _</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/07/20/enhance-performance-of-extjs-grid-record-set-value/">Enhance Performance of ExtJs Grid Record Set Value Operation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-20T23:25:39+08:00" pubdate data-updated="true">Jul 20<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When implementing a feature for the project, I encounter one Javascript method that takes around 9 seconds to finish.  Clearly, there is some performance issue in it.</p>
-
-<p>The method logic is simple.  Take below table&#8217;s data as an example:</p>
-
-<pre><code>Measurement         XS     S     M     L      XL   XXL
- Sleeve             1      1     0     2      2     2
-</code></pre>
-
-<p>Consider above row &#8220;Sleeve&#8221; is a Record in ExtJs Grid.  When deleting size S &amp; L column, the figure should change to be:</p>
-
-<pre><code>Measurement         XS     M     XL      XXL
- Sleeve             2      0      4      4
-</code></pre>
-
-<p>The intent is to accumulate the figure of the deleted size to the remained ones in one direction from the Standard size M.  Hence, this method requires intensive call on Record.set();  Below is the sudo code.</p>
-
-<pre><code>    var recalculatedGridData = [];
-    var colSearchCount = 0;
-    for (var rowNo = 0; rowNo &lt; gridStoreLength; rowNo++) {
-        ...
-        // Calculation logic here to get all the correct data first.
-        ...
-        recalculatedGridData.push(recordData); // Store the data
-    }
-    // Reset recalculated data to record
-    for (var rowNo = 0; rowNo &lt; recalculatedGridData.length; rowNo++) {
-        var recordData = recalculatedGridData[rowNo];
-        var record = store.virtualGetAt(recordData.rowNo);
-        for (var colNo = 0; colNo &lt; recordData.cells.length; colNo++) {
-            var cell = recordData.cells[colNo];
-            record.set(cell.name, cell.value);
-        }
-        // record.batchSet(recordData.cells); // Enhanced version to batch set
-    }
-</code></pre>
-
-<p>The performance tuning rule is first to find out the part where the bigger portion of the time used in.  This method contains two major for loop.  One is the first for calculation logic and the second is just purely setting data to the right cell.</p>
-
-<p>The total time of the method takes around 9 seconds when the involved number of records are 42 and each have 5 cells affected.  It&#8217;s found that 99% of the time spent on the second for loop.</p>
-
-<p>After testing more intensively, each record.set() takes around 0.05 second.  That is why operation on around 42 * 5 = 210 cells takes 9 seconds.</p>
-
-<p>OK.  Root cause is found and it&#8217;s time to see why it takes so long to call record.set().  After checking on the source of ExtJs Record and Store object.</p>
-
-<p>In Record.js:</p>
-
-<pre><code>set : function(name, value){
-        var encode = Ext.isPrimitive(value) ? String : Ext.encode;
-        if(encode(this.data[name]) == encode(value)) {
-            return;
-        }
-        this.dirty = true;
-        if(!this.modified){
-            this.modified = {};
-        }
-        if(this.modified[name] === undefined){
-            this.modified[name] = this.data[name];
-        }
-        this.data[name] = value;
-        if(!this.editing){
-            this.afterEdit();
-        }
-    },
-
-    // private
-    afterEdit : function(){
-        if (this.store != undefined &amp;&amp; typeof this.store.afterEdit == "function") {
-            this.store.afterEdit(this);
-        }
-    },
-</code></pre>
-
-<p>In Store.js:</p>
-
-<pre><code>    afterEdit : function(record){
-        if(this.modified.indexOf(record) == -1){
-            this.modified.push(record);
-        }
-        this.fireEvent('update', this, record, Ext.data.Record.EDIT);
-    },
-</code></pre>
-
-<p>You can find that each Record.set() will call store.afterEdit() with its own as parameter.  Hence, I am considering batch update all cells in one record and then trigger Record.afterEdit() method.  Below is the &#8220;cracked&#8221; method added for batch set data.</p>
-
-<pre><code>batchSet : function(cells){
-        for (var i = cells.length; i--;) {
-            var name = cells[i].name;
-            var value = cells[i].value;
-            var encode = Ext.isPrimitive(value) ? String : Ext.encode;
-            if(encode(this.data[name]) == encode(value)) {
-                return;
-            }
-            this.dirty = true;
-            if(!this.modified){
-                this.modified = {};
-            }
-            if(this.modified[name] === undefined){
-                this.modified[name] = this.data[name];
-            }
-            this.data[name] = value;
-        }
-        if(!this.editing){
-            this.afterEdit();
-        }
-    },
-</code></pre>
-
-<p>After testing, operation based on the same data set takes around 3.5 seconds now.  Suddenly drops 60%!</p>
-
-<p>Kind of satisfied on what I have changed on this.  However, I think there should be room to improve.  Any Comment?</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -646,6 +559,10 @@ _</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/">String interpolation should not be used with Class Directive in AngularJS </a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/">被广泛误解的匈牙利命名法</a>
@@ -683,20 +600,18 @@ _</p>
         <a href="/blog/2012/08/06/extjs-jasmine-maven-integration/">ExtJS, Jasmine, Maven - Integration</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">ExtJS, Jasmine, Maven - Why I am working on them?</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (12)</a></li><li><a href='/blog/categories/think'>Think (20)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (13)</a></li><li><a href='/blog/categories/think'>Think (20)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
-    <li><a style="font-size: 60%" href="//blogging/">Blogging</a></li>
+    <li><a style="font-size: 60%" href="//angularjs/">AngularJS</a></li>
+<li><a style="font-size: 60%" href="//blogging/">Blogging</a></li>
+<li><a style="font-size: 60%" href="//class-directive/">Class Directive</a></li>
 <li><a style="font-size: 110%" href="//coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="//connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="//db/">DB</a></li>
@@ -707,7 +622,7 @@ _</p>
 <li><a style="font-size: 60%" href="//health/">Health</a></li>
 <li><a style="font-size: 60%" href="//jawr/">JAWR</a></li>
 <li><a style="font-size: 123%" href="//jasmine/">Jasmine</a></li>
-<li><a style="font-size: 149%" href="//javascript/">Javascript</a></li>
+<li><a style="font-size: 155%" href="//javascript/">Javascript</a></li>
 <li><a style="font-size: 123%" href="//management/">Management</a></li>
 <li><a style="font-size: 92%" href="//maven/">Maven</a></li>
 <li><a style="font-size: 60%" href="//mongodb/">MongoDB</a></li>
@@ -718,6 +633,7 @@ _</p>
 <li><a style="font-size: 60%" href="//pomodoro/">Pomodoro</a></li>
 <li><a style="font-size: 92%" href="//productivity/">Productivity</a></li>
 <li><a style="font-size: 165%" href="//retrospect/">Retrospect</a></li>
+<li><a style="font-size: 60%" href="//string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="//stuff/">Stuff</a></li>
 <li><a style="font-size: 92%" href="//time-management/">Time Management</a></li>
 <li><a style="font-size: 110%" href="//trip/">Trip</a></li>

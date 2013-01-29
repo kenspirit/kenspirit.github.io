@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/javascript/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-01-03T21:21:31+08:00</updated>
+  <updated>2013-01-30T07:12:49+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,144 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS ]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
+    <updated>2013-01-30T07:02:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
+    <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
+``` html</p>
+
+<pre><code>&lt;span ng-class="task-{\{task.type}}"&gt;{\{task.type}}&lt;/span&gt;
+&lt;input type="text" ng-model="task.type"/&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>Do you see what is the difference between the one below and above?<br/>
+``` html</p>
+
+<pre><code>&lt;span ng-class="'task-' + task.type"&gt;{\{task.type}}&lt;/span&gt;
+&lt;input type="text" ng-model="task.type"/&gt;
+</code></pre>
+
+<p>```</p>
+
+<p><strong>Yes yes yes, String interpolation doesn't constain the extra &#92;.  I don't know how to escape the god damn double curly brace correctly in Backtick code block in octopress.  Please forgive me now and help is appreciated.</strong></p>
+
+<p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
+
+<p>Before furher reading, it's better if you have read the Developer Guide, <a href="http://docs.angularjs.org/guide/directive">Directive</a> section which explains the concept of <strong>String interpolation</strong> and <strong>Compilation process, and directive matching</strong>, although honestly, it doesn't quite clearly say how the String interpolation should or can be used.  Before, I just have the rough idea that it can be evaluated and replaced in String and also reflect the change from model.</p>
+
+<p>If you use the first code snippet to create sample AngularJS page and bind an <em>task</em> model to it, you can see that the String Interpolation "<em>works</em>": the ng-class attribute and the content of the span tag can be replaced correctly with model value.  Even if you change the model value through the input field, they can be updated accordingly.  However, the CSS is not applied as expected.</p>
+
+<p>Why?  Let's take a look at AngularJS source:</p>
+
+<p>In function <em>collectDirectives</em>, when it checks the element's attribute, it calls <em>addAttrInterpolateDirective</em> before <em>addDirective</em>.  In <em>addAttrInterpolateDirective</em>, the <a href="http://docs.angularjs.org/guide/expression">Expression</a> in String interpolation will be converted to a new directive with compile function to watch the change and set new value to the attribute which is the class directive in this case.  There are two important things need to be aware of:</p>
+
+<ol>
+<li>A new directive is ad-hoc created before the class directive it's inspecting.</li>
+<li>The new directive's linking function is watching the expression change to update the class directive value itself.</li>
+</ol>
+
+
+<p>```javascript</p>
+
+<pre><code>function collectDirectives(node, directives, attrs, maxPriority) {
+  var nodeType = node.nodeType,
+      attrsMap = attrs.$attr,
+      match,
+      className;
+
+  switch(nodeType) {
+    case 1: /* Element */
+      // use the node name: &lt;directive&gt;
+      addDirective(directives,
+          directiveNormalize(nodeName_(node).toLowerCase()), 'E', maxPriority);
+
+      // iterate over the attributes
+      for (var attr, name, nName, value, nAttrs = node.attributes,
+               j = 0, jj = nAttrs &amp;&amp; nAttrs.length; j &lt; jj; j++) {
+        attr = nAttrs[j];
+        if (attr.specified) {
+          name = attr.name;
+          nName = directiveNormalize(name.toLowerCase());
+          ...
+          addAttrInterpolateDirective(node, directives, value, nName);
+          addDirective(directives, nName, 'A', maxPriority);
+        }
+      }
+      ...
+    }
+    ...
+}
+
+function addAttrInterpolateDirective(node, directives, value, name) {
+  var interpolateFn = $interpolate(value, true);
+
+  // no interpolation found -&gt; ignore
+  if (!interpolateFn) return;
+
+  directives.push({
+    priority: 100,
+    compile: valueFn(function(scope, element, attr) {
+      var $$observers = (attr.$$observers || (attr.$$observers = {}));
+      ...
+      attr[name] = undefined;
+      ($$observers[name] || ($$observers[name] = [])).$$inter = true;
+      (attr.$$observers &amp;&amp; attr.$$observers[name].$$scope || scope).
+        $watch(interpolateFn, function(value) {
+          attr.$set(name, value);
+        });
+    })
+  });
+}
+</code></pre>
+
+<p>```</p>
+
+<p>Let's see how class directive works now.  It's at function <em>classDirective</em>.  If you put an expression in class directive, it will watch that.  Once there is any value change, it adds/removes class from element.  Hence, the second example above works correctly.</p>
+
+<p>```javascript</p>
+
+<pre><code>function classDirective(name, selector) {
+  name = 'ngClass' + name;
+  return ngDirective(function(scope, element, attr) {
+    scope.$watch(attr[name], function(newVal, oldVal) {
+      if (selector === true || scope.$index % 2 === selector) {
+        if (oldVal &amp;&amp; (newVal !== oldVal)) {
+           if (isObject(oldVal) &amp;&amp; !isArray(oldVal))
+             oldVal = map(oldVal, function(v, k) { if (v) return k });
+           element.removeClass(isArray(oldVal) ? oldVal.join(' ') : oldVal);
+         }
+         if (isObject(newVal) &amp;&amp; !isArray(newVal))
+            newVal = map(newVal, function(v, k) { if (v) return k });
+         if (newVal) element.addClass(isArray(newVal) ? newVal.join(' ') : newVal);      }
+    }, true);
+  });
+}
+</code></pre>
+
+<p>```</p>
+
+<p>However, if you put String interpolation into it, it will be watching <strong>undefined</strong>.  Why?  Remember what <em>addAttrInterpolateDirective</em> does?  An extra directive is added before this class directive and so its linking function runs before the one for class directive.  And one more thing I omit above: its linking function explicitly sets <strong>attr[name] = undefined;</strong>.  Hence, when the linking functions run sequentially, the class directive's linking function doesn't watch the expression in String interpolation or the value derived although the String interpolation itself works correctly to set the value to class directive.</p>
+
+<p>Hence, in order to set CSS class on HTML element dynamically, we should either use:</p>
+
+<ul>
+<li>ng-class / ng-class-odd / ng-class-even without String interpolation by directly using model value or Expression.</li>
+</ul>
+
+
+<p>or</p>
+
+<ul>
+<li>HTML class attribute directly with String interpolation.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A response pends forever issue in MongoDB, Connect and Node.js]]></title>
@@ -602,42 +740,6 @@ Results: 3 specs, 0 failures
 <p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
 
 <p>OK, now preparation for Unit Test is done.  Let's see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Why I am working on them?]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"/>
-    <updated>2012-08-05T15:52:24+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them</id>
-    <content type="html"><![CDATA[<p>Before going into how to setup <a href="http://pivotal.github.com/jasmine/">Jasmine</a> to do Unit Test for <a href="www.sencha.com/products/extjs">ExtJS</a>, I think I should describe why I am doing this.</p>
-
-<p>I have been using ExtJS for around 4 years.  My first company used HTML + ExtJS to build the UI while the current one use ExtJS completely to do that.  I have encountered lots of cases that well-tested behavior failed after some new features introduced in.</p>
-
-<p>Everyone knows that it's because there lacks Unit Test.  However, there have never been any Unit Test done for Javascript in any project.  There are many of the reasons behind that, such as tight schedule, not enough attention etc.  But the most important reason that outweights or strengthens others is that Unit Test for Javascript is way too difficult than Java, especially when Javascript is used intensively to build the UI and implement business logics.</p>
-
-<p>One of the reason makes Javascript hard to do Unit Test is due to good tools unavailability;  the other one is that most developers tend to not separating business logic from UI code quite clearly.</p>
-
-<p>After the emergence of <a href="http://seleniumhq.org/">Selenium</a>, I have once thought it should be the right tool to address this issue.  However, after reading Selenium Doc and seeing what my previous colleagues did for recording &amp; playing, I think Selenium should be used mainly for Integration Test, not in Unit Test level.  My opinion is further strenghten after watching a video from Google Testing Expert and reading the blog from Martin Fowler:</p>
-
-<blockquote><p><a href="http://www.infoq.com/cn/presentations/duannian-agile-test">让测试也敏捷起来</a> by 段念</p></blockquote>
-
-<p><a href="http://martinfowler.com/bliki/TestPyramid.html">TestPyramid</a> by Martin Fowler</p>
-
-<p><strong>The main points in TestPyramid are:</strong></p>
-
-<blockquote><ol>
-<li><p><strong>Low-level unit test should be many more than high level end-to-end testing through GUI.</strong></p></li>
-<li><p><strong>Testing through UI is slow, brittle, expensive to write.</strong></p></li>
-<li><p><strong>A rich javascript UI should have most of its UI behavior tested with javascript unit tests using something like Jasmine.</strong></p></li>
-</ol>
-</blockquote>
-
-<p>Above is a long long purpose briefing, I hope it worthes to let you know the background and also agree with me on this.  I heard about Jasmine before reading the post by Martin Fowler, however, I kept thinking that it's quite difficult or even impossible to use Jasmine to test those ExtJS UI components.</p>
-
-<p>Until I did sit down and really tried to use Jasmine to test the ExtJS code, I can say that Unit Test against ExtJS by Jasmine can be achieved at some level once we know what to test for.</p>
-
-<p>In next post, I will show you the steps to bind ExtJS, Jasmine, Maven together to do the Unit Test and what I think we should test against.</p>
 ]]></content>
   </entry>
   

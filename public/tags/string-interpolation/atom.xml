@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: String interpolation | Thinking in Crowd / 鹄思乱想]]></title>
+  <link href="http://www.thinkingincrowd.me/tags/string-interpolation/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-01-30T07:12:49+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
+  <author>
+    <name><![CDATA[鹄思乱想]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS ]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
+    <updated>2013-01-30T07:02:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
+    <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
+``` html</p>
+
+<pre><code>&lt;span ng-class="task-{\{task.type}}"&gt;{\{task.type}}&lt;/span&gt;
+&lt;input type="text" ng-model="task.type"/&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>Do you see what is the difference between the one below and above?<br/>
+``` html</p>
+
+<pre><code>&lt;span ng-class="'task-' + task.type"&gt;{\{task.type}}&lt;/span&gt;
+&lt;input type="text" ng-model="task.type"/&gt;
+</code></pre>
+
+<p>```</p>
+
+<p><strong>Yes yes yes, String interpolation doesn't constain the extra &#92;.  I don't know how to escape the god damn double curly brace correctly in Backtick code block in octopress.  Please forgive me now and help is appreciated.</strong></p>
+
+<p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
+
+<p>Before furher reading, it's better if you have read the Developer Guide, <a href="http://docs.angularjs.org/guide/directive">Directive</a> section which explains the concept of <strong>String interpolation</strong> and <strong>Compilation process, and directive matching</strong>, although honestly, it doesn't quite clearly say how the String interpolation should or can be used.  Before, I just have the rough idea that it can be evaluated and replaced in String and also reflect the change from model.</p>
+
+<p>If you use the first code snippet to create sample AngularJS page and bind an <em>task</em> model to it, you can see that the String Interpolation "<em>works</em>": the ng-class attribute and the content of the span tag can be replaced correctly with model value.  Even if you change the model value through the input field, they can be updated accordingly.  However, the CSS is not applied as expected.</p>
+
+<p>Why?  Let's take a look at AngularJS source:</p>
+
+<p>In function <em>collectDirectives</em>, when it checks the element's attribute, it calls <em>addAttrInterpolateDirective</em> before <em>addDirective</em>.  In <em>addAttrInterpolateDirective</em>, the <a href="http://docs.angularjs.org/guide/expression">Expression</a> in String interpolation will be converted to a new directive with compile function to watch the change and set new value to the attribute which is the class directive in this case.  There are two important things need to be aware of:</p>
+
+<ol>
+<li>A new directive is ad-hoc created before the class directive it's inspecting.</li>
+<li>The new directive's linking function is watching the expression change to update the class directive value itself.</li>
+</ol>
+
+
+<p>```javascript</p>
+
+<pre><code>function collectDirectives(node, directives, attrs, maxPriority) {
+  var nodeType = node.nodeType,
+      attrsMap = attrs.$attr,
+      match,
+      className;
+
+  switch(nodeType) {
+    case 1: /* Element */
+      // use the node name: &lt;directive&gt;
+      addDirective(directives,
+          directiveNormalize(nodeName_(node).toLowerCase()), 'E', maxPriority);
+
+      // iterate over the attributes
+      for (var attr, name, nName, value, nAttrs = node.attributes,
+               j = 0, jj = nAttrs &amp;&amp; nAttrs.length; j &lt; jj; j++) {
+        attr = nAttrs[j];
+        if (attr.specified) {
+          name = attr.name;
+          nName = directiveNormalize(name.toLowerCase());
+          ...
+          addAttrInterpolateDirective(node, directives, value, nName);
+          addDirective(directives, nName, 'A', maxPriority);
+        }
+      }
+      ...
+    }
+    ...
+}
+
+function addAttrInterpolateDirective(node, directives, value, name) {
+  var interpolateFn = $interpolate(value, true);
+
+  // no interpolation found -&gt; ignore
+  if (!interpolateFn) return;
+
+  directives.push({
+    priority: 100,
+    compile: valueFn(function(scope, element, attr) {
+      var $$observers = (attr.$$observers || (attr.$$observers = {}));
+      ...
+      attr[name] = undefined;
+      ($$observers[name] || ($$observers[name] = [])).$$inter = true;
+      (attr.$$observers &amp;&amp; attr.$$observers[name].$$scope || scope).
+        $watch(interpolateFn, function(value) {
+          attr.$set(name, value);
+        });
+    })
+  });
+}
+</code></pre>
+
+<p>```</p>
+
+<p>Let's see how class directive works now.  It's at function <em>classDirective</em>.  If you put an expression in class directive, it will watch that.  Once there is any value change, it adds/removes class from element.  Hence, the second example above works correctly.</p>
+
+<p>```javascript</p>
+
+<pre><code>function classDirective(name, selector) {
+  name = 'ngClass' + name;
+  return ngDirective(function(scope, element, attr) {
+    scope.$watch(attr[name], function(newVal, oldVal) {
+      if (selector === true || scope.$index % 2 === selector) {
+        if (oldVal &amp;&amp; (newVal !== oldVal)) {
+           if (isObject(oldVal) &amp;&amp; !isArray(oldVal))
+             oldVal = map(oldVal, function(v, k) { if (v) return k });
+           element.removeClass(isArray(oldVal) ? oldVal.join(' ') : oldVal);
+         }
+         if (isObject(newVal) &amp;&amp; !isArray(newVal))
+            newVal = map(newVal, function(v, k) { if (v) return k });
+         if (newVal) element.addClass(isArray(newVal) ? newVal.join(' ') : newVal);      }
+    }, true);
+  });
+}
+</code></pre>
+
+<p>```</p>
+
+<p>However, if you put String interpolation into it, it will be watching <strong>undefined</strong>.  Why?  Remember what <em>addAttrInterpolateDirective</em> does?  An extra directive is added before this class directive and so its linking function runs before the one for class directive.  And one more thing I omit above: its linking function explicitly sets <strong>attr[name] = undefined;</strong>.  Hence, when the linking functions run sequentially, the class directive's linking function doesn't watch the expression in String interpolation or the value derived although the String interpolation itself works correctly to set the value to class directive.</p>
+
+<p>Hence, in order to set CSS class on HTML element dynamically, we should either use:</p>
+
+<ul>
+<li>ng-class / ng-class-odd / ng-class-even without String interpolation by directly using model value or Expression.</li>
+</ul>
+
+
+<p>or</p>
+
+<ul>
+<li>HTML class attribute directly with String interpolation.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
