@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="Before going into how to setup Jasmine to do Unit Test for ExtJS, I think I should describe why I am doing this. I have been using ExtJS for around 4 &hellip;">
+  <meta name="description" content="After briefing Why I am working on them, let me show you how they can be integrated all together first. Jasmine is a BDD Test Framework which can be &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,142 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/06/extjs-jasmine-maven-integration/">ExtJS, Jasmine, Maven - Integration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T22:59:31+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
+
+<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error &#8220;Class not found: File&#8221; if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
+
+<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project&#8217;s build management.</p>
+
+<p>Let&#8217;s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;plugin&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;groupId&gt;</span>com.github.searls<span class="nt">&lt;/groupId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;artifactId&gt;</span>jasmine-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;version&gt;</span>1.2.0.0<span class="nt">&lt;/version&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;extensions&gt;</span>true<span class="nt">&lt;/extensions&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;executions&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;execution&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;goals&gt;</span>
+</span><span class='line'>              <span class="nt">&lt;goal&gt;</span>test<span class="nt">&lt;/goal&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/goals&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/execution&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/executions&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;configuration&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;preloadSources&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;source&gt;</span>${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]<span class="nt">&lt;/source&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/preloadSources&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;jsSrcDir&gt;</span>${project.basedir}/Resources/js<span class="nt">&lt;/jsSrcDir&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;jsTestSrcDir&gt;</span>${project.basedir}/Resources/test/js<span class="nt">&lt;/jsTestSrcDir&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;sourceIncludes&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;include&gt;</span>[TO_BE_TESTED_JS_FILES_GOES_HERE]<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;include&gt;</span>[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/sourceIncludes&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;specIncludes&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;include&gt;</span>[SPEC_JS_FOLDER_GOES_HERE]/*.js<span class="nt">&lt;/include&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/specIncludes&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/configuration&gt;</span>
+</span><span class='line'><span class="nt">&lt;/plugin&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type &#8220;mvn test&#8221; in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>INFO<span class="o">]</span> Executing Jasmine Specs
+</span><span class='line'>-------------------------------------------------------
+</span><span class='line'> J A S M I N E   S P E C S
+</span><span class='line'>-------------------------------------------------------
+</span><span class='line'><span class="o">[</span>INFO<span class="o">]</span>
+</span><span class='line'>Test Suite Name 1
+</span><span class='line'>  Spec 1
+</span><span class='line'>  Spec 2
+</span><span class='line'>
+</span><span class='line'>Test Suite Name 2
+</span><span class='line'>  Spec 3
+</span><span class='line'>
+</span><span class='line'>Results: 3 specs, 0 failures
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
+
+<p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
+
+<p>OK, now preparation for Unit Test is done.  Let&#8217;s see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -524,83 +660,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/05/forward-or-backward/">到底是前进还是后退？</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-02-05T02:07:56+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自从我离开旧公司以来，都有旧同事问我新公司这边有没有什么好的职位。</p>
-
-<p>一开始，其实都系正常，因为问我的人，都已经在那做了和我差不多那么多年，甚至都还是第一份工作。所以，希望出去闯闯也理所当然。但是近来，好像人数还有增多的倾向，而且是服役多长时间的都有，有扩散的倾向。这还不是让我最担心的，更重要的是，从每个人身上，我都听到些怨言。这样，感觉情况就不妙了。</p>
-
-<p>我走的时候，就听说公司，上至大老板开始更加重视起和员工的沟通，员工培养上面来。</p>
-
-<p>本想我走了后，可能还真是做了件好事，但为什么所谓“更加重视员工”的做法还会引起那么多怨言和激发人员要走的想法呢？</p>
-
-<p>拿我听到的两点来说吧:</p>
-
-<p><strong>1.  加薪方面</strong></p>
-
-<p>本来人员流失后，加薪是正常和需要的，尤其是我之前还在职并还能发表一下意见的时候，已经和上层说过这个问题了。公司开发部中层方面（3年左右）的人员，薪酬水平有点偏低的。但我听到的很多怨言，都说这次加薪幅度，很多人都不满意。估计主要是中层加的不多。像一些做了5年以上的，公司里非常重视的少数，好像并没太大声音听到，因为我也知道有一些加的好像真不少，我也和他们说其实公司对他们已经很不薄，不要以为外面真的高很多而跟风轻率跳槽。</p>
-
-<p>所以我感觉，可能中层普遍加的都并不多，薪酬集中到某些人上面去了。这里是一个问题，因为感觉公司以前一直有一个想法就是，最重要的那么年资老的，能干活的人，保住就行了。其它人就无所谓了。反正有老员工带着干。</p>
-
-<p>其实这样的想法是错误的，会引起下面的问题。要保住和发展公司，不是只要有老员工就行的了。</p>
-
-<ul>
-<li><p>新员工感觉不受重视，没发挥空间。因为上层，也只认得老员工，有事也找他们。新员工Turn over太快。其实这也和上层缺乏和下面的员工进行沟通有关。我就听一个新员工说过：“我们这些新人，其实都不重要，都是堆砖头的，老员工在就行了。”</p></li>
-<li><p>老员工经常要带新员工，但因为他们流动太快，老员工都有培训疲劳症了。公司的产品本来是有一个比较好的框架的，做的事情，一部份是重复性劳动，一部份是业务逻辑或复杂的customization。如果一直要老员工培训新人来做重复性的劳动，老员工就会很烦，而且因为项目紧还要忙于处理剩下的部分，还没有时间去改进框架和产品。框架很快就被毁了。</p></li>
-<li><p>公司总不招一些有经验的人，这样，老员工学习新知识，新文化只能靠上层，或者自学了。可是，因为忙，基本哪还有时间，有时周末都还要加班。上层也少和下面的沟通，更不要说创造培训的机会了。这样，久而久之，老员工感觉学不到东西了，你工资又不比别人有吸引力，那为什么还要留着呢，更何况连本来保留着的一些感情，还被一些人，一点一点的摧毁了。老员工的流失也成了必然。听一个老员工说，他临走前问上层为什么不招有经验的人，那个竟然答，我们不需要有经验的，进来还不是要教他？我真是无语了。</p></li>
-</ul>
-
-
-<p>还有另一方面是，有人说这次加薪幅度不高，但是搞了个什么类似奖金的东西，就是做满一年后，会再拿到双薪外可能多一个月左右的工资吧。但据他们算过以后，觉得如果分摊到每一个月现拿，才差不多达到他们觉得理想的水平。所以普遍让人觉得，又想让人留下，又一点诚意都没有。</p>
-
-<p>其实这种压后拿钱，和别人给个什么期权是一样道理，是有用的，但要看什么时候。如果别人都很不爽了，或者觉得你没有前途了，还要来干什么呢？所谓乱世用重典，重要时候，一定要用让人一击即倒的手段，让人无法拒绝，而不是还谈什么感情，理想的。过年那段时间，我刚好看了一本关于人脑学习特性的书(Brain Bugs)里面有说到，人普遍来说是比较看重眼前利益的，你说现在得到20元，或者一个月后拿到40元。基本都是选现拿的。因为远期目标并不多多少，而且还要看你说话算话不。所以，如果真如我听到的，要等上一年，而且即使现在分摊出来，才是理想的价格，可以说是没有多少吸引力的。</p>
-
-<p><strong>2.  请假方面</strong></p>
-
-<p>听说现在请假很不容易，要提前一个有，还真有人被reject了，可能多是一两天那种情况吧，我不知道是真的那么忙呢，还是专门出这种政策来防人出去面试找工作的。如果真是后一种情况，还真是脑残做法。所谓上有政策，肯定下有对策，请个病假不就行了，还不用提前说呢。退一步说，如果真是那么忙，据我所知，以前一起工作的同事，基本和我熟悉的，每个人工作都是很负责任的。有需要的话，晚上周末自觉加班，过年过节被点名要开电话或加班，最多抱怨一下，也还是这样。到真有事要请假，相信也是有急事，事后也会补回来。再退一步说，现在公司那么多怨言的情况下，还出这样的政策，真是还怕不够多吗？想走的人，真不爽了，没找到新工作，也会走。真搞不懂他们是怎么想的。</p>
-
-<p>之前，我在LinkedIn里还看了两篇文章：</p>
-
-<p><a href="http://www.linkedin.com/news?actionBar=&amp;articleID=5562842806801670153&amp;ids=cPATdjAPe3wSdj0PczkMd3oRdiMPczcNd3AMdz0Sd30MdjsOdzkRb34Me30Rdj8Scj8Uej0Vej8SdjkIcj8Td3gRej0UdzoOc3AQczoRdiMPdj4MdPoNc3wSc3wOd3wOdzkR&amp;aag=true&amp;freq=weekly&amp;trk=eml-tod2-b-ttl-0&amp;ut=2yCqJXsKqFql41">Six Reason Why You Should Give Your Employee a 4-Day Week</a></p>
-
-<p><a href="http://www.linkedin.com/news?actionBar=&amp;articleID=1026708525&amp;ids=cPsOdzoVdj8MciMTdzcScPoVdzATe3wTcj4NdzkRb34Tdj8PcjgOc34Idj8Re30Tdz8MciMPcPsMe3sMcz0N&amp;aag=true&amp;freq=weekly&amp;trk=eml-tod2-b-ttl-1&amp;ut=0D2UlrYgjNgR41">Why You Should Give Your Employee Unlimited Vacation</a></p>
-
-<p>里面其实说的都是为什么这样会更尊重员工，减少公司成本，激起员工工作热情，还可以从中找出积极向上的人。其实想起来何尝不是呢？想起我们平时不是有很多假期都没有放，要堆到年后才清吗？放个长一点的假，其实也是觉得无聊，想干活了。其实有些时候，放松了，可能更好管。</p>
-
-<p>本来既然已经离开，就不好再说什么，但是看到这种情况，还是忍不住要发泄一下。也不知道那些那么另人不爽的政策，是不是又是那个人想出来的。真是“成也萧何 败也萧何”。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -618,7 +677,11 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/">String interpolation should not be used with Class Directive in AngularJS </a>
+        <a href="/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/">Expression in AngularJS must be idempotent and for multiple calls</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/">String interpolation should not be used with Class Directive in AngularJS</a>
       </li>
     
       <li class="post">
@@ -653,33 +716,29 @@
         <a href="/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/08/06/extjs-jasmine-maven-integration/">ExtJS, Jasmine, Maven - Integration</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (13)</a></li><li><a href='/blog/categories/think'>Think (20)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (14)</a></li><li><a href='/blog/categories/think'>Think (20)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
-    <li><a style="font-size: 60%" href="//angularjs/">AngularJS</a></li>
+    <li><a style="font-size: 92%" href="//angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="//blogging/">Blogging</a></li>
-<li><a style="font-size: 60%" href="//class-directive/">Class Directive</a></li>
 <li><a style="font-size: 110%" href="//coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="//connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="//db/">DB</a></li>
 <li><a style="font-size: 92%" href="//design/">Design</a></li>
+<li><a style="font-size: 92%" href="//directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="//excel/">Excel</a></li>
 <li><a style="font-size: 133%" href="//extjs/">ExtJs</a></li>
 <li><a style="font-size: 92%" href="//gtd/">GTD</a></li>
 <li><a style="font-size: 60%" href="//health/">Health</a></li>
 <li><a style="font-size: 60%" href="//jawr/">JAWR</a></li>
 <li><a style="font-size: 123%" href="//jasmine/">Jasmine</a></li>
-<li><a style="font-size: 155%" href="//javascript/">Javascript</a></li>
+<li><a style="font-size: 160%" href="//javascript/">Javascript</a></li>
 <li><a style="font-size: 123%" href="//management/">Management</a></li>
 <li><a style="font-size: 92%" href="//maven/">Maven</a></li>
 <li><a style="font-size: 60%" href="//mongodb/">MongoDB</a></li>
@@ -699,6 +758,8 @@
 <li><a style="font-size: 123%" href="//unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="//weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="//i18n/">i18n</a></li>
+<li><a style="font-size: 60%" href="//ngclass/">ngClass</a></li>
+<li><a style="font-size: 60%" href="//ngrepeat/">ngRepeat</a></li>
 
   </ul>
 </section>

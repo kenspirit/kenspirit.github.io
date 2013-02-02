@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-01-30T07:12:49+08:00</updated>
+  <updated>2013-02-02T14:52:17+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -14,7 +14,279 @@
 
   
   <entry>
-    <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS ]]></title>
+    <title type="html"><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
+    <updated>2013-02-02T14:32:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
+    <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
+
+<h2>Requirement</h2>
+
+<p>I am making some workout entries as a list and one special requirement is to group the records by the date.</p>
+
+<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>    <span class="nt">&lt;style&gt;</span>
+</span><span class='line'>        <span class="nt">body</span> <span class="p">{</span><span class="k">font-family</span><span class="o">:</span> <span class="s1">&#39;Lucida Grande&#39;</span><span class="o">,</span> <span class="s1">&#39;Lucida Sans&#39;</span><span class="o">,</span> <span class="n">Arial</span><span class="o">,</span> <span class="k">sans-serif</span><span class="p">;}</span>
+</span><span class='line'>        <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span><span class="k">list-style-type</span><span class="o">:</span> <span class="k">none</span><span class="p">;}</span>
+</span><span class='line'>        <span class="nc">.actionDateGroup</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">red</span><span class="p">}</span>
+</span><span class='line'>    <span class="nt">&lt;/style&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;EntryCtrl&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;entries&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;entry in entries&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;div</span> <span class="na">ng-switch</span> <span class="na">on=</span><span class="s">&quot;isNewDateGroup(entry.actionDate)&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                        <span class="nt">&lt;div</span> <span class="na">ng-switch-when=</span><span class="s">&quot;true&quot;</span> <span class="na">class=</span><span class="s">&quot;actionDateGroup&quot;</span><span class="nt">&gt;</span>{{entry.actionDate}}<span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;span&gt;</span>{{entry.desc}}<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./js/angular/angular.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script&gt;</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="nx">EntryCtrl</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$location</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">entries</span> <span class="o">=</span> <span class="p">[{</span>
+</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Rope jumping count 1000&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="p">},{</span>
+</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Jogging 3000M&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span>
+</span><span class='line'>            <span class="p">},{</span>
+</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Situp 40 * 3&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-30&#39;</span>
+</span><span class='line'>            <span class="p">}];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">isNewDateGroup</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Function called count: &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="p">);</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Entry date vs Scope date: &#39;</span> <span class="o">+</span> <span class="nx">actionDate</span> <span class="o">+</span> <span class="s1">&#39; vs &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
+</span><span class='line'>                    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Expectation</h2>
+
+<ol>
+<li><em>actionDate</em> of the first entry will always be shown as it&#8217;s the first group.</li>
+<li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.</li>
+</ol>
+
+
+<h2>Phenomenon</h2>
+
+<p>When the sample data is as above (case #1), the effect looks like it&#8217;s behaving correctly as below:</p>
+
+<ul>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-31</div>
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-30</div>
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn&#8217;t it supposed to show only the first one as all entries have the same <em>actionDate</em>?</p>
+
+<h4>Expected result:</h4>
+
+<ul>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-31</div>
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<h4>Actual result:</h4>
+
+<ul>
+    <li style="list-style-type: none;">
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<p>Now if you check the calledCount in the debug message, you will find that it&#8217;s called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:</p>
+
+<ol>
+<li>The <em>isNewDateGroup</em> function is called more than the entries&#8217; count.  (Guess this, right?)</li>
+<li>The called count is different when the data is different.  (how about this?)</li>
+</ol>
+
+
+<h2>Causes</h2>
+
+<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> API:</p>
+
+<blockquote><ul>
+<li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> and should be <strong>idempotent</strong>.</li>
+<li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> &#8230;</li>
+<li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.
+&#8230;
+(Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)</li>
+</ul>
+</blockquote>
+
+<h3>Issue #1</h3>
+
+<p>The <em>isNewDateGroup</em> being watched whose calculation relies on value of <em>lastActionDate</em> is not idempotent and so during initial run stage, <em>lastActionDate</em> is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.</p>
+
+<h3>Issue #2</h3>
+
+<p>In below code, if I comment out <strong>$scope.lastActionDate = actionDate;</strong> or change the <strong>return true;</strong> to <strong>return false;</strong>, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let&#8217;s see what the return value is for watch expression <em>isNewDateGroup</em> after each run.</p>
+
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:</p>
+
+<p>
+<table style="font-size: 0.85em;">
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">true (&#8216;2012-01-31&#8217; !== &#8216;2012-01-30&#8217;;<br/>
+        $scope.lastActionDate = &#8216;2012-01-30&#8217;)
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">2nd</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate !== &#8216;2012-01-31&#8217;)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">true</td>
+    </tr>
+</table>
+</p>
+
+
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:</p>
+
+<p>
+<table style="font-size: 0.85em;">
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">2nd</td>
+        <td style="padding: 5px; border: 1px solid black;">false (change compared to last run)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">3rd</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+</table>
+</p>
+
+
+<p>So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS]]></title>
     <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
     <updated>2013-01-30T07:02:00+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
@@ -22,7 +294,7 @@
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;task-{\{task.type}}&quot;</span><span class="nt">&gt;</span>{\{task.type}}<span class="nt">&lt;/span&gt;</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;task-{{task.type}}&quot;</span><span class="nt">&gt;</span>{{task.type}}<span class="nt">&lt;/span&gt;</span>
 </span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;task.type&quot;</span><span class="nt">/&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -31,12 +303,10 @@
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;&#39;task-&#39; + task.type&quot;</span><span class="nt">&gt;</span>{\{task.type}}<span class="nt">&lt;/span&gt;</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;&#39;task-&#39; + task.type&quot;</span><span class="nt">&gt;</span>{{task.type}}<span class="nt">&lt;/span&gt;</span>
 </span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;task.type&quot;</span><span class="nt">/&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-<p><strong>Yes yes yes, String interpolation doesn&#8217;t constain the extra &#92;.  I don&#8217;t know how to escape the god damn double curly brace correctly in Backtick code block in octopress.  Please forgive me now and help is appreciated.</strong></p>
 
 <p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
 
@@ -2084,31 +2354,6 @@ _</p>
 <p>原文链接: <a href="http://agile.dzone.com/news/10-mistakes-software-team">http://agile.dzone.com/news/10-mistakes-software-team</a></p>
 
 <p>By Roy Osherove</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[看了让我有点蛋疼的文章标题]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/07/27/annoying-titles-of-two-articles/"/>
-    <updated>2011-07-27T18:45:34+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/07/27/annoying-titles-of-two-articles</id>
-    <content type="html"><![CDATA[<p>这两篇文章都是<a href="http://www.ifanr.com/author/kkk/">李楠</a>写的：</p>
-
-<h1><a href="http://www.ifanr.com/47183">为何 G+ 的圈子是倒退？</a></h1>
-
-<h1><a href="http://www.ifanr.com/47332">为何 G+ 的圈子是进步?</a></h1>
-
-<p>怎么样？ 有点感觉没有？初看标题我就不知道他对G+是持何种的观点。假定两篇都是成立的，那必然应该说的是两个不同的方面。那应该在标题上更写清楚点。</p>
-
-<p>我先看了说G+的圈子是倒退的那篇，主要说的是G+的圈子使用上是对人进行分类(Category)，对比Tag，Category这种单一的分类，其实并不符合实际，已经被Tag取代。核心的观点也就是说对事物的特性，我们是应该可以打上多个而不是单个标记。但G+的圈子,其实是可以把同一个人放入不同的圈子里的，也就是打上多个标记。也就是说一个人，你可以把他标记为高中同学，也可以标记为死党，没有冲突。所以，如果从人员分类来说G+的圈子其实是Category，单一的标记，是错误的。</p>
-
-<p>当然，文章里还提到信息传播方向的问题（也就是下一篇说G+的圈子是进步的文章的主题），如发相到什么高中同学，G+的圈子是可以，也是需要你定向的（把他们都放在一个圈子），如果你真的介意不想让别的任何人看到。我觉得从你发觉有需要定向传播信息的时候，你就得找到那群人，而G+给的，就是那个圈子。它只是让你重用那一个圈子的人，不会你每次选啊选。我没觉得，并没什么退步的地方。对于说这个圈人的方式，是否合理，我觉得还行，因为一开始，你只要把他放一个比较适合的圈子，或哪个圈子都不放。到有特别需要的时候，再拖过去。当然，不否定以后可能有更好的方式，但我觉得这并没有退步之说。</p>
-
-<p>再看说G+的圈子是进步的那篇，主要说的就是信息传播和产生的影响方面的。里面说到，Twitter的影响，由别人决定，要看follow你的人的多少，和愿意为你传声的有多少。而G+，我觉得也一样，只是多了一个定向传声功能，你不做广播，只和一群人说而已。再退一步，你也还是可以做广播的，发到Public就可以了。至于你的影响力，最少可以是某一群人，后面的，就看那群人中，会不会，或怎么样帮你传声了。从这个角度来说，G+是Twitter私密增强版，进步了一点。</p>
-
-<p>写这篇东西，感觉自己也有点蛋疼，因为也没什么结论出来。</p>
-
-<p>我也不是批驳作者，只是觉得那两篇文章有点标题党了，不太爽。</p>
 ]]></content>
   </entry>
   

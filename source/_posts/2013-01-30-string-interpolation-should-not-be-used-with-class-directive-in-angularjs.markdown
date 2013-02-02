@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "String interpolation should not be used with Class Directive in AngularJS "
+title: "String interpolation should not be used with Class Directive in AngularJS"
 date: 2013-01-30 07:02
 comments: true
 categories:
@@ -8,7 +8,8 @@ categories:
 tags:
 - AngularJS
 - Javascript
-- Class Directive
+- ngClass
+- Directive
 - String interpolation
 ---
 
@@ -17,18 +18,20 @@ tags:
 [Expression]: http://docs.angularjs.org/guide/expression
 
 Do you see any issue in below HTML snippet with [AngularJS][] code?  
+{% raw %}
 ``` html
-    <span ng-class="task-{\{task.type}}">{\{task.type}}</span>
+    <span ng-class="task-{{task.type}}">{{task.type}}</span>
     <input type="text" ng-model="task.type"/>
 ```
+{% endraw %}
 
 Do you see what is the difference between the one below and above?  
+{% raw %}
 ``` html
-    <span ng-class="'task-' + task.type">{\{task.type}}</span>
+    <span ng-class="'task-' + task.type">{{task.type}}</span>
     <input type="text" ng-model="task.type"/>
 ```
-
-**Yes yes yes, String interpolation doesn't constain the extra &#92;.  I don't know how to escape the god damn double curly brace correctly in Backtick code block in octopress.  Please forgive me now and help is appreciated.**  
+{% endraw %}
 
 The first one use String interpolation in Class [Directive][].  The result is that the css class you expect to got based on model value _task.type_ will not be applied to the _span_ element. It took me a long time to figure out why.  
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sword | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/blog/categories/sword/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-01-30T07:12:49+08:00</updated>
+  <updated>2013-02-02T14:52:17+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -14,29 +14,262 @@
 
   
   <entry>
-    <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS ]]></title>
+    <title type="html"><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
+    <updated>2013-02-02T14:32:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
+    <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
+
+<h2>Requirement</h2>
+
+<p>I am making some workout entries as a list and one special requirement is to group the records by the date.</p>
+
+<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.</p>
+
+<p>
+``` html</p>
+
+<pre><code>&lt;style&gt;
+    body {font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;}
+    ul li {list-style-type: none;}
+    .actionDateGroup {font-weight: bold; color: red}
+&lt;/style&gt;
+&lt;div id="content" ng-controller="EntryCtrl"&gt;
+    &lt;div id="entries"&gt;
+        &lt;ul&gt;
+            &lt;li ng-repeat="entry in entries"&gt;
+                &lt;div ng-switch on="isNewDateGroup(entry.actionDate)"&gt;
+                    &lt;div ng-switch-when="true" class="actionDateGroup"&gt;{{entry.actionDate}}&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;span&gt;{{entry.desc}}&lt;/span&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript" src="./js/angular/angular.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+    function EntryCtrl($scope, $location) {
+        $scope.entries = [{
+            desc: 'Rope jumping count 1000',
+            actionDate: '2012-01-31',
+        },{
+            desc: 'Jogging 3000M',
+            actionDate: '2012-01-31'
+        },{
+            desc: 'Situp 40 * 3',
+            actionDate: '2012-01-30'
+        }];
+        $scope.lastActionDate = null;
+        $scope.calledCount = 0;
+
+        $scope.isNewDateGroup = function(actionDate) {
+            $scope.calledCount++;
+            console.log('Function called count: ' + $scope.calledCount);
+            console.log('Entry date vs Scope date: ' + actionDate + ' vs ' + $scope.lastActionDate);
+            if ($scope.lastActionDate === null || $scope.lastActionDate !== actionDate) {
+                $scope.lastActionDate = actionDate;
+                return true;
+            }
+            return false;
+        };
+    }
+&lt;/script&gt;
+</code></pre>
+
+<p>```
+</p>
+
+<h2>Expectation</h2>
+
+<ol>
+<li><em>actionDate</em> of the first entry will always be shown as it's the first group.</li>
+<li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.</li>
+</ol>
+
+
+<h2>Phenomenon</h2>
+
+<p>When the sample data is as above (case #1), the effect looks like it's behaving correctly as below:</p>
+
+<ul>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-31</div>
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-30</div>
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn't it supposed to show only the first one as all entries have the same <em>actionDate</em>?</p>
+
+<h4>Expected result:</h4>
+
+<ul>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-31</div>
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<h4>Actual result:</h4>
+
+<ul>
+    <li style="list-style-type: none;">
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<p>Now if you check the calledCount in the debug message, you will find that it's called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:</p>
+
+<ol>
+<li>The <em>isNewDateGroup</em> function is called more than the entries' count.  (Guess this, right?)</li>
+<li>The called count is different when the data is different.  (how about this?)</li>
+</ol>
+
+
+<h2>Causes</h2>
+
+<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> API:</p>
+
+<blockquote><ul>
+<li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> and should be <strong>idempotent</strong>.</li>
+<li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> ...</li>
+<li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.
+...
+(Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)</li>
+</ul>
+</blockquote>
+
+<h3>Issue #1</h3>
+
+<p>The <em>isNewDateGroup</em> being watched whose calculation relies on value of <em>lastActionDate</em> is not idempotent and so during initial run stage, <em>lastActionDate</em> is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.</p>
+
+<h3>Issue #2</h3>
+
+<p>In below code, if I comment out <strong>$scope.lastActionDate = actionDate;</strong> or change the <strong>return true;</strong> to <strong>return false;</strong>, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.</p>
+
+<p>``` javascript</p>
+
+<pre><code>if ($scope.lastActionDate === null || $scope.lastActionDate !== actionDate) {
+    $scope.lastActionDate = actionDate;
+    return true;
+}
+</code></pre>
+
+<p>```</p>
+
+<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let's see what the return value is for watch expression <em>isNewDateGroup</em> after each run.</p>
+
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:</p>
+
+<p>
+<table style="font-size: 0.85em;">
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">true ('2012-01-31' !== '2012-01-30';<br/>
+        $scope.lastActionDate = '2012-01-30')
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">2nd</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate !== '2012-01-31')</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">true</td>
+    </tr>
+</table>
+</p>
+
+
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:</p>
+
+<p>
+<table style="font-size: 0.85em;">
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">2nd</td>
+        <td style="padding: 5px; border: 1px solid black;">false (change compared to last run)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">3rd</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+</table>
+</p>
+
+
+<p>So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS]]></title>
     <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
     <updated>2013-01-30T07:02:00+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
     <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
+
 ``` html</p>
 
-<pre><code>&lt;span ng-class="task-{\{task.type}}"&gt;{\{task.type}}&lt;/span&gt;
+<pre><code>&lt;span ng-class="task-{{task.type}}"&gt;{{task.type}}&lt;/span&gt;
 &lt;input type="text" ng-model="task.type"/&gt;
 </code></pre>
 
-<p>```</p>
+<p>```
+</p>
 
 <p>Do you see what is the difference between the one below and above?<br/>
+
 ``` html</p>
 
-<pre><code>&lt;span ng-class="'task-' + task.type"&gt;{\{task.type}}&lt;/span&gt;
+<pre><code>&lt;span ng-class="'task-' + task.type"&gt;{{task.type}}&lt;/span&gt;
 &lt;input type="text" ng-model="task.type"/&gt;
 </code></pre>
 
-<p>```</p>
-
-<p><strong>Yes yes yes, String interpolation doesn't constain the extra &#92;.  I don't know how to escape the god damn double curly brace correctly in Backtick code block in octopress.  Please forgive me now and help is appreciated.</strong></p>
+<p>```
+</p>
 
 <p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
 
@@ -539,200 +772,6 @@ REQUIREMENTS:
 <p>好玩吧?  所以, 把数据维度设成行记录来存储, 还可以把不同维度加上其它一些设置, 如比重等, 配置起来会比较方便.</p>
 
 <p>不知道大家有什么意见?  欢迎拍砖.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
-    <updated>2012-08-30T23:04:06+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
-    <content type="html"><![CDATA[<p>Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.</p>
-
-<p>ExtJS has been adopted in the two companies I worked and am working for.  Hence, here I only show you how to test Ajax in ExtJS built application.</p>
-
-<p>In my previous post <a href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test – Part 1 (Philosophy and Test for Store)</a>, the part on how to test Autoload <em>Ext.data.Store</em> simply override <em>Ext.lib.Ajax</em> so that it does nothing and <em>Ext.data.Store</em> is tested through manual loading data.</p>
-
-<p>That is the simplest way but cannot fulfill the requirement to test real production code which uses Ajax feature.</p>
-
-<p><strong>How real production code might look like if the application is built entirely by ExtJS?</strong></p>
-
-<p>```javascript</p>
-
-<pre><code>xxx.UiImpl = Ext.extend(xxx.Ui, {
-    initComponent: function() {
-        xxx.UiImpl.superclass.initComponent.call(this);
-
-        this.emptyNameWarningMsg = 'Name is empty!';
-        this.duplicateNameWarningMsg = 'Name has been in used!';
-        this.nameField = Ext.getCmp('xxx.name');
-
-        this.initEventHandlers();
-    },
-
-    initEventHandlers : function() {
-        this.nameField.on('blur', this.validateName, this);
-    },
-
-    validateName: function(){
-        var sName = this.nameField.getValue();
-        if (sName == '') {
-            this.nameField.markInvalid(this.emptyNameWarningMsg);
-            return;
-        }
-
-        Ext.Ajax.request({
-            url : config.appName() + "/foo/validateName",
-            method : 'GET',
-            params : {
-                name : sName
-            },
-            success : function(data){
-                if (data.responseText != '') {
-                    this.nameField.markInvalid(this.duplicateNameWarningMsg);
-                }
-            },
-            failure : function(data){
-                alert("validate failure!");
-            },
-            scope: this
-        });
-    }
-});
-</code></pre>
-
-<p>```</p>
-
-<p>Above is a simple UI implementation class which extends from an UI class.  You can safely guess that this UI class simply has one name field which is bound with a Blur Event.  The Blur Event handler triggers an Ajax calls to validate whether the typed-in name is empty or duplicated within the system.  Pretty straightforward, right?</p>
-
-<p><strong>Considering the Test Philosophy I mentioned in my last post, what contracts or behaviors we should test against here?</strong></p>
-
-<p>Here are some examples:</p>
-
-<ol>
-<li>Contract between user and our system (blur event).  I would expect there would some code like this in my Jasmine Spec:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>oUI.nameField.fireEvent('blur');
-</code></pre>
-
-<p>```</p>
-
-<ol>
-<li>Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the <em>responseText</em> from Ajax call to be not empty, the <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em>.  Say, the response can be stub as:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>Ext.lib.Ajax.response({
-    status: 200,
-    responseText: 'Duplicate'
-});
-</code></pre>
-
-<p>```</p>
-
-<ol>
-<li>Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em> or <em>oUI.emptyNameWarningMsg</em> under different situations<strong>.</strong> Sample Spec code might be:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-
-oUI.nameField.setValue('Ken');
-oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-</code></pre>
-
-<p>```</p>
-
-<ol>
-<li>Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it's very difficult to be aware of.  Sample Spec code might be:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>var oUI = Ext.getCmp('kentest');
-</code></pre>
-
-<p>```</p>
-
-<p><strong>The Test Spec is already in mind but how can I use it to test against the production code?  </strong></p>
-
-<p>I googled around and found one useful helper API - <a href="http://github.com/pivotal/jasmine-ajax">Jasmine-Ajax</a> : a set of helpers for testing AJAX requests under the Jasmine BDD framework for JavaScript.  However, now it only supports Prototype.js and jQuery.</p>
-
-<p>I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   <a href="https://dl.dropbox.com/u/17182499/blog/2012/08/mock-ajax.js">mock-ajax</a></p>
-
-<p>How should I include this helper class to use Jasmine to test the Ajax in ExtJS?</p>
-
-<p>Configuration in POM.xml</p>
-
-<p>```xml</p>
-
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/mock-ajax.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/global.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-...
-&lt;configuration&gt;
-</code></pre>
-
-<p>```</p>
-
-<p>Code in file globalTestStub.js change to be:</p>
-
-<p>```javascript</p>
-
-<pre><code>jasmine.Ajax.installMock();
-</code></pre>
-
-<p>```</p>
-
-<p>How to write the Test Spec?</p>
-
-<p>```javascript</p>
-
-<pre><code>describe('Test Maintenance UI', function() {
-    beforeEach(function() {
-        jasmine.Ajax.useMock();
-    });
-
-    it('Maintenance UI should be initialized successfully', function() {
-        var oUI = new xxx.UI({});
-        expect(Ext.getCmp('kentest')).toBeTruthy();
-    });
-
-    it('Focus leaving name field should trigger unique validation.', function() {
-        Ext.lib.Ajax.response({
-            status: 200,
-            responseText: 'Duplicate'
-        });
-
-        var oUI = Ext.getCmp('kentest');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-
-        oUI.nameField.setValue('Ken');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-    });
-});
-</code></pre>
-
-<p>```</p>
-
-<p>Can you see how all above works now?  Please take it a trial and share your comment with me.</p>
 ]]></content>
   </entry>
   
