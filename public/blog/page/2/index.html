@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="The 101 Time Management is the act or process of planning and exercising conscious control over the amount of time spent on specific activities, &hellip;">
+  <meta name="description" content="What is it and why I want to work on that I hope the name is brief and clear on what it should be although I was worrying whether it brings an &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,111 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/">UED in My Pet Project - Take Time (Part 1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-25T21:41:00+08:00" pubdate data-updated="true">Dec 25<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>What is it and why I want to work on that</h2>
+
+<p>I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it&#8217;s telling you to <em>&#8220;Take your time.  Slow down.&#8221;</em>.  Actually, it&#8217;s where to take the time seriously and you can keep track of your time.</p>
+
+<p>Why would I want to do such a seemingly boring thing?  There are three reasons:</p>
+
+<ul>
+<li><p>For those who really cares about their time, they really want to find some effective way to make their time used effectively.</p></li>
+<li><p>I have been working in two software companies which both require staffs to input TIMESHEET!  Yes, we all know it&#8217;s bullshit, meaningless and most of the figures are made up, but it&#8217;s just required.</p>
+
+<p>  I can understand that part of the objective is good, just like what this pet project is made for. However, mostly it&#8217;s just some policy or resource monitoring required by boss.</p></li>
+<li><p>Practice my development skills with some of my favorite tools by doing real work.</p></li>
+</ul>
+
+
+<p>Hence, I am trying to make an easy-to-use application for those who want an effective time management.  The design is basically following my <a href="http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/">practices</a> of it and the principle of simplicity.</p>
+
+<h2>What does it look like</h2>
+
+<p>It should be simple in general.</p>
+
+<ul>
+<li>It&#8217;s a GTD-style task web application.</li>
+<li>It can plan, track and retrospect the tasks.</li>
+</ul>
+
+
+<h2>How to capture the time</h2>
+
+<p>No matter you are planning tasks or actually tracking the tasks done.  You need to capture it.  There are many elements need to write down:</p>
+
+<ul>
+<li>For planning tasks: Task content, Start/End date and Estimated how long it needs.</li>
+<li>For tracking tasks: Task content, Start/End date, Start/End time and how long it takes.</li>
+</ul>
+
+
+<p>The elements in tracking tasks covers all we need for planning tasks, hence the capturing UI should be able to unified.  Below is the draft UI designed:<br/>
+<img src="https://dl.dropbox.com/u/17182499/blog/2012/12/task_capture.png" alt="Capture UI" /></p>
+
+<ul>
+<li>By default, there is a task content textbox.</li>
+<li>After you input something, some additional text and input boxes are shown.</li>
+</ul>
+
+
+<p>You should probably be able to guess how to use it already (if not, let me know how to make it happen):</p>
+
+<ul>
+<li>If you input the task name and press &#8221;<em>Enter</em>&#8221;, you start your task immediately.</li>
+<li>If you input the task name and the duration it takes and press &#8221;<em>Enter</em>&#8221;, you are tracking a task just finished.  It&#8217;s calculated based on the current time and the duration you input.</li>
+<li>If you also fills a specific date in &#8221;<em>yyyy-MM-dd</em>&#8221;, you are planning tasks if it&#8217;s a future date; you are tracking tasks if it&#8217;s a historical date.  The last &#8221;<em>hh:mm</em>&#8221; field is optional for the task start time.</li>
+</ul>
+
+
+<h2>Why design like this</h2>
+
+<p><em>4</em> fields with some easy to explain text made it can be read as a sentence.  It should be natural to fill in what is required.  And when you press &#8220;Enter&#8221; at any field, it will do different things automatically.  It should be simple enough but satisfy all the requirement.</p>
+
+<p>I have been thinking how to capture the duration.</p>
+
+<ul>
+<li>Two fields separately for hours and mins (This app is not designed for those crazy people who need to capture seconds).</li>
+<li>One field for all.</li>
+</ul>
+
+
+<p>Approach <em>#1</em> looks natural but needs an extra field and more key-stroke.  By taking <em>#3</em>, decimal number need to be used to express minutes.  You may question me that calculating decimal is even harder.  But think it this way:  <em>.25</em> is <em>15</em> mins; <em>.5</em> is <em>30</em> mins; <em>.75</em> is <em>45</em> mins; <em>.1</em> is around <em>5</em> mins.</p>
+
+<p>I think it&#8217;s not that difficult to use decimal to express it.  What is more, when you are actually tracking your task this way, you are guessing or trying to remember how long it took.  Your mental power is &#8220;calculating&#8221; somehow to get a number.  If it&#8217;s one field, you just need to do one calculation and input.  If it&#8217;s two fields, you might possibly calculating two fields, especially when your task start time is say from <em>2:35</em> to <em>4:08</em>.  I think it just doesn&#8217;t matter if there is minor inaccurate.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -899,224 +1004,6 @@ REQUIREMENTS:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-13T23:02:18+08:00" pubdate data-updated="true">Aug 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
-
-<p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it&#8217;s difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
-
-<p>Assuming I need to introduce JS Unit Test to a system without any Unit Test covered, what should the general JS Unit Test principles to be firstly considered?  My opinions are:</p>
-
-<blockquote><ol>
-<li><p>To test external contract against each ExtJS Component or JS function.  The external contract is where changes often take place.</p></li>
-<li><p>To test business logic (data calculation/validation, etc.) because this is where the real value in the business.</p></li>
-<li><p>Not to test the UI behavior (Window popup, Panel/Tree collapse/expand, Drap/Drop, Animation, etc.).  It&#8217;s quite difficult to mimic and verify the UI behavior because you have to twist your mind somehow to &#8220;tranform&#8221; the UI behavior to manual control the &#8220;movement&#8221; and then verify it.  It&#8217;s just writing even more UI logic to control other UI logic.</p></li>
-<li><p>Not to test all Ajax requests because it&#8217;s slow and actually should be considered as Integration Test.  It&#8217;s better to mock the interface data to test the Ajax caller &amp; response handler.</p></li>
-</ol>
-</blockquote>
-
-<p>Let&#8217;s see some real Unit Test example.  (Here some assumptions are made on how the components are generated and used in System: UI are completely built by ExtJS Designer.  It may not be the best practice, but it&#8217;s the way I think the real practice can be applied.)</p>
-
-<p><strong>Ext.data.Store</strong></p>
-
-<p>You might first wonder why Unit Test need to be done for Store component?  I got to tell you that I have met many bugs that are introduced because of fields&#8217; definition changed.  This is the major contract bound the Store with the caller.</p>
-
-<p>Below is a typical xxx.Datastore.js file generated by Ext Designer.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">ns</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">JsonStore</span><span class="p">,</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">cfg</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">cfg</span> <span class="o">=</span> <span class="nx">cfg</span> <span class="o">||</span> <span class="p">{};</span>
-</span><span class='line'>        <span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span><span class="p">.</span><span class="nx">superclass</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">apply</span><span class="p">({</span>
-</span><span class='line'>            <span class="nx">storeId</span><span class="o">:</span> <span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://www.foo.com/stub&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">root</span><span class="o">:</span> <span class="s1">&#39;data.rows&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">totalProperty</span><span class="o">:</span> <span class="s1">&#39;data.totalCount&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">autoLoad</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">fields</span><span class="o">:</span> <span class="p">[</span>
-</span><span class='line'>                <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;code&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;name&#39;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">]</span>
-</span><span class='line'>        <span class="p">},</span> <span class="nx">cfg</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'><span class="k">new</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>How should we test it?  This is an autoLoad Store.  As a JS source file to be linked in for testing, I cannot use Jasmine spyOn to stub it.  That is because JS source file is loaded before Jasmine spyOn in Spec can ever be run.  The only thing I can think of is to override the Ext Ajax lib to not doing actual request call.</p>
-
-<p>Code in file globalTestStub.js to override the Ajax lib:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">lib</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">request</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">{</span><span class="nx">success</span><span class="o">:</span> <span class="kc">true</span><span class="p">};</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Configuration in POM.xml</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;configuration&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;preloadSources&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;source&gt;</span>adapter/ext/ext-base-debug.js<span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;source&gt;</span>ext/ext-all-debug-w-comments.js<span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;source&gt;</span>${project.basedir}/Resources/test/js/globalTestStub.js<span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/preloadSources&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;jsSrcDir&gt;</span>${project.basedir}/Resources/js<span class="nt">&lt;/jsSrcDir&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;jsTestSrcDir&gt;</span>${project.basedir}/Resources/test/js<span class="nt">&lt;/jsTestSrcDir&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;sourceIncludes&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;include&gt;</span>xxx.DataStore.js<span class="nt">&lt;/include&gt;</span>
-</span><span class='line'>...
-</span><span class='line'><span class="nt">&lt;/configuration&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ExtJS source and the globalTestStub.js are included in <em>preloadSources</em> so that all Stub/Mock code required for Unit Test can be initialized correctly before other JS sources and Test Spec files without polluting real production code.</p>
-
-<p>How to write a Test Spec then?  Actually, there is no fixed way, but just a simple rule: to test the contract.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;xxx.Datastore&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should be able to initialized&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">oStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">StoreMgr</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oStore</span><span class="p">).</span><span class="nx">toBeTruthy</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should load data correctly&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">oStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">StoreMgr</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">oStore</span><span class="p">.</span><span class="nx">loadData</span><span class="p">({</span>
-</span><span class='line'>            <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span>
-</span><span class='line'>                    <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">code</span><span class="o">:</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span>
-</span><span class='line'>                        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;N1&#39;</span>
-</span><span class='line'>                    <span class="p">},</span>
-</span><span class='line'>                    <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">code</span><span class="o">:</span> <span class="s1">&#39;C2&#39;</span><span class="p">,</span>
-</span><span class='line'>                        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;N2&#39;</span>
-</span><span class='line'>                    <span class="p">}</span>
-</span><span class='line'>                <span class="p">],</span>
-</span><span class='line'>                <span class="nx">totalCount</span><span class="o">:</span> <span class="mi">2</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oStore</span><span class="p">.</span><span class="nx">getTotalCount</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">oRecord</span> <span class="o">=</span> <span class="nx">oStore</span><span class="p">.</span><span class="nx">getAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oRecord</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oRecord</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">&#39;N1&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Unit Test for non-autoload Store would be similar but easier.</p>
-
-<p>Beside how the Test is written, I would like to draw your attention to how I wrote the description for the Suite and the Spec.  I am not sure whether I understood the <a href="http://dannorth.net/introducing-bdd/">Behavior Driven Development</a> comprehensively because I am still learning it.  However, I think this simple mind change helps me to think about how the behavior should be more than just simply how to write Test to meet coverage.  It can even helps us to review our design whether particular code belongs to the right place.</p>
-
-<p>Let&#8217;s explore how Unit Test can be achieved more for ExtJS later.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1132,6 +1019,10 @@ REQUIREMENTS:
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/05/2013-retrospect-and-goal-setting/">2013 Retrospect and Goal Setting</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/">Expression in AngularJS must be idempotent and for multiple calls</a>
@@ -1169,50 +1060,47 @@ REQUIREMENTS:
         <a href="/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (14)</a></li><li><a href='/blog/categories/think'>Think (20)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (14)</a></li><li><a href='/blog/categories/think'>Think (21)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
-    <li><a style="font-size: 92%" href="//angularjs/">AngularJS</a></li>
+    <li><a style="font-size: 90%" href="//angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="//blogging/">Blogging</a></li>
-<li><a style="font-size: 110%" href="//coding/">Coding</a></li>
+<li><a style="font-size: 108%" href="//coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="//connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="//db/">DB</a></li>
-<li><a style="font-size: 92%" href="//design/">Design</a></li>
-<li><a style="font-size: 92%" href="//directive/">Directive</a></li>
+<li><a style="font-size: 90%" href="//design/">Design</a></li>
+<li><a style="font-size: 90%" href="//directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="//excel/">Excel</a></li>
-<li><a style="font-size: 133%" href="//extjs/">ExtJs</a></li>
-<li><a style="font-size: 92%" href="//gtd/">GTD</a></li>
+<li><a style="font-size: 130%" href="//extjs/">ExtJs</a></li>
+<li><a style="font-size: 90%" href="//gtd/">GTD</a></li>
+<li><a style="font-size: 60%" href="//goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="//health/">Health</a></li>
 <li><a style="font-size: 60%" href="//jawr/">JAWR</a></li>
-<li><a style="font-size: 123%" href="//jasmine/">Jasmine</a></li>
-<li><a style="font-size: 160%" href="//javascript/">Javascript</a></li>
-<li><a style="font-size: 123%" href="//management/">Management</a></li>
-<li><a style="font-size: 92%" href="//maven/">Maven</a></li>
+<li><a style="font-size: 121%" href="//jasmine/">Jasmine</a></li>
+<li><a style="font-size: 156%" href="//javascript/">Javascript</a></li>
+<li><a style="font-size: 121%" href="//management/">Management</a></li>
+<li><a style="font-size: 90%" href="//maven/">Maven</a></li>
 <li><a style="font-size: 60%" href="//mongodb/">MongoDB</a></li>
-<li><a style="font-size: 123%" href="//mood/">Mood</a></li>
-<li><a style="font-size: 92%" href="//nodejs/">NodeJS</a></li>
+<li><a style="font-size: 121%" href="//mood/">Mood</a></li>
+<li><a style="font-size: 90%" href="//nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="//poi/">POI</a></li>
 <li><a style="font-size: 60%" href="//performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="//pomodoro/">Pomodoro</a></li>
-<li><a style="font-size: 92%" href="//productivity/">Productivity</a></li>
+<li><a style="font-size: 90%" href="//productivity/">Productivity</a></li>
 <li><a style="font-size: 165%" href="//retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="//string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="//stuff/">Stuff</a></li>
-<li><a style="font-size: 92%" href="//time-management/">Time Management</a></li>
-<li><a style="font-size: 110%" href="//trip/">Trip</a></li>
+<li><a style="font-size: 90%" href="//time-management/">Time Management</a></li>
+<li><a style="font-size: 108%" href="//trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="//ued/">UED</a></li>
 <li><a style="font-size: 60%" href="//ui/">UI</a></li>
-<li><a style="font-size: 123%" href="//unittest/">UnitTest</a></li>
+<li><a style="font-size: 121%" href="//unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="//weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="//i18n/">i18n</a></li>
 <li><a style="font-size: 60%" href="//ngclass/">ngClass</a></li>
