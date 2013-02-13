@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。 翻墙 比较大的事件就是这个。难的换工作后有机会肉体翻墙，去拜访了万恶的资本主义老大 - 美国，还真见识了一把。蔚蓝的天空， &hellip;">
+  <meta name="description" content="这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。 Lean Startup 这本书我总体来说看的比较粗略，主要因为前面的章节在目前身处非创业型企业文化下不太容易适用得上， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,102 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/">读 Lean Startup 和观电影 Lincoln，电影 the VOW 后感</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-13T21:40:00+08:00" pubdate data-updated="true">Feb 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。</p>
+
+<h2><a href="http://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898">Lean Startup</a></h2>
+
+<p>这本书我总体来说看的比较粗略，主要因为前面的章节在目前身处非创业型企业文化下不太容易适用得上，所以目的只是大概了解作者思想。后面的 <em>Part Three ACCELERATE</em> 部分倒是有些是可以相对容易地应用在成熟，或者说已经某程度上固化并寻求改变的企业上。我说的是不太容易和相对容易，因为任何改变，重则涉及文化，轻亦涉及利益，都是难事。那如何建立一个 Adaptive 的企业环境呢？</p>
+
+<h3>突破点</h3>
+
+<p>Five Whys 是在第11章 <em>Adapt</em> 里提到的一个很好的方法。其实就是中国人说的打破砂盆问到底。看来还是古人智慧无穷啊。这个 Five Whys 除了带来它显而易见的好处，也就是了解到事件的根源之外，其实还可以让一个企业或团队控制解决问题的程度和节奏。问五次，不至于太少而了解不到真相，也不至于太多，而浪费过多精力。</p>
+
+<p>我们很常在开发或团队建设中碰到不少问题，比如说每次代码改动后要浪费很长时间部署，某某人改动代码后部署不成功了，新人不了解系统框架，部分人写代码很不好读等。很多人听到这些问题都会抛出一个大而全的答案，机器慢，没 CI 环境，没培训，没标准等。这种答案因为太笼统和没有边际，导致解决方案看起来需要大量人力物力去解决问题，后来不了了之，说了白说。</p>
+
+<p>所以，Five Whys 的实施要求是 <strong>Be Small，Be Specific</strong>。</p>
+
+<p>比如前面说代码改动后部署慢，原因可能是要重新编译打包和 Web 容器启动慢。那为什么要重新编译打包，可能是因为某些系统服务编译和打包的脚本绑定在一起。那可不可以把它们分开？如何分开？能否借助工具做 Hot Deploy？那为什么容器启动慢？能否不用 EAR 来部署，减少解压缩时间？能否换用轻量级容器？能否禁用不必要插件？ 这些其实就是一些细小而精确的建议和想法。再比如书本举出的很常见的例子，就是培训。多少的培训才足够，覆盖范围要多广？还是说，在碰到问题后，才写出对应的 Guideline 来避免错误再次发生？这样的 Incremental 式的累积，会否更省时间，更有效针对问题？</p>
+
+<p>其实 Be Small，Be Specific 还有另一个好处就是避免由 Five Whys 而产生出 Five Blames。把问题精确化，细化，可以尽量避免问题扩大化，责任推诿，相互指责，无法确定责任人，最后无法解决。</p>
+
+<h3>实施细节</h3>
+
+<p>另两条原则呢，可以引用原话来说：</p>
+
+<blockquote><ol>
+<li>Be tolerant of all mistakes the first time.</li>
+<li>Never allow the same mistake to be make twice.</li>
+</ol>
+</blockquote>
+
+<p>还有一些比如说，不要带上历史包袱，把历史遗留问题等到重新出现时再解决；讨论问题原因和解决方案时，一定要所有牵扯到的人员在场，无论位处任何部门，级别等都是需要注意的事项，推荐各位去细看。</p>
+
+<h3>后台要硬</h3>
+
+<p>这里可能说的有点黑，但其实中国人很能理解它的含义。因为要想做事，首先必须得到领导支持。要有开明的文化和环境，必须要有开明的领导。所以，充分让领导认识到 Five Whys 的好处，实施的原则，可能带来的后果和对团队文化的冲突，并取得全力支持，才能确保有效执行。</p>
+
+<h2><a href="http://www.imdb.com/title/tt0443272/">电影 Lincoln</a></h2>
+
+<p>Lincoln 每次说话，要么风趣睿智，要么充满激情。那一字一顿，不紧不慢而又坚定的语气，让我感受到这位历史伟人，对解放奴隶制的理想是多么执着。从以下欧几里德定理都可以看到人人生而平等，真是可贵，或者还是只能说他对此执着到何等程度。</p>
+
+<blockquote><p>It is a self evident truth that things which are equal to the same thing are equal to each other.</p></blockquote>
+
+<p>电影里也描述了他作为一位父亲和丈夫的一面，那些为国而牺牲家庭对他带来的愧疚。总体来说，这是一部不错的电影，让我看到当中的一些人性转变，慷慨激昂，推荐大家看看。</p>
+
+<h3>懂得如何前行</h3>
+
+<p>电影里的一段他对 Mr. Steven 说的话，我觉得深有感触。听写可能有差别，但大意应该没错：</p>
+
+<blockquote><p>A compass, I learnt when I was surfing in hill, will point you to the true north where you are standing, but it has got no advice about the swamps, deserts, chasms, along the way.  You can pursuit to go the destination, you plunge your head ahead, heedlessly of the obstacles, achieving nothing more than sinking in the swamp?  What is the use of knowing the true north?</p></blockquote>
+
+<p>其实这里说的道理就是，即使你知道真理和正确的方向，如果因为鲁莽地直行，被途中困难所牵绊而无法到达目的地，那手握真理意义何在？</p>
+
+<p>正如去年我的目标是 Drive the Change，如果说我只顾四处宣扬，不顾各方抵触，而不是实在的迂回实施，那意义何在？ 所以说，求变，也要懂得如何带领别人跟随而变。自己独变，往往成为异类，无法生存。带领众变，才能成为改变历史的潮流。</p>
+
+<h2><a href="http://www.imdb.com/title/tt1606389">电影 The VOW</a></h2>
+
+<p>这可能算是老套的爱情桥段电影了。女主角撞车失忆，她丈夫尽一切办法想她恢复，但都无能为力。放手离开后，女主角重过生活，发现后来，还是沿旧轨迹，邂逅男主角，重续前缘。</p>
+
+<p>老婆看的纸巾浪费无数，我也被男主角的无私的爱而折服。情爱的观点基本共通，我也就不说了。此外的感悟是，一个人，即使让你重新走一次走过的路，可能你还是会沿旧有的轨迹再走一次。你就是你，无论何时何刻，那一刻的反应，那一刻的抉择，都是你内心的反映。所以，不必后悔说，如果回到某时某刻，可能你就不会那样做了。也不用对一些事情犹豫不决，不知道做了学了，对日后是否有益处。要做的，还是跟随自己的心，在当前时刻，做一个自己的决定，走自己的路。最终回首，一些看不起眼的决定，都是为你的 Destiny 而铺设的。正如乔帮主的名言，过去不起眼的点，在最后都会连成线，成就你自己。</p>
+
+<blockquote><p>Again, you can&#8217;t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever. This approach has never let me down, and it has made all the difference in my life.</p></blockquote>
+
+<p>所以说，自己认为该做的就去做，该放手时，还是应该放手。是你的，总会回来。不是你的，放手后，可能你的才会来。谋事在人，成事在天。Make things happen，but don&#8217;t force things happen。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -165,7 +261,7 @@
 
 <h2>时间安排</h2>
 
-<p>学习时间：
+<p>学习时间：<br/>
 零散时间基本就只有平时上下班车里的30分钟，还有其它一切可能的坐车时间。这些时间都是用来看书，写 Blog，或者看看 Google Reader，微博。连续的时间最多只在早上。由于家人比较早睡觉，大概9:30-10:00就休息了，所以我也只能早睡早起以避免打扰。早上4:30-5:00期间起床，洗漱15分钟，到6:45分基本有1.5小时，周末的话，家人比较晚起，可以有2小时。这段时间主要先用30分钟左右看看微博，或者书。再写写代码。最后还有周末午休时间，大概3小时，也主要用来写代码或者Blog。</p>
 
 <p>家庭时间：<br/>
@@ -788,79 +884,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/01/why-i-start-blogging-and-in-english/">为什么开始写技术博客, 并且还是用英语?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-01T22:00:00+08:00" pubdate data-updated="true">Jan 1<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一些朋友发现我最近在写一些博客，而且还多数是英语的，都在好奇我在搞什么。那我就写一篇博客来解释一下吧。</p>
-
-<p>写技术博客好处很多，很多牛人也提到过, 这是我出来刚工作时的一位同事的<a href="http://www.iamhukai.com/">博客</a>, 现在他在Thoughworks, 里面有好几篇文章说到为什么要写和怎么写。</p>
-
-<h2>写技术博客的原因</h2>
-
-<ul>
-<li><p><strong>写博客可以积累总结自己的一些想法，见证技术学习过程和成长的经历</strong>。所以，我博客里的内容，一般应该会是技术类文章多一点，当然也会有一些开发过程和管理的想法及吐槽。写博客就是一种总结的手段，对自己知识的回顾和梳理。</p></li>
-<li><p><strong>博客是一种对外沟通交友，甚至是宣扬思想和文化的平台，说点实际的还可以为自己打广告</strong>。人生在世，总希望找到些志同道合的朋友。这些朋友有生活上的，情感上的，也有事业上的。博客也可以说是为我寻找事业上的朋友的地方之一。</p></li>
-<li><p><strong>为后来人积累一些财富，帮助他人解决一些问题</strong>。我已经习惯在Google和别人的博客上索取了那么长时间了，是时候贡献自己的力量的时候了。把自己遇到的一些问题，最终的解决方案，想法分享出来，应该可以帮助一些后来人。也许有人觉得自己遇到的困难和解决方法太微不足道了，说出来让人笑话。其实不然，每个人都有成长过程，像我们也要去获取别人的智慧一样，我们要帮助的就是那些还没有起来的人。而且，也别太小看自己了。</p></li>
-</ul>
-
-
-<h2>用英语的原因</h2>
-
-<p>也许有不少人觉得我在装13，卖弄自己的英语水平。而且我觉得, 用英语写博客, 可能会使得博客流量不高, 正如我那位旧同事所说。那么，我为什么还这么做呢？</p>
-
-<ul>
-<li><p>我确实英语水平比中文好，我也喜欢英语多过中文。很多人看到这可能会说我卖国贼，呵呵。其实为什么呢？我从小语文水平都不高，60到70分左右吧，作文也差。对以前的语文课，我完全感受不到语言的美丽。各种什么作者观点分析，文言文等，搞得我对语文很反感，遇到的语文老师，又没几个好的，反正学习语文对我来说充满了挫折感。</p>
-
-<p>  我是在六年级就开始学英语，但那时是用中文来模拟发音和死记的。我记得刚上初中的时候，第一次测验才40多分的。但后来水平一直都不算差，我也不知道为什么。不过使我喜欢上英语的，是因为在大学梦想出国留学，疯狂学英语，考TOEFL和GRE，才喜欢上了，也使得自己水平比附近的人要高。学英语对我来说，充满了成功和优越感。所以，培养成功的感觉，可能真的很重要。为什么同样是语言，学英语我会比学语文好？可能TOEFL和GRE考试都强调的是事实和逻辑推理，不像语文那些什么观点分析那么狗屁吧。</p>
-
-<p>  至于现在，我还那么喜欢英语，我想是延续之前的情结，以及从事IT的缘故吧。所有先进的技术，一开始都从国外发源起来，不懂英语，怎么行呢？</p></li>
-<li><p>我现在主要的工作，还是编程。编程用什么语言？废话，当然是英语。大家看过<a href="http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882">Clean Code</a>这本书吗？ 什么叫做<em>Self-Documentary</em>的代码？ 不知道的，看书去。为了能写出清晰，优雅，具有自我说明能力的代码，命名一个变量，一个方法，都是有讲究的，如果一段代码，读起来像读文章一样，那就成功了一大半了。</p>
-
-<p>  而且，在<a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/B002KE5SLU/ref=sr_1_1?ie=UTF8&amp;qid=1357050792&amp;sr=8-1&amp;keywords=More+Joel+on+Software">More Joel on Software</a>, 也就是<a href="http://book.douban.com/subject/4163938/">软件随想录</a> 这本书里面，在<em>Learn how to write before graduating</em>这一节里面说到：</p></li>
-</ul>
-
-
-<blockquote><p>the programmers with the most power and influence are the ones who can write and speaks in English clearly, convincingly, and comfortably,</p>
-
-<p>&#8230;</p>
-
-<p>The difference between a tolerable programmer and a great programmer is not how many languages they know, and it&#8217;s not whether they prefer Python or Java.  It&#8217;s whether they can communicate their ideas.</p></blockquote>
-
-<p>所以，锻炼用英语来写博客，主要是提高自己的代码编写能力和成为一名好的程序员。</p>
-
-<p>好了, 我已经起航了, 你们是否也考虑考虑写写博客?</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -874,6 +897,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/">读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/02/05/2013-retrospect-and-goal-setting/">2013 Retrospect and Goal Setting</a>
@@ -911,25 +938,24 @@
         <a href="/blog/2012/10/27/db-design-for-multi-dimension-data/">一个多维度数据匹配的RDBMS数据库表设计的想法</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (14)</a></li><li><a href='/blog/categories/think'>Think (21)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (14)</a></li><li><a href='/blog/categories/think'>Think (22)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
-    <li><a style="font-size: 90%" href="//angularjs/">AngularJS</a></li>
+    <li><a style="font-size: 60%" href="//adapt/">Adapt</a></li>
+<li><a style="font-size: 90%" href="//angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="//blogging/">Blogging</a></li>
+<li><a style="font-size: 60%" href="//change/">Change</a></li>
 <li><a style="font-size: 108%" href="//coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="//connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="//db/">DB</a></li>
 <li><a style="font-size: 90%" href="//design/">Design</a></li>
+<li><a style="font-size: 60%" href="//destiny/">Destiny</a></li>
 <li><a style="font-size: 90%" href="//directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="//excel/">Excel</a></li>
 <li><a style="font-size: 130%" href="//extjs/">ExtJs</a></li>
