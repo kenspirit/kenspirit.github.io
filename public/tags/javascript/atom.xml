@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/javascript/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-03-11T05:42:02+08:00</updated>
+  <updated>2013-04-13T13:10:28+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,105 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
+    <updated>2013-04-13T12:59:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
+    <content type="html"><![CDATA[<h2>Background</h2>
+
+<p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>
+
+<p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.</p>
+
+<p>Hence, the code sharing between Node.js and browser requires the code to be used as the same way in browser.</p>
+
+<h2>Situations and Solutions</h2>
+
+<p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:</p>
+
+<p>```javascript
+var a = xxx;
+a.foo();</p>
+
+<p>var b = require('b');
+b.bar();
+```</p>
+
+<p>There are two kinds of situations:</p>
+
+<h3>Modularization already realized for browser code</h3>
+
+<p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/">RequireJS</a>, or <a href="http://seajs.org/">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.</p>
+
+<p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.</p>
+
+<p>```javascript
+define(['./b'], function (b) {</p>
+
+<pre><code>var a = xxx;
+a.foo();
+b.bar();
+
+return {
+    bla: function(){
+        console.log('bla');
+    }
+};
+</code></pre>
+
+<p>});
+```</p>
+
+<p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.</p>
+
+<p>To overcome this incompatibility, there are two main approaches.</p>
+
+<ul>
+<li><p>Directly add boilerplate code in one side to fit the other</p>
+
+<ol>
+<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html">here</a>.</li>
+<li><a href="https://github.com/ajaxorg/node-amd-loader">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.</li>
+<li>The <a href="https://github.com/jrburke/amdefine">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer">RequireJS Optimizer</a>.</li>
+</ol>
+</li>
+<li><p>Build process to handle the boilerplate</p>
+
+<ol>
+<li><a href="https://github.com/substack/node-browserify">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.</li>
+<li><a href="https://github.com/medikoo/modules-webmake">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.</li>
+<li><a href="https://github.com/kenspirit/webassemble">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.</li>
+</ol>
+</li>
+</ul>
+
+
+<p>Personally, I prefer introducing extra build process to handle the boilerplate for me.</p>
+
+<p>The advantages of build process boilerplate are:</p>
+
+<ol>
+<li>Boilerplate code is brittle and subject to change.  Adding it to every file makes future change harder.  If some build process can automatically remove them, why not use the build process to automatically add them?</li>
+<li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.</li>
+<li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.</li>
+</ol>
+
+
+<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/">Grunt</a>, it's just a couple of seconds' waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.</p>
+
+<h3>Legacy or namespace browser code style</h3>
+
+<p>Although it's seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it's actually easier to share your Node.js code under this circumstance.</p>
+
+<p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.</p>
+
+<p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P</p>
+
+<p>So tell me what is yours.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
@@ -762,142 +861,6 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
 <p>```</p>
 
 <p>Can you see how all above works now?  Please take it a trial and share your comment with me.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
-    <updated>2012-08-13T23:02:18+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
-    <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
-
-<p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it's difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
-
-<p>Assuming I need to introduce JS Unit Test to a system without any Unit Test covered, what should the general JS Unit Test principles to be firstly considered?  My opinions are:</p>
-
-<blockquote><ol>
-<li><p>To test external contract against each ExtJS Component or JS function.  The external contract is where changes often take place.</p></li>
-<li><p>To test business logic (data calculation/validation, etc.) because this is where the real value in the business.</p></li>
-<li><p>Not to test the UI behavior (Window popup, Panel/Tree collapse/expand, Drap/Drop, Animation, etc.).  It's quite difficult to mimic and verify the UI behavior because you have to twist your mind somehow to "tranform" the UI behavior to manual control the "movement" and then verify it.  It's just writing even more UI logic to control other UI logic.</p></li>
-<li><p>Not to test all Ajax requests because it's slow and actually should be considered as Integration Test.  It's better to mock the interface data to test the Ajax caller &amp; response handler.</p></li>
-</ol>
-</blockquote>
-
-<p>Let's see some real Unit Test example.  (Here some assumptions are made on how the components are generated and used in System: UI are completely built by ExtJS Designer.  It may not be the best practice, but it's the way I think the real practice can be applied.)</p>
-
-<p><strong>Ext.data.Store</strong></p>
-
-<p>You might first wonder why Unit Test need to be done for Store component?  I got to tell you that I have met many bugs that are introduced because of fields' definition changed.  This is the major contract bound the Store with the caller.</p>
-
-<p>Below is a typical xxx.Datastore.js file generated by Ext Designer.</p>
-
-<p>```javascript</p>
-
-<pre><code>Ext.ns('xxx');
-xxx.DataStore = Ext.extend(Ext.data.JsonStore, {
-    constructor: function(cfg) {
-        cfg = cfg || {};
-        xxx.DataStore.superclass.constructor.call(this, Ext.apply({
-            storeId: 'xxx.DataStore',
-            url: 'http://www.foo.com/stub',
-            root: 'data.rows',
-            totalProperty: 'data.totalCount',
-            autoLoad: true,
-            fields: [
-                {
-                    name: 'code'
-                },
-                {
-                    name: 'name'
-                }
-            ]
-        }, cfg));
-    }
-});
-new xxx.DataStore();
-</code></pre>
-
-<p>```</p>
-
-<p>How should we test it?  This is an autoLoad Store.  As a JS source file to be linked in for testing, I cannot use Jasmine spyOn to stub it.  That is because JS source file is loaded before Jasmine spyOn in Spec can ever be run.  The only thing I can think of is to override the Ext Ajax lib to not doing actual request call.</p>
-
-<p>Code in file globalTestStub.js to override the Ajax lib:</p>
-
-<p>```javascript</p>
-
-<pre><code>Ext.lib.Ajax.request = function() {
-  return {success: true};
-};
-</code></pre>
-
-<p>```</p>
-
-<p>Configuration in POM.xml</p>
-
-<p>```xml</p>
-
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/globalTestStub.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-        &lt;include&gt;xxx.DataStore.js&lt;/include&gt;
-...
-&lt;/configuration&gt;
-</code></pre>
-
-<p>```</p>
-
-<p>ExtJS source and the globalTestStub.js are included in <em>preloadSources</em> so that all Stub/Mock code required for Unit Test can be initialized correctly before other JS sources and Test Spec files without polluting real production code.</p>
-
-<p>How to write a Test Spec then?  Actually, there is no fixed way, but just a simple rule: to test the contract.</p>
-
-<p>```javascript</p>
-
-<pre><code>describe('xxx.Datastore', function() {
-    it('should be able to initialized', function() {
-        var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
-        expect(oStore).toBeTruthy();
-    });
-
-    it('should load data correctly', function() {
-        var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
-        oStore.loadData({
-            data: {
-                rows: [
-                    {
-                        code: 'C1',
-                        name: 'N1'
-                    },
-                    {
-                        code: 'C2',
-                        name: 'N2'
-                    }
-                ],
-                totalCount: 2
-            }
-        });
-
-        expect(oStore.getTotalCount()).toEqual(2);
-        var oRecord = oStore.getAt(0);
-        expect(oRecord.get('code')).toEqual('C1');
-        expect(oRecord.get('name')).toEqual('N1');
-    });
-});
-</code></pre>
-
-<p>```</p>
-
-<p>Unit Test for non-autoload Store would be similar but easier.</p>
-
-<p>Beside how the Test is written, I would like to draw your attention to how I wrote the description for the Suite and the Spec.  I am not sure whether I understood the <a href="http://dannorth.net/introducing-bdd/">Behavior Driven Development</a> comprehensively because I am still learning it.  However, I think this simple mind change helps me to think about how the behavior should be more than just simply how to write Test to meet coverage.  It can even helps us to review our design whether particular code belongs to the right place.</p>
-
-<p>Let's explore how Unit Test can be achieved more for ExtJS later.</p>
 ]]></content>
   </entry>
   

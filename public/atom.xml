@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-03-11T05:42:02+08:00</updated>
+  <updated>2013-04-13T13:10:28+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,118 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
+    <updated>2013-04-13T12:59:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
+    <content type="html"><![CDATA[<h2>Background</h2>
+
+<p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>
+
+<p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.</p>
+
+<p>Hence, the code sharing between Node.js and browser requires the code to be used as the same way in browser.</p>
+
+<h2>Situations and Solutions</h2>
+
+<p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">;</span>
+</span><span class='line'><span class="nx">a</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">b</span><span class="p">.</span><span class="nx">bar</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are two kinds of situations:</p>
+
+<h3>Modularization already realized for browser code</h3>
+
+<p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/">RequireJS</a>, or <a href="http://seajs.org/">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.</p>
+
+<p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;./b&#39;</span><span class="p">],</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">a</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">b</span><span class="p">.</span><span class="nx">bar</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">bla</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;bla&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.</p>
+
+<p>To overcome this incompatibility, there are two main approaches.</p>
+
+<ul>
+<li><p>Directly add boilerplate code in one side to fit the other</p>
+
+<ol>
+<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html">here</a>.</li>
+<li><a href="https://github.com/ajaxorg/node-amd-loader">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.</li>
+<li>The <a href="https://github.com/jrburke/amdefine">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer">RequireJS Optimizer</a>.</li>
+</ol>
+</li>
+<li><p>Build process to handle the boilerplate</p>
+
+<ol>
+<li><a href="https://github.com/substack/node-browserify">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.</li>
+<li><a href="https://github.com/medikoo/modules-webmake">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.</li>
+<li><a href="https://github.com/kenspirit/webassemble">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.</li>
+</ol>
+</li>
+</ul>
+
+
+<p>Personally, I prefer introducing extra build process to handle the boilerplate for me.</p>
+
+<p>The advantages of build process boilerplate are:</p>
+
+<ol>
+<li>Boilerplate code is brittle and subject to change.  Adding it to every file makes future change harder.  If some build process can automatically remove them, why not use the build process to automatically add them?</li>
+<li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.</li>
+<li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.</li>
+</ol>
+
+
+<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/">Grunt</a>, it&#8217;s just a couple of seconds&#8217; waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.</p>
+
+<h3>Legacy or namespace browser code style</h3>
+
+<p>Although it&#8217;s seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it&#8217;s actually easier to share your Node.js code under this circumstance.</p>
+
+<p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.</p>
+
+<p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P</p>
+
+<p>So tell me what is yours.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感]]></title>
@@ -2237,48 +2349,6 @@ ath:/wls_prs_doc spec-version:2.5]&#8221;, defined in weblogic.xml [Extension-Na
 <p> </p>
 
 <p> </p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[9种比钱更好的激励员工的方法]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/12/17/9-things-that-motivate-employee-more-than-money/"/>
-    <updated>2011-12-17T00:24:26+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/12/17/9-things-that-motivate-employee-more-than-money</id>
-    <content type="html"><![CDATA[<p>激励员工的士气</p>
-
-<p>最近看到篇文章：“<a href="http://goo.gl/ushlH">9种比钱更好的激励员工的方法</a> (9 Things That Motivate Employees More Than Money)”。</p>
-
-<p>第1、6点，展示了公司的高层有没有真正的关心过下属，是真的把他们做的事都看在眼里，放在心上，还是只是说说而已。表扬不应该是空泛的，应该很具体，让下属知道，原来我的老板真的看在眼里，知道我在做什么的，还肯特意抽时间和他吃饭，谈话。如果真的关心，员工是感觉的到的。很多别的都是浮云。说到底，还是有没有心，就像关心自己朋友，家人一样。</p>
-
-<p>第2、3、9，其实还是让员工有“当家做主”的感觉，把他和公司联系在一起。生死共存。尽量减少中间层管理人员，也是希望减少一种被命令的感觉。</p>
-
-<p>下面是译文：</p>
-
-<p><strong>别简单的向他们展示钱(即使你有). 下面有9种更好的方法来提升士气.</strong></p>
-
-<p><strong>激励员工的能力</strong>是一个企业家需要具备的最重要的能力之一. 两年前, 我认识到我并不具备这种能力. 所以,我请了一个有这种能力的CEO.</p>
-
-<p>Josh在企业界已经有12年的经验, 包括在Comcast公司运营一个重要的部门. 我知道他已经很老练, 但一开始的时候我还是对他有点怀疑. 当时我们正在经历一些成长的危机, 我认为我们并不充足的现金非常难提高公司和员工的士气.</p>
-
-<p>我错了.</p>
-
-<p>在他和他任命的团队领袖的帮助下, Josh不单单重建了公司的文化, 还打造了一个充满激情, 奋力拼搏的团队. 而这正是我希望致力于为发展和改善公司想做的.</p>
-
-<p>下面是我从他身上学到的9件事:</p>
-
-<ol>
-<li><p><strong>不要吝惜表扬.</strong> 每一个人都渴望得到表扬, 而这也是最容易做到的一件事情. 再说, 从一个CEO那得到表扬, 比你想像的要有效得多. 为你的团队成员取得的任何改进提出表扬. 当你适应了一对一下为员工提出表扬, 你可以尝试在其他所有人的面前表扬那些值得表扬的人.</p></li>
-<li><p><strong>把管理人员都去掉.</strong> 项目里没有项目经理? 不对吧! 请试一下. 我明白把项目经理或管理人员去掉, 让你的员工以一个团队的形式紧紧的工作而不是向某一个人汇报的做法会有点让人怀疑. 请想一想. 比让你的管理人员失望更糟糕的事情是什么? 是让你的团队失望! 让一个团队的人平等的于同事一起工作, 项目通常会做得更好更快. 他们会很早来到办公室, 留得很晚, 并把他们所有的精力集中在解决问题上面来.</p></li>
-<li><p><strong>把你的想法变成是他们的.</strong> 人们都不愿意被人命令做事. 与其告诉别人你想做不什么出来; 通过一些方式让他们觉得你提出的要求好像是他们自己想出来的一样. “我想你这样做”可以说成”你不觉得如果我们这样做的话更好吗?”</p></li>
-<li><p><strong>绝不批评或纠正.</strong> 任何人, 是的, 我说的是任何人, 都不愿意听到别人说他们做错了. 如果你在找一个打压士气的人, 这就是了. 要尝试一种委婉的方式让人们去提高, 从他们的错误中学习, 并解决问题. 你可以问:”这是解决问题的最好办法吗?” 这种情况下,你们是在谈论解决方案的对话中, 而不是互相指责.</p></li>
-<li><p><strong>让所有的人成为领袖.</strong> 指出你下面的最出色人员的强项, 并让他们知道正是因为他们的出色表现, 你希望他们成为其它人的榜样. 这样, 定出高标准, 那他们自然而然得被激励并为了保持作为一名领袖的名声而努力.</p></li>
-<li><p><strong>一星期带一名员工出吃午饭.</strong> 让他们得到惊喜. 别发公告来说明制定出这样一个政策. 走到一名员工面前, 然后邀请他和你共进午餐. 这是非常简单的方法让他们知道你有关注和感激他们的辛勤工作.</p></li>
-<li><p><strong>认可并给于奖励.</strong> 这两件事有很多形式: 大声在公司会议点名说出他成功的为公司做了什么事情. 比赛或举办游戏并把结果记录在白板上,让任何人都可以看到. 有形的奖励也行, 但别太昂贵了. 尝试一些事情像晚餐, 奖杯, spa服务和牌匾等.</p></li>
-<li><p><strong>举办公司派队.</strong> 以一个团队来做事情可以维系一个团队很长时间. 举办公司郊游活动, 生日派队, 快乐时光时间. 别只是等到节假日才举办公司活动. 一年内不间断的举办活动可以让你的员工知道所有人都在一起.</p></li>
-<li><p><strong>分享荣誉和痛苦.</strong> 当你的公司表现好的时候,庆祝. 这是最好的时间来让所以人知道你感激他们每一个人的辛勤劳动. 当人们帮助你的公司成功的时候, 尽你的最大努力让人们知道你是会怎么来感激他们的. 如果有什么让人失望的事情, 同样于所有人分享. 当你期望有很好的表现的时候, 你的团队应该知道公司当前的位置. 要坦白和透明.</p></li>
-</ol>
-
 ]]></content>
   </entry>
   

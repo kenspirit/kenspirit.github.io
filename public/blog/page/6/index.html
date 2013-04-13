@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="有一种常用的Excel报表打印实现是用客户定义好的Excel Template, 通过POI来写值进去。 这样的好处是基本可以原汁原味的保留Excel的样式和一些宏。 有时，在Excel里会定义有一些Name, 然后用到某一些Cell里做Validation, 也就是模拟下拉选项的效果。 有时候， &hellip;">
+  <meta name="description" content="公司的前General Manager Tim Shee给我看了如下一篇文章： 小和尚的大石頭值多少錢？ 大都市城外山上有一座峰巒環抱，翠竹蔥蔥，松柏鬱鬱的古剎，有一天，一個小和尚跑過來向老和尚請教：「師父，我人生最大的價值是什麼呢？」 老和尚說：「你到後花園搬一塊大石頭，拿到山下菜市場上去賣， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,97 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/20/valueofstone/">一个石头值多少钱</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-20T17:49:13+08:00" pubdate data-updated="true">Jul 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>公司的前General Manager Tim Shee给我看了如下一篇文章：</p>
+
+<p>小和尚的大石頭值多少錢？</p>
+
+<p>大都市城外山上有一座峰巒環抱，翠竹蔥蔥，松柏鬱鬱的古剎，有一天，一個小和尚跑過來向老和尚請教：「師父，我人生最大的價值是什麼呢？」</p>
+
+<p>老和尚說：「你到後花園搬一塊大石頭，拿到山下菜市場上去賣，假如有人問你什麼價錢，
+你不要講話，只伸出一個指頭；假如他跟你還價，你不要賣，然後馬上抱回來，師父就告訴你，你人生最大的價值是什麼。」</p>
+
+<p>第一天一大早，小和尚抱了一塊大石頭，興致勃勃地跑到山下菜市場上去賣。菜市場上人來人往，熙熙攘攘，人們很好奇，誰會買一塊石頭呢？結果沒一會兒，一個家庭主婦走了過來，問小和尚：「這石頭多少錢賣呀？」</p>
+
+<p>小和尚伸出了一個指頭，那個家庭主婦說：「10塊錢？」
+小和尚搖搖頭，家庭主婦說：「那麼是100塊錢？好吧，好吧！我剛好拿回去壓酸菜。」
+小和尚聽到：「我的媽呀，一文不值的石頭居然有人出100元錢來買！我們山上有的是呢！」</p>
+
+<p>於是，小和尚遵照師父的囑託沒有賣，樂不可支地抱回山上，去見師父：「師父，
+今天有一個家庭主婦願意出100元，買我的石頭。師父，您現在可以告訴我，我人生最大的價值是什麼了嗎？」</p>
+
+<p>老和尚說：「嗯！不急，你明天一早，再把這塊石頭拿到博物館 門口去，假如有人問價，
+你依然伸出一個指頭；如果他還價，你不要賣，再抱回來，我們再談。」
+第二天早上，小和尚又興高采烈地抱著這塊大石頭，來到了博物館。</p>
+
+<p>在博物館外，一群好奇的人圍觀，竊竊私語：「一塊普通的石頭，到底有什麼價值，
+難不成是什麼稀奇呢？只是我們還不知道而已。」
+這時，有一個人從人群中竄出來，對小和尚大聲說：</p>
+
+<p>「小和尚，你這塊石頭要賣多少錢啊？」小和尚沒出聲，伸出一個指頭，那個人說：
+「1000元？1000元就1000元吧，剛好我要用它雕刻一尊神像。」
+小和尚聽到這裡，倒退了一步，嚇得說不出話！但小和尚依然遵照師父的囑託沒有賣，
+趕緊抱回山上，去見師父，見到師父說：「師父，今天有人要出1000元買我這塊石頭，
+這回您總要告訴我，我人生最大的價值是什麼了吧？」</p>
+
+<p>老和尚哈哈大笑說：「你明天再把這塊石頭拿到古董店門口去賣，照例有人還價，
+但仍然不要賣掉它。你就把它抱回來。這一次，師傅一定告訴你，你人生最大的價值是什麼。」</p>
+
+<p>小和尚聽後徹夜難眠，只恨天亮的太慢，好不容易到了天亮，他急忙捧著石頭跑到古董店門口，突然出現一名的拍賣師告訴他這是千年不遇的寶石，問他要賣多少錢，小和尚沒出聲，
+伸出一個指頭，拍賣師說：「10000元？」小和尚搖了搖頭，拍賣師出價說：
+「100000元就100000元吧，我要好好珍藏它！」小和尚聽了幾乎當場暈倒，趕緊抱回山上，去見師父，見到師父說：「師父，今天有人要出100000元買我這塊石頭，這回你總要告訴我，我人生最大的價值是什麼了吧？」</p>
+
+<p>老和尚指著石頭打斷他說：「其實，我們並不打算賣它，不過現在你應該明白，
+為什麼石頭的形狀和外表都沒有變，而你的想法和做法卻再三變化呢，我之所以讓你這樣做，主要是想培養和鍛煉你充分認識自我價值的能力，和對事物的理解能力。如果你是生活在菜市場，那麼你只有那個市場的理解力，你就永遠不會認識更高的價值。</p>
+
+<p>不管你在什麼地方，同樣的你，有人將你抬得很高，有人把你貶得很低，有價值的東西，
+只有在懂價值的人面前，才有價值。不要管別人怎麼看，關鍵是自己怎麼看自己。總而言之，你可以掌握自己的命運，決定自己的價值！」</p>
+
+<p>※【激勵一點通】※</p>
+
+<p>也許你就一個普通的石頭，只要你認為自己是一塊寶石，別人也可能把你當寶石來看，
+也許你就是一個寶石，可是你卻認為自己是一塊普通的石頭，也許只配給人做成墊腳石來看待。</p>
+
+<p>你看了这篇文章怎么想？
+我的看法是：
+1. 首先，最重要的是要清楚自己的一块什么石头，有什么料。 不然，如果确实只是烂石头，放到博物馆内也让人踢出来。
+2. 知道自己的价值后，尽量往需要你这样的价值的人去靠近，不然，宝石也变压咸菜的而已。好马也要遇到伯乐才行。
+3. 当然也如本文说的，不要妄自菲薄，要坚持，努力挖掘自己的优点和价值。
+多到处走走，看看，了解哪可以用得上自己。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -396,66 +487,6 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2006/05/18/classic-statement-from-winnie-keep-updating/">小茹语录(Keep Updating)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-05-18T19:18:28+08:00" pubdate data-updated="true">May 18<span>th</span>, 2006</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>以下是小茹经典的语录。都不明她的语言点解可以甘搞笑。<img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" /></strong></p>
-
-<p> </p>
-
-<p><em>回气荡肠</em></p>
-
-<p>  －意思：荡气回肠</p>
-
-<p>  －情景：一晚，茹因吃得太饱，肚子发出“咕”一声。然后她就笑笑口甘爆出呢个词。</p>
-
-<p> </p>
-
-<p><em>双按</em></p>
-
-<p>  －意思：双击、double click</p>
-
-<p>  －情景：一晚准备放工，她要关UltraEdit的一个Tag，发现关不了，就话：“点解双按关唔到嘎？”。</p>
-
-<p> </p>
-
-<p><em>人地有压力嘎</em></p>
-
-<p>  －情景：一晚，茹搽完药膏，大叫：“个盖呢？”。我就话：“是不是不在厅啊？”。茹答：“是啊。”后来她回到房，发现原来个盖系房。我就笑啦，点知她就爆出呢句。因为刚看完“巴士阿叔”，所以狂笑。</p>
-
-<p> </p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -471,6 +502,10 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share code between Node.js and browser</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/">读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感</a>
@@ -508,20 +543,17 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
         <a href="/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/">A response pends forever issue in MongoDB, Connect and Node.js</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/10/27/db-design-for-multi-dimension-data/">一个多维度数据匹配的RDBMS数据库表设计的想法</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (14)</a></li><li><a href='/blog/categories/think'>Think (22)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (15)</a></li><li><a href='/blog/categories/think'>Think (22)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
-    <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
+    <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
+<li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
 <li><a style="font-size: 90%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
 <li><a style="font-size: 60%" href="/tags/change/">Change</a></li>
@@ -538,12 +570,13 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
 <li><a style="font-size: 121%" href="/tags/jasmine/">Jasmine</a></li>
-<li><a style="font-size: 156%" href="/tags/javascript/">Javascript</a></li>
+<li><a style="font-size: 161%" href="/tags/javascript/">Javascript</a></li>
 <li><a style="font-size: 121%" href="/tags/management/">Management</a></li>
 <li><a style="font-size: 90%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
 <li><a style="font-size: 121%" href="/tags/mood/">Mood</a></li>
-<li><a style="font-size: 90%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 108%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
@@ -556,6 +589,7 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
 <li><a style="font-size: 121%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="/tags/i18n/">i18n</a></li>
 <li><a style="font-size: 60%" href="/tags/ngclass/">ngClass</a></li>
