@@ -9,7 +9,10 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="我承认我是其中的一员。要向发明者 Charles Simonyi 道个歉。 长期以来，不问出处，不求起源，只是单纯接受一些看起来是常识或事实的结论，导致此问题发生。这是我有的一点不足，要改进。多思考，多看书是良方，庆幸在不断服药中。如果不是看到 More Joel On Software（ &hellip;">
+  <meta name="description" content="Do you see any issue in below HTML snippet with AngularJS code? 1
+2
+&lt;span ng-class=&quot;task-{{task.type}}&quot;&gt;{{task.type}}&lt;/span&gt;
+& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +81,228 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/">String Interpolation Should Not Be Used With Class Directive in AngularJS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-30T07:02:00+08:00" pubdate data-updated="true">Jan 30<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;task-{{task.type}}&quot;</span><span class="nt">&gt;</span>{{task.type}}<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;task.type&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Do you see what is the difference between the one below and above?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;span</span> <span class="na">ng-class=</span><span class="s">&quot;&#39;task-&#39; + task.type&quot;</span><span class="nt">&gt;</span>{{task.type}}<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">ng-model=</span><span class="s">&quot;task.type&quot;</span><span class="nt">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
+
+<p>Before furher reading, it&#8217;s better if you have read the Developer Guide, <a href="http://docs.angularjs.org/guide/directive">Directive</a> section which explains the concept of <strong>String interpolation</strong> and <strong>Compilation process, and directive matching</strong>, although honestly, it doesn&#8217;t quite clearly say how the String interpolation should or can be used.  Before, I just have the rough idea that it can be evaluated and replaced in String and also reflect the change from model.</p>
+
+<p>If you use the first code snippet to create sample AngularJS page and bind an <em>task</em> model to it, you can see that the String Interpolation &#8221;<em>works</em>&#8221;: the ng-class attribute and the content of the span tag can be replaced correctly with model value.  Even if you change the model value through the input field, they can be updated accordingly.  However, the CSS is not applied as expected.</p>
+
+<p>Why?  Let&#8217;s take a look at AngularJS source:</p>
+
+<p>In function <em>collectDirectives</em>, when it checks the element&#8217;s attribute, it calls <em>addAttrInterpolateDirective</em> before <em>addDirective</em>.  In <em>addAttrInterpolateDirective</em>, the <a href="http://docs.angularjs.org/guide/expression">Expression</a> in String interpolation will be converted to a new directive with compile function to watch the change and set new value to the attribute which is the class directive in this case.  There are two important things need to be aware of:</p>
+
+<ol>
+<li>A new directive is ad-hoc created before the class directive it&#8217;s inspecting.</li>
+<li>The new directive&#8217;s linking function is watching the expression change to update the class directive value itself.</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">collectDirectives</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">directives</span><span class="p">,</span> <span class="nx">attrs</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">nodeType</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">nodeType</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">attrsMap</span> <span class="o">=</span> <span class="nx">attrs</span><span class="p">.</span><span class="nx">$attr</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">match</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">className</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">switch</span><span class="p">(</span><span class="nx">nodeType</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="cm">/* Element */</span>
+</span><span class='line'>      <span class="c1">// use the node name: &lt;directive&gt;</span>
+</span><span class='line'>      <span class="nx">addDirective</span><span class="p">(</span><span class="nx">directives</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">nodeName_</span><span class="p">(</span><span class="nx">node</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">()),</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// iterate over the attributes</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">attr</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">nName</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">nAttrs</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">attributes</span><span class="p">,</span>
+</span><span class='line'>               <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">jj</span> <span class="o">=</span> <span class="nx">nAttrs</span> <span class="o">&amp;&amp;</span> <span class="nx">nAttrs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">jj</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">attr</span> <span class="o">=</span> <span class="nx">nAttrs</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">specified</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">name</span> <span class="o">=</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>          <span class="nx">nName</span> <span class="o">=</span> <span class="nx">directiveNormalize</span><span class="p">(</span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">());</span>
+</span><span class='line'>          <span class="p">...</span>
+</span><span class='line'>          <span class="nx">addAttrInterpolateDirective</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">directives</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">nName</span><span class="p">);</span>
+</span><span class='line'>          <span class="nx">addDirective</span><span class="p">(</span><span class="nx">directives</span><span class="p">,</span> <span class="nx">nName</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="nx">maxPriority</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">addAttrInterpolateDirective</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">directives</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">interpolateFn</span> <span class="o">=</span> <span class="nx">$interpolate</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// no interpolation found -&gt; ignore</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">interpolateFn</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">directives</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">priority</span><span class="o">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">compile</span><span class="o">:</span> <span class="nx">valueFn</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">$$observers</span> <span class="o">=</span> <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span> <span class="o">||</span> <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span> <span class="o">=</span> <span class="p">{}));</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>      <span class="nx">attr</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">(</span><span class="nx">$$observers</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">||</span> <span class="p">(</span><span class="nx">$$observers</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[])).</span><span class="nx">$$inter</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">(</span><span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span> <span class="o">&amp;&amp;</span> <span class="nx">attr</span><span class="p">.</span><span class="nx">$$observers</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">$$scope</span> <span class="o">||</span> <span class="nx">scope</span><span class="p">).</span>
+</span><span class='line'>        <span class="nx">$watch</span><span class="p">(</span><span class="nx">interpolateFn</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">attr</span><span class="p">.</span><span class="nx">$set</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s see how class directive works now.  It&#8217;s at function <em>classDirective</em>.  If you put an expression in class directive, it will watch that.  Once there is any value change, it adds/removes class from element.  Hence, the second example above works correctly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">classDirective</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">selector</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;ngClass&#39;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">ngDirective</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span><span class="nx">attr</span><span class="p">[</span><span class="nx">name</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newVal</span><span class="p">,</span> <span class="nx">oldVal</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">selector</span> <span class="o">===</span> <span class="kc">true</span> <span class="o">||</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">$index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">===</span> <span class="nx">selector</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">oldVal</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">newVal</span> <span class="o">!==</span> <span class="nx">oldVal</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>           <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">))</span>
+</span><span class='line'>             <span class="nx">oldVal</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="k">return</span> <span class="nx">k</span> <span class="p">});</span>
+</span><span class='line'>           <span class="nx">element</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">oldVal</span><span class="p">)</span> <span class="o">?</span> <span class="nx">oldVal</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">:</span> <span class="nx">oldVal</span><span class="p">);</span>
+</span><span class='line'>         <span class="p">}</span>
+</span><span class='line'>         <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">newVal</span><span class="p">))</span>
+</span><span class='line'>            <span class="nx">newVal</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">newVal</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="k">return</span> <span class="nx">k</span> <span class="p">});</span>
+</span><span class='line'>         <span class="k">if</span> <span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="nx">element</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="o">?</span> <span class="nx">newVal</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">:</span> <span class="nx">newVal</span><span class="p">);</span>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, if you put String interpolation into it, it will be watching <strong>undefined</strong>.  Why?  Remember what <em>addAttrInterpolateDirective</em> does?  An extra directive is added before this class directive and so its linking function runs before the one for class directive.  And one more thing I omit above: its linking function explicitly sets <strong>attr[name] = undefined;</strong>.  Hence, when the linking functions run sequentially, the class directive&#8217;s linking function doesn&#8217;t watch the expression in String interpolation or the value derived although the String interpolation itself works correctly to set the value to class directive.</p>
+
+<p>Hence, in order to set CSS class on HTML element dynamically, we should either use:</p>
+
+<ul>
+<li>ng-class / ng-class-odd / ng-class-even without String interpolation by directly using model value or Expression.</li>
+</ul>
+
+
+<p>or</p>
+
+<ul>
+<li>HTML class attribute directly with String interpolation.</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -409,311 +634,6 @@ The trouble is, getting into &#8220;the zone&#8221; is not easy. When you try to
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/">A Response Pends Forever Issue in MongoDB, Connect and Node.js</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-05T21:08:00+08:00" pubdate data-updated="true">Dec 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>My ignorance</strong><br/>
-When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it&#8217;s all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.</p>
-
-<p>First, I dig into the <em>session.js</em> in Connect.  Around line 267:</p>
-
-<figure class='code'><figcaption><span>connect/lib/middleware/session.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// proxy end() to commit the session</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">;</span>
-</span><span class='line'><span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">){</span>
-</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="o">=</span> <span class="nx">end</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">)</span> <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">debug</span><span class="p">(</span><span class="s1">&#39;saving&#39;</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">resetMaxAge</span><span class="p">();</span>
-</span><span class='line'>  <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="nx">debug</span><span class="p">(</span><span class="s1">&#39;saved&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">});</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After opening the debug feature in <a href="http://nodejs.org">Node</a>, I found that it&#8217;s never going into the callback of <em>session.save()</em>.  Hence, the &#8216;saved&#8217; message is never printed in the console after &#8216;saving&#8217; and the response is never ending.</p>
-
-<p>Why would this happened?  I kept tracing the code and found that <em>session.save()</em> in Connect is calling the <em>sessionStore.set()</em> method.  The <em>MongoStore.set()</em> method in <em>connect-mongodb.js</em> is just purely calling <em>collection.update()</em> and no much magic there.  However, it seems the <em>update()</em> method call has either no err and data coming back.  Is there something wrong with the MongoDB or the Collection?</p>
-
-<p>MongoDB log doesn&#8217;t seems to have any query or update action recorded and I just found that there are 10 connections started every time I started my app, but I remembered there were 5 connections (default pool size) before (Actually, I haven&#8217;t noticed that this is the phenomenon of the problem I have at that time yet).</p>
-
-<p>Without any clue, I checked the initialization of the MongoStore and find below code:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">server_config</span><span class="p">.</span><span class="nx">isConnected</span><span class="p">())</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">authenticateAndGetCollection</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">server_config</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">callback</span><span class="p">(</span><span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Error connecting (&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">err</span> <span class="k">instanceof</span> <span class="nb">Error</span> <span class="o">?</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span> <span class="o">:</span> <span class="nx">err</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">));</span>
-</span><span class='line'>      <span class="nx">authenticateAndGetCollection</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It turns out that the flow goes into <em>server_config.connect()</em> again.  But why?  DB should be initialized in below code which is intended to encapsulate all DB operation.</p>
-
-<figure class='code'><figcaption><span>DbManager.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">DbManager</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Db</span><span class="p">(</span><span class="s1">&#39;tyt&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Server</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">,</span> <span class="p">{</span><span class="nx">auto_reconnect</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span> <span class="p">{}),</span> <span class="p">{</span><span class="nx">safe</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
-</span><span class='line'>  <span class="nx">db</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="kd">function</span><span class="p">(){});</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">getDb</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nx">db</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">})();</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">exports</span><span class="p">.</span><span class="nx">DbManager</span> <span class="o">=</span> <span class="nx">DbManager</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>In my node app.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">,</span> <span class="nx">DbManager</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./db.js&#39;</span><span class="p">).</span><span class="nx">DbManager</span>
-</span><span class='line'>  <span class="p">,</span> <span class="nx">mongoStore</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-mongodb&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Configuration</span>
-</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">session</span><span class="p">({</span>
-</span><span class='line'>      <span class="nx">secret</span><span class="o">:</span> <span class="s1">&#39;kenspirit&#39;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;tt.sid&#39;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">cookie</span><span class="o">:</span> <span class="p">{</span><span class="nx">secure</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">maxAge</span><span class="o">:</span> <span class="mi">300000</span><span class="p">},</span>
-</span><span class='line'>      <span class="nx">store</span><span class="o">:</span> <span class="k">new</span> <span class="nx">mongoStore</span><span class="p">({</span><span class="nx">db</span><span class="o">:</span> <span class="nx">DbManager</span><span class="p">.</span><span class="nx">getDb</span><span class="p">()})</span>
-</span><span class='line'>  <span class="p">}));</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you are familiar with Node, you may have already noticed what I haven&#8217;t done right here.  I am assuming the DB should be connected and ready for use already as I have called <em>db.open()</em> during DbManager&#8217;s construction.  However, Async is the most importance concept in Node, <em>db.open()</em> takes my callback will immediately return and it doesn&#8217;t guarantee it&#8217;s opened already.  If I change to below code, problem solved.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">DbManager</span><span class="p">.</span><span class="nx">getDb</span><span class="p">();</span>
-</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">db</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">db</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">session</span><span class="p">({</span>
-</span><span class='line'>      <span class="nx">secret</span><span class="o">:</span> <span class="s1">&#39;kenspirit&#39;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;tt.sid&#39;</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">cookie</span><span class="o">:</span> <span class="p">{</span><span class="nx">secure</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">maxAge</span><span class="o">:</span> <span class="mi">300000</span><span class="p">},</span>
-</span><span class='line'>      <span class="nx">store</span><span class="o">:</span> <span class="k">new</span> <span class="nx">mongoStore</span><span class="p">({</span><span class="nx">db</span><span class="o">:</span> <span class="nx">db</span><span class="p">})</span>
-</span><span class='line'>    <span class="p">}));</span>
-</span><span class='line'>   <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>The root of not responding</strong><br/>
-I wonder where is the actual source to make the response kept waiting?  I have configured the <em>auto_reconnect</em> already.  Later I found that in mongodb:</p>
-
-<figure class='code'><figcaption><span>mongodb/lib/mongodb/db.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">Db</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">_state</span> <span class="o">=</span> <span class="s1">&#39;connecting&#39;</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">serverConfig</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="p">{</span><span class="nx">firstCall</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="nx">err</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Set that db has been closed</span>
-</span><span class='line'>        <span class="nx">self</span><span class="p">.</span><span class="nx">openCalled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'>        <span class="c1">// Return error from connection</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="c1">// Set the status of the server</span>
-</span><span class='line'>      <span class="nx">self</span><span class="p">.</span><span class="nx">_state</span> <span class="o">=</span> <span class="s1">&#39;connected&#39;</span><span class="p">;</span>
-</span><span class='line'>      <span class="c1">// Callback</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">self</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">Db</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_executeInsertCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">db_command</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="c1">// If the pool is not connected, attemp to reconnect to send the message</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">_state</span> <span class="o">==</span> <span class="s1">&#39;connecting&#39;</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">serverConfig</span><span class="p">.</span><span class="nx">autoReconnect</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">self</span><span class="p">.</span><span class="nx">commands</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span><span class="s1">&#39;insert&#39;</span><span class="p">,</span> <span class="s1">&#39;db_command&#39;</span><span class="o">:</span><span class="nx">db_command</span><span class="p">,</span> <span class="s1">&#39;options&#39;</span><span class="o">:</span><span class="nx">options</span><span class="p">,</span> <span class="s1">&#39;callback&#39;</span><span class="o">:</span><span class="nx">callback</span><span class="p">});</span>
-</span><span class='line'>      <span class="p">})</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>  <span class="p">;}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>mongodb/lib/connection/server.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">Server</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dbInstance</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="c1">// Force connection pool if there is one</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">connectionPool</span><span class="p">)</span> <span class="nx">server</span><span class="p">.</span><span class="nx">connectionPool</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="c1">// Create connection Pool instance with the current BSON serializer</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">connectionPool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ConnectionPool</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">port</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">poolSize</span><span class="p">,</span> <span class="nx">dbInstance</span><span class="p">.</span><span class="nx">bson</span><span class="p">,</span>  <span class="k">this</span><span class="p">.</span><span class="nx">socketOptions</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">...</span>
-</span><span class='line'>    <span class="c1">// Set up on connect method</span>
-</span><span class='line'>    <span class="nx">connectionPool</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;poolReady&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// Create db command and Add the callback to the list of callbacks by the request id (mapping outgoing messages to correct callbacks)</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">db_command</span> <span class="o">=</span> <span class="nx">DbCommand</span><span class="p">.</span><span class="nx">NcreateIsMasterCommand</span><span class="p">(</span><span class="nx">dbInstance</span><span class="p">,</span> <span class="nx">dbInstance</span><span class="p">.</span><span class="nx">databaseName</span><span class="p">);</span>
-</span><span class='line'>      <span class="c1">// Check out a reader from the pool</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">connection</span> <span class="o">=</span> <span class="nx">connectionPool</span><span class="p">.</span><span class="nx">checkoutConnection</span><span class="p">();</span>
-</span><span class='line'>      <span class="c1">// Set server state to connEcted</span>
-</span><span class='line'>      <span class="nx">server</span><span class="p">.</span><span class="nx">_serverState</span> <span class="o">=</span> <span class="s1">&#39;connected&#39;</span><span class="p">;</span>
-</span><span class='line'>      <span class="c1">// dbInstance._state = &#39;connected&#39;;  If I add this line here, even if my code doesn&#39;t do any change, it works.</span>
-</span><span class='line'>      <span class="p">...</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>  <span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finally, the root cause is found.  Normally, when <em>db.open()</em> is called, it sets its <em>_state = &#8216;connecting&#8217;</em>, and it then will call <em>server.connect()</em> to create connection pool and in the callback, it sets its <em>_state = &#8216;connected&#8217;</em> again.  However, my case is that the second call <em>server.connect()</em> in MongoStore.js first make the first connection pool stops and then creates a new connection pool again(This should be where makes the mongo db log has 10 connections opened).  Somehow, the callback in normal flow cannot be executed so that <em>db._state</em> has not been set to &#8216;connected&#8217;.  What is more, the callback set in <em>MongoStore.js</em> doesn&#8217;t set the <em>db._state</em> to &#8216;connected&#8217;.  The <em>db._state</em> is remained in &#8216;connecting&#8217; forever which makes my update command keep pushing to its commands stack.</p>
-
-<p><strong>Most appropriate way to initialize MongoDB and its connections in Node.js</strong><br/>
-I began to wonder what is the &#8220;most appropriate way&#8221; to initialize MongoDB and manage its connections and googled around.</p>
-
-<p>At first, I found a similar question asked in <a href="http://stackoverflow.com/questions/10656574/how-to-manage-mongodb-connections-in-a-nodejs-webapp">StackOverFlow</a>.<br/>
-However, the reply doesn&#8217;t seem to be reasonable.  It recommands opening a new connection (actually, a DB and Connection Pool there) per request.  And it said it&#8217;s due to MongoDB is asynchronous.  It&#8217;s pretty confusing and the asynchronous mechanism in Node should be achieved by callback instead of creating new connection per request.  If so, what is the point of using pool then?  This approach should be more slow.</p>
-
-<p>Later I found out a reply from the author of node-mongodb-native in <a href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated &#8220;DO NOT call open on each request.&#8221;.</p>
-
-<p>I believe only opening MongoDB once with appropriate pool size and initialize node application in the <em>db.open()</em> callback should be the right way to go.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -729,6 +649,10 @@ However, the reply doesn&#8217;t seem to be reasonable.  It recommands opening a
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/can-i-make-13-billion-in-20-months/">我能否20个月赚130亿?</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share code between Node.js and browser</a>
@@ -766,15 +690,11 @@ However, the reply doesn&#8217;t seem to be reasonable.  It recommands opening a
         <a href="/blog/2012/12/24/my-practices-on-time-management/">My practices on Time Management</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/">A response pends forever issue in MongoDB, Connect and Node.js</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (15)</a></li><li><a href='/blog/categories/think'>Think (22)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (15)</a></li><li><a href='/blog/categories/think'>Think (23)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
@@ -783,12 +703,13 @@ However, the reply doesn&#8217;t seem to be reasonable.  It recommands opening a
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
 <li><a style="font-size: 90%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 60%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 60%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 90%" href="/tags/change/">Change</a></li>
 <li><a style="font-size: 108%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
 <li><a style="font-size: 90%" href="/tags/design/">Design</a></li>
-<li><a style="font-size: 60%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 90%" href="/tags/destiny/">Destiny</a></li>
 <li><a style="font-size: 90%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
 <li><a style="font-size: 130%" href="/tags/extjs/">ExtJs</a></li>
