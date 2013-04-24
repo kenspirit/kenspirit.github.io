@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Book | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/book/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-16T21:56:53+08:00</updated>
+  <updated>2013-04-25T06:18:48+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[打造 Facebook 读后感]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook/"/>
+    <updated>2013-04-25T06:10:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook</id>
+    <content type="html"><![CDATA[<p>看完<em><a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a></em>后，很快我又把<em><a href="http://www.amazon.cn/dp/B00ANI5YXW">打造 Facebook</a></em>看完了。但感觉这没上本书过＂瘾＂，我看得更快和粗略。</p>
+
+<p>笔者王淮主要是为外部人士揭秘 Facebook  内部一些流程和机制，包括招聘，人员培养，团队合作，项目流程等。本书内容叙述直白，但略显平淡和笼统。揭秘的 Facebook 流程，其实也和其他一些关于敏捷，管理等文章提及的好的做法没太大差别。这其实也在意料之中，因为核心机密也没可能爆料，加上好的做法本来就那些，关键看怎么做，执行力如何和团队配合，而且最主要是配合不同公司文化，架构和流程作调整。</p>
+
+<p>下面我只抽 Facebook 做得比多数公司好的其它关键说说。</p>
+
+<h2>制胜关键</h2>
+
+<h3>重视内部工具，平台搭建</h3>
+
+<p>可能是和 Facebook 的工程师文化驱动文化也有关，Facebook 内部竟然还有专门的团队负责所有工程师要用的工具和平台的搭建，而且最重要的是这个团队还是被放在最高优先级和重要的位置上，而不是说把二流的人放在那。</p>
+
+<p>这就应该和其他大多数公司很不同。很多公司都是把重心和一流人才放在产品上面，但却不知道这样一个打造工具和平台的团队，其实才是打造公司核心技术，和提高工程师生产率的重要基石。如果一个公司能为项目工程师提供一键搭建环境，和各种提高生产率以及沟通的工具，那这家公司的技术功底和自动化流程做得有多好啊。</p>
+
+<h3>所有人以 Facebook 的整体利益为考虑出发点</h3>
+
+<p>这可不是说那么容易的。特别是大公司，各个部门各自为政，以部门利益为出发点，在人员调配，项目进度安排上可以说是协调的噩梦。每每总要等待各个部门的老大的最顶层上司直接命令下来才能成事。想想中间要花费多少功夫。书中虽然没有提及细节，但好几处都提到和体现这个整体利益。无论在人员换组，项目人手调配，进度安排上，感觉他们都能比较好的处理好，这相当不容易。</p>
+
+<p>作为一个曾经体验过部门之间要人和不放人，被不同 Manager 带过都被打上不同标签和不平等对待的人，真是气不打一处来。当时还是在家小公司啊。还有就是项目组之间如果有依赖，优先级和协调的重要性现在更是深有体会。</p>
+
+<p>在 Facebook 里，整体利益的另一体现就是 Don't reinvent the wheel。  笔者提到的就是他们项目里的核心机器学习的组件，当初考虑到是放在自己支付安全组内还是放在 Anti-Spam 那边。因为那边已经有现成的框架，最后平衡考虑还是放在别组，然后协调和推进。可是很多公司，往往因为只顾部门利益，总想自己造些什么出来显露功绩。即使有现成的东西也不用，造成资源浪费。</p>
+
+<h3>发挥工程师创意</h3>
+
+<p>和 Google 的 20% 自由时间差不多，Facebook 也有内部的 Hackathon 来鼓励工程师做各种好玩的事情，甚至可以推迟项目时间。真是难得。</p>
+
+<h2>八卦</h2>
+
+<p>书里也提到了关于 Facebook 请公关公司炮制散布 Google 负面新闻的事情。Mark 在内部向所有员工说明并要求大家要支持 Marketing 部门，因为它们平常都在保护公司的利益。现在即使犯一点错，也应该得到体谅。</p>
+
+<p>书里也提到 Mark 很在意公司保密的原则，一但有人出错，坚决处理。</p>
+
+<p>这里隐含的意思就有点意思了。Mark 是一个很看重公司机密的人。他也很注意公司团结，员工应该一致向外。个人感觉这件事情上，Facebook 的 Marketing 应该不会在老板没出声的情况下，自己乱来吧？何况书中也说到 Mark 在关键问题的产品把控上是很严的。所以，小人之心猜测那也是 Mark 本人的意思。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[我能否20个月赚130亿?]]></title>
