@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Goal | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/goal/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/goal/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[2013 Retrospect and Goal Setting]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
+    <link href="http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
     <updated>2013-02-05T22:37:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
+    <id>http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
     <content type="html"><![CDATA[<p>现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。</p>
 
 <h2>翻墙</h2>

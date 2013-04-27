@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Weblogic | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/weblogic/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/weblogic/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/"/>
+    <link href="http://kenspirit.github.io/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/"/>
     <updated>2012-02-04T09:07:35+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references</id>
+    <id>http://kenspirit.github.io/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references</id>
     <content type="html"><![CDATA[<p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
 
 <blockquote><p>weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for "ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Sword | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/blog/categories/sword/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/blog/categories/sword/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
+    <link href="http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
     <updated>2013-04-13T12:59:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
+    <id>http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
     <content type="html"><![CDATA[<h2>Background</h2>
 
 <p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>
@@ -114,9 +114,9 @@ return {
   
   <entry>
     <title type="html"><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
+    <link href="http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
     <updated>2013-02-02T14:32:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
+    <id>http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
     <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
 
 <h2>Requirement</h2>
@@ -345,9 +345,9 @@ return {
   
   <entry>
     <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
+    <link href="http://kenspirit.github.io/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
     <updated>2013-01-30T07:02:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
+    <id>http://kenspirit.github.io/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
     <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
 
 ``` html</p>
@@ -485,9 +485,9 @@ function addAttrInterpolateDirective(node, directives, value, name) {
   
   <entry>
     <title type="html"><![CDATA[UED in my pet project - Take Time (Part 1)]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
+    <link href="http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
     <updated>2012-12-25T21:41:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
+    <id>http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
     <content type="html"><![CDATA[<h2>What is it and why I want to work on that</h2>
 
 <p>I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it's telling you to <em>"Take your time.  Slow down."</em>.  Actually, it's where to take the time seriously and you can keep track of your time.</p>
@@ -563,9 +563,9 @@ function addAttrInterpolateDirective(node, directives, value, name) {
   
   <entry>
     <title type="html"><![CDATA[A response pends forever issue in MongoDB, Connect and Node.js]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/"/>
+    <link href="http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/"/>
     <updated>2012-12-05T21:08:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs</id>
+    <id>http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs</id>
     <content type="html"><![CDATA[<p><strong>My ignorance</strong><br/>
 When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it's all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.</p>
 

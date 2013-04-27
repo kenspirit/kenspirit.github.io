@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Retrospect | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/retrospect/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/retrospect/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[2013 Retrospect and Goal Setting]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
+    <link href="http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
     <updated>2013-02-05T22:37:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
+    <id>http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
     <content type="html"><![CDATA[<p>现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。</p>
 
 <h2>翻墙</h2>
@@ -104,9 +104,9 @@
   
   <entry>
     <title type="html"><![CDATA[为什么开始写技术博客, 并且还是用英语?]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english/"/>
+    <link href="http://kenspirit.github.io/blog/2013/01/01/why-i-start-blogging-and-in-english/"/>
     <updated>2013-01-01T22:00:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english</id>
+    <id>http://kenspirit.github.io/blog/2013/01/01/why-i-start-blogging-and-in-english</id>
     <content type="html"><![CDATA[<p>一些朋友发现我最近在写一些博客，而且还多数是英语的，都在好奇我在搞什么。那我就写一篇博客来解释一下吧。</p>
 
 <p>写技术博客好处很多，很多牛人也提到过, 这是我出来刚工作时的一位同事的<a href="http://www.iamhukai.com/">博客</a>, 现在他在Thoughworks, 里面有好几篇文章说到为什么要写和怎么写。</p>
@@ -150,9 +150,9 @@
   
   <entry>
     <title type="html"><![CDATA[待在优秀的地方，还是把所在的地方改变的优秀]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/07/15/stay-in-good-or-change-to-be-good/"/>
+    <link href="http://kenspirit.github.io/blog/2012/07/15/stay-in-good-or-change-to-be-good/"/>
     <updated>2012-07-15T17:31:25+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/07/15/stay-in-good-or-change-to-be-good</id>
+    <id>http://kenspirit.github.io/blog/2012/07/15/stay-in-good-or-change-to-be-good</id>
     <content type="html"><![CDATA[<p>已经换了工作差不多一年，期间还有幸被派去美国学习所做的系统后台开发，趁着本博客重新启航，是时候回顾一下了。</p>
 
 <p><strong>小公司 vs 大公司</strong></p>
@@ -191,18 +191,18 @@
   
   <entry>
     <title type="html"><![CDATA[曾经，最后]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/02/15/ever-never/"/>
+    <link href="http://kenspirit.github.io/blog/2012/02/15/ever-never/"/>
     <updated>2012-02-15T02:42:33+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/02/15/ever-never</id>
+    <id>http://kenspirit.github.io/blog/2012/02/15/ever-never</id>
     <content type="html"><![CDATA[<p>曾经真心相待，换来质疑无奈。只能痛心离去，送上最后祝福。</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[一个石头值多少钱]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/07/20/valueofstone/"/>
+    <link href="http://kenspirit.github.io/blog/2011/07/20/valueofstone/"/>
     <updated>2011-07-20T17:49:13+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/07/20/valueofstone</id>
+    <id>http://kenspirit.github.io/blog/2011/07/20/valueofstone</id>
     <content type="html"><![CDATA[<p>公司的前General Manager Tim Shee给我看了如下一篇文章：</p>
 
 <p>小和尚的大石頭值多少錢？</p>

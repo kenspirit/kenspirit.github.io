@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: String interpolation | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/string-interpolation/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/string-interpolation/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
+    <link href="http://kenspirit.github.io/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
     <updated>2013-01-30T07:02:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
+    <id>http://kenspirit.github.io/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
     <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
 
 ``` html</p>

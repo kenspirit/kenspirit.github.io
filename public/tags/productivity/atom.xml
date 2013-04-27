@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Productivity | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/productivity/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/productivity/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[UED in my pet project - Take Time (Part 1)]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
+    <link href="http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
     <updated>2012-12-25T21:41:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
+    <id>http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
     <content type="html"><![CDATA[<h2>What is it and why I want to work on that</h2>
 
 <p>I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it's telling you to <em>"Take your time.  Slow down."</em>.  Actually, it's where to take the time seriously and you can keep track of your time.</p>
@@ -93,9 +93,9 @@
   
   <entry>
     <title type="html"><![CDATA[My practices on Time Management]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/"/>
+    <link href="http://kenspirit.github.io/blog/2012/12/24/my-practices-on-time-management/"/>
     <updated>2012-12-24T06:22:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management</id>
+    <id>http://kenspirit.github.io/blog/2012/12/24/my-practices-on-time-management</id>
     <content type="html"><![CDATA[<h2>The 101</h2>
 
 <blockquote><p>Time Management is the act or process of planning and exercising conscious control over the amount of time spent on specific activities, especially to increase effectiveness, efficiency or productivity.</p></blockquote>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Coding | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/coding/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/coding/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[被广泛误解的匈牙利命名法]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
+    <link href="http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
     <updated>2013-01-03T21:03:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
+    <id>http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
     <content type="html"><![CDATA[<p>我承认我是其中的一员。要向发明者 <em>Charles Simonyi</em> 道个歉。</p>
 
 <p><strong>长期以来，不问出处，不求起源，只是单纯接受一些看起来是常识或事实的结论，导致此问题发生</strong>。这是我有的一点不足，要改进。多思考，多看书是良方，庆幸在不断服药中。如果不是看到 <a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel On Software</a>（<a href="http://book.douban.com/subject/4163938/">软件随想录</a>）里 <em>I'm Hungary</em> 那一节，我会继续误解下去。扯远了，回归。</p>
@@ -61,9 +61,9 @@
   
   <entry>
     <title type="html"><![CDATA[通过艰难的六步让你成长为一名出色的程序员]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/10/14/six-steps-to-be-good-programmer/"/>
+    <link href="http://kenspirit.github.io/blog/2011/10/14/six-steps-to-be-good-programmer/"/>
     <updated>2011-10-14T14:53:26+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/10/14/six-steps-to-be-good-programmer</id>
+    <id>http://kenspirit.github.io/blog/2011/10/14/six-steps-to-be-good-programmer</id>
     <content type="html"><![CDATA[<p>在我决定要在技术上，下狠功夫时，看到一篇非常好的文章。</p>
 
 <h2>以下是我的译文，期望与大家共勉：</h2>
@@ -149,9 +149,9 @@ _</p>
   
   <entry>
     <title type="html"><![CDATA[Cleaner Code]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/03/06/cleaner-code/"/>
+    <link href="http://kenspirit.github.io/blog/2011/03/06/cleaner-code/"/>
     <updated>2011-03-06T21:23:04+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/03/06/cleaner-code</id>
+    <id>http://kenspirit.github.io/blog/2011/03/06/cleaner-code</id>
     <content type="html"><![CDATA[<p>Finished reading Robert Martin's "Clean Code" these days, I suddenly feel more passionate to write code, to write better and more descriptive code.</p>
 
 <p>Before, I do think my coding style is not bad and stick to it every time when I am writing Java, Javascript, SQL, etc.</p>

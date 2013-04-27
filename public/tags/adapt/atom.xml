@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Adapt | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/adapt/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/adapt/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
+    <link href="http://kenspirit.github.io/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
     <updated>2013-02-13T21:40:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow</id>
+    <id>http://kenspirit.github.io/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow</id>
     <content type="html"><![CDATA[<p>这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。</p>
 
 <h2><a href="http://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898">Lean Startup</a></h2>

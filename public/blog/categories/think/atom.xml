@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Think | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/blog/categories/think/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/blog/categories/think/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[打造 Facebook 读后感]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook/"/>
+    <link href="http://kenspirit.github.io/blog/2013/04/25/review-on-book-inside-the-facebook/"/>
     <updated>2013-04-25T06:10:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook</id>
+    <id>http://kenspirit.github.io/blog/2013/04/25/review-on-book-inside-the-facebook</id>
     <content type="html"><![CDATA[<p>看完<em><a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a></em>后，很快我又把<em><a href="http://www.amazon.cn/dp/B00ANI5YXW">打造 Facebook</a></em>看完了。但感觉这没上本书过＂瘾＂，我看得更快和粗略。</p>
 
 <p>笔者王淮主要是为外部人士揭秘 Facebook  内部一些流程和机制，包括招聘，人员培养，团队合作，项目流程等。本书内容叙述直白，但略显平淡和笼统。揭秘的 Facebook 流程，其实也和其他一些关于敏捷，管理等文章提及的好的做法没太大差别。这其实也在意料之中，因为核心机密也没可能爆料，加上好的做法本来就那些，关键看怎么做，执行力如何和团队配合，而且最主要是配合不同公司文化，架构和流程作调整。</p>
@@ -56,9 +56,9 @@
   
   <entry>
     <title type="html"><![CDATA[我能否20个月赚130亿?]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months/"/>
+    <link href="http://kenspirit.github.io/blog/2013/04/16/can-i-make-13-billion-in-20-months/"/>
     <updated>2013-04-16T21:36:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months</id>
+    <id>http://kenspirit.github.io/blog/2013/04/16/can-i-make-13-billion-in-20-months</id>
     <content type="html"><![CDATA[<p>你是否看到这个标题，想鄙视我而冲进来了？呵呵，我承认是有点标题党，所以我马上告诉你答案，不能。因为看完<a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a>，我发现我不具备他，或者说硅谷人的特质，至少暂时。这就是他书里反复提到的，其实看书时也强烈感受到的，＂瘾＂。</p>
 
 <p>这本书周五在亚马逊下单，周六下午收到，周日晚就看完了。是在带儿子的零星时间看完的。之所以可以看的那么快，除了我看得快，没太关注些八卦细节外，重要的是书写的流畅，活跃，富有激情。真的使我拿起来就不想放下。感觉他就像和我对话，讲故事一样。推荐看看，也可以找我借。</p>
@@ -131,9 +131,9 @@
   
   <entry>
     <title type="html"><![CDATA[读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
+    <link href="http://kenspirit.github.io/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
     <updated>2013-02-13T21:40:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow</id>
+    <id>http://kenspirit.github.io/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow</id>
     <content type="html"><![CDATA[<p>这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。</p>
 
 <h2><a href="http://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898">Lean Startup</a></h2>
@@ -200,9 +200,9 @@
   
   <entry>
     <title type="html"><![CDATA[2013 Retrospect and Goal Setting]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
+    <link href="http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
     <updated>2013-02-05T22:37:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
+    <id>http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
     <content type="html"><![CDATA[<p>现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。</p>
 
 <h2>翻墙</h2>
@@ -289,9 +289,9 @@
   
   <entry>
     <title type="html"><![CDATA[被广泛误解的匈牙利命名法]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
+    <link href="http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
     <updated>2013-01-03T21:03:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
+    <id>http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
     <content type="html"><![CDATA[<p>我承认我是其中的一员。要向发明者 <em>Charles Simonyi</em> 道个歉。</p>
 
 <p><strong>长期以来，不问出处，不求起源，只是单纯接受一些看起来是常识或事实的结论，导致此问题发生</strong>。这是我有的一点不足，要改进。多思考，多看书是良方，庆幸在不断服药中。如果不是看到 <a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel On Software</a>（<a href="http://book.douban.com/subject/4163938/">软件随想录</a>）里 <em>I'm Hungary</em> 那一节，我会继续误解下去。扯远了，回归。</p>

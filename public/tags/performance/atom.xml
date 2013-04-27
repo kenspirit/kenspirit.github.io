@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Performance | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://www.thinkingincrowd.me/tags/performance/atom.xml" rel="self"/>
-  <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-04-25T06:18:48+08:00</updated>
-  <id>http://www.thinkingincrowd.me/</id>
+  <link href="http://kenspirit.github.io/tags/performance/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-04-27T15:27:51+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Enhance Performance of ExtJs Grid Record set value operation]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2011/07/20/enhance-performance-of-extjs-grid-record-set-value/"/>
+    <link href="http://kenspirit.github.io/blog/2011/07/20/enhance-performance-of-extjs-grid-record-set-value/"/>
     <updated>2011-07-20T23:25:39+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2011/07/20/enhance-performance-of-extjs-grid-record-set-value</id>
+    <id>http://kenspirit.github.io/blog/2011/07/20/enhance-performance-of-extjs-grid-record-set-value</id>
     <content type="html"><![CDATA[<p>When implementing a feature for the project, I encounter one Javascript method that takes around 9 seconds to finish.  Clearly, there is some performance issue in it.</p>
 
 <p>The method logic is simple.  Take below table's data as an example:</p>
