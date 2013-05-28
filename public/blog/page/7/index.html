@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="Suddenly feel that my mind is trying to move a step further. Although it&#8217;s a bit late, march on.  Yeah.  _^ Thanks to all those different kinds &hellip;">
+  <meta name="description" content="Finished reading Robert Martin&#8217;s &#8220;Clean Code&#8221; these days, I suddenly feel more passionate to write code, to write better and more &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,139 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/03/06/cleaner-code/">Cleaner Code</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-06T21:23:04+08:00" pubdate data-updated="true">Mar 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Finished reading Robert Martin&#8217;s &#8220;Clean Code&#8221; these days, I suddenly feel more passionate to write code, to write better and more descriptive code.</p>
+
+<p>Before, I do think my coding style is not bad and stick to it every time when I am writing Java, Javascript, SQL, etc.</p>
+
+<p>However, after digesting the essence of &#8220;Clean Code&#8221;, I am forcing myself to write self-descriptive code, without using comment.</p>
+
+<p>The most important points I do remember after reading it are:</p>
+
+<ol>
+<li><p>Longer descriptive name, smaller function</p></li>
+<li><p>Boy Scout Rule</p></li>
+<li><p>Know your algorithm</p></li>
+</ol>
+
+
+<p>Although &#8220;Clean Code&#8221; has shown us many aspects on how to make the code clean, these two rules are easy to remember, fundamental of others.</p>
+
+<p>Now, I feel the passion of writing code as I am writing a diary, an article.  I feel the impulse of cleaning the mess I got before submitting it again.  What is more, in order to make the code cleaner, I have to make my English better.  haha</p>
+
+<p>Just take below function as an example.  You might not easily figure out what it&#8217;s for.</p>
+
+<pre><code>function groupingFieldFormat(value, p, r, rowIndex, i, ds) {
+    var cGrid = ds.cGrid;
+    var cGridIsReadonly = (cGrid &amp;&amp; cGrid.isReadonly()) ? true : false;
+
+    if (rowIndex === 0) {
+        if (cGrid.id === 'shipmentPackDetail'
+               &amp;&amp; p.id === 'packCount') {
+            Core.FieldFormat.addCellEditableIndicator(
+               config, p, cGridIsReadonly);
+        }
+        return value;
+    }
+    var lastRecord = ds.getAt(rowIndex - 1);
+
+    if (lastRecord.data['lineNo'] == r.data['lineNo']
+            &amp;&amp;  lastRecord.data[p.id] === value) {
+        return '';
+    }
+
+    if (cGrid.id === 'shipmentPackDetail'
+            &amp;&amp; p.id === 'packCount') {
+        Core.FieldFormat.addCellEditableIndicator(
+            config, p, cGridIsReadonly);
+    }
+    return value;
+}
+</code></pre>
+
+<p>Below is the my modified version.  Which version is better is quite obvious although it still has room to improve.</p>
+
+<pre><code>/**
+ * Used by Color, Pack Name, Pack Count in two grids
+ */
+function eliminateRepeatedValueInGroup(value, colMeta, record, rowIndex, colIndex, dataStore) {
+    if (isFirstLineInOneGroup(dataStore, record, rowIndex, colMeta.id)) {
+        showPackCountEditableIfNeeded(colMeta, dataStore);
+        return value;
+    }
+
+    // Always show value for the first row in grid
+    // even though not the first line in one pack,
+    // so that user is easier to check the group value
+    return rowIndex === 0 ? value : '';
+}
+
+function isFirstLineInOneGroup(dataStore, record, rowIndex, fieldId) {
+    var cGrid = dataStore.cGrid;
+    if (cGrid.id === 'shipmentPackDetail') {
+        return isFirstLineInOnePack(record);
+    }
+
+    var lastRecord = dataStore.getAt(rowIndex - 1);
+    if (lastRecord
+            &amp;&amp; lastRecord.data[fieldId] !== record.data[fieldId]) {
+        return true;
+    }
+    return false;
+}
+
+function isFirstLineInOnePack(record) {
+    if (record.data['packSeq'] === 1) {
+        return true;
+    }
+    return false;
+}
+
+function showPackCountEditableIfNeeded(colMeta, dataStore) {
+    var cGrid = dataStore.cGrid;
+    if (cGrid.id === 'shipmentPackDetail'
+           &amp;&amp; colMeta.id === 'packCount') {
+        var cGridIsReadonly =
+           (cGrid &amp;&amp; cGrid.isReadonly()) ? true : false;
+        Core.FieldFormat.addCellEditableIndicator(
+            {}, colMeta, cGridIsReadonly);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -341,52 +474,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2006/03/28/my-t43/">My 小黑</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-03-28T22:39:12+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2006</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I finally had my laptop.  It costs all my procession earned during these two years, but it&#8217;s still worth the lost of money.</p>
-
-<p>For someone that doesn&#8217;t know what is 小黑, let me brief here.  小黑 is IBM Thinkpad.  My 小黑 is IBM T43 2668 BH4.</p>
-
-<p>When I opened the case, I was shocked by the compactly arranged 小黑 and its accessories.  Although my 小黑 is black and has no fancy appearance, that is the style I love.  It&#8217;s black, compact and professional.  It&#8217;s like a professional dressed in a smart black suit with insight vision and in depth knowledge.</p>
-
-<p>小黑, my dream.  It came true and it will come true.</p>
-
-<p><a href="http://blufiles.storage.live.com/y1m11_8HmfikYjDWqaj_gDvvexnmwLefe_R0vV5vUSMzvqO3eZcPsJA-cxMCX_yqmWHbkvx-uleTPLU3E-plsHu07Zc8o9-HQCRFz4aDgl_5AJ_vI_Wbhgn2iDhpJwLwH2CUPjUOpUU-tY"><img src="http://blufiles.storage.live.com/y1m11_8HmfikYjDWqaj_gDvvexnmwLefe_R0vV5vUSMzvqO3eZcPsJA-cxMCX_yqmWHbkvx-uleTPLU3E-plsHu0ywUCiYUX_EcqZ_8hDpoZlIo5iiJQ8UyfNBeJztkIQ1tDqUzgda6bRk" alt="" /></a></p>
-
-<p><a href="http://blufiles.storage.live.com/y1mvNAS6Iw_gkeNZGC-mBLw16p3ekT4OS95zpm3tXYDswl3GaHzCpXzwiFVyu-F4onyRGdmbmk6Lkr8eZu4gIjiGadAQD_6hIL64OmgxChrslOlLWt94UOQq8RS1S3v34WJDfjG__Nnk88"><img src="http://blufiles.storage.live.com/y1mvNAS6Iw_gkeNZGC-mBLw16p3ekT4OS95zpm3tXYDswl3GaHzCpXzwiFVyu-F4onyRGdmbmk6Lkr8eZu4gIjiGVT0x9JWyGsXoFiYQ4q9yWryGNQFJ17N5t5AR-4hIh22bmNF9Rqd5Fg" alt="" /></a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -402,6 +489,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/05/28/how-to-ask-share-and-influence/">一点点对提问，分享和影响力的看法</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/04/25/review-on-book-inside-the-facebook/">打造 Facebook 读后感</a>
@@ -439,15 +530,11 @@
         <a href="/blog/2013/01/01/why-i-start-blogging-and-in-english/">为什么开始写技术博客, 并且还是用英语?</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/">UED in my pet project - Take Time (Part 1)</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (15)</a></li><li><a href='/blog/categories/think'>Think (24)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (15)</a></li><li><a href='/blog/categories/think'>Think (25)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
@@ -469,10 +556,11 @@
 <li><a style="font-size: 90%" href="/tags/gtd/">GTD</a></li>
 <li><a style="font-size: 60%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
+<li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
 <li><a style="font-size: 121%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 161%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 130%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 138%" href="/tags/management/">Management</a></li>
 <li><a style="font-size: 90%" href="/tags/maven/">Maven</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
@@ -483,6 +571,7 @@
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
 <li><a style="font-size: 90%" href="/tags/productivity/">Productivity</a></li>
 <li><a style="font-size: 165%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
 <li><a style="font-size: 60%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
