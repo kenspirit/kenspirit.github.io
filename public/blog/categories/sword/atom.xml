@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sword | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/blog/categories/sword/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-05-28T21:56:25+08:00</updated>
+  <updated>2013-06-08T22:15:53+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,152 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
+    <link href="http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
+    <updated>2013-06-08T22:17:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
+    <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it's pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
+
+<p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>
+
+<blockquote><p><strong>expect(method, url, data, headers)</strong><br/>
+Creates a new request expectation.</p>
+
+<p>Parameters<br/>
+* method – {string} – HTTP method.<br/>
+* url – {string|RegExp} – HTTP url.<br/>
+* data(optional) – {(string|RegExp)=} – HTTP request body.</p></blockquote>
+
+<p>So normally, below simple case is working as expected:</p>
+
+<p>```javascript</p>
+
+<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', 'hello').respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save('hello');
+$httpBackend.flush();
+
+$httpBackend.expect('POST', 'http://localhost/timeEntry', /te/g).respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save('test');
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>However, in real application, the data posted to server is normally in JSON format.  How do we verify JSON data then?  Actually, if we look into the source of the <em>angular-mocks.js</em>, it supports JSON data too although it's not documented.</p>
+
+<p>```javascript
+  this.matchData = function(d) {</p>
+
+<pre><code>if (angular.isUndefined(data)) return true;
+if (data &amp;&amp; angular.isFunction(data.test)) return data.test(d);
+if (data &amp;&amp; !angular.isString(data)) return angular.toJson(data) == d;
+return data == d;
+</code></pre>
+
+<p>  };
+```</p>
+
+<p>So below sample also works.</p>
+
+<p>```javascript</p>
+
+<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', {firstName: 'Ken', lastName: 'Chen'}).respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save({firstName: 'Ken', lastName: 'Chen'});
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>As we see, the JSON data validation requires the JSON data posted to be exactly the same as the expect value provided.  How if the JSON data posted is different on each posting, say guid or timestamp field is contained, and we want to verify whether the JSON data is valid based on our special valiation logic?</p>
+
+<p>Here is the hack to make AngularJS take our special validation logic.</p>
+
+<p>```javascript</p>
+
+<pre><code>var Validator = (function() {
+    return {
+        hasMinimumFields: function(entry) {
+            return StringUtil.isNotBlank(entry.id) &amp;&amp; StringUtil.isNotBlank(entry.desc) &amp;&amp;
+                StringUtil.isNotBlank(entry.lastUpdateOn) &amp;&amp; StringUtil.isNotBlank(entry.status);
+        },
+        isNewEntry: function(entry) {
+            return this.hasMinimumFields(entry) &amp;&amp; entry.status === 'P';
+        }
+    };
+})();
+
+$scope.desc = 'Hello there';
+
+var data = {
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc === $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+$httpBackend.expect('POST', 'http://localhost/timeEntry', data).respond(200, 'Done');
+$scope.saveEntry(); // Let's assume this method will post the data with model $scope.desc
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>The hacking as you see is to take advantage of the <em>test</em> method which the <em>RegExp</em> has and AngularJS uses for data matching.  But when the data is not posted as expected, the Unit Test fails with below message:</p>
+
+<p>```javascript</p>
+
+<pre><code>Chrome 27.0 (Linux) Unit: Controllers Test EntryCtrl should start entry in correct format if only entry desc is filled. FAILED
+Error: Expected POST http://localhost/timeEntry with different data
+EXPECTED: {}
+GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Unit Test","id":"3849ae1a-4b9c-40be-baa0-60eeaf3af430","lastUpdateOn":"2013/06/08T13:24:44.104+0000"}
+</code></pre>
+
+<p>```</p>
+
+<p>This error message is not quite developer friendly and it doesn't tell you much about why it failed at first glance.  However, if we make the test data contain the JSON value too, the expect message would be more meaningful.</p>
+
+<p>```javascript</p>
+
+<pre><code>var data = {
+    desc: $scope.desc,
+    status: 'P',
+    id: 'NOT BLANK',
+    lastUpdateOn: 'NOT BLANK',
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: {"desc":"First Unit Test","status":"P","id":"NOT BLANK","lastUpdateOn":"NOT BLANK"}
+</code></p>
+
+<p>Or we write the expect data like this, then the expect message becomes the tips we supply:<br/>
+```javascript</p>
+
+<pre><code>var data = {
+    toString: function() {
+        return 'id &amp; lastUpdateOn should not be blank; status should be P';
+    },
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc === $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: id &amp; lastUpdateOn should not be blank; status should be P
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
@@ -558,193 +704,6 @@ function addAttrInterpolateDirective(node, directives, value, name) {
 <p>Approach <em>#1</em> looks natural but needs an extra field and more key-stroke.  By taking <em>#3</em>, decimal number need to be used to express minutes.  You may question me that calculating decimal is even harder.  But think it this way:  <em>.25</em> is <em>15</em> mins; <em>.5</em> is <em>30</em> mins; <em>.75</em> is <em>45</em> mins; <em>.1</em> is around <em>5</em> mins.</p>
 
 <p>I think it's not that difficult to use decimal to express it.  What is more, when you are actually tracking your task this way, you are guessing or trying to remember how long it took.  Your mental power is "calculating" somehow to get a number.  If it's one field, you just need to do one calculation and input.  If it's two fields, you might possibly calculating two fields, especially when your task start time is say from <em>2:35</em> to <em>4:08</em>.  I think it just doesn't matter if there is minor inaccurate.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A response pends forever issue in MongoDB, Connect and Node.js]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/"/>
-    <updated>2012-12-05T21:08:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs</id>
-    <content type="html"><![CDATA[<p><strong>My ignorance</strong><br/>
-When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it's all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.</p>
-
-<p>First, I dig into the <em>session.js</em> in Connect.  Around line 267:
-```javascript connect/lib/middleware/session.js</p>
-
-<pre><code>// proxy end() to commit the session
-var end = res.end;
-res.end = function(data, encoding){
-  res.end = end;
-  if (!req.session) return res.end(data, encoding);
-  debug('saving');
-  req.session.resetMaxAge();
-  req.session.save(function(){
-    debug('saved');
-    res.end(data, encoding);
-  });
-};
-</code></pre>
-
-<p>```</p>
-
-<p>After opening the debug feature in <a href="http://nodejs.org">Node</a>, I found that it's never going into the callback of <em>session.save()</em>.  Hence, the 'saved' message is never printed in the console after 'saving' and the response is never ending.</p>
-
-<p>Why would this happened?  I kept tracing the code and found that <em>session.save()</em> in Connect is calling the <em>sessionStore.set()</em> method.  The <em>MongoStore.set()</em> method in <em>connect-mongodb.js</em> is just purely calling <em>collection.update()</em> and no much magic there.  However, it seems the <em>update()</em> method call has either no err and data coming back.  Is there something wrong with the MongoDB or the Collection?</p>
-
-<p>MongoDB log doesn't seems to have any query or update action recorded and I just found that there are 10 connections started every time I started my app, but I remembered there were 5 connections (default pool size) before (Actually, I haven't noticed that this is the phenomenon of the problem I have at that time yet).</p>
-
-<p>Without any clue, I checked the initialization of the MongoStore and find below code:
-```javascript</p>
-
-<pre><code>if (server_config.isConnected()) {
-  authenticateAndGetCollection(callback);
-} else {
-  server_config.connect(db, function (err) {
-    if (err) callback(Error("Error connecting (" + (err instanceof Error ? err.message : err) + ")"));
-      authenticateAndGetCollection(callback);
-    });
-}
-</code></pre>
-
-<p>```</p>
-
-<p>It turns out that the flow goes into <em>server_config.connect()</em> again.  But why?  DB should be initialized in below code which is intended to encapsulate all DB operation.
-```javascript DbManager.js</p>
-
-<pre><code>DbManager = (function() {
-  var db = new Db('tyt', new Server('127.0.0.1', 27017, {auto_reconnect: true}, {}), {safe: true});
-  db.open(function(){});
-
-  return {
-    getDb: function() {
-        return db;
-    }
-  }
-})();
-
-exports.DbManager = DbManager;
-</code></pre>
-
-<p>```</p>
-
-<p>```javascript In my node app.js</p>
-
-<pre><code>var express = require('express')
-  , DbManager = require('./db.js').DbManager
-  , mongoStore = require('connect-mongodb');
-
-var app = module.exports = express();
-
-// Configuration
-app.configure(function(){
-  app.use(express.session({
-      secret: 'kenspirit',
-      key: 'tt.sid',
-      cookie: {secure: false, maxAge: 300000},
-      store: new mongoStore({db: DbManager.getDb()})
-  }));
-});
-</code></pre>
-
-<p>```</p>
-
-<p>If you are familiar with Node, you may have already noticed what I haven't done right here.  I am assuming the DB should be connected and ready for use already as I have called <em>db.open()</em> during DbManager's construction.  However, Async is the most importance concept in Node, <em>db.open()</em> takes my callback will immediately return and it doesn't guarantee it's opened already.  If I change to below code, problem solved.</p>
-
-<p>```javascript</p>
-
-<pre><code>var db = DbManager.getDb();
-db.open(function(err, db) {
-  if (db) {
-    app.use(express.session({
-      secret: 'kenspirit',
-      key: 'tt.sid',
-      cookie: {secure: false, maxAge: 300000},
-      store: new mongoStore({db: db})
-    }));
-   }
-});
-</code></pre>
-
-<p>```</p>
-
-<p><strong>The root of not responding</strong><br/>
-I wonder where is the actual source to make the response kept waiting?  I have configured the <em>auto_reconnect</em> already.  Later I found that in mongodb:
-```javascript mongodb/lib/mongodb/db.js
-  Db.prototype.open = function(callback) {</p>
-
-<pre><code>...
-self._state = 'connecting';
-...
-self.serverConfig.connect(self, {firstCall: true}, function(err, result) {
-  if(err != null) {
-    // Set that db has been closed
-    self.openCalled = false;
-    // Return error from connection
-    return callback(err, null);
-  }
-  // Set the status of the server
-  self._state = 'connected';
-  // Callback
-  return callback(null, self);
-});
-...
-</code></pre>
-
-<p>  };</p>
-
-<p>  Db.prototype._executeInsertCommand = function(db_command, options, callback) {</p>
-
-<pre><code>...
-// If the pool is not connected, attemp to reconnect to send the message
-if(self._state == 'connecting' &amp;&amp; this.serverConfig.autoReconnect) {
-  process.nextTick(function() {
-    self.commands.push({type:'insert', 'db_command':db_command, 'options':options, 'callback':callback});
-  })
-}
-...
-</code></pre>
-
-<p>  ;}
-```</p>
-
-<p>```javascript mongodb/lib/connection/server.js
-  Server.prototype.connect = function(dbInstance, options, callback) {</p>
-
-<pre><code>...
-// Force connection pool if there is one
-if(server.connectionPool) server.connectionPool.stop();
-...
-// Create connection Pool instance with the current BSON serializer
-var connectionPool = new ConnectionPool(this.host, this.port, this.poolSize, dbInstance.bson,  this.socketOptions);
-...
-// Set up on connect method
-connectionPool.on("poolReady", function() {
-  // Create db command and Add the callback to the list of callbacks by the request id (mapping outgoing messages to correct callbacks)
-  var db_command = DbCommand.NcreateIsMasterCommand(dbInstance, dbInstance.databaseName);
-  // Check out a reader from the pool
-  var connection = connectionPool.checkoutConnection();
-  // Set server state to connEcted
-  server._serverState = 'connected';
-  // dbInstance._state = 'connected';  If I add this line here, even if my code doesn't do any change, it works.
-  ...
-});
-</code></pre>
-
-<p>  };
-```</p>
-
-<p>Finally, the root cause is found.  Normally, when <em>db.open()</em> is called, it sets its <em>_state = 'connecting'</em>, and it then will call <em>server.connect()</em> to create connection pool and in the callback, it sets its <em>_state = 'connected'</em> again.  However, my case is that the second call <em>server.connect()</em> in MongoStore.js first make the first connection pool stops and then creates a new connection pool again(This should be where makes the mongo db log has 10 connections opened).  Somehow, the callback in normal flow cannot be executed so that <em>db._state</em> has not been set to 'connected'.  What is more, the callback set in <em>MongoStore.js</em> doesn't set the <em>db._state</em> to 'connected'.  The <em>db._state</em> is remained in 'connecting' forever which makes my update command keep pushing to its commands stack.</p>
-
-<p><strong>Most appropriate way to initialize MongoDB and its connections in Node.js</strong><br/>
-I began to wonder what is the "most appropriate way" to initialize MongoDB and manage its connections and googled around.</p>
-
-<p>At first, I found a similar question asked in <a href="http://stackoverflow.com/questions/10656574/how-to-manage-mongodb-connections-in-a-nodejs-webapp">StackOverFlow</a>.<br/>
-However, the reply doesn't seem to be reasonable.  It recommands opening a new connection (actually, a DB and Connection Pool there) per request.  And it said it's due to MongoDB is asynchronous.  It's pretty confusing and the asynchronous mechanism in Node should be achieved by callback instead of creating new connection per request.  If so, what is the point of using pool then?  This approach should be more slow.</p>
-
-<p>Later I found out a reply from the author of node-mongodb-native in <a href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated "DO NOT call open on each request.".</p>
-
-<p>I believe only opening MongoDB once with appropriate pool size and initialize node application in the <em>db.open()</em> callback should be the right way to go.</p>
 ]]></content>
   </entry>
   

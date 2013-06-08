@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/javascript/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-05-28T21:56:25+08:00</updated>
+  <updated>2013-06-08T22:15:53+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,152 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
+    <link href="http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
+    <updated>2013-06-08T22:17:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
+    <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it's pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
+
+<p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>
+
+<blockquote><p><strong>expect(method, url, data, headers)</strong><br/>
+Creates a new request expectation.</p>
+
+<p>Parameters<br/>
+* method – {string} – HTTP method.<br/>
+* url – {string|RegExp} – HTTP url.<br/>
+* data(optional) – {(string|RegExp)=} – HTTP request body.</p></blockquote>
+
+<p>So normally, below simple case is working as expected:</p>
+
+<p>```javascript</p>
+
+<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', 'hello').respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save('hello');
+$httpBackend.flush();
+
+$httpBackend.expect('POST', 'http://localhost/timeEntry', /te/g).respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save('test');
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>However, in real application, the data posted to server is normally in JSON format.  How do we verify JSON data then?  Actually, if we look into the source of the <em>angular-mocks.js</em>, it supports JSON data too although it's not documented.</p>
+
+<p>```javascript
+  this.matchData = function(d) {</p>
+
+<pre><code>if (angular.isUndefined(data)) return true;
+if (data &amp;&amp; angular.isFunction(data.test)) return data.test(d);
+if (data &amp;&amp; !angular.isString(data)) return angular.toJson(data) == d;
+return data == d;
+</code></pre>
+
+<p>  };
+```</p>
+
+<p>So below sample also works.</p>
+
+<p>```javascript</p>
+
+<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', {firstName: 'Ken', lastName: 'Chen'}).respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save({firstName: 'Ken', lastName: 'Chen'});
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>As we see, the JSON data validation requires the JSON data posted to be exactly the same as the expect value provided.  How if the JSON data posted is different on each posting, say guid or timestamp field is contained, and we want to verify whether the JSON data is valid based on our special valiation logic?</p>
+
+<p>Here is the hack to make AngularJS take our special validation logic.</p>
+
+<p>```javascript</p>
+
+<pre><code>var Validator = (function() {
+    return {
+        hasMinimumFields: function(entry) {
+            return StringUtil.isNotBlank(entry.id) &amp;&amp; StringUtil.isNotBlank(entry.desc) &amp;&amp;
+                StringUtil.isNotBlank(entry.lastUpdateOn) &amp;&amp; StringUtil.isNotBlank(entry.status);
+        },
+        isNewEntry: function(entry) {
+            return this.hasMinimumFields(entry) &amp;&amp; entry.status === 'P';
+        }
+    };
+})();
+
+$scope.desc = 'Hello there';
+
+var data = {
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc === $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+$httpBackend.expect('POST', 'http://localhost/timeEntry', data).respond(200, 'Done');
+$scope.saveEntry(); // Let's assume this method will post the data with model $scope.desc
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>The hacking as you see is to take advantage of the <em>test</em> method which the <em>RegExp</em> has and AngularJS uses for data matching.  But when the data is not posted as expected, the Unit Test fails with below message:</p>
+
+<p>```javascript</p>
+
+<pre><code>Chrome 27.0 (Linux) Unit: Controllers Test EntryCtrl should start entry in correct format if only entry desc is filled. FAILED
+Error: Expected POST http://localhost/timeEntry with different data
+EXPECTED: {}
+GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Unit Test","id":"3849ae1a-4b9c-40be-baa0-60eeaf3af430","lastUpdateOn":"2013/06/08T13:24:44.104+0000"}
+</code></pre>
+
+<p>```</p>
+
+<p>This error message is not quite developer friendly and it doesn't tell you much about why it failed at first glance.  However, if we make the test data contain the JSON value too, the expect message would be more meaningful.</p>
+
+<p>```javascript</p>
+
+<pre><code>var data = {
+    desc: $scope.desc,
+    status: 'P',
+    id: 'NOT BLANK',
+    lastUpdateOn: 'NOT BLANK',
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: {"desc":"First Unit Test","status":"P","id":"NOT BLANK","lastUpdateOn":"NOT BLANK"}
+</code></p>
+
+<p>Or we write the expect data like this, then the expect message becomes the tips we supply:<br/>
+```javascript</p>
+
+<pre><code>var data = {
+    toString: function() {
+        return 'id &amp; lastUpdateOn should not be blank; status should be P';
+    },
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc === $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: id &amp; lastUpdateOn should not be blank; status should be P
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
@@ -667,200 +813,6 @@ However, the reply doesn't seem to be reasonable.  It recommands opening a new c
 <p>Later I found out a reply from the author of node-mongodb-native in <a href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated "DO NOT call open on each request.".</p>
 
 <p>I believe only opening MongoDB once with appropriate pool size and initialize node application in the <em>db.open()</em> callback should be the right way to go.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
-    <updated>2012-08-30T23:04:06+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
-    <content type="html"><![CDATA[<p>Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.</p>
-
-<p>ExtJS has been adopted in the two companies I worked and am working for.  Hence, here I only show you how to test Ajax in ExtJS built application.</p>
-
-<p>In my previous post <a href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/">ExtJS, Jasmine, Unit Test – Part 1 (Philosophy and Test for Store)</a>, the part on how to test Autoload <em>Ext.data.Store</em> simply override <em>Ext.lib.Ajax</em> so that it does nothing and <em>Ext.data.Store</em> is tested through manual loading data.</p>
-
-<p>That is the simplest way but cannot fulfill the requirement to test real production code which uses Ajax feature.</p>
-
-<p><strong>How real production code might look like if the application is built entirely by ExtJS?</strong></p>
-
-<p>```javascript</p>
-
-<pre><code>xxx.UiImpl = Ext.extend(xxx.Ui, {
-    initComponent: function() {
-        xxx.UiImpl.superclass.initComponent.call(this);
-
-        this.emptyNameWarningMsg = 'Name is empty!';
-        this.duplicateNameWarningMsg = 'Name has been in used!';
-        this.nameField = Ext.getCmp('xxx.name');
-
-        this.initEventHandlers();
-    },
-
-    initEventHandlers : function() {
-        this.nameField.on('blur', this.validateName, this);
-    },
-
-    validateName: function(){
-        var sName = this.nameField.getValue();
-        if (sName == '') {
-            this.nameField.markInvalid(this.emptyNameWarningMsg);
-            return;
-        }
-
-        Ext.Ajax.request({
-            url : config.appName() + "/foo/validateName",
-            method : 'GET',
-            params : {
-                name : sName
-            },
-            success : function(data){
-                if (data.responseText != '') {
-                    this.nameField.markInvalid(this.duplicateNameWarningMsg);
-                }
-            },
-            failure : function(data){
-                alert("validate failure!");
-            },
-            scope: this
-        });
-    }
-});
-</code></pre>
-
-<p>```</p>
-
-<p>Above is a simple UI implementation class which extends from an UI class.  You can safely guess that this UI class simply has one name field which is bound with a Blur Event.  The Blur Event handler triggers an Ajax calls to validate whether the typed-in name is empty or duplicated within the system.  Pretty straightforward, right?</p>
-
-<p><strong>Considering the Test Philosophy I mentioned in my last post, what contracts or behaviors we should test against here?</strong></p>
-
-<p>Here are some examples:</p>
-
-<ol>
-<li>Contract between user and our system (blur event).  I would expect there would some code like this in my Jasmine Spec:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>oUI.nameField.fireEvent('blur');
-</code></pre>
-
-<p>```</p>
-
-<ol>
-<li>Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the <em>responseText</em> from Ajax call to be not empty, the <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em>.  Say, the response can be stub as:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>Ext.lib.Ajax.response({
-    status: 200,
-    responseText: 'Duplicate'
-});
-</code></pre>
-
-<p>```</p>
-
-<ol>
-<li>Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em> or <em>oUI.emptyNameWarningMsg</em> under different situations<strong>.</strong> Sample Spec code might be:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-
-oUI.nameField.setValue('Ken');
-oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-</code></pre>
-
-<p>```</p>
-
-<ol>
-<li>Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it's very difficult to be aware of.  Sample Spec code might be:</li>
-</ol>
-
-
-<p>```javascript</p>
-
-<pre><code>var oUI = Ext.getCmp('kentest');
-</code></pre>
-
-<p>```</p>
-
-<p><strong>The Test Spec is already in mind but how can I use it to test against the production code?  </strong></p>
-
-<p>I googled around and found one useful helper API - <a href="http://github.com/pivotal/jasmine-ajax">Jasmine-Ajax</a> : a set of helpers for testing AJAX requests under the Jasmine BDD framework for JavaScript.  However, now it only supports Prototype.js and jQuery.</p>
-
-<p>I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   <a href="https://dl.dropbox.com/u/17182499/blog/2012/08/mock-ajax.js">mock-ajax</a></p>
-
-<p>How should I include this helper class to use Jasmine to test the Ajax in ExtJS?</p>
-
-<p>Configuration in POM.xml</p>
-
-<p>```xml</p>
-
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/mock-ajax.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/global.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-...
-&lt;configuration&gt;
-</code></pre>
-
-<p>```</p>
-
-<p>Code in file globalTestStub.js change to be:</p>
-
-<p>```javascript</p>
-
-<pre><code>jasmine.Ajax.installMock();
-</code></pre>
-
-<p>```</p>
-
-<p>How to write the Test Spec?</p>
-
-<p>```javascript</p>
-
-<pre><code>describe('Test Maintenance UI', function() {
-    beforeEach(function() {
-        jasmine.Ajax.useMock();
-    });
-
-    it('Maintenance UI should be initialized successfully', function() {
-        var oUI = new xxx.UI({});
-        expect(Ext.getCmp('kentest')).toBeTruthy();
-    });
-
-    it('Focus leaving name field should trigger unique validation.', function() {
-        Ext.lib.Ajax.response({
-            status: 200,
-            responseText: 'Duplicate'
-        });
-
-        var oUI = Ext.getCmp('kentest');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-
-        oUI.nameField.setValue('Ken');
-        oUI.nameField.fireEvent('blur');
-        expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
-    });
-});
-</code></pre>
-
-<p>```</p>
-
-<p>Can you see how all above works now?  Please take it a trial and share your comment with me.</p>
 ]]></content>
   </entry>
   
