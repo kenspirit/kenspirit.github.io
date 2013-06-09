@@ -104,8 +104,8 @@ This error message is not quite developer friendly and it doesn't tell you much 
     var data = {
         desc: $scope.desc,
         status: 'P',
-        id: 'NOT BLANK',
-        lastUpdateOn: 'NOT BLANK',
+        id: 'SHOULD NOT BLANK',
+        lastUpdateOn: 'SHOULD NOT BLANK',
         test: function(data) {
             var entry = angular.fromJson(data);
             return (entry.desc !== $scope.desc) && Validator.isNewEntry(entry);
@@ -114,22 +114,5 @@ This error message is not quite developer friendly and it doesn't tell you much 
 ```
 
 ```javascript
-EXPECTED: {"desc":"First Unit Test","status":"P","id":"NOT BLANK","lastUpdateOn":"NOT BLANK"}
-```
-
-Or we write the expect data like this, then the expect message becomes the tips we supply:  
-```javascript
-    var data = {
-        toString: function() {
-            return 'id & lastUpdateOn should not be blank; status should be P';
-        },
-        test: function(data) {
-            var entry = angular.fromJson(data);
-            return (entry.desc === $scope.desc) && Validator.isNewEntry(entry);
-        }
-    };
-```
-
-```javascript
-EXPECTED: id & lastUpdateOn should not be blank; status should be P
+EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
 ```

@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-08T22:15:53+08:00</updated>
+  <updated>2013-06-09T20:20:31+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -158,8 +158,8 @@ Creates a new request expectation.</p>
 </pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
 </span><span class='line'>    <span class="nx">desc</span><span class="o">:</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">desc</span><span class="p">,</span>
 </span><span class='line'>    <span class="nx">status</span><span class="o">:</span> <span class="s1">&#39;P&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;NOT BLANK&#39;</span><span class="p">,</span>
-</span><span class='line'>    <span class="nx">lastUpdateOn</span><span class="o">:</span> <span class="s1">&#39;NOT BLANK&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;SHOULD NOT BLANK&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">lastUpdateOn</span><span class="o">:</span> <span class="s1">&#39;SHOULD NOT BLANK&#39;</span><span class="p">,</span>
 </span><span class='line'>    <span class="nx">test</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="kd">var</span> <span class="nx">entry</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">fromJson</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 </span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">desc</span> <span class="o">!==</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">desc</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">Validator</span><span class="p">.</span><span class="nx">isNewEntry</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
@@ -171,37 +171,7 @@ Creates a new request expectation.</p>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">EXPECTED</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;desc&quot;</span><span class="o">:</span><span class="s2">&quot;First Unit Test&quot;</span><span class="p">,</span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;NOT BLANK&quot;</span><span class="p">,</span><span class="s2">&quot;lastUpdateOn&quot;</span><span class="o">:</span><span class="s2">&quot;NOT BLANK&quot;</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Or we write the expect data like this, then the expect message becomes the tips we supply:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="s1">&#39;id &amp; lastUpdateOn should not be blank; status should be P&#39;</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nx">test</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">entry</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">fromJson</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nx">entry</span><span class="p">.</span><span class="nx">desc</span> <span class="o">===</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">desc</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">Validator</span><span class="p">.</span><span class="nx">isNewEntry</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">EXPECTED</span><span class="o">:</span> <span class="nx">id</span> <span class="o">&amp;</span> <span class="nx">lastUpdateOn</span> <span class="nx">should</span> <span class="nx">not</span> <span class="nx">be</span> <span class="nx">blank</span><span class="p">;</span> <span class="nx">status</span> <span class="nx">should</span> <span class="nx">be</span> <span class="nx">P</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">EXPECTED</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;desc&quot;</span><span class="o">:</span><span class="s2">&quot;First Unit Test&quot;</span><span class="p">,</span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="s2">&quot;P&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="o">:</span><span class="s2">&quot;SHOULD NOT BLANK&quot;</span><span class="p">,</span><span class="s2">&quot;lastUpdateOn&quot;</span><span class="o">:</span><span class="s2">&quot;SHOULD NOT BLANK&quot;</span><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>

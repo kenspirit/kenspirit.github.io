@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/javascript/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-08T22:15:53+08:00</updated>
+  <updated>2013-06-09T20:20:31+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -122,8 +122,8 @@ GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Un
 <pre><code>var data = {
     desc: $scope.desc,
     status: 'P',
-    id: 'NOT BLANK',
-    lastUpdateOn: 'NOT BLANK',
+    id: 'SHOULD NOT BLANK',
+    lastUpdateOn: 'SHOULD NOT BLANK',
     test: function(data) {
         var entry = angular.fromJson(data);
         return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
@@ -134,27 +134,7 @@ GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Un
 <p>```</p>
 
 <p><code>javascript
-EXPECTED: {"desc":"First Unit Test","status":"P","id":"NOT BLANK","lastUpdateOn":"NOT BLANK"}
-</code></p>
-
-<p>Or we write the expect data like this, then the expect message becomes the tips we supply:<br/>
-```javascript</p>
-
-<pre><code>var data = {
-    toString: function() {
-        return 'id &amp; lastUpdateOn should not be blank; status should be P';
-    },
-    test: function(data) {
-        var entry = angular.fromJson(data);
-        return (entry.desc === $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
-    }
-};
-</code></pre>
-
-<p>```</p>
-
-<p><code>javascript
-EXPECTED: id &amp; lastUpdateOn should not be blank; status should be P
+EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
 </code></p>
 ]]></content>
   </entry>
