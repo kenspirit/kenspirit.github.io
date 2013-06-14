@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。 Lean Startup 这本书我总体来说看的比较粗略，主要因为前面的章节在目前身处非创业型企业文化下不太容易适用得上， &hellip;">
+  <meta name="description" content="Background When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,145 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share Code Between Node.js and Browser</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-13T12:59:00+08:00" pubdate data-updated="true">Apr 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Background</h2>
+
+<p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>
+
+<p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.</p>
+
+<p>Hence, the code sharing between Node.js and browser requires the code to be used as the same way in browser.</p>
+
+<h2>Situations and Solutions</h2>
+
+<p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">;</span>
+</span><span class='line'><span class="nx">a</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">b</span><span class="p">.</span><span class="nx">bar</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are two kinds of situations:</p>
+
+<h3>Modularization already realized for browser code</h3>
+
+<p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/">RequireJS</a>, or <a href="http://seajs.org/">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.</p>
+
+<p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;./b&#39;</span><span class="p">],</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">a</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
+</span><span class='line'>    <span class="nx">b</span><span class="p">.</span><span class="nx">bar</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">bla</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;bla&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.</p>
+
+<p>To overcome this incompatibility, there are two main approaches.</p>
+
+<ul>
+<li><p>Directly add boilerplate code in one side to fit the other</p>
+
+<ol>
+<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html">here</a>.</li>
+<li><a href="https://github.com/ajaxorg/node-amd-loader">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.</li>
+<li>The <a href="https://github.com/jrburke/amdefine">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer">RequireJS Optimizer</a>.</li>
+</ol>
+</li>
+<li><p>Build process to handle the boilerplate</p>
+
+<ol>
+<li><a href="https://github.com/substack/node-browserify">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.</li>
+<li><a href="https://github.com/medikoo/modules-webmake">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.</li>
+<li><a href="https://github.com/kenspirit/webassemble">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.</li>
+</ol>
+</li>
+</ul>
+
+
+<p>Personally, I prefer introducing extra build process to handle the boilerplate for me.</p>
+
+<p>The advantages of build process boilerplate are:</p>
+
+<ol>
+<li>Boilerplate code is brittle and subject to change.  Adding it to every file makes future change harder.  If some build process can automatically remove them, why not use the build process to automatically add them?</li>
+<li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.</li>
+<li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.</li>
+</ol>
+
+
+<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/">Grunt</a>, it&#8217;s just a couple of seconds&#8217; waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.</p>
+
+<h3>Legacy or namespace browser code style</h3>
+
+<p>Although it&#8217;s seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it&#8217;s actually easier to share your Node.js code under this circumstance.</p>
+
+<p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.</p>
+
+<p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P</p>
+
+<p>So tell me what is yours.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -812,79 +951,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/">被广泛误解的匈牙利命名法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-01-03T21:03:00+08:00" pubdate data-updated="true">Jan 3<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我承认我是其中的一员。要向发明者 <em>Charles Simonyi</em> 道个歉。</p>
-
-<p><strong>长期以来，不问出处，不求起源，只是单纯接受一些看起来是常识或事实的结论，导致此问题发生</strong>。这是我有的一点不足，要改进。多思考，多看书是良方，庆幸在不断服药中。如果不是看到 <a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel On Software</a>（<a href="http://book.douban.com/subject/4163938/">软件随想录</a>）里 <em>I&#8217;m Hungary</em> 那一节，我会继续误解下去。扯远了，回归。</p>
-
-<p>估计可能 <em>90%</em> 的人都只是知道<strong><a href="http://en.wikipedia.org/wiki/Hungarian_notation">匈牙利命名法</a></strong>要求在变量名前面加上类别。这里用类别，而不是 type，也正是书里所说的，这个关键点就是使得不少人误解和背弃这种用法的原因。</p>
-
-<p>多数人的用法是加上变量所代表的<strong>数据类型</strong>或<strong>作用域</strong>，如：</p>
-
-<ul>
-<li><em>n</em> 表示 <em>number</em> 型</li>
-<li><em>s</em> 表示 <em>string</em> 型</li>
-<li><em>g</em> 表示全局变量</li>
-</ul>
-
-
-<p>这种用法，在弱类型语言或者使用之前一些并不完善的 IDE 时，用处还是明显的。可以避免把数据赋值到不同类型的变量中而产生错误，或者养成不好的编程习惯。但是，其实更深层的意思应该是在书中提到的:</p>
-
-<blockquote><p>Make wrong code look wrong</p></blockquote>
-
-<p>这是什么意思呢？就是<strong>让错误的代码更容易暴露出来</strong>。一些不符合命名规范或非约定俗成的变量的使用，或者不恰当的方法调用，应该使得它们只要我们的眼睛一扫过，就可以判断出来。而这个基本原则，正是匈牙利命名法真正的用意所在。</p>
-
-<p>在书中提到的关于用前缀来区别一些字符串是用户输入(Unsafe)的，还是已经处理过的(Safe)的例子，就很好的说明了这种意图。在当前很多大型的企业级系统里面，数据交换在用户，数据库，和不同子系统之间的交换需求是那么多且复杂，判断数据是否已经恰当处理就显得很重要。什么是用户提供的原始数据，什么是从数据库中拿出来的数据，有没有经过HTML编码，XML编码等。这些如果处理不好，就会产生一些隐藏很深的Bug。</p>
-
-<p>还有一个适合这个应用场景的例子，我想就是时间数据的存储。在一些供跨国企业或用户协作的系统里面，时间数据的存储和显示，往往伴随着 TimeZone 的处理。一般来说，时间数据都是把 ISO 时间，也就是不包含时区的时间，存储到数据库里面，当需要显示的时候，再根据用户的时区来转换处理。当然，也有一些系统在业务上的需求是把已经考虑了时区的时间存储在数据库的。这样的话，什么时间是包含了时区信息的，什么时间是没有包含的，也是关键点。加上恰当的命名前缀，再结合业务需求，很容易就可以判断代码处理的对不对了，而不需要再翻看一系列的代码。</p>
-
-<p>当然，你可以说，我可以把变量名写的很详尽，如 <em>unsafeContent</em> 而不是 <em>usContent</em>。 这是可以的。只是这样就使得我们的手和眼睛需要处理更多的字符，而且也混合了变量名中的类别意义和业务意义两部分在一起。个人感觉还是分开好点。</p>
-
-<p>回想起来，很多对 <em>Code Convention</em> 上的要求，除了让程序员可以更容易理解代码以外，另一层意思也是更容易发现错误或问题所在，比如：</p>
-
-<ul>
-<li>简短的方法体</li>
-<li>有意义的变量和方法名称</li>
-<li><em>Self-Documentary Code</em> 或者是加注释</li>
-<li>恰当缩进和使用括号{}</li>
-</ul>
-
-
-<p>所以说，我们也不应该一棍打死匈牙利命名法。有需要的话，只要整个团队一致认为某些情况确实可以增加代码清晰度和容易看出问题，那么定义清楚什么时候该用就行了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -900,6 +966,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/14/function-definition-this-and-bind-in-javascript/">Function definition, this and bind in JavaScript</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">How to verify JSON data with AngularJS $httpBackend</a>
@@ -937,67 +1007,67 @@
         <a href="/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/">String interpolation should not be used with Class Directive in AngularJS</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/">被广泛误解的匈牙利命名法</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (16)</a></li><li><a href='/blog/categories/think'>Think (25)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (17)</a></li><li><a href='/blog/categories/think'>Think (25)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
-<li><a style="font-size: 108%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 106%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 90%" href="/tags/book/">Book</a></li>
-<li><a style="font-size: 90%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 108%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 89%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 89%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 106%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
-<li><a style="font-size: 90%" href="/tags/design/">Design</a></li>
-<li><a style="font-size: 90%" href="/tags/destiny/">Destiny</a></li>
-<li><a style="font-size: 90%" href="/tags/directive/">Directive</a></li>
+<li><a style="font-size: 89%" href="/tags/design/">Design</a></li>
+<li><a style="font-size: 89%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 89%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
-<li><a style="font-size: 130%" href="/tags/extjs/">ExtJs</a></li>
-<li><a style="font-size: 90%" href="/tags/gtd/">GTD</a></li>
+<li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
+<li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
+<li><a style="font-size: 89%" href="/tags/gtd/">GTD</a></li>
 <li><a style="font-size: 60%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
 <li><a style="font-size: 60%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
 <li><a style="font-size: 60%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 130%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 128%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 138%" href="/tags/management/">Management</a></li>
-<li><a style="font-size: 90%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 136%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 89%" href="/tags/maven/">Maven</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 121%" href="/tags/mood/">Mood</a></li>
-<li><a style="font-size: 108%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 119%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 106%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
-<li><a style="font-size: 90%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 165%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 89%" href="/tags/productivity/">Productivity</a></li>
+<li><a style="font-size: 161%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
 <li><a style="font-size: 60%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
-<li><a style="font-size: 90%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 108%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 89%" href="/tags/time-management/">Time Management</a></li>
+<li><a style="font-size: 106%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 130%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 128%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
+<li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
 <li><a style="font-size: 60%" href="/tags/i18n/">i18n</a></li>
 <li><a style="font-size: 60%" href="/tags/ngclass/">ngClass</a></li>
 <li><a style="font-size: 60%" href="/tags/ngrepeat/">ngRepeat</a></li>
+<li><a style="font-size: 60%" href="/tags/this/">this</a></li>
 
   </ul>
 </section>

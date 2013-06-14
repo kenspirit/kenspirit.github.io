@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="When we are writing Unit Test for AngularJS Controller or Service, it&#8217;s pretty common to verify the data posted to server using $httpBackend in &hellip;">
+  <meta name="description" content="I thought I know the Function definition, execution context and the behavior of this in JavaScript. However, I realized that actually I don&#8217;t &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,207 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/14/function-definition-this-and-bind-in-javascript/">Function Definition, This and Bind in JavaScript</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-14T20:00:00+08:00" pubdate data-updated="true">Jun 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&#8217;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">a</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">b</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+</span><span class='line'><span class="nx">c</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The result will be as below, right?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">B</span>
+</span><span class='line'><span class="nx">A</span>
+</span><span class='line'><span class="nx">B</span>
+</span><span class='line'><span class="nx">A</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don&#8217;t know JavasScript well either like me.  The result actually is:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">B</span>
+</span><span class='line'><span class="nx">A</span>
+</span><span class='line'><span class="nx">B</span>
+</span><span class='line'><span class="nx">TypeError</span><span class="o">:</span> <span class="nb">Object</span> <span class="p">[</span><span class="nx">object</span> <span class="nx">global</span><span class="p">]</span> <span class="nx">has</span> <span class="nx">no</span> <span class="nx">method</span> <span class="s1">&#39;a&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It is a little bit awkward or counterintuitive at first glance but it&#8217;s JavaScript.  It&#8217;s the feature and amazing part.  Let&#8217;s break it down piece by piece and see why.</p>
+
+<h2>Function definition</h2>
+
+<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">B</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">();</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">a</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nx">b</span><span class="o">:</span> <span class="nx">B</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>this</h2>
+
+<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:</p>
+
+<blockquote><p><strong>10.4.3 Entering Function Code</strong><br/>
+The following steps are performed when control enters the execution context for function code contained in
+function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
+
+<ol>
+<li>If the function code is strict code, set the ThisBinding to thisArg.</li>
+<li>Else if thisArg is null or undefined, set the ThisBinding to the global object.</li>
+<li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).</li>
+<li>Else set the ThisBinding to thisArg.<br/>
+&#8230;</li>
+</ol>
+</blockquote>
+
+<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.</p>
+
+<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.</p>
+
+<p>However, below statements mean differently.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+</span><span class='line'><span class="nx">c</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.</p>
+
+<h2>How to set a particular object as <em>this</em> to function</h2>
+
+<p>It&#8217;s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+</span><span class='line'><span class="nx">c</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">dynamic</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">fn</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">dynamic</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it&#8217;s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.</p>
+
+<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">dynamic</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">fn</span><span class="p">();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">dynamic</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&#8217;s fun, isn&#8217;t it?</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -543,145 +744,6 @@ to get the word out, the right people will already be listening.</p></blockquote
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share Code Between Node.js and Browser</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-13T12:59:00+08:00" pubdate data-updated="true">Apr 13<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Background</h2>
-
-<p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>
-
-<p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.</p>
-
-<p>Hence, the code sharing between Node.js and browser requires the code to be used as the same way in browser.</p>
-
-<h2>Situations and Solutions</h2>
-
-<p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">;</span>
-</span><span class='line'><span class="nx">a</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nx">b</span><span class="p">.</span><span class="nx">bar</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There are two kinds of situations:</p>
-
-<h3>Modularization already realized for browser code</h3>
-
-<p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/">RequireJS</a>, or <a href="http://seajs.org/">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.</p>
-
-<p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">define</span><span class="p">([</span><span class="s1">&#39;./b&#39;</span><span class="p">],</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">xxx</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">a</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span>
-</span><span class='line'>    <span class="nx">b</span><span class="p">.</span><span class="nx">bar</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">bla</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;bla&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.</p>
-
-<p>To overcome this incompatibility, there are two main approaches.</p>
-
-<ul>
-<li><p>Directly add boilerplate code in one side to fit the other</p>
-
-<ol>
-<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html">here</a>.</li>
-<li><a href="https://github.com/ajaxorg/node-amd-loader">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.</li>
-<li>The <a href="https://github.com/jrburke/amdefine">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer">RequireJS Optimizer</a>.</li>
-</ol>
-</li>
-<li><p>Build process to handle the boilerplate</p>
-
-<ol>
-<li><a href="https://github.com/substack/node-browserify">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.</li>
-<li><a href="https://github.com/medikoo/modules-webmake">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.</li>
-<li><a href="https://github.com/kenspirit/webassemble">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.</li>
-</ol>
-</li>
-</ul>
-
-
-<p>Personally, I prefer introducing extra build process to handle the boilerplate for me.</p>
-
-<p>The advantages of build process boilerplate are:</p>
-
-<ol>
-<li>Boilerplate code is brittle and subject to change.  Adding it to every file makes future change harder.  If some build process can automatically remove them, why not use the build process to automatically add them?</li>
-<li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.</li>
-<li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.</li>
-</ol>
-
-
-<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/">Grunt</a>, it&#8217;s just a couple of seconds&#8217; waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.</p>
-
-<h3>Legacy or namespace browser code style</h3>
-
-<p>Although it&#8217;s seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it&#8217;s actually easier to share your Node.js code under this circumstance.</p>
-
-<p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.</p>
-
-<p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P</p>
-
-<p>So tell me what is yours.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -695,6 +757,10 @@ to get the word out, the right people will already be listening.</p></blockquote
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/14/function-definition-this-and-bind-in-javascript/">Function definition, this and bind in JavaScript</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">How to verify JSON data with AngularJS $httpBackend</a>
@@ -732,67 +798,67 @@ to get the word out, the right people will already be listening.</p></blockquote
         <a href="/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/">String interpolation should not be used with Class Directive in AngularJS</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/">被广泛误解的匈牙利命名法</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (16)</a></li><li><a href='/blog/categories/think'>Think (25)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (17)</a></li><li><a href='/blog/categories/think'>Think (25)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
-<li><a style="font-size: 108%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 106%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 90%" href="/tags/book/">Book</a></li>
-<li><a style="font-size: 90%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 108%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 89%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 89%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 106%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
-<li><a style="font-size: 90%" href="/tags/design/">Design</a></li>
-<li><a style="font-size: 90%" href="/tags/destiny/">Destiny</a></li>
-<li><a style="font-size: 90%" href="/tags/directive/">Directive</a></li>
+<li><a style="font-size: 89%" href="/tags/design/">Design</a></li>
+<li><a style="font-size: 89%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 89%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
-<li><a style="font-size: 130%" href="/tags/extjs/">ExtJs</a></li>
-<li><a style="font-size: 90%" href="/tags/gtd/">GTD</a></li>
+<li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
+<li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
+<li><a style="font-size: 89%" href="/tags/gtd/">GTD</a></li>
 <li><a style="font-size: 60%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
 <li><a style="font-size: 60%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
 <li><a style="font-size: 60%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 130%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 128%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 138%" href="/tags/management/">Management</a></li>
-<li><a style="font-size: 90%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 136%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 89%" href="/tags/maven/">Maven</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 121%" href="/tags/mood/">Mood</a></li>
-<li><a style="font-size: 108%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 119%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 106%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
-<li><a style="font-size: 90%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 165%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 89%" href="/tags/productivity/">Productivity</a></li>
+<li><a style="font-size: 161%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
 <li><a style="font-size: 60%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
-<li><a style="font-size: 90%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 108%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 89%" href="/tags/time-management/">Time Management</a></li>
+<li><a style="font-size: 106%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 130%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 128%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
+<li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
 <li><a style="font-size: 60%" href="/tags/i18n/">i18n</a></li>
 <li><a style="font-size: 60%" href="/tags/ngclass/">ngClass</a></li>
 <li><a style="font-size: 60%" href="/tags/ngrepeat/">ngRepeat</a></li>
+<li><a style="font-size: 60%" href="/tags/this/">this</a></li>
 
   </ul>
 </section>

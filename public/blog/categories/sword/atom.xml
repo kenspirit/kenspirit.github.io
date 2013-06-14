@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sword | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/blog/categories/sword/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-09T20:20:31+08:00</updated>
+  <updated>2013-06-14T20:05:56+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,142 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Function definition, this and bind in JavaScript]]></title>
+    <link href="http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
+    <updated>2013-06-14T20:00:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
+    <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don't or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
+
+<p>```javascript
+var TestObj = {</p>
+
+<pre><code>a: function() {
+    console.log('A');
+},
+b: function() {
+    console.log('B');
+    this.a();
+}
+</code></pre>
+
+<p>};</p>
+
+<p>TestObj.b();</p>
+
+<p>var c = TestObj.b;
+c();
+```</p>
+
+<p>The result will be as below, right?</p>
+
+<p><code>javascript
+B
+A
+B
+A
+</code></p>
+
+<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don't know JavasScript well either like me.  The result actually is:</p>
+
+<p><code>javascript
+B
+A
+B
+TypeError: Object [object global] has no method 'a'
+</code></p>
+
+<p>It is a little bit awkward or counterintuitive at first glance but it's JavaScript.  It's the feature and amazing part.  Let's break it down piece by piece and see why.</p>
+
+<h2>Function definition</h2>
+
+<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:</p>
+
+<p>```javascript
+function B() {</p>
+
+<pre><code>console.log('B');
+this.a();
+</code></pre>
+
+<p>};</p>
+
+<p>var TestObj = {</p>
+
+<pre><code>a: function() {
+    console.log('A');
+},
+b: B
+</code></pre>
+
+<p>};
+```</p>
+
+<h2>this</h2>
+
+<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:</p>
+
+<blockquote><p><strong>10.4.3 Entering Function Code</strong><br/>
+The following steps are performed when control enters the execution context for function code contained in
+function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
+
+<ol>
+<li>If the function code is strict code, set the ThisBinding to thisArg.</li>
+<li>Else if thisArg is null or undefined, set the ThisBinding to the global object.</li>
+<li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).</li>
+<li>Else set the ThisBinding to thisArg.<br/>
+...</li>
+</ol>
+</blockquote>
+
+<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.</p>
+
+<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.</p>
+
+<p>However, below statements mean differently.</p>
+
+<p><code>javascript
+var c = TestObj.b;
+c();
+</code></p>
+
+<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.</p>
+
+<h2>How to set a particular object as <em>this</em> to function</h2>
+
+<p>It's commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:</p>
+
+<p><code>javascript
+var c = TestObj.b;
+c.call(TestObj);
+</code></p>
+
+<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:</p>
+
+<p>```javascript
+function dynamic(fn) {
+  fn();
+}</p>
+
+<p>dynamic(TestObj.b);
+```</p>
+
+<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it's a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.</p>
+
+<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:</p>
+
+<p>```javascript
+function dynamic(fn) {
+  fn();
+}</p>
+
+<p>dynamic(TestObj.b.bind(TestObj));
+```</p>
+
+<p>It's fun, isn't it?</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
@@ -606,84 +742,6 @@ function addAttrInterpolateDirective(node, directives, value, name) {
 <li>HTML class attribute directly with String interpolation.</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[UED in my pet project - Take Time (Part 1)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
-    <updated>2012-12-25T21:41:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
-    <content type="html"><![CDATA[<h2>What is it and why I want to work on that</h2>
-
-<p>I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it's telling you to <em>"Take your time.  Slow down."</em>.  Actually, it's where to take the time seriously and you can keep track of your time.</p>
-
-<p>Why would I want to do such a seemingly boring thing?  There are three reasons:</p>
-
-<ul>
-<li><p>For those who really cares about their time, they really want to find some effective way to make their time used effectively.</p></li>
-<li><p>I have been working in two software companies which both require staffs to input TIMESHEET!  Yes, we all know it's bullshit, meaningless and most of the figures are made up, but it's just required.</p>
-
-<p>  I can understand that part of the objective is good, just like what this pet project is made for. However, mostly it's just some policy or resource monitoring required by boss.</p></li>
-<li><p>Practice my development skills with some of my favorite tools by doing real work.</p></li>
-</ul>
-
-
-<p>Hence, I am trying to make an easy-to-use application for those who want an effective time management.  The design is basically following my <a href="http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/">practices</a> of it and the principle of simplicity.</p>
-
-<h2>What does it look like</h2>
-
-<p>It should be simple in general.</p>
-
-<ul>
-<li>It's a GTD-style task web application.</li>
-<li>It can plan, track and retrospect the tasks.</li>
-</ul>
-
-
-<h2>How to capture the time</h2>
-
-<p>No matter you are planning tasks or actually tracking the tasks done.  You need to capture it.  There are many elements need to write down:</p>
-
-<ul>
-<li>For planning tasks: Task content, Start/End date and Estimated how long it needs.</li>
-<li>For tracking tasks: Task content, Start/End date, Start/End time and how long it takes.</li>
-</ul>
-
-
-<p>The elements in tracking tasks covers all we need for planning tasks, hence the capturing UI should be able to unified.  Below is the draft UI designed:<br/>
-<img src="https://dl.dropbox.com/u/17182499/blog/2012/12/task_capture.png" alt="Capture UI" /></p>
-
-<ul>
-<li>By default, there is a task content textbox.</li>
-<li>After you input something, some additional text and input boxes are shown.</li>
-</ul>
-
-
-<p>You should probably be able to guess how to use it already (if not, let me know how to make it happen):</p>
-
-<ul>
-<li>If you input the task name and press "<em>Enter</em>", you start your task immediately.</li>
-<li>If you input the task name and the duration it takes and press "<em>Enter</em>", you are tracking a task just finished.  It's calculated based on the current time and the duration you input.</li>
-<li>If you also fills a specific date in "<em>yyyy-MM-dd</em>", you are planning tasks if it's a future date; you are tracking tasks if it's a historical date.  The last "<em>hh:mm</em>" field is optional for the task start time.</li>
-</ul>
-
-
-<h2>Why design like this</h2>
-
-<p><em>4</em> fields with some easy to explain text made it can be read as a sentence.  It should be natural to fill in what is required.  And when you press "Enter" at any field, it will do different things automatically.  It should be simple enough but satisfy all the requirement.</p>
-
-<p>I have been thinking how to capture the duration.</p>
-
-<ul>
-<li>Two fields separately for hours and mins (This app is not designed for those crazy people who need to capture seconds).</li>
-<li>One field for all.</li>
-</ul>
-
-
-<p>Approach <em>#1</em> looks natural but needs an extra field and more key-stroke.  By taking <em>#3</em>, decimal number need to be used to express minutes.  You may question me that calculating decimal is even harder.  But think it this way:  <em>.25</em> is <em>15</em> mins; <em>.5</em> is <em>30</em> mins; <em>.75</em> is <em>45</em> mins; <em>.1</em> is around <em>5</em> mins.</p>
-
-<p>I think it's not that difficult to use decimal to express it.  What is more, when you are actually tracking your task this way, you are guessing or trying to remember how long it took.  Your mental power is "calculating" somehow to get a number.  If it's one field, you just need to do one calculation and input.  If it's two fields, you might possibly calculating two fields, especially when your task start time is say from <em>2:35</em> to <em>4:08</em>.  I think it just doesn't matter if there is minor inaccurate.</p>
 ]]></content>
   </entry>
   
