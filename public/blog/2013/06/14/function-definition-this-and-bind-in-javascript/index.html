@@ -270,6 +270,51 @@ function object F, a caller provided thisArg, and a caller provided argumentsLis
 
 
 <p>It&#8217;s fun, isn&#8217;t it?</p>
+
+<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">logLength</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">length</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">b</span><span class="o">:</span> <span class="nx">logLength</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">c</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]();</span>
+</span><span class='line'>        <span class="p">})(</span><span class="nx">logLength</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">();</span>
+</span><span class='line'><span class="nx">TestObj</span><span class="p">.</span><span class="nx">c</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.</p>
+
+<p>More fun, right?</p>
 </div>
 
 

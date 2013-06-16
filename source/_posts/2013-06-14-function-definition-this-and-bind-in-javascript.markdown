@@ -127,3 +127,30 @@ dynamic(TestObj.b.bind(TestObj));
 ```
 
 It's fun, isn't it?
+
+\[Edited on 2013/06/17\]: Today, I saw another case which maybe confusing too.  
+
+```javascript
+var length = 3;
+
+function logLength() {
+  console.log(this.length);
+}
+
+var TestObj = {
+    length: 2,
+    b: logLength,
+    c: function() {
+        (function(fn) {
+            arguments[0]();
+        })(logLength);
+    }
+};
+
+TestObj.b();
+TestObj.c();
+```
+
+What do you think the console should log?  Will it be _2_ and _3_?  Actually, the result is _2_ and _1_.  Because the _TestObj.c()_ actually is calling the function _logLength_ on the arguments Object, and then the _this.length_ is referring to its own length, which is _1_.  
+
+More fun, right?

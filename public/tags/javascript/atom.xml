@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/javascript/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-14T20:05:56+08:00</updated>
+  <updated>2013-06-17T06:32:46+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -146,6 +146,36 @@ function dynamic(fn) {
 ```</p>
 
 <p>It's fun, isn't it?</p>
+
+<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.</p>
+
+<p>```javascript
+var length = 3;</p>
+
+<p>function logLength() {
+  console.log(this.length);
+}</p>
+
+<p>var TestObj = {</p>
+
+<pre><code>length: 2,
+b: logLength,
+c: function() {
+    (function(fn) {
+        arguments[0]();
+    })(logLength);
+}
+</code></pre>
+
+<p>};</p>
+
+<p>TestObj.b();
+TestObj.c();
+```</p>
+
+<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.</p>
+
+<p>More fun, right?</p>
 ]]></content>
   </entry>
   
