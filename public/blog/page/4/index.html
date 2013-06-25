@@ -9,7 +9,8 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="首先, 我先要说明一下, 这里的“多维度”可能并不太准确.  这里说的并不是数据仓库里的维度, 而只是数据的属性. 举个例子可能就比较好明白了. 比如, 如果你上京东, 或者苏宁一些网上商场买电脑, 上面一堆的过滤条件 (比如: CPU, 内存, 硬盘等) , 其实就是电脑的属性, &hellip;">
+  <meta name="description" content="My ignorance
+When I first switched to use connect-mongodb to replace the MemoryStore in Connect, I found that the homepage of my pet project cannot &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +79,311 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/">A Response Pends Forever Issue in MongoDB, Connect and Node.js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-05T21:08:00+08:00" pubdate data-updated="true">Dec 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>My ignorance</strong><br/>
+When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it&#8217;s all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.</p>
+
+<p>First, I dig into the <em>session.js</em> in Connect.  Around line 267:</p>
+
+<figure class='code'><figcaption><span>connect/lib/middleware/session.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// proxy end() to commit the session</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">;</span>
+</span><span class='line'><span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">){</span>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="o">=</span> <span class="nx">end</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">)</span> <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">debug</span><span class="p">(</span><span class="s1">&#39;saving&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">resetMaxAge</span><span class="p">();</span>
+</span><span class='line'>  <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nx">debug</span><span class="p">(</span><span class="s1">&#39;saved&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After opening the debug feature in <a href="http://nodejs.org">Node</a>, I found that it&#8217;s never going into the callback of <em>session.save()</em>.  Hence, the &#8216;saved&#8217; message is never printed in the console after &#8216;saving&#8217; and the response is never ending.</p>
+
+<p>Why would this happened?  I kept tracing the code and found that <em>session.save()</em> in Connect is calling the <em>sessionStore.set()</em> method.  The <em>MongoStore.set()</em> method in <em>connect-mongodb.js</em> is just purely calling <em>collection.update()</em> and no much magic there.  However, it seems the <em>update()</em> method call has either no err and data coming back.  Is there something wrong with the MongoDB or the Collection?</p>
+
+<p>MongoDB log doesn&#8217;t seems to have any query or update action recorded and I just found that there are 10 connections started every time I started my app, but I remembered there were 5 connections (default pool size) before (Actually, I haven&#8217;t noticed that this is the phenomenon of the problem I have at that time yet).</p>
+
+<p>Without any clue, I checked the initialization of the MongoStore and find below code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">server_config</span><span class="p">.</span><span class="nx">isConnected</span><span class="p">())</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">authenticateAndGetCollection</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">server_config</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">db</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">callback</span><span class="p">(</span><span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Error connecting (&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">err</span> <span class="k">instanceof</span> <span class="nb">Error</span> <span class="o">?</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span> <span class="o">:</span> <span class="nx">err</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">));</span>
+</span><span class='line'>      <span class="nx">authenticateAndGetCollection</span><span class="p">(</span><span class="nx">callback</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It turns out that the flow goes into <em>server_config.connect()</em> again.  But why?  DB should be initialized in below code which is intended to encapsulate all DB operation.</p>
+
+<figure class='code'><figcaption><span>DbManager.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">DbManager</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Db</span><span class="p">(</span><span class="s1">&#39;tyt&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Server</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">,</span> <span class="p">{</span><span class="nx">auto_reconnect</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span> <span class="p">{}),</span> <span class="p">{</span><span class="nx">safe</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
+</span><span class='line'>  <span class="nx">db</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="kd">function</span><span class="p">(){});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">getDb</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">db</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">})();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">exports</span><span class="p">.</span><span class="nx">DbManager</span> <span class="o">=</span> <span class="nx">DbManager</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>In my node app.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">DbManager</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./db.js&#39;</span><span class="p">).</span><span class="nx">DbManager</span>
+</span><span class='line'>  <span class="p">,</span> <span class="nx">mongoStore</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-mongodb&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Configuration</span>
+</span><span class='line'><span class="nx">app</span><span class="p">.</span><span class="nx">configure</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">session</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">secret</span><span class="o">:</span> <span class="s1">&#39;kenspirit&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;tt.sid&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">cookie</span><span class="o">:</span> <span class="p">{</span><span class="nx">secure</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">maxAge</span><span class="o">:</span> <span class="mi">300000</span><span class="p">},</span>
+</span><span class='line'>      <span class="nx">store</span><span class="o">:</span> <span class="k">new</span> <span class="nx">mongoStore</span><span class="p">({</span><span class="nx">db</span><span class="o">:</span> <span class="nx">DbManager</span><span class="p">.</span><span class="nx">getDb</span><span class="p">()})</span>
+</span><span class='line'>  <span class="p">}));</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you are familiar with Node, you may have already noticed what I haven&#8217;t done right here.  I am assuming the DB should be connected and ready for use already as I have called <em>db.open()</em> during DbManager&#8217;s construction.  However, Async is the most importance concept in Node, <em>db.open()</em> takes my callback will immediately return and it doesn&#8217;t guarantee it&#8217;s opened already.  If I change to below code, problem solved.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">db</span> <span class="o">=</span> <span class="nx">DbManager</span><span class="p">.</span><span class="nx">getDb</span><span class="p">();</span>
+</span><span class='line'><span class="nx">db</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">db</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">db</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">session</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">secret</span><span class="o">:</span> <span class="s1">&#39;kenspirit&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">key</span><span class="o">:</span> <span class="s1">&#39;tt.sid&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">cookie</span><span class="o">:</span> <span class="p">{</span><span class="nx">secure</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nx">maxAge</span><span class="o">:</span> <span class="mi">300000</span><span class="p">},</span>
+</span><span class='line'>      <span class="nx">store</span><span class="o">:</span> <span class="k">new</span> <span class="nx">mongoStore</span><span class="p">({</span><span class="nx">db</span><span class="o">:</span> <span class="nx">db</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">}));</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>The root of not responding</strong><br/>
+I wonder where is the actual source to make the response kept waiting?  I have configured the <em>auto_reconnect</em> already.  Later I found that in mongodb:</p>
+
+<figure class='code'><figcaption><span>mongodb/lib/mongodb/db.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">Db</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">_state</span> <span class="o">=</span> <span class="s1">&#39;connecting&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">serverConfig</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="p">{</span><span class="nx">firstCall</span><span class="o">:</span> <span class="kc">true</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="nx">err</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Set that db has been closed</span>
+</span><span class='line'>        <span class="nx">self</span><span class="p">.</span><span class="nx">openCalled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="c1">// Return error from connection</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="c1">// Set the status of the server</span>
+</span><span class='line'>      <span class="nx">self</span><span class="p">.</span><span class="nx">_state</span> <span class="o">=</span> <span class="s1">&#39;connected&#39;</span><span class="p">;</span>
+</span><span class='line'>      <span class="c1">// Callback</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">self</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">Db</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_executeInsertCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">db_command</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="c1">// If the pool is not connected, attemp to reconnect to send the message</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">_state</span> <span class="o">==</span> <span class="s1">&#39;connecting&#39;</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">serverConfig</span><span class="p">.</span><span class="nx">autoReconnect</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">process</span><span class="p">.</span><span class="nx">nextTick</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">self</span><span class="p">.</span><span class="nx">commands</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span><span class="s1">&#39;insert&#39;</span><span class="p">,</span> <span class="s1">&#39;db_command&#39;</span><span class="o">:</span><span class="nx">db_command</span><span class="p">,</span> <span class="s1">&#39;options&#39;</span><span class="o">:</span><span class="nx">options</span><span class="p">,</span> <span class="s1">&#39;callback&#39;</span><span class="o">:</span><span class="nx">callback</span><span class="p">});</span>
+</span><span class='line'>      <span class="p">})</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>  <span class="p">;}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>mongodb/lib/connection/server.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="nx">Server</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dbInstance</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="c1">// Force connection pool if there is one</span>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">connectionPool</span><span class="p">)</span> <span class="nx">server</span><span class="p">.</span><span class="nx">connectionPool</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="c1">// Create connection Pool instance with the current BSON serializer</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">connectionPool</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ConnectionPool</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">host</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">port</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">poolSize</span><span class="p">,</span> <span class="nx">dbInstance</span><span class="p">.</span><span class="nx">bson</span><span class="p">,</span>  <span class="k">this</span><span class="p">.</span><span class="nx">socketOptions</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">...</span>
+</span><span class='line'>    <span class="c1">// Set up on connect method</span>
+</span><span class='line'>    <span class="nx">connectionPool</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;poolReady&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// Create db command and Add the callback to the list of callbacks by the request id (mapping outgoing messages to correct callbacks)</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">db_command</span> <span class="o">=</span> <span class="nx">DbCommand</span><span class="p">.</span><span class="nx">NcreateIsMasterCommand</span><span class="p">(</span><span class="nx">dbInstance</span><span class="p">,</span> <span class="nx">dbInstance</span><span class="p">.</span><span class="nx">databaseName</span><span class="p">);</span>
+</span><span class='line'>      <span class="c1">// Check out a reader from the pool</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">connection</span> <span class="o">=</span> <span class="nx">connectionPool</span><span class="p">.</span><span class="nx">checkoutConnection</span><span class="p">();</span>
+</span><span class='line'>      <span class="c1">// Set server state to connEcted</span>
+</span><span class='line'>      <span class="nx">server</span><span class="p">.</span><span class="nx">_serverState</span> <span class="o">=</span> <span class="s1">&#39;connected&#39;</span><span class="p">;</span>
+</span><span class='line'>      <span class="c1">// dbInstance._state = &#39;connected&#39;;  If I add this line here, even if my code doesn&#39;t do any change, it works.</span>
+</span><span class='line'>      <span class="p">...</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, the root cause is found.  Normally, when <em>db.open()</em> is called, it sets its <em>_state = &#8216;connecting&#8217;</em>, and it then will call <em>server.connect()</em> to create connection pool and in the callback, it sets its <em>_state = &#8216;connected&#8217;</em> again.  However, my case is that the second call <em>server.connect()</em> in MongoStore.js first make the first connection pool stops and then creates a new connection pool again(This should be where makes the mongo db log has 10 connections opened).  Somehow, the callback in normal flow cannot be executed so that <em>db._state</em> has not been set to &#8216;connected&#8217;.  What is more, the callback set in <em>MongoStore.js</em> doesn&#8217;t set the <em>db._state</em> to &#8216;connected&#8217;.  The <em>db._state</em> is remained in &#8216;connecting&#8217; forever which makes my update command keep pushing to its commands stack.</p>
+
+<p><strong>Most appropriate way to initialize MongoDB and its connections in Node.js</strong><br/>
+I began to wonder what is the &#8220;most appropriate way&#8221; to initialize MongoDB and manage its connections and googled around.</p>
+
+<p>At first, I found a similar question asked in <a href="http://stackoverflow.com/questions/10656574/how-to-manage-mongodb-connections-in-a-nodejs-webapp">StackOverFlow</a>.<br/>
+However, the reply doesn&#8217;t seem to be reasonable.  It recommands opening a new connection (actually, a DB and Connection Pool there) per request.  And it said it&#8217;s due to MongoDB is asynchronous.  It&#8217;s pretty confusing and the asynchronous mechanism in Node should be achieved by callback instead of creating new connection per request.  If so, what is the point of using pool then?  This approach should be more slow.</p>
+
+<p>Later I found out a reply from the author of node-mongodb-native in <a href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated &#8220;DO NOT call open on each request.&#8221;.</p>
+
+<p>I believe only opening MongoDB once with appropriate pool size and initialize node application in the <em>db.open()</em> callback should be the right way to go.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -870,69 +1176,6 @@ REQUIREMENTS:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">ExtJS, Jasmine, Maven - Why I Am Working on Them?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-05T15:52:24+08:00" pubdate data-updated="true">Aug 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Before going into how to setup <a href="http://pivotal.github.com/jasmine/">Jasmine</a> to do Unit Test for <a href="www.sencha.com/products/extjs">ExtJS</a>, I think I should describe why I am doing this.</p>
-
-<p>I have been using ExtJS for around 4 years.  My first company used HTML + ExtJS to build the UI while the current one use ExtJS completely to do that.  I have encountered lots of cases that well-tested behavior failed after some new features introduced in.</p>
-
-<p>Everyone knows that it&#8217;s because there lacks Unit Test.  However, there have never been any Unit Test done for Javascript in any project.  There are many of the reasons behind that, such as tight schedule, not enough attention etc.  But the most important reason that outweights or strengthens others is that Unit Test for Javascript is way too difficult than Java, especially when Javascript is used intensively to build the UI and implement business logics.</p>
-
-<p>One of the reason makes Javascript hard to do Unit Test is due to good tools unavailability;  the other one is that most developers tend to not separating business logic from UI code quite clearly.</p>
-
-<p>After the emergence of <a href="http://seleniumhq.org/">Selenium</a>, I have once thought it should be the right tool to address this issue.  However, after reading Selenium Doc and seeing what my previous colleagues did for recording &amp; playing, I think Selenium should be used mainly for Integration Test, not in Unit Test level.  My opinion is further strenghten after watching a video from Google Testing Expert and reading the blog from Martin Fowler:</p>
-
-<blockquote><p><a href="http://www.infoq.com/cn/presentations/duannian-agile-test">让测试也敏捷起来</a> by 段念</p></blockquote>
-
-<p><a href="http://martinfowler.com/bliki/TestPyramid.html">TestPyramid</a> by Martin Fowler</p>
-
-<p><strong>The main points in TestPyramid are:</strong></p>
-
-<blockquote><ol>
-<li><p><strong>Low-level unit test should be many more than high level end-to-end testing through GUI.</strong></p></li>
-<li><p><strong>Testing through UI is slow, brittle, expensive to write.</strong></p></li>
-<li><p><strong>A rich javascript UI should have most of its UI behavior tested with javascript unit tests using something like Jasmine.</strong></p></li>
-</ol>
-</blockquote>
-
-<p>Above is a long long purpose briefing, I hope it worthes to let you know the background and also agree with me on this.  I heard about Jasmine before reading the post by Martin Fowler, however, I kept thinking that it&#8217;s quite difficult or even impossible to use Jasmine to test those ExtJS UI components.</p>
-
-<p>Until I did sit down and really tried to use Jasmine to test the ExtJS code, I can say that Unit Test against ExtJS by Jasmine can be achieved at some level once we know what to test for.</p>
-
-<p>In next post, I will show you the steps to bind ExtJS, Jasmine, Maven together to do the Unit Test and what I think we should test against.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -948,6 +1191,10 @@ REQUIREMENTS:
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/26/startup-review-permanent-beta/">永久测试之心, 寻求真我</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/06/14/function-definition-this-and-bind-in-javascript/">Function definition, this and bind in JavaScript</a>
@@ -985,15 +1232,11 @@ REQUIREMENTS:
         <a href="/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/">Expression in AngularJS must be idempotent and for multiple calls</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/">String interpolation should not be used with Class Directive in AngularJS</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (17)</a></li><li><a href='/blog/categories/think'>Think (25)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (17)</a></li><li><a href='/blog/categories/think'>Think (26)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
@@ -1002,7 +1245,7 @@ REQUIREMENTS:
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
 <li><a style="font-size: 106%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 89%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 106%" href="/tags/book/">Book</a></li>
 <li><a style="font-size: 89%" href="/tags/change/">Change</a></li>
 <li><a style="font-size: 106%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
@@ -1015,7 +1258,7 @@ REQUIREMENTS:
 <li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
 <li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
 <li><a style="font-size: 89%" href="/tags/gtd/">GTD</a></li>
-<li><a style="font-size: 60%" href="/tags/goal/">Goal</a></li>
+<li><a style="font-size: 89%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
 <li><a style="font-size: 60%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
@@ -1031,11 +1274,12 @@ REQUIREMENTS:
 <li><a style="font-size: 106%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
+<li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
 <li><a style="font-size: 89%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 161%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 165%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
-<li><a style="font-size: 60%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 89%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
 <li><a style="font-size: 89%" href="/tags/time-management/">Time Management</a></li>
