@@ -9,10 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="Do you see any issue in below HTML snippet with AngularJS code? 1
-2
-&lt;span ng-class=&quot;task-{{task.type}}&quot;&gt;{{task.type}}&lt;/span&gt;
-& &hellip;">
+  <meta name="description" content="Recently, I encounter two very interesting issues when using ng-repeat in AngularJS. Not completely understanding the $watch and $digest() is the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +78,305 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/">Expression in AngularJS Must Be Idempotent and for Multiple Calls</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-02T14:32:00+08:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
+
+<h2>Requirement</h2>
+
+<p>I am making some workout entries as a list and one special requirement is to group the records by the date.</p>
+
+<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>    <span class="nt">&lt;style&gt;</span>
+</span><span class='line'>        <span class="nt">body</span> <span class="p">{</span><span class="k">font-family</span><span class="o">:</span> <span class="s1">&#39;Lucida Grande&#39;</span><span class="o">,</span> <span class="s1">&#39;Lucida Sans&#39;</span><span class="o">,</span> <span class="n">Arial</span><span class="o">,</span> <span class="k">sans-serif</span><span class="p">;}</span>
+</span><span class='line'>        <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span><span class="k">list-style-type</span><span class="o">:</span> <span class="k">none</span><span class="p">;}</span>
+</span><span class='line'>        <span class="nc">.actionDateGroup</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">red</span><span class="p">}</span>
+</span><span class='line'>    <span class="nt">&lt;/style&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;EntryCtrl&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;entries&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;entry in entries&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;div</span> <span class="na">ng-switch</span> <span class="na">on=</span><span class="s">&quot;isNewDateGroup(entry.actionDate)&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>                        <span class="nt">&lt;div</span> <span class="na">ng-switch-when=</span><span class="s">&quot;true&quot;</span> <span class="na">class=</span><span class="s">&quot;actionDateGroup&quot;</span><span class="nt">&gt;</span>{{entry.actionDate}}<span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>                    <span class="nt">&lt;span&gt;</span>{{entry.desc}}<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./js/angular/angular.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script&gt;</span>
+</span><span class='line'>        <span class="kd">function</span> <span class="nx">EntryCtrl</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$location</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">entries</span> <span class="o">=</span> <span class="p">[{</span>
+</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Rope jumping count 1000&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="p">},{</span>
+</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Jogging 3000M&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span>
+</span><span class='line'>            <span class="p">},{</span>
+</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Situp 40 * 3&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-30&#39;</span>
+</span><span class='line'>            <span class="p">}];</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">isNewDateGroup</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Function called count: &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="p">);</span>
+</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Entry date vs Scope date: &#39;</span> <span class="o">+</span> <span class="nx">actionDate</span> <span class="o">+</span> <span class="s1">&#39; vs &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
+</span><span class='line'>                    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">};</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Expectation</h2>
+
+<ol>
+<li><em>actionDate</em> of the first entry will always be shown as it&#8217;s the first group.</li>
+<li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.</li>
+</ol>
+
+
+<h2>Phenomenon</h2>
+
+<p>When the sample data is as above (case #1), the effect looks like it&#8217;s behaving correctly as below:</p>
+
+<ul>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-31</div>
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-30</div>
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn&#8217;t it supposed to show only the first one as all entries have the same <em>actionDate</em>?</p>
+
+<h4>Expected result:</h4>
+
+<ul>
+    <li style="list-style-type: none;">
+        <div style="font-weight: bold; color: red">2012-01-31</div>
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<h4>Actual result:</h4>
+
+<ul>
+    <li style="list-style-type: none;">
+        <span>Rope jumping count 1000</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Jogging 3000M</span>
+    </li>
+    <li style="list-style-type: none;">
+        <span>Situp 40 * 3</span>
+    </li>
+</ul>
+
+
+<p>Now if you check the calledCount in the debug message, you will find that it&#8217;s called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:</p>
+
+<ol>
+<li>The <em>isNewDateGroup</em> function is called more than the entries&#8217; count.  (Guess this, right?)</li>
+<li>The called count is different when the data is different.  (how about this?)</li>
+</ol>
+
+
+<h2>Causes</h2>
+
+<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> API:</p>
+
+<blockquote><ul>
+<li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> and should be <strong>idempotent</strong>.</li>
+<li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> &#8230;</li>
+<li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.
+&#8230;
+(Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)</li>
+</ul>
+</blockquote>
+
+<h3>Issue #1</h3>
+
+<p>The <em>isNewDateGroup</em> being watched whose calculation relies on value of <em>lastActionDate</em> is not idempotent and so during initial run stage, <em>lastActionDate</em> is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.</p>
+
+<h3>Issue #2</h3>
+
+<p>In below code, if I comment out <strong>$scope.lastActionDate = actionDate;</strong> or change the <strong>return true;</strong> to <strong>return false;</strong>, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let&#8217;s see what the return value is for watch expression <em>isNewDateGroup</em> after each run.</p>
+
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:</p>
+
+<p>
+<table style="font-size: 0.85em;">
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">true (&#8216;2012-01-31&#8217; !== &#8216;2012-01-30&#8217;;<br/>
+        $scope.lastActionDate = &#8216;2012-01-30&#8217;)
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">2nd</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate !== &#8216;2012-01-31&#8217;)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">true</td>
+    </tr>
+</table>
+</p>
+
+
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:</p>
+
+<p>
+<table style="font-size: 0.85em;">
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
+        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">2nd</td>
+        <td style="padding: 5px; border: 1px solid black;">false (change compared to last run)</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+    <tr>
+        <td style="padding: 5px; border: 1px solid black;">3rd</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+        <td style="padding: 5px; border: 1px solid black;">false</td>
+    </tr>
+</table>
+</p>
+
+
+<p>So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -555,85 +851,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/24/my-practices-on-time-management/">My Practices on Time Management</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-24T06:22:00+08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>The 101</h2>
-
-<blockquote><p>Time Management is the act or process of planning and exercising conscious control over the amount of time spent on specific activities, especially to increase effectiveness, efficiency or productivity.</p></blockquote>
-
-<p>Everyone who cares about their time should be familiar with this concept and knows its goal - to increase effectiveness.  The <a href="http://en.wikipedia.org/wiki/Time_management">Wiki</a> site covers different aspects of it.</p>
-
-<p>Here I would like to share my understandings and what my choices are to make good use of my time.<br/>
-1. Planning &amp; Prioritizing<br/>
-2. Protecting thy time<br/>
-3. Identifying waste</p>
-
-<h2>Planning &amp; Prioritizing</h2>
-
-<p>Planning &amp; Prioritizing is a must.  It helps us not losing any task we have to do but also makes sure we do the most urgent &amp; important ones first.  <a href="http://en.wikipedia.org/wiki/Getting_Things_Done">Getting Things Done</a> is a great methodology.  However, <strong>DON&#8217;T SPEND TOO MUCH TIME ON THE LIST.</strong>  You cannot prioritize or categorize your tasks if the list fills with tons of items especially if you have some level of <a href="http://en.wikipedia.org/wiki/Obsessive%E2%80%93compulsive_disorder">Obsessive-compulsive disorder</a>.</p>
-
-<p>I have the same issue stated in <a href="http://simpleprogrammer.com/2012/10/28/my-15-minute-rule-to-productivity/">My 15 Minute Rule to Productivity</a>:</p>
-
-<blockquote><p>I’ll delay doing something that I know is important until the last moment that it needs to be done.</p></blockquote>
-
-<p>Hence, my rule on making a list is: <strong>Make a task list only for the tasks I need to do TODAY and come up an estimated time on how long to take it.</strong>  How if I have something important to do in the future? Put it to calendar/reminder and also include an estimated time so that this task will go into my future TODAY task list.</p>
-
-<p>And then the rule of picking the task from a list is: <strong>Scan the tasks and their estimated time; Pick the one I MUST start it.</strong>  This action is to take out the most IMPORTANT and URGENT task which is actually prioritizing.  The estimated time made in the first step helps me know when it is the right time to pick which task.</p>
-
-<h2>Protecting thy time</h2>
-
-<p>What does this mean?  It means avoid distraction.  Distraction is the major time killer which makes us ineffective.  <a href="http://en.wikipedia.org/wiki/Pomodoro_Technique">Pomodoro Technique</a> is the one I like.  It imposes an external mechanism (a timer here) to keep us focus on work for a short period (generally 25 mins) and also have some rest inbetween.  The rest in between the working period can be used to reply your email, IM or actually relaxing your mind.  Its working style is like marathon which needs constant pacing.</p>
-
-<p>However, this mechanism might have an issue to some knowledge worker.  Here is the view in one of <a href="http://www.joelonsoftware.com/articles/fog0000000068.html">Joel Spolsky&#8217; article</a> with which I totally agree:</p>
-
-<blockquote><p>We all know that knowledge workers work best by getting into &#8220;flow&#8221;, also known as being &#8220;in the zone&#8221;, where they are fully concentrated on their work and fully tuned out of their environment. They lose track of time and produce great stuff through absolute concentration.<br/>
-&#8230;<br/>
-The trouble is, getting into &#8220;the zone&#8221; is not easy. When you try to measure it, it looks like it takes an average of 15 minutes to start working at maximum productivity.  Sometimes, if you&#8217;re tired or have already done a lot of creative work that day, you just can&#8217;t get into the zone and you spend the rest of your work day fiddling around, reading the web, playing Tetris.</p></blockquote>
-
-<p>Hence, the Pomodoro Technique might knock you out of the zone and you should choose your own timer based on the average time you can maintain your flow state instead of 25 minutes.  Or you can just let your flow flows until you think you need to get a break.  The point is to try to maintain some continuous period to get uninterrupted.</p>
-
-<p>But generally, Pomodoro is helpful under certain circumstances like management level people who don&#8217;t even have continous time more than 25 minutes or some working environment has interruption often or someone whose productive time shorter than 25 minutes and want to extend their flow state.</p>
-
-<h2>Identifying waste</h2>
-
-<p>Planning is the starting process of time management, while identifying the waste is the retrospect process.  Sometimes, it&#8217;s even more important than the planning.  That is because planning is working on something uncertain, while retrospect is based on reality and intended to make improvement.  History and fact can tells us more on the our regular time usage pattern.</p>
-
-<p>How to identify waste?  Track the time and see where your time spends.  Our memory is unreliable to keep track of how long we spend on the things done.  We need to actually write it down and write it down when it happens (at the beginning or the end of the task).</p>
-
-<p>By tracking where the time we spend, we can find out where the waste is and try to eliminate it.  Also we can consolidate those discretionary time slots to a continuous unit for more effective usage.  There is a wonderful chapter &#8220;Know Thy Time&#8221; in <a href="http://www.amazon.com/Effective-Executive-Drucker-Series-Peter/dp/0750643900/ref=sr_1_2?ie=UTF8&amp;qid=1356302486&amp;sr=8-2&amp;keywords=The+Effective+Executive">The Effective Executive</a> by <em>Peter F. Drucker</em> describing how to make good use of time.  Highly recommend.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -649,6 +866,10 @@ The trouble is, getting into &#8220;the zone&#8221; is not easy. When you try to
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/29/startup-review-network/">至关重要的关系</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/06/26/startup-review-permanent-beta/">永久测试之心, 寻求真我</a>
@@ -686,65 +907,64 @@ The trouble is, getting into &#8220;the zone&#8221; is not easy. When you try to
         <a href="/blog/2013/02/05/2013-retrospect-and-goal-setting/">2013 Retrospect and Goal Setting</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/">Expression in AngularJS must be idempotent and for multiple calls</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (17)</a></li><li><a href='/blog/categories/think'>Think (26)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (17)</a></li><li><a href='/blog/categories/think'>Think (27)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
-<li><a style="font-size: 106%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 105%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 106%" href="/tags/book/">Book</a></li>
-<li><a style="font-size: 89%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 106%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 117%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 88%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 105%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
-<li><a style="font-size: 89%" href="/tags/design/">Design</a></li>
-<li><a style="font-size: 89%" href="/tags/destiny/">Destiny</a></li>
-<li><a style="font-size: 89%" href="/tags/directive/">Directive</a></li>
+<li><a style="font-size: 88%" href="/tags/design/">Design</a></li>
+<li><a style="font-size: 88%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 88%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
 <li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
-<li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 126%" href="/tags/extjs/">ExtJs</a></li>
 <li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
-<li><a style="font-size: 89%" href="/tags/gtd/">GTD</a></li>
-<li><a style="font-size: 89%" href="/tags/goal/">Goal</a></li>
+<li><a style="font-size: 88%" href="/tags/gtd/">GTD</a></li>
+<li><a style="font-size: 88%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
 <li><a style="font-size: 60%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
 <li><a style="font-size: 60%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 128%" href="/tags/jasmine/">Jasmine</a></li>
-<li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 136%" href="/tags/management/">Management</a></li>
-<li><a style="font-size: 89%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 126%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 162%" href="/tags/javascript/">Javascript</a></li>
+<li><a style="font-size: 133%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 88%" href="/tags/maven/">Maven</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 119%" href="/tags/mood/">Mood</a></li>
-<li><a style="font-size: 106%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 117%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 60%" href="/tags/network/">Network</a></li>
+<li><a style="font-size: 105%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 60%" href="/tags/opportunity/">Opportunity</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
-<li><a style="font-size: 89%" href="/tags/productivity/">Productivity</a></li>
+<li><a style="font-size: 88%" href="/tags/productivity/">Productivity</a></li>
 <li><a style="font-size: 165%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 60%" href="/tags/risk/">Risk</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
-<li><a style="font-size: 89%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 105%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
-<li><a style="font-size: 89%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 106%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 88%" href="/tags/time-management/">Time Management</a></li>
+<li><a style="font-size: 105%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 128%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 126%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
