@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Jasmine | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/jasmine/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-29T08:14:47+08:00</updated>
+  <updated>2013-08-09T21:32:15+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -136,13 +136,33 @@ GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Un
 <p><code>javascript
 EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
 </code></p>
+
+<p><em>[Edited on Aug 09th 2013]</em>: After AngularJS accepted my <a href="https://github.com/angular/angular.js/pull/2981">pull request</a> to support Function as validation data last week, we don't need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function's <em>toString()</em> method to give more expressive error message in a cleaner way.</p>
+
+<p>```javascript</p>
+
+<pre><code>var data = function(data) {
+    var entry = angular.fromJson(data);
+    return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+};
+data.toString = function() {
+    return 'The status of the new entry should be "P", desc should be "' + $scope.desc +
+        '" and its id &amp; lastUpdateOn should not be blank.';
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: The status of the new entry should be "P", desc should be "First Unit Test" and its id &amp; lastUpdateOn should not be blank.
+</code></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)]]></title>
     <link href="http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
-    <updated>2012-08-30T23:04:06+08:00</updated>
+    <updated>2012-08-30T15:04:06+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
     <content type="html"><![CDATA[<p>Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.</p>
 
@@ -336,7 +356,7 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)]]></title>
     <link href="http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
-    <updated>2012-08-13T23:02:18+08:00</updated>
+    <updated>2012-08-13T15:02:18+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
     <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
 
@@ -472,7 +492,7 @@ new xxx.DataStore();
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Integration]]></title>
     <link href="http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
-    <updated>2012-08-06T22:59:31+08:00</updated>
+    <updated>2012-08-06T14:59:31+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration</id>
     <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 
@@ -547,7 +567,7 @@ Results: 3 specs, 0 failures
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Why I am working on them?]]></title>
     <link href="http://kenspirit.github.io/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"/>
-    <updated>2012-08-05T15:52:24+08:00</updated>
+    <updated>2012-08-05T07:52:24+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them</id>
     <content type="html"><![CDATA[<p>Before going into how to setup <a href="http://pivotal.github.com/jasmine/">Jasmine</a> to do Unit Test for <a href="www.sencha.com/products/extjs">ExtJS</a>, I think I should describe why I am doing this.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: POI | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/poi/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-29T08:14:47+08:00</updated>
+  <updated>2013-08-09T21:32:15+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[如何避免Microsoft Excel在Cell上定义好的Named Validation的下拉选项在POI写值后丢失]]></title>
     <link href="http://kenspirit.github.io/blog/2011/06/15/excelavoidvaliationlostafterpoi/"/>
-    <updated>2011-06-15T13:54:07+08:00</updated>
+    <updated>2011-06-15T05:54:07+08:00</updated>
     <id>http://kenspirit.github.io/blog/2011/06/15/excelavoidvaliationlostafterpoi</id>
     <content type="html"><![CDATA[<p>有一种常用的Excel报表打印实现是用客户定义好的Excel Template, 通过POI来写值进去。</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: JSON | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/json/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-29T08:14:47+08:00</updated>
+  <updated>2013-08-09T21:32:15+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -135,6 +135,26 @@ GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Un
 
 <p><code>javascript
 EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
+</code></p>
+
+<p><em>[Edited on Aug 09th 2013]</em>: After AngularJS accepted my <a href="https://github.com/angular/angular.js/pull/2981">pull request</a> to support Function as validation data last week, we don't need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function's <em>toString()</em> method to give more expressive error message in a cleaner way.</p>
+
+<p>```javascript</p>
+
+<pre><code>var data = function(data) {
+    var entry = angular.fromJson(data);
+    return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+};
+data.toString = function() {
+    return 'The status of the new entry should be "P", desc should be "' + $scope.desc +
+        '" and its id &amp; lastUpdateOn should not be blank.';
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: The status of the new entry should be "P", desc should be "First Unit Test" and its id &amp; lastUpdateOn should not be blank.
 </code></p>
 ]]></content>
   </entry>

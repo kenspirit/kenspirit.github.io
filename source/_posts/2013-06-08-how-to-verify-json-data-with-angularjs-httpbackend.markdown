@@ -116,3 +116,22 @@ This error message is not quite developer friendly and it doesn't tell you much 
 ```javascript
 EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
 ```
+
+[pull request]: https://github.com/angular/angular.js/pull/2981
+
+_[Edited on Aug 09th 2013]_: After AngularJS accepted my [pull request][] to support Function as validation data last week, we don't need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function's _toString()_ method to give more expressive error message in a cleaner way.  
+
+```javascript
+    var data = function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc !== $scope.desc) && Validator.isNewEntry(entry);
+    };
+    data.toString = function() {
+        return 'The status of the new entry should be "P", desc should be "' + $scope.desc +
+            '" and its id & lastUpdateOn should not be blank.';
+    };
+```
+
+```javascript
+EXPECTED: The status of the new entry should be "P", desc should be "First Unit Test" and its id & lastUpdateOn should not be blank.
+```

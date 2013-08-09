@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Coding | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/coding/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-06-29T08:14:47+08:00</updated>
+  <updated>2013-08-09T21:32:15+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -62,7 +62,7 @@
   <entry>
     <title type="html"><![CDATA[通过艰难的六步让你成长为一名出色的程序员]]></title>
     <link href="http://kenspirit.github.io/blog/2011/10/14/six-steps-to-be-good-programmer/"/>
-    <updated>2011-10-14T14:53:26+08:00</updated>
+    <updated>2011-10-14T06:53:26+08:00</updated>
     <id>http://kenspirit.github.io/blog/2011/10/14/six-steps-to-be-good-programmer</id>
     <content type="html"><![CDATA[<p>在我决定要在技术上，下狠功夫时，看到一篇非常好的文章。</p>
 
@@ -150,7 +150,7 @@ _</p>
   <entry>
     <title type="html"><![CDATA[Cleaner Code]]></title>
     <link href="http://kenspirit.github.io/blog/2011/03/06/cleaner-code/"/>
-    <updated>2011-03-06T21:23:04+08:00</updated>
+    <updated>2011-03-06T13:23:04+08:00</updated>
     <id>http://kenspirit.github.io/blog/2011/03/06/cleaner-code</id>
     <content type="html"><![CDATA[<p>Finished reading Robert Martin's "Clean Code" these days, I suddenly feel more passionate to write code, to write better and more descriptive code.</p>
 
