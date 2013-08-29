@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-08-09T21:32:15+08:00</updated>
+  <updated>2013-08-29T20:35:15+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,99 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to support page content i18n in AngularJS]]></title>
+    <link href="http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
+    <updated>2013-08-29T20:16:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
+    <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn&#8217;t really help us a lot to do what we want basically for i18n, language change support of the web page content.</p>
+
+<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?</p>
+
+<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven&#8217;t done performance test for extremely large page yet.</p>
+
+<p>Let&#8217;s see how it&#8217;s done.</p>
+
+<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;LocaleManager&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">,</span> <span class="nx">$rootScope</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">langs</span> <span class="o">=</span> <span class="p">{},</span>
+</span><span class='line'>        <span class="nx">LocaleManager</span> <span class="o">=</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;/js/i18n/resources-locale_:lang.js&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="p">{</span><span class="nx">port</span><span class="o">:</span> <span class="s1">&#39;:3000&#39;</span><span class="p">,</span> <span class="nx">lang</span><span class="o">:</span> <span class="s1">&#39;en_US&#39;</span><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">LocaleManager</span><span class="p">.</span><span class="nx">load</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">language</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">langs</span><span class="p">[</span><span class="nx">language</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="nx">$rootScope</span><span class="p">.</span><span class="nx">language</span> <span class="o">!==</span> <span class="nx">language</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">language</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">LocaleManager</span><span class="p">.</span><span class="nx">get</span><span class="p">({</span><span class="nx">lang</span><span class="o">:</span> <span class="nx">language</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">langs</span><span class="p">[</span><span class="nx">language</span><span class="p">]</span> <span class="o">=</span> <span class="nx">data</span><span class="p">;</span>
+</span><span class='line'>            <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="nx">language</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">LocaleManager</span><span class="p">.</span><span class="nx">getText</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">language</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">language</span> <span class="o">===</span> <span class="s1">&#39;en_US&#39;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">langs</span><span class="p">[</span><span class="nx">language</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">langs</span><span class="p">[</span><span class="nx">language</span><span class="p">][</span><span class="nx">text</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">langs</span><span class="p">[</span><span class="nx">language</span><span class="p">][</span><span class="nx">text</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">LocaleManager</span><span class="p">;</span>
+</span><span class='line'><span class="p">})</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.</p>
+
+<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.</p>
+
+<pre><code>{{ LocaleManager.getText('Login', language) }}
+</code></pre>
+
+<p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven&#8217;t tried that yet and will give an update here once done.</p>
+
+<p>Do you have experience on i18n in AngularJS?  Thoughts and comments are appreciated.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[至关重要的关系]]></title>
@@ -2385,197 +2478,6 @@ REQUIREMENTS:
 
 
 <p>Can you see how all above works now?  Please take it a trial and share your comment with me.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
-    <updated>2012-08-13T15:02:18+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
-    <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
-
-<p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it&#8217;s difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
-
-<p>Assuming I need to introduce JS Unit Test to a system without any Unit Test covered, what should the general JS Unit Test principles to be firstly considered?  My opinions are:</p>
-
-<blockquote><ol>
-<li><p>To test external contract against each ExtJS Component or JS function.  The external contract is where changes often take place.</p></li>
-<li><p>To test business logic (data calculation/validation, etc.) because this is where the real value in the business.</p></li>
-<li><p>Not to test the UI behavior (Window popup, Panel/Tree collapse/expand, Drap/Drop, Animation, etc.).  It&#8217;s quite difficult to mimic and verify the UI behavior because you have to twist your mind somehow to &#8220;tranform&#8221; the UI behavior to manual control the &#8220;movement&#8221; and then verify it.  It&#8217;s just writing even more UI logic to control other UI logic.</p></li>
-<li><p>Not to test all Ajax requests because it&#8217;s slow and actually should be considered as Integration Test.  It&#8217;s better to mock the interface data to test the Ajax caller &amp; response handler.</p></li>
-</ol>
-</blockquote>
-
-<p>Let&#8217;s see some real Unit Test example.  (Here some assumptions are made on how the components are generated and used in System: UI are completely built by ExtJS Designer.  It may not be the best practice, but it&#8217;s the way I think the real practice can be applied.)</p>
-
-<p><strong>Ext.data.Store</strong></p>
-
-<p>You might first wonder why Unit Test need to be done for Store component?  I got to tell you that I have met many bugs that are introduced because of fields&#8217; definition changed.  This is the major contract bound the Store with the caller.</p>
-
-<p>Below is a typical xxx.Datastore.js file generated by Ext Designer.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">ns</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Ext</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">JsonStore</span><span class="p">,</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">cfg</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">cfg</span> <span class="o">=</span> <span class="nx">cfg</span> <span class="o">||</span> <span class="p">{};</span>
-</span><span class='line'>        <span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span><span class="p">.</span><span class="nx">superclass</span><span class="p">.</span><span class="nx">constructor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">apply</span><span class="p">({</span>
-</span><span class='line'>            <span class="nx">storeId</span><span class="o">:</span> <span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://www.foo.com/stub&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">root</span><span class="o">:</span> <span class="s1">&#39;data.rows&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">totalProperty</span><span class="o">:</span> <span class="s1">&#39;data.totalCount&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">autoLoad</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>            <span class="nx">fields</span><span class="o">:</span> <span class="p">[</span>
-</span><span class='line'>                <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;code&#39;</span>
-</span><span class='line'>                <span class="p">},</span>
-</span><span class='line'>                <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;name&#39;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">]</span>
-</span><span class='line'>        <span class="p">},</span> <span class="nx">cfg</span><span class="p">));</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">});</span>
-</span><span class='line'><span class="k">new</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">DataStore</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>How should we test it?  This is an autoLoad Store.  As a JS source file to be linked in for testing, I cannot use Jasmine spyOn to stub it.  That is because JS source file is loaded before Jasmine spyOn in Spec can ever be run.  The only thing I can think of is to override the Ext Ajax lib to not doing actual request call.</p>
-
-<p>Code in file globalTestStub.js to override the Ajax lib:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Ext</span><span class="p">.</span><span class="nx">lib</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">.</span><span class="nx">request</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">{</span><span class="nx">success</span><span class="o">:</span> <span class="kc">true</span><span class="p">};</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Configuration in POM.xml</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;configuration&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;preloadSources&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;source&gt;</span>adapter/ext/ext-base-debug.js<span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;source&gt;</span>ext/ext-all-debug-w-comments.js<span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;source&gt;</span>${project.basedir}/Resources/test/js/globalTestStub.js<span class="nt">&lt;/source&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/preloadSources&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;jsSrcDir&gt;</span>${project.basedir}/Resources/js<span class="nt">&lt;/jsSrcDir&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;jsTestSrcDir&gt;</span>${project.basedir}/Resources/test/js<span class="nt">&lt;/jsTestSrcDir&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;sourceIncludes&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;include&gt;</span>xxx.DataStore.js<span class="nt">&lt;/include&gt;</span>
-</span><span class='line'>...
-</span><span class='line'><span class="nt">&lt;/configuration&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ExtJS source and the globalTestStub.js are included in <em>preloadSources</em> so that all Stub/Mock code required for Unit Test can be initialized correctly before other JS sources and Test Spec files without polluting real production code.</p>
-
-<p>How to write a Test Spec then?  Actually, there is no fixed way, but just a simple rule: to test the contract.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;xxx.Datastore&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should be able to initialized&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">oStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">StoreMgr</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oStore</span><span class="p">).</span><span class="nx">toBeTruthy</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should load data correctly&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">oStore</span> <span class="o">=</span> <span class="nx">Ext</span><span class="p">.</span><span class="nx">StoreMgr</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="s1">&#39;xxx.DataStore&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">oStore</span><span class="p">.</span><span class="nx">loadData</span><span class="p">({</span>
-</span><span class='line'>            <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span>
-</span><span class='line'>                    <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">code</span><span class="o">:</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span>
-</span><span class='line'>                        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;N1&#39;</span>
-</span><span class='line'>                    <span class="p">},</span>
-</span><span class='line'>                    <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">code</span><span class="o">:</span> <span class="s1">&#39;C2&#39;</span><span class="p">,</span>
-</span><span class='line'>                        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;N2&#39;</span>
-</span><span class='line'>                    <span class="p">}</span>
-</span><span class='line'>                <span class="p">],</span>
-</span><span class='line'>                <span class="nx">totalCount</span><span class="o">:</span> <span class="mi">2</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oStore</span><span class="p">.</span><span class="nx">getTotalCount</span><span class="p">()).</span><span class="nx">toEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">oRecord</span> <span class="o">=</span> <span class="nx">oStore</span><span class="p">.</span><span class="nx">getAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oRecord</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">&#39;C1&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">oRecord</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s1">&#39;N1&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Unit Test for non-autoload Store would be similar but easier.</p>
-
-<p>Beside how the Test is written, I would like to draw your attention to how I wrote the description for the Suite and the Spec.  I am not sure whether I understood the <a href="http://dannorth.net/introducing-bdd/">Behavior Driven Development</a> comprehensively because I am still learning it.  However, I think this simple mind change helps me to think about how the behavior should be more than just simply how to write Test to meet coverage.  It can even helps us to review our design whether particular code belongs to the right place.</p>
-
-<p>Let&#8217;s explore how Unit Test can be achieved more for ExtJS later.</p>
 ]]></content>
   </entry>
   
