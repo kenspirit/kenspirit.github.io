@@ -12,6 +12,7 @@ tags:
 - Jasmine
 - Javascript
 - UnitTest
+- Mock
 ---
 
 After the [integration](http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/) for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Directive | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/directive/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-08-29T20:35:15+08:00</updated>
+  <updated>2013-09-24T07:12:02+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -26,7 +26,7 @@
 
 <p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.</p>
 
-<p>
+<p>{% raw %}
 ``` html</p>
 
 <pre><code>&lt;style&gt;
@@ -77,7 +77,7 @@
 </code></pre>
 
 <p>```
-</p>
+{% endraw %}</p>
 
 <h2>Expectation</h2>
 
@@ -250,7 +250,7 @@
     <updated>2013-01-30T07:02:00+08:00</updated>
     <id>http://kenspirit.github.io/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
     <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
-
+{% raw %}
 ``` html</p>
 
 <pre><code>&lt;span ng-class="task-{{task.type}}"&gt;{{task.type}}&lt;/span&gt;
@@ -258,10 +258,10 @@
 </code></pre>
 
 <p>```
-</p>
+{% endraw %}</p>
 
 <p>Do you see what is the difference between the one below and above?<br/>
-
+{% raw %}
 ``` html</p>
 
 <pre><code>&lt;span ng-class="'task-' + task.type"&gt;{{task.type}}&lt;/span&gt;
@@ -269,7 +269,7 @@
 </code></pre>
 
 <p>```
-</p>
+{% endraw %}</p>
 
 <p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sword | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/blog/categories/sword/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-08-29T20:35:15+08:00</updated>
+  <updated>2013-09-24T07:12:02+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,32 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
+    <link href="http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
+    <updated>2013-09-24T06:24:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
+    <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog's visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:</p>
+
+<ol>
+<li>Total Visits <strong>616</strong></li>
+<li>Unique Visitors: <strong>555</strong></li>
+<li>Pageviews: <strong>793</strong></li>
+<li>Pages / visit: <strong>1.29</strong></li>
+<li>% New Visits: <strong>88.31%</strong></li>
+</ol>
+
+
+<p>Thanks to everyone who visited my blogs and made all those suggestive comments, such as Da.  I will strive to write more valuable articles to keep my knowledge and help others.  Hopefully, the return visits can grow more.</p>
+
+<p>I happened to found that This particular <a href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">article</a> about <a href="http://angularjs.org">AngularJS</a> <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> brought me <strong>215</strong> visits.  I think that should be due to a patch I submitted to AngularJS in <a href="https://github.com">Github</a>.  How valuable for that patch!!  I will try to contribute more to the opensource.</p>
+
+<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks too.</p>
+
+<p>Do not ask but give.  You will earn more.  Thanks guys.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to support page content i18n in AngularJS]]></title>
@@ -69,12 +95,12 @@
 
 <p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.</p>
 
-<p></p>
+<p>{% raw %}</p>
 
 <pre><code>{{ LocaleManager.getText('Login', language) }}
 </code></pre>
 
-<p></p>
+<p>{% endraw %}</p>
 
 <p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven't tried that yet and will give an update here once done.</p>
 
@@ -490,237 +516,6 @@ return {
 <p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P</p>
 
 <p>So tell me what is yours.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
-    <updated>2013-02-02T14:32:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
-    <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
-
-<h2>Requirement</h2>
-
-<p>I am making some workout entries as a list and one special requirement is to group the records by the date.</p>
-
-<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.</p>
-
-<p>
-``` html</p>
-
-<pre><code>&lt;style&gt;
-    body {font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;}
-    ul li {list-style-type: none;}
-    .actionDateGroup {font-weight: bold; color: red}
-&lt;/style&gt;
-&lt;div id="content" ng-controller="EntryCtrl"&gt;
-    &lt;div id="entries"&gt;
-        &lt;ul&gt;
-            &lt;li ng-repeat="entry in entries"&gt;
-                &lt;div ng-switch on="isNewDateGroup(entry.actionDate)"&gt;
-                    &lt;div ng-switch-when="true" class="actionDateGroup"&gt;{{entry.actionDate}}&lt;/div&gt;
-                &lt;/div&gt;
-                &lt;span&gt;{{entry.desc}}&lt;/span&gt;
-            &lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;script type="text/javascript" src="./js/angular/angular.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-    function EntryCtrl($scope, $location) {
-        $scope.entries = [{
-            desc: 'Rope jumping count 1000',
-            actionDate: '2012-01-31',
-        },{
-            desc: 'Jogging 3000M',
-            actionDate: '2012-01-31'
-        },{
-            desc: 'Situp 40 * 3',
-            actionDate: '2012-01-30'
-        }];
-        $scope.lastActionDate = null;
-        $scope.calledCount = 0;
-
-        $scope.isNewDateGroup = function(actionDate) {
-            $scope.calledCount++;
-            console.log('Function called count: ' + $scope.calledCount);
-            console.log('Entry date vs Scope date: ' + actionDate + ' vs ' + $scope.lastActionDate);
-            if ($scope.lastActionDate === null || $scope.lastActionDate !== actionDate) {
-                $scope.lastActionDate = actionDate;
-                return true;
-            }
-            return false;
-        };
-    }
-&lt;/script&gt;
-</code></pre>
-
-<p>```
-</p>
-
-<h2>Expectation</h2>
-
-<ol>
-<li><em>actionDate</em> of the first entry will always be shown as it's the first group.</li>
-<li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.</li>
-</ol>
-
-
-<h2>Phenomenon</h2>
-
-<p>When the sample data is as above (case #1), the effect looks like it's behaving correctly as below:</p>
-
-<ul>
-    <li style="list-style-type: none;">
-        <div style="font-weight: bold; color: red">2012-01-31</div>
-        <span>Rope jumping count 1000</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Jogging 3000M</span>
-    </li>
-    <li style="list-style-type: none;">
-        <div style="font-weight: bold; color: red">2012-01-30</div>
-        <span>Situp 40 * 3</span>
-    </li>
-</ul>
-
-
-<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn't it supposed to show only the first one as all entries have the same <em>actionDate</em>?</p>
-
-<h4>Expected result:</h4>
-
-<ul>
-    <li style="list-style-type: none;">
-        <div style="font-weight: bold; color: red">2012-01-31</div>
-        <span>Rope jumping count 1000</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Jogging 3000M</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Situp 40 * 3</span>
-    </li>
-</ul>
-
-
-<h4>Actual result:</h4>
-
-<ul>
-    <li style="list-style-type: none;">
-        <span>Rope jumping count 1000</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Jogging 3000M</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Situp 40 * 3</span>
-    </li>
-</ul>
-
-
-<p>Now if you check the calledCount in the debug message, you will find that it's called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:</p>
-
-<ol>
-<li>The <em>isNewDateGroup</em> function is called more than the entries' count.  (Guess this, right?)</li>
-<li>The called count is different when the data is different.  (how about this?)</li>
-</ol>
-
-
-<h2>Causes</h2>
-
-<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> API:</p>
-
-<blockquote><ul>
-<li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> and should be <strong>idempotent</strong>.</li>
-<li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> ...</li>
-<li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.
-...
-(Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)</li>
-</ul>
-</blockquote>
-
-<h3>Issue #1</h3>
-
-<p>The <em>isNewDateGroup</em> being watched whose calculation relies on value of <em>lastActionDate</em> is not idempotent and so during initial run stage, <em>lastActionDate</em> is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.</p>
-
-<h3>Issue #2</h3>
-
-<p>In below code, if I comment out <strong>$scope.lastActionDate = actionDate;</strong> or change the <strong>return true;</strong> to <strong>return false;</strong>, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.</p>
-
-<p>``` javascript</p>
-
-<pre><code>if ($scope.lastActionDate === null || $scope.lastActionDate !== actionDate) {
-    $scope.lastActionDate = actionDate;
-    return true;
-}
-</code></pre>
-
-<p>```</p>
-
-<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let's see what the return value is for watch expression <em>isNewDateGroup</em> after each run.</p>
-
-<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:</p>
-
-<p>
-<table style="font-size: 0.85em;">
-    <tr>
-        <td style="padding: 5px; border: 1px solid black;"></td>
-        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
-        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
-        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
-    </tr>
-    <tr>
-        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
-        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-        <td style="padding: 5px; border: 1px solid black;">true ('2012-01-31' !== '2012-01-30';<br/>
-        $scope.lastActionDate = '2012-01-30')
-        </td>
-    </tr>
-    <tr>
-        <td style="padding: 5px; border: 1px solid black;">2nd</td>
-        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate !== '2012-01-31')</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-        <td style="padding: 5px; border: 1px solid black;">true</td>
-    </tr>
-</table>
-</p>
-
-
-<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:</p>
-
-<p>
-<table style="font-size: 0.85em;">
-    <tr>
-        <td style="padding: 5px; border: 1px solid black;"></td>
-        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
-        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
-        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
-    </tr>
-    <tr>
-        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
-        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-    </tr>
-    <tr>
-        <td style="padding: 5px; border: 1px solid black;">2nd</td>
-        <td style="padding: 5px; border: 1px solid black;">false (change compared to last run)</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-    </tr>
-    <tr>
-        <td style="padding: 5px; border: 1px solid black;">3rd</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-        <td style="padding: 5px; border: 1px solid black;">false</td>
-    </tr>
-</table>
-</p>
-
-
-<p>So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.</p>
 ]]></content>
   </entry>
   

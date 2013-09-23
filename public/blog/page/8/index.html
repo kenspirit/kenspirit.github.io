@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="Finished reading Robert Martin&#8217;s &#8220;Clean Code&#8221; these days, I suddenly feel more passionate to write code, to write better and more &hellip;">
+  <meta name="description" content="有一种常用的Excel报表打印实现是用客户定义好的Excel Template, 通过POI来写值进去。 这样的好处是基本可以原汁原味的保留Excel的样式和一些宏。 有时，在Excel里会定义有一些Name, 然后用到某一些Cell里做Validation, 也就是模拟下拉选项的效果。 有时候， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/15/excelavoidvaliationlostafterpoi/">如何避免Microsoft Excel在Cell上定义好的Named Validation的下拉选项在POI写值后丢失</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-15T05:54:07+08:00" pubdate data-updated="true">Jun 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>有一种常用的Excel报表打印实现是用客户定义好的Excel Template, 通过POI来写值进去。</p>
+
+<p>这样的好处是基本可以原汁原味的保留Excel的样式和一些宏。</p>
+
+<p>有时，在Excel里会定义有一些Name, 然后用到某一些Cell里做Validation, 也就是模拟下拉选项的效果。</p>
+
+<p>有时候，Excel Template经过POI写值后，会发现那个用Validation做成的模拟下拉选项不见了，而未写值前的Excel Template里是有的。 情况可能是这样：</p>
+
+<ol>
+<li><p> 在做好Excel Template, 保存的瞬间，光标选在的某个有Named List Validation的Cell上。我们要注意，保存Excel Template里，光标必须落在一些空白或不重要的地方。</p></li>
+<li><p>如果你做的Named List里动态写值的，那最好先做一些dummy的list, 在需要做Validation的Cell上，定义好这个Named List Validation, 然后再把那些dummy value删去。</p></li>
+</ol>
+
+
+<p>这样都会有影响，Microsoft的东西有够诡异的了吧？ 哈哈</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -406,74 +456,6 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2006/03/28/bangkok-trip/">BangKok Trip</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-03-28T16:09:59+08:00" pubdate data-updated="true">Mar 28<span>th</span>, 2006</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>At 2:30PM on Mar 24, 2006, I was in the <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" /> from Macau to BangKok.  I was going to have a three-days&#8217; trip in BangKok with some colleagues.  This was a company event rewarding the staffs worked for one year.</p>
-
-<p> </p>
-
-<p>This is not the first time I took <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" />, but the first time I crossed my country&#8217;s boundary.  At the end of the three-hours&#8217; <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" />, our <img src="http://spaces.msn.com/rte/emoticons/airplane.gif" alt="" /> kept cycling in the sky for five times.  Maybe the airport had no place to let it land on at that time, but it was really a signal indicating an unforgetable trip.</p>
-
-<p> </p>
-
-<p>We finally had our dinner at 7:00PM that night.  We all were like starving wolfs.  Although the Thai food was a little spicy, it was very delicious.  Especially the fruit, the pineapple, watermelon, were as sweet as sugar.  Our table had had 3 dishes.<img src="http://spaces.msn.com/rte/emoticons/smile_shades.gif" alt="" />  We had tried our best to tasted and finished all the courses.  However, there were too many dishes to eat them all.</p>
-
-<p> </p>
-
-<p>The hotel is really wonderful.  This was the first time I stayed in five-star hotel.  The room is clean, comfortable and has necessary facilities.  However, it has one strange design that the bath room and the main room is separated by glass and shutter.  That means people outside the bath room can see the inside of the bathroom!  I still can&#8217;t understand it.</p>
-
-<p> </p>
-
-<p>The meals, activities during this trip were great, especially the breakfast in the hotel and the night show (SIAM NIRAMIT).  The night show is Thai&#8217;s traditional dancing.  We watched it in a beautiful decorated hall.  The lights, scenes, dancing were fantastic.  It is much much better than the Renyao show.</p>
-
-<p> </p>
-
-<p>Another unforgettable thing is the Thai Massage we had.  Before being massaged by the Massage people, I was very afraid to die in the joints twisting.  However, I really wanted to had it another time after massage.  Although it&#8217;s a little ached during their pressing and twisting, the massage people really got to the points where your muscle and joints are tight.  You will feel kind of released and light after massage.  I just think it would be great if I can have Thai massage while I am working.  <img src="http://spaces.msn.com/rte/emoticons/smile_tongue.gif" alt="" /></p>
-
-<p> </p>
-
-<p>The last unbelievable and unforgettable thing is how crazy the HK colleagues can be.  At the second night in the hotel, I was invited to have a drink with some HK colleagues.  Playing games and drinking wine, we gradually became a little drunk and crazy.  We drank, tried every means to wake up other colleagues and wandered in hotel.  I can&#8217;t believe how I could do that but I actually did it.  <strong><em>When play, play crazily; when work, work hard.</em></strong>  I can finally feel that after that night.  When will another crazy night come?  <img src="http://spaces.msn.com/rte/emoticons/smile_teeth.gif" alt="" /></p>
-
-<p> </p>
-
-<p>There were two small add-ons at the end of this trip.  One is that I left my worn clothes in the travel bus and realized this in the plane back to Macau from BangKok!<img src="http://spaces.msn.com/rte/emoticons/smile_confused.gif" alt="" />  Luckily the HK colleagues found it and bring them back to me.<img src="http://spaces.msn.com/rte/emoticons/smile_embaressed.gif" alt="" />  The other one is that it&#8217;s required to pay extra money if we use the luggage case in taxi.  We knew that after being cheated by one taxi driver in Macau.<img src="http://spaces.msn.com/rte/emoticons/smile_angry.gif" alt="" />  We in fact didn&#8217;t have much luggage and didn&#8217;t need to put them there.</p>
-
-<p> </p>
-
-<p>This BangKok is also a UAT - unforgettable, adorable and treasurable.  I am looking forward for another one next year.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/9/">&larr; Older</a>
@@ -489,6 +471,10 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/">Thanks to everyone, Zach Lendon, Github, AngularJS</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/">How to support page content i18n in AngularJS</a>
@@ -526,26 +512,23 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
         <a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share code between Node.js and browser</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/">读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (18)</a></li><li><a href='/blog/categories/think'>Think (27)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (19)</a></li><li><a href='/blog/categories/think'>Think (27)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
-<li><a style="font-size: 117%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 60%" href="/tags/ajax/">Ajax</a></li>
+<li><a style="font-size: 124%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 117%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 115%" href="/tags/book/">Book</a></li>
 <li><a style="font-size: 88%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 105%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 104%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
 <li><a style="font-size: 88%" href="/tags/design/">Design</a></li>
@@ -553,42 +536,43 @@ function showPackCountEditableIfNeeded(colMeta, dataStore) {
 <li><a style="font-size: 88%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
 <li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
-<li><a style="font-size: 126%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 131%" href="/tags/extjs/">ExtJs</a></li>
 <li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
 <li><a style="font-size: 88%" href="/tags/gtd/">GTD</a></li>
 <li><a style="font-size: 88%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
-<li><a style="font-size: 60%" href="/tags/httpbackend/">HttpBackend</a></li>
+<li><a style="font-size: 88%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
-<li><a style="font-size: 60%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 126%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 88%" href="/tags/json/">JSON</a></li>
+<li><a style="font-size: 131%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 133%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 131%" href="/tags/management/">Management</a></li>
 <li><a style="font-size: 88%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 60%" href="/tags/mock/">Mock</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 117%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 115%" href="/tags/mood/">Mood</a></li>
 <li><a style="font-size: 60%" href="/tags/network/">Network</a></li>
-<li><a style="font-size: 105%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 104%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/opportunity/">Opportunity</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
 <li><a style="font-size: 88%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 165%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 162%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/risk/">Risk</a></li>
 <li><a style="font-size: 60%" href="/tags/spa/">SPA</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
-<li><a style="font-size: 105%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 104%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
 <li><a style="font-size: 88%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 105%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 104%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 126%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 131%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>

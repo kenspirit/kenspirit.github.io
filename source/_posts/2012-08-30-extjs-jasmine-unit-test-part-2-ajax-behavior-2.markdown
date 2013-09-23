@@ -12,6 +12,7 @@ tags:
 - Jasmine
 - Javascript
 - UnitTest
+- Mock
 ---
 
 Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.
