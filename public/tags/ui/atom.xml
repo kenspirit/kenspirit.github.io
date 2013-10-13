@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: UI | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/ui/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-09-24T07:12:02+08:00</updated>
+  <updated>2013-10-13T15:01:45+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -55,8 +55,8 @@
 </ul>
 
 
-<p>The elements in tracking tasks covers all we need for planning tasks, hence the capturing UI should be able to unified.  Below is the draft UI designed:<br/>
-<img src="https://dl.dropbox.com/u/17182499/blog/2012/12/task_capture.png" alt="Capture UI" /></p>
+<p>The elements in tracking tasks covers all we need for planning tasks, hence the capturing UI should be able to unified.  Below is the draft UI designed:
+<img src="http://thinkingincrowd.u.qiniudn.com/task_capture.png" alt="Capture UI" /></p>
 
 <ul>
 <li>By default, there is a task content textbox.</li>

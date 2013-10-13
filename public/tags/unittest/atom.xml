@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: UnitTest | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/unittest/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-09-24T07:12:02+08:00</updated>
+  <updated>2013-10-13T15:01:45+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -188,7 +188,7 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)]]></title>
     <link href="http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
-    <updated>2012-08-30T15:04:06+08:00</updated>
+    <updated>2012-08-30T23:04:06+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
     <content type="html"><![CDATA[<p>Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.</p>
 
@@ -312,7 +312,7 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
 
 <p>I googled around and found one useful helper API - <a href="http://github.com/pivotal/jasmine-ajax">Jasmine-Ajax</a> : a set of helpers for testing AJAX requests under the Jasmine BDD framework for JavaScript.  However, now it only supports Prototype.js and jQuery.</p>
 
-<p>I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   <a href="https://dl.dropbox.com/u/17182499/blog/2012/08/mock-ajax.js">mock-ajax</a></p>
+<p>I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   <a href="http://thinkingincrowd.u.qiniudn.com/mock-ajax.js">mock-ajax</a></p>
 
 <p>How should I include this helper class to use Jasmine to test the Ajax in ExtJS?</p>
 
@@ -382,7 +382,7 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)]]></title>
     <link href="http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
-    <updated>2012-08-13T15:02:18+08:00</updated>
+    <updated>2012-08-13T23:02:18+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
     <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
 
@@ -518,7 +518,7 @@ new xxx.DataStore();
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Integration]]></title>
     <link href="http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
-    <updated>2012-08-06T14:59:31+08:00</updated>
+    <updated>2012-08-06T22:59:31+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration</id>
     <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 

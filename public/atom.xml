@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-09-24T07:08:24+08:00</updated>
+  <updated>2013-10-13T15:01:45+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -33,7 +33,7 @@
 
 <p>I happened to found that This particular <a href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">article</a> about <a href="http://angularjs.org">AngularJS</a> <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> brought me <strong>215</strong> visits.  I think that should be due to a patch I submitted to AngularJS in <a href="https://github.com">Github</a>.  How valuable for that patch!!  I will try to contribute more to the opensource.</p>
 
-<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks personally too.</p>
+<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks too.</p>
 
 <p>Do not ask but give.  You will earn more.  Thanks guys.</p>
 ]]></content>
@@ -1758,8 +1758,8 @@ to get the word out, the right people will already be listening.</p></blockquote
 </ul>
 
 
-<p>The elements in tracking tasks covers all we need for planning tasks, hence the capturing UI should be able to unified.  Below is the draft UI designed:<br/>
-<img src="https://dl.dropbox.com/u/17182499/blog/2012/12/task_capture.png" alt="Capture UI" /></p>
+<p>The elements in tracking tasks covers all we need for planning tasks, hence the capturing UI should be able to unified.  Below is the draft UI designed:
+<img src="http://thinkingincrowd.u.qiniudn.com/task_capture.png" alt="Capture UI" /></p>
 
 <ul>
 <li>By default, there is a task content textbox.</li>
@@ -2127,7 +2127,7 @@ However, the reply doesn&#8217;t seem to be reasonable.  It recommands opening a
   <entry>
     <title type="html"><![CDATA[一个多维度数据匹配的RDBMS数据库表设计的想法]]></title>
     <link href="http://kenspirit.github.io/blog/2012/10/27/db-design-for-multi-dimension-data/"/>
-    <updated>2012-10-27T15:48:37+08:00</updated>
+    <updated>2012-10-27T23:48:37+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/10/27/db-design-for-multi-dimension-data</id>
     <content type="html"><![CDATA[<p>首先, 我先要说明一下, 这里的“多维度”可能并不太准确.  这里说的并不是数据仓库里的维度, 而只是数据的属性.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Weblogic | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/weblogic/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-09-24T07:12:02+08:00</updated>
+  <updated>2013-10-13T15:01:45+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Resolve Error of "weblogic.management.DeploymentException: Error: Unresolved Webapp Library references"]]></title>
     <link href="http://kenspirit.github.io/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/"/>
-    <updated>2012-02-04T01:07:35+08:00</updated>
+    <updated>2012-02-04T09:07:35+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references</id>
     <content type="html"><![CDATA[<p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
 
@@ -36,7 +36,7 @@ ath:/wls_prs_doc spec-version:2.5]", defined in weblogic.xml [Extension-Name: js
 
 <p>I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.</p>
 
-<p><a href="https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg"><img src="https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg?w=574" alt="Image" /></a><a href="https://dl.dropbox.com/u/17182499/blog/2012/02/1.jpg"><img src="https://dl.dropbox.com/u/17182499/blog/2012/02/2.jpg?w=614" alt="Image" /></a></p>
+<p><a href="http://thinkingincrowd.u.qiniudn.com/weblogic1.jpg"><img src="http://thinkingincrowd.u.qiniudn.com/weblogic1.jpg?w=574" alt="Image" /></a><a href="http://thinkingincrowd.u.qiniudn.com/weblogic2.jpg"><img src="http://thinkingincrowd.u.qiniudn.com/weblogic2.jpg?w=614" alt="Image" /></a></p>
 
 <p> </p>
 
