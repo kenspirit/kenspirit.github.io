@@ -104,119 +104,115 @@
   </header>
 
 
-<div class="entry-content"><p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
+<div class="entry-content">
+<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.  </p>
 
-<h2>Requirement</h2>
+<h2 id="requirement">Requirement</h2>
+<p>I am making some workout entries as a list and one special requirement is to group the records by the date.  </p>
 
-<p>I am making some workout entries as a list and one special requirement is to group the records by the date.</p>
+<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.  </p>
 
-<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line">    <span class="nt">&lt;style&gt;</span>
+</span><span class="line">        <span class="nt">body</span> <span class="p">{</span><span class="k">font-family</span><span class="o">:</span> <span class="s1">&#39;Lucida Grande&#39;</span><span class="o">,</span> <span class="s1">&#39;Lucida Sans&#39;</span><span class="o">,</span> <span class="n">Arial</span><span class="o">,</span> <span class="k">sans-serif</span><span class="p">;}</span>
+</span><span class="line">        <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span><span class="k">list-style-type</span><span class="o">:</span> <span class="k">none</span><span class="p">;}</span>
+</span><span class="line">        <span class="nc">.actionDateGroup</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">red</span><span class="p">}</span>
+</span><span class="line">    <span class="nt">&lt;/style&gt;</span>
+</span><span class="line">    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;EntryCtrl&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;entries&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">            <span class="nt">&lt;ul&gt;</span>
+</span><span class="line">                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;entry in entries&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">                    <span class="nt">&lt;div</span> <span class="na">ng-switch</span> <span class="na">on=</span><span class="s">&quot;isNewDateGroup(entry.actionDate)&quot;</span><span class="nt">&gt;</span>
+</span><span class="line">                        <span class="nt">&lt;div</span> <span class="na">ng-switch-when=</span><span class="s">&quot;true&quot;</span> <span class="na">class=</span><span class="s">&quot;actionDateGroup&quot;</span><span class="nt">&gt;</span>{{entry.actionDate}}<span class="nt">&lt;/div&gt;</span>
+</span><span class="line">                    <span class="nt">&lt;/div&gt;</span>
+</span><span class="line">                    <span class="nt">&lt;span&gt;</span>{{entry.desc}}<span class="nt">&lt;/span&gt;</span>
+</span><span class="line">                <span class="nt">&lt;/li&gt;</span>
+</span><span class="line">            <span class="nt">&lt;/ul&gt;</span>
+</span><span class="line">        <span class="nt">&lt;/div&gt;</span>
+</span><span class="line">    <span class="nt">&lt;/div&gt;</span>
+</span><span class="line">    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./js/angular/angular.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class="line">    <span class="nt">&lt;script&gt;</span>
+</span><span class="line">        <span class="kd">function</span> <span class="nx">EntryCtrl</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$location</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="nx">$scope</span><span class="p">.</span><span class="nx">entries</span> <span class="o">=</span> <span class="p">[{</span>
+</span><span class="line">                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Rope jumping count 1000&#39;</span><span class="p">,</span>
+</span><span class="line">                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span><span class="p">,</span>
+</span><span class="line">            <span class="p">},{</span>
+</span><span class="line">                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Jogging 3000M&#39;</span><span class="p">,</span>
+</span><span class="line">                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span>
+</span><span class="line">            <span class="p">},{</span>
+</span><span class="line">                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Situp 40 * 3&#39;</span><span class="p">,</span>
+</span><span class="line">                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-30&#39;</span>
+</span><span class="line">            <span class="p">}];</span>
+</span><span class="line">            <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class="line">            <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line">            <span class="nx">$scope</span><span class="p">.</span><span class="nx">isNewDateGroup</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">                <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="o">++</span><span class="p">;</span>
+</span><span class="line">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Function called count: &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="p">);</span>
+</span><span class="line">                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Entry date vs Scope date: &#39;</span> <span class="o">+</span> <span class="nx">actionDate</span> <span class="o">+</span> <span class="s1">&#39; vs &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span><span class="p">);</span>
+</span><span class="line">                <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
+</span><span class="line">                    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class="line">                <span class="p">}</span>
+</span><span class="line">                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class="line">            <span class="p">};</span>
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">    <span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>    <span class="nt">&lt;style&gt;</span>
-</span><span class='line'>        <span class="nt">body</span> <span class="p">{</span><span class="k">font-family</span><span class="o">:</span> <span class="s1">&#39;Lucida Grande&#39;</span><span class="o">,</span> <span class="s1">&#39;Lucida Sans&#39;</span><span class="o">,</span> <span class="n">Arial</span><span class="o">,</span> <span class="k">sans-serif</span><span class="p">;}</span>
-</span><span class='line'>        <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span><span class="k">list-style-type</span><span class="o">:</span> <span class="k">none</span><span class="p">;}</span>
-</span><span class='line'>        <span class="nc">.actionDateGroup</span> <span class="p">{</span><span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span> <span class="k">color</span><span class="o">:</span> <span class="nb">red</span><span class="p">}</span>
-</span><span class='line'>    <span class="nt">&lt;/style&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span> <span class="na">ng-controller=</span><span class="s">&quot;EntryCtrl&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;entries&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;ul&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;li</span> <span class="na">ng-repeat=</span><span class="s">&quot;entry in entries&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>                    <span class="nt">&lt;div</span> <span class="na">ng-switch</span> <span class="na">on=</span><span class="s">&quot;isNewDateGroup(entry.actionDate)&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>                        <span class="nt">&lt;div</span> <span class="na">ng-switch-when=</span><span class="s">&quot;true&quot;</span> <span class="na">class=</span><span class="s">&quot;actionDateGroup&quot;</span><span class="nt">&gt;</span>{{entry.actionDate}}<span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>                    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>                    <span class="nt">&lt;span&gt;</span>{{entry.desc}}<span class="nt">&lt;/span&gt;</span>
-</span><span class='line'>                <span class="nt">&lt;/li&gt;</span>
-</span><span class='line'>            <span class="nt">&lt;/ul&gt;</span>
-</span><span class='line'>        <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./js/angular/angular.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;script&gt;</span>
-</span><span class='line'>        <span class="kd">function</span> <span class="nx">EntryCtrl</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$location</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">entries</span> <span class="o">=</span> <span class="p">[{</span>
-</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Rope jumping count 1000&#39;</span><span class="p">,</span>
-</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="p">},{</span>
-</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Jogging 3000M&#39;</span><span class="p">,</span>
-</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-31&#39;</span>
-</span><span class='line'>            <span class="p">},{</span>
-</span><span class='line'>                <span class="nx">desc</span><span class="o">:</span> <span class="s1">&#39;Situp 40 * 3&#39;</span><span class="p">,</span>
-</span><span class='line'>                <span class="nx">actionDate</span><span class="o">:</span> <span class="s1">&#39;2012-01-30&#39;</span>
-</span><span class='line'>            <span class="p">}];</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="nx">$scope</span><span class="p">.</span><span class="nx">isNewDateGroup</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="o">++</span><span class="p">;</span>
-</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Function called count: &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">calledCount</span><span class="p">);</span>
-</span><span class='line'>                <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Entry date vs Scope date: &#39;</span> <span class="o">+</span> <span class="nx">actionDate</span> <span class="o">+</span> <span class="s1">&#39; vs &#39;</span> <span class="o">+</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span><span class="p">);</span>
-</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">};</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="nt">&lt;/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Expectation</h2>
+<h2 id="expectation">Expectation</h2>
 
 <ol>
-<li><em>actionDate</em> of the first entry will always be shown as it&#8217;s the first group.</li>
-<li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.</li>
+  <li><em>actionDate</em> of the first entry will always be shown as it’s the first group.  </li>
+  <li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.  </li>
 </ol>
 
-
-<h2>Phenomenon</h2>
-
-<p>When the sample data is as above (case #1), the effect looks like it&#8217;s behaving correctly as below:</p>
-
+<h2 id="phenomenon">Phenomenon</h2>
+<p>When the sample data is as above (case #1), the effect looks like it’s behaving correctly as below:  </p>
 <ul>
     <li style="list-style-type: none;">
         <div style="font-weight: bold; color: red">2012-01-31</div>
@@ -231,11 +227,9 @@
     </li>
 </ul>
 
+<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn’t it supposed to show only the first one as all entries have the same <em>actionDate</em>?  </p>
 
-<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn&#8217;t it supposed to show only the first one as all entries have the same <em>actionDate</em>?</p>
-
-<h4>Expected result:</h4>
-
+<h4 id="expected-result">Expected result:</h4>
 <ul>
     <li style="list-style-type: none;">
         <div style="font-weight: bold; color: red">2012-01-31</div>
@@ -249,9 +243,7 @@
     </li>
 </ul>
 
-
-<h4>Actual result:</h4>
-
+<h4 id="actual-result">Actual result:</h4>
 <ul>
     <li style="list-style-type: none;">
         <span>Rope jumping count 1000</span>
@@ -264,64 +256,58 @@
     </li>
 </ul>
 
-
-<p>Now if you check the calledCount in the debug message, you will find that it&#8217;s called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:</p>
+<p>Now if you check the calledCount in the debug message, you will find that it’s called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:  </p>
 
 <ol>
-<li>The <em>isNewDateGroup</em> function is called more than the entries&#8217; count.  (Guess this, right?)</li>
-<li>The called count is different when the data is different.  (how about this?)</li>
+  <li>The <em>isNewDateGroup</em> function is called more than the entries’ count.  (Guess this, right?)  </li>
+  <li>The called count is different when the data is different.  (how about this?)  </li>
 </ol>
 
+<h2 id="causes">Causes</h2>
+<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> API:  </p>
 
-<h2>Causes</h2>
-
-<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> API:</p>
-
-<blockquote><ul>
-<li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> and should be <strong>idempotent</strong>.</li>
-<li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> &#8230;</li>
-<li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.
-&#8230;
+<blockquote>
+  <ul>
+    <li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> and should be <strong>idempotent</strong>.  </li>
+    <li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> …</li>
+    <li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.
+…
 (Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)</li>
-</ul>
+  </ul>
 </blockquote>
 
-<h3>Issue #1</h3>
-
+<h3 id="issue-1">Issue #1</h3>
 <p>The <em>isNewDateGroup</em> being watched whose calculation relies on value of <em>lastActionDate</em> is not idempotent and so during initial run stage, <em>lastActionDate</em> is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.</p>
 
-<h3>Issue #2</h3>
-
+<h3 id="issue-2">Issue #2</h3>
 <p>In below code, if I comment out <strong>$scope.lastActionDate = actionDate;</strong> or change the <strong>return true;</strong> to <strong>return false;</strong>, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="k">if</span> <span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">===</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">!==</span> <span class="nx">actionDate</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">$scope</span><span class="p">.</span><span class="nx">lastActionDate</span> <span class="o">=</span> <span class="nx">actionDate</span><span class="p">;</span>
+</span><span class="line">    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let’s see what the return value is for watch expression <em>isNewDateGroup</em> after each run.  </p>
 
-<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let&#8217;s see what the return value is for watch expression <em>isNewDateGroup</em> after each run.</p>
-
-<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:</p>
-
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:  </p>
 <p>
 <table style="font-size: 0.85em;">
     <tr>
-        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black;" />
         <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
         <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
         <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
     </tr>
     <tr>
-        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">1st <br />(initial)</td>
         <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
         <td style="padding: 5px; border: 1px solid black;">false</td>
-        <td style="padding: 5px; border: 1px solid black;">true (&#8216;2012-01-31&#8217; !== &#8216;2012-01-30&#8217;;<br/>
+        <td style="padding: 5px; border: 1px solid black;">true (&#8216;2012-01-31&#8217; !== &#8216;2012-01-30&#8217;;<br />
         $scope.lastActionDate = &#8216;2012-01-30&#8217;)
         </td>
     </tr>
@@ -334,19 +320,17 @@
 </table>
 </p>
 
-
-<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:</p>
-
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:  </p>
 <p>
 <table style="font-size: 0.85em;">
     <tr>
-        <td style="padding: 5px; border: 1px solid black;"></td>
+        <td style="padding: 5px; border: 1px solid black;" />
         <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td>
         <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td>
         <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td>
     </tr>
     <tr>
-        <td style="padding: 5px; border: 1px solid black;">1st <br/>(initial)</td>
+        <td style="padding: 5px; border: 1px solid black;">1st <br />(initial)</td>
         <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td>
         <td style="padding: 5px; border: 1px solid black;">false</td>
         <td style="padding: 5px; border: 1px solid black;">false</td>
@@ -365,7 +349,6 @@
     </tr>
 </table>
 </p>
-
 
 <p>So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.</p>
 </div>
@@ -444,6 +427,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/11/13/jingjs-2013-fun/">京JS 2013 之神打击</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/13/callbacks-are-imperative/">回调函数是指令式的；Promise 是函数式的：Node 错失的最大机会</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/">Thanks to everyone, Zach Lendon, Github, AngularJS</a>
       </li>
     
@@ -475,19 +466,11 @@
         <a href="/blog/2013/04/25/review-on-book-inside-the-facebook/">打造 Facebook 读后感</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/04/16/can-i-make-13-billion-in-20-months/">我能否20个月赚130亿?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share code between Node.js and browser</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (19)</a></li><li><a href='/blog/categories/think'>Think (27)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (20)</a></li><li><a href='/blog/categories/think'>Think (28)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
@@ -495,59 +478,63 @@
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
 <li><a style="font-size: 60%" href="/tags/ajax/">Ajax</a></li>
-<li><a style="font-size: 124%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 121%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 115%" href="/tags/book/">Book</a></li>
-<li><a style="font-size: 88%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 104%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 112%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 60%" href="/tags/callback/">Callback</a></li>
+<li><a style="font-size: 86%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 102%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
-<li><a style="font-size: 88%" href="/tags/design/">Design</a></li>
-<li><a style="font-size: 88%" href="/tags/destiny/">Destiny</a></li>
-<li><a style="font-size: 88%" href="/tags/directive/">Directive</a></li>
+<li><a style="font-size: 86%" href="/tags/design/">Design</a></li>
+<li><a style="font-size: 86%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 86%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
 <li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
-<li><a style="font-size: 131%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
 <li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
-<li><a style="font-size: 88%" href="/tags/gtd/">GTD</a></li>
-<li><a style="font-size: 88%" href="/tags/goal/">Goal</a></li>
+<li><a style="font-size: 86%" href="/tags/gtd/">GTD</a></li>
+<li><a style="font-size: 86%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
-<li><a style="font-size: 88%" href="/tags/httpbackend/">HttpBackend</a></li>
+<li><a style="font-size: 86%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
-<li><a style="font-size: 88%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 131%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 60%" href="/tags/jsconf/">JSConf</a></li>
+<li><a style="font-size: 86%" href="/tags/json/">JSON</a></li>
+<li><a style="font-size: 128%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 131%" href="/tags/management/">Management</a></li>
-<li><a style="font-size: 88%" href="/tags/maven/">Maven</a></li>
-<li><a style="font-size: 104%" href="/tags/mock/">Mock</a></li>
+<li><a style="font-size: 60%" href="/tags/jingjs/">JingJS</a></li>
+<li><a style="font-size: 128%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 86%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 102%" href="/tags/mock/">Mock</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 115%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 112%" href="/tags/mood/">Mood</a></li>
 <li><a style="font-size: 60%" href="/tags/network/">Network</a></li>
-<li><a style="font-size: 104%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 112%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/opportunity/">Opportunity</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
-<li><a style="font-size: 88%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 162%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 86%" href="/tags/productivity/">Productivity</a></li>
+<li><a style="font-size: 60%" href="/tags/promise/">Promise</a></li>
+<li><a style="font-size: 157%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/risk/">Risk</a></li>
 <li><a style="font-size: 60%" href="/tags/spa/">SPA</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
-<li><a style="font-size: 104%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 102%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
-<li><a style="font-size: 88%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 104%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 86%" href="/tags/time-management/">Time Management</a></li>
+<li><a style="font-size: 102%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 131%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 128%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
-<li><a style="font-size: 88%" href="/tags/i18n/">i18n</a></li>
+<li><a style="font-size: 86%" href="/tags/i18n/">i18n</a></li>
 <li><a style="font-size: 60%" href="/tags/ngclass/">ngClass</a></li>
 <li><a style="font-size: 60%" href="/tags/ngrepeat/">ngRepeat</a></li>
 <li><a style="font-size: 60%" href="/tags/this/">this</a></li>

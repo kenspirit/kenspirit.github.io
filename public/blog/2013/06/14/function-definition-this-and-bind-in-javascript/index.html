@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="I thought I know the Function definition, execution context and the behavior of this in JavaScript. However, I realized that actually I don&#8217;t &hellip;">
+  <meta name="description" content="I thought I know the Function definition, execution context and the behavior of this in JavaScript. However, I realized that actually I don’t or the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -104,215 +104,204 @@
   </header>
 
 
-<div class="entry-content"><p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&#8217;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
+<div class="entry-content">
+<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don’t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.  </p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">a</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nx">b</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
-</span><span class='line'><span class="nx">c</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">a</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">);</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">    <span class="nx">b</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
+</span><span class="line">        <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">();</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">();</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+</span><span class="line"><span class="nx">c</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>The result will be as below, right?  </p>
 
-<p>The result will be as below, right?</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">B</span>
+</span><span class="line"><span class="nx">A</span>
+</span><span class="line"><span class="nx">B</span>
+</span><span class="line"><span class="nx">A</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">B</span>
-</span><span class='line'><span class="nx">A</span>
-</span><span class='line'><span class="nx">B</span>
-</span><span class='line'><span class="nx">A</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don’t know JavasScript well either like me.  The result actually is:  </p>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">B</span>
+</span><span class="line"><span class="nx">A</span>
+</span><span class="line"><span class="nx">B</span>
+</span><span class="line"><span class="nx">TypeError</span><span class="o">:</span> <span class="nb">Object</span> <span class="p">[</span><span class="nx">object</span> <span class="nx">global</span><span class="p">]</span> <span class="nx">has</span> <span class="nx">no</span> <span class="nx">method</span> <span class="s1">&#39;a&#39;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don&#8217;t know JavasScript well either like me.  The result actually is:</p>
+<p>It is a little bit awkward or counterintuitive at first glance but it’s JavaScript.  It’s the feature and amazing part.  Let’s break it down piece by piece and see why.  </p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">B</span>
-</span><span class='line'><span class="nx">A</span>
-</span><span class='line'><span class="nx">B</span>
-</span><span class='line'><span class="nx">TypeError</span><span class="o">:</span> <span class="nb">Object</span> <span class="p">[</span><span class="nx">object</span> <span class="nx">global</span><span class="p">]</span> <span class="nx">has</span> <span class="nx">no</span> <span class="nx">method</span> <span class="s1">&#39;a&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
+<h2 id="function-definition">Function definition</h2>
+<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:  </p>
 
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">B</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
+</span><span class="line">    <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">();</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">a</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">);</span>
+</span><span class="line">    <span class="p">},</span>
+</span><span class="line">    <span class="nx">b</span><span class="o">:</span> <span class="nx">B</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>It is a little bit awkward or counterintuitive at first glance but it&#8217;s JavaScript.  It&#8217;s the feature and amazing part.  Let&#8217;s break it down piece by piece and see why.</p>
+<h2 id="this">this</h2>
+<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:<br />
+&gt;<strong>10.4.3 Entering Function Code</strong><br />
+&gt;The following steps are performed when control enters the execution context for function code contained in
+function object F, a caller provided thisArg, and a caller provided argumentsList:  </p>
 
-<h2>Function definition</h2>
-
-<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">B</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">();</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">a</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">},</span>
-</span><span class='line'>    <span class="nx">b</span><span class="o">:</span> <span class="nx">B</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>this</h2>
-
-<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:</p>
-
-<blockquote><p><strong>10.4.3 Entering Function Code</strong><br/>
-The following steps are performed when control enters the execution context for function code contained in
-function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
-
-<ol>
-<li>If the function code is strict code, set the ThisBinding to thisArg.</li>
-<li>Else if thisArg is null or undefined, set the ThisBinding to the global object.</li>
-<li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).</li>
-<li>Else set the ThisBinding to thisArg.<br/>
-&#8230;</li>
-</ol>
+<blockquote>
+  <ol>
+    <li>If the function code is strict code, set the ThisBinding to thisArg.  </li>
+    <li>Else if thisArg is null or undefined, set the ThisBinding to the global object.  </li>
+    <li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).  </li>
+    <li>Else set the ThisBinding to thisArg.<br />
+…</li>
+  </ol>
 </blockquote>
 
-<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.</p>
+<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.  </p>
 
-<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.</p>
+<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.  </p>
 
-<p>However, below statements mean differently.</p>
+<p>However, below statements mean differently.  </p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
-</span><span class='line'><span class="nx">c</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+</span><span class="line"><span class="nx">c</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.   </p>
 
-<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.</p>
+<h2 id="how-to-set-a-particular-object-as-this-to-function">How to set a particular object as <em>this</em> to function</h2>
+<p>It’s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:  </p>
 
-<h2>How to set a particular object as <em>this</em> to function</h2>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
+</span><span class="line"><span class="nx">c</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>It&#8217;s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:</p>
+<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:  </p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">;</span>
-</span><span class='line'><span class="nx">c</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">dynamic</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">fn</span><span class="p">();</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">dynamic</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it’s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.  </p>
 
-<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:</p>
+<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:  </p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">dynamic</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fn</span><span class="p">();</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">dynamic</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">function</span> <span class="nx">dynamic</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">fn</span><span class="p">();</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">dynamic</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">));</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>It’s fun, isn’t it?</p>
 
-<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it&#8217;s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.</p>
+<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.  </p>
 
-<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:</p>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">function</span> <span class="nx">logLength</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</span><span class="line"><span class="p">}</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class="line">    <span class="nx">length</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">b</span><span class="o">:</span> <span class="nx">logLength</span><span class="p">,</span>
+</span><span class="line">    <span class="nx">c</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">        <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">            <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]();</span>
+</span><span class="line">        <span class="p">})(</span><span class="nx">logLength</span><span class="p">);</span>
+</span><span class="line">    <span class="p">}</span>
+</span><span class="line"><span class="p">};</span>
+</span><span class="line">
+</span><span class="line"><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">();</span>
+</span><span class="line"><span class="nx">TestObj</span><span class="p">.</span><span class="nx">c</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">dynamic</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fn</span><span class="p">();</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">dynamic</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">TestObj</span><span class="p">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It&#8217;s fun, isn&#8217;t it?</p>
-
-<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">function</span> <span class="nx">logLength</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">TestObj</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">length</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
-</span><span class='line'>    <span class="nx">b</span><span class="o">:</span> <span class="nx">logLength</span><span class="p">,</span>
-</span><span class='line'>    <span class="nx">c</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]();</span>
-</span><span class='line'>        <span class="p">})(</span><span class="nx">logLength</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">TestObj</span><span class="p">.</span><span class="nx">b</span><span class="p">();</span>
-</span><span class='line'><span class="nx">TestObj</span><span class="p">.</span><span class="nx">c</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.</p>
+<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.  </p>
 
 <p>More fun, right?</p>
 </div>
@@ -391,6 +380,14 @@ function object F, a caller provided thisArg, and a caller provided argumentsLis
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/11/13/jingjs-2013-fun/">京JS 2013 之神打击</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/13/callbacks-are-imperative/">回调函数是指令式的；Promise 是函数式的：Node 错失的最大机会</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/">Thanks to everyone, Zach Lendon, Github, AngularJS</a>
       </li>
     
@@ -422,19 +419,11 @@ function object F, a caller provided thisArg, and a caller provided argumentsLis
         <a href="/blog/2013/04/25/review-on-book-inside-the-facebook/">打造 Facebook 读后感</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/04/16/can-i-make-13-billion-in-20-months/">我能否20个月赚130亿?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share code between Node.js and browser</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (19)</a></li><li><a href='/blog/categories/think'>Think (27)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (20)</a></li><li><a href='/blog/categories/think'>Think (28)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
@@ -442,59 +431,63 @@ function object F, a caller provided thisArg, and a caller provided argumentsLis
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
 <li><a style="font-size: 60%" href="/tags/ajax/">Ajax</a></li>
-<li><a style="font-size: 124%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 121%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 115%" href="/tags/book/">Book</a></li>
-<li><a style="font-size: 88%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 104%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 112%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 60%" href="/tags/callback/">Callback</a></li>
+<li><a style="font-size: 86%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 102%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
-<li><a style="font-size: 88%" href="/tags/design/">Design</a></li>
-<li><a style="font-size: 88%" href="/tags/destiny/">Destiny</a></li>
-<li><a style="font-size: 88%" href="/tags/directive/">Directive</a></li>
+<li><a style="font-size: 86%" href="/tags/design/">Design</a></li>
+<li><a style="font-size: 86%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 86%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
 <li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
-<li><a style="font-size: 131%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
 <li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
-<li><a style="font-size: 88%" href="/tags/gtd/">GTD</a></li>
-<li><a style="font-size: 88%" href="/tags/goal/">Goal</a></li>
+<li><a style="font-size: 86%" href="/tags/gtd/">GTD</a></li>
+<li><a style="font-size: 86%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
-<li><a style="font-size: 88%" href="/tags/httpbackend/">HttpBackend</a></li>
+<li><a style="font-size: 86%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
-<li><a style="font-size: 88%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 131%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 60%" href="/tags/jsconf/">JSConf</a></li>
+<li><a style="font-size: 86%" href="/tags/json/">JSON</a></li>
+<li><a style="font-size: 128%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 131%" href="/tags/management/">Management</a></li>
-<li><a style="font-size: 88%" href="/tags/maven/">Maven</a></li>
-<li><a style="font-size: 104%" href="/tags/mock/">Mock</a></li>
+<li><a style="font-size: 60%" href="/tags/jingjs/">JingJS</a></li>
+<li><a style="font-size: 128%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 86%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 102%" href="/tags/mock/">Mock</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 115%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 112%" href="/tags/mood/">Mood</a></li>
 <li><a style="font-size: 60%" href="/tags/network/">Network</a></li>
-<li><a style="font-size: 104%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 112%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/opportunity/">Opportunity</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
-<li><a style="font-size: 88%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 162%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 86%" href="/tags/productivity/">Productivity</a></li>
+<li><a style="font-size: 60%" href="/tags/promise/">Promise</a></li>
+<li><a style="font-size: 157%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/risk/">Risk</a></li>
 <li><a style="font-size: 60%" href="/tags/spa/">SPA</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
-<li><a style="font-size: 104%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 102%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
-<li><a style="font-size: 88%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 104%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 86%" href="/tags/time-management/">Time Management</a></li>
+<li><a style="font-size: 102%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 131%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 128%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
-<li><a style="font-size: 88%" href="/tags/i18n/">i18n</a></li>
+<li><a style="font-size: 86%" href="/tags/i18n/">i18n</a></li>
 <li><a style="font-size: 60%" href="/tags/ngclass/">ngClass</a></li>
 <li><a style="font-size: 60%" href="/tags/ngrepeat/">ngRepeat</a></li>
 <li><a style="font-size: 60%" href="/tags/this/">this</a></li>

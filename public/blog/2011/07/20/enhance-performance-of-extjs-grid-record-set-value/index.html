@@ -106,13 +106,13 @@
 
 <div class="entry-content"><p>When implementing a feature for the project, I encounter one Javascript method that takes around 9 seconds to finish.  Clearly, there is some performance issue in it.</p>
 
-<p>The method logic is simple.  Take below table&#8217;s data as an example:</p>
+<p>The method logic is simple.  Take below table’s data as an example:</p>
 
 <pre><code>Measurement         XS     S     M     L      XL   XXL
  Sleeve             1      1     0     2      2     2
 </code></pre>
 
-<p>Consider above row &#8220;Sleeve&#8221; is a Record in ExtJs Grid.  When deleting size S &amp; L column, the figure should change to be:</p>
+<p>Consider above row “Sleeve” is a Record in ExtJs Grid.  When deleting size S &amp; L column, the figure should change to be:</p>
 
 <pre><code>Measurement         XS     M     XL      XXL
  Sleeve             2      0      4      4
@@ -142,11 +142,11 @@
 
 <p>The performance tuning rule is first to find out the part where the bigger portion of the time used in.  This method contains two major for loop.  One is the first for calculation logic and the second is just purely setting data to the right cell.</p>
 
-<p>The total time of the method takes around 9 seconds when the involved number of records are 42 and each have 5 cells affected.  It&#8217;s found that 99% of the time spent on the second for loop.</p>
+<p>The total time of the method takes around 9 seconds when the involved number of records are 42 and each have 5 cells affected.  It’s found that 99% of the time spent on the second for loop.</p>
 
 <p>After testing more intensively, each record.set() takes around 0.05 second.  That is why operation on around 42 * 5 = 210 cells takes 9 seconds.</p>
 
-<p>OK.  Root cause is found and it&#8217;s time to see why it takes so long to call record.set().  After checking on the source of ExtJs Record and Store object.</p>
+<p>OK.  Root cause is found and it’s time to see why it takes so long to call record.set().  After checking on the source of ExtJs Record and Store object.</p>
 
 <p>In Record.js:</p>
 
@@ -186,7 +186,7 @@
     },
 </code></pre>
 
-<p>You can find that each Record.set() will call store.afterEdit() with its own as parameter.  Hence, I am considering batch update all cells in one record and then trigger Record.afterEdit() method.  Below is the &#8220;cracked&#8221; method added for batch set data.</p>
+<p>You can find that each Record.set() will call store.afterEdit() with its own as parameter.  Hence, I am considering batch update all cells in one record and then trigger Record.afterEdit() method.  Below is the “cracked” method added for batch set data.</p>
 
 <pre><code>batchSet : function(cells){
         for (var i = cells.length; i--;) {
@@ -290,6 +290,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/11/13/jingjs-2013-fun/">京JS 2013 之神打击</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/13/callbacks-are-imperative/">回调函数是指令式的；Promise 是函数式的：Node 错失的最大机会</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/">Thanks to everyone, Zach Lendon, Github, AngularJS</a>
       </li>
     
@@ -321,19 +329,11 @@
         <a href="/blog/2013/04/25/review-on-book-inside-the-facebook/">打造 Facebook 读后感</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/04/16/can-i-make-13-billion-in-20-months/">我能否20个月赚130亿?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/13/share-code-between-nodejs-and-browser/">Share code between Node.js and browser</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (19)</a></li><li><a href='/blog/categories/think'>Think (27)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (20)</a></li><li><a href='/blog/categories/think'>Think (28)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
@@ -341,59 +341,63 @@
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
 <li><a style="font-size: 60%" href="/tags/ajax/">Ajax</a></li>
-<li><a style="font-size: 124%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 121%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 115%" href="/tags/book/">Book</a></li>
-<li><a style="font-size: 88%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 104%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 112%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 60%" href="/tags/callback/">Callback</a></li>
+<li><a style="font-size: 86%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 102%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
-<li><a style="font-size: 88%" href="/tags/design/">Design</a></li>
-<li><a style="font-size: 88%" href="/tags/destiny/">Destiny</a></li>
-<li><a style="font-size: 88%" href="/tags/directive/">Directive</a></li>
+<li><a style="font-size: 86%" href="/tags/design/">Design</a></li>
+<li><a style="font-size: 86%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 86%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
 <li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
-<li><a style="font-size: 131%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
 <li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
-<li><a style="font-size: 88%" href="/tags/gtd/">GTD</a></li>
-<li><a style="font-size: 88%" href="/tags/goal/">Goal</a></li>
+<li><a style="font-size: 86%" href="/tags/gtd/">GTD</a></li>
+<li><a style="font-size: 86%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
-<li><a style="font-size: 88%" href="/tags/httpbackend/">HttpBackend</a></li>
+<li><a style="font-size: 86%" href="/tags/httpbackend/">HttpBackend</a></li>
 <li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
-<li><a style="font-size: 88%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 131%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 60%" href="/tags/jsconf/">JSConf</a></li>
+<li><a style="font-size: 86%" href="/tags/json/">JSON</a></li>
+<li><a style="font-size: 128%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
-<li><a style="font-size: 131%" href="/tags/management/">Management</a></li>
-<li><a style="font-size: 88%" href="/tags/maven/">Maven</a></li>
-<li><a style="font-size: 104%" href="/tags/mock/">Mock</a></li>
+<li><a style="font-size: 60%" href="/tags/jingjs/">JingJS</a></li>
+<li><a style="font-size: 128%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 86%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 102%" href="/tags/mock/">Mock</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 115%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 112%" href="/tags/mood/">Mood</a></li>
 <li><a style="font-size: 60%" href="/tags/network/">Network</a></li>
-<li><a style="font-size: 104%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 112%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/opportunity/">Opportunity</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
-<li><a style="font-size: 88%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 162%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 86%" href="/tags/productivity/">Productivity</a></li>
+<li><a style="font-size: 60%" href="/tags/promise/">Promise</a></li>
+<li><a style="font-size: 157%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/risk/">Risk</a></li>
 <li><a style="font-size: 60%" href="/tags/spa/">SPA</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
-<li><a style="font-size: 104%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 102%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
-<li><a style="font-size: 88%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 104%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 86%" href="/tags/time-management/">Time Management</a></li>
+<li><a style="font-size: 102%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 131%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 128%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
-<li><a style="font-size: 88%" href="/tags/i18n/">i18n</a></li>
+<li><a style="font-size: 86%" href="/tags/i18n/">i18n</a></li>
 <li><a style="font-size: 60%" href="/tags/ngclass/">ngClass</a></li>
 <li><a style="font-size: 60%" href="/tags/ngrepeat/">ngRepeat</a></li>
 <li><a style="font-size: 60%" href="/tags/this/">this</a></li>

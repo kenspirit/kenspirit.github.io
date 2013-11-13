@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: POI | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/poi/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-10-13T15:01:45+08:00</updated>
+  <updated>2013-11-13T08:35:37+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -27,10 +27,13 @@
 <p>有时候，Excel Template经过POI写值后，会发现那个用Validation做成的模拟下拉选项不见了，而未写值前的Excel Template里是有的。 情况可能是这样：</p>
 
 <ol>
-<li><p> 在做好Excel Template, 保存的瞬间，光标选在的某个有Named List Validation的Cell上。我们要注意，保存Excel Template里，光标必须落在一些空白或不重要的地方。</p></li>
-<li><p>如果你做的Named List里动态写值的，那最好先做一些dummy的list, 在需要做Validation的Cell上，定义好这个Named List Validation, 然后再把那些dummy value删去。</p></li>
+  <li>
+    <p> 在做好Excel Template, 保存的瞬间，光标选在的某个有Named List Validation的Cell上。我们要注意，保存Excel Template里，光标必须落在一些空白或不重要的地方。</p>
+  </li>
+  <li>
+    <p>如果你做的Named List里动态写值的，那最好先做一些dummy的list, 在需要做Validation的Cell上，定义好这个Named List Validation, 然后再把那些dummy value删去。</p>
+  </li>
 </ol>
-
 
 <p>这样都会有影响，Microsoft的东西有够诡异的了吧？ 哈哈</p>
 ]]></content>

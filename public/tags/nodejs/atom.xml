@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: NodeJS | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/nodejs/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-10-13T15:01:45+08:00</updated>
+  <updated>2013-11-13T08:35:37+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -14,101 +14,130 @@
 
   
   <entry>
+    <title type="html"><![CDATA[京JS 2013 之神打击]]></title>
+    <link href="http://kenspirit.github.io/blog/2013/11/13/jingjs-2013-fun/"/>
+    <updated>2013-11-13T13:21:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2013/11/13/jingjs-2013-fun</id>
+    <content type="html"><![CDATA[
+<p>首先要吐槽一下 <a href="http://weibo.com/jingjs2013">@京JS</a>。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 <a href="https://github.com/substack">@substack</a>，<a href="http://isaacmao.com/">Issac</a> 和讲 Data Visualization 的 Nick。第二天早上的主题还是相当给力的，下午的 CSS Automation Test 也还不错。</p>
+
+<p>晚上的活动还是要狠狠表扬一下 @京JS。第一晚包了车库咖啡，晚饭虽然是 Pizza 等，但是量也算足，只是地方有点小，不过也是逼着和别人站着交流的好机会。星期天的晚上还有去 Bar 的 after-party，可惜我要赶飞机回珠海，就没法去了，但估计也会很棒。</p>
+
+<p>第一天晚上，看到 @substack 来了后，我坚定不移地过去和他搭话，接着各种好玩，技术黑和大神间（当然这不包我）的对话就来了。首先声明，可以肯定我的智商是完全没法跟上大神的，加上没法肯定听力上能跟上多少。所以下面的一些神吐糟不保证 100％ 正确，有错误的话也是我这译者的错误，并且这里的技术黑都不是拉仇恨啊。 Please forgive my poor English for any potential misleading.</p>
+
+<p>我和他搭话是因为我最近看的一篇<a href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/">关于 Promise 的文章</a>，个人感觉不错的，想问他对比 Callback 有什么看法。原来他并不太喜欢 Promise。（好了，整晚挖坑自埋的节奏开始了）。他指点我去看看 <a href="http://callbackhell.com">callbackhell.com</a>，还有他的 <a href="https://github.com/substack/stream-handbook">stream-handbook</a>。说如果我按照那样做了，也应该不会碰到什么 Hell 的问题。他说即使他以后遇到，也是首先偏向于用 <a href="https://github.com/caolan/async">Async</a> 的。</p>
+
+<p>接着一个同学拿着 Douglas Crockford 的书给他签名，他说虽然和他有点过节还是观点不同什么来着（他用的词忘了），但还是签了（他的签名很有趣，是一幅机器人漫画，幸亏我也拿到一个）。我就八卦了一下问是他说的是什么情况，他举例说那个什么 <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">Hoisting</a> 就是胡扯。我当然也很赞同的说是的，应该定义在离它最近使用的地方。好像记得 <a href="http://weibo.com/lifesinger">@玉伯也叫射雕</a> 也是持同样观点的。</p>
+
+<p>然后 <a href="http://weibo.com/fool2fish">@fool2fish</a> 出现了，问他关于一些测试方面怎么从区分浏览器 Tab 独立线程，监测 CPU，等什么的（好像是说这些吧，中间没太跟上）。然后他不断解说和演示他的 <a href="https://github.com/substack/testling">testling</a> 可以拿来怎么用。</p>
+
+<p>之后 @fool2fish 就问可以在 testling 里用什么测试框架，@substack 又把自己的 <a href="https://github.com/substack/tape">tape</a> 搬出来耍了。@fool2fish 再问能否集成 <a href="https://github.com/visionmedia/mocha">Mocha</a> 之类的框架时，@substack 说可以的。但是他不喜欢用那些框架，一堆的全局变量，evil，不是 Node 可以直接运行的程序。还有 <a href="https://github.com/pivotal/jasmine">Jasmine</a> 什么的更烂。</p>
+
+<p>然后转到问是否支持 AMD，CommonJS的主题上。@fool2fish 就给他瞄了一眼 <a href="https://github.com/seajs/seajs">SeaJS</a> define 的用法，可能本想把它推出国门。没想到他说他知道 SeaJS，但这不是 CommonJS，是 fake 的写法。@fool2fish 脸都绿了，都想拉 @玉伯也叫射雕 来抵抗一下了，没等反应过来。@substack 又搬出了他的 <a href="https://github.com/substack/node-browserify">browserify</a> 来说明怎么把 Node 的代码和浏览器分享（这个观点我一直是比较赞同的，所以之前也基于 <a href="https://github.com/medikoo/modules-webmake">webmake</a> 搞了个 <a href="https://github.com/kenspirit/webassemble">webassemble</a>。因为我觉的生产环境基本都是打包好再用的，哪有什么异步再去拿文件，异步也是拿另一个大 bundle。require 在 Node 的写法，如果在浏览器能通用确实挺好的。回头细想是不是偏后端程序员没看到前端看到的另一些东西，回头再想想）。旁边的另一个鬼佬（抱歉不认识是哪位神），看到我们被打击的样子，几乎笑的不行了，都和 @substack 说你别再打击他们了，可是神才不鸟你，继续打击。</p>
+
+<p>后面，他们都走了，我犯贱又去问 @substack 怎么看那些前端的 MVC 或者 MVVM 的框架，比如 <a href="http://angularjs.org">AngularJS</a>。他说他还没看懂到底它最终要解决什么问题，一堆的东西，什么 DI，Databinding 等。我说 Databinding 很好啊，可以免得我们写一堆代码拿值赋值等，declarative 语法也不错啊。他说他只是写纯粹的 JS，那些拿值赋值的可以什么把原生操作抽象和模块化，举例说把复杂的 Form 抽象成模块，只在里头处理赋值拿值之类的。我说那不是 JS 和 HTML 混一起了吗？他好像说只要模块化的好就没有问题了。晕。（这里不敢苟同，可能我还没到那种境界）</p>
+
+<p>最后，又再一次嘴贱的问他那个 tape 能不能集成到 <a href="http://gruntjs.com/‎">Grunt</a>。没想到他说他也没看明白 Grunt 有什么用，我就知道我又挖坑埋自己了。他啪啪啪敲键盘和让我看他怎么用 NPM 的 test 命令，自定义命令和直接结合 Script 来做到一系列的集成操作的。</p>
+
+<p>@substack 真是 geek 到不行啊。他追求纯粹，简洁，和模块化可以说到极致的境地，不喜欢那些大而全的框架，真的是和我最近看的 “Art of Unit Programming” 那本书说到 “Only do one thing and do it really well”，然后通过组合把一些小工具结合成更强大的工具的思想非常吻合。</p>
+
+<p>后面 xxx 来了之后，被打击对象转到他头上了。是的，神喷神了，哈哈。以下可能和原话有偏差，因为大神间的对话，我有时实在很难跟上。</p>
+
+<p>xxx 在做的是 <a href="http://vertx.io/">Vert.x</a>。他一开始说它们直接支持在 npm 跑还是改了加了什么新功能来着。（一开始我在纠结那个 Vertx 发音是什么东西，迷失了一下）。@substack 就说你们那么改的原因是什么？带来什么好处？没好处改来干什么？（另一个神被打击的样子很有趣 :D ）。后来说 Vert.x 特性是 Polyglot，说到支持 Java，Python 等，@substack 意思好像是说为什么要那么做？那些垃圾语言支持来干嘛？（Python 差点被拖累了，他后来改口说 Python 不烂）我永远都不要写 JAVA。xxx 也脸绿了，我也帮口说在商业大项目里，因为系统和团队的多和杂，Polyglot 和 JAVA 都是需要的，虽然我现在也不喜欢 JAVA。其实无论我们怎么说，神的观点都不会变，他就说我不会遇到这样的情况，哈哈。xxx 后来问 @substack Vert.x 怎么才能被他们 buyin (接受)，@substack 就不断 blablabla 说什么你们的 api 要保持和 npm 一致，要在 npm 上容易安装，可以通过 -g 参数那样装了后，命令运行等，不然你看现在没人鸟你们，然后和 yyy 各种建议给他。</p>
+
+<p>两大神后来开始怀旧说小时候几岁的时候玩什么技术之类的，我的智商和听力就彻底跟不上了。后来 xxx 说他用 SQL 去考他妈妈，他妈妈竟然只需要问它那个语句是干什么的，然后她妈妈竟然可以从汇编，指令和寄存器的角度指出它哪里有问题了。靠，开挂了吧。xxx 还想请 @substack 去他们上海公司给员工感受一下什么叫做 live for code，而不是 code for live 的精神。说费用他包，问有没有兴趣。@substack 好像说会在中国待 3 星期，没什么问题，之后可能还要到深圳来骑车什么的。深圳的同学们有关系的话，就看能不能请到他去玩了。后面我们扯着扯着就讲到为什么国内那么难找到这样的人，什么独生政策，教育，压力的都来了。一直聊到 10 点散场了才走了。</p>
+
+<p>整个晚上和 @substack 及其他大神的一些直接对话真比在会场听一天感悟还多。所以意见是大家以后听会议，一定要准备问题，尽量和各种大神聊天。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
     <link href="http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
     <updated>2013-04-13T12:59:00+08:00</updated>
     <id>http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
-    <content type="html"><![CDATA[<h2>Background</h2>
+    <content type="html"><![CDATA[<h2 id="background">Background</h2>
 
-<p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>
+<p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.  </p>
 
-<p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.</p>
+<p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.  </p>
 
 <p>Hence, the code sharing between Node.js and browser requires the code to be used as the same way in browser.</p>
 
-<h2>Situations and Solutions</h2>
+<h2 id="situations-and-solutions">Situations and Solutions</h2>
 
-<p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:</p>
+<p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:  </p>
 
 <p>```javascript
 var a = xxx;
 a.foo();</p>
 
-<p>var b = require('b');
+<p>var b = require(‘b’);
 b.bar();
 ```</p>
 
-<p>There are two kinds of situations:</p>
+<p>There are two kinds of situations:  </p>
 
-<h3>Modularization already realized for browser code</h3>
+<h3 id="modularization-already-realized-for-browser-code">Modularization already realized for browser code</h3>
+<p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/">RequireJS</a>, or <a href="http://seajs.org/">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.  </p>
 
-<p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/">RequireJS</a>, or <a href="http://seajs.org/">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.</p>
-
-<p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.</p>
+<p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.  </p>
 
 <p>```javascript
-define(['./b'], function (b) {</p>
+define([’./b’], function (b) {
+    var a = xxx;
+    a.foo();
+    b.bar();</p>
 
-<pre><code>var a = xxx;
-a.foo();
-b.bar();
-
-return {
+<pre><code>return {
     bla: function(){
         console.log('bla');
     }
-};
+}; }); ```
 </code></pre>
 
-<p>});
-```</p>
+<p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.  </p>
 
-<p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.</p>
-
-<p>To overcome this incompatibility, there are two main approaches.</p>
+<p>To overcome this incompatibility, there are two main approaches.  </p>
 
 <ul>
-<li><p>Directly add boilerplate code in one side to fit the other</p>
-
-<ol>
-<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html">here</a>.</li>
-<li><a href="https://github.com/ajaxorg/node-amd-loader">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.</li>
-<li>The <a href="https://github.com/jrburke/amdefine">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer">RequireJS Optimizer</a>.</li>
-</ol>
-</li>
-<li><p>Build process to handle the boilerplate</p>
-
-<ol>
-<li><a href="https://github.com/substack/node-browserify">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.</li>
-<li><a href="https://github.com/medikoo/modules-webmake">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.</li>
-<li><a href="https://github.com/kenspirit/webassemble">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.</li>
-</ol>
-</li>
+  <li>Directly add boilerplate code in one side to fit the other<br />
+    <ol>
+      <li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html">here</a>.  </li>
+      <li><a href="https://github.com/ajaxorg/node-amd-loader">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.  </li>
+      <li>The <a href="https://github.com/jrburke/amdefine">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer">RequireJS Optimizer</a>.  </li>
+    </ol>
+  </li>
+  <li>Build process to handle the boilerplate<br />
+    <ol>
+      <li><a href="https://github.com/substack/node-browserify">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.  </li>
+      <li><a href="https://github.com/medikoo/modules-webmake">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.  </li>
+      <li><a href="https://github.com/kenspirit/webassemble">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.  </li>
+    </ol>
+  </li>
 </ul>
 
+<p>Personally, I prefer introducing extra build process to handle the boilerplate for me.  </p>
 
-<p>Personally, I prefer introducing extra build process to handle the boilerplate for me.</p>
-
-<p>The advantages of build process boilerplate are:</p>
+<p>The advantages of build process boilerplate are:  </p>
 
 <ol>
-<li>Boilerplate code is brittle and subject to change.  Adding it to every file makes future change harder.  If some build process can automatically remove them, why not use the build process to automatically add them?</li>
-<li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.</li>
-<li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.</li>
+  <li>Boilerplate code is brittle and subject to change.  Adding it to every file makes future change harder.  If some build process can automatically remove them, why not use the build process to automatically add them?  </li>
+  <li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.  </li>
+  <li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.  </li>
 </ol>
 
+<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/">Grunt</a>, it’s just a couple of seconds’ waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.  </p>
 
-<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/">Grunt</a>, it's just a couple of seconds' waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.</p>
+<h3 id="legacy-or-namespace-browser-code-style">Legacy or namespace browser code style</h3>
+<p>Although it’s seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it’s actually easier to share your Node.js code under this circumstance.  </p>
 
-<h3>Legacy or namespace browser code style</h3>
+<p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.  </p>
 
-<p>Although it's seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it's actually easier to share your Node.js code under this circumstance.</p>
+<p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P  </p>
 
-<p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.</p>
+<p>So tell me what is yours.  </p>
 
-<p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P</p>
-
-<p>So tell me what is yours.</p>
 ]]></content>
   </entry>
   
@@ -117,75 +146,66 @@ return {
     <link href="http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/"/>
     <updated>2012-12-05T21:08:00+08:00</updated>
     <id>http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs</id>
-    <content type="html"><![CDATA[<p><strong>My ignorance</strong><br/>
-When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it's all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.</p>
+    <content type="html"><![CDATA[
+<p><strong>My ignorance</strong><br />
+When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it’s all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.  </p>
 
 <p>First, I dig into the <em>session.js</em> in Connect.  Around line 267:
-```javascript connect/lib/middleware/session.js</p>
+<code>javascript connect/lib/middleware/session.js
+    // proxy end() to commit the session
+    var end = res.end;
+    res.end = function(data, encoding){
+      res.end = end;
+      if (!req.session) return res.end(data, encoding);
+      debug('saving');
+      req.session.resetMaxAge();
+      req.session.save(function(){
+        debug('saved');
+        res.end(data, encoding);
+      });
+    };
+</code></p>
 
-<pre><code>// proxy end() to commit the session
-var end = res.end;
-res.end = function(data, encoding){
-  res.end = end;
-  if (!req.session) return res.end(data, encoding);
-  debug('saving');
-  req.session.resetMaxAge();
-  req.session.save(function(){
-    debug('saved');
-    res.end(data, encoding);
-  });
-};
-</code></pre>
+<p>After opening the debug feature in <a href="http://nodejs.org">Node</a>, I found that it’s never going into the callback of <em>session.save()</em>.  Hence, the ‘saved’ message is never printed in the console after ‘saving’ and the response is never ending.  </p>
 
-<p>```</p>
+<p>Why would this happened?  I kept tracing the code and found that <em>session.save()</em> in Connect is calling the <em>sessionStore.set()</em> method.  The <em>MongoStore.set()</em> method in <em>connect-mongodb.js</em> is just purely calling <em>collection.update()</em> and no much magic there.  However, it seems the <em>update()</em> method call has either no err and data coming back.  Is there something wrong with the MongoDB or the Collection?  </p>
 
-<p>After opening the debug feature in <a href="http://nodejs.org">Node</a>, I found that it's never going into the callback of <em>session.save()</em>.  Hence, the 'saved' message is never printed in the console after 'saving' and the response is never ending.</p>
-
-<p>Why would this happened?  I kept tracing the code and found that <em>session.save()</em> in Connect is calling the <em>sessionStore.set()</em> method.  The <em>MongoStore.set()</em> method in <em>connect-mongodb.js</em> is just purely calling <em>collection.update()</em> and no much magic there.  However, it seems the <em>update()</em> method call has either no err and data coming back.  Is there something wrong with the MongoDB or the Collection?</p>
-
-<p>MongoDB log doesn't seems to have any query or update action recorded and I just found that there are 10 connections started every time I started my app, but I remembered there were 5 connections (default pool size) before (Actually, I haven't noticed that this is the phenomenon of the problem I have at that time yet).</p>
+<p>MongoDB log doesn’t seems to have any query or update action recorded and I just found that there are 10 connections started every time I started my app, but I remembered there were 5 connections (default pool size) before (Actually, I haven’t noticed that this is the phenomenon of the problem I have at that time yet).  </p>
 
 <p>Without any clue, I checked the initialization of the MongoStore and find below code:
-```javascript</p>
-
-<pre><code>if (server_config.isConnected()) {
-  authenticateAndGetCollection(callback);
-} else {
-  server_config.connect(db, function (err) {
-    if (err) callback(Error("Error connecting (" + (err instanceof Error ? err.message : err) + ")"));
+<code>javascript
+    if (server_config.isConnected()) {
       authenticateAndGetCollection(callback);
-    });
-}
-</code></pre>
-
-<p>```</p>
+    } else {
+      server_config.connect(db, function (err) {
+        if (err) callback(Error("Error connecting (" + (err instanceof Error ? err.message : err) + ")"));
+          authenticateAndGetCollection(callback);
+        });
+    }
+</code></p>
 
 <p>It turns out that the flow goes into <em>server_config.connect()</em> again.  But why?  DB should be initialized in below code which is intended to encapsulate all DB operation.
-```javascript DbManager.js</p>
+```javascript DbManager.js
+    DbManager = (function() {
+      var db = new Db(‘tyt’, new Server(‘127.0.0.1’, 27017, {auto_reconnect: true}, {}), {safe: true});
+      db.open(function(){});</p>
 
-<pre><code>DbManager = (function() {
-  var db = new Db('tyt', new Server('127.0.0.1', 27017, {auto_reconnect: true}, {}), {safe: true});
-  db.open(function(){});
-
-  return {
+<pre><code>  return {
     getDb: function() {
         return db;
     }
   }
 })();
 
-exports.DbManager = DbManager;
+exports.DbManager = DbManager; ```
 </code></pre>
 
-<p>```</p>
+<p>```javascript In my node app.js
+    var express = require(‘express’)
+      , DbManager = require(‘./db.js’).DbManager
+      , mongoStore = require(‘connect-mongodb’);</p>
 
-<p>```javascript In my node app.js</p>
-
-<pre><code>var express = require('express')
-  , DbManager = require('./db.js').DbManager
-  , mongoStore = require('connect-mongodb');
-
-var app = module.exports = express();
+<pre><code>var app = module.exports = express();
 
 // Configuration
 app.configure(function(){
@@ -195,105 +215,91 @@ app.configure(function(){
       cookie: {secure: false, maxAge: 300000},
       store: new mongoStore({db: DbManager.getDb()})
   }));
-});
+}); ```
 </code></pre>
 
-<p>```</p>
+<p>If you are familiar with Node, you may have already noticed what I haven’t done right here.  I am assuming the DB should be connected and ready for use already as I have called <em>db.open()</em> during DbManager’s construction.  However, Async is the most importance concept in Node, <em>db.open()</em> takes my callback will immediately return and it doesn’t guarantee it’s opened already.  If I change to below code, problem solved.  </p>
 
-<p>If you are familiar with Node, you may have already noticed what I haven't done right here.  I am assuming the DB should be connected and ready for use already as I have called <em>db.open()</em> during DbManager's construction.  However, Async is the most importance concept in Node, <em>db.open()</em> takes my callback will immediately return and it doesn't guarantee it's opened already.  If I change to below code, problem solved.</p>
+<p><code>javascript
+    var db = DbManager.getDb();
+    db.open(function(err, db) {
+      if (db) {
+        app.use(express.session({
+          secret: 'kenspirit',
+          key: 'tt.sid',
+          cookie: {secure: false, maxAge: 300000},
+          store: new mongoStore({db: db})
+        }));
+       }
+    });
+</code></p>
 
-<p>```javascript</p>
-
-<pre><code>var db = DbManager.getDb();
-db.open(function(err, db) {
-  if (db) {
-    app.use(express.session({
-      secret: 'kenspirit',
-      key: 'tt.sid',
-      cookie: {secure: false, maxAge: 300000},
-      store: new mongoStore({db: db})
-    }));
-   }
-});
-</code></pre>
-
-<p>```</p>
-
-<p><strong>The root of not responding</strong><br/>
+<p><strong>The root of not responding</strong><br />
 I wonder where is the actual source to make the response kept waiting?  I have configured the <em>auto_reconnect</em> already.  Later I found that in mongodb:
 ```javascript mongodb/lib/mongodb/db.js
-  Db.prototype.open = function(callback) {</p>
+  Db.prototype.open = function(callback) {
+    …
+    self._state = ‘connecting’;
+    …
+    self.serverConfig.connect(self, {firstCall: true}, function(err, result) {
+      if(err != null) {
+        // Set that db has been closed
+        self.openCalled = false;
+        // Return error from connection
+        return callback(err, null);
+      }
+      // Set the status of the server
+      self._state = ‘connected’;
+      // Callback
+      return callback(null, self);
+    });
+    …
+  };</p>
 
-<pre><code>...
-self._state = 'connecting';
-...
-self.serverConfig.connect(self, {firstCall: true}, function(err, result) {
-  if(err != null) {
-    // Set that db has been closed
-    self.openCalled = false;
-    // Return error from connection
-    return callback(err, null);
-  }
-  // Set the status of the server
-  self._state = 'connected';
-  // Callback
-  return callback(null, self);
-});
-...
-</code></pre>
-
-<p>  };</p>
-
-<p>  Db.prototype._executeInsertCommand = function(db_command, options, callback) {</p>
-
-<pre><code>...
-// If the pool is not connected, attemp to reconnect to send the message
-if(self._state == 'connecting' &amp;&amp; this.serverConfig.autoReconnect) {
-  process.nextTick(function() {
-    self.commands.push({type:'insert', 'db_command':db_command, 'options':options, 'callback':callback});
-  })
-}
-...
-</code></pre>
-
-<p>  ;}
+<p>Db.prototype._executeInsertCommand = function(db_command, options, callback) {
+    …
+    // If the pool is not connected, attemp to reconnect to send the message
+    if(self._state == ‘connecting’ &amp;&amp; this.serverConfig.autoReconnect) {
+      process.nextTick(function() {
+        self.commands.push({type:’insert’, ‘db_command’:db_command, ‘options’:options, ‘callback’:callback});
+      })
+    }
+    …
+  ;}
 ```</p>
 
-<p>```javascript mongodb/lib/connection/server.js
-  Server.prototype.connect = function(dbInstance, options, callback) {</p>
+<p><code>javascript mongodb/lib/connection/server.js
+  Server.prototype.connect = function(dbInstance, options, callback) {
+    ...
+    // Force connection pool if there is one
+    if(server.connectionPool) server.connectionPool.stop();
+    ...
+    // Create connection Pool instance with the current BSON serializer
+    var connectionPool = new ConnectionPool(this.host, this.port, this.poolSize, dbInstance.bson,  this.socketOptions);
+    ...
+    // Set up on connect method
+    connectionPool.on("poolReady", function() {
+      // Create db command and Add the callback to the list of callbacks by the request id (mapping outgoing messages to correct callbacks)
+      var db_command = DbCommand.NcreateIsMasterCommand(dbInstance, dbInstance.databaseName);
+      // Check out a reader from the pool
+      var connection = connectionPool.checkoutConnection();
+      // Set server state to connEcted
+      server._serverState = 'connected';
+      // dbInstance._state = 'connected';  If I add this line here, even if my code doesn't do any change, it works.
+      ...
+    });
+  };
+</code></p>
 
-<pre><code>...
-// Force connection pool if there is one
-if(server.connectionPool) server.connectionPool.stop();
-...
-// Create connection Pool instance with the current BSON serializer
-var connectionPool = new ConnectionPool(this.host, this.port, this.poolSize, dbInstance.bson,  this.socketOptions);
-...
-// Set up on connect method
-connectionPool.on("poolReady", function() {
-  // Create db command and Add the callback to the list of callbacks by the request id (mapping outgoing messages to correct callbacks)
-  var db_command = DbCommand.NcreateIsMasterCommand(dbInstance, dbInstance.databaseName);
-  // Check out a reader from the pool
-  var connection = connectionPool.checkoutConnection();
-  // Set server state to connEcted
-  server._serverState = 'connected';
-  // dbInstance._state = 'connected';  If I add this line here, even if my code doesn't do any change, it works.
-  ...
-});
-</code></pre>
+<p>Finally, the root cause is found.  Normally, when <em>db.open()</em> is called, it sets its <em>_state = ‘connecting’</em>, and it then will call <em>server.connect()</em> to create connection pool and in the callback, it sets its <em>_state = ‘connected’</em> again.  However, my case is that the second call <em>server.connect()</em> in MongoStore.js first make the first connection pool stops and then creates a new connection pool again(This should be where makes the mongo db log has 10 connections opened).  Somehow, the callback in normal flow cannot be executed so that <em>db._state</em> has not been set to ‘connected’.  What is more, the callback set in <em>MongoStore.js</em> doesn’t set the <em>db._state</em> to ‘connected’.  The <em>db._state</em> is remained in ‘connecting’ forever which makes my update command keep pushing to its commands stack.</p>
 
-<p>  };
-```</p>
+<p><strong>Most appropriate way to initialize MongoDB and its connections in Node.js</strong><br />
+I began to wonder what is the “most appropriate way” to initialize MongoDB and manage its connections and googled around.  </p>
 
-<p>Finally, the root cause is found.  Normally, when <em>db.open()</em> is called, it sets its <em>_state = 'connecting'</em>, and it then will call <em>server.connect()</em> to create connection pool and in the callback, it sets its <em>_state = 'connected'</em> again.  However, my case is that the second call <em>server.connect()</em> in MongoStore.js first make the first connection pool stops and then creates a new connection pool again(This should be where makes the mongo db log has 10 connections opened).  Somehow, the callback in normal flow cannot be executed so that <em>db._state</em> has not been set to 'connected'.  What is more, the callback set in <em>MongoStore.js</em> doesn't set the <em>db._state</em> to 'connected'.  The <em>db._state</em> is remained in 'connecting' forever which makes my update command keep pushing to its commands stack.</p>
+<p>At first, I found a similar question asked in <a href="http://stackoverflow.com/questions/10656574/how-to-manage-mongodb-connections-in-a-nodejs-webapp">StackOverFlow</a>.<br />
+However, the reply doesn’t seem to be reasonable.  It recommands opening a new connection (actually, a DB and Connection Pool there) per request.  And it said it’s due to MongoDB is asynchronous.  It’s pretty confusing and the asynchronous mechanism in Node should be achieved by callback instead of creating new connection per request.  If so, what is the point of using pool then?  This approach should be more slow.</p>
 
-<p><strong>Most appropriate way to initialize MongoDB and its connections in Node.js</strong><br/>
-I began to wonder what is the "most appropriate way" to initialize MongoDB and manage its connections and googled around.</p>
-
-<p>At first, I found a similar question asked in <a href="http://stackoverflow.com/questions/10656574/how-to-manage-mongodb-connections-in-a-nodejs-webapp">StackOverFlow</a>.<br/>
-However, the reply doesn't seem to be reasonable.  It recommands opening a new connection (actually, a DB and Connection Pool there) per request.  And it said it's due to MongoDB is asynchronous.  It's pretty confusing and the asynchronous mechanism in Node should be achieved by callback instead of creating new connection per request.  If so, what is the point of using pool then?  This approach should be more slow.</p>
-
-<p>Later I found out a reply from the author of node-mongodb-native in <a href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated "DO NOT call open on each request.".</p>
+<p>Later I found out a reply from the author of node-mongodb-native in <a href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated “DO NOT call open on each request.”.  </p>
 
 <p>I believe only opening MongoDB once with appropriate pool size and initialize node application in the <em>db.open()</em> callback should be the right way to go.</p>
 ]]></content>
@@ -306,71 +312,65 @@ However, the reply doesn't seem to be reasonable.  It recommands opening a new c
     <id>http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration</id>
     <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 
-<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
+<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error “Class not found: File” if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
 
-<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project's build management.</p>
+<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project’s build management.</p>
 
-<p>Let's see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
+<p>Let’s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
 
-<p>```xml</p>
+<p><code>xml
+    &lt;plugin&gt;
+        &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
+        &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.2.0.0&lt;/version&gt;
+        &lt;extensions&gt;true&lt;/extensions&gt;
+        &lt;executions&gt;
+            &lt;execution&gt;
+                &lt;goals&gt;
+                  &lt;goal&gt;test&lt;/goal&gt;
+                &lt;/goals&gt;
+            &lt;/execution&gt;
+        &lt;/executions&gt;
+        &lt;configuration&gt;
+    	&lt;preloadSources&gt;
+    	    &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
+    	&lt;/preloadSources&gt;
+    	&lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
+    	&lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
+    	&lt;sourceIncludes&gt;
+                &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
+    	    &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    	&lt;/sourceIncludes&gt;
+    	&lt;specIncludes&gt;
+    	    &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    	&lt;/specIncludes&gt;
+        &lt;/configuration&gt;
+    &lt;/plugin&gt;
+</code></p>
 
-<pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
-    &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0.0&lt;/version&gt;
-    &lt;extensions&gt;true&lt;/extensions&gt;
-    &lt;executions&gt;
-        &lt;execution&gt;
-            &lt;goals&gt;
-              &lt;goal&gt;test&lt;/goal&gt;
-            &lt;/goals&gt;
-        &lt;/execution&gt;
-    &lt;/executions&gt;
-    &lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-            &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
-        &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/sourceIncludes&gt;
-    &lt;specIncludes&gt;
-        &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/specIncludes&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-</code></pre>
+<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type “mvn test” in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
 
-<p>```</p>
+<p>```bash
+    [INFO] Executing Jasmine Specs
+    ——————————————————-
+     J A S M I N E   S P E C S
+    ——————————————————-
+    [INFO]
+    Test Suite Name 1
+      Spec 1
+      Spec 2</p>
 
-<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type "mvn test" in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
-
-<p>```bash</p>
-
-<pre><code>[INFO] Executing Jasmine Specs
--------------------------------------------------------
- J A S M I N E   S P E C S
--------------------------------------------------------
-[INFO]
-Test Suite Name 1
-  Spec 1
-  Spec 2
-
-Test Suite Name 2
+<pre><code>Test Suite Name 2
   Spec 3
 
-Results: 3 specs, 0 failures
+Results: 3 specs, 0 failures ```
 </code></pre>
-
-<p>```</p>
 
 <p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
 
 <p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
 
-<p>OK, now preparation for Unit Test is done.  Let's see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
+<p>OK, now preparation for Unit Test is done.  Let’s see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
 ]]></content>
   </entry>
   

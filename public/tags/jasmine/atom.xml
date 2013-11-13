@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Jasmine | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/jasmine/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-10-13T15:01:45+08:00</updated>
+  <updated>2013-11-13T08:35:37+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -18,22 +18,22 @@
     <link href="http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
     <updated>2013-09-24T06:24:00+08:00</updated>
     <id>http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
-    <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog's visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:</p>
+    <content type="html"><![CDATA[
+<p>Today I just wander around Google Analytics to check my blog’s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:  </p>
 
 <ol>
-<li>Total Visits <strong>616</strong></li>
-<li>Unique Visitors: <strong>555</strong></li>
-<li>Pageviews: <strong>793</strong></li>
-<li>Pages / visit: <strong>1.29</strong></li>
-<li>% New Visits: <strong>88.31%</strong></li>
+  <li>Total Visits <strong>616</strong>  </li>
+  <li>Unique Visitors: <strong>555</strong>  </li>
+  <li>Pageviews: <strong>793</strong>  </li>
+  <li>Pages / visit: <strong>1.29</strong>  </li>
+  <li>% New Visits: <strong>88.31%</strong>  </li>
 </ol>
 
+<p>Thanks to everyone who visited my blogs and made all those suggestive comments, such as Da.  I will strive to write more valuable articles to keep my knowledge and help others.  Hopefully, the return visits can grow more.  </p>
 
-<p>Thanks to everyone who visited my blogs and made all those suggestive comments, such as Da.  I will strive to write more valuable articles to keep my knowledge and help others.  Hopefully, the return visits can grow more.</p>
+<p>I happened to found that This particular <a href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">article</a> about <a href="http://angularjs.org">AngularJS</a> <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> brought me <strong>215</strong> visits.  I think that should be due to a patch I submitted to AngularJS in <a href="https://github.com">Github</a>.  How valuable for that patch!!  I will try to contribute more to the opensource.  </p>
 
-<p>I happened to found that This particular <a href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">article</a> about <a href="http://angularjs.org">AngularJS</a> <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> brought me <strong>215</strong> visits.  I think that should be due to a patch I submitted to AngularJS in <a href="https://github.com">Github</a>.  How valuable for that patch!!  I will try to contribute more to the opensource.</p>
-
-<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks too.</p>
+<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks too.  </p>
 
 <p>Do not ask but give.  You will earn more.  Thanks guys.</p>
 ]]></content>
@@ -44,77 +44,72 @@
     <link href="http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
     <updated>2013-06-08T22:17:00+08:00</updated>
     <id>http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
-    <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it's pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
+    <content type="html"><![CDATA[
+<p>When we are writing Unit Test for AngularJS Controller or Service, it’s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.  </p>
 
-<p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>
+<p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.  </p>
 
-<blockquote><p><strong>expect(method, url, data, headers)</strong><br/>
+<blockquote>
+  <p><strong>expect(method, url, data, headers)</strong><br />
 Creates a new request expectation.</p>
+</blockquote>
 
-<p>Parameters<br/>
-* method – {string} – HTTP method.<br/>
-* url – {string|RegExp} – HTTP url.<br/>
-* data(optional) – {(string|RegExp)=} – HTTP request body.</p></blockquote>
+<blockquote>
+  <p>Parameters<br />
+* method – {string} – HTTP method.<br />
+* url – {string|RegExp} – HTTP url.<br />
+* data(optional) – {(string|RegExp)=} – HTTP request body.</p>
+</blockquote>
 
-<p>So normally, below simple case is working as expected:</p>
-
-<p>```javascript</p>
-
-<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', 'hello').respond(200, 'Done');
-$resource('http://localhost/timeEntry/').save('hello');
-$httpBackend.flush();
-
-$httpBackend.expect('POST', 'http://localhost/timeEntry', /te/g).respond(200, 'Done');
-$resource('http://localhost/timeEntry/').save('test');
-$httpBackend.flush();
-</code></pre>
-
-<p>```</p>
-
-<p>However, in real application, the data posted to server is normally in JSON format.  How do we verify JSON data then?  Actually, if we look into the source of the <em>angular-mocks.js</em>, it supports JSON data too although it's not documented.</p>
+<p>So normally, below simple case is working as expected:  </p>
 
 <p>```javascript
-  this.matchData = function(d) {</p>
+    $httpBackend.expect(‘POST’, ‘http://localhost/timeEntry’, ‘hello’).respond(200, ‘Done’);
+    $resource(‘http://localhost/timeEntry/’).save(‘hello’);
+    $httpBackend.flush();</p>
 
-<pre><code>if (angular.isUndefined(data)) return true;
-if (data &amp;&amp; angular.isFunction(data.test)) return data.test(d);
-if (data &amp;&amp; !angular.isString(data)) return angular.toJson(data) == d;
-return data == d;
+<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', /te/g).respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save('test');
+$httpBackend.flush(); ```
 </code></pre>
 
-<p>  };
-```</p>
+<p>However, in real application, the data posted to server is normally in JSON format.  How do we verify JSON data then?  Actually, if we look into the source of the <em>angular-mocks.js</em>, it supports JSON data too although it’s not documented.  </p>
 
-<p>So below sample also works.</p>
+<p><code>javascript
+  this.matchData = function(d) {
+    if (angular.isUndefined(data)) return true;
+    if (data &amp;&amp; angular.isFunction(data.test)) return data.test(d);
+    if (data &amp;&amp; !angular.isString(data)) return angular.toJson(data) == d;
+    return data == d;
+  };
+</code></p>
 
-<p>```javascript</p>
+<p>So below sample also works.  </p>
 
-<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', {firstName: 'Ken', lastName: 'Chen'}).respond(200, 'Done');
-$resource('http://localhost/timeEntry/').save({firstName: 'Ken', lastName: 'Chen'});
-$httpBackend.flush();
-</code></pre>
+<p><code>javascript
+    $httpBackend.expect('POST', 'http://localhost/timeEntry', {firstName: 'Ken', lastName: 'Chen'}).respond(200, 'Done');
+    $resource('http://localhost/timeEntry/').save({firstName: 'Ken', lastName: 'Chen'});
+    $httpBackend.flush();
+</code></p>
 
-<p>```</p>
+<p>As we see, the JSON data validation requires the JSON data posted to be exactly the same as the expect value provided.  How if the JSON data posted is different on each posting, say guid or timestamp field is contained, and we want to verify whether the JSON data is valid based on our special valiation logic?  </p>
 
-<p>As we see, the JSON data validation requires the JSON data posted to be exactly the same as the expect value provided.  How if the JSON data posted is different on each posting, say guid or timestamp field is contained, and we want to verify whether the JSON data is valid based on our special valiation logic?</p>
+<p>Here is the hack to make AngularJS take our special validation logic.  </p>
 
-<p>Here is the hack to make AngularJS take our special validation logic.</p>
+<p>```javascript
+    var Validator = (function() {
+        return {
+            hasMinimumFields: function(entry) {
+                return StringUtil.isNotBlank(entry.id) &amp;&amp; StringUtil.isNotBlank(entry.desc) &amp;&amp;
+                    StringUtil.isNotBlank(entry.lastUpdateOn) &amp;&amp; StringUtil.isNotBlank(entry.status);
+            },
+            isNewEntry: function(entry) {
+                return this.hasMinimumFields(entry) &amp;&amp; entry.status === ‘P’;
+            }
+        };
+    })();</p>
 
-<p>```javascript</p>
-
-<pre><code>var Validator = (function() {
-    return {
-        hasMinimumFields: function(entry) {
-            return StringUtil.isNotBlank(entry.id) &amp;&amp; StringUtil.isNotBlank(entry.desc) &amp;&amp;
-                StringUtil.isNotBlank(entry.lastUpdateOn) &amp;&amp; StringUtil.isNotBlank(entry.status);
-        },
-        isNewEntry: function(entry) {
-            return this.hasMinimumFields(entry) &amp;&amp; entry.status === 'P';
-        }
-    };
-})();
-
-$scope.desc = 'Hello there';
+<pre><code>$scope.desc = 'Hello there';
 
 var data = {
     test: function(data) {
@@ -124,60 +119,49 @@ var data = {
 };
 $httpBackend.expect('POST', 'http://localhost/timeEntry', data).respond(200, 'Done');
 $scope.saveEntry(); // Let's assume this method will post the data with model $scope.desc
-$httpBackend.flush();
+$httpBackend.flush(); ```
 </code></pre>
 
-<p>```</p>
+<p>The hacking as you see is to take advantage of the <em>test</em> method which the <em>RegExp</em> has and AngularJS uses for data matching.  But when the data is not posted as expected, the Unit Test fails with below message:  </p>
 
-<p>The hacking as you see is to take advantage of the <em>test</em> method which the <em>RegExp</em> has and AngularJS uses for data matching.  But when the data is not posted as expected, the Unit Test fails with below message:</p>
+<p><code>javascript
+    Chrome 27.0 (Linux) Unit: Controllers Test EntryCtrl should start entry in correct format if only entry desc is filled. FAILED
+    Error: Expected POST http://localhost/timeEntry with different data
+    EXPECTED: {}
+    GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Unit Test","id":"3849ae1a-4b9c-40be-baa0-60eeaf3af430","lastUpdateOn":"2013/06/08T13:24:44.104+0000"}
+</code></p>
 
-<p>```javascript</p>
+<p>This error message is not quite developer friendly and it doesn’t tell you much about why it failed at first glance.  However, if we make the test data contain the JSON value too, the expect message would be more meaningful.  </p>
 
-<pre><code>Chrome 27.0 (Linux) Unit: Controllers Test EntryCtrl should start entry in correct format if only entry desc is filled. FAILED
-Error: Expected POST http://localhost/timeEntry with different data
-EXPECTED: {}
-GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Unit Test","id":"3849ae1a-4b9c-40be-baa0-60eeaf3af430","lastUpdateOn":"2013/06/08T13:24:44.104+0000"}
-</code></pre>
-
-<p>```</p>
-
-<p>This error message is not quite developer friendly and it doesn't tell you much about why it failed at first glance.  However, if we make the test data contain the JSON value too, the expect message would be more meaningful.</p>
-
-<p>```javascript</p>
-
-<pre><code>var data = {
-    desc: $scope.desc,
-    status: 'P',
-    id: 'SHOULD NOT BLANK',
-    lastUpdateOn: 'SHOULD NOT BLANK',
-    test: function(data) {
-        var entry = angular.fromJson(data);
-        return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
-    }
-};
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    var data = {
+        desc: $scope.desc,
+        status: 'P',
+        id: 'SHOULD NOT BLANK',
+        lastUpdateOn: 'SHOULD NOT BLANK',
+        test: function(data) {
+            var entry = angular.fromJson(data);
+            return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+        }
+    };
+</code></p>
 
 <p><code>javascript
 EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
 </code></p>
 
-<p><em>[Edited on Aug 09th 2013]</em>: After AngularJS accepted my <a href="https://github.com/angular/angular.js/pull/2981">pull request</a> to support Function as validation data last week, we don't need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function's <em>toString()</em> method to give more expressive error message in a cleaner way.</p>
+<p><em>[Edited on Aug 09th 2013]</em>: After AngularJS accepted my <a href="https://github.com/angular/angular.js/pull/2981">pull request</a> to support Function as validation data last week, we don’t need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function’s <em>toString()</em> method to give more expressive error message in a cleaner way.  </p>
 
-<p>```javascript</p>
-
-<pre><code>var data = function(data) {
-    var entry = angular.fromJson(data);
-    return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
-};
-data.toString = function() {
-    return 'The status of the new entry should be "P", desc should be "' + $scope.desc +
-        '" and its id &amp; lastUpdateOn should not be blank.';
-};
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    var data = function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    };
+    data.toString = function() {
+        return 'The status of the new entry should be "P", desc should be "' + $scope.desc +
+            '" and its id &amp; lastUpdateOn should not be blank.';
+    };
+</code></p>
 
 <p><code>javascript
 EXPECTED: The status of the new entry should be "P", desc should be "First Unit Test" and its id &amp; lastUpdateOn should not be blank.
@@ -200,13 +184,12 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
 
 <p><strong>How real production code might look like if the application is built entirely by ExtJS?</strong></p>
 
-<p>```javascript</p>
+<p>```javascript
+    xxx.UiImpl = Ext.extend(xxx.Ui, {
+        initComponent: function() {
+            xxx.UiImpl.superclass.initComponent.call(this);</p>
 
-<pre><code>xxx.UiImpl = Ext.extend(xxx.Ui, {
-    initComponent: function() {
-        xxx.UiImpl.superclass.initComponent.call(this);
-
-        this.emptyNameWarningMsg = 'Name is empty!';
+<pre><code>        this.emptyNameWarningMsg = 'Name is empty!';
         this.duplicateNameWarningMsg = 'Name has been in used!';
         this.nameField = Ext.getCmp('xxx.name');
 
@@ -241,10 +224,8 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
             scope: this
         });
     }
-});
+}); ```
 </code></pre>
-
-<p>```</p>
 
 <p>Above is a simple UI implementation class which extends from an UI class.  You can safely guess that this UI class simply has one name field which is bound with a Blur Event.  The Blur Event handler triggers an Ajax calls to validate whether the typed-in name is empty or duplicated within the system.  Pretty straightforward, right?</p>
 
@@ -253,60 +234,44 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
 <p>Here are some examples:</p>
 
 <ol>
-<li>Contract between user and our system (blur event).  I would expect there would some code like this in my Jasmine Spec:</li>
+  <li>Contract between user and our system (blur event).  I would expect there would some code like this in my Jasmine Spec:</li>
 </ol>
 
-
-<p>```javascript</p>
-
-<pre><code>oUI.nameField.fireEvent('blur');
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    oUI.nameField.fireEvent('blur');
+</code></p>
 
 <ol>
-<li>Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the <em>responseText</em> from Ajax call to be not empty, the <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em>.  Say, the response can be stub as:</li>
+  <li>Contract between backend data structure and frontend handling on Ajax call.  I am expecting if I set the <em>responseText</em> from Ajax call to be not empty, the <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em>.  Say, the response can be stub as:</li>
 </ol>
 
-
-<p>```javascript</p>
-
-<pre><code>Ext.lib.Ajax.response({
-    status: 200,
-    responseText: 'Duplicate'
-});
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    Ext.lib.Ajax.response({
+        status: 200,
+        responseText: 'Duplicate'
+    });
+</code></p>
 
 <ol>
-<li>Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em> or <em>oUI.emptyNameWarningMsg</em> under different situations<strong>.</strong> Sample Spec code might be:</li>
+  <li>Contract between implementation logic and UI behavior experienced by user.  The point mentioned above that <em>nameField</em> in UI should be marked as invalid and show the <em>oUI.duplicateNameWarningMsg</em> or <em>oUI.emptyNameWarningMsg</em> under different situations<strong>.</strong> Sample Spec code might be:</li>
 </ol>
 
+<p>```javascript
+    oUI.nameField.fireEvent(‘blur’);
+    expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);</p>
 
-<p>```javascript</p>
-
-<pre><code>oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.emptyNameWarningMsg);
-
-oUI.nameField.setValue('Ken');
+<pre><code>oUI.nameField.setValue('Ken');
 oUI.nameField.fireEvent('blur');
-expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
+expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg); ```
 </code></pre>
-
-<p>```</p>
 
 <ol>
-<li>Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it's very difficult to be aware of.  Sample Spec code might be:</li>
+  <li>Other Contracts (e.g. Hardcode global variable or Element Id).  Why this is needed?  Because this where most of the change happens but it’s very difficult to be aware of.  Sample Spec code might be:</li>
 </ol>
 
-
-<p>```javascript</p>
-
-<pre><code>var oUI = Ext.getCmp('kentest');
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    var oUI = Ext.getCmp('kentest');
+</code></p>
 
 <p><strong>The Test Spec is already in mind but how can I use it to test against the production code?  </strong></p>
 
@@ -318,40 +283,33 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
 
 <p>Configuration in POM.xml</p>
 
-<p>```xml</p>
-
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/mock-ajax.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/global.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-...
-&lt;configuration&gt;
-</code></pre>
-
-<p>```</p>
+<p><code>xml
+    &lt;configuration&gt;
+        &lt;preloadSources&gt;
+            &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
+            &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
+            &lt;source&gt;${project.basedir}/Resources/test/js/mock-ajax.js&lt;/source&gt;
+            &lt;source&gt;${project.basedir}/Resources/test/js/global.js&lt;/source&gt;
+        &lt;/preloadSources&gt;
+    ...
+    &lt;configuration&gt;
+</code></p>
 
 <p>Code in file globalTestStub.js change to be:</p>
 
-<p>```javascript</p>
-
-<pre><code>jasmine.Ajax.installMock();
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    jasmine.Ajax.installMock();
+</code></p>
 
 <p>How to write the Test Spec?</p>
 
-<p>```javascript</p>
+<p>```javascript
+    describe(‘Test Maintenance UI’, function() {
+        beforeEach(function() {
+            jasmine.Ajax.useMock();
+        });</p>
 
-<pre><code>describe('Test Maintenance UI', function() {
-    beforeEach(function() {
-        jasmine.Ajax.useMock();
-    });
-
-    it('Maintenance UI should be initialized successfully', function() {
+<pre><code>    it('Maintenance UI should be initialized successfully', function() {
         var oUI = new xxx.UI({});
         expect(Ext.getCmp('kentest')).toBeTruthy();
     });
@@ -370,10 +328,8 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
         oUI.nameField.fireEvent('blur');
         expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
     });
-});
+}); ```
 </code></pre>
-
-<p>```</p>
 
 <p>Can you see how all above works now?  Please take it a trial and share your comment with me.</p>
 ]]></content>
@@ -386,100 +342,118 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
     <id>http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
     <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
 
-<p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it's difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
+<p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it’s difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
 
 <p>Assuming I need to introduce JS Unit Test to a system without any Unit Test covered, what should the general JS Unit Test principles to be firstly considered?  My opinions are:</p>
 
-<blockquote><ol>
-<li><p>To test external contract against each ExtJS Component or JS function.  The external contract is where changes often take place.</p></li>
-<li><p>To test business logic (data calculation/validation, etc.) because this is where the real value in the business.</p></li>
-<li><p>Not to test the UI behavior (Window popup, Panel/Tree collapse/expand, Drap/Drop, Animation, etc.).  It's quite difficult to mimic and verify the UI behavior because you have to twist your mind somehow to "tranform" the UI behavior to manual control the "movement" and then verify it.  It's just writing even more UI logic to control other UI logic.</p></li>
-<li><p>Not to test all Ajax requests because it's slow and actually should be considered as Integration Test.  It's better to mock the interface data to test the Ajax caller &amp; response handler.</p></li>
-</ol>
+<blockquote>
+
 </blockquote>
 
-<p>Let's see some real Unit Test example.  (Here some assumptions are made on how the components are generated and used in System: UI are completely built by ExtJS Designer.  It may not be the best practice, but it's the way I think the real practice can be applied.)</p>
+<blockquote>
+
+</blockquote>
+
+<blockquote>
+  <ol>
+    <li>To test external contract against each ExtJS Component or JS function.  The external contract is where changes often take place.</li>
+  </ol>
+
+</blockquote>
+
+<blockquote>
+  <ol>
+    <li>To test business logic (data calculation/validation, etc.) because this is where the real value in the business.</li>
+  </ol>
+
+</blockquote>
+
+<blockquote>
+  <ol>
+    <li>Not to test the UI behavior (Window popup, Panel/Tree collapse/expand, Drap/Drop, Animation, etc.).  It’s quite difficult to mimic and verify the UI behavior because you have to twist your mind somehow to “tranform” the UI behavior to manual control the “movement” and then verify it.  It’s just writing even more UI logic to control other UI logic.</li>
+  </ol>
+
+</blockquote>
+
+<blockquote>
+  <ol>
+    <li>Not to test all Ajax requests because it’s slow and actually should be considered as Integration Test.  It’s better to mock the interface data to test the Ajax caller &amp; response handler.</li>
+  </ol>
+
+</blockquote>
+
+<p>Let’s see some real Unit Test example.  (Here some assumptions are made on how the components are generated and used in System: UI are completely built by ExtJS Designer.  It may not be the best practice, but it’s the way I think the real practice can be applied.)</p>
 
 <p><strong>Ext.data.Store</strong></p>
 
-<p>You might first wonder why Unit Test need to be done for Store component?  I got to tell you that I have met many bugs that are introduced because of fields' definition changed.  This is the major contract bound the Store with the caller.</p>
+<p>You might first wonder why Unit Test need to be done for Store component?  I got to tell you that I have met many bugs that are introduced because of fields’ definition changed.  This is the major contract bound the Store with the caller.</p>
 
 <p>Below is a typical xxx.Datastore.js file generated by Ext Designer.</p>
 
-<p>```javascript</p>
-
-<pre><code>Ext.ns('xxx');
-xxx.DataStore = Ext.extend(Ext.data.JsonStore, {
-    constructor: function(cfg) {
-        cfg = cfg || {};
-        xxx.DataStore.superclass.constructor.call(this, Ext.apply({
-            storeId: 'xxx.DataStore',
-            url: 'http://www.foo.com/stub',
-            root: 'data.rows',
-            totalProperty: 'data.totalCount',
-            autoLoad: true,
-            fields: [
-                {
-                    name: 'code'
-                },
-                {
-                    name: 'name'
-                }
-            ]
-        }, cfg));
-    }
-});
-new xxx.DataStore();
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    Ext.ns('xxx');
+    xxx.DataStore = Ext.extend(Ext.data.JsonStore, {
+        constructor: function(cfg) {
+            cfg = cfg || {};
+            xxx.DataStore.superclass.constructor.call(this, Ext.apply({
+                storeId: 'xxx.DataStore',
+                url: 'http://www.foo.com/stub',
+                root: 'data.rows',
+                totalProperty: 'data.totalCount',
+                autoLoad: true,
+                fields: [
+                    {
+                        name: 'code'
+                    },
+                    {
+                        name: 'name'
+                    }
+                ]
+            }, cfg));
+        }
+    });
+    new xxx.DataStore();
+</code></p>
 
 <p>How should we test it?  This is an autoLoad Store.  As a JS source file to be linked in for testing, I cannot use Jasmine spyOn to stub it.  That is because JS source file is loaded before Jasmine spyOn in Spec can ever be run.  The only thing I can think of is to override the Ext Ajax lib to not doing actual request call.</p>
 
 <p>Code in file globalTestStub.js to override the Ajax lib:</p>
 
-<p>```javascript</p>
-
-<pre><code>Ext.lib.Ajax.request = function() {
-  return {success: true};
-};
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    Ext.lib.Ajax.request = function() {
+      return {success: true};
+    };
+</code></p>
 
 <p>Configuration in POM.xml</p>
 
-<p>```xml</p>
-
-<pre><code>&lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
-        &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
-        &lt;source&gt;${project.basedir}/Resources/test/js/globalTestStub.js&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-        &lt;include&gt;xxx.DataStore.js&lt;/include&gt;
-...
-&lt;/configuration&gt;
-</code></pre>
-
-<p>```</p>
+<p><code>xml
+    &lt;configuration&gt;
+        &lt;preloadSources&gt;
+            &lt;source&gt;adapter/ext/ext-base-debug.js&lt;/source&gt;
+            &lt;source&gt;ext/ext-all-debug-w-comments.js&lt;/source&gt;
+            &lt;source&gt;${project.basedir}/Resources/test/js/globalTestStub.js&lt;/source&gt;
+        &lt;/preloadSources&gt;
+        &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
+        &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
+        &lt;sourceIncludes&gt;
+            &lt;include&gt;xxx.DataStore.js&lt;/include&gt;
+    ...
+    &lt;/configuration&gt;
+</code></p>
 
 <p>ExtJS source and the globalTestStub.js are included in <em>preloadSources</em> so that all Stub/Mock code required for Unit Test can be initialized correctly before other JS sources and Test Spec files without polluting real production code.</p>
 
 <p>How to write a Test Spec then?  Actually, there is no fixed way, but just a simple rule: to test the contract.</p>
 
-<p>```javascript</p>
+<p>```javascript
+    describe(‘xxx.Datastore’, function() {
+        it(‘should be able to initialized’, function() {
+            var oStore = Ext.StoreMgr.lookup(‘xxx.DataStore’);
+            expect(oStore).toBeTruthy();
+        });</p>
 
-<pre><code>describe('xxx.Datastore', function() {
-    it('should be able to initialized', function() {
-        var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
-        expect(oStore).toBeTruthy();
-    });
-
-    it('should load data correctly', function() {
+<pre><code>    it('should load data correctly', function() {
         var oStore = Ext.StoreMgr.lookup('xxx.DataStore');
         oStore.loadData({
             data: {
@@ -502,16 +476,14 @@ new xxx.DataStore();
         expect(oRecord.get('code')).toEqual('C1');
         expect(oRecord.get('name')).toEqual('N1');
     });
-});
+}); ```
 </code></pre>
-
-<p>```</p>
 
 <p>Unit Test for non-autoload Store would be similar but easier.</p>
 
 <p>Beside how the Test is written, I would like to draw your attention to how I wrote the description for the Suite and the Spec.  I am not sure whether I understood the <a href="http://dannorth.net/introducing-bdd/">Behavior Driven Development</a> comprehensively because I am still learning it.  However, I think this simple mind change helps me to think about how the behavior should be more than just simply how to write Test to meet coverage.  It can even helps us to review our design whether particular code belongs to the right place.</p>
 
-<p>Let's explore how Unit Test can be achieved more for ExtJS later.</p>
+<p>Let’s explore how Unit Test can be achieved more for ExtJS later.</p>
 ]]></content>
   </entry>
   
@@ -522,71 +494,65 @@ new xxx.DataStore();
     <id>http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration</id>
     <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 
-<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
+<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error “Class not found: File” if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
 
-<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project's build management.</p>
+<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project’s build management.</p>
 
-<p>Let's see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
+<p>Let’s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
 
-<p>```xml</p>
+<p><code>xml
+    &lt;plugin&gt;
+        &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
+        &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
+        &lt;version&gt;1.2.0.0&lt;/version&gt;
+        &lt;extensions&gt;true&lt;/extensions&gt;
+        &lt;executions&gt;
+            &lt;execution&gt;
+                &lt;goals&gt;
+                  &lt;goal&gt;test&lt;/goal&gt;
+                &lt;/goals&gt;
+            &lt;/execution&gt;
+        &lt;/executions&gt;
+        &lt;configuration&gt;
+    	&lt;preloadSources&gt;
+    	    &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
+    	&lt;/preloadSources&gt;
+    	&lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
+    	&lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
+    	&lt;sourceIncludes&gt;
+                &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
+    	    &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    	&lt;/sourceIncludes&gt;
+    	&lt;specIncludes&gt;
+    	    &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    	&lt;/specIncludes&gt;
+        &lt;/configuration&gt;
+    &lt;/plugin&gt;
+</code></p>
 
-<pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
-    &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0.0&lt;/version&gt;
-    &lt;extensions&gt;true&lt;/extensions&gt;
-    &lt;executions&gt;
-        &lt;execution&gt;
-            &lt;goals&gt;
-              &lt;goal&gt;test&lt;/goal&gt;
-            &lt;/goals&gt;
-        &lt;/execution&gt;
-    &lt;/executions&gt;
-    &lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-            &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
-        &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/sourceIncludes&gt;
-    &lt;specIncludes&gt;
-        &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/specIncludes&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-</code></pre>
+<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type “mvn test” in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
 
-<p>```</p>
+<p>```bash
+    [INFO] Executing Jasmine Specs
+    ——————————————————-
+     J A S M I N E   S P E C S
+    ——————————————————-
+    [INFO]
+    Test Suite Name 1
+      Spec 1
+      Spec 2</p>
 
-<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type "mvn test" in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
-
-<p>```bash</p>
-
-<pre><code>[INFO] Executing Jasmine Specs
--------------------------------------------------------
- J A S M I N E   S P E C S
--------------------------------------------------------
-[INFO]
-Test Suite Name 1
-  Spec 1
-  Spec 2
-
-Test Suite Name 2
+<pre><code>Test Suite Name 2
   Spec 3
 
-Results: 3 specs, 0 failures
+Results: 3 specs, 0 failures ```
 </code></pre>
-
-<p>```</p>
 
 <p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
 
 <p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
 
-<p>OK, now preparation for Unit Test is done.  Let's see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
+<p>OK, now preparation for Unit Test is done.  Let’s see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: i18n | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://kenspirit.github.io/tags/i18n/atom.xml" rel="self"/>
   <link href="http://kenspirit.github.io/"/>
-  <updated>2013-10-13T15:01:45+08:00</updated>
+  <updated>2013-11-13T08:35:37+08:00</updated>
   <id>http://kenspirit.github.io/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -18,24 +18,24 @@
     <link href="http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
     <updated>2013-08-29T20:16:00+08:00</updated>
     <id>http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
-    <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn't really help us a lot to do what we want basically for i18n, language change support of the web page content.</p>
+    <content type="html"><![CDATA[
+<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn’t really help us a lot to do what we want basically for i18n, language change support of the web page content.  </p>
 
-<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?</p>
+<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?  </p>
 
-<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven't done performance test for extremely large page yet.</p>
+<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven’t done performance test for extremely large page yet.  </p>
 
-<p>Let's see how it's done.</p>
+<p>Let’s see how it’s done.  </p>
 
-<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.</p>
+<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.  </p>
 
-<p>```javascript</p>
+<p>```javascript
+    factory(‘LocaleManager’, function($resource, $rootScope) {
+        var langs = {},
+            LocaleManager = $resource(‘/js/i18n/resources-locale_:lang.js’,
+                {port: ‘:3000’, lang: ‘en_US’});</p>
 
-<pre><code>factory('LocaleManager', function($resource, $rootScope) {
-    var langs = {},
-        LocaleManager = $resource('/js/i18n/resources-locale_:lang.js',
-            {port: ':3000', lang: 'en_US'});
-
-    LocaleManager.load = function(language) {
+<pre><code>    LocaleManager.load = function(language) {
         if (langs[language]) {
             if ($rootScope.language !== language) {
                 $rootScope.language = language;
@@ -60,23 +60,18 @@
     };
 
     return LocaleManager;
-})
+}) ```
 </code></pre>
 
-<p>```</p>
+<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.  </p>
 
-<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.</p>
+<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.  </p>
 
-<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.</p>
+<p>
+    {{ LocaleManager.getText(‘Login’, language) }}
+</p>
 
-<p></p>
-
-<pre><code>{{ LocaleManager.getText('Login', language) }}
-</code></pre>
-
-<p></p>
-
-<p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven't tried that yet and will give an update here once done.</p>
+<p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven’t tried that yet and will give an update here once done.</p>
 
 <p>Do you have experience on i18n in AngularJS?  Thoughts and comments are appreciated.</p>
 ]]></content>
@@ -93,118 +88,110 @@
 
 <p>ExtJS, JavaScript framework, provides numerous UI  components to build complex UI.</p>
 
-<p>In order to implement i18 in UI page purely built by ExtJS, it's inevitable to translate the title, label of the ExtJS components into proper language.  From my point of view, there should be two ways for that:</p>
+<p>In order to implement i18 in UI page purely built by ExtJS, it’s inevitable to translate the title, label of the ExtJS components into proper language.  From my point of view, there should be two ways for that:</p>
 
 <ol>
-<li><p>Use the translated text directly in the UI components during construction</p></li>
-<li><p>Use separate JS to replace the text before rendering, say in initComponent method or beforeRender event handler.</p></li>
+  <li>
+    <p>Use the translated text directly in the UI components during construction</p>
+  </li>
+  <li>
+    <p>Use separate JS to replace the text before rendering, say in initComponent method or beforeRender event handler.</p>
+  </li>
 </ol>
-
 
 <p>There are pros and cons for each approach:</p>
 
 <ol>
-<li><p>Approach #1 is easy, but injecting logic for i18n text translation into the UI components construction is just like adding event handler into the HTML directly and it makes the code for text translation spread all around the code building UI.</p></li>
-<li><p>Approach #2 separates the i18n implementation detail which makes it easier to change.  The benefit got from this can be easier prototyping, unit testing, and future enhancement if i18n implementation changed.</p></li>
+  <li>
+    <p>Approach #1 is easy, but injecting logic for i18n text translation into the UI components construction is just like adding event handler into the HTML directly and it makes the code for text translation spread all around the code building UI.</p>
+  </li>
+  <li>
+    <p>Approach #2 separates the i18n implementation detail which makes it easier to change.  The benefit got from this can be easier prototyping, unit testing, and future enhancement if i18n implementation changed.</p>
+  </li>
 </ol>
-
 
 <p>In order to avoid violation of separation of concern principle, I would like to choose approach #2.  If you agree with me, you can keep going.</p>
 
 <p><strong>How to use JAWR to implement i18n</strong></p>
 
 <p>Normally, i18n text file is built with property file (e.g. msg_en_UI.properties) in which an entry is represented as:
-```ini</p>
+<code>ini
+    msgkey=msgText in i18n
+</code>
+This kind of file is very common in JAVA and <a href="http://jawr.java.net">JAWR</a> can be used to interpret this kind of property file and built code for i18n.  It’s quite easy to setup JAWR and I am not going to brief it here.  In a word, if your i18n text entry built like this:</p>
 
-<pre><code>msgkey=msgText in i18n
-</code></pre>
-
-<p>```
-This kind of file is very common in JAVA and <a href="http://jawr.java.net">JAWR</a> can be used to interpret this kind of property file and built code for i18n.  It's quite easy to setup JAWR and I am not going to brief it here.  In a word, if your i18n text entry built like this:</p>
-
-<p>```ini</p>
-
-<pre><code>main.hello.world=Hello world!
-</code></pre>
-
-<p>```</p>
+<p><code>ini
+    main.hello.world=Hello world!
+</code></p>
 
 <p>Then you can get the translated text by:</p>
 
-<p>```javascript</p>
-
-<pre><code>messages.main.hello.world(); // Hello world!
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    messages.main.hello.world(); // Hello world!
+</code></p>
 
 <p>Actually, JAWR build the text to Javascript data structure (messages is default prefix) to make a function call to get the actual text (i18n is based on which property file loaded depending on your locale resolver).</p>
 
 <p>OK, till now, do you get the idea and like this kind of implementation?</p>
 
-<p>Personally, I don't quite like it.  Although the usage of data structure is to prevent polluting the Javascript namespace, directly mapping to data structure with the message key makes it hard to dynamically handle the text translation or even in batch operation.  Imagine the message key is the ID of the UI component, you have to use eval() function on "ID of UI component + ()" if you want a generic way.</p>
+<p>Personally, I don’t quite like it.  Although the usage of data structure is to prevent polluting the Javascript namespace, directly mapping to data structure with the message key makes it hard to dynamically handle the text translation or even in batch operation.  Imagine the message key is the ID of the UI component, you have to use eval() function on “ID of UI component + ()” if you want a generic way.</p>
 
 <p>Hence, I would rather have a Message Manager class having a function to return the translated message by passing in the message key.  If you agree with me again, keep follow.</p>
 
-<p>Luckily, I am able to do this because JAWR provides flexibility to use a customized message generator.  Let's see how to do it.  According to its doc about <a href="http://jawr.java.net/docs/messages_gen.html">message</a> and <a href="http://jawr.java.net/docs/generators.html">generators</a>, we need just need to do three things:</p>
+<p>Luckily, I am able to do this because JAWR provides flexibility to use a customized message generator.  Let’s see how to do it.  According to its doc about <a href="http://jawr.java.net/docs/messages_gen.html">message</a> and <a href="http://jawr.java.net/docs/generators.html">generators</a>, we need just need to do three things:</p>
 
 <ol>
-<li>Set below sample lines in jawr.properties file:</li>
+  <li>Set below sample lines in jawr.properties file:</li>
 </ol>
 
+<p>```ini
+    jawr.custom.generators=xxx.MyResourceBundleMessagesGenerator</p>
 
-<p>```ini</p>
-
-<pre><code>jawr.custom.generators=xxx.MyResourceBundleMessagesGenerator
-
-jawr.js.bundle.lib.mappings=**mymessages**:com.myapp.messages(mynamespace)
+<pre><code>jawr.js.bundle.lib.mappings=**mymessages**:com.myapp.messages(mynamespace) ```
 </code></pre>
 
-<p>```</p>
-
 <ol>
-<li><p>Build the customized generator.  How? The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.ResourceBundleMessagesGenerator</em> and overrides its <em>public Reader createResource(GeneratorContext context)</em> to use our own generator and overrides its <em>public String getMappingPrefix()</em> to return our own mapping <strong>mymessages</strong>.</p></li>
-<li><p>Build the customized creator.  How?  The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.message.MessageBundleScriptCreator</em> and overrides its <em>protected Reader doCreateScript(Properties props)</em> to write our own script generation code.</p></li>
+  <li>
+    <p>Build the customized generator.  How? The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.ResourceBundleMessagesGenerator</em> and overrides its <em>public Reader createResource(GeneratorContext context)</em> to use our own generator and overrides its <em>public String getMappingPrefix()</em> to return our own mapping <strong>mymessages</strong>.</p>
+  </li>
+  <li>
+    <p>Build the customized creator.  How?  The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.message.MessageBundleScriptCreator</em> and overrides its <em>protected Reader doCreateScript(Properties props)</em> to write our own script generation code.</p>
+  </li>
 </ol>
-
 
 <p>Below is the sample code in my <em>xxx.MyResourceBundleMessagesGenerator</em>:</p>
 
-<p>```java</p>
+<p>```java
+    @Override
+    public Reader createResource(GeneratorContext context) {
+      MyMessageBundleScriptCreator creator = new MyMessageBundleScriptCreator(context);
+      return creator.createScript(context.getCharset());
+    }</p>
 
 <pre><code>@Override
-public Reader createResource(GeneratorContext context) {
-  MyMessageBundleScriptCreator creator = new MyMessageBundleScriptCreator(context);
-  return creator.createScript(context.getCharset());
-}
-
-@Override
 public String getMappingPrefix() {
   return "mymessages";
-}
+} ```
 </code></pre>
-
-<p>```</p>
 
 <p>Below is the sample code in my <em>xxx.MyMessageBundleScriptCreator</em>:</p>
 
-<p>```java</p>
+<p>```java
+    private StringBuffer loadScriptTemplate() {
+      StringWriter sw = new StringWriter();
+      InputStream is = null;
+      try {
+        is = ClassLoaderResourceUtils.getResourceAsStream(“/xxx/messages.js”, this);
+        IOUtils.copy(is, sw);
+      } catch (IOException e) {
+        throw new BundlingProcessException(“Fail to load the message template. “, e);
+      } finally {
+        IOUtils.close(is);
+      }
+      return sw.getBuffer();
+    }</p>
 
-<pre><code>private StringBuffer loadScriptTemplate() {
-  StringWriter sw = new StringWriter();
-  InputStream is = null;
-  try {
-    is = ClassLoaderResourceUtils.getResourceAsStream("/xxx/messages.js", this);
-    IOUtils.copy(is, sw);
-  } catch (IOException e) {
-    throw new BundlingProcessException("Fail to load the message template. ", e);
-  } finally {
-    IOUtils.close(is);
-  }
-  return sw.getBuffer();
-}
-
-@Override
+<pre><code>@Override
 protected Reader doCreateScript(Properties props) {
   String script = loadScriptTemplate().toString();
   Set keys = props.stringPropertyNames();
@@ -221,58 +208,50 @@ protected Reader doCreateScript(Properties props) {
   script = script.replace("@namespace", RegexUtil.adaptReplacementToMatcher(this.namespace));
   script = script.replaceFirst("@messages", RegexUtil.adaptReplacementToMatcher(messages.toString()));
   return new StringReader(script);
-}
+} ```
 </code></pre>
 
-<p>```</p>
+<p>Finally, let’s see what is in my message.js:</p>
 
-<p>Finally, let's see what is in my message.js:</p>
-
-<p>```javascript</p>
-
-<pre><code>if (!window.MultilingualMessageMgr) {
-  window.MultilingualMessageMgr = (function(){
-    var msgMap = {};
-    return {
-      getMsg: function(namespace, msgKey) {
-        var argLen = arguments.length;
-        if (argLen &lt; 2) {
-          return null;
-        }
-        var msg = null;
-        if (argLen === 2) {
-          msg = msgMap[namespace][msgKey];
-        }
-        if (argLen &gt; 2) {
-          for (var i = 2; i &lt; argLen; i++) {
-            msg = msg.replace("{" + (i - 2) + "}", arguments[i]);
+<p><code>javascript
+    if (!window.MultilingualMessageMgr) {
+      window.MultilingualMessageMgr = (function(){
+        var msgMap = {};
+        return {
+          getMsg: function(namespace, msgKey) {
+            var argLen = arguments.length;
+            if (argLen &lt; 2) {
+              return null;
+            }
+            var msg = null;
+            if (argLen === 2) {
+              msg = msgMap[namespace][msgKey];
+            }
+            if (argLen &gt; 2) {
+              for (var i = 2; i &lt; argLen; i++) {
+                msg = msg.replace("{" + (i - 2) + "}", arguments[i]);
+              }
+            }
+            return msg;
+          },
+          putMsgs: function(namespace, msgObj) {
+            msgMap[namespace] = msgObj;
           }
-        }
-        return msg;
-      },
-      putMsgs: function(namespace, msgObj) {
-        msgMap[namespace] = msgObj;
-      }
-    };
-  })();
-}
-window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
-</code></pre>
-
-<p>```</p>
+        };
+      })();
+    }
+    window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
+</code></p>
 
 <p>Let me explain a bit on what the <em>MultilingualMessageMgr</em> does here.</p>
 
-<p>It's an object which is returned by anonymous function.  This object has a <em>getMsg</em> and <em>putMsgs</em> function.  Both of them is referring to an <em>msgMap</em> object in the anonymous function scope so that it cannot be accessed directly outside <em>MultilingualMessageMgr</em>.  The <em>getMsg</em> function takes at least two arguments including namespace and message key, any other parameters are treated some value to replace the placeholder in message.  The <em>getMsg</em> function puts the messages json object with namespace bound to it for retrieval later.</p>
+<p>It’s an object which is returned by anonymous function.  This object has a <em>getMsg</em> and <em>putMsgs</em> function.  Both of them is referring to an <em>msgMap</em> object in the anonymous function scope so that it cannot be accessed directly outside <em>MultilingualMessageMgr</em>.  The <em>getMsg</em> function takes at least two arguments including namespace and message key, any other parameters are treated some value to replace the placeholder in message.  The <em>getMsg</em> function puts the messages json object with namespace bound to it for retrieval later.</p>
 
 <p>With this <em>MultilingualMessageMgr,</em> multilingual message translation can be done by sample call like:</p>
 
-<p>```javascript</p>
-
-<pre><code>MultilingualMessageMgr.getMsg(namespace, msgKey);
-</code></pre>
-
-<p>```</p>
+<p><code>javascript
+    MultilingualMessageMgr.getMsg(namespace, msgKey);
+</code></p>
 
 <p>Now, centralizing i18n logic to dynamically replace all ExtJs UI components can be realized by building the property file with component id as message key and iterating all components to replace them.</p>
 
