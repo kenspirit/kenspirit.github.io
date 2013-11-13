@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: SPA | Thinking in Crowd / 鹄思乱想]]></title>
+  <link href="http://kenspirit.github.io/tags/spa/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-11-13T22:13:05+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
+  <author>
+    <name><![CDATA[鹄思乱想]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to support page content i18n in AngularJS]]></title>
+    <link href="http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
+    <updated>2013-08-29T20:16:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
+    <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn&rsquo;t really help us a lot to do what we want basically for i18n, language change support of the web page content.</p>
+
+<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?</p>
+
+<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven&rsquo;t done performance test for extremely large page yet.</p>
+
+<p>Let&rsquo;s see how it&rsquo;s done.</p>
+
+<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.</p>
+
+<p>```javascript</p>
+
+<pre><code>factory('LocaleManager', function($resource, $rootScope) {
+    var langs = {},
+        LocaleManager = $resource('/js/i18n/resources-locale_:lang.js',
+            {port: ':3000', lang: 'en_US'});
+
+    LocaleManager.load = function(language) {
+        if (langs[language]) {
+            if ($rootScope.language !== language) {
+                $rootScope.language = language;
+            }
+            return;
+        }
+
+        return LocaleManager.get({lang: language}, function(data) {
+            langs[language] = data;
+            $rootScope.language = language;
+        });
+    };
+
+    LocaleManager.getText = function(text, language) {
+        if (language === 'en_US') {
+            return text;
+        }
+        if (langs[language] &amp;&amp; langs[language][text]) {
+            return langs[language][text];
+        }
+        return text;
+    };
+
+    return LocaleManager;
+})
+</code></pre>
+
+<p>```</p>
+
+<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.</p>
+
+<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.</p>
+
+<p></p>
+
+<pre><code>{{ LocaleManager.getText('Login', language) }}
+</code></pre>
+
+<p></p>
+
+<p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven&rsquo;t tried that yet and will give an update here once done.</p>
+
+<p>Do you have experience on i18n in AngularJS?  Thoughts and comments are appreciated.</p>
+]]></content>
+  </entry>
+  
+</feed>

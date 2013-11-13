@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Tag: Connect | Thinking in Crowd / 鹄思乱想]]></title>
+  <link href="http://kenspirit.github.io/tags/connect/atom.xml" rel="self"/>
+  <link href="http://kenspirit.github.io/"/>
+  <updated>2013-11-13T22:13:05+08:00</updated>
+  <id>http://kenspirit.github.io/</id>
+  <author>
+    <name><![CDATA[鹄思乱想]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A response pends forever issue in MongoDB, Connect and Node.js]]></title>
+    <link href="http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/"/>
+    <updated>2012-12-05T21:08:00+08:00</updated>
+    <id>http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs</id>
+    <content type="html"><![CDATA[<p><strong>My ignorance</strong><br/>
+When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it&rsquo;s all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.</p>
+
+<p>First, I dig into the <em>session.js</em> in Connect.  Around line 267:
+```javascript connect/lib/middleware/session.js</p>
+
+<pre><code>// proxy end() to commit the session
+var end = res.end;
+res.end = function(data, encoding){
+  res.end = end;
+  if (!req.session) return res.end(data, encoding);
+  debug('saving');
+  req.session.resetMaxAge();
+  req.session.save(function(){
+    debug('saved');
+    res.end(data, encoding);
+  });
+};
+</code></pre>
+
+<p>```</p>
+
+<p>After opening the debug feature in <a href="http://nodejs.org">Node</a>, I found that it&rsquo;s never going into the callback of <em>session.save()</em>.  Hence, the &lsquo;saved&rsquo; message is never printed in the console after &lsquo;saving&rsquo; and the response is never ending.</p>
+
+<p>Why would this happened?  I kept tracing the code and found that <em>session.save()</em> in Connect is calling the <em>sessionStore.set()</em> method.  The <em>MongoStore.set()</em> method in <em>connect-mongodb.js</em> is just purely calling <em>collection.update()</em> and no much magic there.  However, it seems the <em>update()</em> method call has either no err and data coming back.  Is there something wrong with the MongoDB or the Collection?</p>
+
+<p>MongoDB log doesn&rsquo;t seems to have any query or update action recorded and I just found that there are 10 connections started every time I started my app, but I remembered there were 5 connections (default pool size) before (Actually, I haven&rsquo;t noticed that this is the phenomenon of the problem I have at that time yet).</p>
+
+<p>Without any clue, I checked the initialization of the MongoStore and find below code:
+```javascript</p>
+
+<pre><code>if (server_config.isConnected()) {
+  authenticateAndGetCollection(callback);
+} else {
+  server_config.connect(db, function (err) {
+    if (err) callback(Error("Error connecting (" + (err instanceof Error ? err.message : err) + ")"));
+      authenticateAndGetCollection(callback);
+    });
+}
+</code></pre>
+
+<p>```</p>
+
+<p>It turns out that the flow goes into <em>server_config.connect()</em> again.  But why?  DB should be initialized in below code which is intended to encapsulate all DB operation.
+```javascript DbManager.js</p>
+
+<pre><code>DbManager = (function() {
+  var db = new Db('tyt', new Server('127.0.0.1', 27017, {auto_reconnect: true}, {}), {safe: true});
+  db.open(function(){});
+
+  return {
+    getDb: function() {
+        return db;
+    }
+  }
+})();
+
+exports.DbManager = DbManager;
+</code></pre>
+
+<p>```</p>
+
+<p>```javascript In my node app.js</p>
+
+<pre><code>var express = require('express')
+  , DbManager = require('./db.js').DbManager
+  , mongoStore = require('connect-mongodb');
+
+var app = module.exports = express();
+
+// Configuration
+app.configure(function(){
+  app.use(express.session({
+      secret: 'kenspirit',
+      key: 'tt.sid',
+      cookie: {secure: false, maxAge: 300000},
+      store: new mongoStore({db: DbManager.getDb()})
+  }));
+});
+</code></pre>
+
+<p>```</p>
+
+<p>If you are familiar with Node, you may have already noticed what I haven&rsquo;t done right here.  I am assuming the DB should be connected and ready for use already as I have called <em>db.open()</em> during DbManager&rsquo;s construction.  However, Async is the most importance concept in Node, <em>db.open()</em> takes my callback will immediately return and it doesn&rsquo;t guarantee it&rsquo;s opened already.  If I change to below code, problem solved.</p>
+
+<p>```javascript</p>
+
+<pre><code>var db = DbManager.getDb();
+db.open(function(err, db) {
+  if (db) {
+    app.use(express.session({
+      secret: 'kenspirit',
+      key: 'tt.sid',
+      cookie: {secure: false, maxAge: 300000},
+      store: new mongoStore({db: db})
+    }));
+   }
+});
+</code></pre>
+
+<p>```</p>
+
+<p><strong>The root of not responding</strong><br/>
+I wonder where is the actual source to make the response kept waiting?  I have configured the <em>auto_reconnect</em> already.  Later I found that in mongodb:
+```javascript mongodb/lib/mongodb/db.js
+  Db.prototype.open = function(callback) {</p>
+
+<pre><code>...
+self._state = 'connecting';
+...
+self.serverConfig.connect(self, {firstCall: true}, function(err, result) {
+  if(err != null) {
+    // Set that db has been closed
+    self.openCalled = false;
+    // Return error from connection
+    return callback(err, null);
+  }
+  // Set the status of the server
+  self._state = 'connected';
+  // Callback
+  return callback(null, self);
+});
+...
+</code></pre>
+
+<p>  };</p>
+
+<p>  Db.prototype._executeInsertCommand = function(db_command, options, callback) {</p>
+
+<pre><code>...
+// If the pool is not connected, attemp to reconnect to send the message
+if(self._state == 'connecting' &amp;&amp; this.serverConfig.autoReconnect) {
+  process.nextTick(function() {
+    self.commands.push({type:'insert', 'db_command':db_command, 'options':options, 'callback':callback});
+  })
+}
+...
+</code></pre>
+
+<p>  ;}
+```</p>
+
+<p>```javascript mongodb/lib/connection/server.js
+  Server.prototype.connect = function(dbInstance, options, callback) {</p>
+
+<pre><code>...
+// Force connection pool if there is one
+if(server.connectionPool) server.connectionPool.stop();
+...
+// Create connection Pool instance with the current BSON serializer
+var connectionPool = new ConnectionPool(this.host, this.port, this.poolSize, dbInstance.bson,  this.socketOptions);
+...
+// Set up on connect method
+connectionPool.on("poolReady", function() {
+  // Create db command and Add the callback to the list of callbacks by the request id (mapping outgoing messages to correct callbacks)
+  var db_command = DbCommand.NcreateIsMasterCommand(dbInstance, dbInstance.databaseName);
+  // Check out a reader from the pool
+  var connection = connectionPool.checkoutConnection();
+  // Set server state to connEcted
+  server._serverState = 'connected';
+  // dbInstance._state = 'connected';  If I add this line here, even if my code doesn't do any change, it works.
+  ...
+});
+</code></pre>
+
+<p>  };
+```</p>
+
+<p>Finally, the root cause is found.  Normally, when <em>db.open()</em> is called, it sets its <em>_state = &lsquo;connecting&rsquo;</em>, and it then will call <em>server.connect()</em> to create connection pool and in the callback, it sets its <em>_state = &lsquo;connected&rsquo;</em> again.  However, my case is that the second call <em>server.connect()</em> in MongoStore.js first make the first connection pool stops and then creates a new connection pool again(This should be where makes the mongo db log has 10 connections opened).  Somehow, the callback in normal flow cannot be executed so that <em>db._state</em> has not been set to &lsquo;connected&rsquo;.  What is more, the callback set in <em>MongoStore.js</em> doesn&rsquo;t set the <em>db._state</em> to &lsquo;connected&rsquo;.  The <em>db._state</em> is remained in &lsquo;connecting&rsquo; forever which makes my update command keep pushing to its commands stack.</p>
+
+<p><strong>Most appropriate way to initialize MongoDB and its connections in Node.js</strong><br/>
+I began to wonder what is the &ldquo;most appropriate way&rdquo; to initialize MongoDB and manage its connections and googled around.</p>
+
+<p>At first, I found a similar question asked in <a href="http://stackoverflow.com/questions/10656574/how-to-manage-mongodb-connections-in-a-nodejs-webapp">StackOverFlow</a>.<br/>
+However, the reply doesn&rsquo;t seem to be reasonable.  It recommands opening a new connection (actually, a DB and Connection Pool there) per request.  And it said it&rsquo;s due to MongoDB is asynchronous.  It&rsquo;s pretty confusing and the asynchronous mechanism in Node should be achieved by callback instead of creating new connection per request.  If so, what is the point of using pool then?  This approach should be more slow.</p>
+
+<p>Later I found out a reply from the author of node-mongodb-native in <a href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated &ldquo;DO NOT call open on each request.&rdquo;.</p>
+
+<p>I believe only opening MongoDB once with appropriate pool size and initialize node application in the <em>db.open()</em> callback should be the right way to go.</p>
+]]></content>
+  </entry>
+  
+</feed>

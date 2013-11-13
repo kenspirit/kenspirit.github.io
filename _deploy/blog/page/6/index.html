@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Thinking in Crowd / 鹄思乱想</title>
+  <meta name="author" content="鹄思乱想">
+
+  
+  <meta name="description" content="What is i18n and How to do it in Javascript? i18n, which is so called internationalization, is to support multilingual for a platform. ExtJS, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://kenspirit.github.io/blog/page/6/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-37378953-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Thinking in Crowd / 鹄思乱想</a></h1>
+  
+    <h2>Swan flying in the immense sky</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:kenspirit.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about">About</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/tags">Tags</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/21/i18n-extjs-and-jawr/">I18n, ExtJS and JAWR</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-21T17:19:57+08:00" pubdate data-updated="true">Jul 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>What is i18n and How to do it in Javascript?</strong></p>
+
+<p>i18n, which is so called internationalization, is to support multilingual for a platform.</p>
+
+<p>ExtJS, JavaScript framework, provides numerous UI  components to build complex UI.</p>
+
+<p>In order to implement i18 in UI page purely built by ExtJS, it&rsquo;s inevitable to translate the title, label of the ExtJS components into proper language.  From my point of view, there should be two ways for that:</p>
+
+<ol>
+<li><p> Use the translated text directly in the UI components during construction</p></li>
+<li><p> Use separate JS to replace the text before rendering, say in initComponent method or beforeRender event handler.</p></li>
+</ol>
+
+
+<p>There are pros and cons for each approach:</p>
+
+<ol>
+<li><p> Approach #1 is easy, but injecting logic for i18n text translation into the UI components construction is just like adding event handler into the HTML directly and it makes the code for text translation spread all around the code building UI.</p></li>
+<li><p> Approach #2 separates the i18n implementation detail which makes it easier to change.  The benefit got from this can be easier prototyping, unit testing, and future enhancement if i18n implementation changed.</p></li>
+</ol>
+
+
+<p>In order to avoid violation of separation of concern principle, I would like to choose approach #2.  If you agree with me, you can keep going.</p>
+
+<p><strong>How to use JAWR to implement i18n</strong></p>
+
+<p>Normally, i18n text file is built with property file (e.g. msg_en_UI.properties) in which an entry is represented as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">msgkey</span><span class="o">=</span><span class="s">msgText in i18n</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This kind of file is very common in JAVA and <a href="http://jawr.java.net">JAWR</a> can be used to interpret this kind of property file and built code for i18n.  It&rsquo;s quite easy to setup JAWR and I am not going to brief it here.  In a word, if your i18n text entry built like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">main.hello.world</span><span class="o">=</span><span class="s">Hello world!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you can get the translated text by:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">messages</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">hello</span><span class="p">.</span><span class="nx">world</span><span class="p">();</span> <span class="c1">// Hello world!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Actually, JAWR build the text to Javascript data structure (messages is default prefix) to make a function call to get the actual text (i18n is based on which property file loaded depending on your locale resolver).</p>
+
+<p>OK, till now, do you get the idea and like this kind of implementation?</p>
+
+<p>Personally, I don&rsquo;t quite like it.  Although the usage of data structure is to prevent polluting the Javascript namespace, directly mapping to data structure with the message key makes it hard to dynamically handle the text translation or even in batch operation.  Imagine the message key is the ID of the UI component, you have to use eval() function on &ldquo;ID of UI component + ()&rdquo; if you want a generic way.</p>
+
+<p>Hence, I would rather have a Message Manager class having a function to return the translated message by passing in the message key.  If you agree with me again, keep follow.</p>
+
+<p>Luckily, I am able to do this because JAWR provides flexibility to use a customized message generator.  Let&rsquo;s see how to do it.  According to its doc about <a href="http://jawr.java.net/docs/messages_gen.html">message</a> and <a href="http://jawr.java.net/docs/generators.html">generators</a>, we need just need to do three things:</p>
+
+<ol>
+<li> Set below sample lines in jawr.properties file:</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ini'><span class='line'><span class="na">jawr.custom.generators</span><span class="o">=</span><span class="s">xxx.MyResourceBundleMessagesGenerator</span>
+</span><span class='line'>
+</span><span class='line'><span class="na">jawr.js.bundle.lib.mappings</span><span class="o">=</span><span class="s">**mymessages**:com.myapp.messages(mynamespace)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li><p> Build the customized generator.  How? The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.ResourceBundleMessagesGenerator</em> and overrides its <em>public Reader createResource(GeneratorContext context)</em> to use our own generator and overrides its <em>public String getMappingPrefix()</em> to return our own mapping <strong>mymessages</strong>.</p></li>
+<li><p> Build the customized creator.  How?  The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.message.MessageBundleScriptCreator</em> and overrides its <em>protected Reader doCreateScript(Properties props)</em> to write our own script generation code.</p></li>
+</ol>
+
+
+<p>Below is the sample code in my <em>xxx.MyResourceBundleMessagesGenerator</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Reader</span> <span class="nf">createResource</span><span class="o">(</span><span class="n">GeneratorContext</span> <span class="n">context</span><span class="o">)</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="n">MyMessageBundleScriptCreator</span> <span class="n">creator</span> <span class="o">=</span><span class="err"> </span><span class="k">new</span> <span class="n">MyMessageBundleScriptCreator</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">creator</span><span class="o">.</span><span class="na">createScript</span><span class="o">(</span><span class="n">context</span><span class="o">.</span><span class="na">getCharset</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">String</span> <span class="nf">getMappingPrefix</span><span class="o">()</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s">&quot;mymessages&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Below is the sample code in my <em>xxx.MyMessageBundleScriptCreator</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">StringBuffer</span> <span class="nf">loadScriptTemplate</span><span class="o">()</span><span class="err"> </span><span class="o">{</span>
+</span><span class='line'>  <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>  <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">is</span> <span class="o">=</span> <span class="n">ClassLoaderResourceUtils</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">&quot;/xxx/messages.js&quot;</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">copy</span><span class="o">(</span><span class="n">is</span><span class="o">,</span> <span class="n">sw</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">throw</span> <span class="k">new</span> <span class="nf">BundlingProcessException</span><span class="o">(</span><span class="s">&quot;Fail to load the message template. &quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">IOUtils</span><span class="o">.</span><span class="na">close</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">sw</span><span class="o">.</span><span class="na">getBuffer</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">protected</span> <span class="n">Reader</span> <span class="nf">doCreateScript</span><span class="o">(</span><span class="n">Properties</span> <span class="n">props</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">String</span> <span class="n">script</span> <span class="o">=</span> <span class="n">loadScriptTemplate</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">Set</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="na">stringPropertyNames</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">StringBuffer</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">(</span><span class="s">&quot;{&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">key</span> <span class="o">:</span> <span class="n">keys</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">messages</span><span class="o">.</span><span class="na">append</span><span class="o">(</span>
+</span><span class='line'><span class="s">&quot;\&quot;&quot;</span> <span class="o">+</span> <span class="n">key</span> <span class="o">+</span> <span class="s">&quot;\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">StringUtils</span><span class="o">.</span><span class="na">defaultString</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">).</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;\&quot;&quot;</span><span class="o">,</span> <span class="s">&quot;\\\\\&quot;&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;\&quot;,\n&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">messages</span><span class="o">.</span><span class="na">deleteCharAt</span><span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  <span class="n">messages</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">&quot;}&quot;</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">script</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">&quot;@namespace&quot;</span><span class="o">,</span> <span class="n">RegexUtil</span><span class="o">.</span><span class="na">adaptReplacementToMatcher</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">namespace</span><span class="o">));</span>
+</span><span class='line'>  <span class="n">script</span> <span class="o">=</span> <span class="n">script</span><span class="o">.</span><span class="na">replaceFirst</span><span class="o">(</span><span class="s">&quot;@messages&quot;</span><span class="o">,</span> <span class="n">RegexUtil</span><span class="o">.</span><span class="na">adaptReplacementToMatcher</span><span class="o">(</span><span class="n">messages</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span>
+</span><span class='line'>  <span class="k">return</span> <span class="k">new</span> <span class="nf">StringReader</span><span class="o">(</span><span class="n">script</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, let&rsquo;s see what is in my message.js:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">msgMap</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">getMsg</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgKey</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">argLen</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">===</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">msg</span> <span class="o">=</span> <span class="nx">msgMap</span><span class="p">[</span><span class="nx">namespace</span><span class="p">][</span><span class="nx">msgKey</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">argLen</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">argLen</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">msg</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nx">msg</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="nx">putMsgs</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgObj</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">msgMap</span><span class="p">[</span><span class="nx">namespace</span><span class="p">]</span> <span class="o">=</span> <span class="nx">msgObj</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>  <span class="p">})();</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nb">window</span><span class="p">.</span><span class="nx">MultilingualMessageMgr</span><span class="p">.</span><span class="nx">putMsgs</span><span class="p">(</span><span class="s2">&quot;@namespace&quot;</span><span class="p">,</span> <span class="err">@</span><span class="nx">messages</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let me explain a bit on what the <em>MultilingualMessageMgr</em> does here.</p>
+
+<p>It&rsquo;s an object which is returned by anonymous function.  This object has a <em>getMsg</em> and <em>putMsgs</em> function.  Both of them is referring to an <em>msgMap</em> object in the anonymous function scope so that it cannot be accessed directly outside <em>MultilingualMessageMgr</em>.  The <em>getMsg</em> function takes at least two arguments including namespace and message key, any other parameters are treated some value to replace the placeholder in message.  The <em>getMsg</em> function puts the messages json object with namespace bound to it for retrieval later.</p>
+
+<p>With this <em>MultilingualMessageMgr,</em> multilingual message translation can be done by sample call like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">MultilingualMessageMgr</span><span class="p">.</span><span class="nx">getMsg</span><span class="p">(</span><span class="nx">namespace</span><span class="p">,</span> <span class="nx">msgKey</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, centralizing i18n logic to dynamically replace all ExtJs UI components can be realized by building the property file with component id as message key and iterating all components to replace them.</p>
+
+<p>If you have any comment or better idea on how to do i18n in JavaScript, please let me know.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/15/stay-in-good-or-change-to-be-good/">待在优秀的地方，还是把所在的地方改变的优秀</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-15T17:31:25+08:00" pubdate data-updated="true">Jul 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>已经换了工作差不多一年，期间还有幸被派去美国学习所做的系统后台开发，趁着本博客重新启航，是时候回顾一下了。</p>
+
+<p><strong>小公司 vs 大公司</strong></p>
+
+<p>在小公司那么多年来，给我最大的感受就是灵活性强，行动敏捷。再加上本人后来能担当上Team Lead角色，所以，有什么好的想法，自然容易尝试和贯彻。但是公司的敏捷，一但被利用成不断高强度赶项目而忽视了人员培养，代码和框架的改进，团队和系统的问题便不断浮现。这也成为我离开的原因之一。不过，对怎么样推动改变上，我并没有做的很好。在能自己拍板范围外的事，虽然有提意见，但是推动不够，主要都在等领导的改变和决策，主动性还不够强。</p>
+
+<p>来了大公司差不多一年了，最大的感受和没有来之前想象到的差不多，就是沟通成本非常高，行动迟缓。再加上职位上我只是小兵一名，有好的想法，也没法通过“强硬”的手段，推广出去。在哪里体现出迟缓的问题呢？</p>
+
+<ol>
+<li><p> 问题达成结论难。邮件多，开会部门多，人员杂，是大公司的通病。这其实还不是主要问题。问题是一开始讨论邮件或者开会的人员，在等级或者部门上来讲，大家都是平级的。通常情况是老大级别一般先没有参于，即使有，也是各方的老大，也都在，结果还是打平。在谈一个问题的时候，除非大家对一个问题共识较多，或者各方影响不大，方案比较容易通过。但是如果主要涉及一方要其它各方做更大改变，就不容易出结论了。因为大家平级，不好说一方强行推行。那么最终可能要拉锯一段时间，最后再把老老大拉出来，才能拍板。</p></li>
+<li><p> 推行改变很难。改变，本来就是很难的事情。想一想睡惯懒觉的你突然要自己每天早起30分钟，跑5圈，你做的到吗？更何况如果是要改变别人，那更难了。再想象在大公司，你要改变的是多少个别人。举个例子，从10月份进公司我问为什么不用Maven，有人答我，可能今年5月，到几个星期前我再抱怨，再有人说8月。现在就放话在这，等等看什么时候实施得了。另一个原因同开会难有定调一样，涉及到影响流程，或某些人员的工作比较大的时候，就一定要有一位拍板的人物了。</p></li>
+</ol>
+
+
+<p>其实无论是软件还是非软件公司，大了，自然不好管了。Yahoo不是也被批官僚气氛严重，甚至连Google也不例外。Agile的提出，其中一个焦点也致于减少沟通环节。我们也引入了Agile，但是，感觉形式多于内容，反而更乱。</p>
+
+<p><strong>如何改变，如何敏捷</strong></p>
+
+<p>个人认为，要做到Agile，很重要的一个思想就是行动迅速，不断反省，找出不完善的地方，加以改正。这里面，非常需要的一个手段，就是试错。但是很多大公司，很难实现Agile的原因，一个原因是人多难协调，行动缓慢，另一个原因就是不敢试错。一般来说，大公司除了客观原因由于子系统杂，多，乱外，更是因为人员求稳，怕担责的思想，不敢随意做改变。怕错了，出问题，承担后果。</p>
+
+<p>之前看了一本David J. Anderson写的关于<a href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402/ref=sr_1_1?ie=UTF8&amp;qid=1342343902&amp;sr=8-1&amp;keywords=Kanban+David+J">Kanban</a>的书，个人感觉是非常适合大公司引用来进行流程，甚至是文化的改进的，甚至比Agile更有效。其中一个重要的原因是Agile的推行，一般意味着对现有流程的一次大的变革。如果人员思想跟不上，或者没有抓住重点，流于形式的话，问题更多。反而，Kanban强调的是在现有流程上的不断发现各个部位的瓶颈，不断进行细微改善和调整。里面推崇的Kaizen文化，更是精华：“任何人对流程改进的尝试，即使失败，或者出问题，都不会被追究。” 要做到这点，虽然需要有良好的衡量机制，更重要的是一种开放和允许尝试的文化。当每个人都不必惧怕所谓的承担责任时，甚至鼓励自发的对流程进行改善的时候，力量可是不容小看的。</p>
+
+<p>具体操作上来说，要推行改变，首先要对你提出的东西，有深刻的理解，它的优缺点都要清楚，必须强调改变带来的好处是远大于它的缺点的。因为抵制的人，总会拿它的缺点说事。而且，你也必须要有坚实的论证，才能说服同事，甚至是你的老板。之前看了一本书《<a href="http://www.amazon.com/Driving-Technical-Change-Terrence-Ryan/dp/1934356603/ref=sr_1_1?ie=UTF8&amp;qid=1342343784&amp;sr=8-1&amp;keywords=Driving+Technical+Change">Driving Technical Change</a>》by Terrence Ryan，主要正是教人如何推行改变。最后，当然得期望你上面的领导是英明的，你就事半功倍了。</p>
+
+<p><strong>改变才是永恒</strong></p>
+
+<p>其实，没有哪里可以永恒保持优秀，重要的是如何不断的改变，来追寻优秀。小公司可以变得臃肿，大公司也可以敏捷。重要的是，首先自己要有一颗秉持Kaizen的心，和同一班同样追寻改变和优秀的人合作。</p>
+
+<p>所以，今年我的目标就是&#8221;Push for Change; Act as Model” &ndash; “推行改变，以身作则”。其实这作为每一年的目标都是正确的，但是，对于现在的我来说，是迫切的。这正是针对自己之前的不足，也是针对目前的环境。问题多的地方，机会才多。这么一段时间以来，我感觉也确实推动了一些东西，无论直接还是间接，甚至方法上可能并不正确，或者为自己留下后患，我都无所畏惧，将继续前进。</p>
+
+<p>可喜的是，新任的Team Lead，对问题上和我有比较一致的看法，也很积极推动团队的前进，感觉非常高兴。同时，可以在他身上，学习如何在大公司内推动改变，确实难得。前景暂时还是光明的，只需要继续努力。</p>
+
+<p>接下来，具体的想改变的事项，我希望能在目前项目的前端开发引入Unit Test，以验证自己对前端开发和测试的想法，以及作为发展自己前端开发能力的一项手段。敬请期待。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/15/ever-never/">曾经，最后</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-15T02:42:33+08:00" pubdate data-updated="true">Feb 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>曾经真心相待，换来质疑无奈。只能痛心离去，送上最后祝福。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/05/forward-or-backward/">到底是前进还是后退？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-05T02:07:56+08:00" pubdate data-updated="true">Feb 5<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>自从我离开旧公司以来，都有旧同事问我新公司这边有没有什么好的职位。</p>
+
+<p>一开始，其实都系正常，因为问我的人，都已经在那做了和我差不多那么多年，甚至都还是第一份工作。所以，希望出去闯闯也理所当然。但是近来，好像人数还有增多的倾向，而且是服役多长时间的都有，有扩散的倾向。这还不是让我最担心的，更重要的是，从每个人身上，我都听到些怨言。这样，感觉情况就不妙了。</p>
+
+<p>我走的时候，就听说公司，上至大老板开始更加重视起和员工的沟通，员工培养上面来。</p>
+
+<p>本想我走了后，可能还真是做了件好事，但为什么所谓“更加重视员工”的做法还会引起那么多怨言和激发人员要走的想法呢？</p>
+
+<p>拿我听到的两点来说吧:</p>
+
+<p><strong>1.  加薪方面</strong></p>
+
+<p>本来人员流失后，加薪是正常和需要的，尤其是我之前还在职并还能发表一下意见的时候，已经和上层说过这个问题了。公司开发部中层方面（3年左右）的人员，薪酬水平有点偏低的。但我听到的很多怨言，都说这次加薪幅度，很多人都不满意。估计主要是中层加的不多。像一些做了5年以上的，公司里非常重视的少数，好像并没太大声音听到，因为我也知道有一些加的好像真不少，我也和他们说其实公司对他们已经很不薄，不要以为外面真的高很多而跟风轻率跳槽。</p>
+
+<p>所以我感觉，可能中层普遍加的都并不多，薪酬集中到某些人上面去了。这里是一个问题，因为感觉公司以前一直有一个想法就是，最重要的那么年资老的，能干活的人，保住就行了。其它人就无所谓了。反正有老员工带着干。</p>
+
+<p>其实这样的想法是错误的，会引起下面的问题。要保住和发展公司，不是只要有老员工就行的了。</p>
+
+<ul>
+<li><p>新员工感觉不受重视，没发挥空间。因为上层，也只认得老员工，有事也找他们。新员工Turn over太快。其实这也和上层缺乏和下面的员工进行沟通有关。我就听一个新员工说过：“我们这些新人，其实都不重要，都是堆砖头的，老员工在就行了。”</p></li>
+<li><p>老员工经常要带新员工，但因为他们流动太快，老员工都有培训疲劳症了。公司的产品本来是有一个比较好的框架的，做的事情，一部份是重复性劳动，一部份是业务逻辑或复杂的customization。如果一直要老员工培训新人来做重复性的劳动，老员工就会很烦，而且因为项目紧还要忙于处理剩下的部分，还没有时间去改进框架和产品。框架很快就被毁了。</p></li>
+<li><p>公司总不招一些有经验的人，这样，老员工学习新知识，新文化只能靠上层，或者自学了。可是，因为忙，基本哪还有时间，有时周末都还要加班。上层也少和下面的沟通，更不要说创造培训的机会了。这样，久而久之，老员工感觉学不到东西了，你工资又不比别人有吸引力，那为什么还要留着呢，更何况连本来保留着的一些感情，还被一些人，一点一点的摧毁了。老员工的流失也成了必然。听一个老员工说，他临走前问上层为什么不招有经验的人，那个竟然答，我们不需要有经验的，进来还不是要教他？我真是无语了。</p></li>
+</ul>
+
+
+<p>还有另一方面是，有人说这次加薪幅度不高，但是搞了个什么类似奖金的东西，就是做满一年后，会再拿到双薪外可能多一个月左右的工资吧。但据他们算过以后，觉得如果分摊到每一个月现拿，才差不多达到他们觉得理想的水平。所以普遍让人觉得，又想让人留下，又一点诚意都没有。</p>
+
+<p>其实这种压后拿钱，和别人给个什么期权是一样道理，是有用的，但要看什么时候。如果别人都很不爽了，或者觉得你没有前途了，还要来干什么呢？所谓乱世用重典，重要时候，一定要用让人一击即倒的手段，让人无法拒绝，而不是还谈什么感情，理想的。过年那段时间，我刚好看了一本关于人脑学习特性的书(Brain Bugs)里面有说到，人普遍来说是比较看重眼前利益的，你说现在得到20元，或者一个月后拿到40元。基本都是选现拿的。因为远期目标并不多多少，而且还要看你说话算话不。所以，如果真如我听到的，要等上一年，而且即使现在分摊出来，才是理想的价格，可以说是没有多少吸引力的。</p>
+
+<p><strong>2.  请假方面</strong></p>
+
+<p>听说现在请假很不容易，要提前一个有，还真有人被reject了，可能多是一两天那种情况吧，我不知道是真的那么忙呢，还是专门出这种政策来防人出去面试找工作的。如果真是后一种情况，还真是脑残做法。所谓上有政策，肯定下有对策，请个病假不就行了，还不用提前说呢。退一步说，如果真是那么忙，据我所知，以前一起工作的同事，基本和我熟悉的，每个人工作都是很负责任的。有需要的话，晚上周末自觉加班，过年过节被点名要开电话或加班，最多抱怨一下，也还是这样。到真有事要请假，相信也是有急事，事后也会补回来。再退一步说，现在公司那么多怨言的情况下，还出这样的政策，真是还怕不够多吗？想走的人，真不爽了，没找到新工作，也会走。真搞不懂他们是怎么想的。</p>
+
+<p>之前，我在LinkedIn里还看了两篇文章：</p>
+
+<p><a href="http://www.linkedin.com/news?actionBar=&amp;articleID=5562842806801670153&amp;ids=cPATdjAPe3wSdj0PczkMd3oRdiMPczcNd3AMdz0Sd30MdjsOdzkRb34Me30Rdj8Scj8Uej0Vej8SdjkIcj8Td3gRej0UdzoOc3AQczoRdiMPdj4MdPoNc3wSc3wOd3wOdzkR&amp;aag=true&amp;freq=weekly&amp;trk=eml-tod2-b-ttl-0&amp;ut=2yCqJXsKqFql41">Six Reason Why You Should Give Your Employee a 4-Day Week</a></p>
+
+<p><a href="http://www.linkedin.com/news?actionBar=&amp;articleID=1026708525&amp;ids=cPsOdzoVdj8MciMTdzcScPoVdzATe3wTcj4NdzkRb34Tdj8PcjgOc34Idj8Re30Tdz8MciMPcPsMe3sMcz0N&amp;aag=true&amp;freq=weekly&amp;trk=eml-tod2-b-ttl-1&amp;ut=0D2UlrYgjNgR41">Why You Should Give Your Employee Unlimited Vacation</a></p>
+
+<p>里面其实说的都是为什么这样会更尊重员工，减少公司成本，激起员工工作热情，还可以从中找出积极向上的人。其实想起来何尝不是呢？想起我们平时不是有很多假期都没有放，要堆到年后才清吗？放个长一点的假，其实也是觉得无聊，想干活了。其实有些时候，放松了，可能更好管。</p>
+
+<p>本来既然已经离开，就不好再说什么，但是看到这种情况，还是忍不住要发泄一下。也不知道那些那么另人不爽的政策，是不是又是那个人想出来的。真是“成也萧何 败也萧何”。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/">Resolve Error of &#8220;weblogic.management.DeploymentException: Error: Unresolved Webapp Library References&#8221;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-04T09:07:35+08:00" pubdate data-updated="true">Feb 4<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.</p>
+
+<blockquote><p>weblogic.management.DeploymentException: Error: Unresolved Webapp Library references for &ldquo;ServletContext@36720652[app:WLS_PRS_DOC module:wls_prs_doc p
+ath:/wls_prs_doc spec-version:2.5]&rdquo;, defined in weblogic.xml [Extension-Name: jsf, Specification-Version: 2, exact-match: true], [Extension-Name: jstl
+, Specification-Version: 1.2, exact-match: true]</p></blockquote>
+
+<p>It looks strange from the error message that the EAR is referring to some jars but cannot be resolved.</p>
+
+<p>I remember that these two jars have been set as shared library in Weblogic since the very beginning and why the problems occur when I am deploying it to the newly created server but not ADMIN.</p>
+
+<p>I wonder around by using Google and happened to see this website.</p>
+
+<p><a href="http://middlewaremagic.com/weblogic/?p=2938">http://middlewaremagic.com/weblogic/?p=2938</a></p>
+
+<p>It&rsquo;s also said that the directory having the Shared Library should be included when you are calling weblogic.appc to compile your EAR.</p>
+
+<p>I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.</p>
+
+<p><a href="http://thinkingincrowd.u.qiniudn.com/weblogic1.jpg"><img src="http://thinkingincrowd.u.qiniudn.com/weblogic1.jpg?w=574" alt="Image" /></a><a href="http://thinkingincrowd.u.qiniudn.com/weblogic2.jpg"><img src="http://thinkingincrowd.u.qiniudn.com/weblogic2.jpg?w=614" alt="Image" /></a></p>
+
+<p> </p>
+
+<p> </p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/7/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/5/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/13/callbacks-are-imperative/">回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/">Thanks to everyone, Zach Lendon, Github, AngularJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/">How to support page content i18n in AngularJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/29/startup-review-network/">至关重要的关系</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/26/startup-review-permanent-beta/">永久测试之心, 寻求真我</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/14/function-definition-this-and-bind-in-javascript/">Function definition, this and bind in JavaScript</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">How to verify JSON data with AngularJS $httpBackend</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/28/how-to-ask-share-and-influence/">一点点对提问，分享和影响力的看法</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/25/review-on-book-inside-the-facebook/">打造 Facebook 读后感</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/can-i-make-13-billion-in-20-months/">我能否20个月赚130亿?</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (20)</a></li><li><a href='/blog/categories/think'>Think (27)</a></li></ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+  <ul class="tag-cloud">
+    <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
+<li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
+<li><a style="font-size: 60%" href="/tags/ajax/">Ajax</a></li>
+<li><a style="font-size: 122%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
+<li><a style="font-size: 114%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 60%" href="/tags/callback/">Callback</a></li>
+<li><a style="font-size: 87%" href="/tags/change/">Change</a></li>
+<li><a style="font-size: 103%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
+<li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
+<li><a style="font-size: 87%" href="/tags/design/">Design</a></li>
+<li><a style="font-size: 87%" href="/tags/destiny/">Destiny</a></li>
+<li><a style="font-size: 87%" href="/tags/directive/">Directive</a></li>
+<li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
+<li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
+<li><a style="font-size: 129%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
+<li><a style="font-size: 60%" href="/tags/functional-programming/">Functional Programming</a></li>
+<li><a style="font-size: 87%" href="/tags/gtd/">GTD</a></li>
+<li><a style="font-size: 87%" href="/tags/goal/">Goal</a></li>
+<li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
+<li><a style="font-size: 87%" href="/tags/httpbackend/">HttpBackend</a></li>
+<li><a style="font-size: 60%" href="/tags/influence/">Influence</a></li>
+<li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
+<li><a style="font-size: 87%" href="/tags/json/">JSON</a></li>
+<li><a style="font-size: 129%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
+<li><a style="font-size: 129%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 87%" href="/tags/maven/">Maven</a></li>
+<li><a style="font-size: 103%" href="/tags/mock/">Mock</a></li>
+<li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
+<li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
+<li><a style="font-size: 114%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 60%" href="/tags/network/">Network</a></li>
+<li><a style="font-size: 114%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 60%" href="/tags/opportunity/">Opportunity</a></li>
+<li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
+<li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
+<li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
+<li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
+<li><a style="font-size: 87%" href="/tags/productivity/">Productivity</a></li>
+<li><a style="font-size: 60%" href="/tags/promise/">Promise</a></li>
+<li><a style="font-size: 159%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 60%" href="/tags/risk/">Risk</a></li>
+<li><a style="font-size: 60%" href="/tags/spa/">SPA</a></li>
+<li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
+<li><a style="font-size: 103%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
+<li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
+<li><a style="font-size: 87%" href="/tags/time-management/">Time Management</a></li>
+<li><a style="font-size: 103%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
+<li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
+<li><a style="font-size: 129%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
+<li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
+<li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
+<li><a style="font-size: 87%" href="/tags/i18n/">i18n</a></li>
+<li><a style="font-size: 60%" href="/tags/ngclass/">ngClass</a></li>
+<li><a style="font-size: 60%" href="/tags/ngrepeat/">ngRepeat</a></li>
+<li><a style="font-size: 60%" href="/tags/this/">this</a></li>
+
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/kenspirit">@kenspirit</a> on GitHub
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'kenspirit',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+<section>
+    <h1>Weibo</h1>
+    <iframe id="sina_widget_1730265332" style="width:100%; height:500px;" frameborder="0" scrolling="no" src="http://v.t.sina.com.cn/widget/widget_blog.php?uid=1730265332&height=500&skin=wd_01&showpic=1"></iframe>
+</section>
+
+
+
+<section class="googleplus googleplus-hidden">
+  <h1>
+    <a href="https://plus.google.com/chengusky@gmail.com?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - 鹄思乱想 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'thinkingincrowd';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
