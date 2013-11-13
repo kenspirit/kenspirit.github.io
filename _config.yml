@@ -33,8 +33,13 @@ destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
-# markdown: rdiscount
-markdown: kramdown # To fix UTF-8 error
+# markdown: kramdown # To fix UTF-8 error
+markdown: rdiscount
+rdiscount:
+  extensions:
+    - autolink
+    - footnotes
+    - smart
 pygments: false # default python pygments have been replaced by pygments.rb
 
 paginate: 5          # Posts per page on the blog index
