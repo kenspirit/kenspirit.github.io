@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: UED | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/ued/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/ued/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[UED in my pet project - Take Time (Part 1)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
     <updated>2012-12-25T21:41:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
     <content type="html"><![CDATA[<h2>What is it and why I want to work on that</h2>
 
 <p>I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it&rsquo;s telling you to <em>&ldquo;Take your time.  Slow down.&rdquo;</em>.  Actually, it&rsquo;s where to take the time seriously and you can keep track of your time.</p>

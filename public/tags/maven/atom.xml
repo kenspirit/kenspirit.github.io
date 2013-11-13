@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Maven | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/maven/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T08:35:37+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/maven/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,122 +15,108 @@
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Integration]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
     <updated>2012-08-06T22:59:31+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration</id>
     <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 
-<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error “Class not found: File” if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
+<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error &ldquo;Class not found: File&rdquo; if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
 
-<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project’s build management.</p>
+<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project&rsquo;s build management.</p>
 
-<p>Let’s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
+<p>Let&rsquo;s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
 
-<p><code>xml
-    &lt;plugin&gt;
-        &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
-        &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
-        &lt;version&gt;1.2.0.0&lt;/version&gt;
-        &lt;extensions&gt;true&lt;/extensions&gt;
-        &lt;executions&gt;
-            &lt;execution&gt;
-                &lt;goals&gt;
-                  &lt;goal&gt;test&lt;/goal&gt;
-                &lt;/goals&gt;
-            &lt;/execution&gt;
-        &lt;/executions&gt;
-        &lt;configuration&gt;
-    	&lt;preloadSources&gt;
-    	    &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
-    	&lt;/preloadSources&gt;
-    	&lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    	&lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    	&lt;sourceIncludes&gt;
-                &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
-    	    &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    	&lt;/sourceIncludes&gt;
-    	&lt;specIncludes&gt;
-    	    &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    	&lt;/specIncludes&gt;
-        &lt;/configuration&gt;
-    &lt;/plugin&gt;
-</code></p>
+<p>```xml</p>
 
-<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type “mvn test” in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
+    &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.2.0.0&lt;/version&gt;
+    &lt;extensions&gt;true&lt;/extensions&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;test&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+    &lt;configuration&gt;
+    &lt;preloadSources&gt;
+        &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
+    &lt;/preloadSources&gt;
+    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
+    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
+    &lt;sourceIncludes&gt;
+            &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
+        &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    &lt;/sourceIncludes&gt;
+    &lt;specIncludes&gt;
+        &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
+    &lt;/specIncludes&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
 
-<p>```bash
-    [INFO] Executing Jasmine Specs
-    ——————————————————-
-     J A S M I N E   S P E C S
-    ——————————————————-
-    [INFO]
-    Test Suite Name 1
-      Spec 1
-      Spec 2</p>
+<p>```</p>
 
-<pre><code>Test Suite Name 2
+<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type &ldquo;mvn test&rdquo; in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
+
+<p>```bash</p>
+
+<pre><code>[INFO] Executing Jasmine Specs
+-------------------------------------------------------
+ J A S M I N E   S P E C S
+-------------------------------------------------------
+[INFO]
+Test Suite Name 1
+  Spec 1
+  Spec 2
+
+Test Suite Name 2
   Spec 3
 
-Results: 3 specs, 0 failures ```
+Results: 3 specs, 0 failures
 </code></pre>
+
+<p>```</p>
 
 <p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
 
 <p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
 
-<p>OK, now preparation for Unit Test is done.  Let’s see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
+<p>OK, now preparation for Unit Test is done.  Let&rsquo;s see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Why I am working on them?]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"/>
     <updated>2012-08-05T15:52:24+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them</id>
     <content type="html"><![CDATA[<p>Before going into how to setup <a href="http://pivotal.github.com/jasmine/">Jasmine</a> to do Unit Test for <a href="www.sencha.com/products/extjs">ExtJS</a>, I think I should describe why I am doing this.</p>
 
 <p>I have been using ExtJS for around 4 years.  My first company used HTML + ExtJS to build the UI while the current one use ExtJS completely to do that.  I have encountered lots of cases that well-tested behavior failed after some new features introduced in.</p>
 
-<p>Everyone knows that it’s because there lacks Unit Test.  However, there have never been any Unit Test done for Javascript in any project.  There are many of the reasons behind that, such as tight schedule, not enough attention etc.  But the most important reason that outweights or strengthens others is that Unit Test for Javascript is way too difficult than Java, especially when Javascript is used intensively to build the UI and implement business logics.</p>
+<p>Everyone knows that it&rsquo;s because there lacks Unit Test.  However, there have never been any Unit Test done for Javascript in any project.  There are many of the reasons behind that, such as tight schedule, not enough attention etc.  But the most important reason that outweights or strengthens others is that Unit Test for Javascript is way too difficult than Java, especially when Javascript is used intensively to build the UI and implement business logics.</p>
 
 <p>One of the reason makes Javascript hard to do Unit Test is due to good tools unavailability;  the other one is that most developers tend to not separating business logic from UI code quite clearly.</p>
 
 <p>After the emergence of <a href="http://seleniumhq.org/">Selenium</a>, I have once thought it should be the right tool to address this issue.  However, after reading Selenium Doc and seeing what my previous colleagues did for recording &amp; playing, I think Selenium should be used mainly for Integration Test, not in Unit Test level.  My opinion is further strenghten after watching a video from Google Testing Expert and reading the blog from Martin Fowler:</p>
 
-<blockquote>
-  <p><a href="http://www.infoq.com/cn/presentations/duannian-agile-test">让测试也敏捷起来</a> by 段念</p>
-</blockquote>
+<blockquote><p><a href="http://www.infoq.com/cn/presentations/duannian-agile-test">让测试也敏捷起来</a> by 段念</p></blockquote>
 
 <p><a href="http://martinfowler.com/bliki/TestPyramid.html">TestPyramid</a> by Martin Fowler</p>
 
 <p><strong>The main points in TestPyramid are:</strong></p>
 
-<blockquote>
-
+<blockquote><ol>
+<li><p> <strong>Low-level unit test should be many more than high level end-to-end testing through GUI.</strong></p></li>
+<li><p> <strong>Testing through UI is slow, brittle, expensive to write.</strong></p></li>
+<li><p> <strong>A rich javascript UI should have most of its UI behavior tested with javascript unit tests using something like Jasmine.</strong></p></li>
+</ol>
 </blockquote>
 
-<blockquote>
-  <ol>
-    <li><strong>Low-level unit test should be many more than high level end-to-end testing through GUI.</strong></li>
-  </ol>
-
-</blockquote>
-
-<blockquote>
-  <ol>
-    <li><strong>Testing through UI is slow, brittle, expensive to write.</strong></li>
-  </ol>
-
-</blockquote>
-
-<blockquote>
-  <ol>
-    <li><strong>A rich javascript UI should have most of its UI behavior tested with javascript unit tests using something like Jasmine.</strong></li>
-  </ol>
-
-</blockquote>
-
-<p>Above is a long long purpose briefing, I hope it worthes to let you know the background and also agree with me on this.  I heard about Jasmine before reading the post by Martin Fowler, however, I kept thinking that it’s quite difficult or even impossible to use Jasmine to test those ExtJS UI components.</p>
+<p>Above is a long long purpose briefing, I hope it worthes to let you know the background and also agree with me on this.  I heard about Jasmine before reading the post by Martin Fowler, however, I kept thinking that it&rsquo;s quite difficult or even impossible to use Jasmine to test those ExtJS UI components.</p>
 
 <p>Until I did sit down and really tried to use Jasmine to test the ExtJS code, I can say that Unit Test against ExtJS by Jasmine can be achieved at some level once we know what to test for.</p>
 

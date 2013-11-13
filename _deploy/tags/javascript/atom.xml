@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/javascript/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/javascript/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/"/>
     <updated>2013-11-13T21:43:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative</id>
     <content type="html"><![CDATA[<p>我之前都有接触过关于 <a href="http://en.wikipedia.org/wiki/Promise_(programming)">Promise</a> 的一些文章，但是对它的感觉并不大。因为觉得虽然<a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)">回调</a>风格确实有问题，但我写的代码还没有复杂到那种程度，所以，要去使用的感觉并不强烈。</p>
 
 <p>但是，后面碰到一个问题真的好像用回调的风格来写的话，会比较糟糕。加上看到了这一篇从另一侧面来看 Promise 对函数式编程的思维方面的转变，觉得很不错。值得一看，所以在有其它大神也翻译过的情况下，自己也译一次，顺便深入学习。</p>
@@ -600,9 +600,9 @@ D.then(function(d) { d.run(1000，2) });</p>
   
   <entry>
     <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
     <updated>2013-09-24T06:24:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
     <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog&rsquo;s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:</p>
 
 <ol>
@@ -626,9 +626,9 @@ D.then(function(d) { d.run(1000，2) });</p>
   
   <entry>
     <title type="html"><![CDATA[How to support page content i18n in AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
     <updated>2013-08-29T20:16:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
     <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn&rsquo;t really help us a lot to do what we want basically for i18n, language change support of the web page content.</p>
 
 <p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?</p>
@@ -695,9 +695,9 @@ D.then(function(d) { d.run(1000，2) });</p>
   
   <entry>
     <title type="html"><![CDATA[Function definition, this and bind in JavaScript]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
     <updated>2013-06-14T20:00:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
     <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&rsquo;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
 
 <p>```javascript
@@ -861,9 +861,9 @@ TestObj.c();
   
   <entry>
     <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
     <updated>2013-06-08T22:17:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
     <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it&rsquo;s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
 
 <p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: ExtJs | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/extjs/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/extjs/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
     <updated>2013-09-24T06:24:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
     <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog&rsquo;s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:</p>
 
 <ol>
@@ -41,9 +41,9 @@
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
     <updated>2012-08-30T23:04:06+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
     <content type="html"><![CDATA[<p>Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.</p>
 
 <p>ExtJS has been adopted in the two companies I worked and am working for.  Hence, here I only show you how to test Ajax in ExtJS built application.</p>
@@ -235,9 +235,9 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
     <updated>2012-08-13T23:02:18+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
     <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
 
 <p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it&rsquo;s difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
@@ -371,9 +371,9 @@ new xxx.DataStore();
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Why I am working on them?]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/"/>
     <updated>2012-08-05T15:52:24+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them</id>
     <content type="html"><![CDATA[<p>Before going into how to setup <a href="http://pivotal.github.com/jasmine/">Jasmine</a> to do Unit Test for <a href="www.sencha.com/products/extjs">ExtJS</a>, I think I should describe why I am doing this.</p>
 
 <p>I have been using ExtJS for around 4 years.  My first company used HTML + ExtJS to build the UI while the current one use ExtJS completely to do that.  I have encountered lots of cases that well-tested behavior failed after some new features introduced in.</p>
@@ -407,9 +407,9 @@ new xxx.DataStore();
   
   <entry>
     <title type="html"><![CDATA[i18n, ExtJS and JAWR]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/07/21/i18n-extjs-and-jawr/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/07/21/i18n-extjs-and-jawr/"/>
     <updated>2012-07-21T17:19:57+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/07/21/i18n-extjs-and-jawr</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/07/21/i18n-extjs-and-jawr</id>
     <content type="html"><![CDATA[<p><strong>What is i18n and How to do it in Javascript?</strong></p>
 
 <p>i18n, which is so called internationalization, is to support multilingual for a platform.</p>

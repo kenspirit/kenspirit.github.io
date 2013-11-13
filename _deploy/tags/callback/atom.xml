@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Callback | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/callback/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/callback/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/"/>
     <updated>2013-11-13T21:43:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative</id>
     <content type="html"><![CDATA[<p>我之前都有接触过关于 <a href="http://en.wikipedia.org/wiki/Promise_(programming)">Promise</a> 的一些文章，但是对它的感觉并不大。因为觉得虽然<a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)">回调</a>风格确实有问题，但我写的代码还没有复杂到那种程度，所以，要去使用的感觉并不强烈。</p>
 
 <p>但是，后面碰到一个问题真的好像用回调的风格来写的话，会比较糟糕。加上看到了这一篇从另一侧面来看 Promise 对函数式编程的思维方面的转变，觉得很不错。值得一看，所以在有其它大神也翻译过的情况下，自己也译一次，顺便深入学习。</p>

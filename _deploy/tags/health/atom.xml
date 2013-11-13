@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Health | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/health/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/health/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Many things happened.  All "unhappy".]]></title>
-    <link href="http://kenspirit.github.io/blog/2005/11/14/many-things-happened-all-unhappy/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2005/11/14/many-things-happened-all-unhappy/"/>
     <updated>2005-11-14T23:04:59+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2005/11/14/many-things-happened-all-unhappy</id>
+    <id>http://www.thinkingincrowd.me/blog/2005/11/14/many-things-happened-all-unhappy</id>
     <content type="html"><![CDATA[<p>In this shortly two months, many unhappy things happened around me.  Actually, I can&rsquo;t say those are all unhappy.  They just made me worried and greatly drew my attention.</p>
 
 <p> </p>

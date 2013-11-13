@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: i18n | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/i18n/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/i18n/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to support page content i18n in AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
     <updated>2013-08-29T20:16:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
     <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn&rsquo;t really help us a lot to do what we want basically for i18n, language change support of the web page content.</p>
 
 <p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?</p>
@@ -84,9 +84,9 @@
   
   <entry>
     <title type="html"><![CDATA[i18n, ExtJS and JAWR]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/07/21/i18n-extjs-and-jawr/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/07/21/i18n-extjs-and-jawr/"/>
     <updated>2012-07-21T17:19:57+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/07/21/i18n-extjs-and-jawr</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/07/21/i18n-extjs-and-jawr</id>
     <content type="html"><![CDATA[<p><strong>What is i18n and How to do it in Javascript?</strong></p>
 
 <p>i18n, which is so called internationalization, is to support multilingual for a platform.</p>

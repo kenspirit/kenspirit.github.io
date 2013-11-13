@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Execution context | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/execution-context/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/execution-context/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Function definition, this and bind in JavaScript]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
     <updated>2013-06-14T20:00:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
     <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&rsquo;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
 
 <p>```javascript

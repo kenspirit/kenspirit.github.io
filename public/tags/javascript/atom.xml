@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/javascript/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T08:35:37+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/javascript/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -14,64 +14,23 @@
 
   
   <entry>
-    <title type="html"><![CDATA[京JS 2013 之神打击]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/11/13/jingjs-2013-fun/"/>
-    <updated>2013-11-13T13:21:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/11/13/jingjs-2013-fun</id>
-    <content type="html"><![CDATA[
-<p>首先要吐槽一下 <a href="http://weibo.com/jingjs2013">@京JS</a>。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 <a href="https://github.com/substack">@substack</a>，<a href="http://isaacmao.com/">Issac</a> 和讲 Data Visualization 的 Nick。第二天早上的主题还是相当给力的，下午的 CSS Automation Test 也还不错。</p>
-
-<p>晚上的活动还是要狠狠表扬一下 @京JS。第一晚包了车库咖啡，晚饭虽然是 Pizza 等，但是量也算足，只是地方有点小，不过也是逼着和别人站着交流的好机会。星期天的晚上还有去 Bar 的 after-party，可惜我要赶飞机回珠海，就没法去了，但估计也会很棒。</p>
-
-<p>第一天晚上，看到 @substack 来了后，我坚定不移地过去和他搭话，接着各种好玩，技术黑和大神间（当然这不包我）的对话就来了。首先声明，可以肯定我的智商是完全没法跟上大神的，加上没法肯定听力上能跟上多少。所以下面的一些神吐糟不保证 100％ 正确，有错误的话也是我这译者的错误，并且这里的技术黑都不是拉仇恨啊。 Please forgive my poor English for any potential misleading.</p>
-
-<p>我和他搭话是因为我最近看的一篇<a href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/">关于 Promise 的文章</a>，个人感觉不错的，想问他对比 Callback 有什么看法。原来他并不太喜欢 Promise。（好了，整晚挖坑自埋的节奏开始了）。他指点我去看看 <a href="http://callbackhell.com">callbackhell.com</a>，还有他的 <a href="https://github.com/substack/stream-handbook">stream-handbook</a>。说如果我按照那样做了，也应该不会碰到什么 Hell 的问题。他说即使他以后遇到，也是首先偏向于用 <a href="https://github.com/caolan/async">Async</a> 的。</p>
-
-<p>接着一个同学拿着 Douglas Crockford 的书给他签名，他说虽然和他有点过节还是观点不同什么来着（他用的词忘了），但还是签了（他的签名很有趣，是一幅机器人漫画，幸亏我也拿到一个）。我就八卦了一下问是他说的是什么情况，他举例说那个什么 <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">Hoisting</a> 就是胡扯。我当然也很赞同的说是的，应该定义在离它最近使用的地方。好像记得 <a href="http://weibo.com/lifesinger">@玉伯也叫射雕</a> 也是持同样观点的。</p>
-
-<p>然后 <a href="http://weibo.com/fool2fish">@fool2fish</a> 出现了，问他关于一些测试方面怎么从区分浏览器 Tab 独立线程，监测 CPU，等什么的（好像是说这些吧，中间没太跟上）。然后他不断解说和演示他的 <a href="https://github.com/substack/testling">testling</a> 可以拿来怎么用。</p>
-
-<p>之后 @fool2fish 就问可以在 testling 里用什么测试框架，@substack 又把自己的 <a href="https://github.com/substack/tape">tape</a> 搬出来耍了。@fool2fish 再问能否集成 <a href="https://github.com/visionmedia/mocha">Mocha</a> 之类的框架时，@substack 说可以的。但是他不喜欢用那些框架，一堆的全局变量，evil，不是 Node 可以直接运行的程序。还有 <a href="https://github.com/pivotal/jasmine">Jasmine</a> 什么的更烂。</p>
-
-<p>然后转到问是否支持 AMD，CommonJS的主题上。@fool2fish 就给他瞄了一眼 <a href="https://github.com/seajs/seajs">SeaJS</a> define 的用法，可能本想把它推出国门。没想到他说他知道 SeaJS，但这不是 CommonJS，是 fake 的写法。@fool2fish 脸都绿了，都想拉 @玉伯也叫射雕 来抵抗一下了，没等反应过来。@substack 又搬出了他的 <a href="https://github.com/substack/node-browserify">browserify</a> 来说明怎么把 Node 的代码和浏览器分享（这个观点我一直是比较赞同的，所以之前也基于 <a href="https://github.com/medikoo/modules-webmake">webmake</a> 搞了个 <a href="https://github.com/kenspirit/webassemble">webassemble</a>。因为我觉的生产环境基本都是打包好再用的，哪有什么异步再去拿文件，异步也是拿另一个大 bundle。require 在 Node 的写法，如果在浏览器能通用确实挺好的。回头细想是不是偏后端程序员没看到前端看到的另一些东西，回头再想想）。旁边的另一个鬼佬（抱歉不认识是哪位神），看到我们被打击的样子，几乎笑的不行了，都和 @substack 说你别再打击他们了，可是神才不鸟你，继续打击。</p>
-
-<p>后面，他们都走了，我犯贱又去问 @substack 怎么看那些前端的 MVC 或者 MVVM 的框架，比如 <a href="http://angularjs.org">AngularJS</a>。他说他还没看懂到底它最终要解决什么问题，一堆的东西，什么 DI，Databinding 等。我说 Databinding 很好啊，可以免得我们写一堆代码拿值赋值等，declarative 语法也不错啊。他说他只是写纯粹的 JS，那些拿值赋值的可以什么把原生操作抽象和模块化，举例说把复杂的 Form 抽象成模块，只在里头处理赋值拿值之类的。我说那不是 JS 和 HTML 混一起了吗？他好像说只要模块化的好就没有问题了。晕。（这里不敢苟同，可能我还没到那种境界）</p>
-
-<p>最后，又再一次嘴贱的问他那个 tape 能不能集成到 <a href="http://gruntjs.com/‎">Grunt</a>。没想到他说他也没看明白 Grunt 有什么用，我就知道我又挖坑埋自己了。他啪啪啪敲键盘和让我看他怎么用 NPM 的 test 命令，自定义命令和直接结合 Script 来做到一系列的集成操作的。</p>
-
-<p>@substack 真是 geek 到不行啊。他追求纯粹，简洁，和模块化可以说到极致的境地，不喜欢那些大而全的框架，真的是和我最近看的 “Art of Unit Programming” 那本书说到 “Only do one thing and do it really well”，然后通过组合把一些小工具结合成更强大的工具的思想非常吻合。</p>
-
-<p>后面 xxx 来了之后，被打击对象转到他头上了。是的，神喷神了，哈哈。以下可能和原话有偏差，因为大神间的对话，我有时实在很难跟上。</p>
-
-<p>xxx 在做的是 <a href="http://vertx.io/">Vert.x</a>。他一开始说它们直接支持在 npm 跑还是改了加了什么新功能来着。（一开始我在纠结那个 Vertx 发音是什么东西，迷失了一下）。@substack 就说你们那么改的原因是什么？带来什么好处？没好处改来干什么？（另一个神被打击的样子很有趣 :D ）。后来说 Vert.x 特性是 Polyglot，说到支持 Java，Python 等，@substack 意思好像是说为什么要那么做？那些垃圾语言支持来干嘛？（Python 差点被拖累了，他后来改口说 Python 不烂）我永远都不要写 JAVA。xxx 也脸绿了，我也帮口说在商业大项目里，因为系统和团队的多和杂，Polyglot 和 JAVA 都是需要的，虽然我现在也不喜欢 JAVA。其实无论我们怎么说，神的观点都不会变，他就说我不会遇到这样的情况，哈哈。xxx 后来问 @substack Vert.x 怎么才能被他们 buyin (接受)，@substack 就不断 blablabla 说什么你们的 api 要保持和 npm 一致，要在 npm 上容易安装，可以通过 -g 参数那样装了后，命令运行等，不然你看现在没人鸟你们，然后和 yyy 各种建议给他。</p>
-
-<p>两大神后来开始怀旧说小时候几岁的时候玩什么技术之类的，我的智商和听力就彻底跟不上了。后来 xxx 说他用 SQL 去考他妈妈，他妈妈竟然只需要问它那个语句是干什么的，然后她妈妈竟然可以从汇编，指令和寄存器的角度指出它哪里有问题了。靠，开挂了吧。xxx 还想请 @substack 去他们上海公司给员工感受一下什么叫做 live for code，而不是 code for live 的精神。说费用他包，问有没有兴趣。@substack 好像说会在中国待 3 星期，没什么问题，之后可能还要到深圳来骑车什么的。深圳的同学们有关系的话，就看能不能请到他去玩了。后面我们扯着扯着就讲到为什么国内那么难找到这样的人，什么独生政策，教育，压力的都来了。一直聊到 10 点散场了才走了。</p>
-
-<p>整个晚上和 @substack 及其他大神的一些直接对话真比在会场听一天感悟还多。所以意见是大家以后听会议，一定要准备问题，尽量和各种大神聊天。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[回调函数是指令式的；Promise 是函数式的：Node 错失的最大机会]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative/"/>
-    <updated>2013-11-13T08:43:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative</id>
-    <content type="html"><![CDATA[
-<p>我之前都有接触过关于 <a href="http://en.wikipedia.org/wiki/Promise_(programming)">Promise</a> 的一些文章，但是对它的感觉并不大。因为觉得虽然<a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)">回调</a>风格确实有问题，但我写的代码还没有复杂到那种程度，所以，要去使用的感觉并不强烈。</p>
+    <title type="html"><![CDATA[回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/"/>
+    <updated>2013-11-13T21:43:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative</id>
+    <content type="html"><![CDATA[<p>我之前都有接触过关于 <a href="http://en.wikipedia.org/wiki/Promise_(programming)">Promise</a> 的一些文章，但是对它的感觉并不大。因为觉得虽然<a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)">回调</a>风格确实有问题，但我写的代码还没有复杂到那种程度，所以，要去使用的感觉并不强烈。</p>
 
 <p>但是，后面碰到一个问题真的好像用回调的风格来写的话，会比较糟糕。加上看到了这一篇从另一侧面来看 Promise 对函数式编程的思维方面的转变，觉得很不错。值得一看，所以在有其它大神也翻译过的情况下，自己也译一次，顺便深入学习。</p>
 
 <p>原文链接： <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/">Callbacks are imperative, promises are functional: Node’s biggest missed opportunity</a></p>
 
-<blockquote>
-  <p>Promise的本质就是他们不随着环境的变化而变化。</p>
+<blockquote><p>Promise的本质就是他们不随着环境的变化而变化。</p>
 
-  <p>—— Frank Underwood，‘纸牌屋’</p>
-</blockquote>
+<p>  —— Frank Underwood，‘纸牌屋’</p></blockquote>
 
-<p>你经常会听到说 JavaScript 是一门 “函数式” 编程语言。通常我们这样描述它的时候是因为函数在它里面是作为 “一等公民” 而存在的。但是其它 “函数式” 编程语言里面的特性，比如：数据不可改变，代数类型系统，使用迭代优于循环，避免副作用都统统忽略了。虽然函数作为 “一等公民” 是非常有用的，并且决定用户能够在需要的时候使用函数式风格来编写代码。但是 JS 是函数式的观点却常常忽略了函数式编程的一个核心思想：面向值编程。</p>
+<p>你经常会听到说 JavaScript 是一门 &ldquo;函数式&rdquo; 编程语言。通常我们这样描述它的时候是因为函数在它里面是作为 &ldquo;一等公民&rdquo; 而存在的。但是其它 &ldquo;函数式&rdquo; 编程语言里面的特性，比如：数据不可改变，代数类型系统，使用迭代优于循环，避免副作用都统统忽略了。虽然函数作为 &ldquo;一等公民&rdquo; 是非常有用的，并且决定用户能够在需要的时候使用函数式风格来编写代码。但是 JS 是函数式的观点却常常忽略了函数式编程的核心思想：面向值编程。</p>
 
-<p>“函数式编程” 的命名其实会产生误导，以至于人们认为它的意义在于，相对于 “面向对象编程” 来说，它是 “面向函数编程”。但是如果面向对象编程是把所有东西都从对象角度考虑，那函数式编程就是把所有东西都作为值来处理，而不仅仅是把函数考虑为值。很明显，数值当然包含那些数字，字符，列表和其它数据值，但其实它也包含其它面向对象编程的粉丝通常没有考虑过的一些东西：IO 操作和其它副作用，GUI 事件流，空值检查，甚至函数调用的顺序。如果你曾经听说过 “<a href="http://en.wikipedia.org/wiki/Monad_(functional_programming)">可编程分号</a>” 的话，你应该知道我想说的是什么了.</p>
+<p>&ldquo;函数式编程&rdquo; 的命名其实会产生误导，以至于人们认为它的意义在于，相对于 “面向对象编程” 来说，它是 “面向函数编程”。但是如果面向对象编程是把所有东西都从对象角度考虑，那函数式编程就是把所有东西都作为值来处理，而不仅仅是把函数考虑为值。很明显，数值当然包含那些数字，字符，列表和其它数据值，但其实它也包含其它面向对象编程的粉丝通常没有考虑过的一些东西：IO 操作和其它副作用，GUI 事件流，空值检查，甚至函数调用的顺序。如果你曾经听说过 “<a href="http://en.wikipedia.org/wiki/Monad_(functional_programming)">可编程分号</a>” 的话，你应该知道我想说的是什么了.</p>
 
 <p>函数式编程最大的好处是它是声明式的。在命令式编程里面，我们需要写一系列的指令来告诉计算机是怎么去实现我们想要做的事情的。在函数式编程里面，我们只是需要描述值之间的计算关系，计算机就会自己想办法得出需要的计算指令顺序。</p>
 
@@ -79,21 +38,17 @@
 
 <p>在阐述了这些基本概念的基础上，我想说明一下我觉得 Node.js 在设计上最大的失误是什么: 这就是在它的设计早期，决定了倾向于使用回调风格的 API 而不是 promise 风格.</p>
 
-<blockquote>
-  <p>所有人都使用回调。如果你发布了一个返回 promise 的模块，根本没有人会关注和使用你那个模块。</p>
+<blockquote><p>所有人都使用回调。如果你发布了一个返回 promise 的模块，根本没有人会关注和使用你那个模块。</p>
 
-  <p>如果我写了一个小模块，它需要和 Redis 交互，我所需要做的唯一一件事情就是传递一个回调函数给 Redis。当我们遇到<a href="http://callbackhell.com/">回调无底洞</a>的时候，其实这根本不是什么问题: 因为同样有<a href="http://en.wikipedia.org/wiki/Coroutine">协程</a>和 <a href="http://en.wikipedia.org/wiki/Monad_(functional_programming)">monad</a> 无底洞。因为如果你把任何一个抽象使用地足够频繁的话，都同样会创造一个无底洞。</p>
+<p>如果我写了一个小模块，它需要和 Redis 交互，我所需要做的唯一一件事情就是传递一个回调函数给 Redis。当我们遇到<a href="http://callbackhell.com/">回调无底洞</a>的时候，其实这根本不是什么问题: 因为同样有<a href="http://en.wikipedia.org/wiki/Coroutine">协程</a>和 <a href="http://en.wikipedia.org/wiki/Monad_(functional_programming)">monad</a> 无底洞。因为如果你把任何一个抽象使用地足够频繁的话，都同样会创造一个无底洞。</p>
 
-  <p>在 90% 的情况下，你只需要做一件事情，回调如此简单的接口使得你只是需要简单的缩进一下就可以了。如果你遇到了非常复杂的用例，你和其它在 npm 里面的 827 个模块一样，使用 async 就好了.</p>
+<p>在 90% 的情况下，你只需要做一件事情，回调如此简单的接口使得你只是需要简单的缩进一下就可以了。如果你遇到了非常复杂的用例，你和其它在 npm 里面的 827 个模块一样，使用 async 就好了.</p>
 
-  <p>—— Mikeal Rogers，LXJS 2012</p>
-</blockquote>
+<p>—— Mikeal Rogers，LXJS 2012</p></blockquote>
 
 <p>这段话是从 Mikeal Rogers 最近的一次涵盖了好些 Node 设计哲学的演讲里摘取出来的:</p>
 
-<blockquote>
-  <p>在 Node 的初期设计目标里面，我希望可以让更多的非专家级别的程序员可以很容易编写出快速，支持并行的网络程序，虽然我知道这个想法有点违背生产效率。Promises 其实可以使得程序在运行时自动控制数据流动，而不是靠程序员通过显式指令控制，所以能更加容易组织正确清晰和最大化并行操作的程序.</p>
-</blockquote>
+<blockquote><p>在 Node 的初期设计目标里面，我希望可以让更多的非专家级别的程序员可以很容易编写出快速，支持并行的网络程序，虽然我知道这个想法有点违背生产效率。Promises 其实可以使得程序在运行时自动控制数据流动，而不是靠程序员通过显式指令控制，所以能更加容易组织正确清晰和最大化并行操作的程序.</p></blockquote>
 
 <p>要写出正确的并行程序基本上需要你实现尽可能多的并行工作的同时，保证操作指令还是以正确的顺序执行。虽然 JavaScript 是单线程的，但我们依然有可能因为在异步操作的情况下触发了竞争机制: 任何涉及 IO 的操作都会在它等待回调的时候把 CPU 时间腾到其它操作上面。多个并发操作就有可能同时访问同一段内存数据，或者产生一系列重叠的操作数据库或者 DOM 的指令。所以，我希望在这篇文章里可以告诉大家，promies 能够像 Excel 一样，提供一种只需要描述值之间的关系模型，你的工具就能够自动寻求最佳解决方案给你。而不是需要你自己控制程序流.</p>
 
@@ -101,7 +56,7 @@
 
 <p>首先，我想先重温一下几年前写的一篇文章。它是关于 promises 是怎么在异步编程上作为一个 monad 的角色而存在的。这里的核心思想就是 monad 其实是帮助你组织函数的工具，比如说，当一个函数的返回值要做为下一个函数的输入的时候，建立数据管道。数据关系的结构化是实现的关键。</p>
 
-<p>在这里的，我还是需要用到 Haskell 的类型注解来帮助说明一下。在 Haskell 里，注解 foo :: bar 表示 “foo 是 bar 的类型“。注解 foo :: Bar -&gt; Qux 表示 “foo 是一个接受输入值为 Bar 类型和返回值为 Qux 类型的函数“。如果输入输出的类别并不重要的话，我们会用单一小写字母，foo :: a -&gt; b。如果函数 foo 可以接受多个参数的化，我们会添加多个箭头，比如：“ foo :: a -&gt; b -&gt; c ” 表示 foo 接收两个分别为类型 a 和 b 的参数并返回类型 c 的值.</p>
+<p>在这里的，我还是需要用到 Haskell 的类型注解来帮助说明一下。在 Haskell 里，注解 foo :: bar 表示 “foo 是 bar 的类型“。注解 foo :: Bar &ndash;> Qux 表示 “foo 是一个接受输入值为 Bar 类型和返回值为 Qux 类型的函数“。如果输入输出的类别并不重要的话，我们会用单一小写字母，foo :: a &ndash;> b。如果函数 foo 可以接受多个参数的化，我们会添加多个箭头，比如：“ foo :: a &ndash;> b &ndash;> c ” 表示 foo 接收两个分别为类型 a 和 b 的参数并返回类型 c 的值.</p>
 
 <p>我们来看一个 Node 函数吧，比如，fs.readFile()。这个函数接收一个 String 类型的路径参数，还有一个回调函数，并且没有任何返回值。回调函数会接收一个可能为空的 Error 类型和一个包含了文件内容的 Buffer 类型的参数，并且也没有返回值。那我们就可以把 readFile 的类型用注解表示为:</p>
 
@@ -138,14 +93,17 @@ promise :: a -&gt; Promise b
 
 <p>相反，基于 promise 的函数总是让你把函数返回值作为一个不依赖于时间的值来考虑的。当你调用一个回调风格的函数时，在你的函数调用和它的回调函数被调用之间，在程序里面我们没办法找到一个最终结果的表现形式.</p>
 
-<p><code>javascript
-fs.readFile('file1.txt',
-  // some time passes...
-  function(error，buffer) {
-    // the result now pops into existence
-  }
+<p>```javascript
+fs.readFile(&lsquo;file1.txt&rsquo;,
+  // some time passes&hellip;
+  function(error，buffer) {</p>
+
+<pre><code>// the result now pops into existence
+</code></pre>
+
+<p>  }
 );
-</code></p>
+```</p>
 
 <p>从基于回调和事件的函数里面取得结果基本上意味着 “你必须在恰当的时间和地点”。如果你在事件被触发之后才绑定你的事件监听器，或者你没有在恰当的地方回调你的函数，那么恭喜你，你将无法得到你要的结果了。这些事情使得人们在 Node 里写 HTTP 服务器相当困难。如果你的控制流不对，你的程序就无法按期望运行.</p>
 
@@ -170,10 +128,12 @@ p2.then(console.log);</p>
 <p>到目前为止，这些区别都很微小；很少函数单单和其它函数交互。我们现在来处理一些复杂一点的问题，以便看到 promises 更加强大之处。假设我们现在有一些代码，通过使用 fs.stat() 来取得一些文件的 mtimes。如果是同步的操作，我们只是需要调用 paths.map(fs.stat) 就可以了，但是因为用 mapping 来处理异步的问题是很困难的，我们看看用上 async 模块是什么样子.</p>
 
 <p>```javascript
-var async = require(‘async’),
-    fs    = require(‘fs’);</p>
+var async = require(&lsquo;async&rsquo;),</p>
 
-<p>var paths = [‘file1.txt’，’file2.txt’，’file3.txt’];</p>
+<pre><code>fs    = require('fs');
+</code></pre>
+
+<p>var paths = [&lsquo;file1.txt'，'file2.txt'，'file3.txt&rsquo;];</p>
 
 <p>async.map(paths，fs.stat，function(error，results) {
   // use the results
@@ -185,7 +145,7 @@ var async = require(‘async’),
 <p>这样看起来都还不错，直到我们决定要拿到 file1 的大小来做其它不相关的任务的时候。当然，我们可以再拿一次那个文件的状态:</p>
 
 <p>```javascript
-var paths = [‘file1.txt’，’file2.txt’，’file3.txt’];</p>
+var paths = [&lsquo;file1.txt'，'file2.txt'，'file3.txt&rsquo;];</p>
 
 <p>async.map(paths，fs.stat，function(error，results) {
   // use the results
@@ -199,7 +159,7 @@ var paths = [‘file1.txt’，’file2.txt’，’file3.txt’];</p>
 <p>这样显然没有问题，但是我们现在取了那个文件的状态两次。当然，本地的文件操作是没有问题的，但如果我们正在通过 https 来获取大文件的时候，那麻烦就大了。所以，我们只能访问文件一次。这样，我们就要修改一下前面的代码来特殊处理一下第一个文件:</p>
 
 <p>```javascript
-var paths = [‘file1.txt’，’file2.txt’，’file3.txt’];</p>
+var paths = [&lsquo;file1.txt'，'file2.txt'，'file3.txt&rsquo;];</p>
 
 <p>async.map(paths，fs.stat，function(error，results) {
   var size = results[0].size;
@@ -211,15 +171,20 @@ var paths = [‘file1.txt’，’file2.txt’，’file3.txt’];</p>
 <p>这初看也没有问题，但是获取文件大小的任务就必须等到整个列表都处理完了才能够开始。如果其中任何一个文件处理出错，我们就无法得到第一个文件的结果了。这种方案并不好，那我们来试一试另一种方式: 我们把第一个文件分开单独处理.</p>
 
 <p>```javascript
-var paths = [‘file1.txt’，’file2.txt’，’file3.txt’],
-    file1 = paths.shift();</p>
+var paths = [&lsquo;file1.txt'，'file2.txt'，'file3.txt&rsquo;],</p>
+
+<pre><code>file1 = paths.shift();
+</code></pre>
 
 <p>fs.stat(file1，function(error，stat) {
   // use stat.size
-  async.map(paths，fs.stat，function(error，results) {
-    results.unshift(stat);
-    // use the results
-  });
+  async.map(paths，fs.stat，function(error，results) {</p>
+
+<pre><code>results.unshift(stat);
+// use the results
+</code></pre>
+
+<p>  });
 });
 ```</p>
 
@@ -228,19 +193,27 @@ var paths = [‘file1.txt’，’file2.txt’，’file3.txt’],
 <p>好吧，最后一击。我们现在要做的是得到所有文件的详情，每个文件只读取一次，如果第一个文件读取成功了我们要做些特殊处理，并且如果整个列表里的文件都处理成功，我们要对整个列表再进行一些操作。让我们用 async 来在代码里表达出这个需求的依赖关系看看.</p>
 
 <p>```javascript
-var paths = [‘file1.txt’，’file2.txt’，’file3.txt’],
-    file1 = paths.shift();</p>
+var paths = [&lsquo;file1.txt'，'file2.txt'，'file3.txt&rsquo;],</p>
+
+<pre><code>file1 = paths.shift();
+</code></pre>
 
 <p>async.parallel([
-  function(callback) {
-    fs.stat(file1，function(error，stat) {
-      // use stat.size
-      callback(error，stat);
-    });
-  },
-  function(callback) {
-    async.map(paths，fs.stat，callback);
-  }
+  function(callback) {</p>
+
+<pre><code>fs.stat(file1，function(error，stat) {
+  // use stat.size
+  callback(error，stat);
+});
+</code></pre>
+
+<p>  },
+  function(callback) {</p>
+
+<pre><code>async.map(paths，fs.stat，callback);
+</code></pre>
+
+<p>  }
 ]，function(error，results) {
   var stats = [results[0]].concat(results[1]);
   // use the stats
@@ -268,14 +241,15 @@ String -&gt; Promise Stat
 <p>下面就是这个元编程的函数:</p>
 
 <p>```javascript
-// promisify :: (a -&gt; (Error -&gt; b -&gt; ()) -&gt; ()) -&gt; (a -&gt; Promise b)
+// promisify :: (a &ndash;> (Error &ndash;> b &ndash;> ()) &ndash;> ()) &ndash;> (a &ndash;> Promise b)
 var promisify = function(fn，receiver) {
-  return function() {
-    var slice   = Array.prototype.slice,
-        args    = slice.call(arguments，0，fn.length - 1),
-        promise = new Promise();</p>
+  return function() {</p>
 
-<pre><code>args.push(function() {
+<pre><code>var slice   = Array.prototype.slice,
+    args    = slice.call(arguments，0，fn.length - 1),
+    promise = new Promise();
+
+args.push(function() {
   var results = slice.call(arguments),
       error   = results.shift();
 
@@ -284,8 +258,12 @@ var promisify = function(fn，receiver) {
 });
 
 fn.apply(receiver，args);
-return promise;   }; }; ```
+return promise;
 </code></pre>
+
+<p>  };
+};
+```</p>
 
 <p>(这还不是一个通用方案，但是足够在我们的场景里使用了.)</p>
 
@@ -294,9 +272,9 @@ return promise;   }; }; ```
 <p>```javascript
 var fs_stat = promisify(fs.stat);</p>
 
-<p>var paths = [‘file1.txt’，’file2.txt’，’file3.txt’];</p>
+<p>var paths = [&lsquo;file1.txt'，'file2.txt'，'file3.txt&rsquo;];</p>
 
-<p>// [String] -&gt; [Promise Stat]
+<p>// [String] &ndash;> [Promise Stat]
 var statsPromises = paths.map(fs_stat);
 ```</p>
 
@@ -313,29 +291,32 @@ statsPromises[0].then(function(stat) { /* use stat.size */ });
 <p>让我们看看一个简单的 list 方法是怎么做到可以把一个包含了 promises 的列表转化成一个 promise，而且当它里面所有的 promises 都处理完后，它自己也处理了.</p>
 
 <p>```javascript
-// list :: [Promise a] -&gt; Promise [a]
+// list :: [Promise a] &ndash;> Promise [a]
 var list = function(promises) {
   var listPromise = new Promise();
   for (var k in listPromise) promises[k] = listPromise[k];</p>
 
-<p>var results = []，done = 0;</p>
+<p>  var results = []，done = 0;</p>
 
-<p>promises.forEach(function(promise，i) {
-    promise.then(function(result) {
-      results[i] = result;
-      done += 1;
-      if (done === promises.length) promises.resolve(results);
-    }，function(error) {
-      promises.reject(error);
-    });
-  });</p>
+<p>  promises.forEach(function(promise，i) {</p>
 
-<p>if (promises.length === 0) promises.resolve(results);
+<pre><code>promise.then(function(result) {
+  results[i] = result;
+  done += 1;
+  if (done === promises.length) promises.resolve(results);
+}，function(error) {
+  promises.reject(error);
+});
+</code></pre>
+
+<p>  });</p>
+
+<p>  if (promises.length === 0) promises.resolve(results);
   return promises;
 };
 ```</p>
 
-<p><em>(译者注：这里感觉好像哪怪怪的，好像 promises 和 listPromise 几个地方反了。作者没开评论，无法确认，不过有时间试一下代码就知道了。)</em></p>
+<p><em>(译者注：这里感觉好像 promises 和 listPromise 几个地方反了。作者没开评论，无法确认，不过有时间试一下代码就知道了。)</em></p>
 
 <p>(这个方法其实和 jQuery.when() 函数类似，它同样接收一个列表的 promises 并返回一个新的 promise。当这个 promise 所有的输入都处理完后，它自己也处理了.)</p>
 
@@ -350,8 +331,10 @@ list(statsPromises).then(function(stats) { /* use the stats */ });
 <p>```javascript
 var fs_stat = promisify(fs.stat);</p>
 
-<p>var paths = [‘file1.txt’，’file2.txt’，’file3.txt’],
-    statsPromises = list(paths.map(fs_stat));</p>
+<p>var paths = [&lsquo;file1.txt'，'file2.txt'，'file3.txt&rsquo;],</p>
+
+<pre><code>statsPromises = list(paths.map(fs_stat));
+</code></pre>
 
 <p>statsPromises[0].then(function(stat) {
   // use stat.size
@@ -362,7 +345,7 @@ var fs_stat = promisify(fs.stat);</p>
 });
 ```</p>
 
-<p>这个解决方案的表达就相当的简洁清晰了。通过一些通用的辅助函数和既有的数组的方法，我们用一种正确的，有效并且容易调整的方法来实现了。我们也不需要 async 模块的特殊集合类函数，我们只需要让 promises和数组两者的思想相互独立，并通过一种强大的方式把它们组合使用就可以了.</p>
+<p>这个解决方案的表达就相当的简洁清晰了。通过一些通用的辅助函数和既有的数组操作函数，我们用一种正确的，有效并且容易调整的方法来实现了。我们也不需要 async 模块的特殊集合类函数，我们只需要让 promises和数组两者的思想相互独立，并通过一种强大的方式把它们组合使用就可以了.</p>
 
 <p>特别要注意的是，我们的程序在这里并没有说任何部分是应该是并行还是串行处理的。我们只是描述了我们想要什么，任务之间的关系是怎么样的，剩下的都是 promise 组件帮我们优化的.</p>
 
@@ -374,12 +357,15 @@ async.map(inputs，fn，function(error，results) {});
 
 <p>和下面的是一样的:</p>
 
-<p><code>javascript
-list(inputs.map(promisify(fn))).then(
-    function(results) {},
-    function(error) {}
-);
-</code></p>
+<p>```javascript
+list(inputs.map(promisify(fn))).then(</p>
+
+<pre><code>function(results) {},
+function(error) {}
+</code></pre>
+
+<p>);
+```</p>
 
 <p>async.each() 其实就是用 async.map()，然后利用那些被执行的函数的副作用，而把它们的返回值舍弃掉; 你用 map() 就可以了.</p>
 
@@ -393,17 +379,22 @@ async.mapSeries(dirs，fs.rmdir，function(error) {});
 <p>和下面的是一样的:</p>
 
 <p>```javascript
-var dirs     = [‘a/b/c’，’a/b’，’a’],
-    fs_rmdir = promisify(fs.rmdir);</p>
+var dirs     = [&lsquo;a/b/c'，'a/b'，'a&rsquo;],</p>
+
+<pre><code>fs_rmdir = promisify(fs.rmdir);
+</code></pre>
 
 <p>var rm_rf = dirs.reduce(function(promise，path) {
   return promise.then(function() { return fs_rmdir(path) });
 }，unit());</p>
 
-<p>rm_rf.then(
-    function() {},
-    function(error) {}
-);
+<p>rm_rf.then(</p>
+
+<pre><code>function() {},
+function(error) {}
+</code></pre>
+
+<p>);
 ```</p>
 
 <p>这里的 unit() 只是一个简单的返回一个已经处理的 promise 来开始整个操作链 (如果你知道什么是 monads，这个就是 promises 的返回函数):</p>
@@ -419,58 +410,70 @@ var unit = function(a) {
 
 <p>这个使用 reduce() 的方案简单的使用接收列表中的两个路径值，并使用 promise.then() 来确保前面的文件夹删除成功之后，再删除后面的文件夹。这其实还帮你处理了非空文件夹的情况: 如果前面的 promise 因为任何错误而无法处理，那么整个处理流程就停止了。使用值的依赖关系来强制某种执行顺序是函数式编程使用 monads 来处理副作用的核心思想.</p>
 
-<p>最后的代码似乎比同样功能的 async 代码更啰嗦，但别因为这样蒙骗了你。最重要的思想是我们通过把 promise 值和列表操作来组合程序，而不是依赖于特别的库来控制程序流。正如我们前面看到的，前一种方式可以写出更容易理解的程序.</p>
+<p>最后的代码似乎比同样功能的 async 代码更啰嗦，但别因为这样蒙骗了你。最重要的思想是我们通过使用 promise 数值和列表操作来组合程序，而不是依赖于特别的库来控制程序流。正如我们前面看到的，前一种方式可以写出更容易理解的程序.</p>
 
 <p>前一种程序更容易理解是因为我们把我们思考流程的一部分交给机器去做了。当使用 async 模块的时候，我们的思考流程是这样的:</p>
 
-<ol>
-  <li>在程序里，我们的任务应该是这样相互依赖的,  </li>
-  <li>因此，应该要这样把操作组织好,  </li>
-  <li>那么，我们现在用代码来表现 B 所描述的流程.  </li>
+<ol type="a">
+<li>在程序里，我们的任务应该是这样相互依赖的,</li>
+<li>因此，应该要这样把操作组织好,</li>
+<li>那么，我们现在用代码来表现 B 所描述的流程.</li>
 </ol>
+
 
 <p>利用相互依赖的 promises 可以让你完全把 B 那步抛弃掉。你的代码只需要表达出任务的相互关系就可以了，然后让电脑来决定处理流程。换另一个说法就是，回调风格是显式的控制处理流程来把很多值组织在一起，而 promises 是显式表达出值的关系来把控制流的各个组件连接在一起。回调是指令式的，promises 是函数式的.</p>
 
-<p>这个主题的讨论只有当我们谈到 promises 的最后一个使用场景，也就是函数式编程的核心思想，延时性，才算完整。Haskell 是一种惰性语言。它和那些从上往下执行的脚本程序不一样，它是从定义了程序最终输出的表达式开始的 – 有什么需要写到标准输出，数据库，等，然后反回来向前执行。它首先看最终的表达式是依赖那些表达式来取得它们的输入值的，然后一直往前遍历整棵树图，直到整个程序为了它的输出计算出所需的所有数据为止。只有需要用到的数据才会在程序里计算出来.</p>
+<p>这个主题的讨论只有当我们谈到 promises 的最后一个使用场景，也就是函数式编程的核心思想，延时性，才算完整。Haskell 是一种惰性语言。它和那些从上往下执行的脚本程序不一样，它是从定义了程序最终输出的表达式开始的 – 有什么需要写到标准输出，数据库等，然后反回来向前执行。它首先看最终的表达式是依赖哪些表达式来取得它们的输入值的，然后一直往前遍历整棵树图，直到整个程序为了它的输出结果反过来计算出所需的所有数据为止。只有需要用到的数据才会在程序里计算出来.</p>
 
 <p>很多时候，计算机领域的问题，最后找到的最佳解决方案都是需要找到最佳的数据结构来建模而得出来的。JavaScript 里有一个跟我刚才描述的情况非常相似的问题: 模块加载。你只想加载那些你的程序需要用到的模块，并且希望越快越好.</p>
 
-<p>在我们有 CommonJS 和 AMD 这类依赖关系敏感的规范前，我们有好一些脚本加载库。它们基本的工作原理都是像我们上面的例子一样，通过显式向加载器声明你要加载的脚本哪些是可以并行下载的，哪些是一定要按某种顺序下载。你基本上都要说清楚下载的策略，要正确并有效的做好的是相当困难的。相反，通过描述脚本之间的依赖关系来让加载器优化下载策略就会容易很多.</p>
+<p>在我们有 CommonJS 和 AMD 这类有了依赖关系意识的规范前，我们有好一些脚本加载库。它们基本的工作原理都是像我们上面的例子一样，通过显式向加载器声明你要加载的脚本哪些是可以并行下载的，哪些是一定要按某种顺序下载。你基本上都要说清楚下载的策略，要正确并有效的做好的是相当困难的。相反，通过描述脚本之间的依赖关系来让加载器优化下载策略就会容易很多.</p>
 
 <p>现在让我们来看看怎么实现 LazyPromise 的。这是一个 Promise，包含了一个可能会做异步操作的函数。这个函数只有在被调用 then() 这个方法的时候会被执行一次: 我们只有在有需要得到返回结果的时候才会开始执行。我们通过重写 then() 来判断一下如果还没有开始过的话就执行操作.</p>
 
 <p>```javascript
-var Promise = require(‘rsvp’).Promise,
-    util    = require(‘util’);</p>
+var Promise = require(&lsquo;rsvp&rsquo;).Promise,</p>
+
+<pre><code>util    = require('util');
+</code></pre>
 
 <p>var LazyPromise = function(factory) {
-  this._factory = factory;
-  this._started = false;
+  this.<em>factory = factory;
+  this.</em>started = false;
 };
 util.inherits(LazyPromise，Promise);</p>
 
 <p>LazyPromise.prototype.then = function() {
-  if (!this._started) {
-    this._started = true;
-    var self = this;</p>
+  if (!this._started) {</p>
 
-<pre><code>this._factory(function(error，result) {
+<pre><code>this._started = true;
+var self = this;
+
+this._factory(function(error，result) {
   if (error) self.reject(error);
   else self.resolve(result);
-});   }   return Promise.prototype.then.apply(this，arguments); }; ```
+});
 </code></pre>
+
+<p>  }
+  return Promise.prototype.then.apply(this，arguments);
+};
+```</p>
 
 <p>比如说，下面这个程序什么也不会做: 因为我们没有向 promise 取值，没有需要执行任何操作:</p>
 
-<p><code>javascript
+<p>```javascript
 var delayed = new LazyPromise(function(callback) {
-  console.log('Started');
-  setTimeout(function() {
-    console.log('Done');
-    callback(null，42);
-  }，1000);
+  console.log(&lsquo;Started&rsquo;);
+  setTimeout(function() {</p>
+
+<pre><code>console.log('Done');
+callback(null，42);
+</code></pre>
+
+<p>  }，1000);
 });
-</code></p>
+```</p>
 
 <p>但是如果我们添加了下面这一行代码，那么程序就会打印出 Started，然后一秒后再打印出Done，最后打印出42:</p>
 
@@ -487,7 +490,7 @@ delayed.then(console.log);</p>
 
 <p>// prints:
 // Started
-// – 1 second delay –
+// &mdash; 1 second delay &mdash;
 // Done
 // 42
 // 42
@@ -497,37 +500,49 @@ delayed.then(console.log);</p>
 <p>通过把以上简单的通用操作抽象出来，我们很容易就可以打造一个模块优化系统。想象一下我们要把一系列的模块这样处理一下: 每一个模块创建时都绑定了一个名字，一个它依赖的模块列表，和一个构造函数。这个构造函数会在执行时被传入所依赖的模块作为参数，然后返回本身这个模块的 API。这其实和 AMD 工作模式类似.</p>
 
 <p>```javascript
-var A = new Module(‘A’，[]，function() {
-  return {
-    logBase: function(x，y) {
-      return Math.log(x) / Math.log(y);
-    }
-  };
+var A = new Module(&lsquo;A'，[]，function() {
+  return {</p>
+
+<pre><code>logBase: function(x，y) {
+  return Math.log(x) / Math.log(y);
+}
+</code></pre>
+
+<p>  };
 });</p>
 
-<p>var B = new Module(‘B’，[A]，function(a) {
-  return {
-    doMath: function(x，y) {
-      return ‘B result is: ‘ + a.logBase(x，y);
-    }
-  };
+<p>var B = new Module(&lsquo;B'，[A]，function(a) {
+  return {</p>
+
+<pre><code>doMath: function(x，y) {
+  return 'B result is: ' + a.logBase(x，y);
+}
+</code></pre>
+
+<p>  };
 });</p>
 
-<p>var C = new Module(‘C’，[A]，function(a) {
-  return {
-    doMath: function(x，y) {
-      return ‘C result is: ‘ + a.logBase(y，x);
-    }
-  };
+<p>var C = new Module(&lsquo;C'，[A]，function(a) {
+  return {</p>
+
+<pre><code>doMath: function(x，y) {
+  return 'C result is: ' + a.logBase(y，x);
+}
+</code></pre>
+
+<p>  };
 });</p>
 
-<p>var D = new Module(‘D’，[B，C]，function(b，c) {
-  return {
-    run: function(x，y) {
-      console.log(b.doMath(x，y));
-      console.log(c.doMath(x，y));
-    }
-  };
+<p>var D = new Module(&rsquo;D'，[B，C]，function(b，c) {
+  return {</p>
+
+<pre><code>run: function(x，y) {
+  console.log(b.doMath(x，y));
+  console.log(c.doMath(x，y));
+}
+</code></pre>
+
+<p>  };
 });
 ```</p>
 
@@ -539,16 +554,19 @@ var A = new Module(‘A’，[]，function() {
 var DELAY = 1000;</p>
 
 <p>var Module = function(name，deps，factory) {
-  this._factory = function(callback) {
-    list(deps).then(function(apis) {
-      console.log(‘– module LOAD: ‘ + name);
-      setTimeout(function() {
-        console.log(‘– module done: ‘ + name);
-        var api = factory.apply(this，apis);
-        callback(null，api);
-      }，DELAY);
-    });
-  };
+  this._factory = function(callback) {</p>
+
+<pre><code>list(deps).then(function(apis) {
+  console.log('-- module LOAD: ' + name);
+  setTimeout(function() {
+    console.log('-- module done: ' + name);
+    var api = factory.apply(this，apis);
+    callback(null，api);
+  }，DELAY);
+});
+</code></pre>
+
+<p>  };
 };
 util.inherits(Module，LazyPromise);
 ```</p>
@@ -560,14 +578,14 @@ D.then(function(d) { d.run(1000，2) });</p>
 
 <p>// prints:
 //
-// – module LOAD: A
-// – module done: A
-// – module LOAD: B
-// – module LOAD: C
-// – module done: B
-// – module done: C
-// – module LOAD: D
-// – module done: D
+// &mdash; module LOAD: A
+// &mdash; module done: A
+// &mdash; module LOAD: B
+// &mdash; module LOAD: C
+// &mdash; module done: B
+// &mdash; module done: C
+// &mdash; module LOAD: D
+// &mdash; module done: D
 // B result is: 9.965784284662087
 // C result is: 0.10034333188799373
 ```</p>
@@ -582,25 +600,25 @@ D.then(function(d) { d.run(1000，2) });</p>
   
   <entry>
     <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
     <updated>2013-09-24T06:24:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
-    <content type="html"><![CDATA[
-<p>Today I just wander around Google Analytics to check my blog’s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:  </p>
+    <id>http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
+    <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog&rsquo;s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:</p>
 
 <ol>
-  <li>Total Visits <strong>616</strong>  </li>
-  <li>Unique Visitors: <strong>555</strong>  </li>
-  <li>Pageviews: <strong>793</strong>  </li>
-  <li>Pages / visit: <strong>1.29</strong>  </li>
-  <li>% New Visits: <strong>88.31%</strong>  </li>
+<li>Total Visits <strong>616</strong></li>
+<li>Unique Visitors: <strong>555</strong></li>
+<li>Pageviews: <strong>793</strong></li>
+<li>Pages / visit: <strong>1.29</strong></li>
+<li>% New Visits: <strong>88.31%</strong></li>
 </ol>
 
-<p>Thanks to everyone who visited my blogs and made all those suggestive comments, such as Da.  I will strive to write more valuable articles to keep my knowledge and help others.  Hopefully, the return visits can grow more.  </p>
 
-<p>I happened to found that This particular <a href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">article</a> about <a href="http://angularjs.org">AngularJS</a> <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> brought me <strong>215</strong> visits.  I think that should be due to a patch I submitted to AngularJS in <a href="https://github.com">Github</a>.  How valuable for that patch!!  I will try to contribute more to the opensource.  </p>
+<p>Thanks to everyone who visited my blogs and made all those suggestive comments, such as Da.  I will strive to write more valuable articles to keep my knowledge and help others.  Hopefully, the return visits can grow more.</p>
 
-<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks too.  </p>
+<p>I happened to found that This particular <a href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/">article</a> about <a href="http://angularjs.org">AngularJS</a> <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> brought me <strong>215</strong> visits.  I think that should be due to a patch I submitted to AngularJS in <a href="https://github.com">Github</a>.  How valuable for that patch!!  I will try to contribute more to the opensource.</p>
+
+<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks too.</p>
 
 <p>Do not ask but give.  You will earn more.  Thanks guys.</p>
 ]]></content>
@@ -608,27 +626,27 @@ D.then(function(d) { d.run(1000，2) });</p>
   
   <entry>
     <title type="html"><![CDATA[How to support page content i18n in AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
     <updated>2013-08-29T20:16:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
-    <content type="html"><![CDATA[
-<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn’t really help us a lot to do what we want basically for i18n, language change support of the web page content.  </p>
+    <id>http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
+    <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn&rsquo;t really help us a lot to do what we want basically for i18n, language change support of the web page content.</p>
 
-<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?  </p>
+<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?</p>
 
-<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven’t done performance test for extremely large page yet.  </p>
+<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven&rsquo;t done performance test for extremely large page yet.</p>
 
-<p>Let’s see how it’s done.  </p>
+<p>Let&rsquo;s see how it&rsquo;s done.</p>
 
-<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.  </p>
+<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.</p>
 
-<p>```javascript
-    factory(‘LocaleManager’, function($resource, $rootScope) {
-        var langs = {},
-            LocaleManager = $resource(‘/js/i18n/resources-locale_:lang.js’,
-                {port: ‘:3000’, lang: ‘en_US’});</p>
+<p>```javascript</p>
 
-<pre><code>    LocaleManager.load = function(language) {
+<pre><code>factory('LocaleManager', function($resource, $rootScope) {
+    var langs = {},
+        LocaleManager = $resource('/js/i18n/resources-locale_:lang.js',
+            {port: ':3000', lang: 'en_US'});
+
+    LocaleManager.load = function(language) {
         if (langs[language]) {
             if ($rootScope.language !== language) {
                 $rootScope.language = language;
@@ -653,18 +671,23 @@ D.then(function(d) { d.run(1000，2) });</p>
     };
 
     return LocaleManager;
-}) ```
+})
 </code></pre>
 
-<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.  </p>
+<p>```</p>
 
-<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.  </p>
+<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.</p>
 
-<p>
-    {{ LocaleManager.getText(‘Login’, language) }}
-</p>
+<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.</p>
 
-<p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven’t tried that yet and will give an update here once done.</p>
+<p></p>
+
+<pre><code>{{ LocaleManager.getText('Login', language) }}
+</code></pre>
+
+<p></p>
+
+<p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven&rsquo;t tried that yet and will give an update here once done.</p>
 
 <p>Do you have experience on i18n in AngularJS?  Thoughts and comments are appreciated.</p>
 ]]></content>
@@ -672,22 +695,24 @@ D.then(function(d) { d.run(1000，2) });</p>
   
   <entry>
     <title type="html"><![CDATA[Function definition, this and bind in JavaScript]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
     <updated>2013-06-14T20:00:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
-    <content type="html"><![CDATA[
-<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don’t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.  </p>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
+    <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&rsquo;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
 
 <p>```javascript
-var TestObj = {
-    a: function() {
-        console.log(‘A’);
-    },
-    b: function() {
-        console.log(‘B’);
-        this.a();
-    }
-};</p>
+var TestObj = {</p>
+
+<pre><code>a: function() {
+    console.log('A');
+},
+b: function() {
+    console.log('B');
+    this.a();
+}
+</code></pre>
+
+<p>};</p>
 
 <p>TestObj.b();</p>
 
@@ -695,7 +720,7 @@ var TestObj = {
 c();
 ```</p>
 
-<p>The result will be as below, right?  </p>
+<p>The result will be as below, right?</p>
 
 <p><code>javascript
 B
@@ -704,7 +729,7 @@ B
 A
 </code></p>
 
-<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don’t know JavasScript well either like me.  The result actually is:  </p>
+<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don&rsquo;t know JavasScript well either like me.  The result actually is:</p>
 
 <p><code>javascript
 B
@@ -713,63 +738,72 @@ B
 TypeError: Object [object global] has no method 'a'
 </code></p>
 
-<p>It is a little bit awkward or counterintuitive at first glance but it’s JavaScript.  It’s the feature and amazing part.  Let’s break it down piece by piece and see why.  </p>
+<p>It is a little bit awkward or counterintuitive at first glance but it&rsquo;s JavaScript.  It&rsquo;s the feature and amazing part.  Let&rsquo;s break it down piece by piece and see why.</p>
 
-<h2 id="function-definition">Function definition</h2>
-<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:  </p>
+<h2>Function definition</h2>
+
+<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:</p>
 
 <p>```javascript
-function B() {
-    console.log(‘B’);
-    this.a();
-};</p>
+function B() {</p>
 
-<p>var TestObj = {
-    a: function() {
-        console.log(‘A’);
-    },
-    b: B
-};
+<pre><code>console.log('B');
+this.a();
+</code></pre>
+
+<p>};</p>
+
+<p>var TestObj = {</p>
+
+<pre><code>a: function() {
+    console.log('A');
+},
+b: B
+</code></pre>
+
+<p>};
 ```</p>
 
-<h2 id="this">this</h2>
-<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:<br />
-&gt;<strong>10.4.3 Entering Function Code</strong><br />
-&gt;The following steps are performed when control enters the execution context for function code contained in
-function object F, a caller provided thisArg, and a caller provided argumentsList:  </p>
+<h2>this</h2>
 
-<blockquote>
-  <ol>
-    <li>If the function code is strict code, set the ThisBinding to thisArg.  </li>
-    <li>Else if thisArg is null or undefined, set the ThisBinding to the global object.  </li>
-    <li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).  </li>
-    <li>Else set the ThisBinding to thisArg.<br />
-…</li>
-  </ol>
+<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:</p>
+
+<blockquote><p><strong>10.4.3 Entering Function Code</strong><br/>
+The following steps are performed when control enters the execution context for function code contained in
+function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
+
+<ol>
+<li>If the function code is strict code, set the ThisBinding to thisArg.</li>
+<li>Else if thisArg is null or undefined, set the ThisBinding to the global object.</li>
+<li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).</li>
+<li>Else set the ThisBinding to thisArg.<br/>
+&hellip;</li>
+</ol>
 </blockquote>
 
-<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.  </p>
+<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.</p>
 
-<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.  </p>
+<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.</p>
 
-<p>However, below statements mean differently.  </p>
+<p>However, below statements mean differently.</p>
 
 <p><code>javascript
 var c = TestObj.b;
 c();
 </code></p>
 
-<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.   </p>
+<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.</p>
 
-<h2 id="how-to-set-a-particular-object-as-this-to-function">How to set a particular object as <em>this</em> to function</h2>
-<p>It’s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:  </p>
+<h2>How to set a particular object as <em>this</em> to function</h2>
+
+<p>It&rsquo;s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:</p>
 
 <p><code>javascript
 var c = TestObj.b;
 c.call(TestObj);
 </code></p>
 
-<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:  </p>
+<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:</p>
 
 <p>```javascript
 function dynamic(fn) {
@@ -779,9 +813,9 @@ function dynamic(fn) {
 <p>dynamic(TestObj.b);
 ```</p>
 
-<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it’s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.  </p>
+<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it&rsquo;s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.</p>
 
-<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:  </p>
+<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:</p>
 
 <p>```javascript
 function dynamic(fn) {
@@ -791,9 +825,9 @@ function dynamic(fn) {
 <p>dynamic(TestObj.b.bind(TestObj));
 ```</p>
 
-<p>It’s fun, isn’t it?</p>
+<p>It&rsquo;s fun, isn&rsquo;t it?</p>
 
-<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.  </p>
+<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.</p>
 
 <p>```javascript
 var length = 3;</p>
@@ -802,23 +836,172 @@ var length = 3;</p>
   console.log(this.length);
 }</p>
 
-<p>var TestObj = {
-    length: 2,
-    b: logLength,
-    c: function() {
-        (function(fn) {
-            arguments<a href="">0</a>;
-        })(logLength);
-    }
-};</p>
+<p>var TestObj = {</p>
+
+<pre><code>length: 2,
+b: logLength,
+c: function() {
+    (function(fn) {
+        arguments[0]();
+    })(logLength);
+}
+</code></pre>
+
+<p>};</p>
 
 <p>TestObj.b();
 TestObj.c();
 ```</p>
 
-<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.  </p>
+<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.</p>
 
 <p>More fun, right?</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
+    <updated>2013-06-08T22:17:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
+    <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it&rsquo;s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
+
+<p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>
+
+<blockquote><p><strong>expect(method, url, data, headers)</strong><br/>
+Creates a new request expectation.</p>
+
+<p>Parameters<br/>
+* method – {string} – HTTP method.<br/>
+* url – {string|RegExp} – HTTP url.<br/>
+* data(optional) – {(string|RegExp)=} – HTTP request body.</p></blockquote>
+
+<p>So normally, below simple case is working as expected:</p>
+
+<p>```javascript</p>
+
+<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', 'hello').respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save('hello');
+$httpBackend.flush();
+
+$httpBackend.expect('POST', 'http://localhost/timeEntry', /te/g).respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save('test');
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>However, in real application, the data posted to server is normally in JSON format.  How do we verify JSON data then?  Actually, if we look into the source of the <em>angular-mocks.js</em>, it supports JSON data too although it&rsquo;s not documented.</p>
+
+<p>```javascript
+  this.matchData = function(d) {</p>
+
+<pre><code>if (angular.isUndefined(data)) return true;
+if (data &amp;&amp; angular.isFunction(data.test)) return data.test(d);
+if (data &amp;&amp; !angular.isString(data)) return angular.toJson(data) == d;
+return data == d;
+</code></pre>
+
+<p>  };
+```</p>
+
+<p>So below sample also works.</p>
+
+<p>```javascript</p>
+
+<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', {firstName: 'Ken', lastName: 'Chen'}).respond(200, 'Done');
+$resource('http://localhost/timeEntry/').save({firstName: 'Ken', lastName: 'Chen'});
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>As we see, the JSON data validation requires the JSON data posted to be exactly the same as the expect value provided.  How if the JSON data posted is different on each posting, say guid or timestamp field is contained, and we want to verify whether the JSON data is valid based on our special valiation logic?</p>
+
+<p>Here is the hack to make AngularJS take our special validation logic.</p>
+
+<p>```javascript</p>
+
+<pre><code>var Validator = (function() {
+    return {
+        hasMinimumFields: function(entry) {
+            return StringUtil.isNotBlank(entry.id) &amp;&amp; StringUtil.isNotBlank(entry.desc) &amp;&amp;
+                StringUtil.isNotBlank(entry.lastUpdateOn) &amp;&amp; StringUtil.isNotBlank(entry.status);
+        },
+        isNewEntry: function(entry) {
+            return this.hasMinimumFields(entry) &amp;&amp; entry.status === 'P';
+        }
+    };
+})();
+
+$scope.desc = 'Hello there';
+
+var data = {
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc === $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+$httpBackend.expect('POST', 'http://localhost/timeEntry', data).respond(200, 'Done');
+$scope.saveEntry(); // Let's assume this method will post the data with model $scope.desc
+$httpBackend.flush();
+</code></pre>
+
+<p>```</p>
+
+<p>The hacking as you see is to take advantage of the <em>test</em> method which the <em>RegExp</em> has and AngularJS uses for data matching.  But when the data is not posted as expected, the Unit Test fails with below message:</p>
+
+<p>```javascript</p>
+
+<pre><code>Chrome 27.0 (Linux) Unit: Controllers Test EntryCtrl should start entry in correct format if only entry desc is filled. FAILED
+Error: Expected POST http://localhost/timeEntry with different data
+EXPECTED: {}
+GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Unit Test","id":"3849ae1a-4b9c-40be-baa0-60eeaf3af430","lastUpdateOn":"2013/06/08T13:24:44.104+0000"}
+</code></pre>
+
+<p>```</p>
+
+<p>This error message is not quite developer friendly and it doesn&rsquo;t tell you much about why it failed at first glance.  However, if we make the test data contain the JSON value too, the expect message would be more meaningful.</p>
+
+<p>```javascript</p>
+
+<pre><code>var data = {
+    desc: $scope.desc,
+    status: 'P',
+    id: 'SHOULD NOT BLANK',
+    lastUpdateOn: 'SHOULD NOT BLANK',
+    test: function(data) {
+        var entry = angular.fromJson(data);
+        return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+    }
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
+</code></p>
+
+<p><em>[Edited on Aug 09th 2013]</em>: After AngularJS accepted my <a href="https://github.com/angular/angular.js/pull/2981">pull request</a> to support Function as validation data last week, we don&rsquo;t need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function&rsquo;s <em>toString()</em> method to give more expressive error message in a cleaner way.</p>
+
+<p>```javascript</p>
+
+<pre><code>var data = function(data) {
+    var entry = angular.fromJson(data);
+    return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
+};
+data.toString = function() {
+    return 'The status of the new entry should be "P", desc should be "' + $scope.desc +
+        '" and its id &amp; lastUpdateOn should not be blank.';
+};
+</code></pre>
+
+<p>```</p>
+
+<p><code>javascript
+EXPECTED: The status of the new entry should be "P", desc should be "First Unit Test" and its id &amp; lastUpdateOn should not be blank.
+</code></p>
 ]]></content>
   </entry>
   

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Jasmine | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/jasmine/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/jasmine/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
     <updated>2013-09-24T06:24:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
     <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog&rsquo;s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:</p>
 
 <ol>
@@ -41,9 +41,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
     <updated>2013-06-08T22:17:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
     <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it&rsquo;s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
 
 <p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>
@@ -187,9 +187,9 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test – Part 2 (Ajax & Behavior)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/"/>
     <updated>2012-08-30T23:04:06+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2</id>
     <content type="html"><![CDATA[<p>Ajax is a pretty common used feature now for every JS Rich application. How to test it is common headache for many application.</p>
 
 <p>ExtJS has been adopted in the two companies I worked and am working for.  Hence, here I only show you how to test Ajax in ExtJS built application.</p>
@@ -381,9 +381,9 @@ expect(oUI.nameField.getActiveError()).toEqual(oUI.duplicateNameWarningMsg);
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Unit Test - Part 1 (Philosophy and Test for Store)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/"/>
     <updated>2012-08-13T23:02:18+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store</id>
     <content type="html"><![CDATA[<p>After the <a href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/">integration</a> for ExtJS, Jasmine and Maven is done, we should consider how the unit test should be done for some web application built by ExtJS.</p>
 
 <p>My previous ExtJS projects experience are all for internal company usage in Retail or Logistics business, the UI is composed of plenty components and full of user interaction.  Hence, business logic are often intervened with UI behavior together.  This is also one of the reason previously we think it&rsquo;s difficult to go for JS Unit Test.  (Maybe just we are too inexperienced on that.  Please share your experience to us if you have any.)</p>
@@ -517,9 +517,9 @@ new xxx.DataStore();
   
   <entry>
     <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Integration]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
     <updated>2012-08-06T22:59:31+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/08/06/extjs-jasmine-maven-integration</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration</id>
     <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
 
 <p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error &ldquo;Class not found: File&rdquo; if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>

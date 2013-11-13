@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/"/>
     <updated>2013-11-13T21:43:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/11/13/callbacks-are-imperative</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative</id>
     <content type="html"><![CDATA[<p>我之前都有接触过关于 <a href="http://en.wikipedia.org/wiki/Promise_(programming)">Promise</a> 的一些文章，但是对它的感觉并不大。因为觉得虽然<a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)">回调</a>风格确实有问题，但我写的代码还没有复杂到那种程度，所以，要去使用的感觉并不强烈。</p>
 
 <p>但是，后面碰到一个问题真的好像用回调的风格来写的话，会比较糟糕。加上看到了这一篇从另一侧面来看 Promise 对函数式编程的思维方面的转变，觉得很不错。值得一看，所以在有其它大神也翻译过的情况下，自己也译一次，顺便深入学习。</p>
@@ -803,9 +803,9 @@
   
   <entry>
     <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
     <updated>2013-09-24T06:24:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs</id>
     <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog&rsquo;s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:</p>
 
 <ol>
@@ -829,9 +829,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to support page content i18n in AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
     <updated>2013-08-29T20:16:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/08/29/how-to-support-page-content-i18n-in-angularjs</id>
     <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn&rsquo;t really help us a lot to do what we want basically for i18n, language change support of the web page content.</p>
 
 <p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?</p>
@@ -922,9 +922,9 @@
   
   <entry>
     <title type="html"><![CDATA[至关重要的关系]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/29/startup-review-network/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network/"/>
     <updated>2013-06-29T07:59:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/29/startup-review-network</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network</id>
     <content type="html"><![CDATA[<p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>了。</p>
 
 <h2>比能力重要</h2>
@@ -1008,9 +1008,9 @@
   
   <entry>
     <title type="html"><![CDATA[永久测试之心, 寻求真我]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/26/startup-review-permanent-beta/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/"/>
     <updated>2013-06-26T06:39:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/26/startup-review-permanent-beta</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta</id>
     <content type="html"><![CDATA[<p>最近看了李开复作序的书：<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>，也就是<a href="http://www.amazon.com/dp/B008NXKYNO">THE START-UP OF YOU</a>的译本。书的英文原名和它的意图其实想说明的是，每个人其实都是和企业家一样，具备相同的特质。</p>
 
 <blockquote><p>广义的企业家精神：自主独立，足智多谋，满怀抱负，灵活变通，并拥有广泛的人脉。企业家精神是一种生活态度，而不是一个商业概念；是伴随一生的观念，而不只是某一代人的想法。</p></blockquote>
@@ -1074,9 +1074,9 @@
   
   <entry>
     <title type="html"><![CDATA[Function definition, this and bind in JavaScript]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
     <updated>2013-06-14T20:00:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
     <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&rsquo;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1293,9 +1293,9 @@ function object F, a caller provided thisArg, and a caller provided argumentsLis
   
   <entry>
     <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
     <updated>2013-06-08T22:17:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
     <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it&rsquo;s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
 
 <p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>
@@ -1485,9 +1485,9 @@ Creates a new request expectation.</p>
   
   <entry>
     <title type="html"><![CDATA[一点点对提问，分享和影响力的看法]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/05/28/how-to-ask-share-and-influence/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/05/28/how-to-ask-share-and-influence/"/>
     <updated>2013-05-28T21:48:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/05/28/how-to-ask-share-and-influence</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/05/28/how-to-ask-share-and-influence</id>
     <content type="html"><![CDATA[<p>一晚和一位旧同事在 KFC 从10点夜谈到凌晨 3 点。很久没那么年轻过了。我们谈了什么？ 主要是提问，指导和分享，人格魅力和影响力，投资等方面。</p>
 
 <h2>提问，指导和分享</h2>
@@ -1561,9 +1561,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[打造 Facebook 读后感]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/04/25/review-on-book-inside-the-facebook/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook/"/>
     <updated>2013-04-25T06:10:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/04/25/review-on-book-inside-the-facebook</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook</id>
     <content type="html"><![CDATA[<p>看完<em><a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a></em>后，很快我又把<em><a href="http://www.amazon.cn/dp/B00ANI5YXW">打造 Facebook</a></em>看完了。但感觉这没上本书过＂瘾＂，我看得更快和粗略。</p>
 
 <p>笔者王淮主要是为外部人士揭秘 Facebook  内部一些流程和机制，包括招聘，人员培养，团队合作，项目流程等。本书内容叙述直白，但略显平淡和笼统。揭秘的 Facebook 流程，其实也和其他一些关于敏捷，管理等文章提及的好的做法没太大差别。这其实也在意料之中，因为核心机密也没可能爆料，加上好的做法本来就那些，关键看怎么做，执行力如何和团队配合，而且最主要是配合不同公司文化，架构和流程作调整。</p>
@@ -1602,9 +1602,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[我能否20个月赚130亿?]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/04/16/can-i-make-13-billion-in-20-months/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months/"/>
     <updated>2013-04-16T21:36:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/04/16/can-i-make-13-billion-in-20-months</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months</id>
     <content type="html"><![CDATA[<p>你是否看到这个标题，想鄙视我而冲进来了？呵呵，我承认是有点标题党，所以我马上告诉你答案，不能。因为看完<a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a>，我发现我不具备他，或者说硅谷人的特质，至少暂时。这就是他书里反复提到的，其实看书时也强烈感受到的，＂瘾＂。</p>
 
 <p>这本书周五在亚马逊下单，周六下午收到，周日晚就看完了。是在带儿子的零星时间看完的。之所以可以看的那么快，除了我看得快，没太关注些八卦细节外，重要的是书写的流畅，活跃，富有激情。真的使我拿起来就不想放下。感觉他就像和我对话，讲故事一样。推荐看看，也可以找我借。</p>
@@ -1677,9 +1677,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
     <updated>2013-04-13T12:59:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
     <content type="html"><![CDATA[<h2>Background</h2>
 
 <p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>
@@ -1789,9 +1789,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
     <updated>2013-02-13T21:40:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow</id>
     <content type="html"><![CDATA[<p>这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。</p>
 
 <h2><a href="http://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898">Lean Startup</a></h2>
@@ -1858,9 +1858,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[2013 Retrospect and Goal Setting]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
     <updated>2013-02-05T22:37:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
     <content type="html"><![CDATA[<p>现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。</p>
 
 <h2>翻墙</h2>
@@ -1947,9 +1947,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
     <updated>2013-02-02T14:32:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
     <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
 
 <h2>Requirement</h2>
@@ -2219,9 +2219,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[String interpolation should not be used with Class Directive in AngularJS]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/"/>
     <updated>2013-01-30T07:02:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
     <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -2414,9 +2414,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[被广泛误解的匈牙利命名法]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
     <updated>2013-01-03T21:03:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
     <content type="html"><![CDATA[<p>我承认我是其中的一员。要向发明者 <em>Charles Simonyi</em> 道个歉。</p>
 
 <p><strong>长期以来，不问出处，不求起源，只是单纯接受一些看起来是常识或事实的结论，导致此问题发生</strong>。这是我有的一点不足，要改进。多思考，多看书是良方，庆幸在不断服药中。如果不是看到 <a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel On Software</a>（<a href="http://book.douban.com/subject/4163938/">软件随想录</a>）里 <em>I&rsquo;m Hungary</em> 那一节，我会继续误解下去。扯远了，回归。</p>
@@ -2460,9 +2460,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[为什么开始写技术博客, 并且还是用英语?]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/01/01/why-i-start-blogging-and-in-english/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english/"/>
     <updated>2013-01-01T22:00:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/01/01/why-i-start-blogging-and-in-english</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english</id>
     <content type="html"><![CDATA[<p>一些朋友发现我最近在写一些博客，而且还多数是英语的，都在好奇我在搞什么。那我就写一篇博客来解释一下吧。</p>
 
 <p>写技术博客好处很多，很多牛人也提到过, 这是我出来刚工作时的一位同事的<a href="http://www.iamhukai.com/">博客</a>, 现在他在Thoughworks, 里面有好几篇文章说到为什么要写和怎么写。</p>
@@ -2506,9 +2506,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[UED in my pet project - Take Time (Part 1)]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
     <updated>2012-12-25T21:41:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
     <content type="html"><![CDATA[<h2>What is it and why I want to work on that</h2>
 
 <p>I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it&rsquo;s telling you to <em>&ldquo;Take your time.  Slow down.&rdquo;</em>.  Actually, it&rsquo;s where to take the time seriously and you can keep track of your time.</p>
@@ -2584,9 +2584,9 @@ to get the word out, the right people will already be listening.</p></blockquote
   
   <entry>
     <title type="html"><![CDATA[My practices on Time Management]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/12/24/my-practices-on-time-management/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/"/>
     <updated>2012-12-24T06:22:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/12/24/my-practices-on-time-management</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management</id>
     <content type="html"><![CDATA[<h2>The 101</h2>
 
 <blockquote><p>Time Management is the act or process of planning and exercising conscious control over the amount of time spent on specific activities, especially to increase effectiveness, efficiency or productivity.</p></blockquote>
@@ -2636,9 +2636,9 @@ The trouble is, getting into &ldquo;the zone&rdquo; is not easy. When you try to
   
   <entry>
     <title type="html"><![CDATA[A response pends forever issue in MongoDB, Connect and Node.js]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/"/>
     <updated>2012-12-05T21:08:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs</id>
     <content type="html"><![CDATA[<p><strong>My ignorance</strong><br/>
 When I first switched to use <a href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it&rsquo;s all fine.  There must be something wrong when I am using <a href="http://www.mongodb.org/">MongoDB</a> for session management.</p>
 

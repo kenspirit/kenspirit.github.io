@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Book | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/book/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/book/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[至关重要的关系]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/29/startup-review-network/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network/"/>
     <updated>2013-06-29T07:59:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/29/startup-review-network</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network</id>
     <content type="html"><![CDATA[<p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>了。</p>
 
 <h2>比能力重要</h2>
@@ -101,9 +101,9 @@
   
   <entry>
     <title type="html"><![CDATA[永久测试之心, 寻求真我]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/26/startup-review-permanent-beta/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/"/>
     <updated>2013-06-26T06:39:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/26/startup-review-permanent-beta</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta</id>
     <content type="html"><![CDATA[<p>最近看了李开复作序的书：<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>，也就是<a href="http://www.amazon.com/dp/B008NXKYNO">THE START-UP OF YOU</a>的译本。书的英文原名和它的意图其实想说明的是，每个人其实都是和企业家一样，具备相同的特质。</p>
 
 <blockquote><p>广义的企业家精神：自主独立，足智多谋，满怀抱负，灵活变通，并拥有广泛的人脉。企业家精神是一种生活态度，而不是一个商业概念；是伴随一生的观念，而不只是某一代人的想法。</p></blockquote>
@@ -167,9 +167,9 @@
   
   <entry>
     <title type="html"><![CDATA[打造 Facebook 读后感]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/04/25/review-on-book-inside-the-facebook/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook/"/>
     <updated>2013-04-25T06:10:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/04/25/review-on-book-inside-the-facebook</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/25/review-on-book-inside-the-facebook</id>
     <content type="html"><![CDATA[<p>看完<em><a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a></em>后，很快我又把<em><a href="http://www.amazon.cn/dp/B00ANI5YXW">打造 Facebook</a></em>看完了。但感觉这没上本书过＂瘾＂，我看得更快和粗略。</p>
 
 <p>笔者王淮主要是为外部人士揭秘 Facebook  内部一些流程和机制，包括招聘，人员培养，团队合作，项目流程等。本书内容叙述直白，但略显平淡和笼统。揭秘的 Facebook 流程，其实也和其他一些关于敏捷，管理等文章提及的好的做法没太大差别。这其实也在意料之中，因为核心机密也没可能爆料，加上好的做法本来就那些，关键看怎么做，执行力如何和团队配合，而且最主要是配合不同公司文化，架构和流程作调整。</p>
@@ -208,9 +208,9 @@
   
   <entry>
     <title type="html"><![CDATA[我能否20个月赚130亿?]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/04/16/can-i-make-13-billion-in-20-months/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months/"/>
     <updated>2013-04-16T21:36:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/04/16/can-i-make-13-billion-in-20-months</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months</id>
     <content type="html"><![CDATA[<p>你是否看到这个标题，想鄙视我而冲进来了？呵呵，我承认是有点标题党，所以我马上告诉你答案，不能。因为看完<a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a>，我发现我不具备他，或者说硅谷人的特质，至少暂时。这就是他书里反复提到的，其实看书时也强烈感受到的，＂瘾＂。</p>
 
 <p>这本书周五在亚马逊下单，周六下午收到，周日晚就看完了。是在带儿子的零星时间看完的。之所以可以看的那么快，除了我看得快，没太关注些八卦细节外，重要的是书写的流畅，活跃，富有激情。真的使我拿起来就不想放下。感觉他就像和我对话，讲故事一样。推荐看看，也可以找我借。</p>

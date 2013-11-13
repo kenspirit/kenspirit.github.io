@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: DB | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/db/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T08:35:37+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/db/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[一个多维度数据匹配的RDBMS数据库表设计的想法]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/10/27/db-design-for-multi-dimension-data/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/10/27/db-design-for-multi-dimension-data/"/>
     <updated>2012-10-27T23:48:37+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/10/27/db-design-for-multi-dimension-data</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/10/27/db-design-for-multi-dimension-data</id>
     <content type="html"><![CDATA[<p>首先, 我先要说明一下, 这里的“多维度”可能并不太准确.  这里说的并不是数据仓库里的维度, 而只是数据的属性.</p>
 
 <p>举个例子可能就比较好明白了.</p>
@@ -34,20 +34,7 @@
 
 <p>表 GLASSES的列有:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>UUID</td>
-      <td>名称</td>
-      <td>厂家</td>
-      <td>材料</td>
-      <td>颜色</td>
-      <td>设计</td>
-      <td> 面向人群</td>
-      <td>面向性别</td>
-    </tr>
-  </tbody>
-</table>
+<p>| UUID | 名称 | 厂家 | 材料 | 颜色 | 设计 | 面向人群 | 面向性别 |</p>
 
 <p>那么, 假设一个喜欢红色半框设计眼镜的男人来找眼镜, 根据输入来查寻数据的SQL就会是类似:</p>
 
@@ -75,28 +62,16 @@ AND (面向性别 = '男' OR 面向性别 IS NULL);
 <p>到这里, 问题就比较清楚了.  如果从写代码和DB设计来考虑, 属性做为表的列来设计的话, 我个人觉得有几种不好之处:</p>
 
 <ul>
-  <li>
-    <p>如果以后要添加或者删除属性, 表结构要不断改变, 代码也要不断改变来生成各种组合的动态SQL.</p>
-  </li>
-  <li>
-    <p>从SQL的特性 (条件不确定, 维度组合多) 来看, 并且如果维度或者说列多的话, 为每一个维度创建index也不太可行, 查询效率也不高.</p>
-  </li>
+<li><p>如果以后要添加或者删除属性, 表结构要不断改变, 代码也要不断改变来生成各种组合的动态SQL.</p></li>
+<li><p>从SQL的特性 (条件不确定, 维度组合多) 来看, 并且如果维度或者说列多的话, 为每一个维度创建index也不太可行, 查询效率也不高.</p></li>
 </ul>
+
 
 <p>所以, 自然的, 我把数据维度的值, 设计成存储在子表里, 结构示例如下:</p>
 
 <p>表GLASSES_ATTRIBUTES:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>UUID</td>
-      <td>GLASSES_UUID</td>
-      <td>维度类别</td>
-      <td>维度值</td>
-    </tr>
-  </tbody>
-</table>
+<p>| UUID | GLASSES_UUID | 维度类别 | 维度值 |</p>
 
 <p>这样的话, 上面的SQL就转换成:</p>
 
@@ -118,33 +93,25 @@ WHERE NOT EXISTS (
 <p>这种实现方法, 个人认为相对来说好处有:</p>
 
 <ul>
-  <li>
-    <p>虽然SQL也要动态生成, 但是变化的部份从表的列名, 转换成数据值, 逻辑会相当简单, 减少一些Hardcode的成份.</p>
-  </li>
-  <li>
-    <p>数据库表GLASSES_ATTRIBUTES可以创建一个维度类别+维度值的复合index就可以了</p>
-  </li>
+<li><p>虽然SQL也要动态生成, 但是变化的部份从表的列名, 转换成数据值, 逻辑会相当简单, 减少一些Hardcode的成份.</p></li>
+<li><p>数据库表GLASSES_ATTRIBUTES可以创建一个维度类别+维度值的复合index就可以了</p></li>
 </ul>
+
 
 <p>不过, 老实说, 我也不敢肯定后面一种SQL的查询效率会高点, 因为也会有比较多OR的条件, 并且还要用上NOT EXISTS.  我曾经测试过在GLASSESE里有6W条记录, GLASSES_ATTRIBUTES上有37W条记录的环境里, 用3个维度(也就是3个OR组合), 找出1W条左右记录, 大概0.01秒.  用6个维度, 找出1K条左右记录, 大概0.1秒;  用11个维度, 找出15条记录, 也大概0.2秒左右.  所以, 看起来, 好像还可以.</p>
 
 <p>其实, 我在这里把数据的维度值用行记录来存储, 而不是列值, 还因为实际的系统需求, 还有更多复杂的要求.  再举一个纯属搞笑的例子, 但实际原理是一样的.</p>
 
-<p>比如一个女的要征婚, 她列下了一些要求, 也就是”如果男的xxx, 就要准备yyy之类的.   xxx就是数据 (男) 的维度, 比如年龄30以上, 或者帅, 等.  yyy就是需求, 比如有房, 有车,  年薪,  爱宠物什么的.</p>
+<p>比如一个女的要征婚, 她列下了一些要求, 也就是"如果男的xxx, 就要准备yyy之类的.   xxx就是数据 (男) 的维度, 比如年龄30以上, 或者帅, 等.  yyy就是需求, 比如有房, 有车,  年薪,  爱宠物什么的.</p>
 
 <p>这里呢, 会有3个表:</p>
 
 <ul>
-  <li>
-    <p>主表 - 这里的每一条记录, 代表一份要求</p>
-  </li>
-  <li>
-    <p>维度子表 (CONDITIONS) - 存的是归到这份要求, 男的情况是什么, 如年龄30以上, 不帅</p>
-  </li>
-  <li>
-    <p>需求子表 (REQUIREMENTS) - 存的是归到这份要求, 男的要准备什么, 女的才会嫁他, 如车30W以上, 房要50W以上等</p>
-  </li>
+<li><p>主表 &ndash; 这里的每一条记录, 代表一份要求</p></li>
+<li><p>维度子表 (CONDITIONS) &ndash; 存的是归到这份要求, 男的情况是什么, 如年龄30以上, 不帅</p></li>
+<li><p>需求子表 (REQUIREMENTS) &ndash; 存的是归到这份要求, 男的要准备什么, 女的才会嫁他, 如车30W以上, 房要50W以上等</p></li>
 </ul>
+
 
 <p>系统的行为, 就是当把一个男的所有情况输入进去, 就会找到所有女方的需求是什么, 都组合在一起, 作为总的要求.  这种情况下, 系统就复杂了.  比如主表有三条记录A, B, C.  维度和需求分别是:</p>
 

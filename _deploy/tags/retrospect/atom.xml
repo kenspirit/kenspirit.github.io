@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Retrospect | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/retrospect/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/retrospect/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[至关重要的关系]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/29/startup-review-network/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network/"/>
     <updated>2013-06-29T07:59:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/29/startup-review-network</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network</id>
     <content type="html"><![CDATA[<p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>了。</p>
 
 <h2>比能力重要</h2>
@@ -101,9 +101,9 @@
   
   <entry>
     <title type="html"><![CDATA[永久测试之心, 寻求真我]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/26/startup-review-permanent-beta/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/"/>
     <updated>2013-06-26T06:39:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/26/startup-review-permanent-beta</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta</id>
     <content type="html"><![CDATA[<p>最近看了李开复作序的书：<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>，也就是<a href="http://www.amazon.com/dp/B008NXKYNO">THE START-UP OF YOU</a>的译本。书的英文原名和它的意图其实想说明的是，每个人其实都是和企业家一样，具备相同的特质。</p>
 
 <blockquote><p>广义的企业家精神：自主独立，足智多谋，满怀抱负，灵活变通，并拥有广泛的人脉。企业家精神是一种生活态度，而不是一个商业概念；是伴随一生的观念，而不只是某一代人的想法。</p></blockquote>
@@ -167,9 +167,9 @@
   
   <entry>
     <title type="html"><![CDATA[2013 Retrospect and Goal Setting]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting/"/>
     <updated>2013-02-05T22:37:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/02/05/2013-retrospect-and-goal-setting</id>
     <content type="html"><![CDATA[<p>现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。</p>
 
 <h2>翻墙</h2>
@@ -256,9 +256,9 @@
   
   <entry>
     <title type="html"><![CDATA[为什么开始写技术博客, 并且还是用英语?]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/01/01/why-i-start-blogging-and-in-english/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english/"/>
     <updated>2013-01-01T22:00:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/01/01/why-i-start-blogging-and-in-english</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/01/why-i-start-blogging-and-in-english</id>
     <content type="html"><![CDATA[<p>一些朋友发现我最近在写一些博客，而且还多数是英语的，都在好奇我在搞什么。那我就写一篇博客来解释一下吧。</p>
 
 <p>写技术博客好处很多，很多牛人也提到过, 这是我出来刚工作时的一位同事的<a href="http://www.iamhukai.com/">博客</a>, 现在他在Thoughworks, 里面有好几篇文章说到为什么要写和怎么写。</p>
@@ -302,9 +302,9 @@
   
   <entry>
     <title type="html"><![CDATA[待在优秀的地方，还是把所在的地方改变的优秀]]></title>
-    <link href="http://kenspirit.github.io/blog/2012/07/15/stay-in-good-or-change-to-be-good/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2012/07/15/stay-in-good-or-change-to-be-good/"/>
     <updated>2012-07-15T17:31:25+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2012/07/15/stay-in-good-or-change-to-be-good</id>
+    <id>http://www.thinkingincrowd.me/blog/2012/07/15/stay-in-good-or-change-to-be-good</id>
     <content type="html"><![CDATA[<p>已经换了工作差不多一年，期间还有幸被派去美国学习所做的系统后台开发，趁着本博客重新启航，是时候回顾一下了。</p>
 
 <p><strong>小公司 vs 大公司</strong></p>

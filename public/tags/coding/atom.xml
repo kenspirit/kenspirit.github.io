@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Coding | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/coding/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T08:35:37+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/coding/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,75 +15,66 @@
   
   <entry>
     <title type="html"><![CDATA[被广泛误解的匈牙利命名法]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/"/>
     <updated>2013-01-03T21:03:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
-    <content type="html"><![CDATA[
-<p>我承认我是其中的一员。要向发明者 <em>Charles Simonyi</em> 道个歉。  </p>
+    <id>http://www.thinkingincrowd.me/blog/2013/01/03/widely-misunderstood-naming-convention-the-hungarian</id>
+    <content type="html"><![CDATA[<p>我承认我是其中的一员。要向发明者 <em>Charles Simonyi</em> 道个歉。</p>
 
-<p><strong>长期以来，不问出处，不求起源，只是单纯接受一些看起来是常识或事实的结论，导致此问题发生</strong>。这是我有的一点不足，要改进。多思考，多看书是良方，庆幸在不断服药中。如果不是看到 <a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel On Software</a>（<a href="http://book.douban.com/subject/4163938/">软件随想录</a>）里 <em>I’m Hungary</em> 那一节，我会继续误解下去。扯远了，回归。  </p>
+<p><strong>长期以来，不问出处，不求起源，只是单纯接受一些看起来是常识或事实的结论，导致此问题发生</strong>。这是我有的一点不足，要改进。多思考，多看书是良方，庆幸在不断服药中。如果不是看到 <a href="http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/1430209879">More Joel On Software</a>（<a href="http://book.douban.com/subject/4163938/">软件随想录</a>）里 <em>I&rsquo;m Hungary</em> 那一节，我会继续误解下去。扯远了，回归。</p>
 
-<p>估计可能 <em>90%</em> 的人都只是知道<strong><a href="http://en.wikipedia.org/wiki/Hungarian_notation">匈牙利命名法</a></strong>要求在变量名前面加上类别。这里用类别，而不是 type，也正是书里所说的，这个关键点就是使得不少人误解和背弃这种用法的原因。  </p>
+<p>估计可能 <em>90%</em> 的人都只是知道<strong><a href="http://en.wikipedia.org/wiki/Hungarian_notation">匈牙利命名法</a></strong>要求在变量名前面加上类别。这里用类别，而不是 type，也正是书里所说的，这个关键点就是使得不少人误解和背弃这种用法的原因。</p>
 
-<p>多数人的用法是加上变量所代表的<strong>数据类型</strong>或<strong>作用域</strong>，如：  </p>
+<p>多数人的用法是加上变量所代表的<strong>数据类型</strong>或<strong>作用域</strong>，如：</p>
 
 <ul>
-  <li><em>n</em> 表示 <em>number</em> 型  </li>
-  <li><em>s</em> 表示 <em>string</em> 型  </li>
-  <li><em>g</em> 表示全局变量</li>
+<li><em>n</em> 表示 <em>number</em> 型</li>
+<li><em>s</em> 表示 <em>string</em> 型</li>
+<li><em>g</em> 表示全局变量</li>
 </ul>
 
-<p>这种用法，在弱类型语言或者使用之前一些并不完善的 IDE 时，用处还是明显的。可以避免把数据赋值到不同类型的变量中而产生错误，或者养成不好的编程习惯。但是，其实更深层的意思应该是在书中提到的:  </p>
 
-<blockquote>
-  <p>Make wrong code look wrong</p>
-</blockquote>
+<p>这种用法，在弱类型语言或者使用之前一些并不完善的 IDE 时，用处还是明显的。可以避免把数据赋值到不同类型的变量中而产生错误，或者养成不好的编程习惯。但是，其实更深层的意思应该是在书中提到的:</p>
 
-<p>这是什么意思呢？就是<strong>让错误的代码更容易暴露出来</strong>。一些不符合命名规范或非约定俗成的变量的使用，或者不恰当的方法调用，应该使得它们只要我们的眼睛一扫过，就可以判断出来。而这个基本原则，正是匈牙利命名法真正的用意所在。  </p>
+<blockquote><p>Make wrong code look wrong</p></blockquote>
 
-<p>在书中提到的关于用前缀来区别一些字符串是用户输入(Unsafe)的，还是已经处理过的(Safe)的例子，就很好的说明了这种意图。在当前很多大型的企业级系统里面，数据交换在用户，数据库，和不同子系统之间的交换需求是那么多且复杂，判断数据是否已经恰当处理就显得很重要。什么是用户提供的原始数据，什么是从数据库中拿出来的数据，有没有经过HTML编码，XML编码等。这些如果处理不好，就会产生一些隐藏很深的Bug。  </p>
+<p>这是什么意思呢？就是<strong>让错误的代码更容易暴露出来</strong>。一些不符合命名规范或非约定俗成的变量的使用，或者不恰当的方法调用，应该使得它们只要我们的眼睛一扫过，就可以判断出来。而这个基本原则，正是匈牙利命名法真正的用意所在。</p>
 
-<p>还有一个适合这个应用场景的例子，我想就是时间数据的存储。在一些供跨国企业或用户协作的系统里面，时间数据的存储和显示，往往伴随着 TimeZone 的处理。一般来说，时间数据都是把 ISO 时间，也就是不包含时区的时间，存储到数据库里面，当需要显示的时候，再根据用户的时区来转换处理。当然，也有一些系统在业务上的需求是把已经考虑了时区的时间存储在数据库的。这样的话，什么时间是包含了时区信息的，什么时间是没有包含的，也是关键点。加上恰当的命名前缀，再结合业务需求，很容易就可以判断代码处理的对不对了，而不需要再翻看一系列的代码。  </p>
+<p>在书中提到的关于用前缀来区别一些字符串是用户输入(Unsafe)的，还是已经处理过的(Safe)的例子，就很好的说明了这种意图。在当前很多大型的企业级系统里面，数据交换在用户，数据库，和不同子系统之间的交换需求是那么多且复杂，判断数据是否已经恰当处理就显得很重要。什么是用户提供的原始数据，什么是从数据库中拿出来的数据，有没有经过HTML编码，XML编码等。这些如果处理不好，就会产生一些隐藏很深的Bug。</p>
 
-<p>当然，你可以说，我可以把变量名写的很详尽，如 <em>unsafeContent</em> 而不是 <em>usContent</em>。 这是可以的。只是这样就使得我们的手和眼睛需要处理更多的字符，而且也混合了变量名中的类别意义和业务意义两部分在一起。个人感觉还是分开好点。  </p>
+<p>还有一个适合这个应用场景的例子，我想就是时间数据的存储。在一些供跨国企业或用户协作的系统里面，时间数据的存储和显示，往往伴随着 TimeZone 的处理。一般来说，时间数据都是把 ISO 时间，也就是不包含时区的时间，存储到数据库里面，当需要显示的时候，再根据用户的时区来转换处理。当然，也有一些系统在业务上的需求是把已经考虑了时区的时间存储在数据库的。这样的话，什么时间是包含了时区信息的，什么时间是没有包含的，也是关键点。加上恰当的命名前缀，再结合业务需求，很容易就可以判断代码处理的对不对了，而不需要再翻看一系列的代码。</p>
+
+<p>当然，你可以说，我可以把变量名写的很详尽，如 <em>unsafeContent</em> 而不是 <em>usContent</em>。 这是可以的。只是这样就使得我们的手和眼睛需要处理更多的字符，而且也混合了变量名中的类别意义和业务意义两部分在一起。个人感觉还是分开好点。</p>
 
 <p>回想起来，很多对 <em>Code Convention</em> 上的要求，除了让程序员可以更容易理解代码以外，另一层意思也是更容易发现错误或问题所在，比如：</p>
 
 <ul>
-  <li>简短的方法体  </li>
-  <li>有意义的变量和方法名称  </li>
-  <li><em>Self-Documentary Code</em> 或者是加注释  </li>
-  <li>恰当缩进和使用括号{}  </li>
+<li>简短的方法体</li>
+<li>有意义的变量和方法名称</li>
+<li><em>Self-Documentary Code</em> 或者是加注释</li>
+<li>恰当缩进和使用括号{}</li>
 </ul>
 
-<p>所以说，我们也不应该一棍打死匈牙利命名法。有需要的话，只要整个团队一致认为某些情况确实可以增加代码清晰度和容易看出问题，那么定义清楚什么时候该用就行了。  </p>
+
+<p>所以说，我们也不应该一棍打死匈牙利命名法。有需要的话，只要整个团队一致认为某些情况确实可以增加代码清晰度和容易看出问题，那么定义清楚什么时候该用就行了。</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[通过艰难的六步让你成长为一名出色的程序员]]></title>
-    <link href="http://kenspirit.github.io/blog/2011/10/14/six-steps-to-be-good-programmer/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2011/10/14/six-steps-to-be-good-programmer/"/>
     <updated>2011-10-14T14:53:26+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2011/10/14/six-steps-to-be-good-programmer</id>
+    <id>http://www.thinkingincrowd.me/blog/2011/10/14/six-steps-to-be-good-programmer</id>
     <content type="html"><![CDATA[<p>在我决定要在技术上，下狠功夫时，看到一篇非常好的文章。</p>
 
-<h2 id="section">以下是我的译文，期望与大家共勉：</h2>
+<h2>以下是我的译文，期望与大家共勉：</h2>
 
-<h2 id="httpwwwgamedevnetblog355entry-2250592-become-a-good-programmer-in-six-really-hard-steps"><a href="http://www.gamedev.net/blog/355/entry-2250592-become-a-good-programmer-in-six-really-hard-steps/">通过艰难的六步让你成长为一名优秀程序员</a></h2>
+<h2><a href="http://www.gamedev.net/blog/355/entry-2250592-become-a-good-programmer-in-six-really-hard-steps/">通过艰难的六步让你成长为一名优秀程序员</a></h2>
 
 <p>05 September 2011</p>
 
 <p>Posted by <strong><a href="http://www.gamedev.net/index.php?showuser=33873">ApochPiQ</a></strong> <a href="http://www.gamedev.net/index.php?showuser=33873&amp;f="><img src="http://public.gamedev.net/public/style_images/master/user_popup.png" alt="" /></a></p>
 
-<table>
-  <tbody>
-    <tr>
-      <td>在GDNet论坛里，其中一类比较常见到的是像这样的一些主题：“你好，我刚 [ 买了台电脑</td>
-      <td>写了一个简单的游戏</td>
-      <td>发现了一个游戏引擎 ] ，我想知道从这起步的话，可以走到哪？如果说我想要最终能实现某个特定目标的话，我需要学习什么东西呢？”首先，你必须明白，Peter Norvig 很久以前就已经非常清楚的知道: <a href="http://norvig.com/21-days.html">成为一名程序员要花费10年时间</a>。现在市面上充斥大量的”短时间内学会X” 类型的书; 还有一大堆博客教你 “如何通过一些简单的方法提高编程水平”; 总的来说，很多人总是在寻找一些能够让他们通过最少的努力来成为专家的方法。</td>
-    </tr>
-  </tbody>
-</table>
+<p>在GDNet论坛里，其中一类比较常见到的是像这样的一些主题：“你好，我刚 [ 买了台电脑 | 写了一个简单的游戏 | 发现了一个游戏引擎 ] ，我想知道从这起步的话，可以走到哪？如果说我想要最终能实现某个特定目标的话，我需要学习什么东西呢？”首先，你必须明白，Peter Norvig 很久以前就已经非常清楚的知道: <a href="http://norvig.com/21-days.html">成为一名程序员要花费10年时间</a>。现在市面上充斥大量的"短时间内学会X" 类型的书; 还有一大堆博客教你 &ldquo;如何通过一些简单的方法提高编程水平&rdquo;; 总的来说，很多人总是在寻找一些能够让他们通过最少的努力来成为专家的方法。</p>
 
 <p>我在这里想把标准调高一点。与其告诉你5种容易的方法来在21天内写出令人惊艳的代码, 我将要告诉你的是事实是怎么样的。请看如何通过艰难的六步让你成长为一名出色的程序员。_
 _</p>
@@ -91,7 +82,7 @@ _</p>
 <p><strong>第一步：坚持。沉下心，深吸一口气。如果做不到就一边去观鸟算了。</strong>
 当然, 你可以反复折腾，写一些小巧的Shell脚本或者几个小游戏。到这里，如果你已经满足于你已经拥有的技能，那么只管通过最快和最容易的方法去解决你遇到的问题就可以了。 我不想忽视这个选择的合理性，有些人没有时间（或者甚至没有意愿）成为一个编程高手。如果你并不为你将训练你的手艺上十年直至你精通它为止的想法而津津乐道的话，那就别那么干。但是不要被迷惑了，你将一直只能被局限在你以前能做什么和能把什么做好。如果你几经权衡，认为那已经足够。好，那么你就没有必要继续阅读下去了。</p>
 
-<p>对于继续阅读下来的我们，其实还是有这么一些东西吸引我们，让我们真真正正精通编程技巧。我们想成为专家，忍者，领袖级人物 - 任何超高级的冲击你幻想的名词。对于我们来说，10年看上去是合理的投资。可能看上去有那么点沉重，但如果这本身就是值得你去做的事情，就值得你做对，不是吗？</p>
+<p>对于继续阅读下来的我们，其实还是有这么一些东西吸引我们，让我们真真正正精通编程技巧。我们想成为专家，忍者，领袖级人物 &ndash; 任何超高级的冲击你幻想的名词。对于我们来说，10年看上去是合理的投资。可能看上去有那么点沉重，但如果这本身就是值得你去做的事情，就值得你做对，不是吗？</p>
 
 <p>所以，要想成为出色的程序员的第一步，就是吞下苦水。接受现实，这不是十年的过程，而是一辈子的过程。 像Norvig说的那样，这样做只是因为你想去做。如果不是自己愿意去做的话，没有人会在那方面变得异常出色。世界纪录保持者不会因为那天他恰巧吃下最多的热狗被纪录下来，而一定是因为那天他也确实是感到饿的。</p>
 
@@ -100,7 +91,7 @@ _</p>
 
 <p>学习的过程永远也不会停止，所以，如果在一段时间里，你秉持通过不断的解决问题的同时来学习和进步的态度来前进的话，你将可以走的很远。要认识到，如果在一天、一星期、一个月内如果没有学到有趣的东西，其实是一种失败。每天，其实都有足够多的事情让你能从中学习到一点有益的东西。当然这从15年左右作为一个标记来看的话会很难，但也是完全可能的。没有一个凡人可以完全吸收这世界上关于编程的所有知识，所以，如果你感觉到你没什么东西要学习了，开始一个新的项目，写更多的代码。</p>
 
-<p>当你这样做的时候，请留心。寻找一些模式 - 一些你经常做的，可能可以变成自动处理的东西，或者说一些你经常写的，可以被分出来放在共享包里的代码。寻找那些非常容易处理特定任务的语言，同时也找出那些处理同样任务，却不太容易的语言，并想想为什么他们有什么不同。</p>
+<p>当你这样做的时候，请留心。寻找一些模式 &ndash; 一些你经常做的，可能可以变成自动处理的东西，或者说一些你经常写的，可以被分出来放在共享包里的代码。寻找那些非常容易处理特定任务的语言，同时也找出那些处理同样任务，却不太容易的语言，并想想为什么他们有什么不同。</p>
 
 <p>但最重要的是：不断写代码。每天，即使那只是一个简单的正则表达式来搜查你的邮件历史或别的什么。尽可能经常的用编程的手法来处理事情。记住，如果什么时候你觉得你做的事情不再显得有趣，那么，去做别的事。做一些你本身并不享受的事情没有一点意义。</p>
 
@@ -128,16 +119,11 @@ _</p>
 <p>这样做会让你有以下三种收获：</p>
 
 <ul>
-  <li>
-    <p>你会更深入的理解到你的工具是如何工作的，那么你在使用它们的时候会更有效率。</p>
-  </li>
-  <li>
-    <p>你会慢慢看到那些吸引你的或让你觉得很不舒服的主流语言和工具的设计理念。这样，你在今后开始新项目的时候，就能更有效的选择你的工具。</p>
-  </li>
-  <li>
-    <p>你将可以留意到那些可供开发的新语言和工具的处女地，为你打开前所未有的视野去学习和尝试新的东西。</p>
-  </li>
+<li><p>你会更深入的理解到你的工具是如何工作的，那么你在使用它们的时候会更有效率。</p></li>
+<li><p>你会慢慢看到那些吸引你的或让你觉得很不舒服的主流语言和工具的设计理念。这样，你在今后开始新项目的时候，就能更有效的选择你的工具。</p></li>
+<li><p>你将可以留意到那些可供开发的新语言和工具的处女地，为你打开前所未有的视野去学习和尝试新的东西。</p></li>
 </ul>
+
 
 <p><strong>第六步: 学习一些没有别的人学习过的东西</strong>
 这是最难也是最后一步。到目前为止，你已经习得那些已知的东西，那些能从别的人代码，或书，或学术文章获得的东西。那些东西值得学习，但并不是标新立异的东西。</p>
@@ -151,47 +137,41 @@ _</p>
 <p>并不是所有的人都能成功走完这一步，但任何曾经尝试过的人都会受益非浅。不要让任何事情击败你。即便你没能获得图灵奖，你也应当在你的程序员生涯不断前行，向着你的终极领域进发。而这一切，都需要靠着你不断挑战难题，延展你的大脑。</p>
 
 <p><strong>恭喜! 你已经成为一名出色的程序员了!</strong>
-等等… 事实上，你可能已经因为年纪太大而离去了。对不起，下辈子再来一遍吧，可能会好运点!</p>
+等等&hellip; 事实上，你可能已经因为年纪太大而离去了。对不起，下辈子再来一遍吧，可能会好运点!</p>
 
 <p>哈哈，玩笑话。话说回来，别认为会有结束的那天。在你在成长旅途中一但开始停滞不前，你实际已经开始死亡，而变得无关了。我在编程世界里见过的最让人觉得悲伤的失败是那些选择在这领域开始并前行一段后，决定放弃，不再学习了。作为一个人，他们现在肯定完全已经对软件世界来说是毫无相干的了，也几乎可以说他们再也走不出他们目前的处境，除非，他们再继续学习前进。</p>
 
 <p>现在就开始前进吧，写代码! 可能某一天你就会成为一名出色的程序员，然后告诉我你是怎么做的。</p>
 
 <p>我非常热爱学习。</p>
-
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Cleaner Code]]></title>
-    <link href="http://kenspirit.github.io/blog/2011/03/06/cleaner-code/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2011/03/06/cleaner-code/"/>
     <updated>2011-03-06T21:23:04+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2011/03/06/cleaner-code</id>
-    <content type="html"><![CDATA[<p>Finished reading Robert Martin’s “Clean Code” these days, I suddenly feel more passionate to write code, to write better and more descriptive code.</p>
+    <id>http://www.thinkingincrowd.me/blog/2011/03/06/cleaner-code</id>
+    <content type="html"><![CDATA[<p>Finished reading Robert Martin&rsquo;s &ldquo;Clean Code&rdquo; these days, I suddenly feel more passionate to write code, to write better and more descriptive code.</p>
 
 <p>Before, I do think my coding style is not bad and stick to it every time when I am writing Java, Javascript, SQL, etc.</p>
 
-<p>However, after digesting the essence of “Clean Code”, I am forcing myself to write self-descriptive code, without using comment.</p>
+<p>However, after digesting the essence of &ldquo;Clean Code&rdquo;, I am forcing myself to write self-descriptive code, without using comment.</p>
 
 <p>The most important points I do remember after reading it are:</p>
 
 <ol>
-  <li>
-    <p>Longer descriptive name, smaller function</p>
-  </li>
-  <li>
-    <p>Boy Scout Rule</p>
-  </li>
-  <li>
-    <p>Know your algorithm</p>
-  </li>
+<li><p> Longer descriptive name, smaller function</p></li>
+<li><p> Boy Scout Rule</p></li>
+<li><p> Know your algorithm</p></li>
 </ol>
 
-<p>Although “Clean Code” has shown us many aspects on how to make the code clean, these two rules are easy to remember, fundamental of others.</p>
+
+<p>Although &ldquo;Clean Code&rdquo; has shown us many aspects on how to make the code clean, these two rules are easy to remember, fundamental of others.</p>
 
 <p>Now, I feel the passion of writing code as I am writing a diary, an article.  I feel the impulse of cleaning the mess I got before submitting it again.  What is more, in order to make the code cleaner, I have to make my English better.  haha</p>
 
-<p>Just take below function as an example.  You might not easily figure out what it’s for.</p>
+<p>Just take below function as an example.  You might not easily figure out what it&rsquo;s for.</p>
 
 <pre><code>function groupingFieldFormat(value, p, r, rowIndex, i, ds) {
     var cGrid = ds.cGrid;

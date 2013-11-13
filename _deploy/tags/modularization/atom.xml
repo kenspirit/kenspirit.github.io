@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Modularization | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/modularization/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/modularization/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Share code between Node.js and browser]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser/"/>
     <updated>2013-04-13T12:59:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/04/13/share-code-between-nodejs-and-browser</id>
     <content type="html"><![CDATA[<h2>Background</h2>
 
 <p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.</p>

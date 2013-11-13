@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: ngRepeat | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/ngrepeat/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/ngrepeat/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
     <updated>2013-02-02T14:32:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls</id>
     <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest">$digest()</a> is the root cause.</p>
 
 <h2>Requirement</h2>

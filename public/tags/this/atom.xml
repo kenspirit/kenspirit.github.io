@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: this | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/this/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T08:35:37+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/this/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,22 +15,24 @@
   
   <entry>
     <title type="html"><![CDATA[Function definition, this and bind in JavaScript]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
     <updated>2013-06-14T20:00:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
-    <content type="html"><![CDATA[
-<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don’t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.  </p>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
+    <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&rsquo;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
 
 <p>```javascript
-var TestObj = {
-    a: function() {
-        console.log(‘A’);
-    },
-    b: function() {
-        console.log(‘B’);
-        this.a();
-    }
-};</p>
+var TestObj = {</p>
+
+<pre><code>a: function() {
+    console.log('A');
+},
+b: function() {
+    console.log('B');
+    this.a();
+}
+</code></pre>
+
+<p>};</p>
 
 <p>TestObj.b();</p>
 
@@ -38,7 +40,7 @@ var TestObj = {
 c();
 ```</p>
 
-<p>The result will be as below, right?  </p>
+<p>The result will be as below, right?</p>
 
 <p><code>javascript
 B
@@ -47,7 +49,7 @@ B
 A
 </code></p>
 
-<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don’t know JavasScript well either like me.  The result actually is:  </p>
+<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don&rsquo;t know JavasScript well either like me.  The result actually is:</p>
 
 <p><code>javascript
 B
@@ -56,63 +58,72 @@ B
 TypeError: Object [object global] has no method 'a'
 </code></p>
 
-<p>It is a little bit awkward or counterintuitive at first glance but it’s JavaScript.  It’s the feature and amazing part.  Let’s break it down piece by piece and see why.  </p>
+<p>It is a little bit awkward or counterintuitive at first glance but it&rsquo;s JavaScript.  It&rsquo;s the feature and amazing part.  Let&rsquo;s break it down piece by piece and see why.</p>
 
-<h2 id="function-definition">Function definition</h2>
-<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:  </p>
+<h2>Function definition</h2>
+
+<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:</p>
 
 <p>```javascript
-function B() {
-    console.log(‘B’);
-    this.a();
-};</p>
+function B() {</p>
 
-<p>var TestObj = {
-    a: function() {
-        console.log(‘A’);
-    },
-    b: B
-};
+<pre><code>console.log('B');
+this.a();
+</code></pre>
+
+<p>};</p>
+
+<p>var TestObj = {</p>
+
+<pre><code>a: function() {
+    console.log('A');
+},
+b: B
+</code></pre>
+
+<p>};
 ```</p>
 
-<h2 id="this">this</h2>
-<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:<br />
-&gt;<strong>10.4.3 Entering Function Code</strong><br />
-&gt;The following steps are performed when control enters the execution context for function code contained in
-function object F, a caller provided thisArg, and a caller provided argumentsList:  </p>
+<h2>this</h2>
 
-<blockquote>
-  <ol>
-    <li>If the function code is strict code, set the ThisBinding to thisArg.  </li>
-    <li>Else if thisArg is null or undefined, set the ThisBinding to the global object.  </li>
-    <li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).  </li>
-    <li>Else set the ThisBinding to thisArg.<br />
-…</li>
-  </ol>
+<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:</p>
+
+<blockquote><p><strong>10.4.3 Entering Function Code</strong><br/>
+The following steps are performed when control enters the execution context for function code contained in
+function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
+
+<ol>
+<li>If the function code is strict code, set the ThisBinding to thisArg.</li>
+<li>Else if thisArg is null or undefined, set the ThisBinding to the global object.</li>
+<li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).</li>
+<li>Else set the ThisBinding to thisArg.<br/>
+&hellip;</li>
+</ol>
 </blockquote>
 
-<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.  </p>
+<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.</p>
 
-<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.  </p>
+<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.</p>
 
-<p>However, below statements mean differently.  </p>
+<p>However, below statements mean differently.</p>
 
 <p><code>javascript
 var c = TestObj.b;
 c();
 </code></p>
 
-<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.   </p>
+<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.</p>
 
-<h2 id="how-to-set-a-particular-object-as-this-to-function">How to set a particular object as <em>this</em> to function</h2>
-<p>It’s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:  </p>
+<h2>How to set a particular object as <em>this</em> to function</h2>
+
+<p>It&rsquo;s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:</p>
 
 <p><code>javascript
 var c = TestObj.b;
 c.call(TestObj);
 </code></p>
 
-<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:  </p>
+<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:</p>
 
 <p>```javascript
 function dynamic(fn) {
@@ -122,9 +133,9 @@ function dynamic(fn) {
 <p>dynamic(TestObj.b);
 ```</p>
 
-<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it’s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.  </p>
+<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it&rsquo;s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.</p>
 
-<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:  </p>
+<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:</p>
 
 <p>```javascript
 function dynamic(fn) {
@@ -134,9 +145,9 @@ function dynamic(fn) {
 <p>dynamic(TestObj.b.bind(TestObj));
 ```</p>
 
-<p>It’s fun, isn’t it?</p>
+<p>It&rsquo;s fun, isn&rsquo;t it?</p>
 
-<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.  </p>
+<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.</p>
 
 <p>```javascript
 var length = 3;</p>
@@ -145,21 +156,24 @@ var length = 3;</p>
   console.log(this.length);
 }</p>
 
-<p>var TestObj = {
-    length: 2,
-    b: logLength,
-    c: function() {
-        (function(fn) {
-            arguments<a href="">0</a>;
-        })(logLength);
-    }
-};</p>
+<p>var TestObj = {</p>
+
+<pre><code>length: 2,
+b: logLength,
+c: function() {
+    (function(fn) {
+        arguments[0]();
+    })(logLength);
+}
+</code></pre>
+
+<p>};</p>
 
 <p>TestObj.b();
 TestObj.c();
 ```</p>
 
-<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.  </p>
+<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.</p>
 
 <p>More fun, right?</p>
 ]]></content>

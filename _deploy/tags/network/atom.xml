@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Tag: Network | Thinking in Crowd / 鹄思乱想]]></title>
-  <link href="http://kenspirit.github.io/tags/network/atom.xml" rel="self"/>
-  <link href="http://kenspirit.github.io/"/>
-  <updated>2013-11-13T22:13:05+08:00</updated>
-  <id>http://kenspirit.github.io/</id>
+  <link href="http://www.thinkingincrowd.me/tags/network/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2013-11-13T22:34:16+08:00</updated>
+  <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[至关重要的关系]]></title>
-    <link href="http://kenspirit.github.io/blog/2013/06/29/startup-review-network/"/>
+    <link href="http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network/"/>
     <updated>2013-06-29T07:59:00+08:00</updated>
-    <id>http://kenspirit.github.io/blog/2013/06/29/startup-review-network</id>
+    <id>http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network</id>
     <content type="html"><![CDATA[<p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>了。</p>
 
 <h2>比能力重要</h2>
