@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Think | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/blog/categories/think/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-13T22:34:16+08:00</updated>
+  <updated>2013-11-14T20:33:14+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,43 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[京JS 2013 之挖坑自埋与神打击]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/14/jingjs-2013-fun/"/>
+    <updated>2013-11-14T20:21:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/14/jingjs-2013-fun</id>
+    <content type="html"><![CDATA[<p>首先要吐槽一下 <a href="http://weibo.com/jingjs2013">@京JS</a>。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 <a href="https://github.com/substack">@substack</a>，<a href="http://isaacmao.com/">Issac</a> 和讲 Data Visualization 的 Nick。第二天早上的主题还是相当给力的，下午 Kim, Jakob 也还不错。</p>
+
+<p>晚上的活动还是要狠狠表扬一下 @京JS。第一晚包了车库咖啡，晚饭虽然是 Pizza 等，但是量也算足，只是地方有点小，不过也是逼着和别人站着交流的好机会。星期天的晚上还有去 Bar 的 after-party，可惜我要赶飞机回珠海，就没法去了，但估计也会很棒。</p>
+
+<p>第一天晚上，看到 @substack 来了后，我坚定不移地过去和他搭话，接着各种好玩，技术黑和大神间（当然这不包我）的对话就来了。首先声明，可以肯定我的智商是完全没法跟上大神的，加上没法肯定听力上能跟上多少。所以下面的一些神吐糟不保证 100％ 正确，有错误的话也是我这译者的错误，并且这里的技术黑都不是拉仇恨啊。 Please forgive my poor English for any potential misleading.</p>
+
+<p>我和他搭话是因为我最近看的一篇<a href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/">关于 Promise 的文章</a>，个人感觉不错的，想问他对比 Callback 有什么看法。原来他并不太喜欢 Promise。（好了，整晚挖坑自埋的节奏开始了）。他指点我去看看 <a href="http://callbackhell.com">callbackhell.com</a>，还有他的 <a href="https://github.com/substack/stream-handbook">stream-handbook</a>。说如果我按照那样做了，也应该不会碰到什么 Hell 的问题。他说即使他以后遇到，也是首先偏向于用 <a href="https://github.com/caolan/async">Async</a> 的。</p>
+
+<p>接着一个同学拿着 Douglas Crockford 的书给他签名，他说虽然和他有点过节还是观点不同什么来着（他用的词忘了），但还是签了（他的签名很有趣，是一幅机器人漫画，幸亏我也拿到一个）。我就八卦了一下问是他说的是什么情况，他举例说那个什么 <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">Hoisting</a> 就是胡扯。我当然也很赞同的说是的，应该定义在离它最近使用的地方。好像记得 <a href="http://weibo.com/lifesinger">@玉伯也叫射雕</a> 也是持同样观点的。</p>
+
+<p>然后 <a href="http://weibo.com/fool2fish">@fool2fish</a> 出现了，问他关于一些测试方面怎么区分浏览器 Tab 独立线程，监测 CPU，等什么的（好像是说这些吧，中间没太跟上）。然后他不断解说和演示他的 <a href="https://github.com/substack/testling">testling</a> 可以拿来怎么用。</p>
+
+<p>之后 @fool2fish 就问可以在 testling 里用什么测试框架，@substack 又把自己的 <a href="https://github.com/substack/tape">tape</a> 搬出来耍了。@fool2fish 再问能否集成 <a href="https://github.com/visionmedia/mocha">Mocha</a> 之类的框架时，@substack 说可以的。但是他不喜欢用那些框架，一堆的全局变量，evil，不是 Node 可以直接运行的程序。还有 <a href="https://github.com/pivotal/jasmine">Jasmine</a> 什么的更烂。估计喜欢这两个的，听到这都晕了。</p>
+
+<p>然后转到问是否支持 <a href="http://en.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a>，<a href="http://wiki.commonjs.org/wiki/CommonJS">CommonJS</a> 的主题上。@fool2fish 就给他瞄了一眼 <a href="https://github.com/seajs/seajs">SeaJS</a> define 的用法，可能本想把它推出国门。没想到他说他知道 SeaJS，但这不是 CommonJS，是 fake 的写法。@fool2fish 脸都绿了，都想拉 @玉伯也叫射雕 来抵抗一下了，没等反应过来。@substack 又搬出了他的 <a href="https://github.com/substack/node-browserify">browserify</a> 来说明怎么把 Node 的代码和浏览器分享（这个观点我一直是比较赞同的，所以之前也基于 <a href="https://github.com/medikoo/modules-webmake">webmake</a> 搞了个 <a href="https://github.com/kenspirit/webassemble">webassemble</a>。因为我觉的生产环境基本都是打包好再用的，哪有什么异步再去拿文件，异步也是拿另一个大 bundle。require 在 Node 的写法，如果在浏览器能通用确实挺好的。回头细想是不是偏后端程序员没看到前端看到的另一些东西，我再想想）。旁边的另一个鬼佬（抱歉不认识是哪位神），看到我们被打击的样子，几乎笑的不行了，都和 @substack 说你别再打击他们了，可是神才不鸟你，继续打击。</p>
+
+<p>后面，他们都走了，我犯贱又去问 @substack 怎么看那些前端的 MVC 或者 MVVM 的框架，比如 <a href="http://angularjs.org">AngularJS</a>。他说他还没看懂到底它最终要解决什么问题，一堆的东西，什么 DI，Databinding 等。我说 Databinding 很好啊，可以免得我们写一堆代码拿值赋值等，declarative 语法也不错啊。他说他只是写纯粹的 JS，那些拿值赋值的可以什么把原生操作抽象和模块化，举例说把复杂的 Form 抽象成模块，只在里头处理赋值拿值之类的。我说那不是 JS 和 HTML 混一起了吗？他好像说只要模块化的好就没有问题了。晕。（这里不敢苟同，可能我还没到那种境界）</p>
+
+<p>最后，又再一次嘴贱的问他那个 tape 能不能集成到 <a href="http://gruntjs.com/%E2%80%8E">Grunt</a>。没想到他说他也没看明白 Grunt 有什么用，我就知道我又挖坑埋自己了。他啪啪啪敲键盘和让我看他怎么用 NPM 的 test 命令，自定义命令和直接结合 Script 来做到一系列的集成操作的。</p>
+
+<p>@substack 真是 geek 到不行啊。他追求纯粹，简洁，和模块化可以说到极致的境地，不喜欢那些大而全的框架，真的是和我最近看的 “Art of Unit Programming” 那本书说到 “Only do one thing and do it really well”，然后通过组合把一些小工具结合成更强大的工具的思想非常吻合。</p>
+
+<p>后面 H神 来了之后，被打击对象转到他头上了。是的，神喷神了，哈哈。以下可能和原话有偏差，因为大神间的对话，我有时实在很难跟上。</p>
+
+<p>H神 在做的是 <a href="http://vertx.io/">Vert.x</a>。他一开始说它们直接支持在 npm 跑还是改了加了什么新功能来着。（一开始我在纠结那个 Vertx 发音是什么东西，迷失了一下）。@substack 就说你们那么改的原因是什么？带来什么好处？没好处改来干什么？（另一个神被打击的样子很有趣 :D ）。后来说 Vert.x 特性是 Polyglot，说到支持 Java，Python 等，@substack 意思好像是说为什么要那么做？那些垃圾语言支持来干嘛？（Python 差点被拖累了，他后来改口说 Python 不烂）我永远都不要写 JAVA。H神 也脸绿了，我也帮口说在商业大项目里，因为系统和团队的多和杂，Polyglot 和 JAVA 都是需要的，虽然我现在也不喜欢 JAVA。其实无论我们怎么说，神的观点都不会变，他就说我不会遇到这样的情况，哈哈。H神 后来问 @substack Vert.x 怎么才能被他们 buyin (接受)，@substack 就不断 blablabla 说什么你们的 api 要保持和 npm 一致，要在 npm 上容易安装，可以通过 -g 参数那样装了后，命令运行等，不然你看现在没人鸟你们，然后各种建议给他。</p>
+
+<p>两大神后来开始缅怀小时候几岁的时候玩什么技术之类的，我的智商和听力就彻底跟不上了。后来 H神 说他用 SQL 去考他妈妈，他妈妈竟然只需要问它那个语句是干什么的，然后她妈妈竟然可以从汇编，指令和寄存器的角度指出它哪里有问题了。靠，开挂了吧。H神 还想请 @substack 去他们上海公司给员工感受一下什么叫做 live for code，而不是 code for live 的精神。说费用他包，问有没有兴趣。@substack 好像说会在中国待 3 星期，没什么问题，之后可能还要到深圳来骑车什么的。深圳的同学们有关系的话，就看能不能请到他去玩了。后面我们扯着扯着就讲到为什么国内那么难找到这样的人，什么独生政策，教育，压力的都来了。中间我还讥讽 H神 也还不是 code for live。他说不是，他是因为写 code 是让他可以赚最多钱的工作。其实他还可以搞建筑什么的，还说他的床上功夫也不错，笑死我。 我们就这样一直聊到 10 点散场了才走了。</p>
+
+<p>整个晚上和 @substack 及其他大神的一些直接对话真比在会场听一天感悟还多。所以意见是大家以后听会议，一定要准备问题，尽量和各种大神聊天。只是听讲座和拍几张PPT或大神照片就没什么用了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[至关重要的关系]]></title>
@@ -279,81 +316,6 @@ to get the word out, the right people will already be listening.</p></blockquote
 <p>书里也提到 Mark 很在意公司保密的原则，一但有人出错，坚决处理。</p>
 
 <p>这里隐含的意思就有点意思了。Mark 是一个很看重公司机密的人。他也很注意公司团结，员工应该一致向外。个人感觉这件事情上，Facebook 的 Marketing 应该不会在老板没出声的情况下，自己乱来吧？何况书中也说到 Mark 在关键问题的产品把控上是很严的。所以，小人之心猜测那也是 Mark 本人的意思。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[我能否20个月赚130亿?]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months/"/>
-    <updated>2013-04-16T21:36:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/04/16/can-i-make-13-billion-in-20-months</id>
-    <content type="html"><![CDATA[<p>你是否看到这个标题，想鄙视我而冲进来了？呵呵，我承认是有点标题党，所以我马上告诉你答案，不能。因为看完<a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product">YouTube 创始人陈士俊自传</a>，我发现我不具备他，或者说硅谷人的特质，至少暂时。这就是他书里反复提到的，其实看书时也强烈感受到的，＂瘾＂。</p>
-
-<p>这本书周五在亚马逊下单，周六下午收到，周日晚就看完了。是在带儿子的零星时间看完的。之所以可以看的那么快，除了我看得快，没太关注些八卦细节外，重要的是书写的流畅，活跃，富有激情。真的使我拿起来就不想放下。感觉他就像和我对话，讲故事一样。推荐看看，也可以找我借。</p>
-
-<h2>瘾</h2>
-
-<p>说回这本书，如果说他的成功是因为从他打小就对计算机感兴趣，和可能内在有天才工程师的基因有关，不如说是他深深的那种写代码和创造产品的瘾。他可以在一台没有硬盘的电脑上重敲一次程序展示给父母看他的成果，可以连续写代码20小时，可以放弃 Google 工作和奖金重新出来创业＂折腾＂。这就是在他们 Paypal 帮里共同存在的因子，硅谷人的因子，也是造就成功的因子。说来也巧，他也一度面临肿瘤这样的病痛，像乔帮主一样知道自己的＂瘾＂的存在，而为之奋斗。</p>
-
-<p>我想，除了这个不为金钱的瘾外，没任何东西是能让他们这类人如此成功的。我能否培养或者挖掘这种瘾出来，然后不顾后果的去追寻呢？我觉得很难，因为我向来的性格是求稳，做事情会想很多方面，希望求最稳妥的方式，和他极其不同。就像他说的：</p>
-
-<blockquote><p>在创业这件事上，我不希望＂退可守＂，我不想设定好退路，过于安稳的尝试性的投入岂非过于无聊？实际上，如果有一天我在一个寂静的森林里迷失，而前面又有两条路可以选择的话，我一定会在观望很久后放弃充满车辙的那一条，接下来选择杂草丛生的那条，因为我觉得，走可以预期结果的路，那样真的没意思。</p></blockquote>
-
-<p>暂时我还做不了这点，但我隐约感觉内心有想做点事情，和创业的冲动，或许现在，我能做的是保持内心这么点冲动，和打磨自己的技术，并紧跟潮流。</p>
-
-<h2>书里一些我比较同意的观点</h2>
-
-<h3>公司架构和管理</h3>
-
-<blockquote><p>PayPal 在招聘时就刻意寻找志同道合的＂自己人＂，因此让推行这种平等自由的文化变的容易起来。
-&hellip;
-他们在招聘于自己类似的人。</p></blockquote>
-
-<p>其实我非常赞同这种找人的观点。虽然管理上有说法，招聘者不应该只找自己类型的人，应该在团队里有各种不同类型的人，用以互补之类的。但我觉得，互补的，主要应该是技术专业特长，但他们还是一些拥有核心共同特质的，一些相同的原则，比如说开放和接受改变挑战的心态，积极的勤奋的负责任的态度，团队合作妥协和支持的精神等。反而技术水平，专业领域不是第一考虑。当然，那些 Level A 的工程师，选人时当然尽量只选能力也是同样 Level 的同事，这可以理解。但是就像书里那个有点极端的例子，真的到了这种心态的顶峰了：面试听到说面试者喜欢打篮球的，就不要了，因为他印象中，那些打篮球的旧同学，没几个靠谱的。</p>
-
-<p>就敏捷来说，我也觉得必须管理层和团队里每个人都有敏捷的心态才行。不一定都要是编程高手，但一定是内心要不断求变，求改进，对敏捷的核心思想的认可，而不是简单的流程的 follow。</p>
-
-<blockquote><p>仅仅管理者自己做到尊重团队是不够的。公司管理架构的设置，有的时候，会从一开始就决定了管理和沟通的难度。</p>
-
-<p>潘宇的总结：＂在创业公司，你是生产创意，而在稳定的大公司，你首先得在同事当中销售这些点子，得证明你的是最好的才行。＂</p></blockquote>
-
-<p>在小公司待了近8年时间的我，可以说，真的是很不习惯大公司的沟通和效率。大公司按职能分各种团队，导致人员项目协调费时费力，出问题还很容易导致推卸责任而不是集体负责。这在书里的例子，即使是 eBay 这样的算是软件业巨头，也不能幸免。所以说，公司架构的设置，可能就已经决定问题的存在。不改变架构，是无法改变这种情况的。</p>
-
-<p>书中提到的潘宇的总结，其实就是看你的主意到底要说服多少人，和哪些人。如果都是在创业公司里的自己人，事情就好办了。但如果是涉及大公司里不同部门，特别是不同利益团体，那就悲催了。所以在 Conway&rsquo;s law 有说:</p>
-
-<blockquote><p>organizations which design systems &hellip; are constrained to produce designs which are copies of the communication structures of these organizations.</p></blockquote>
-
-<p>在软件工程里，沟通占据绝大多数时间和比重。公司架构这种影响沟通的客观屏障，也就不可避免的影响了系统设计。</p>
-
-<p>我心中的理想团队，就是那么几个志同道合的人，几个工程师，一两个设计人员，当中有一个核心的令人敬仰和最后拍板的头头，说做就做，同进退。</p>
-
-<h3>创业</h3>
-
-<blockquote><p>每一个创业的成功当然都免不了运气的成分，<br/>
-&hellip;<br/>
-也就是俗称的＂在正确的时间做正确的事＂。<br/>
-&hellip;<br/>
-创业者们得培养自己分析和理解技术趋势的眼光，要不然只能任运气溜走。</p>
-
-<p>新闻每天都在发生。但对于敏感的创业者来说，这些事件，如果你搞清楚它们背后的联系，总会意味着某些意想不到的机会。</p>
-
-<p>YouTube 和点评网站 Yelp 都从 Paypal 那里学到一个有价值的经验 &mdash;&mdash; 头一个想法往往不是最好的。</p>
-
-<p>＂奥卡姆剃刀＂这个这个哲学原理崇尚＂如无必要，勿增实体＂，尽量简单有效。</p></blockquote>
-
-<h3>人</h3>
-
-<blockquote><p>在这个世界上，有的人就是擅长维持一个公司的运转，有的人则擅长不断创新突破，这两种选择本就无所谓对错，只是，要选择最适合你自己的。</p></blockquote>
-
-<p>我还不知道自己属于哪种人。我算是有点典型工程师心态，对一些繁琐的流程和企业架构和事务感觉很没效率，不爽，也很不喜欢办公室政治等。维持公司运转要比这烦多了。作技术突破创新吧，技术底和那种专注技术难点的死劲还不够，创新能力也有待培养。再按感觉走走看，攻一下技术吧，这也算是硬通货。</p>
-
-<h2>八卦</h2>
-
-<ol>
-<li>一个 Google 高管，跳槽去 Facebook 前，向他打探 YouTube 的战略。Facebook 还请公关公司炮制散布 Google 负面新闻。</li>
-<li>他很短时间就娶了 Google 韩国第一美女。求婚过程还很有趣的。</li>
-</ol>
-
 ]]></content>
   </entry>
   
