@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: JingJS | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/jingjs/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-14T20:33:14+08:00</updated>
+  <updated>2013-11-16T15:35:42+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.thinkingincrowd.me/blog/2013/11/14/jingjs-2013-fun/"/>
     <updated>2013-11-14T20:21:00+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2013/11/14/jingjs-2013-fun</id>
-    <content type="html"><![CDATA[<p>首先要吐槽一下 <a href="http://weibo.com/jingjs2013">@京JS</a>。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 <a href="https://github.com/substack">@substack</a>，<a href="http://isaacmao.com/">Issac</a> 和讲 Data Visualization 的 Nick。第二天早上的主题还是相当给力的，下午 Kim, Jakob 也还不错。</p>
+    <content type="html"><![CDATA[<p><img alt="JingJS Badge" src="http://thinkingincrowd.u.qiniudn.com/JingJS_Badge.jpg?imageView/2/w/100" style="position: relative; float: left; margin-right: 5px; border: 0px;"/>首先要吐槽一下 <a href="http://weibo.com/jingjs2013">@京JS</a>。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 <a href="https://github.com/substack">@substack</a>，<a href="http://isaacmao.com/">Issac</a> 和讲 Data Visualization 的 Nick。第二天早上的主题还是相当给力的，下午 Kim, Jakob 也还不错。</p>
 
 <p>晚上的活动还是要狠狠表扬一下 @京JS。第一晚包了车库咖啡，晚饭虽然是 Pizza 等，但是量也算足，只是地方有点小，不过也是逼着和别人站着交流的好机会。星期天的晚上还有去 Bar 的 after-party，可惜我要赶飞机回珠海，就没法去了，但估计也会很棒。</p>
 
@@ -26,7 +26,9 @@
 
 <p>我和他搭话是因为我最近看的一篇<a href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/">关于 Promise 的文章</a>，个人感觉不错的，想问他对比 Callback 有什么看法。原来他并不太喜欢 Promise。（好了，整晚挖坑自埋的节奏开始了）。他指点我去看看 <a href="http://callbackhell.com">callbackhell.com</a>，还有他的 <a href="https://github.com/substack/stream-handbook">stream-handbook</a>。说如果我按照那样做了，也应该不会碰到什么 Hell 的问题。他说即使他以后遇到，也是首先偏向于用 <a href="https://github.com/caolan/async">Async</a> 的。</p>
 
-<p>接着一个同学拿着 Douglas Crockford 的书给他签名，他说虽然和他有点过节还是观点不同什么来着（他用的词忘了），但还是签了（他的签名很有趣，是一幅机器人漫画，幸亏我也拿到一个）。我就八卦了一下问是他说的是什么情况，他举例说那个什么 <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">Hoisting</a> 就是胡扯。我当然也很赞同的说是的，应该定义在离它最近使用的地方。好像记得 <a href="http://weibo.com/lifesinger">@玉伯也叫射雕</a> 也是持同样观点的。</p>
+<p><img alt="Substack Signature" src="http://thinkingincrowd.u.qiniudn.com/Substack_Signature.jpg?imageView/2/w/500" style="border: 0px;"/></p>
+
+<p>接着一个同学拿着 Douglas Crockford 的书给他签名，他说虽然和他有点过节还是观点不同什么来着（他用的词忘了），但还是签了（他的签名很有趣，就是上面这幅机器人漫画，幸亏我也拿到一个）。我就八卦了一下问是他说的是什么情况，他举例说那个什么 <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html">Hoisting</a> 就是胡扯。我当然也很赞同的说是的，应该定义在离它最近使用的地方。好像记得 <a href="http://weibo.com/lifesinger">@玉伯也叫射雕</a> 也是持同样观点的。</p>
 
 <p>然后 <a href="http://weibo.com/fool2fish">@fool2fish</a> 出现了，问他关于一些测试方面怎么区分浏览器 Tab 独立线程，监测 CPU，等什么的（好像是说这些吧，中间没太跟上）。然后他不断解说和演示他的 <a href="https://github.com/substack/testling">testling</a> 可以拿来怎么用。</p>
 
@@ -47,6 +49,8 @@
 <p>两大神后来开始缅怀小时候几岁的时候玩什么技术之类的，我的智商和听力就彻底跟不上了。后来 H神 说他用 SQL 去考他妈妈，他妈妈竟然只需要问它那个语句是干什么的，然后她妈妈竟然可以从汇编，指令和寄存器的角度指出它哪里有问题了。靠，开挂了吧。H神 还想请 @substack 去他们上海公司给员工感受一下什么叫做 live for code，而不是 code for live 的精神。说费用他包，问有没有兴趣。@substack 好像说会在中国待 3 星期，没什么问题，之后可能还要到深圳来骑车什么的。深圳的同学们有关系的话，就看能不能请到他去玩了。后面我们扯着扯着就讲到为什么国内那么难找到这样的人，什么独生政策，教育，压力的都来了。中间我还讥讽 H神 也还不是 code for live。他说不是，他是因为写 code 是让他可以赚最多钱的工作。其实他还可以搞建筑什么的，还说他的床上功夫也不错，笑死我。 我们就这样一直聊到 10 点散场了才走了。</p>
 
 <p>整个晚上和 @substack 及其他大神的一些直接对话真比在会场听一天感悟还多。所以意见是大家以后听会议，一定要准备问题，尽量和各种大神聊天。只是听讲座和拍几张PPT或大神照片就没什么用了。</p>
+
+<p><img alt="Group" src="http://thinkingincrowd.u.qiniudn.com/JingJS_AfterParty.JPG?imageView/2/w/500" style="border: 0px;"/></p>
 ]]></content>
   </entry>
   
