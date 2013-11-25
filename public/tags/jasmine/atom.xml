@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Jasmine | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/jasmine/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-16T15:35:42+08:00</updated>
+  <updated>2013-11-25T08:52:15+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to use Ext Ajax in Promise style and test it]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/"/>
+    <updated>2013-11-25T08:50:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it</id>
+    <content type="html"><![CDATA[<p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.</p>
+
+<p><a href="https://github.com/kenspirit/ExtPromise">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.</p>
+
+<p>It didn&rsquo;t took long to implement the ExtPromise wrapper but it took me some time to test it.</p>
+
+<p>Originally, I thought I could use the <a href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">jasmine-ajax</a> I enhanced and shared before about how to test Ajax call in ExtJs.  However, it doesn&rsquo;t work as expected.  Testing Async method in <a href="http://pivotal.github.com/jasmine/">Jasmine</a> seems very awkward because the API in version 1.4 and 2.0 are dramaticlly different.  Even worst, many strange issues messed around all the way.</p>
+
+<p>I finally gave up and search other alternative approaches.  <a href="http://github.com/cjohansen/Sinon.JS">Sinon.js</a> and <a href="http://github.com/visionmedia/mocha/">Mocha</a> come to rescure.  It is pretty easy to test the Ajax call using the <code>useFakeXMLHttpRequest</code> provided by Sinon and the Async testing in Mocha looks more intuitive (Jasmine 2.0 use the same way).  Let&rsquo;s see how the testing (BDD style) is setup.</p>
+
+<p>```javascript
+describe(&ldquo;Ajax should be now working in promise style&rdquo;, function() {</p>
+
+<pre><code>var xhr, ajax;
+
+before(function() {
+    xhr = sinon.useFakeXMLHttpRequest();
+    xhr.onCreate = function(xhr) {
+        ajax = xhr;
+    }
+})
+
+after(function() {
+    xhr.restore();
+});
+
+describe('ExtPromise.Ajax', function() {
+    it("#success case", function(done) {
+        ExtPromise.Ajax().request({url: 'foo'})
+        .then(function(result) {
+            expect(result.responseText).to.equal('Bar');
+            done();
+        })
+        .catch(done);
+
+        ajax.respond(200, { 'Content-Type': 'application/json' }, 'Bar');
+    });
+});
+</code></pre>
+
+<p>});
+```</p>
+
+<p>It&rsquo;s quite straightforward.  Before test spec runs, it&rsquo;s required to stub the XMLHttpRequest using Sinon&rsquo;s <code>useFakeXMLHttpRequest</code> API and obtain a reference in the <code>onCreate</code> method so that later it can be used to stub a response.</p>
+
+<p>Passing a <code>done</code> parameter in the test spec function tells Mocha that this spec is for Async testing and callinig <code>done()</code> will end it.  One thing to notice here is this part.</p>
+
+<p>```javascript</p>
+
+<pre><code>.catch(done);
+</code></pre>
+
+<p>```</p>
+
+<p>If you don&rsquo;t do this, and the assertion in the test spec failed, the error it shows will be a timeout error instead of telling the true assertion error.</p>
+
+<p>When testing failure case, the style written like below doesn&rsquo;t look good and error-prone because <code>done()</code> is called twice although you might think the success resolver doesnot require as it should not be called.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+        done();
+    }, function(result) {
+        expect(result.status).to.equal(500);
+        done();
+    })
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+
+<p>You may rewrite the call to <code>done</code> in a then call.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+    }, function(result) {
+        expect(result.status).to.equal(500);
+    })
+    .then(done)
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
@@ -512,81 +614,6 @@ new xxx.DataStore();
 <p>Beside how the Test is written, I would like to draw your attention to how I wrote the description for the Suite and the Spec.  I am not sure whether I understood the <a href="http://dannorth.net/introducing-bdd/">Behavior Driven Development</a> comprehensively because I am still learning it.  However, I think this simple mind change helps me to think about how the behavior should be more than just simply how to write Test to meet coverage.  It can even helps us to review our design whether particular code belongs to the right place.</p>
 
 <p>Let&rsquo;s explore how Unit Test can be achieved more for ExtJS later.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[ExtJS, Jasmine, Maven - Integration]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration/"/>
-    <updated>2012-08-06T22:59:31+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/08/06/extjs-jasmine-maven-integration</id>
-    <content type="html"><![CDATA[<p>After briefing <a href="http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/">Why I am working on them</a>, let me show you how they can be integrated all together first.</p>
-
-<p><a href="http://pivotal.github.com/jasmine/">Jasmine</a> is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with <a href="http://nodejs.org/">NodeJS</a> which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error &ldquo;Class not found: File&rdquo; if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.</p>
-
-<p>The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment &amp; process.  <a href="maven.apache.org">Maven</a> is a better choice for us now because we should be using it for our project&rsquo;s build management.</p>
-
-<p>Let&rsquo;s see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup <a href="https://github.com/searls/jasmine-maven-plugin">jasmine-maven-plugin</a> in your POM.xml like below.</p>
-
-<p>```xml</p>
-
-<pre><code>&lt;plugin&gt;
-    &lt;groupId&gt;com.github.searls&lt;/groupId&gt;
-    &lt;artifactId&gt;jasmine-maven-plugin&lt;/artifactId&gt;
-    &lt;version&gt;1.2.0.0&lt;/version&gt;
-    &lt;extensions&gt;true&lt;/extensions&gt;
-    &lt;executions&gt;
-        &lt;execution&gt;
-            &lt;goals&gt;
-              &lt;goal&gt;test&lt;/goal&gt;
-            &lt;/goals&gt;
-        &lt;/execution&gt;
-    &lt;/executions&gt;
-    &lt;configuration&gt;
-    &lt;preloadSources&gt;
-        &lt;source&gt;${project.basedir}/[SOME_PRELOAD_FILES_GOES_HERE]&lt;/source&gt;
-    &lt;/preloadSources&gt;
-    &lt;jsSrcDir&gt;${project.basedir}/Resources/js&lt;/jsSrcDir&gt;
-    &lt;jsTestSrcDir&gt;${project.basedir}/Resources/test/js&lt;/jsTestSrcDir&gt;
-    &lt;sourceIncludes&gt;
-            &lt;include&gt;[TO_BE_TESTED_JS_FILES_GOES_HERE]&lt;/include&gt;
-        &lt;include&gt;[TO_BE_TESTED_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/sourceIncludes&gt;
-    &lt;specIncludes&gt;
-        &lt;include&gt;[SPEC_JS_FOLDER_GOES_HERE]/*.js&lt;/include&gt;
-    &lt;/specIncludes&gt;
-    &lt;/configuration&gt;
-&lt;/plugin&gt;
-</code></pre>
-
-<p>```</p>
-
-<p>After you modify those CAPITALIZED PLACEHOLDER to fit your own project, you can simply type &ldquo;mvn test&rdquo; in command line to see whether Jasmine is included into your Maven test lifecycle.  You should have something similar in output:</p>
-
-<p>```bash</p>
-
-<pre><code>[INFO] Executing Jasmine Specs
--------------------------------------------------------
- J A S M I N E   S P E C S
--------------------------------------------------------
-[INFO]
-Test Suite Name 1
-  Spec 1
-  Spec 2
-
-Test Suite Name 2
-  Spec 3
-
-Results: 3 specs, 0 failures
-</code></pre>
-
-<p>```</p>
-
-<p>If you encounter any error, please go check the documentation site of this plugin or leave a comment here.  The plugin setup should be quite strange forward.</p>
-
-<p>File path in <em>sourceIncludes</em>, <em>specIncludes</em> are relative paths to <em>jsSrcDir</em> and <em>jsTestSrcDir</em>.  <em>preloadSources</em>, <em>sourceIncludes</em>, <em>specIncludes</em> are treated as ordered list so that you can properly arrange your JS and Jasmine Spec in correct order when your JS or Spec has some loading dependency.</p>
-
-<p>OK, now preparation for Unit Test is done.  Let&rsquo;s see how Jasmine can be used to do Unit Test especially for ExtJS project together in my next post.</p>
 ]]></content>
   </entry>
   

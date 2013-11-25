@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sword | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/blog/categories/sword/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-16T15:35:42+08:00</updated>
+  <updated>2013-11-25T08:52:15+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to use Ext Ajax in Promise style and test it]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/"/>
+    <updated>2013-11-25T08:50:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it</id>
+    <content type="html"><![CDATA[<p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.</p>
+
+<p><a href="https://github.com/kenspirit/ExtPromise">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.</p>
+
+<p>It didn&rsquo;t took long to implement the ExtPromise wrapper but it took me some time to test it.</p>
+
+<p>Originally, I thought I could use the <a href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">jasmine-ajax</a> I enhanced and shared before about how to test Ajax call in ExtJs.  However, it doesn&rsquo;t work as expected.  Testing Async method in <a href="http://pivotal.github.com/jasmine/">Jasmine</a> seems very awkward because the API in version 1.4 and 2.0 are dramaticlly different.  Even worst, many strange issues messed around all the way.</p>
+
+<p>I finally gave up and search other alternative approaches.  <a href="http://github.com/cjohansen/Sinon.JS">Sinon.js</a> and <a href="http://github.com/visionmedia/mocha/">Mocha</a> come to rescure.  It is pretty easy to test the Ajax call using the <code>useFakeXMLHttpRequest</code> provided by Sinon and the Async testing in Mocha looks more intuitive (Jasmine 2.0 use the same way).  Let&rsquo;s see how the testing (BDD style) is setup.</p>
+
+<p>```javascript
+describe(&ldquo;Ajax should be now working in promise style&rdquo;, function() {</p>
+
+<pre><code>var xhr, ajax;
+
+before(function() {
+    xhr = sinon.useFakeXMLHttpRequest();
+    xhr.onCreate = function(xhr) {
+        ajax = xhr;
+    }
+})
+
+after(function() {
+    xhr.restore();
+});
+
+describe('ExtPromise.Ajax', function() {
+    it("#success case", function(done) {
+        ExtPromise.Ajax().request({url: 'foo'})
+        .then(function(result) {
+            expect(result.responseText).to.equal('Bar');
+            done();
+        })
+        .catch(done);
+
+        ajax.respond(200, { 'Content-Type': 'application/json' }, 'Bar');
+    });
+});
+</code></pre>
+
+<p>});
+```</p>
+
+<p>It&rsquo;s quite straightforward.  Before test spec runs, it&rsquo;s required to stub the XMLHttpRequest using Sinon&rsquo;s <code>useFakeXMLHttpRequest</code> API and obtain a reference in the <code>onCreate</code> method so that later it can be used to stub a response.</p>
+
+<p>Passing a <code>done</code> parameter in the test spec function tells Mocha that this spec is for Async testing and callinig <code>done()</code> will end it.  One thing to notice here is this part.</p>
+
+<p>```javascript</p>
+
+<pre><code>.catch(done);
+</code></pre>
+
+<p>```</p>
+
+<p>If you don&rsquo;t do this, and the assertion in the test spec failed, the error it shows will be a timeout error instead of telling the true assertion error.</p>
+
+<p>When testing failure case, the style written like below doesn&rsquo;t look good and error-prone because <code>done()</code> is called twice although you might think the success resolver doesnot require as it should not be called.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+        done();
+    }, function(result) {
+        expect(result.status).to.equal(500);
+        done();
+    })
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+
+<p>You may rewrite the call to <code>done</code> in a then call.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+    }, function(result) {
+        expect(result.status).to.equal(500);
+    })
+    .then(done)
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会]]></title>
@@ -856,152 +958,6 @@ TestObj.c();
 <p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.</p>
 
 <p>More fun, right?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
-    <updated>2013-06-08T22:17:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend</id>
-    <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it&rsquo;s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend">$httpBackend</a> in ngMock module.</p>
-
-<p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.</p>
-
-<blockquote><p><strong>expect(method, url, data, headers)</strong><br/>
-Creates a new request expectation.</p>
-
-<p>Parameters<br/>
-* method – {string} – HTTP method.<br/>
-* url – {string|RegExp} – HTTP url.<br/>
-* data(optional) – {(string|RegExp)=} – HTTP request body.</p></blockquote>
-
-<p>So normally, below simple case is working as expected:</p>
-
-<p>```javascript</p>
-
-<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', 'hello').respond(200, 'Done');
-$resource('http://localhost/timeEntry/').save('hello');
-$httpBackend.flush();
-
-$httpBackend.expect('POST', 'http://localhost/timeEntry', /te/g).respond(200, 'Done');
-$resource('http://localhost/timeEntry/').save('test');
-$httpBackend.flush();
-</code></pre>
-
-<p>```</p>
-
-<p>However, in real application, the data posted to server is normally in JSON format.  How do we verify JSON data then?  Actually, if we look into the source of the <em>angular-mocks.js</em>, it supports JSON data too although it&rsquo;s not documented.</p>
-
-<p>```javascript
-  this.matchData = function(d) {</p>
-
-<pre><code>if (angular.isUndefined(data)) return true;
-if (data &amp;&amp; angular.isFunction(data.test)) return data.test(d);
-if (data &amp;&amp; !angular.isString(data)) return angular.toJson(data) == d;
-return data == d;
-</code></pre>
-
-<p>  };
-```</p>
-
-<p>So below sample also works.</p>
-
-<p>```javascript</p>
-
-<pre><code>$httpBackend.expect('POST', 'http://localhost/timeEntry', {firstName: 'Ken', lastName: 'Chen'}).respond(200, 'Done');
-$resource('http://localhost/timeEntry/').save({firstName: 'Ken', lastName: 'Chen'});
-$httpBackend.flush();
-</code></pre>
-
-<p>```</p>
-
-<p>As we see, the JSON data validation requires the JSON data posted to be exactly the same as the expect value provided.  How if the JSON data posted is different on each posting, say guid or timestamp field is contained, and we want to verify whether the JSON data is valid based on our special valiation logic?</p>
-
-<p>Here is the hack to make AngularJS take our special validation logic.</p>
-
-<p>```javascript</p>
-
-<pre><code>var Validator = (function() {
-    return {
-        hasMinimumFields: function(entry) {
-            return StringUtil.isNotBlank(entry.id) &amp;&amp; StringUtil.isNotBlank(entry.desc) &amp;&amp;
-                StringUtil.isNotBlank(entry.lastUpdateOn) &amp;&amp; StringUtil.isNotBlank(entry.status);
-        },
-        isNewEntry: function(entry) {
-            return this.hasMinimumFields(entry) &amp;&amp; entry.status === 'P';
-        }
-    };
-})();
-
-$scope.desc = 'Hello there';
-
-var data = {
-    test: function(data) {
-        var entry = angular.fromJson(data);
-        return (entry.desc === $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
-    }
-};
-$httpBackend.expect('POST', 'http://localhost/timeEntry', data).respond(200, 'Done');
-$scope.saveEntry(); // Let's assume this method will post the data with model $scope.desc
-$httpBackend.flush();
-</code></pre>
-
-<p>```</p>
-
-<p>The hacking as you see is to take advantage of the <em>test</em> method which the <em>RegExp</em> has and AngularJS uses for data matching.  But when the data is not posted as expected, the Unit Test fails with below message:</p>
-
-<p>```javascript</p>
-
-<pre><code>Chrome 27.0 (Linux) Unit: Controllers Test EntryCtrl should start entry in correct format if only entry desc is filled. FAILED
-Error: Expected POST http://localhost/timeEntry with different data
-EXPECTED: {}
-GOT:      {"status":"P","actualStartOn":"2013/06/08T21:24+0800","desc":"First Unit Test","id":"3849ae1a-4b9c-40be-baa0-60eeaf3af430","lastUpdateOn":"2013/06/08T13:24:44.104+0000"}
-</code></pre>
-
-<p>```</p>
-
-<p>This error message is not quite developer friendly and it doesn&rsquo;t tell you much about why it failed at first glance.  However, if we make the test data contain the JSON value too, the expect message would be more meaningful.</p>
-
-<p>```javascript</p>
-
-<pre><code>var data = {
-    desc: $scope.desc,
-    status: 'P',
-    id: 'SHOULD NOT BLANK',
-    lastUpdateOn: 'SHOULD NOT BLANK',
-    test: function(data) {
-        var entry = angular.fromJson(data);
-        return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
-    }
-};
-</code></pre>
-
-<p>```</p>
-
-<p><code>javascript
-EXPECTED: {"desc":"First Unit Test","status":"P","id":"SHOULD NOT BLANK","lastUpdateOn":"SHOULD NOT BLANK"}
-</code></p>
-
-<p><em>[Edited on Aug 09th 2013]</em>: After AngularJS accepted my <a href="https://github.com/angular/angular.js/pull/2981">pull request</a> to support Function as validation data last week, we don&rsquo;t need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function&rsquo;s <em>toString()</em> method to give more expressive error message in a cleaner way.</p>
-
-<p>```javascript</p>
-
-<pre><code>var data = function(data) {
-    var entry = angular.fromJson(data);
-    return (entry.desc !== $scope.desc) &amp;&amp; Validator.isNewEntry(entry);
-};
-data.toString = function() {
-    return 'The status of the new entry should be "P", desc should be "' + $scope.desc +
-        '" and its id &amp; lastUpdateOn should not be blank.';
-};
-</code></pre>
-
-<p>```</p>
-
-<p><code>javascript
-EXPECTED: The status of the new entry should be "P", desc should be "First Unit Test" and its id &amp; lastUpdateOn should not be blank.
-</code></p>
 ]]></content>
   </entry>
   

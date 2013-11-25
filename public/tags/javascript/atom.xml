@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: Javascript | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/javascript/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-16T15:35:42+08:00</updated>
+  <updated>2013-11-25T08:52:15+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to use Ext Ajax in Promise style and test it]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/"/>
+    <updated>2013-11-25T08:50:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it</id>
+    <content type="html"><![CDATA[<p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.</p>
+
+<p><a href="https://github.com/kenspirit/ExtPromise">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.</p>
+
+<p>It didn&rsquo;t took long to implement the ExtPromise wrapper but it took me some time to test it.</p>
+
+<p>Originally, I thought I could use the <a href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">jasmine-ajax</a> I enhanced and shared before about how to test Ajax call in ExtJs.  However, it doesn&rsquo;t work as expected.  Testing Async method in <a href="http://pivotal.github.com/jasmine/">Jasmine</a> seems very awkward because the API in version 1.4 and 2.0 are dramaticlly different.  Even worst, many strange issues messed around all the way.</p>
+
+<p>I finally gave up and search other alternative approaches.  <a href="http://github.com/cjohansen/Sinon.JS">Sinon.js</a> and <a href="http://github.com/visionmedia/mocha/">Mocha</a> come to rescure.  It is pretty easy to test the Ajax call using the <code>useFakeXMLHttpRequest</code> provided by Sinon and the Async testing in Mocha looks more intuitive (Jasmine 2.0 use the same way).  Let&rsquo;s see how the testing (BDD style) is setup.</p>
+
+<p>```javascript
+describe(&ldquo;Ajax should be now working in promise style&rdquo;, function() {</p>
+
+<pre><code>var xhr, ajax;
+
+before(function() {
+    xhr = sinon.useFakeXMLHttpRequest();
+    xhr.onCreate = function(xhr) {
+        ajax = xhr;
+    }
+})
+
+after(function() {
+    xhr.restore();
+});
+
+describe('ExtPromise.Ajax', function() {
+    it("#success case", function(done) {
+        ExtPromise.Ajax().request({url: 'foo'})
+        .then(function(result) {
+            expect(result.responseText).to.equal('Bar');
+            done();
+        })
+        .catch(done);
+
+        ajax.respond(200, { 'Content-Type': 'application/json' }, 'Bar');
+    });
+});
+</code></pre>
+
+<p>});
+```</p>
+
+<p>It&rsquo;s quite straightforward.  Before test spec runs, it&rsquo;s required to stub the XMLHttpRequest using Sinon&rsquo;s <code>useFakeXMLHttpRequest</code> API and obtain a reference in the <code>onCreate</code> method so that later it can be used to stub a response.</p>
+
+<p>Passing a <code>done</code> parameter in the test spec function tells Mocha that this spec is for Async testing and callinig <code>done()</code> will end it.  One thing to notice here is this part.</p>
+
+<p>```javascript</p>
+
+<pre><code>.catch(done);
+</code></pre>
+
+<p>```</p>
+
+<p>If you don&rsquo;t do this, and the assertion in the test spec failed, the error it shows will be a timeout error instead of telling the true assertion error.</p>
+
+<p>When testing failure case, the style written like below doesn&rsquo;t look good and error-prone because <code>done()</code> is called twice although you might think the success resolver doesnot require as it should not be called.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+        done();
+    }, function(result) {
+        expect(result.status).to.equal(500);
+        done();
+    })
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+
+<p>You may rewrite the call to <code>done</code> in a then call.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+    }, function(result) {
+        expect(result.status).to.equal(500);
+    })
+    .then(done)
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[京JS 2013 之挖坑自埋与神打击]]></title>
@@ -731,172 +833,6 @@ D.then(function(d) { d.run(1000，2) });</p>
 <p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven&rsquo;t tried that yet and will give an update here once done.</p>
 
 <p>Do you have experience on i18n in AngularJS?  Thoughts and comments are appreciated.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Function definition, this and bind in JavaScript]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
-    <updated>2013-06-14T20:00:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2013/06/14/function-definition-this-and-bind-in-javascript</id>
-    <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don&rsquo;t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.</p>
-
-<p>```javascript
-var TestObj = {</p>
-
-<pre><code>a: function() {
-    console.log('A');
-},
-b: function() {
-    console.log('B');
-    this.a();
-}
-</code></pre>
-
-<p>};</p>
-
-<p>TestObj.b();</p>
-
-<p>var c = TestObj.b;
-c();
-```</p>
-
-<p>The result will be as below, right?</p>
-
-<p><code>javascript
-B
-A
-B
-A
-</code></p>
-
-<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don&rsquo;t know JavasScript well either like me.  The result actually is:</p>
-
-<p><code>javascript
-B
-A
-B
-TypeError: Object [object global] has no method 'a'
-</code></p>
-
-<p>It is a little bit awkward or counterintuitive at first glance but it&rsquo;s JavaScript.  It&rsquo;s the feature and amazing part.  Let&rsquo;s break it down piece by piece and see why.</p>
-
-<h2>Function definition</h2>
-
-<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:</p>
-
-<p>```javascript
-function B() {</p>
-
-<pre><code>console.log('B');
-this.a();
-</code></pre>
-
-<p>};</p>
-
-<p>var TestObj = {</p>
-
-<pre><code>a: function() {
-    console.log('A');
-},
-b: B
-</code></pre>
-
-<p>};
-```</p>
-
-<h2>this</h2>
-
-<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMA-262</a> edition 5.1:</p>
-
-<blockquote><p><strong>10.4.3 Entering Function Code</strong><br/>
-The following steps are performed when control enters the execution context for function code contained in
-function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
-
-<ol>
-<li>If the function code is strict code, set the ThisBinding to thisArg.</li>
-<li>Else if thisArg is null or undefined, set the ThisBinding to the global object.</li>
-<li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).</li>
-<li>Else set the ThisBinding to thisArg.<br/>
-&hellip;</li>
-</ol>
-</blockquote>
-
-<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.</p>
-
-<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.</p>
-
-<p>However, below statements mean differently.</p>
-
-<p><code>javascript
-var c = TestObj.b;
-c();
-</code></p>
-
-<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.</p>
-
-<h2>How to set a particular object as <em>this</em> to function</h2>
-
-<p>It&rsquo;s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:</p>
-
-<p><code>javascript
-var c = TestObj.b;
-c.call(TestObj);
-</code></p>
-
-<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:</p>
-
-<p>```javascript
-function dynamic(fn) {
-  fn();
-}</p>
-
-<p>dynamic(TestObj.b);
-```</p>
-
-<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it&rsquo;s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.</p>
-
-<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:</p>
-
-<p>```javascript
-function dynamic(fn) {
-  fn();
-}</p>
-
-<p>dynamic(TestObj.b.bind(TestObj));
-```</p>
-
-<p>It&rsquo;s fun, isn&rsquo;t it?</p>
-
-<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.</p>
-
-<p>```javascript
-var length = 3;</p>
-
-<p>function logLength() {
-  console.log(this.length);
-}</p>
-
-<p>var TestObj = {</p>
-
-<pre><code>length: 2,
-b: logLength,
-c: function() {
-    (function(fn) {
-        arguments[0]();
-    })(logLength);
-}
-</code></pre>
-
-<p>};</p>
-
-<p>TestObj.b();
-TestObj.c();
-```</p>
-
-<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.</p>
-
-<p>More fun, right?</p>
 ]]></content>
   </entry>
   

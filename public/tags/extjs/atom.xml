@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: ExtJs | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/extjs/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-16T15:35:42+08:00</updated>
+  <updated>2013-11-25T08:52:15+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to use Ext Ajax in Promise style and test it]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/"/>
+    <updated>2013-11-25T08:50:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it</id>
+    <content type="html"><![CDATA[<p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.</p>
+
+<p><a href="https://github.com/kenspirit/ExtPromise">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.</p>
+
+<p>It didn&rsquo;t took long to implement the ExtPromise wrapper but it took me some time to test it.</p>
+
+<p>Originally, I thought I could use the <a href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">jasmine-ajax</a> I enhanced and shared before about how to test Ajax call in ExtJs.  However, it doesn&rsquo;t work as expected.  Testing Async method in <a href="http://pivotal.github.com/jasmine/">Jasmine</a> seems very awkward because the API in version 1.4 and 2.0 are dramaticlly different.  Even worst, many strange issues messed around all the way.</p>
+
+<p>I finally gave up and search other alternative approaches.  <a href="http://github.com/cjohansen/Sinon.JS">Sinon.js</a> and <a href="http://github.com/visionmedia/mocha/">Mocha</a> come to rescure.  It is pretty easy to test the Ajax call using the <code>useFakeXMLHttpRequest</code> provided by Sinon and the Async testing in Mocha looks more intuitive (Jasmine 2.0 use the same way).  Let&rsquo;s see how the testing (BDD style) is setup.</p>
+
+<p>```javascript
+describe(&ldquo;Ajax should be now working in promise style&rdquo;, function() {</p>
+
+<pre><code>var xhr, ajax;
+
+before(function() {
+    xhr = sinon.useFakeXMLHttpRequest();
+    xhr.onCreate = function(xhr) {
+        ajax = xhr;
+    }
+})
+
+after(function() {
+    xhr.restore();
+});
+
+describe('ExtPromise.Ajax', function() {
+    it("#success case", function(done) {
+        ExtPromise.Ajax().request({url: 'foo'})
+        .then(function(result) {
+            expect(result.responseText).to.equal('Bar');
+            done();
+        })
+        .catch(done);
+
+        ajax.respond(200, { 'Content-Type': 'application/json' }, 'Bar');
+    });
+});
+</code></pre>
+
+<p>});
+```</p>
+
+<p>It&rsquo;s quite straightforward.  Before test spec runs, it&rsquo;s required to stub the XMLHttpRequest using Sinon&rsquo;s <code>useFakeXMLHttpRequest</code> API and obtain a reference in the <code>onCreate</code> method so that later it can be used to stub a response.</p>
+
+<p>Passing a <code>done</code> parameter in the test spec function tells Mocha that this spec is for Async testing and callinig <code>done()</code> will end it.  One thing to notice here is this part.</p>
+
+<p>```javascript</p>
+
+<pre><code>.catch(done);
+</code></pre>
+
+<p>```</p>
+
+<p>If you don&rsquo;t do this, and the assertion in the test spec failed, the error it shows will be a timeout error instead of telling the true assertion error.</p>
+
+<p>When testing failure case, the style written like below doesn&rsquo;t look good and error-prone because <code>done()</code> is called twice although you might think the success resolver doesnot require as it should not be called.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+        done();
+    }, function(result) {
+        expect(result.status).to.equal(500);
+        done();
+    })
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+
+<p>You may rewrite the call to <code>done</code> in a then call.</p>
+
+<p>```javascript</p>
+
+<pre><code>ExtPromise.Ajax().request({url: 'foo', scope: scopeObj})
+    .then(scopeObj.getName)
+    .then(function(result) {
+        expect(result).to.equal('Bar In scope');
+    }, function(result) {
+        expect(result.status).to.equal(500);
+    })
+    .then(done)
+    .catch(done);
+
+ajax.respond(500, { 'Content-Type': 'application/json' }, 'Error');
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
@@ -402,204 +504,6 @@ new xxx.DataStore();
 <p>Until I did sit down and really tried to use Jasmine to test the ExtJS code, I can say that Unit Test against ExtJS by Jasmine can be achieved at some level once we know what to test for.</p>
 
 <p>In next post, I will show you the steps to bind ExtJS, Jasmine, Maven together to do the Unit Test and what I think we should test against.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[i18n, ExtJS and JAWR]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/07/21/i18n-extjs-and-jawr/"/>
-    <updated>2012-07-21T17:19:57+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/07/21/i18n-extjs-and-jawr</id>
-    <content type="html"><![CDATA[<p><strong>What is i18n and How to do it in Javascript?</strong></p>
-
-<p>i18n, which is so called internationalization, is to support multilingual for a platform.</p>
-
-<p>ExtJS, JavaScript framework, provides numerous UI  components to build complex UI.</p>
-
-<p>In order to implement i18 in UI page purely built by ExtJS, it&rsquo;s inevitable to translate the title, label of the ExtJS components into proper language.  From my point of view, there should be two ways for that:</p>
-
-<ol>
-<li><p> Use the translated text directly in the UI components during construction</p></li>
-<li><p> Use separate JS to replace the text before rendering, say in initComponent method or beforeRender event handler.</p></li>
-</ol>
-
-
-<p>There are pros and cons for each approach:</p>
-
-<ol>
-<li><p> Approach #1 is easy, but injecting logic for i18n text translation into the UI components construction is just like adding event handler into the HTML directly and it makes the code for text translation spread all around the code building UI.</p></li>
-<li><p> Approach #2 separates the i18n implementation detail which makes it easier to change.  The benefit got from this can be easier prototyping, unit testing, and future enhancement if i18n implementation changed.</p></li>
-</ol>
-
-
-<p>In order to avoid violation of separation of concern principle, I would like to choose approach #2.  If you agree with me, you can keep going.</p>
-
-<p><strong>How to use JAWR to implement i18n</strong></p>
-
-<p>Normally, i18n text file is built with property file (e.g. msg_en_UI.properties) in which an entry is represented as:
-```ini</p>
-
-<pre><code>msgkey=msgText in i18n
-</code></pre>
-
-<p>```
-This kind of file is very common in JAVA and <a href="http://jawr.java.net">JAWR</a> can be used to interpret this kind of property file and built code for i18n.  It&rsquo;s quite easy to setup JAWR and I am not going to brief it here.  In a word, if your i18n text entry built like this:</p>
-
-<p>```ini</p>
-
-<pre><code>main.hello.world=Hello world!
-</code></pre>
-
-<p>```</p>
-
-<p>Then you can get the translated text by:</p>
-
-<p>```javascript</p>
-
-<pre><code>messages.main.hello.world(); // Hello world!
-</code></pre>
-
-<p>```</p>
-
-<p>Actually, JAWR build the text to Javascript data structure (messages is default prefix) to make a function call to get the actual text (i18n is based on which property file loaded depending on your locale resolver).</p>
-
-<p>OK, till now, do you get the idea and like this kind of implementation?</p>
-
-<p>Personally, I don&rsquo;t quite like it.  Although the usage of data structure is to prevent polluting the Javascript namespace, directly mapping to data structure with the message key makes it hard to dynamically handle the text translation or even in batch operation.  Imagine the message key is the ID of the UI component, you have to use eval() function on &ldquo;ID of UI component + ()&rdquo; if you want a generic way.</p>
-
-<p>Hence, I would rather have a Message Manager class having a function to return the translated message by passing in the message key.  If you agree with me again, keep follow.</p>
-
-<p>Luckily, I am able to do this because JAWR provides flexibility to use a customized message generator.  Let&rsquo;s see how to do it.  According to its doc about <a href="http://jawr.java.net/docs/messages_gen.html">message</a> and <a href="http://jawr.java.net/docs/generators.html">generators</a>, we need just need to do three things:</p>
-
-<ol>
-<li> Set below sample lines in jawr.properties file:</li>
-</ol>
-
-
-<p>```ini</p>
-
-<pre><code>jawr.custom.generators=xxx.MyResourceBundleMessagesGenerator
-
-jawr.js.bundle.lib.mappings=**mymessages**:com.myapp.messages(mynamespace)
-</code></pre>
-
-<p>```</p>
-
-<ol>
-<li><p> Build the customized generator.  How? The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.ResourceBundleMessagesGenerator</em> and overrides its <em>public Reader createResource(GeneratorContext context)</em> to use our own generator and overrides its <em>public String getMappingPrefix()</em> to return our own mapping <strong>mymessages</strong>.</p></li>
-<li><p> Build the customized creator.  How?  The simplest way is to extends the <em>net.jawr.web.resource.bundle.locale.message.MessageBundleScriptCreator</em> and overrides its <em>protected Reader doCreateScript(Properties props)</em> to write our own script generation code.</p></li>
-</ol>
-
-
-<p>Below is the sample code in my <em>xxx.MyResourceBundleMessagesGenerator</em>:</p>
-
-<p>```java</p>
-
-<pre><code>@Override
-public Reader createResource(GeneratorContext context) {
-  MyMessageBundleScriptCreator creator = new MyMessageBundleScriptCreator(context);
-  return creator.createScript(context.getCharset());
-}
-
-@Override
-public String getMappingPrefix() {
-  return "mymessages";
-}
-</code></pre>
-
-<p>```</p>
-
-<p>Below is the sample code in my <em>xxx.MyMessageBundleScriptCreator</em>:</p>
-
-<p>```java</p>
-
-<pre><code>private StringBuffer loadScriptTemplate() {
-  StringWriter sw = new StringWriter();
-  InputStream is = null;
-  try {
-    is = ClassLoaderResourceUtils.getResourceAsStream("/xxx/messages.js", this);
-    IOUtils.copy(is, sw);
-  } catch (IOException e) {
-    throw new BundlingProcessException("Fail to load the message template. ", e);
-  } finally {
-    IOUtils.close(is);
-  }
-  return sw.getBuffer();
-}
-
-@Override
-protected Reader doCreateScript(Properties props) {
-  String script = loadScriptTemplate().toString();
-  Set keys = props.stringPropertyNames();
-  StringBuffer messages = new StringBuffer("{");
-  for (String key : keys) {
-    String value = props.getProperty(key);
-    messages.append(
-"\"" + key + "\": \"" + StringUtils.defaultString(value, "").replaceAll("\"", "\\\\\"") + "\",\n");
-  }
-  if (messages.length() &gt; 1) {
-    messages.deleteCharAt(messages.length() - 1);
-  }
-  messages.append("}");
-  script = script.replace("@namespace", RegexUtil.adaptReplacementToMatcher(this.namespace));
-  script = script.replaceFirst("@messages", RegexUtil.adaptReplacementToMatcher(messages.toString()));
-  return new StringReader(script);
-}
-</code></pre>
-
-<p>```</p>
-
-<p>Finally, let&rsquo;s see what is in my message.js:</p>
-
-<p>```javascript</p>
-
-<pre><code>if (!window.MultilingualMessageMgr) {
-  window.MultilingualMessageMgr = (function(){
-    var msgMap = {};
-    return {
-      getMsg: function(namespace, msgKey) {
-        var argLen = arguments.length;
-        if (argLen &lt; 2) {
-          return null;
-        }
-        var msg = null;
-        if (argLen === 2) {
-          msg = msgMap[namespace][msgKey];
-        }
-        if (argLen &gt; 2) {
-          for (var i = 2; i &lt; argLen; i++) {
-            msg = msg.replace("{" + (i - 2) + "}", arguments[i]);
-          }
-        }
-        return msg;
-      },
-      putMsgs: function(namespace, msgObj) {
-        msgMap[namespace] = msgObj;
-      }
-    };
-  })();
-}
-window.MultilingualMessageMgr.putMsgs("@namespace", @messages);
-</code></pre>
-
-<p>```</p>
-
-<p>Let me explain a bit on what the <em>MultilingualMessageMgr</em> does here.</p>
-
-<p>It&rsquo;s an object which is returned by anonymous function.  This object has a <em>getMsg</em> and <em>putMsgs</em> function.  Both of them is referring to an <em>msgMap</em> object in the anonymous function scope so that it cannot be accessed directly outside <em>MultilingualMessageMgr</em>.  The <em>getMsg</em> function takes at least two arguments including namespace and message key, any other parameters are treated some value to replace the placeholder in message.  The <em>getMsg</em> function puts the messages json object with namespace bound to it for retrieval later.</p>
-
-<p>With this <em>MultilingualMessageMgr,</em> multilingual message translation can be done by sample call like:</p>
-
-<p>```javascript</p>
-
-<pre><code>MultilingualMessageMgr.getMsg(namespace, msgKey);
-</code></pre>
-
-<p>```</p>
-
-<p>Now, centralizing i18n logic to dynamically replace all ExtJs UI components can be realized by building the property file with component id as message key and iterating all components to replace them.</p>
-
-<p>If you have any comment or better idea on how to do i18n in JavaScript, please let me know.</p>
 ]]></content>
   </entry>
   

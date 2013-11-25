@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-16T15:35:42+08:00</updated>
+  <updated>2013-11-25T08:52:15+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,149 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to use Ext Ajax in Promise style and test it]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/"/>
+    <updated>2013-11-25T08:50:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it</id>
+    <content type="html"><![CDATA[<p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.</p>
+
+<p><a href="https://github.com/kenspirit/ExtPromise">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.</p>
+
+<p>It didn&rsquo;t took long to implement the ExtPromise wrapper but it took me some time to test it.</p>
+
+<p>Originally, I thought I could use the <a href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">jasmine-ajax</a> I enhanced and shared before about how to test Ajax call in ExtJs.  However, it doesn&rsquo;t work as expected.  Testing Async method in <a href="http://pivotal.github.com/jasmine/">Jasmine</a> seems very awkward because the API in version 1.4 and 2.0 are dramaticlly different.  Even worst, many strange issues messed around all the way.</p>
+
+<p>I finally gave up and search other alternative approaches.  <a href="http://github.com/cjohansen/Sinon.JS">Sinon.js</a> and <a href="http://github.com/visionmedia/mocha/">Mocha</a> come to rescure.  It is pretty easy to test the Ajax call using the <code>useFakeXMLHttpRequest</code> provided by Sinon and the Async testing in Mocha looks more intuitive (Jasmine 2.0 use the same way).  Let&rsquo;s see how the testing (BDD style) is setup.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Ajax should be now working in promise style&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">xhr</span><span class="p">,</span> <span class="nx">ajax</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">before</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">xhr</span> <span class="o">=</span> <span class="nx">sinon</span><span class="p">.</span><span class="nx">useFakeXMLHttpRequest</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">xhr</span><span class="p">.</span><span class="nx">onCreate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ajax</span> <span class="o">=</span> <span class="nx">xhr</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">after</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">xhr</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;ExtPromise.Ajax&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;#success case&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ExtPromise</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">().</span><span class="nx">request</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">})</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">responseText</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s1">&#39;Bar&#39;</span><span class="p">);</span>
+</span><span class='line'>                <span class="nx">done</span><span class="p">();</span>
+</span><span class='line'>            <span class="p">})</span>
+</span><span class='line'>            <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">ajax</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span> <span class="p">},</span> <span class="s1">&#39;Bar&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s quite straightforward.  Before test spec runs, it&rsquo;s required to stub the XMLHttpRequest using Sinon&rsquo;s <code>useFakeXMLHttpRequest</code> API and obtain a reference in the <code>onCreate</code> method so that later it can be used to stub a response.</p>
+
+<p>Passing a <code>done</code> parameter in the test spec function tells Mocha that this spec is for Async testing and callinig <code>done()</code> will end it.  One thing to notice here is this part.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you don&rsquo;t do this, and the assertion in the test spec failed, the error it shows will be a timeout error instead of telling the true assertion error.</p>
+
+<p>When testing failure case, the style written like below doesn&rsquo;t look good and error-prone because <code>done()</code> is called twice although you might think the success resolver doesnot require as it should not be called.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">ExtPromise</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">().</span><span class="nx">request</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="nx">scope</span><span class="o">:</span> <span class="nx">scopeObj</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">scopeObj</span><span class="p">.</span><span class="nx">getName</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s1">&#39;Bar In scope&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">done</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">done</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">ajax</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span> <span class="p">},</span> <span class="s1">&#39;Error&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may rewrite the call to <code>done</code> in a then call.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">ExtPromise</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">().</span><span class="nx">request</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="nx">scope</span><span class="o">:</span> <span class="nx">scopeObj</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">scopeObj</span><span class="p">.</span><span class="nx">getName</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s1">&#39;Bar In scope&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">ajax</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span> <span class="p">},</span> <span class="s1">&#39;Error&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[京JS 2013 之挖坑自埋与神打击]]></title>
@@ -2620,58 +2763,6 @@ to get the word out, the right people will already be listening.</p></blockquote
 <p>Approach <em>#1</em> looks natural but needs an extra field and more key-stroke.  By taking <em>#3</em>, decimal number need to be used to express minutes.  You may question me that calculating decimal is even harder.  But think it this way:  <em>.25</em> is <em>15</em> mins; <em>.5</em> is <em>30</em> mins; <em>.75</em> is <em>45</em> mins; <em>.1</em> is around <em>5</em> mins.</p>
 
 <p>I think it&rsquo;s not that difficult to use decimal to express it.  What is more, when you are actually tracking your task this way, you are guessing or trying to remember how long it took.  Your mental power is &ldquo;calculating&rdquo; somehow to get a number.  If it&rsquo;s one field, you just need to do one calculation and input.  If it&rsquo;s two fields, you might possibly calculating two fields, especially when your task start time is say from <em>2:35</em> to <em>4:08</em>.  I think it just doesn&rsquo;t matter if there is minor inaccurate.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[My practices on Time Management]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/"/>
-    <updated>2012-12-24T06:22:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management</id>
-    <content type="html"><![CDATA[<h2>The 101</h2>
-
-<blockquote><p>Time Management is the act or process of planning and exercising conscious control over the amount of time spent on specific activities, especially to increase effectiveness, efficiency or productivity.</p></blockquote>
-
-<p>Everyone who cares about their time should be familiar with this concept and knows its goal &ndash; to increase effectiveness.  The <a href="http://en.wikipedia.org/wiki/Time_management">Wiki</a> site covers different aspects of it.</p>
-
-<p>Here I would like to share my understandings and what my choices are to make good use of my time.<br/>
-1. Planning &amp; Prioritizing<br/>
-2. Protecting thy time<br/>
-3. Identifying waste</p>
-
-<h2>Planning &amp; Prioritizing</h2>
-
-<p>Planning &amp; Prioritizing is a must.  It helps us not losing any task we have to do but also makes sure we do the most urgent &amp; important ones first.  <a href="http://en.wikipedia.org/wiki/Getting_Things_Done">Getting Things Done</a> is a great methodology.  However, <strong>DON&rsquo;T SPEND TOO MUCH TIME ON THE LIST.</strong>  You cannot prioritize or categorize your tasks if the list fills with tons of items especially if you have some level of <a href="http://en.wikipedia.org/wiki/Obsessive%E2%80%93compulsive_disorder">Obsessive-compulsive disorder</a>.</p>
-
-<p>I have the same issue stated in <a href="http://simpleprogrammer.com/2012/10/28/my-15-minute-rule-to-productivity/">My 15 Minute Rule to Productivity</a>:</p>
-
-<blockquote><p>I’ll delay doing something that I know is important until the last moment that it needs to be done.</p></blockquote>
-
-<p>Hence, my rule on making a list is: <strong>Make a task list only for the tasks I need to do TODAY and come up an estimated time on how long to take it.</strong>  How if I have something important to do in the future? Put it to calendar/reminder and also include an estimated time so that this task will go into my future TODAY task list.</p>
-
-<p>And then the rule of picking the task from a list is: <strong>Scan the tasks and their estimated time; Pick the one I MUST start it.</strong>  This action is to take out the most IMPORTANT and URGENT task which is actually prioritizing.  The estimated time made in the first step helps me know when it is the right time to pick which task.</p>
-
-<h2>Protecting thy time</h2>
-
-<p>What does this mean?  It means avoid distraction.  Distraction is the major time killer which makes us ineffective.  <a href="http://en.wikipedia.org/wiki/Pomodoro_Technique">Pomodoro Technique</a> is the one I like.  It imposes an external mechanism (a timer here) to keep us focus on work for a short period (generally 25 mins) and also have some rest inbetween.  The rest in between the working period can be used to reply your email, IM or actually relaxing your mind.  Its working style is like marathon which needs constant pacing.</p>
-
-<p>However, this mechanism might have an issue to some knowledge worker.  Here is the view in one of <a href="http://www.joelonsoftware.com/articles/fog0000000068.html">Joel Spolsky&#8217; article</a> with which I totally agree:</p>
-
-<blockquote><p>We all know that knowledge workers work best by getting into &ldquo;flow&rdquo;, also known as being &ldquo;in the zone&rdquo;, where they are fully concentrated on their work and fully tuned out of their environment. They lose track of time and produce great stuff through absolute concentration.<br/>
-&hellip;<br/>
-The trouble is, getting into &ldquo;the zone&rdquo; is not easy. When you try to measure it, it looks like it takes an average of 15 minutes to start working at maximum productivity.  Sometimes, if you&rsquo;re tired or have already done a lot of creative work that day, you just can&rsquo;t get into the zone and you spend the rest of your work day fiddling around, reading the web, playing Tetris.</p></blockquote>
-
-<p>Hence, the Pomodoro Technique might knock you out of the zone and you should choose your own timer based on the average time you can maintain your flow state instead of 25 minutes.  Or you can just let your flow flows until you think you need to get a break.  The point is to try to maintain some continuous period to get uninterrupted.</p>
-
-<p>But generally, Pomodoro is helpful under certain circumstances like management level people who don&rsquo;t even have continous time more than 25 minutes or some working environment has interruption often or someone whose productive time shorter than 25 minutes and want to extend their flow state.</p>
-
-<h2>Identifying waste</h2>
-
-<p>Planning is the starting process of time management, while identifying the waste is the retrospect process.  Sometimes, it&rsquo;s even more important than the planning.  That is because planning is working on something uncertain, while retrospect is based on reality and intended to make improvement.  History and fact can tells us more on the our regular time usage pattern.</p>
-
-<p>How to identify waste?  Track the time and see where your time spends.  Our memory is unreliable to keep track of how long we spend on the things done.  We need to actually write it down and write it down when it happens (at the beginning or the end of the task).</p>
-
-<p>By tracking where the time we spend, we can find out where the waste is and try to eliminate it.  Also we can consolidate those discretionary time slots to a continuous unit for more effective usage.  There is a wonderful chapter &ldquo;Know Thy Time&rdquo; in <a href="http://www.amazon.com/Effective-Executive-Drucker-Series-Peter/dp/0750643900/ref=sr_1_2?ie=UTF8&amp;qid=1356302486&amp;sr=8-2&amp;keywords=The+Effective+Executive">The Effective Executive</a> by <em>Peter F. Drucker</em> describing how to make good use of time.  Highly recommend.</p>
 ]]></content>
   </entry>
   

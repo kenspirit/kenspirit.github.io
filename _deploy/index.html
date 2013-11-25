@@ -9,7 +9,7 @@
   <meta name="author" content="鹄思乱想">
 
   
-  <meta name="description" content="首先要吐槽一下 @京JS。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 @substack， &hellip;">
+  <meta name="description" content="After translated a blog about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -78,6 +78,176 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/">How to Use Ext Ajax in Promise Style and Test It</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-25T08:50:00+08:00" pubdate data-updated="true">Nov 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.</p>
+
+<p><a href="https://github.com/kenspirit/ExtPromise">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.</p>
+
+<p>It didn&rsquo;t took long to implement the ExtPromise wrapper but it took me some time to test it.</p>
+
+<p>Originally, I thought I could use the <a href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/">jasmine-ajax</a> I enhanced and shared before about how to test Ajax call in ExtJs.  However, it doesn&rsquo;t work as expected.  Testing Async method in <a href="http://pivotal.github.com/jasmine/">Jasmine</a> seems very awkward because the API in version 1.4 and 2.0 are dramaticlly different.  Even worst, many strange issues messed around all the way.</p>
+
+<p>I finally gave up and search other alternative approaches.  <a href="http://github.com/cjohansen/Sinon.JS">Sinon.js</a> and <a href="http://github.com/visionmedia/mocha/">Mocha</a> come to rescure.  It is pretty easy to test the Ajax call using the <code>useFakeXMLHttpRequest</code> provided by Sinon and the Async testing in Mocha looks more intuitive (Jasmine 2.0 use the same way).  Let&rsquo;s see how the testing (BDD style) is setup.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Ajax should be now working in promise style&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">xhr</span><span class="p">,</span> <span class="nx">ajax</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">before</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">xhr</span> <span class="o">=</span> <span class="nx">sinon</span><span class="p">.</span><span class="nx">useFakeXMLHttpRequest</span><span class="p">();</span>
+</span><span class='line'>        <span class="nx">xhr</span><span class="p">.</span><span class="nx">onCreate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ajax</span> <span class="o">=</span> <span class="nx">xhr</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">after</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">xhr</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;ExtPromise.Ajax&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;#success case&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">ExtPromise</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">().</span><span class="nx">request</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">})</span>
+</span><span class='line'>            <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">responseText</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s1">&#39;Bar&#39;</span><span class="p">);</span>
+</span><span class='line'>                <span class="nx">done</span><span class="p">();</span>
+</span><span class='line'>            <span class="p">})</span>
+</span><span class='line'>            <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="nx">ajax</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span> <span class="p">},</span> <span class="s1">&#39;Bar&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s quite straightforward.  Before test spec runs, it&rsquo;s required to stub the XMLHttpRequest using Sinon&rsquo;s <code>useFakeXMLHttpRequest</code> API and obtain a reference in the <code>onCreate</code> method so that later it can be used to stub a response.</p>
+
+<p>Passing a <code>done</code> parameter in the test spec function tells Mocha that this spec is for Async testing and callinig <code>done()</code> will end it.  One thing to notice here is this part.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you don&rsquo;t do this, and the assertion in the test spec failed, the error it shows will be a timeout error instead of telling the true assertion error.</p>
+
+<p>When testing failure case, the style written like below doesn&rsquo;t look good and error-prone because <code>done()</code> is called twice although you might think the success resolver doesnot require as it should not be called.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">ExtPromise</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">().</span><span class="nx">request</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="nx">scope</span><span class="o">:</span> <span class="nx">scopeObj</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">scopeObj</span><span class="p">.</span><span class="nx">getName</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s1">&#39;Bar In scope&#39;</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">done</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">done</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">ajax</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span> <span class="p">},</span> <span class="s1">&#39;Error&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may rewrite the call to <code>done</code> in a then call.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">ExtPromise</span><span class="p">.</span><span class="nx">Ajax</span><span class="p">().</span><span class="nx">request</span><span class="p">({</span><span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="nx">scope</span><span class="o">:</span> <span class="nx">scopeObj</span><span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">scopeObj</span><span class="p">.</span><span class="nx">getName</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s1">&#39;Bar In scope&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">status</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">ajax</span><span class="p">.</span><span class="nx">respond</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span> <span class="p">},</span> <span class="s1">&#39;Error&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1135,119 +1305,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/29/startup-review-network/">至关重要的关系</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-29T07:59:00+08:00" pubdate data-updated="true">Jun 29<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY">至关重要的关系</a>了。</p>
-
-<h2>比能力重要</h2>
-
-<p>其实我本人对＂关系＂这个词自然而然的会持否定的态度，因为在很多地方，很多人靠不正当关系和手段，谋取职位或升迁。我不喜欢靠＂关系＂，所以才当程序员，才不去国企，和在小公司待那么久。但工作8年以来，我确实靠关系得到不少机会。正如书中所说：</p>
-
-<blockquote><p>斯坦福大学组织行为学教杰弗瑞•菲弗 (Jeffrey Pfeffe) 搜集整理的证据表明人们在升职的时候，人际关系过硬以及与老板的友好关系比能力更重要。这并不是无法无天的任人唯亲和权术 (尽管有时候很不幸确实如此) ，这种做法有令人信服的理由：一个稍许平庸但能很好地处理人际关系并为团队做贡献的人比一个百分之百能力但无法进行团队合作的人对公司更有利。</p></blockquote>
-
-<p>不过这些必须是靠能力建立起来的过硬的关系，要不然就真的是＂不正当关系＂了，并不能持久。</p>
-
-<h2>如何建立</h2>
-
-<h3>被动式</h3>
-
-<p>如果你懒得建立与维护人脉，那就用 <em>@蔡学墉</em> 一段微博总结的方法吧：</p>
-
-<blockquote><p>设法让自己能力强大，把自己变成值得被他人所利用的资源。这么一来，虽然不一定过得太好，但肯定不会过得太差。</p></blockquote>
-
-<h3>付出</h3>
-
-<p>我之前建立的关系，虽然不是完全这样被动式，但也只是在工作中，任劳任怨，努力把自己变优秀，树立好的形象，并主动帮助别人，分享自己的知识。我之前并不觉得有什么特别，但看了这本书后，才知道其实已经用了书中说的最好的方法，就是<strong>真心帮助别人</strong>。日前，一位其实和我并不太熟悉的旧同事，在跳槽的时候，竟然打电话给我，咨询我的意见，这真是让我觉得颇为惊讶。回头一想，自己能被当作值得信赖或听取一点建议的对象，几年的努力，值得了。</p>
-
-<h3>不烦人</h3>
-
-<p>一直以来，我都没有刻意去扩大自己的网络。除了因为上面说的一些偏见和我确实认为我没什么技巧去做这些事情外，其实我是内向型的人，就是别人没有对我表示出善意的情况下，我是基本不会先迈出第一步的，还有我很怕会烦到别人。</p>
-
-<p>但书中其实有说：</p>
-
-<blockquote><p>你一点也不烦人。</p>
-
-<p>如果说巩固某段关系最好的办法是帮助对方，那么位居第二的方法就是接受对方的帮助。正如本•富兰克林曾说过的：＂如果你想交朋友，让别人帮你个小忙。＂</p></blockquote>
-
-<p>所以呢，我决定今后多一点去＂打搅＂一些人。各位要有心里准备哦。</p>
-
-<h2>优质关系网</h2>
-
-<p>人际关系理论中有个很出名的邓巴数 (Dunbar&rsquo;s number)，说的是我们每个人可以维持的关系数目最多不超过150个。而且还有个六度分隔理论，就是平均只要通过六个人，你就可以联系到地球上任何一个人。</p>
-
-<p>虽然说六度分隔理论，理论上可以让你联系到任何人，但其实链条后面一些关系并不能对你的事业起什么大的作用。能极大影响你的事业和获取信息的是人际关系是前三层，就是一直延伸到你的好朋友(第一层)的好朋友(第二层)的好朋友(第三层)。所以，如果邓巴数里说的主要是你的第一层强关系，算上之后两层的话，你的关系网络数目会远大于邓巴数。这三层中彼此之间都有至少一个强关系纽带，相互认识和引荐的可能性非常高，因为彼此有足够了解和信任。当然强关系中很多是重合的，就是你好朋友的好朋友本来就是你的好朋友。而且可能你们的圈子相近，那么他们获取的信息，可能你也知道了的。</p>
-
-<p>所以书中提及另一种关系 &ndash; 弱关系，既是那些和你接触不多的人。它比强关系占优的地方是可能可以给你提供额外消息来源。所以如果要结合两种优点，我们必须尝试寻找一些其他圈子来建立强关系，这就需要我们去参加一些社团之类的活动了。</p>
-
-<p>所以，基于自己在这方面的短板，我也已经尝试去参加一些行业会议，社区和非自己行业但感兴趣的活动群体，比如英语学习的。我也正在尝试围绕自己，寻找志同道合者，建立一个分享机遇和资源的网络。其实要打造一个网络很难，我一直想做，但都没能做好。鹄言乱语社区刚筹备，看能否得到各位好友支持了。</p>
-
-<p>优质网络的基本要求：</p>
-
-<blockquote><p>第一，每个人都很优秀。<br/>
-第二，每个群体都有一个共同特征，&hellip; 指引大家走到一起。<br/>
-第三，地理密度也很重要。<br/>
-第四，分享和合作风气浓厚。</p></blockquote>
-
-<p>从实际情况看，这种优质网络的起源，基本都是在同一公司干过，并同甘共苦之人，比如著名的 PayPal 黑手党。所以，恰当的跳槽，对打造网络也是有好处的。</p>
-
-<h2>机遇</h2>
-
-<p>如果能力上来了，而且关系网能基本建立起来，机会就会逐渐来临了。</p>
-
-<blockquote><p>企业家博•皮博迪 (Bo Peabody) 曾说过：＂让幸运来临的最好做法是确保很多事情发生。＂</p></blockquote>
-
-<p>所以说，<strong>机会给有准备的人</strong>，我觉得其实一方面的意思是你要通过自己不断地努力尝试，去主动制造而来的。</p>
-
-<p>有了机会，其实等于你面前多了一项选择。那你选择什么，是否决定承担某种风险而改变原来的规划，就涉及到风险评估了。</p>
-
-<h2>风险</h2>
-
-<p>我个人应该是偏保守的，做事情都想得比较多，看哪种选择能带来最大好处。而且比较犹豫，不够果断。因为我比较怕有什么风险。但其实我们通常会高估风险 (可能不适用于一些盲目炒股人士，呵呵) 。</p>
-
-<blockquote><p>神经心理学家里奇•汉森 (Rich Hanson) 是这么说的：＂为了让我们的祖先存活，大自然母亲会时不时地玩弄一下他们，让他们犯三个错误：过高估计风险、过低估计机遇、过低估计资源 (资源是用来应对风险、好好利用机遇的) 。＂</p></blockquote>
-
-<p>一般希望稳定的人，都不希望有变动。但这有可能恰恰是更危险的。所以，个人认为所谓稳定的公务员，国企什么的，一些没什么解聘机制的单位，将来风险很高。我们一定要有永久测试心态，适时变动。</p>
-
-<blockquote><p>从短期来看，变动少其实也是一种稳定。从长期来看，变动少很容易导致不堪一击，因为它会减弱系统对突发状况的应对能力。</p></blockquote>
-
-<p>还有就是一般认为，有多几种后备方案，风险就小点。但其实这和<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/">前面</a>说到的＂粗糙＂的心是相违背的。正如我们学习编程语言，如果说打算学学这，学学那，然后什么工作都能找到的话，往往是什么工作都找不到。</p>
-
-<blockquote><p>＂保留多重选择＂实际上比专心将一项计划付诸实践更具有风险。</p></blockquote>
-
-<p>回首自己工作来最大的机遇，可能是之前一位旧老板邀请我去上海和他创业。不过当时放不下另一个在香港的机遇，因为当时自我定位不同，对旧公司的忠心，和对家人的考虑，没接受，有点遗憾。因为在珠海确实没什么 IT 氛围和环境，对自我成长有比较大的约束。但其实也没有后悔，因为家人还是最重要的，继续在自己可接受风险范围寻求突破吧。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1261,6 +1318,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/">How to use Ext Ajax in Promise style and test it</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/11/14/jingjs-2013-fun/">京JS 2013 之挖坑自埋与神打击</a>
@@ -1298,28 +1359,24 @@
         <a href="/blog/2013/05/28/how-to-ask-share-and-influence/">一点点对提问，分享和影响力的看法</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/04/25/review-on-book-inside-the-facebook/">打造 Facebook 读后感</a>
-      </li>
-    
   </ul>
 </section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (20)</a></li><li><a href='/blog/categories/think'>Think (28)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/life'>Life (6)</a></li><li><a href='/blog/categories/sword'>Sword (21)</a></li><li><a href='/blog/categories/think'>Think (28)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
   <ul class="tag-cloud">
     <li><a style="font-size: 60%" href="/tags/amd/">AMD</a></li>
 <li><a style="font-size: 60%" href="/tags/adapt/">Adapt</a></li>
-<li><a style="font-size: 60%" href="/tags/ajax/">Ajax</a></li>
-<li><a style="font-size: 121%" href="/tags/angularjs/">AngularJS</a></li>
+<li><a style="font-size: 86%" href="/tags/ajax/">Ajax</a></li>
+<li><a style="font-size: 120%" href="/tags/angularjs/">AngularJS</a></li>
 <li><a style="font-size: 60%" href="/tags/blogging/">Blogging</a></li>
-<li><a style="font-size: 112%" href="/tags/book/">Book</a></li>
+<li><a style="font-size: 111%" href="/tags/book/">Book</a></li>
 <li><a style="font-size: 60%" href="/tags/callback/">Callback</a></li>
 <li><a style="font-size: 86%" href="/tags/change/">Change</a></li>
-<li><a style="font-size: 102%" href="/tags/coding/">Coding</a></li>
+<li><a style="font-size: 101%" href="/tags/coding/">Coding</a></li>
 <li><a style="font-size: 60%" href="/tags/connect/">Connect</a></li>
 <li><a style="font-size: 60%" href="/tags/db/">DB</a></li>
 <li><a style="font-size: 86%" href="/tags/design/">Design</a></li>
@@ -1327,9 +1384,9 @@
 <li><a style="font-size: 86%" href="/tags/directive/">Directive</a></li>
 <li><a style="font-size: 60%" href="/tags/excel/">Excel</a></li>
 <li><a style="font-size: 60%" href="/tags/execution-context/">Execution context</a></li>
-<li><a style="font-size: 128%" href="/tags/extjs/">ExtJs</a></li>
+<li><a style="font-size: 132%" href="/tags/extjs/">ExtJs</a></li>
 <li><a style="font-size: 60%" href="/tags/function-definition/">Function definition</a></li>
-<li><a style="font-size: 60%" href="/tags/functional-programming/">Functional Programming</a></li>
+<li><a style="font-size: 86%" href="/tags/functional-programming/">Functional Programming</a></li>
 <li><a style="font-size: 86%" href="/tags/gtd/">GTD</a></li>
 <li><a style="font-size: 86%" href="/tags/goal/">Goal</a></li>
 <li><a style="font-size: 60%" href="/tags/health/">Health</a></li>
@@ -1338,36 +1395,38 @@
 <li><a style="font-size: 60%" href="/tags/jawr/">JAWR</a></li>
 <li><a style="font-size: 60%" href="/tags/jsconf/">JSConf</a></li>
 <li><a style="font-size: 86%" href="/tags/json/">JSON</a></li>
-<li><a style="font-size: 128%" href="/tags/jasmine/">Jasmine</a></li>
+<li><a style="font-size: 132%" href="/tags/jasmine/">Jasmine</a></li>
 <li><a style="font-size: 165%" href="/tags/javascript/">Javascript</a></li>
 <li><a style="font-size: 60%" href="/tags/jingjs/">JingJS</a></li>
-<li><a style="font-size: 128%" href="/tags/management/">Management</a></li>
+<li><a style="font-size: 126%" href="/tags/management/">Management</a></li>
 <li><a style="font-size: 86%" href="/tags/maven/">Maven</a></li>
-<li><a style="font-size: 102%" href="/tags/mock/">Mock</a></li>
+<li><a style="font-size: 60%" href="/tags/mocha/">Mocha</a></li>
+<li><a style="font-size: 101%" href="/tags/mock/">Mock</a></li>
 <li><a style="font-size: 60%" href="/tags/modularization/">Modularization</a></li>
 <li><a style="font-size: 60%" href="/tags/mongodb/">MongoDB</a></li>
-<li><a style="font-size: 112%" href="/tags/mood/">Mood</a></li>
+<li><a style="font-size: 111%" href="/tags/mood/">Mood</a></li>
 <li><a style="font-size: 60%" href="/tags/network/">Network</a></li>
-<li><a style="font-size: 121%" href="/tags/nodejs/">NodeJS</a></li>
+<li><a style="font-size: 120%" href="/tags/nodejs/">NodeJS</a></li>
 <li><a style="font-size: 60%" href="/tags/opportunity/">Opportunity</a></li>
 <li><a style="font-size: 60%" href="/tags/poi/">POI</a></li>
 <li><a style="font-size: 60%" href="/tags/performance/">Performance</a></li>
 <li><a style="font-size: 60%" href="/tags/permanent/">Permanent</a></li>
 <li><a style="font-size: 60%" href="/tags/pomodoro/">Pomodoro</a></li>
 <li><a style="font-size: 86%" href="/tags/productivity/">Productivity</a></li>
-<li><a style="font-size: 60%" href="/tags/promise/">Promise</a></li>
-<li><a style="font-size: 157%" href="/tags/retrospect/">Retrospect</a></li>
+<li><a style="font-size: 86%" href="/tags/promise/">Promise</a></li>
+<li><a style="font-size: 155%" href="/tags/retrospect/">Retrospect</a></li>
 <li><a style="font-size: 60%" href="/tags/risk/">Risk</a></li>
 <li><a style="font-size: 60%" href="/tags/spa/">SPA</a></li>
 <li><a style="font-size: 60%" href="/tags/share/">Share</a></li>
-<li><a style="font-size: 102%" href="/tags/startup/">Startup</a></li>
+<li><a style="font-size: 60%" href="/tags/sinon-js/">Sinon.js</a></li>
+<li><a style="font-size: 101%" href="/tags/startup/">Startup</a></li>
 <li><a style="font-size: 60%" href="/tags/string-interpolation/">String interpolation</a></li>
 <li><a style="font-size: 60%" href="/tags/stuff/">Stuff</a></li>
 <li><a style="font-size: 86%" href="/tags/time-management/">Time Management</a></li>
-<li><a style="font-size: 102%" href="/tags/trip/">Trip</a></li>
+<li><a style="font-size: 101%" href="/tags/trip/">Trip</a></li>
 <li><a style="font-size: 60%" href="/tags/ued/">UED</a></li>
 <li><a style="font-size: 60%" href="/tags/ui/">UI</a></li>
-<li><a style="font-size: 128%" href="/tags/unittest/">UnitTest</a></li>
+<li><a style="font-size: 126%" href="/tags/unittest/">UnitTest</a></li>
 <li><a style="font-size: 60%" href="/tags/webassemble/">Webassemble</a></li>
 <li><a style="font-size: 60%" href="/tags/weblogic/">Weblogic</a></li>
 <li><a style="font-size: 60%" href="/tags/bind/">bind</a></li>
