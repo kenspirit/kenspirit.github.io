@@ -4,7 +4,7 @@
   <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2013-11-25T08:52:15+08:00</updated>
+  <updated>2014-01-03T17:11:19+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2013 Retrospect and 2014 Goal Setting]]></title>
+    <link href="http://www.thinkingincrowd.me/blog/2014/01/02/2013-retrospect-and-2014-goal-setting/"/>
+    <updated>2014-01-02T07:55:00+08:00</updated>
+    <id>http://www.thinkingincrowd.me/blog/2014/01/02/2013-retrospect-and-2014-goal-setting</id>
+    <content type="html"><![CDATA[<h2>工作</h2>
+
+<p>工作上没有什么太大的变动，可以说趋于平淡。对于项目基本框架的使用已经没有什么问题，所以主要已经是在忙于实现项目业务功能模块上。但是还是痛苦挣扎于一些框架的限制，跨部门的约束，低效率的流程上，感觉效能无法有效提升。</p>
+
+<p>组内的新人，经历了一两年的成长，基本上能够独立做事情。不像以前那样，还没想清楚就乱写代码，有问题又不问，最后又推到重来。技术水平有些提升，代码也好看了些，所以我的介入相对少了很多。但是还有待提高，特别是那些低级的错误，类似变量命名上打错字的问题经常让我发现，这让我非常恼火。因为这足以侧面知道做事认真仔细程度到哪。</p>
+
+<p>去年我主要的侧重是集中精力帮他们提升思考能力和业务理解上，最重要的是怎么去思考业务需求带来系统设计的要求。在组内尽量推动的 Peer Code Review，对成员间的沟通，业务的理解，技术的提高上确实有很大的帮助，今年要再加强。希望今年组内每个成员都达到一定水平后，整体效率可以有效提升。我也始终在看，究竟何时及如何引入 Kanban。</p>
+
+<p>由于项目繁忙，能留来做些流程或其它方面的改进的时间并不多，可以说没怎么前进。但是总体来说整个团队还是向学习，分享型组织努力的。</p>
+
+<h2>自我提升</h2>
+
+<h3>读书</h3>
+
+<p>有些书去年积累到现在都还没有看，主要是技术类的。因为水平有限，技术类的书，用零散时间看的话，真的不容易吸收，特别是没有实践配合的话。所以一直用 Kindle 在零散时间还是看非技术类的多。</p>
+
+<p>不过近期 Kindle 被我基本抛弃在一边了。不是不读书了，而是我已经抱着 MBA 随处看书和写代码了。这真是太爽了，虽然对我的颈椎好像有点伤害。不过，这确实可以让我边看书，边实践，榨取更多的时间来 Coding。所以今后将会多看技术类书和实践。</p>
+
+<p><strong>技术类</strong></p>
+
+<ul>
+<li>Functional Programming for the Object-Oriented Programmer by Brian Marick</li>
+<li><em>NOSQL Distilled by Pramod J. Sadalage, Martin Fowler</em></li>
+<li><em>Patterns of Enterprise Application Development by Martin Fowler</em></li>
+<li>Domain-Driven Design by Eric Evans</li>
+<li><em>The Art of UNIX Programming by Eric S. Raymond</em></li>
+</ul>
+
+
+<p><strong>非技术类</strong></p>
+
+<ul>
+<li><em>The Lean Startup by Eric Ries</em></li>
+<li>The Pragmatic Programmer by Andrew Hunt, David Thomas</li>
+<li><em>Mythical Man-Month by Frederick P. Brooks</em></li>
+<li><em>YouTube 创始人陈士俊自传</em></li>
+<li><em>打造 Facebook by 王淮</em></li>
+<li><em>至关重要的关系 by 李开复</em></li>
+<li><em>MackTalk: 人生元编程 by 池建强</em></li>
+</ul>
+
+
+<p><em>注：斜体的已阅</em></p>
+
+<p>在看和计划要看完的主要为以下三本最基础的技术书，尽量今年内搞定。</p>
+
+<ul>
+<li>Structure and Interpretation of Computer Programs by Harold Abelson and Gerald Jay</li>
+<li>Introduction to Algorithms by Thomas H Cormen</li>
+<li>深入了解计算机系统</li>
+</ul>
+
+
+<h3>打造关系网</h3>
+
+<p>在看完《至关重要的关系》后，深有<a href="http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network/">感触</a>, 觉得之前并没有打造一个优质的职业和学习关系网，迫切渴望找到一些志同道合之人，可以一起学习进步。所以去年做了好几样事情：</p>
+
+<ol>
+<li>加入珠海 GDG，时不时去当一下志愿者和参加聚会</li>
+<li>花血本从珠海飞北京参加了两次会议，一次是 AgileChina2013，一次是京JS。</li>
+<li>约几个旧同事和好友，组织起来一起学习和交流</li>
+</ol>
+
+
+<p>几件事情下来，还是有点体会的。</p>
+
+<p>首先，珠海 GDG 的参于还是挺让人兴奋的。参加者因为多为学生，演讲主题都主要是入门级的。真要按照营养上来说的话，对我受益不大。但是有机会认识大妈，刘鑫老师和其他一些组员还是挺高兴的，还让自己活力多了点。以后要参加，就要尽量看能否上去讲讲，给一些学生分享一下，而不是去听。</p>
+
+<p>至于参加一些行业会议，我的目的本来就很坦然，就是看什么会议是值得去的，什么不值得。所以，目标完全实现。AgileChina2013 那次主要是要去听 David 亲自授课，所以感觉很好。后面的大会，因为讲的是方法论什么的多，这些不亲自实践是没办法了解的，而我近期主要攻技术，所以，敏捷这类大会就不会再去了。京JS 给我的感觉也还可以，虽然会议上难免各种对自己作品的广告，但是还是能和一些大神交流，了解他们的看法，新动向等，还是不错的，明年的 JS 大会应该还会去。经过这些行业会议，体会就是，你如果想和牛人有更多话题，让他们关注和看得起你，自己得先变成牛人。</p>
+
+<p>最后一个自我组织朋友来一起交流学习的事情，好坏参半。目前情况基本可以说告一段落。虽然大家有聚在一些玩了一些东西，但是感觉每个人的兴趣，偏好和对聚会的期望都不尽相同，最后基本可以说是失败的。但是中间也学习到不少，和知道自己想要什么。有些事情强求不来，步子迈大了就扯着蛋了。</p>
+
+<h3>开源和项目</h3>
+
+<p>本来是计划做一个 Pet Project，但是做一半后，像上面说的，想约三五朋友一起去做一个更大的东西，一个像 Salesforce 那样的一个 Multi-tenant 的企业系统。可惜没人搭理我，后面自己在考虑怎么在 MongoDB 动态分配空间，和实现了一下后，感觉这东西太大了，先放了下来，后面再找机会继续。</p>
+
+<p>在学习和实践期间，做了两个小玩意出来，一个是用于在 Node.js 和浏览器共享代码的 <a href="https://github.com/kenspirit/webassemble">webassemble</a>, 还有一个是在 ExtJS 里面用 Promise 的 <a href="https://github.com/kenspirit/ExtPromise">ExtPromise</a>。前一个今年如果自己不做什么项目的话，估计使用就会比较少了。希望后面能什么时候在公司项目里用上。</p>
+
+<p>自己还算是开源的踊跃支持者的，并有幸被 AngularJS 接纳了一个 enhancemnt patch，非常高兴。今年看书以外如果有时间看源码，还会挑一些开源的 JS 项目来参于一下，主要考虑 AngularJS 和 NodeWebkit。</p>
+
+<h2>时间安排</h2>
+
+<p>学习时间：<br/>
+基本上是按照去年的时间安排走。上下班车里的30分钟，还有其它一切可能的坐车时间，现在都在用 MBA 看书和写代码。早上5:00 &ndash; 5:30起来，一直到7点，大概1小时多点而已。周末没活动的话，午休时间也大概有2小时。</p>
+
+<p>家庭时间：<br/>
+和去年差不多，占个人时间大头。但是还是一个不懂怎么培养孩子的父亲，因为时间花在考虑怎么培养自己上面了。只希望给他带个好头，别学坏了就好。每每看到 Michelle 带她女儿体验什么，学习什么，各种惭愧。</p>
+
+<p>锻炼时间：<br/>
+中间有段时间断了一下，因为身体受伤，杂七杂八事情，没能很好坚持每天早上固定15分钟左右的锻炼时间。最近恢复，跳绳为主。今年还是得加强一下，身体是本钱。好玩的事情是人生第一次参加公司篮球比赛，虽然偶尔有上场，但主要是抱同组里年轻小伙的大腿，拿到人生的第一个第一名。</p>
+
+<h2>善事</h2>
+
+<p>这方面去年贡献不多，主要是个人精力不足，所以违背了去年美好的想法，每月固定给壹基金和联合国儿间基金会捐助一点。事后证明我行的确实是伪善。</p>
+
+<h2>总结</h2>
+
+<p>工作还凑合。但是自己喜爱的东西，很难在公司派上用场，感觉不太爽，看今后怎么实践吧。虽然已经在不断努力学习技术，也做了一些东西，但是离10000小时原则的强度和积累还是差太远了。今年必须更加努力。正如前面安排，把自己基础巩固好，希望后面能有效提升效能，不断参于开源，写 Blog 和分享总结。还有一件事就是希望可以做个有趣的人，从生活中找找灵感，看能做些什么好玩意没有。反正是随心写代码。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to use Ext Ajax in Promise style and test it]]></title>
@@ -2685,84 +2791,6 @@ to get the word out, the right people will already be listening.</p></blockquote
 <p>所以，锻炼用英语来写博客，主要是提高自己的代码编写能力和成为一名好的程序员。</p>
 
 <p>好了, 我已经起航了, 你们是否也考虑考虑写写博客?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[UED in my pet project - Take Time (Part 1)]]></title>
-    <link href="http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1/"/>
-    <updated>2012-12-25T21:41:00+08:00</updated>
-    <id>http://www.thinkingincrowd.me/blog/2012/12/25/ued-in-my-pet-project-take-time-part-1</id>
-    <content type="html"><![CDATA[<h2>What is it and why I want to work on that</h2>
-
-<p>I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it&rsquo;s telling you to <em>&ldquo;Take your time.  Slow down.&rdquo;</em>.  Actually, it&rsquo;s where to take the time seriously and you can keep track of your time.</p>
-
-<p>Why would I want to do such a seemingly boring thing?  There are three reasons:</p>
-
-<ul>
-<li><p>For those who really cares about their time, they really want to find some effective way to make their time used effectively.</p></li>
-<li><p>I have been working in two software companies which both require staffs to input TIMESHEET!  Yes, we all know it&rsquo;s bullshit, meaningless and most of the figures are made up, but it&rsquo;s just required.</p>
-
-<p>  I can understand that part of the objective is good, just like what this pet project is made for. However, mostly it&rsquo;s just some policy or resource monitoring required by boss.</p></li>
-<li><p>Practice my development skills with some of my favorite tools by doing real work.</p></li>
-</ul>
-
-
-<p>Hence, I am trying to make an easy-to-use application for those who want an effective time management.  The design is basically following my <a href="http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/">practices</a> of it and the principle of simplicity.</p>
-
-<h2>What does it look like</h2>
-
-<p>It should be simple in general.</p>
-
-<ul>
-<li>It&rsquo;s a GTD-style task web application.</li>
-<li>It can plan, track and retrospect the tasks.</li>
-</ul>
-
-
-<h2>How to capture the time</h2>
-
-<p>No matter you are planning tasks or actually tracking the tasks done.  You need to capture it.  There are many elements need to write down:</p>
-
-<ul>
-<li>For planning tasks: Task content, Start/End date and Estimated how long it needs.</li>
-<li>For tracking tasks: Task content, Start/End date, Start/End time and how long it takes.</li>
-</ul>
-
-
-<p>The elements in tracking tasks covers all we need for planning tasks, hence the capturing UI should be able to unified.  Below is the draft UI designed:
-<img src="http://thinkingincrowd.u.qiniudn.com/task_capture.png" alt="Capture UI" /></p>
-
-<ul>
-<li>By default, there is a task content textbox.</li>
-<li>After you input something, some additional text and input boxes are shown.</li>
-</ul>
-
-
-<p>You should probably be able to guess how to use it already (if not, let me know how to make it happen):</p>
-
-<ul>
-<li>If you input the task name and press &ldquo;<em>Enter</em>&rdquo;, you start your task immediately.</li>
-<li>If you input the task name and the duration it takes and press &ldquo;<em>Enter</em>&rdquo;, you are tracking a task just finished.  It&rsquo;s calculated based on the current time and the duration you input.</li>
-<li>If you also fills a specific date in &ldquo;<em>yyyy-MM-dd</em>&rdquo;, you are planning tasks if it&rsquo;s a future date; you are tracking tasks if it&rsquo;s a historical date.  The last &ldquo;<em>hh:mm</em>&rdquo; field is optional for the task start time.</li>
-</ul>
-
-
-<h2>Why design like this</h2>
-
-<p><em>4</em> fields with some easy to explain text made it can be read as a sentence.  It should be natural to fill in what is required.  And when you press &ldquo;Enter&rdquo; at any field, it will do different things automatically.  It should be simple enough but satisfy all the requirement.</p>
-
-<p>I have been thinking how to capture the duration.</p>
-
-<ul>
-<li>Two fields separately for hours and mins (This app is not designed for those crazy people who need to capture seconds).</li>
-<li>One field for all.</li>
-</ul>
-
-
-<p>Approach <em>#1</em> looks natural but needs an extra field and more key-stroke.  By taking <em>#3</em>, decimal number need to be used to express minutes.  You may question me that calculating decimal is even harder.  But think it this way:  <em>.25</em> is <em>15</em> mins; <em>.5</em> is <em>30</em> mins; <em>.75</em> is <em>45</em> mins; <em>.1</em> is around <em>5</em> mins.</p>
-
-<p>I think it&rsquo;s not that difficult to use decimal to express it.  What is more, when you are actually tracking your task this way, you are guessing or trying to remember how long it took.  Your mental power is &ldquo;calculating&rdquo; somehow to get a number.  If it&rsquo;s one field, you just need to do one calculation and input.  If it&rsquo;s two fields, you might possibly calculating two fields, especially when your task start time is say from <em>2:35</em> to <em>4:08</em>.  I think it just doesn&rsquo;t matter if there is minor inaccurate.</p>
 ]]></content>
   </entry>
   

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "2013 Retrospect and Goal Setting"
+title: "2012 Retrospect and 2013 Goal Setting"
 date: 2013-02-05 22:37
 comments: true
 categories: 
