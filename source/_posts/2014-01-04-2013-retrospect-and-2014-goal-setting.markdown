@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "2013 Retrospect and 2014 Goal Setting"
-date: 2014-01-04 07:55
+date: 2014-01-04 08:00
 comments: true
 categories: 
 - Think
