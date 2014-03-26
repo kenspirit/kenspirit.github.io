@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: i18n | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/i18n/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2014-03-26T21:24:59+08:00</updated>
+  <updated>2014-03-26T21:28:24+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -69,12 +69,12 @@
 
 <p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.</p>
 
-<p></p>
+<p>{% raw %}</p>
 
 <pre><code>{{ LocaleManager.getText('Login', language) }}
 </code></pre>
 
-<p></p>
+<p>{% endraw %}</p>
 
 <p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven&rsquo;t tried that yet and will give an update here once done.</p>
 

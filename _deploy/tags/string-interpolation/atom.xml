@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: String interpolation | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/string-interpolation/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2014-03-26T21:24:59+08:00</updated>
+  <updated>2014-03-26T21:28:24+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -19,7 +19,7 @@
     <updated>2013-01-30T07:02:00+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
     <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
-
+{% raw %}
 ``` html</p>
 
 <pre><code>&lt;span ng-class="task-{{task.type}}"&gt;{{task.type}}&lt;/span&gt;
@@ -27,10 +27,10 @@
 </code></pre>
 
 <p>```
-</p>
+{% endraw %}</p>
 
 <p>Do you see what is the difference between the one below and above?<br/>
-
+{% raw %}
 ``` html</p>
 
 <pre><code>&lt;span ng-class="'task-' + task.type"&gt;{{task.type}}&lt;/span&gt;
@@ -38,7 +38,7 @@
 </code></pre>
 
 <p>```
-</p>
+{% endraw %}</p>
 
 <p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
 

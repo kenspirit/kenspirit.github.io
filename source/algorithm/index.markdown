@@ -7,12 +7,12 @@ sharing: true
 footer: true
 ---
 
-<link rel="stylesheet" type="text/css" href="./algorithm/css/bootstrap.css"/>
-<link rel="stylesheet" type="text/css" href="./algorithm/css/sorting.css"/>
-<script src="./algorithm/js/angular.js"></script>
-<script src="./algorithm/js/angular-sanitize.js"></script>
-<script src="./algorithm/js/ui-bootstrap-tpls-0.10.0.js"></script>
-<script src="./algorithm/js/alg.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="./css/sorting.css"/>
+<script src="./js/angular.js"></script>
+<script src="./js/angular-sanitize.js"></script>
+<script src="./js/ui-bootstrap-tpls-0.10.0.js"></script>
+<script src="./js/alg.js"></script>
 
 <form name="myForm" class="form-horizontal" ng-app="SortAlg" ng-controller="SortCtrl">
 
