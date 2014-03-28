@@ -7,12 +7,12 @@ sharing: true
 footer: true
 ---
 
-<link rel="stylesheet" type="text/css" href="./css/bootstrap.css"/>
-<link rel="stylesheet" type="text/css" href="./css/sorting.css"/>
-<script src="./js/angular.js"></script>
-<script src="./js/angular-sanitize.js"></script>
-<script src="./js/ui-bootstrap-tpls-0.10.0.js"></script>
-<script src="./js/alg.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ root_url }}/algorithm/css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="{{ root_url }}/algorithm/css/sorting.css"/>
+<script src="{{ root_url }}/algorithm/js/angular.js"></script>
+<script src="{{ root_url }}/algorithm/js/angular-sanitize.js"></script>
+<script src="{{ root_url }}/algorithm/js/ui-bootstrap-tpls-0.10.0.js"></script>
+<script src="{{ root_url }}/algorithm/js/alg.js"></script>
 
 <form name="myForm" class="form-horizontal" ng-app="SortAlg" ng-controller="SortCtrl">
 
@@ -67,7 +67,7 @@ footer: true
 
 <div class="form-group">
 
-<div class="col-sm-offset-2 col-sm-8">
+<div class="col-sm-offset-2 col-sm-10">
 
 <pre ng-bind-html="trustedCode(algText)"></pre>
 </div>

@@ -4,7 +4,7 @@
   <title><![CDATA[Tag: AngularJS | Thinking in Crowd / 鹄思乱想]]></title>
   <link href="http://www.thinkingincrowd.me/tags/angularjs/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2014-03-26T21:28:24+08:00</updated>
+  <updated>2014-03-28T20:34:31+08:00</updated>
   <id>http://www.thinkingincrowd.me/</id>
   <author>
     <name><![CDATA[鹄思乱想]]></name>
@@ -95,12 +95,12 @@
 
 <p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.</p>
 
-<p>{% raw %}</p>
+<p></p>
 
 <pre><code>{{ LocaleManager.getText('Login', language) }}
 </code></pre>
 
-<p>{% endraw %}</p>
+<p></p>
 
 <p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter">$filter</a> for translation instead of calling a method from Service class.  Haven&rsquo;t tried that yet and will give an update here once done.</p>
 
@@ -267,7 +267,7 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
 
 <p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.</p>
 
-<p>{% raw %}
+<p>
 ``` html</p>
 
 <pre><code>&lt;style&gt;
@@ -318,7 +318,7 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
 </code></pre>
 
 <p>```
-{% endraw %}</p>
+</p>
 
 <h2>Expectation</h2>
 
@@ -491,7 +491,7 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
     <updated>2013-01-30T07:02:00+08:00</updated>
     <id>http://www.thinkingincrowd.me/blog/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs</id>
     <content type="html"><![CDATA[<p>Do you see any issue in below HTML snippet with <a href="http://angularjs.org">AngularJS</a> code?<br/>
-{% raw %}
+
 ``` html</p>
 
 <pre><code>&lt;span ng-class="task-{{task.type}}"&gt;{{task.type}}&lt;/span&gt;
@@ -499,10 +499,10 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
 </code></pre>
 
 <p>```
-{% endraw %}</p>
+</p>
 
 <p>Do you see what is the difference between the one below and above?<br/>
-{% raw %}
+
 ``` html</p>
 
 <pre><code>&lt;span ng-class="'task-' + task.type"&gt;{{task.type}}&lt;/span&gt;
@@ -510,7 +510,7 @@ EXPECTED: The status of the new entry should be "P", desc should be "First Unit 
 </code></pre>
 
 <p>```
-{% endraw %}</p>
+</p>
 
 <p>The first one use String interpolation in Class <a href="http://docs.angularjs.org/guide/directive">Directive</a>.  The result is that the css class you expect to got based on model value <em>task.type</em> will not be applied to the <em>span</em> element. It took me a long time to figure out why.</p>
 
