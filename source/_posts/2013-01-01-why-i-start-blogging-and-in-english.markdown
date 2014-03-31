@@ -1,0 +1,51 @@
+---
+layout: post
+title: "为什么开始写技术博客, 并且还是用英语?"
+date: 2013-01-01 22:00
+comments: true
+categories: 
+- Think
+tags:
+- Blogging
+- Retrospect
+---
+
+[博客]: http://www.iamhukai.com/
+[Clean Code]: http://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882
+[More Joel on Software]: http://www.amazon.com/More-Joel-Software-Occasionally-Developers/dp/B002KE5SLU/ref=sr_1_1?ie=UTF8&qid=1357050792&sr=8-1&keywords=More+Joel+on+Software
+[软件随想录]: http://book.douban.com/subject/4163938/
+
+一些朋友发现我最近在写一些博客，而且还多数是英语的，都在好奇我在搞什么。那我就写一篇博客来解释一下吧。  
+
+写技术博客好处很多，很多牛人也提到过, 这是我出来刚工作时的一位同事的[博客][], 现在他在Thoughworks, 里面有好几篇文章说到为什么要写和怎么写。  
+
+##写技术博客的原因  
+
+* __写博客可以积累总结自己的一些想法，见证技术学习过程和成长的经历__。所以，我博客里的内容，一般应该会是技术类文章多一点，当然也会有一些开发过程和管理的想法及吐槽。写博客就是一种总结的手段，对自己知识的回顾和梳理。  
+
+* __博客是一种对外沟通交友，甚至是宣扬思想和文化的平台，说点实际的还可以为自己打广告__。人生在世，总希望找到些志同道合的朋友。这些朋友有生活上的，情感上的，也有事业上的。博客也可以说是为我寻找事业上的朋友的地方之一。  
+
+* __为后来人积累一些财富，帮助他人解决一些问题__。我已经习惯在Google和别人的博客上索取了那么长时间了，是时候贡献自己的力量的时候了。把自己遇到的一些问题，最终的解决方案，想法分享出来，应该可以帮助一些后来人。也许有人觉得自己遇到的困难和解决方法太微不足道了，说出来让人笑话。其实不然，每个人都有成长过程，像我们也要去获取别人的智慧一样，我们要帮助的就是那些还没有起来的人。而且，也别太小看自己了。  
+
+##用英语的原因  
+也许有不少人觉得我在装13，卖弄自己的英语水平。而且我觉得, 用英语写博客, 可能会使得博客流量不高, 正如我那位旧同事所说。那么，我为什么还这么做呢？  
+
+* 我确实英语水平比中文好，我也喜欢英语多过中文。很多人看到这可能会说我卖国贼，呵呵。其实为什么呢？我从小语文水平都不高，60到70分左右吧，作文也差。对以前的语文课，我完全感受不到语言的美丽。各种什么作者观点分析，文言文等，搞得我对语文很反感，遇到的语文老师，又没几个好的，反正学习语文对我来说充满了挫折感。 
+
+    我是在六年级就开始学英语，但那时是用中文来模拟发音和死记的。我记得刚上初中的时候，第一次测验才40多分的。但后来水平一直都不算差，我也不知道为什么。不过使我喜欢上英语的，是因为在大学梦想出国留学，疯狂学英语，考TOEFL和GRE，才喜欢上了，也使得自己水平比附近的人要高。学英语对我来说，充满了成功和优越感。所以，培养成功的感觉，可能真的很重要。为什么同样是语言，学英语我会比学语文好？可能TOEFL和GRE考试都强调的是事实和逻辑推理，不像语文那些什么观点分析那么狗屁吧。  
+
+    至于现在，我还那么喜欢英语，我想是延续之前的情结，以及从事IT的缘故吧。所有先进的技术，一开始都从国外发源起来，不懂英语，怎么行呢？  
+
+* 我现在主要的工作，还是编程。编程用什么语言？废话，当然是英语。大家看过[Clean Code][]这本书吗？ 什么叫做_Self-Documentary_的代码？ 不知道的，看书去。为了能写出清晰，优雅，具有自我说明能力的代码，命名一个变量，一个方法，都是有讲究的，如果一段代码，读起来像读文章一样，那就成功了一大半了。  
+
+    而且，在[More Joel on Software][], 也就是[软件随想录][] 这本书里面，在_Learn how to write before graduating_这一节里面说到：  
+
+>the programmers with the most power and influence are the ones who can write and speaks in English clearly, convincingly, and comfortably,
+>
+>...
+>
+>The difference between a tolerable programmer and a great programmer is not how many languages they know, and it's not whether they prefer Python or Java.  It's whether they can communicate their ideas.
+
+所以，锻炼用英语来写博客，主要是提高自己的代码编写能力和成为一名好的程序员。  
+
+好了, 我已经起航了, 你们是否也考虑考虑写写博客?
