@@ -6,7 +6,6 @@ slug: cleaner-code
 title: Cleaner Code
 wordpress_id: 26
 categories:
-- Think
 - Sword
 tags:
 - Coding

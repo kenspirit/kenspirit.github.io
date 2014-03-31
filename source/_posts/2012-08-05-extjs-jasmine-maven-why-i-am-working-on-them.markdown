@@ -6,7 +6,6 @@ slug: extjs-jasmine-maven-why-i-am-working-on-them
 title: ExtJS, Jasmine, Maven - Why I am working on them?
 wordpress_id: 311
 categories:
-- Think
 - Sword
 tags:
 - ExtJs

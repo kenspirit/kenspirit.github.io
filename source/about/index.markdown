@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: true
 title: "About Ken"
 date: 2012-11-01 21:13
 comments: false
