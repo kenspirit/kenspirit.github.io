@@ -25,8 +25,8 @@
     <link rel="icon" href="/img/favicon.ico">
     
     
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
     
     <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
@@ -35,6 +35,10 @@
     <header>
       <div>
 		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
 				<h2 class="blog-motto">Swan flying in the immense sky</h2>
@@ -81,14 +85,14 @@
     </p>
   <p class="article-time">
     <time datetime="2014-03-26T13:38:00.000Z" itemprop="datePublished">Mar 26 2014</time>
-    Updated:<time datetime="2014-03-31T14:49:16.000Z" itemprop="dateModified">Mar 31 2014</time>
+    Updated:<time datetime="2014-04-11T15:36:41.000Z" itemprop="dateModified">Apr 11 2014</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		
-		<p><link rel="stylesheet" type="text/css" href="/algorithm/css/bootstrap.css"/> <link rel="stylesheet" type="text/css" href="/algorithm/css/sorting.css"/> <script src="/algorithm/js/angular.js"></script> <script src="/algorithm/js/angular-sanitize.js"></script> <script src="/algorithm/js/ui-bootstrap-tpls-0.10.0.js"></script> <script src="/algorithm/js/alg.js"></script> <form name="myForm" class="form-horizontal" ng-app="SortAlg" ng-controller="SortCtrl"> <div class="form-group"> <label class="col-sm-2 control-label">Method</label> <div class="col-sm-10"> <button ng-repeat="method in sortingMethods.options" type="button" class="btn btn-sm btn-success" ng-model="sortingMethods.selected" btn-radio="'$$method$$'" ng-click="changeAlg(method)">$$method$$</button> </div> </div> <div class="form-group"> <label class="col-sm-2 control-label">Data</label> <div class="col-sm-4"> <button ng-repeat="source in dataSource.options" type="button" class="btn btn-info btn-sm" ng-model="dataSource.selected" btn-radio="'$$source$$'" ng-click="changeSource(source)">$$source$$</button> </div> <div class="col-sm-6" ng-class="{'has-error': myForm.data.$invalid}"> <input type="text" name="data" class="form-control" id="sortSource" placeholder="Comma separated number" ng-model="sortSource" required ng-pattern="/^[0-9]+(,[0-9]+)*$/" ng-change="updateSortData(sortSource)"> <span class="help-block" ng-show="myForm.data.$error.required">Required!</span> <span class="help-block" ng-show="myForm.data.$error.pattern">Format: Comma separated number w/o extra space or comma</span> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-10"> <button class="btn btn-sm btn-danger" ng-model="processing.button" ng-click="start(processing.button)" btn-checkbox btn-checkbox-false="'Start'" btn-checkbox-true="'Stop'">$$processing.button$$</button> <button class="btn btn-sm btn-warning" ng-click="step()">Step</button> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-6"> <bar-chart dataset="sortData"/> </div> <div class="col-sm-2"> <bar-legends legends="legends"/> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-10"> <pre ng-bind-html="trustedCode(algText)"></pre> </div> </div> </form></p>
+		<p><link rel="stylesheet" type="text/css" href="/algorithm/css/bootstrap.css"/> <link rel="stylesheet" type="text/css" href="/algorithm/css/sorting.css"/> <script src="/algorithm/js/angular.js"></script> <script src="/algorithm/js/angular-sanitize.js"></script> <script src="/algorithm/js/ui-bootstrap-tpls-0.10.0.js"></script> <script src="/algorithm/js/alg.js"></script> <form name="myForm" class="form-horizontal" ng-app="SortAlg" ng-controller="SortCtrl"> <div class="form-group"> <label class="col-sm-2 control-label">Method</label> <div class="col-sm-10"> <button ng-repeat="method in sortingMethods.options" type="button" class="btn btn-sm btn-success" ng-model="sortingMethods.selected" btn-radio="'$$method$$'" ng-click="changeAlg(method)">$$method$$</button> </div> </div> <div class="form-group"> <label class="col-sm-2 control-label">Data</label> <div class="col-sm-4"> <button ng-repeat="source in dataSource.options" type="button" class="btn btn-info btn-sm" ng-model="dataSource.selected" btn-radio="'$$source$$'" ng-click="changeSource(source)">$$source$$</button> </div> <div class="col-sm-6" ng-class="{'has-error': myForm.data.$invalid}"> <input type="text" name="data" class="form-control" id="sortSource" placeholder="Comma separated number" ng-model="sortSource" required ng-pattern="/^[0-9]+(,[0-9]+)*$/" ng-change="updateSortData(sortSource)"> <span class="help-block" ng-show="myForm.data.$error.required">Required!</span> <span class="help-block" ng-show="myForm.data.$error.pattern">Format: Comma separated number w/o extra space or comma</span> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-10"> <button class="btn btn-sm btn-danger" ng-model="processing.button" ng-click="start(processing.button)" btn-checkbox btn-checkbox-false="'Start'" btn-checkbox-true="'Stop'">$$processing.button$$</button> <button class="btn btn-sm btn-warning" ng-click="step()">Step</button> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-6"> <bar-chart dataset="sortData" merge="isMerge"/> </div> <div class="col-sm-2"> <bar-legends legends="legends"/> </div> </div> <div class="form-group"> <div class="col-sm-offset-2 col-sm-10"> <pre ng-bind-html="processing.tips" style="height: 60px"></pre> </div> </div><div class="form-group"> <div class="col-sm-offset-2 col-sm-10"> <pre ng-bind-html="trustedCode(algText)"></pre> </div> </div> </form></p>
   
 	</div>
 		<footer class="article-footer clearfix">

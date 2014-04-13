@@ -3,19 +3,25 @@ angular.module('alg.directives', [])
     return {
       restrict: 'E',
       replace: true,
-      scope: {dataset: '='},
+      scope: {dataset: '=', merge: '='},
       template: '<svg ng-attr-width="$$graph.width$$" ng-attr-height="$$graph.height$$">' +
+        '    <rect ng-show="merge" ng-attr-style="$$data.bgStyle$$" ng-repeat="data in dataset"' +
+        '        ng-attr-width="$$width()$$"' +
+        '        ng-attr-height="$$height(data.bgVal)$$"' +
+        '        ng-attr-x="$$x($index)$$"' +
+        '        ng-attr-y="$$y(data.bgVal)$$">' +
+        '    </rect>' +
         '    <rect ng-attr-style="$$data.style$$" ng-repeat="data in dataset"' +
         '        ng-attr-width="$$width()$$"' +
         '        ng-attr-height="$$height(data.val)$$"' +
         '        ng-attr-x="$$x($index)$$"' +
-        '        ng-attr-y="$$y(data.val)$$">' +
+        '        ng-attr-y="$$auxY(data.val)$$">' +
         '    </rect>' +
         '</svg>',
       link: function(scope) {
         scope.graph = {
-          height: 200,
-          width: 400
+          width: 400,
+          height: 200
         };
 
         scope.width = function() {
@@ -30,7 +36,11 @@ angular.module('alg.directives', [])
             }
           }
 
-          return data / max * scope.graph.height;
+          if (scope.merge) {
+            return data / max * scope.graph.height / 2;
+          } else {
+            return data / max * scope.graph.height;
+          }
         };
 
         scope.x = function(index) {
@@ -39,6 +49,14 @@ angular.module('alg.directives', [])
 
         scope.y = function(data) {
           return scope.graph.height - scope.height(data);
+        };
+
+        scope.auxY = function(data) {
+          if (scope.merge) {
+            return scope.y(data) - scope.graph.height / 2;
+          } else {
+            return scope.y(data);
+          }
         };
       }
     };
@@ -101,8 +119,10 @@ angular.module('alg.services.sort', ['alg.services'])
       function SortAlgBase(name) {
         this.name = name;
         this.sortData = [];
+        this.shadowData = [];
         this.scope = null;
         this.interval = -1;
+        this.operationStacks = [];
 
         this.style = {
           default: 'fill:rgb(123, 123, 123);stroke:white;stroke-width:1',
@@ -111,69 +131,106 @@ angular.module('alg.services.sort', ['alg.services'])
           nextToCompare: 'fill:blue;'
         };
 
-        this.getName = function() {
-          return this.name;
-        };
-
-        this.apply = function() {
-          setTimeout(function() {$rootScope.$apply();}, 1);
-        };
-
-        this.isLarger = function(items, srcIdx, targetIdx) {
-          if (parseInt(items[srcIdx].val) > parseInt(items[targetIdx].val)) {
-            return true;
-          }
-          return false;
-        };
-
-        this.isSmaller = function(items, srcIdx, targetIdx) {
-          if (parseInt(items[srcIdx].val) < parseInt(items[targetIdx].val)) {
-            return true;
-          }
-          return false;
-        };
-
-        this.swap = function(items, srcIdx, targetIdx) {
-          var tmp = items[srcIdx];
-          items[srcIdx] = items[targetIdx];
-          items[targetIdx] = tmp;
-        };
-
-        this.start = function(scope, items, interval) {
-          this.interval = interval;
-          if (!this.scope || !this.scope.processing.isStarted) {
-            this.scope = scope;
-            this.sortData = items;
-            this.init();
-          }
-
-          if (interval > 0) {
-            this.scope.processing.id = setInterval(this.step.bind(this), interval);
-          } else {
-            this.step();
-          }
-        };
-
-        this.stop = function() {
-          clearInterval(this.scope.processing.id);
-        };
-
-        this.autoStop = function() {
-          this.stop();
-          this.init();
-        };
-
-        this.getAlgText = function() {
-          return this.sort.toString();
-        };
       }
 
-      SortAlgBase.prototype.init = function() {
+      SortAlgBase.prototype.getName = function() {
+        return this.name;
+      };
+
+      SortAlgBase.prototype.apply = function() {
+        setTimeout(function() {$rootScope.$apply();}, 1);
+      };
+
+      SortAlgBase.prototype.isLarger = function(items, srcIdx, targetIdx) {
+        if (parseInt(items[srcIdx].val) > parseInt(items[targetIdx].val)) {
+          return true;
+        }
+        return false;
+      };
+
+      SortAlgBase.prototype.isSmaller = function(items, srcIdx, targetIdx) {
+        if (parseInt(items[srcIdx].val) < parseInt(items[targetIdx].val)) {
+          return true;
+        }
+        return false;
+      };
+
+      SortAlgBase.prototype.swap = function(items, srcIdx, targetIdx, styleAndTip) {
+        var tmp = items[srcIdx];
+        items[srcIdx] = items[targetIdx];
+        items[targetIdx] = tmp;
+
+        if (styleAndTip) {
+          this.highlightAndTip(styleAndTip);
+        }
+      };
+
+      SortAlgBase.prototype.swapShadowAndQueueNext = function(srcIdx, targetIdx, styleAndTip) {
+        this.swap(this.shadowData, srcIdx, targetIdx);
+
+        this.operationStacks[this.operationStacks.length] =
+          this.swap.bind(this, this.sortData, srcIdx, targetIdx, styleAndTip);
+      };
+
+      SortAlgBase.prototype.start = function(scope, items, interval) {
+        this.interval = interval;
+        if (!this.scope || !this.scope.processing.isStarted) {
+          this.scope = scope;
+          this.scope.processing.isStarted = true;
+
+          this.sortData = items;
+          this.shadowData = this.sortData.map(function(val) {
+            return val;
+          });
+
+          this.init();
+        }
+
+        if (interval > 0) {
+          this.scope.processing.id = setInterval(this.step.bind(this), interval);
+        } else {
+          this.step();
+        }
+      };
+
+      SortAlgBase.prototype.stop = function() {
+        clearInterval(this.scope.processing.id);
+      };
+
+      SortAlgBase.prototype.complete = function() {
+        this.highlightAndTip({
+          tips: '',
+          styles: {}
+        });
+        this.apply();
+        this.stop();
         this.scope.init();
+        this.cleanUp();
+      };
+
+      SortAlgBase.prototype.getAlgText = function() {
+        return this.sort.toString();
+      };
+
+      SortAlgBase.prototype.init = function() {
+        
       };
 
       SortAlgBase.prototype.step = function() {
-        this.scope.processing.isStarted = true;
+        var nextStep = this.operationStacks.splice(0, 1)[0];
+        if (nextStep) {
+          nextStep();
+          this.apply();
+        } else {
+          this.complete();
+        }
+      };
+
+      SortAlgBase.prototype.cleanUp = function() {
+        this.sortData = [];
+        this.shadowData = [];
+        this.interval = -1;
+        this.operationStacks = [];
       };
 
       SortAlgBase.prototype.sort = function() {
@@ -191,27 +248,30 @@ angular.module('alg.services.sort', ['alg.services'])
         }
       };
 
+      SortAlgBase.prototype.setTips = function(tips) {
+        this.scope.processing.tips = tips;
+      };
+
+      SortAlgBase.prototype.highlight = function(styles) {
+        for (var i in this.sortData) {
+          if (styles[i]) {
+            this.setStyle(i, styles[i]);
+          } else {
+            this.setStyle(i, this.style.default);
+          }
+        }
+      };
+
+      SortAlgBase.prototype.highlightAndTip = function(styleAndTip) {
+        this.setTips(styleAndTip.tips);
+        this.highlight(styleAndTip.styles);
+      };
+
       SortAlgBase.prototype.setStyle = function(index, style) {
         if (index < 0 || index >= this.sortData.length) {
           return;
         }
         this.sortData[index].style = style;
-      };
-
-      SortAlgBase.prototype.setDefaultStyle = function(index) {
-        this.setStyle(index, this.style.default);
-      };
-
-      SortAlgBase.prototype.setCurrentlySeenStyle = function(index) {
-        this.setStyle(index, this.style.currentlySeen);
-      };
-
-      SortAlgBase.prototype.setNextToCompareStyle = function(index) {
-        this.setStyle(index, this.style.nextToCompare + this.style.currentlyCompare);
-      };
-
-      SortAlgBase.prototype.setSmallestInLoopStyle = function(index) {
-        this.setStyle(index, this.style.smallestInLoop + this.style.currentlyCompare);
       };
 
       return SortAlgBase;
@@ -222,79 +282,41 @@ angular.module('alg.services.sort', ['alg.services'])
       SelectionSort.init = function() {
         this.constructor.prototype.init.call(this);
 
-        this.scope.processing.currentIdx = 0;
-        this.scope.processing.nextIdx = 1;
-        this.scope.processing.smallestIdx = 0;
-      };
+        var highlightObj;
+        for (var i = 0; i < this.shadowData.length; i++) {
+          var min = i;
 
-      SelectionSort.step = function() {
-        this.constructor.prototype.step.call(this);
+          for (var j = i + 1; j < this.shadowData.length; j++) {
+            highlightObj = {
+              tips: 'Current smallest item is at position ' + (min + 1),
+              styles: {}
+            };
 
-        var currentIdx = this.scope.processing.currentIdx;
-        var nextIdx = this.scope.processing.nextIdx;
-        var smallestIdx = this.scope.processing.smallestIdx;
+            highlightObj.styles[j] = this.style.nextToCompare;
+            highlightObj.styles[min] = this.style.smallestInLoop;
+            highlightObj.styles[i] = this.style.currentlySeen;
 
-        if (this.scope.processing.isLoopEnd === true) {
-          this.scope.processing.isLoopEnd = false;
-
-          // Clear style of current step
-          this.setDefaultStyle(smallestIdx);
-          this.setDefaultStyle(currentIdx);
-          this.setDefaultStyle(nextIdx - 1);
-
-          currentIdx++;
-
-          this.scope.processing.currentIdx = currentIdx;
-          this.scope.processing.smallestIdx = currentIdx;
-          this.scope.processing.nextIdx = currentIdx + 1;
-
-          // Init style for next step
-          this.setSmallestInLoopStyle(currentIdx);
-          this.setCurrentlySeenStyle(currentIdx);
-          this.setNextToCompareStyle(this.scope.processing.nextIdx);
-          this.apply();
-          return;
-        }
-
-        if (currentIdx === this.sortData.length) {
-          // all items processed
-          this.setDefaultStyle(currentIdx - 1);
-          this.setDefaultStyle(smallestIdx);
-          this.autoStop();
-          return;
-        }
-
-        if (this.scope.processing.nextIdx === this.sortData.length) {
-          this.scope.processing.isLoopEnd = true;
-
-          // inner loop complete
-          if (currentIdx != smallestIdx) {
-            this.swap(this.sortData, currentIdx, smallestIdx);
-            this.setDefaultStyle(smallestIdx);
-            this.setSmallestInLoopStyle(currentIdx);
-            this.apply();
+            this.operationStacks[this.operationStacks.length] =
+              this.highlightAndTip.bind(this, highlightObj);
+            
+            if (this.isLarger(this.shadowData, min, j)) {
+              min = j;
+            }
           }
-          return;
+
+          if (i != min) {
+            highlightObj = {
+              tips: 'Swapped smallest item at position ' + (min + 1) +
+                ' with item at position ' + (i + 1),
+              styles: {}
+            };
+
+            highlightObj.styles[i] = this.style.smallestInLoop;
+            highlightObj.styles[min] = this.style.currentlySeen;
+
+            this.swapShadowAndQueueNext(i, min, highlightObj);
+          }
         }
-
-        if (nextIdx - 1 !== smallestIdx || nextIdx - 1 !== currentIdx) {
-          this.setDefaultStyle(nextIdx - 1);
-        }
-        this.setCurrentlySeenStyle(currentIdx);
-        this.setSmallestInLoopStyle(smallestIdx);
-        this.setNextToCompareStyle(nextIdx);
-        this.apply();
-
-        if (this.isLarger(this.sortData, smallestIdx, nextIdx)) {
-          this.setDefaultStyle(smallestIdx); // must be before later statement
-          this.setCurrentlySeenStyle(currentIdx);
-
-          this.scope.processing.smallestIdx = nextIdx;
-
-          this.setSmallestInLoopStyle(nextIdx);
-        }
-        this.apply();
-        this.scope.processing.nextIdx++;
       };
 
       SelectionSort.sort = function(items) {
@@ -319,73 +341,40 @@ angular.module('alg.services.sort', ['alg.services'])
     InsertionSort.init = function() {
       this.constructor.prototype.init.call(this);
 
-      this.scope.processing.currentIdx = 0;
-      this.scope.processing.nextIdx = -1;
-      this.scope.processing.smallestIdx = 0;
-    };
 
-    InsertionSort.step = function() {
-      this.constructor.prototype.step.call(this);
+      for (var i = 0; i < this.shadowData.length; i++) {
+        var min = i;
 
-      var currentIdx = this.scope.processing.currentIdx;
-      var nextIdx = this.scope.processing.nextIdx;
-      var smallestIdx = this.scope.processing.smallestIdx;
+        for (var j = i - 1; j >= 0; j--) {
+          var highlightObj = {
+            tips: 'Current smallest item is at position ' + (min + 1),
+            styles: {}
+          };
 
-      if (currentIdx === this.sortData.length) {
-        // all items processed
-        this.setDefaultStyle(currentIdx - 1);
-        this.setDefaultStyle(smallestIdx);
-        this.setDefaultStyle(nextIdx);
-        this.apply();
-        this.autoStop();
-        return;
+          highlightObj.styles[j] = this.style.nextToCompare;
+          highlightObj.styles[min] = this.style.smallestInLoop;
+          highlightObj.styles[i] = this.style.currentlySeen;
+
+          this.operationStacks[this.operationStacks.length] =
+            this.highlightAndTip.bind(this, highlightObj);
+
+          if (this.isLarger(this.shadowData, j, min)) {
+            highlightObj = {
+              tips: 'Swapped smallest item at position ' + (min + 1) +
+                ' with item at position ' + (j + 1),
+              styles: {}
+            };
+
+            highlightObj.styles[j] = this.style.smallestInLoop;
+            highlightObj.styles[min] = this.style.currentlySeen;
+
+            this.swapShadowAndQueueNext(min, j, highlightObj);
+            min = j;
+          } else {
+            break;
+          }
+        }
       }
-
-      if (nextIdx < 0) {
-        // Inner loop scan complete.  Start on next unseen item.
-        this.setDefaultStyle(0);
-        this.setDefaultStyle(smallestIdx);
-        this.setDefaultStyle(currentIdx);
-        this.apply();
-
-        currentIdx++;
-
-        this.scope.processing.currentIdx = currentIdx;
-        this.scope.processing.nextIdx = currentIdx - 1;
-        this.scope.processing.smallestIdx = currentIdx;
-
-        this.setCurrentlySeenStyle(this.scope.processing.currentIdx);
-        this.setSmallestInLoopStyle(this.scope.processing.smallestIdx);
-        this.setNextToCompareStyle(this.scope.processing.nextIdx);
-        this.apply();
-        return;
-      }
-
-      this.setCurrentlySeenStyle(currentIdx);
-      this.setSmallestInLoopStyle(smallestIdx);
-      this.setNextToCompareStyle(nextIdx);
-      this.apply();
-
-      if (this.isLarger(this.sortData, nextIdx, smallestIdx)) {
-        this.setDefaultStyle(smallestIdx);
-        this.setDefaultStyle(nextIdx);
-
-        this.swap(this.sortData, nextIdx, smallestIdx);
-        this.scope.processing.smallestIdx = nextIdx;
-
-        this.setCurrentlySeenStyle(currentIdx);
-        this.setSmallestInLoopStyle(nextIdx);
-        this.setNextToCompareStyle(nextIdx - 1);
-        this.apply();
-      } else {
-        this.scope.processing.smallestIdx = nextIdx;
-        this.setDefaultStyle(smallestIdx);
-        this.setSmallestInLoopStyle(nextIdx);
-        this.setNextToCompareStyle(nextIdx - 1);
-        this.apply();
-      }
-      this.scope.processing.nextIdx--;
-      return;
     };
 
     InsertionSort.sort = function(items) {
@@ -395,6 +384,8 @@ angular.module('alg.services.sort', ['alg.services'])
           if (this.isLarger(items, j, min)) {
             this.swap(items, min, j);
             min = j;
+          } else {
+            break;
           }
         }
       }
@@ -408,60 +399,32 @@ angular.module('alg.services.sort', ['alg.services'])
     BubbleSort.init = function() {
       this.constructor.prototype.init.call(this);
 
-      this.scope.processing.currentIdx = this.sortData.length - 1;
-      this.scope.processing.nextIdx = 0;
+      for (var i = this.shadowData.length - 1; i > 0; i--) {
+        var tips = 'Finding largest in ' + (i + 1) + ' items';
+
+        for (var j = 0; j < i; j++) {
+          var highlightObj = {
+            tips: tips + '.\nComparing item ' + (j + 1) + ' and ' + (j + 2),
+            styles: {}
+          };
+
+          highlightObj.styles[j] = this.style.nextToCompare;
+          highlightObj.styles[j + 1] = this.style.nextToCompare;
+          highlightObj.styles[i] = this.style.currentlySeen;
+
+          this.operationStacks[this.operationStacks.length] =
+            this.highlightAndTip.bind(this, highlightObj);
+
+          if (this.isLarger(this.shadowData, j, j + 1)) {
+            this.swapShadowAndQueueNext(j, j + 1);
+          }
+        }
+      }
     };
 
     BubbleSort.setLegends = function(legends) {
       delete this.style.smallestInLoop;
       this.constructor.prototype.setLegends.call(this, legends);
-    };
-
-    BubbleSort.step = function() {
-      this.constructor.prototype.step.call(this);
-
-      var currentIdx = this.scope.processing.currentIdx;
-      var nextIdx = this.scope.processing.nextIdx;
-
-      this.setCurrentlySeenStyle(currentIdx);
-      this.setDefaultStyle(nextIdx - 1);
-      this.setNextToCompareStyle(nextIdx);
-      this.apply();
-
-      if (currentIdx === 0) {
-        // all items processed
-        this.setDefaultStyle(currentIdx);
-        this.setDefaultStyle(nextIdx);
-        this.apply();
-        this.autoStop();
-        return;
-      }
-
-      if (nextIdx === currentIdx) {
-        // Inner loop scan complete.  Start on next unseen item.
-        this.setDefaultStyle(currentIdx);
-        this.apply();
-
-        currentIdx--;
-
-        this.scope.processing.currentIdx = currentIdx;
-        this.scope.processing.nextIdx = 0;
-        this.setCurrentlySeenStyle(currentIdx);
-        this.setNextToCompareStyle(0);
-        this.apply();
-        return;
-      }
-
-      if (this.isLarger(this.sortData, nextIdx, currentIdx)) {
-        this.swap(this.sortData, nextIdx, currentIdx);
-
-        this.setNextToCompareStyle(nextIdx);
-        this.setCurrentlySeenStyle(currentIdx);
-        this.apply();
-      }
-
-      this.scope.processing.nextIdx++;
-      return;
     };
 
     BubbleSort.sort = function(items) {
@@ -482,107 +445,68 @@ angular.module('alg.services.sort', ['alg.services'])
     HeapSort.init = function() {
       this.constructor.prototype.init.call(this);
 
-      this.scope.processing.isHeapBuilt = false;
-      this.scope.processing.isSwap = true;
+      // Build a max heap
+      var N = this.shadowData.length;
+      for (var i = parseInt(N / 2); i >= 1; i--) {
+        this.sink(i, N);
+      }
 
-      this.setIndex(this.sortData.length);
+      // Do the sort
+      while (N > 1) {
+        var styleAndTip = {
+          tips: 'Put the largest item to the end of heap',
+          styles: {}
+        };
+
+        styleAndTip.styles[N - 1] = this.style.nextToCompare;
+        styleAndTip.styles[0] = this.style.currentlySeen;
+
+        this.swapShadowAndQueueNext(0, N - 1, styleAndTip);
+        this.sink(1, --N);
+      }
+    };
+
+    HeapSort.sink = function(index, heapCount) {
+      // index and heapCount are 1-based
+      var i = index;
+      var tips = 'Building max heap with count ' + heapCount;
+
+      while (i * 2 <= heapCount) {
+        var child = i * 2;
+        if (child < heapCount &&
+            this.isSmaller(this.shadowData, child - 1, child)) { // convert to 0-based
+          child++; // take the larger child to compare
+        }
+        if (this.isLarger(this.shadowData, i - 1, child - 1)) { // convert to 0-based
+          break;
+        }
+
+        var styleAndTip = {
+          tips: tips + '.\nSinking item in position ' + i +
+            ' with its larger child in position ' + (child - 1),
+          styles: {}
+        };
+
+        styleAndTip.styles[child - 1] = this.style.nextToCompare;
+        styleAndTip.styles[i - 1] = this.style.currentlySeen;
+
+        // convert to 0-based
+        this.swapShadowAndQueueNext(i - 1, child - 1, styleAndTip);
+        i = child;
+      }
+
+      var highlightObj = {
+        tips: tips + '.\nSink done for item ' + index,
+        styles: {}
+      };
+
+      this.operationStacks[this.operationStacks.length] =
+        this.highlightAndTip.bind(this, highlightObj);
     };
 
     HeapSort.setLegends = function(legends) {
       delete this.style.smallestInLoop;
       this.constructor.prototype.setLegends.call(this, legends);
-    };
-
-    HeapSort.setIndex = function(heapCount) {
-      this.scope.processing.N = heapCount;
-      this.scope.processing.nextIdx = parseInt(heapCount / 2);
-      this.scope.processing.nextSinkIdx = this.scope.processing.nextIdx;
-    };
-
-    HeapSort.step = function() {
-      this.constructor.prototype.step.call(this);
-      var N = this.scope.processing.N;
-      var nextIdx = this.scope.processing.nextIdx;
-
-      if (N === 1) {
-        this.autoStop();
-      }
-
-      if (this.scope.processing.isHeapBuilt === false) {
-        // heap building stage
-        if (!this.sink(this.sortData, nextIdx, N)) {
-          return;
-        }
-
-        var i = this.scope.processing.nextSinkIdx;
-        this.setDefaultStyle(i - 1); // clear highlight of last two compared items  
-        this.setDefaultStyle(i * 2 - 1);
-        this.setDefaultStyle(i * 2);
-        this.apply();
-
-        nextIdx--;
-        this.scope.processing.nextIdx = nextIdx;
-        this.scope.processing.nextSinkIdx = this.scope.processing.nextIdx;
-
-        if (nextIdx === 0) {
-          this.scope.processing.isHeapBuilt = true;
-          this.scope.processing.isSwap = true;
-
-          this.setIndex(N);
-        }
-        return;
-      } else {
-        // sorting stage
-        if (N > 1) {
-          // Swap and sink are broken down to two stages
-          if (this.scope.processing.isSwap === true) {
-            this.setCurrentlySeenStyle(0);
-            this.setNextToCompareStyle(N - 1);
-            this.apply();
-
-            this.swap(this.sortData, 0, N - 1);
-            this.scope.processing.isSwap = false;
-          } else {
-            this.setDefaultStyle(0);
-            this.setDefaultStyle(N - 1);
-            this.apply();
-
-            this.setIndex(--N);
-            this.scope.processing.isHeapBuilt = false;
-          }
-        }
-      }
-    };
-
-    HeapSort.sink = function(items, index, heapCount) {
-      // index and heapCount are 1-based
-      var i = this.scope.processing.nextSinkIdx;
-
-      this.setCurrentlySeenStyle(i - 1); // clear highlight of last two compared items
-      this.setDefaultStyle(parseInt(i / 2) - 1);
-
-      if (i * 2 <= heapCount) {
-        var child = i * 2;
-        if (child < heapCount &&
-            this.isSmaller(items, child - 1, child)) { // convert to 0-based
-          child++; // take the larger child to compare
-        }
-
-        this.setNextToCompareStyle(child - 1);
-        this.apply();
-
-        if (this.isLarger(items, i - 1, child - 1)) { // convert to 0-based
-          return true;
-        }
-
-        this.swap(items, i - 1, child - 1); // convert to 0-based
-
-        this.scope.processing.nextSinkIdx = child;
-        return false;
-      } else {
-        this.setDefaultStyle(i - 1);
-        return true;
-      }
     };
 
     HeapSort.sort = function(items) {
@@ -612,10 +536,9 @@ angular.module('alg.services.sort', ['alg.services'])
 
       // Do the sort
       while (N > 1) {
-        this.swap(items, 0, N - 1); // Put the largest item to the end
+        this.swap(items, 0, N - 1); // Put the largest item to the end of items
         sink(items, 1, --N);
       }
-      return items;
     };
 
     return HeapSort;
@@ -626,26 +549,140 @@ angular.module('alg.services.sort', ['alg.services'])
     QuickSort.init = function() {
       this.constructor.prototype.init.call(this);
 
-      this.scope.processing.currentIdx = this.sortData.length - 1;
-      this.scope.processing.nextIdx = 0;
-      this.scope.processing.isShuffled = false;
+      this.setTips('Shuffled.  Performane guarantee.');
+      Shuffler.shuffle(this.sortData);
+      this.shadowData = this.sortData.map(function(val) {
+        return val;
+      });
+
+      this.operationStacks[this.operationStacks.length] =
+        this.recursiveSort.bind(this, this.shadowData, 0, this.sortData.length - 1, true);
+    };
+
+    QuickSort.partition = function(items, low, high, needQueue) {
+      var i = low;
+      var j = high + 1;
+      var tips = 'Partitioning items from ' + (low + 1) + ' to ' + j;
+      var styleAndTip = {};
+
+      while (true) {
+        while (this.isSmaller(items, ++i, low)) {
+          if (needQueue) {
+            styleAndTip = {
+              tips: tips + '\nItem ' + (i + 1) + ' is in order.  Go next.',
+              styles: {}
+            };
+
+            styleAndTip.styles[i] = this.style.nextToCompare;
+            styleAndTip.styles[low] = this.style.currentlySeen;
+            this.operationStacks[this.operationStacks.length] =
+              this.highlightAndTip.bind(this, styleAndTip);
+          }
+
+          if (i === high) {
+            break;
+          }
+        }
+
+        while (this.isSmaller(items, low, --j)) {
+          if (needQueue) {
+            styleAndTip = {
+              tips: tips + '\nItem ' + (j + 1) + ' is in order.  Go next.',
+              styles: {}
+            };
+
+            styleAndTip.styles[i] = this.style.outOfOrder;
+            styleAndTip.styles[j] = this.style.nextToCompare;
+            styleAndTip.styles[low] = this.style.currentlySeen;
+            this.operationStacks[this.operationStacks.length] =
+              this.highlightAndTip.bind(this, styleAndTip);
+          }
+
+          if (j === low) {
+            break;
+          }
+        }
+
+        if (i >= j) {
+          break;
+        }
+
+        if (needQueue) {
+          styleAndTip = {
+            tips: tips + '\nSwapped out of order items ' + (i + 1) +
+              ' and ' + (j + 1),
+            styles: {}
+          };
+
+          styleAndTip.styles[i] = this.style.outOfOrder;
+          styleAndTip.styles[j] = this.style.outOfOrder;
+          styleAndTip.styles[low] = this.style.currentlySeen;
+
+          this.swapShadowAndQueueNext(i, j, styleAndTip);
+        } else {
+          this.swap(i, j);
+        }
+      }
+
+      if (needQueue) {
+        styleAndTip = {
+          tips: 'Partitioning done from ' + (low + 1) + ' to ' + (high + 1) +
+            '.\nSwapped ref item to position ' + (j + 1),
+          styles: {}
+        };
+
+        styleAndTip.styles[j] = this.style.outOfOrder;
+        styleAndTip.styles[low] = this.style.currentlySeen;
+        this.swapShadowAndQueueNext(low, j, styleAndTip);
+      } else {
+        this.swap(low, j);
+      }
+      return j;
+    };
+
+    QuickSort.recursiveSort = function(items, low, high, needQueue, styleAndTip) {
+      if (styleAndTip) {
+        this.highlightAndTip(styleAndTip);
+      }
+
+      if (needQueue) {
+        if (low >= high) {
+          return;
+        }
+
+        var i = this.partition(items, low, high, needQueue);
+
+        styleAndTip = {
+          tips: 'Recursive sort plan for partition from ' + (low + 1) + ' to ' + i,
+          styles: {}
+        };
+
+        styleAndTip.styles[low] = this.style.currentlySeen;
+        styleAndTip.styles[i - 1] = this.style.currentlySeen;
+
+        this.operationStacks[this.operationStacks.length] =
+          this.recursiveSort.bind(this, this.sortData, low, i - 1, false, styleAndTip);
+
+        styleAndTip = {
+          tips: 'Recursive sort plan for partition from ' + (i + 2) + ' to ' + (high + 1),
+          styles: {}
+        };
+
+        styleAndTip.styles[i + 1] = this.style.currentlySeen;
+        styleAndTip.styles[high] = this.style.currentlySeen;
+
+        this.operationStacks[this.operationStacks.length] =
+          this.recursiveSort.bind(this, this.sortData, i + 1, high, false, styleAndTip);
+
+        this.recursiveSort(items, low, i - 1, true);
+        this.recursiveSort(items, i + 1, high, true);
+      }
     };
 
     QuickSort.setLegends = function(legends) {
-      // delete this.style.smallestInLoop;
+      delete this.style.smallestInLoop;
+      this.style.outOfOrder = 'fill:red;';
       this.constructor.prototype.setLegends.call(this, legends);
-    };
-
-    QuickSort.step = function() {
-      this.constructor.prototype.step.call(this);
-
-      if (this.scope.processing.isShuffled === false) {
-        Shuffler.shuffle(this.sortData);
-        this.scope.processing.isShuffled = true;
-        return;
-      }
-
-      
     };
 
     QuickSort.sort = function(items) {
@@ -693,10 +730,369 @@ angular.module('alg.services.sort', ['alg.services'])
 
     return QuickSort;
   }])
+  .factory('ShellSort', ['SortAlgBase', function(SortAlgBase) {
+    var ShellSort = new SortAlgBase('Shell');
+
+    ShellSort.init = function() {
+      this.constructor.prototype.init.call(this);
+
+      var N = this.sortData.length;
+      var h = 1; // 1-based
+      while (h < parseInt(N / 3)) {
+        h = h * 3 + 1;
+      }
+
+      while (h >= 1) {
+        var tips = 'h calculated to be ' + h;
+
+        for (var i = h - 1; i < N; i++) {
+          for (var j = i; j >= h; j -= h) {
+            var k = j - h;
+
+            var highlightObj = {
+              tips: tips + '.\nComparing item at position ' + (j + 1) +
+                ' and ' + (k + 1),
+              styles: {}
+            };
+
+            highlightObj.styles[j] = this.style.nextToCompare;
+            highlightObj.styles[k] = this.style.nextToCompare;
+            highlightObj.styles[i] = this.style.currentlySeen;
+
+            this.operationStacks[this.operationStacks.length] =
+              this.highlightAndTip.bind(this, highlightObj);
+
+            // Insertion sort
+            if (this.isSmaller(this.shadowData, j, k)) {
+              highlightObj = {
+                tips: tips + '\nSwapped smaller item at position ' + (k + 1) +
+                  ' with item at position ' + (j + 1),
+                styles: {}
+              };
+
+              highlightObj.styles[k] = this.style.nextToCompare;
+              highlightObj.styles[j] = this.style.nextToCompare;
+              highlightObj.styles[i] = this.style.currentlySeen;
+
+              this.swapShadowAndQueueNext(j, k, highlightObj);
+            } else {
+              break;
+            }
+          }
+        }
+        h = parseInt(h / 3);
+      }
+    };
+
+    ShellSort.setLegends = function(legends) {
+      delete this.style.smallestInLoop;
+      this.constructor.prototype.setLegends.call(this, legends);
+    };
+
+    ShellSort.sort = function(items) {
+      var N = items.length;
+      var h = 1; // 1-based
+      while (h < parseInt(N / 3)) {
+        h = h * 3 + 1;
+      }
+
+      while (h >= 1) {
+        for (var i = h - 1; i < N; i++) {
+          for (var j = i; j >= h && this.isSmaller(items, j, j - h); j -= h) {
+            // Insertion sort
+            this.swap(items, j, j - h);
+          }
+        }
+        h = parseInt(h / 3);
+      }
+    };
+
+    return ShellSort;
+  }])
+  .factory('TopDownMergeSort', ['SortAlgBase', function(SortAlgBase) {
+    var TopDownMergeSort = new SortAlgBase('Merge (TopDown)');
+
+    TopDownMergeSort.complete = function() {
+      for (var i in this.sortData) {
+        this.sortData[i].bgStyle = this.style.auxiliaryItem;
+      }
+
+      this.constructor.prototype.complete.call(this);
+    };
+
+    TopDownMergeSort.merge = function(items, low, mid, high) {
+      var tips = 'Merging subarray from low pos ' + (low + 1) + ' to high pos ' +
+        (high + 1);
+
+      var aux = [];
+      for (var k = low; k <= high; k++) {
+        aux[k] = {
+          val: items[k].val
+        };
+      }
+
+      this.operationStacks[this.operationStacks.length] =
+        function(items, low, high, tips) {
+          for (var k = 0; k < items.length; k++) {
+            if (k >= low && k <= high) {
+              items[k].bgVal = items[k].val;
+              items[k].bgStyle = this.style.auxiliaryItem;
+            } else {
+              items[k].bgVal = 0;
+            }
+            items[k].style = this.style.default;
+          }
+          this.setTips(tips +
+            '\nAuxiliary items copied.');
+        }.bind(this, this.sortData, low, high, tips);
+
+
+      function exchange(items, k, ref, tips) {
+        items[k].val = items[ref].bgVal;
+
+        for (var i = 0; i < items.length; i++) {
+          items[i].style = this.style.default;
+          items[i].bgStyle = this.style.auxiliaryItem;
+        }
+
+        items[k].style = this.style.currentlyCompare;
+        items[ref].bgStyle = this.style.currentlyCompare;
+        this.setTips(tips);
+      }
+
+      var i = low, j = mid + 1;
+      for (k = low; k <= high; k++) {
+        var ref = k;
+        var stepTips;
+
+        if (i > mid) {
+          stepTips = 'all left subarray items are copied.';
+          ref = j;
+          j++;
+        } else if (j > high) {
+          stepTips = 'all right subarray items are copied.';
+          ref = i;
+          i++;
+        } else if (this.isSmaller(aux, j, i)) {
+          stepTips = 'left item ' + (i + 1) + ' is larger than right item ' + (j + 1);
+          ref = j;
+          j++;
+        } else {
+          stepTips = 'right item ' + (j + 1) + ' is larger than left item ' + (i + 1);
+          ref = i;
+          i++;
+        }
+        stepTips = '\nCopied item ' + (ref + 1) + ' to item ' +
+          (k + 1) + ' because ' + stepTips;
+        items[k] = aux[ref];
+
+        this.operationStacks[this.operationStacks.length] =
+          exchange.bind(this, this.sortData, k, ref, tips + stepTips);
+      }
+    };
+
+    TopDownMergeSort.recursiveSort = function(items, low, high) {
+      if (high <= low) {
+        return;
+      }
+
+      var mid = low + parseInt((high - low) / 2);
+      this.recursiveSort(items, low, mid);
+      this.recursiveSort(items, mid + 1, high);
+      this.merge(items, low, mid, high);
+    };
+
+    TopDownMergeSort.init = function() {
+      this.recursiveSort(this.shadowData, 0, this.shadowData.length - 1);
+    };
+
+    TopDownMergeSort.setLegends = function(legends) {
+      delete this.style.smallestInLoop;
+      delete this.style.currentlySeen;
+      delete this.style.nextToCompare;
+      this.style.auxiliaryItem = 'fill:#cccccc;stroke:white;stroke-width:1';
+      this.style.currentlyCompare = 'fill:green';
+      this.constructor.prototype.setLegends.call(this, legends);
+    };
+
+    TopDownMergeSort.sort = function(items) {
+      function merge(items, aux, low, mid, high) {
+        for (var k = low; k <= high; k++) {
+          aux[k] = items[k];
+        }
+
+        var i = low, j = mid + 1;
+        for (k = low; k <= high; k++) {
+          if (i > mid) {
+            items[k] = aux[j++];
+          } else if (j > high) {
+            items[k] = aux[i++];
+          } else if (this.isSmaller(aux, j, i)) {
+            items[k] = aux[j++];
+          } else {
+            items[k] = aux[i++];
+          }
+        }
+      }
+
+      function sort(items, aux, low, high) {
+        if (high <= low) {
+          return;
+        }
+
+        var mid = low + parseInt((high - low) / 2);
+        sort(items, aux, low, mid);
+        sort(items, aux, mid + 1, high);
+        merge(items, aux, low, mid, high);
+      }
+
+      var aux = items.concat([]);
+
+      sort(items, aux, 0, items.length - 1);
+    };
+
+    return TopDownMergeSort;
+  }])
+  .factory('BottomUpMergeSort', ['SortAlgBase', function(SortAlgBase) {
+    var BottomUpMergeSort = new SortAlgBase('Merge (BottomUp)');
+
+    BottomUpMergeSort.complete = function() {
+      for (var i in this.sortData) {
+        this.sortData[i].bgStyle = this.style.auxiliaryItem;
+      }
+
+      this.constructor.prototype.complete.call(this);
+    };
+
+    BottomUpMergeSort.merge = function(items, low, mid, high, size) {
+      var tips = 'Merging items for subarray in size ' + size +
+        '.  Low pos ' + (low + 1) + ' high pos ' + (high + 1);
+
+      var aux = [];
+      for (var k = low; k <= high; k++) {
+        aux[k] = {
+          val: items[k].val
+        };
+      }
+
+      this.operationStacks[this.operationStacks.length] =
+        function(items, low, high, tips) {
+          for (var k = 0; k < items.length; k++) {
+            if (k >= low && k <= high) {
+              items[k].bgVal = items[k].val;
+              items[k].bgStyle = this.style.auxiliaryItem;
+            } else {
+              items[k].bgVal = 0;
+            }
+            items[k].style = this.style.default;
+          }
+          this.setTips(tips +
+            '\nAuxiliary items copied.');
+        }.bind(this, this.sortData, low, high, tips);
+
+
+      function exchange(items, k, ref, tips) {
+        items[k].val = items[ref].bgVal;
+
+        for (var i = 0; i < items.length; i++) {
+          items[i].style = this.style.default;
+          items[i].bgStyle = this.style.auxiliaryItem;
+        }
+
+        items[k].style = this.style.currentlyCompare;
+        items[ref].bgStyle = this.style.currentlyCompare;
+        this.setTips(tips);
+      }
+
+      var i = low, j = mid + 1;
+      for (k = low; k <= high; k++) {
+        var ref = k;
+        var stepTips;
+
+        if (i > mid) {
+          stepTips = 'all left subarray items are copied.';
+          ref = j;
+          j++;
+        } else if (j > high) {
+          stepTips = 'all right subarray items are copied.';
+          ref = i;
+          i++;
+        } else if (this.isSmaller(aux, j, i)) {
+          stepTips = 'left item ' + (i + 1) + ' is larger than right item ' + (j + 1);
+          ref = j;
+          j++;
+        } else {
+          stepTips = 'right item ' + (j + 1) + ' is larger than left item ' + (i + 1);
+          ref = i;
+          i++;
+        }
+        stepTips = '\nCopied item ' + (ref + 1) + ' to item ' +
+          (k + 1) + ' because ' + stepTips;
+        items[k] = aux[ref];
+
+        this.operationStacks[this.operationStacks.length] =
+          exchange.bind(this, this.sortData, k, ref, tips + stepTips);
+      }
+    };
+
+    BottomUpMergeSort.init = function() {
+      var items = this.shadowData;
+      var N = items.length;
+
+      for (var size = 1; size < N; size = size + size) {
+        for (var low = 0; low < N - size; low += size + size) {
+          this.merge(items, low, low + size - 1, Math.min(low + size + size - 1, N - 1), size);
+        }
+      }
+    };
+
+    BottomUpMergeSort.setLegends = function(legends) {
+      delete this.style.smallestInLoop;
+      delete this.style.currentlySeen;
+      delete this.style.nextToCompare;
+      this.style.auxiliaryItem = 'fill:#cccccc;stroke:white;stroke-width:1';
+      this.style.currentlyCompare = 'fill:green';
+      this.constructor.prototype.setLegends.call(this, legends);
+    };
+
+    BottomUpMergeSort.sort = function(items) {
+      function merge(items, aux, low, mid, high) {
+        for (var k = low; k <= high; k++) {
+          aux[k] = items[k];
+        }
+
+        var i = low, j = mid + 1;
+        for (k = low; k <= high; k++) {
+          if (i > mid) {
+            items[k] = aux[j++];
+          } else if (j > high) {
+            items[k] = aux[i++];
+          } else if (this.isSmaller(aux, j, i)) {
+            items[k] = aux[j++];
+          } else {
+            items[k] = aux[i++];
+          }
+        }
+      }
+
+      var N = items.length;
+      var aux = items.concat([]);
+
+      for (var size = 1; size < N; size = size + size) {
+        for (var low = 0; low < N - size; low += size + size) {
+          merge(items, aux,
+            low, low + size - 1, Math.min(low + size + size - 1, N - 1));
+        }
+      }
+    };
+
+    return BottomUpMergeSort;
+  }])
   .factory('SortAlgFactory', ['InsertionSort', 'SelectionSort', 'BubbleSort',
-    'HeapSort',
-    function(InsertionSort, SelectionSort, BubbleSort, HeapSort) {
-      // Shellsort, quicksort, mergesort remained
+    'HeapSort', 'QuickSort', 'ShellSort', 'TopDownMergeSort', 'BottomUpMergeSort',
+    function(InsertionSort, SelectionSort, BubbleSort, HeapSort, QuickSort,
+        ShellSort, TopDownMergeSort, BottomUpMergeSort) {
+      // Shellsort, mergesort remained
       var algs = {};
       var methodNames = [];
 
@@ -721,7 +1117,10 @@ angular.module('alg.services.sort', ['alg.services'])
         algs[algName] = algFn;
       };
 
-      // SortAlgFactory.reg(QuickSort);
+      SortAlgFactory.reg(TopDownMergeSort);
+      SortAlgFactory.reg(BottomUpMergeSort);
+      SortAlgFactory.reg(ShellSort);
+      SortAlgFactory.reg(QuickSort);
       SortAlgFactory.reg(HeapSort);
       SortAlgFactory.reg(BubbleSort);
       SortAlgFactory.reg(InsertionSort);
@@ -740,10 +1139,15 @@ app.controller('SortCtrl', ['$scope', 'Shuffler', 'SortAlgFactory', 'SortAlgBase
     function($scope, Shuffler, SortAlgFactory, SortAlgBase, $sce) {
 
       $scope.changeAlg = function(method) {
-        var alg = SortAlgFactory.get(method);
-        $scope.algText = alg.getAlgText();
+        if ($scope.alg) {
+          $scope.alg.cleanUp();
+        }
+        $scope.alg = SortAlgFactory.get(method);
+        $scope.isMerge = method.indexOf('Merge') > -1;
+
+        $scope.algText = $scope.alg.getAlgText();
         $scope.updateSortData($scope.sortSource);
-        alg.setLegends($scope.legends);
+        $scope.alg.setLegends($scope.legends);
       };
 
       $scope.updateSortData = function(sortSource) {
@@ -756,7 +1160,9 @@ app.controller('SortCtrl', ['$scope', 'Shuffler', 'SortAlgFactory', 'SortAlgBase
           .map(function(val) {
             return {
               val: val,
-              style: alg.style.default
+              style: alg.style.default,
+              bgVal: 0,
+              bgStyle: 'display:none'
             };
           });
         $scope.init();
@@ -799,7 +1205,7 @@ app.controller('SortCtrl', ['$scope', 'Shuffler', 'SortAlgFactory', 'SortAlgBase
         };
       };
 
-      $scope.interval = 100;
+      $scope.interval = 300;
 
       var regMethods = SortAlgFactory.getAllSortMethods();
       $scope.sortingMethods = {
@@ -818,6 +1224,7 @@ app.controller('SortCtrl', ['$scope', 'Shuffler', 'SortAlgFactory', 'SortAlgBase
 
       $scope.legends = [];
 
+      $scope.init();
       $scope.changeSource($scope.dataSource.selected);
       $scope.changeAlg($scope.sortingMethods.selected);
     }]);
