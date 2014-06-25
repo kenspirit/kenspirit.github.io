@@ -25,6 +25,7 @@ Please free to get in touch with me using any of the method below.
 * __LinkedIn__: [Ken Chen](http://cn.linkedin.com/pub/ken-chen/9/168/a15)
 * __Weibo__: [鹄思乱想](http://weibo.com/kenspirit)
 * __Twitter__: [kenspirit](http://twitter.com/kenspirit)
+* __Slideshare__: [chengusky] (http://www.slideshare.net/chengusky)
 
 
 ##About this blog##
