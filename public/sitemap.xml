@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
+    <lastmod>2014-09-25T14:58:46.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
+    <lastmod>2014-07-31T12:35:17.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</loc>
     <lastmod>2014-06-25T14:21:00.000Z</lastmod>
   </url>
@@ -44,16 +54,6 @@
   <url>
     <loc>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</loc>
     <lastmod>2014-01-04T00:00:00.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
-    <lastmod>2006-03-28T08:09:59.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
-    <lastmod>2006-05-18T03:18:28.000Z</lastmod>
   </url>
   
   <url>
@@ -147,13 +147,13 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
-    <lastmod>2005-06-23T04:02:43.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
+    <lastmod>2012-08-30T07:04:06.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
-    <lastmod>2012-10-27T07:48:37.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    <lastmod>2005-06-23T04:02:43.000Z</lastmod>
   </url>
   
   <url>
@@ -292,8 +292,18 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
-    <lastmod>2012-08-30T07:04:06.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
+    <lastmod>2006-03-28T08:09:59.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
+    <lastmod>2006-05-18T03:18:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
+    <lastmod>2012-10-27T07:48:37.000Z</lastmod>
   </url>
   
 </urlset>
