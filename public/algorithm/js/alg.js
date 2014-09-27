@@ -213,7 +213,7 @@ angular.module('alg.services.sort', ['alg.services'])
       };
 
       SortAlgBase.prototype.init = function() {
-        
+
       };
 
       SortAlgBase.prototype.step = function() {
@@ -298,7 +298,7 @@ angular.module('alg.services.sort', ['alg.services'])
 
             this.operationStacks[this.operationStacks.length] =
               this.highlightAndTip.bind(this, highlightObj);
-            
+
             if (this.isLarger(this.shadowData, min, j)) {
               min = j;
             }
@@ -1227,4 +1227,72 @@ app.controller('SortCtrl', ['$scope', 'Shuffler', 'SortAlgFactory', 'SortAlgBase
       $scope.init();
       $scope.changeSource($scope.dataSource.selected);
       $scope.changeAlg($scope.sortingMethods.selected);
+
+      function getPosition(element) {
+        var xPosition = 0;
+        var yPosition = 0;
+
+        while (element) {
+          xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
+          yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
+          element = element.offsetParent;
+        }
+        return { x: xPosition, y: yPosition };
+      }
+
+      function setInterval(marginLeft, sliderBarWidth) {
+        $scope.interval = parseInt(1000 * marginLeft / sliderBarWidth);
+      }
+
+      function setMarginLeft(marginLeft) {
+        if (marginLeft < 0) {
+          marginLeft = 1;
+        } else if (marginLeft + $scope.sliderWidth >= $scope.sliderBarWidth - 1) {
+          marginLeft = $scope.sliderBarWidth - $scope.sliderWidth - 1;
+        }
+
+        $scope.marginLeft = marginLeft;
+      }
+
+      $scope.isHold = false;
+      $scope.lastClientX = 0;
+      $scope.marginLeft = 60;
+      $scope.sliderBarWidth = 0;
+      $scope.sliderWidth = 0;
+
+      $scope.holdSlider = function($event) {
+        $scope.isHold = true;
+        $scope.sliderBarWidth = $event.target.parentNode.offsetWidth;
+        $scope.sliderWidth = $event.target.offsetWidth;
+        $scope.lastClientX = $event.clientX; // Resetting position when holding
+      };
+
+      $scope.releaseSlider = function() {
+        $scope.isHold = false;
+      };
+
+      $scope.setSlider = function($event) {
+        if ($event.target.id === 'slider') {
+          return; // Do nothing if clicking on slider
+        }
+
+        $scope.sliderBarWidth = $event.target.offsetWidth;
+        $scope.sliderWidth = $event.target.childNodes[1].offsetWidth;
+
+        var sliderBarPosition = getPosition($event.target),
+            marginLeft = $event.clientX - sliderBarPosition.x - $scope.sliderWidth / 2;
+
+        setMarginLeft(marginLeft);
+        setInterval($scope.marginLeft, $scope.sliderBarWidth);
+      };
+
+      $scope.moveSlider = function($event) {
+        if ($scope.isHold) {
+          var diff = $event.clientX - $scope.lastClientX;
+          $scope.lastClientX = $event.clientX;
+
+          setMarginLeft($scope.marginLeft + diff);
+          setInterval($scope.marginLeft, $scope.sliderBarWidth);
+        }
+      };
     }]);
