@@ -1,0 +1,10 @@
+---
+layout: false
+title: "Kanban Board"
+date: 2014-03-26 21:38
+comments: true
+sharing: true
+footer: true
+---
+
+<meta charset="UTF-8"> <link rel="stylesheet" type="text/css" href="{{ root_url }}/kanban/reset.css"/> <link rel="stylesheet" type="text/css" href="{{ root_url }}/kanban/bower_components/bootstrap/dist/css/bootstrap.min.css"/> <link rel="stylesheet" type="text/css" href="{{ root_url }}/kanban/kanban.css"/> <script src="{{ root_url }}/kanban/bower_components/angular/angular.min.js"></script> <script src="{{ root_url }}/kanban/bower_components/angular-dragdrop-ganarajpr/draganddrop.js"></script> <script src="{{ root_url }}/kanban/sample-data.js"></script> <script src="{{ root_url }}/kanban/directives.js"></script> <script src="{{ root_url }}/kanban/kanban.js"></script> <p/> <form name="myForm" class="form-horizontal" ng-app="Kanban" ng-controller="MainCtrl"> <div style="margin: 20px"> <h3>基本双层 Kanban</h3> <ul style="margin: 10px;"> <li>主 Kanban 中的任意阶段, 都可以设置为一个子 Kanban.  比如可以为开发细分状态.</li> <li>子 Kanban 里面的状态, 不会出现在主 Kanban 的 CFD 表中.</li> <li>分 Lane</li> </ul> </div> <kanban-board dataset="SampleBoardAndCards2"></kanban-board> <div style="margin: 20px"> <h3>双层细分子任务 Kanban</h3> <ul style="margin: 10px;"> <li>功能同上, 但是某一个子状态中, 还可以子任务按不同类别分列显示.</li> </ul> </div> <kanban-board dataset="SampleBoardAndCards1"></kanban-board> <div style="margin: 20px"> <h3>高级双层子任务 Kanban</h3> <ul style="margin: 10px;"> <li>主 Kanban 中的任意阶段, 都可以设置为一个子 Kanban.</li> <li>但是这个子 Kanban 里面走的是子任务, 不是主 Kanban 里面的卡片.</li> <li>这种 Kanban 更多是作为一种全局 Kanban 来用, 可以容易看到大项目里各个组件运作情况.  一般只读, 不操作.</li> </ul> </div> <kanban-board dataset="SampleBoardAndCards3"></kanban-board> <p style="margin: 20px"> </p> </form>

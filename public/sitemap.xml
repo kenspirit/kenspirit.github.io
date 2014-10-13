@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.thinkingincrowd.me/kanban/index.html</loc>
+    <lastmod>2014-03-26T13:38:00.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/kanban/card.html</loc>
+    <lastmod>2014-10-13T15:02:56.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/kanban/board.html</loc>
+    <lastmod>2014-10-13T15:02:56.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/algorithm/index.html</loc>
     <lastmod>2014-03-26T13:38:00.000Z</lastmod>
   </url>
@@ -57,26 +72,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
-    <lastmod>2006-05-18T03:18:28.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
-    <lastmod>2006-05-18T07:12:12.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
-    <lastmod>2013-04-13T04:59:00.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/03/06/marching-on/</loc>
-    <lastmod>2011-03-06T01:38:09.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2011/06/15/excelavoidvaliationlostafterpoi/</loc>
     <lastmod>2011-06-14T21:54:07.000Z</lastmod>
   </url>
@@ -112,8 +107,8 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
-    <lastmod>2005-06-23T04:02:43.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2005/07/28/manugistics-consultant-the-beginning/</loc>
+    <lastmod>2005-07-27T17:13:50.000Z</lastmod>
   </url>
   
   <url>
@@ -137,8 +132,8 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/07/28/manugistics-consultant-the-beginning/</loc>
-    <lastmod>2005-07-27T17:13:50.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
+    <lastmod>2005-10-12T03:39:47.000Z</lastmod>
   </url>
   
   <url>
@@ -152,8 +147,8 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
-    <lastmod>2005-06-08T04:14:39.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
+    <lastmod>2012-08-30T07:04:06.000Z</lastmod>
   </url>
   
   <url>
@@ -167,8 +162,8 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
-    <lastmod>2012-12-23T22:22:00.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    <lastmod>2005-06-23T04:02:43.000Z</lastmod>
   </url>
   
   <url>
@@ -204,6 +199,11 @@
   <url>
     <loc>http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/</loc>
     <lastmod>2013-02-13T13:40:00.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
+    <lastmod>2013-04-13T04:59:00.000Z</lastmod>
   </url>
   
   <url>
@@ -267,11 +267,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
-    <lastmod>2005-10-12T03:39:47.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2005/10/12/types-of-people-you-need-to-treasure/</loc>
     <lastmod>2005-10-12T04:38:09.000Z</lastmod>
   </url>
@@ -302,8 +297,28 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
-    <lastmod>2012-08-30T07:04:06.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
+    <lastmod>2006-05-18T03:18:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
+    <lastmod>2006-05-18T07:12:12.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
+    <lastmod>2005-06-08T04:14:39.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/03/06/marching-on/</loc>
+    <lastmod>2011-03-06T01:38:09.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
+    <lastmod>2012-12-23T22:22:00.000Z</lastmod>
   </url>
   
 </urlset>

@@ -1,0 +1,129 @@
+html, body {height: 100%;}
+
+body {
+  font-family: arial;
+}
+
+.header *   {
+  text-align: center;
+  vertical-align: top;
+}
+
+.content {
+  background-color: #fcfcfc;
+}
+
+.borderBottom {
+  border-bottom: #999999 dashed 1px;
+}
+
+.stage {
+  font-size: 1.5em;
+  /*border: #999999 dashed 1px;*/
+}
+
+.substage {
+  font-size: 1.2em;
+  border-bottom: #999999 dashed 1px;
+}
+
+.colWidth {
+  width: 122px;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.maxHeight {
+  height: 100%;
+}
+
+.inTable {
+  display: table;
+}
+
+.inTableRow {
+  display: table-row;
+}
+
+.inTableCell {
+  display: table-cell;
+  vertical-align: top;
+  border: #999999 dashed 1px;
+  border-bottom: none;
+}
+
+.wip {
+  font-size: 0.8em;
+  color: red;
+  font-style: italic;
+}
+
+.wip::before {
+  content: "(";
+}
+
+.wip::after {
+  content: ")";
+}
+
+.lane {
+  font-style: italic;
+}
+
+.laneName {
+  margin: 5px;
+}
+
+.sublane {
+  font-style: italic;
+  float: left;
+  /*border-left: #999999 dashed 1px;*/
+}
+
+.card {
+  padding: 2px;
+  margin: 5px 4px;
+  position: relative;
+  width: 114px;
+  min-height: 60px;
+  background-color: #ffffff;
+  border: #666666 solid 3px;
+}
+
+.trueComplete {
+  border: #80ff00 solid 3px;
+}
+
+.trueBlocked {
+  border: red solid 3px;
+}
+
+.card .title {
+  font-weight: bold;
+}
+
+.card .content {
+  margin-top: 2px;
+  font-size: 0.8em;
+}
+
+.ownerLogo {
+  float: right;
+  width: 20px;
+  height: 20px;
+}
+
+.mainCard {
+  background-color: #c5fffd;
+}
+
+.childCard {
+  background-color: #ffefda;
+}
+
+.dragEnter {
+  height: 50px;
+  background-color: red;
+}
