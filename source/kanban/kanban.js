@@ -21,6 +21,20 @@ var app = angular
         })
       }
 
+      function updateCardLane(card, laneInfoStr) {
+        if (!laneInfoStr) {
+          return;
+        }
+
+        var lanes = laneInfoStr.split(':');
+        lanes.forEach(function(lane) {
+          var laneInfo = lane.split('-');
+          if (card[laneInfo[0]]) {
+              card[laneInfo[0]] = laneInfo[1];
+          }
+        });
+      }
+
       $scope.$on('CARD_UPDATE', function(event, dataId, cardId, stageUniqueId) {
         if (!stageUniqueId) {
           return;
@@ -34,13 +48,16 @@ var app = angular
           return;
         }
 
+        card = card[0];
         boardInfos.forEach(function(boardInfo) {
           var info = boardInfo.split(';');
 
-          if (!card[0].kanbanStages[info[0]]) {
-            card[0].kanbanStages[info[0]] = {};
+          if (!card.kanbanStages[info[0]]) {
+            card.kanbanStages[info[0]] = {};
           }
-          card[0].kanbanStages[info[0]].stage = info[1];
+          card.kanbanStages[info[0]].stage = info[1];
+
+          updateCardLane(card, info[2]);
         });
       });
 
@@ -61,19 +78,15 @@ var app = angular
         return;
       }
 
+      child = child[0];
+
       boardInfos.forEach(function(boardInfo) {
         var info = boardInfo.split(';');
         if (!info[2]) {
           return;
         }
 
-        var lanes = info[2].split(':');
-        lanes.forEach(function(lane) {
-          var laneInfo = lane.split('-');
-          if (child[0][laneInfo[0]]) {
-              child[0][laneInfo[0]] = laneInfo[1];
-          }
-        });
+        updateCardLane(child, info[2]);
       });
 
     });

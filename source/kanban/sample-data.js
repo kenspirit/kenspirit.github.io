@@ -331,6 +331,7 @@ var SampleBoardAndCards3 = {
           "stages": [
             {
               "name": "进行中",
+              "isDefault": true,
               "wip": 2
             },
             {
@@ -396,7 +397,16 @@ var SampleBoardAndCards3 = {
         "1": {
           "stage": "确认"
         }
-      }
+      },
+      "childs": [
+        {
+          "id": 5,
+          "name": "ST004",
+          "desc": "iOS 开发",
+          "owner": "sam",
+          "parent": 1
+        }
+      ]
     },
     {
       "id": 2,

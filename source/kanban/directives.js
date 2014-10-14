@@ -33,9 +33,10 @@ angular.module('kanban.directives', [])
           return lane.name + (lane.lane ? ' (' + lane.lane.name + ')' : '');
         };
 
-        scope.buildBoardInfo = function(id, stage, lane) {
+        scope.buildBoardInfo = function(board, stage, lane) {
           return {
-            id: id,
+            id: board.id,
+            isChildBoard: !!board.isChildBoard,
             stage: stage,
             lane: lane,
           };
@@ -67,6 +68,15 @@ angular.module('kanban.directives', [])
                   }
 
                   if (status.stage !== boardInfo.stage.name) {
+                    isMatched = false;
+                  }
+                } else if (boardInfo.isChildBoard) {
+                  if (boardInfo.stage.isDefault) {
+                    card.kanbanStages = {}; // Init the card to the default stage
+                    card.kanbanStages[boardInfo.id] = {
+                      stage: boardInfo.stage.name
+                    };
+                  } else {
                     isMatched = false;
                   }
                 }

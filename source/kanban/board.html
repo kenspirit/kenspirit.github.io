@@ -32,21 +32,21 @@
       <div class="inTableCell">
         <div class="lane laneName">$$getLaneName(lane)$$</div>
       </div>
-      <div ng-repeat="stage in dataset.board.stages" class="inTableCell maxHeight" ng-init="boardInfo = buildBoardInfo(dataset.board.id, stage, lane)">
+      <div ng-repeat="stage in dataset.board.stages" class="inTableCell maxHeight" ng-init="boardInfo = buildBoardInfo(dataset.board, stage, lane)">
         <div ng-if="stage.board" class="inTable maxHeight">
           <div class="inTableRow maxHeight">
-            <div ng-if="stage.board.isChildBoard" class="colWidth inTableCell maxHeight">
+            <div ng-if="stage.board.isChildBoard" class="colWidth inTableCell maxHeight" ui-on-drop="updateCard($data, $channel, $event)" id="$$getUniqueStageId([boardInfo])$$">
               <div ng-repeat="card in getCards(dataset.cards, [boardInfo])">
                 <kanban-card dataset="card" class="mainCard floatLeft"></kanban-card>
               </div>
             </div>
-            <div ng-repeat="substage in stage.board.stages" class="floatLeft borderBottom maxHeight inTable" ng-init="subBoardInfo = buildBoardInfo(stage.board.id, substage, null)">
+            <div ng-repeat="substage in stage.board.stages" class="floatLeft borderBottom maxHeight inTable" ng-init="subBoardInfo = buildBoardInfo(stage.board, substage, null)">
               <div ng-if="!stage.board.isChildBoard" class="colWidth floatLeft sublane maxHeight" ui-on-drop="updateCard($data, $channel, $event)" id="$$getUniqueStageId([boardInfo, subBoardInfo])$$">
                 <div ng-repeat="card in getCards(dataset.cards, [boardInfo, subBoardInfo])" class="inTableRow maxHeight">
                   <kanban-card dataset="card" class="mainCard floatLeft"></kanban-card>
                 </div>
               </div>
-              <div ng-if="substage.isChildShown" ng-repeat="sublane in substage.lanes" class="colWidth floatLeft sublane maxHeight" ng-init="taskBoardInfo = buildBoardInfo(stage.board.id, substage, sublane)" ui-on-drop="updateChildCardLane($data, $channel, $event)" id="$$getUniqueStageId([boardInfo, taskBoardInfo])$$">
+              <div ng-if="substage.isChildShown" ng-repeat="sublane in substage.lanes" class="colWidth floatLeft sublane maxHeight" ng-init="taskBoardInfo = buildBoardInfo(stage.board, substage, sublane)" ui-on-drop="updateChildCardLane($data, $channel, $event)" id="$$getUniqueStageId([boardInfo, taskBoardInfo])$$">
                 <div ng-repeat="child in getChildCardsByLane(dataset.cards, [boardInfo, subBoardInfo], sublane)">
                   <kanban-card dataset="child" class="childCard"></kanban-card>
                 </div>
