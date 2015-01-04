@@ -1,27 +1,1432 @@
----
-layout: nil
----
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-
-  <title><![CDATA[{{ site.title }}]]></title>
-  <link href="{{ site.url }}/atom.xml" rel="self"/>
-  <link href="{{ site.url }}/"/>
-  <updated>{{ site.time | date_to_xmlschema }}</updated>
-  <id>{{ site.url }}/</id>
+  <title><![CDATA[Thinking in Crowd / 鹄思乱想]]></title>
+  <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://www.thinkingincrowd.me/"/>
+  <updated>2015-01-04T07:17:55.346Z</updated>
+  <id>http://www.thinkingincrowd.me/</id>
+  
   <author>
-    <name><![CDATA[{{ site.author | strip_html }}]]></name>
-    {% if site.email %}<email><![CDATA[{{ site.email }}]]></email>{% endif %}
+    <name><![CDATA[鹄思乱想]]></name>
+    <email><![CDATA[chengusky@gmail.com]]></email>
   </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
-
-  {% for post in site.posts limit: 20 %}
+  
+  <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
   <entry>
-    <title type="html"><![CDATA[{{ post.title | cdata_escape }}]]></title>
-    <link href="{{ site.url }}{{ post.url }}"/>
-    <updated>{{ post.date | date_to_xmlschema }}</updated>
-    <id>{{ site.url }}{{ post.id }}</id>
-    <content type="html"><![CDATA[{{ post.content | expand_urls: site.url | cdata_escape }}]]></content>
+    <title><![CDATA[Statistical Inference 课后小结]]></title>
+    <link href="http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/"/>
+    <id>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</id>
+    <published>2014-09-25T14:58:46.000Z</published>
+    <updated>2014-09-25T15:04:05.000Z</updated>
+    <content type="html"><![CDATA[<p>好不容易才把 <a href="https://www.coursera.org/course/statinference" target="_blank" rel="external">Statistical Inference</a> 的课上完, 真是有点吃力.  简略把教的东西列出来吧, 方便日后再复习.</p>
+<h2 id="概率">概率</h2>
+<h3 id="条件概率_(Conditional_Probability)">条件概率 (Conditional Probability)</h3>
+<p>当 B 发生的概率为 P(B) 时, A 发生的概率为 <code>P(A|B) = P(A ∩ B) / P(B)</code>.<br>如果 A 和 B 是完全独立的事件, 那么 <code>P(A|B) = P(A)P(B) / P(B) = P(A)</code>.</p>
+<h3 id="Bayes’_rule">Bayes’ rule</h3>
+<p><code>P(B|A) = P(A|B)P(B) / (P(A|B)P(B) + P(A|B𝑐)P(B𝑐))</code></p>
+<p><code>P(B𝑐) = 1 - P(B)</code></p>
+<h3 id="诊断测试_(Diagnostic_test)">诊断测试 (Diagnostic test)</h3>
+<p>首先, 诊断测试里面有几个定义先要搞清楚：</p>
+<ul>
+<li><em>+</em> 测试为患病的情况</li>
+<li><em>-</em> 测试为没有患病的情况</li>
+<li><em>D</em> 确定患病的情况</li>
+<li><em>D𝑐</em> 确定没有患病的情况</li>
+<li><em>sensitivity</em> 当确实患病时, 测试为患病的概率 <code>P(+ | D)</code></li>
+<li><em>specificity</em> 当确实没有患病时, 测试为没有患病的概率 <code>P(- | D𝑐)</code></li>
+<li><em>positive predictive value</em> <code>P(D | +)</code></li>
+<li><em>negative predictive value</em> <code>P(D𝑐 | -)</code></li>
+<li><em>prevalance of the disease</em> <code>P(D)</code></li>
+</ul>
+<p>有个很有趣的例子：<br>假如在一项 HIV 的研究中, 有一种 HIV 抗体检查的 sensitivity 是 99.7%, specificity 是 98.5%. (看起来这个抗体检查应该很准, 对吧？)  如果一个人, 从 0.1% prevalence HIV 的群体中抽出来, 他做了这个抗体检查后, 结果是阳性也就是检查结果显示他应该有 HIV.  那么, 你觉得他确实患病的概率有多高呢？</p>
+<p>那我们来看看 positive predictive value 也就是 <code>P(D | +)</code> 概率是多少.  用 Bayes’ rule 公式代入去算一下可得 0.062.  不是很高吧？这么低的数值是由于低 prevalence 造成的。但是如果说你知道那个人是有用毒品习惯, 并且和 HIV 人士有接触。你会不会觉得他患病的概率更高？  其实影响的因素 prevalence 一点没变, 可是我们对所谓证据的诠释不同了.</p>
+<p><strong>Likelihood ratios</strong></p>
+<p><strong>DLR+</strong>, diagnostic likeihood ratio of a positive test, is <code>P(+ | D) / P(+ | D𝑐)</code></p>
+<pre><code><span class="code">`sensitivity / (1 - specificity)`</span>
+</code></pre><p><strong>DLR-</strong>, diagnostic likeihood ratio of a negative test, is <code>P(- | D) / P(- | D𝑐)</code></p>
+<pre><code><span class="code">`(1 - sensitivity) / specificity`</span>
+</code></pre><p>根据 Bayes’ rule 可以推导出：</p>
+<p><code>P(D | +) / P(D𝑐 | +) = DLR+ * P(D) / P(D𝑐)</code></p>
+<p>post-test odds of D = DLR+ * pre-test odds of D  (odds: 一个概率除以 1 减去它)</p>
+<p>相同道理： <code>P(D | -) / P(D𝑐 | -) = DLR- * P(D) / P(D𝑐)</code></p>
+<p><strong>IID</strong></p>
+<ul>
+<li><em>Independent</em>: statistically unrelated from one and another</li>
+<li><em>Identically distributed</em>: all having been drawn from the same population distribution</li>
+</ul>
+<h2 id="期望值_(Expected_Value)">期望值 (Expected Value)</h2>
+<p><strong>Mean</strong>: 分布的中值特征<br><strong>Variance</strong> 和 <strong>Standard Deviation</strong>: 分布性的特征 (How spread out)</p>
+<p>Sample expected values 是用来推测 population 的特征的。</p>
+<p><code>E[X] = ∑ xp(x)</code> 表示了数据分布的位置和权重的中值。比如, 丟硬币:</p>
+<p><code>E[X] = 0 * 0.5 + 1 * 0.5 = 0.5</code></p>
+<p>如果说硬币正反不是概率均等, 而是正面的概率为 <code>p</code>, 那 <code>E[X] = 0 * (1 - p) + 1 * p = p</code></p>
+<p>同理掷骰子, 数字面值的中值, 那就是 <code>E[X] = 1 * 1/6 + 2 * 1/6 + ... + 6 * 1/6 = 3.5</code></p>
+<h3 id="Mean">Mean</h3>
+<p>通过取样, 来获取中值, 这个中值本身, 其实也是随机变量, 它的分布也是有个中值的。这个中值, 如果和它原来要推导的中值本身是一致的, 我们就会说这个推导是公正的 (unbiased)。</p>
+<p>这个说法有点拗口, 其实是这样的是. 比如说, 丟硬币本身的中值是 0.5.  那么, 我们有两种做法：</p>
+<ol>
+<li>一种是丢一次硬币, 记录下一次 0 或者 1, 重复丢 n 次, 然后算它本身的中值就是 0.5.  无限下去的理论值就是 population mean.</li>
+<li>另一种就是丢 m 次硬币, 先算一次中值 (sample mean), 记录下这个中值, 再重复丢 n 次, 最后再算一次中值. 其实也就是中值的中值.</li>
+</ol>
+<p><em>中值的中值</em> 如果说和 population mean 是一致的, 那这个推导就是公正的了. 而且, 如果算 sample mean 的数据 (上面的 m) 越多, 那么中值分布的质量函数 (density / mass function) 最越集中在 population mean.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GetSampleMean &lt;- <span class="keyword">function</span>(count) {</div><div class="line">  data.frame(mean = replicate(<span class="number">5000</span>, mean(sample(c(<span class="number">0</span>, <span class="number">1</span>), count, replace = <span class="literal">T</span>))), cnt = count)</div><div class="line">}</div><div class="line"></div><div class="line">data.df &lt;- rbind(GetSampleMean(<span class="number">10</span>), GetSampleMean(<span class="number">20</span>), GetSampleMean(<span class="number">30</span>))</div><div class="line"></div><div class="line"><span class="keyword">library</span>(ggplot2)</div><div class="line">qplot(x = mean, data = data.df, facets = . ~ cnt, fill = cnt)</div></pre></td></tr></table></figure>
+
+<p><img alt="Sample Mean" src="http://thinkingincrowd.u.qiniudn.com/sample_mean.png"></p>
+<h3 id="方差_(Variance)">方差 (Variance)</h3>
+<p>随机变量到中值的距离 <code>Var(X) = E[(X - μ)2] = E[X²] - E[X]²</code></p>
+<p>假如一个硬币正面的概率是 p.  那它的 Variance 就是:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">E</span>[X] = <span class="number">0</span> * (<span class="number">1</span> - p) + <span class="number">1</span> * p = p</div><div class="line"><span class="keyword">E</span>[X²] = <span class="keyword">E</span>[X] = p</div><div class="line">Var(X) = <span class="keyword">E</span>[X²] - <span class="keyword">E</span>[X]² = p - p² = p(<span class="number">1</span> - p)</div></pre></td></tr></table></figure>
+
+<p><strong>标准差 (Standard Deviation)</strong>: Variance 的平方根, S<br><strong>标准误 (Standard Error)</strong>: S/√n</p>
+<p>同中值一样, 样本的 Variance, S², 也是随机变量, 它的分布也是集中在 population variance, σ².</p>
+<h2 id="常见的概率分布模型">常见的概率分布模型</h2>
+<h3 id="伯努利分布_(Bernoulli_distribution)">伯努利分布 (Bernoulli distribution)</h3>
+<p>又名两点分布或者 0-1 分布.  通常定 1 值的概率为 p, 0 值的概率为 (1 - p).  它的中值为 p, 方差为 p(1 - p).</p>
+<p><strong>伯努利試驗 (Binomial trial)</strong></p>
+<p>这个试验的随机变量，其实是伯努利分布随机值的总和 <code>X = ∑ⁿXᵢ</code>, Xᵢ 为 Bernoulli(p).</p>
+<p>它的质量函数 (mass function) 是: <code>P(X = x) = (n x) * pˣ * (1 - p)ⁿ⁻ˣ</code>. <code>(n x)</code> 是从 n 中取 x 的组合数.</p>
+<p>举个例子说，如果一个家庭有 8 个孩子, 7 个是女的，没有孪生.  如果生男生女的概率为 0.5, 那么 8 个孩子中，生 7 个或以上的女孩概率是多大?</p>
+<p><code>(8 7) * 0.5⁷ * (1 - 0.5)¹ + (8 8) * 0.5⁸ * (1 - 0.5)⁰ ≈ 0.04</code></p>
+<p>对应的 R 代码为:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">choose(<span class="number">8</span>, <span class="number">7</span>) * <span class="number">0.5</span>^<span class="number">8</span> + choose(<span class="number">8</span>, <span class="number">8</span>) * <span class="number">0.5</span>^<span class="number">8</span></div><div class="line"></div><div class="line">pbinom(<span class="number">6</span>, size = <span class="number">8</span>, prob = <span class="number">0.5</span>, lower.tail = <span class="literal">FALSE</span>)</div></pre></td></tr></table></figure>
+
+<h3 id="正态分布_(Normal_distribution)">正态分布 (Normal distribution)</h3>
+<p>如果它的中值是 μ, 方差是 σ², 它的表达式可以写成 <code>X ~ N(μ, σ²)</code>.  如果 μ = 0, σ² = 1, 它就是标准正态分布, 通常用 Z 来表示.</p>
+<p>如果一个随机分布是正态分布 <code>X ~ N(μ, σ²)</code>, 那么经过 <code>(X - μ) / σ</code> 转换后的随机变量就会是标准正态分布.<br>反过来，如果 Z 是标准正态分布, <code>X = μ + σZ ~ N(μ, σ²)</code>.</p>
+<p><strong>正态分布的特性</strong></p>
+<ol>
+<li>68%, 95%, 99% 的正态质量在 1, 2, 3 的标准差内.</li>
+<li>-1.28， -1.645， -1.96， -2.33 分别是标准正态分布的 10th, 5th, 2.5th, 1st 区域</li>
+<li>由于对称性, 1.28， 1.645， 1.96， 2.33 分别是标准正态分布的 90th, 95th, 97.5th, 99th 区域</li>
+</ol>
+<p>比如说 N(μ, σ²) 分布的 95th percentile 是多少?</p>
+<p><code>μ + σ * 1.645</code> 或者</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">qnorm(<span class="number">.95</span>, mean = μ, sd = σ)`</div></pre></td></tr></table></figure>
+
+<p>再举个例.  如果一个网面的点击数平均值在 1020, 标准差在 50, 那么点击数超过 1160 的概率是多少?</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pnorm(<span class="number">1160</span>, mean = <span class="number">1120</span>, sd = <span class="number">50</span>, lower.tail = <span class="literal">F</span>)</div></pre></td></tr></table></figure>
+
+<h3 id="(Poisson_distribution)">(Poisson distribution)</h3>
+<p>它的中值和方差都是 λ.  可用于对 counts, event-time or survival data, contingency table 进行建模.<br>当随机变量的 n 很大，概率 p 很小的时候，Poisson 的分布可以用于近似于 Binomial 分布.</p>
+<p>当它用来对速率的随机变量建模时:</p>
+<p><code>X ~ Poisson(λt)</code></p>
+<ul>
+<li>λ = E[X/t] 表示在单位时间内的数量</li>
+<li>t 是总时间</li>
+</ul>
+<p>比如说人出现在公交站的数量是 Poisson 分布.  假如每小时 2.5 个人, 如果我们观察 4 个小时, 3 个或者少于 3 个人的概率是多大?</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ppois(<span class="number">3</span>, lambda = <span class="number">2.5</span> * <span class="number">4</span>)</div></pre></td></tr></table></figure>
+
+<h2 id="渐近_(Asymptotics)">渐近 (Asymptotics)</h2>
+<h3 id="大数定律_(Law_of_Large_Number)">大数定律 (Law of Large Number)</h3>
+<p>对于 IID 的随机值来说, 只要取的样本足够多, 它的平均值, 最终会和理论的 population mean 是一致的.</p>
+<h3 id="中心极限定理_(Central_Limit_Theorem)">中心极限定理 (Central Limit Theorem)</h3>
+<p>对于 IID 的随机值来说, 只要取的样本足够多, 它的平均值的分布会呈现出正态分布.</p>
+<p>样本 Xₙ 可以说是基本呈现出为 <code>N(μ, σ²/n)</code> 的正态分布.</p>
+<h3 id="Confidence_Intervals">Confidence Intervals</h3>
+<p>对于正态分布来说，随机值 X 大于 <code>μ + 2σ/√n</code> 或者小于 <code>μ - 2σ/√n</code> 的概率只有 5%.  那么 <code>X ± 2σ/√n</code> 就叫做 μ 的 95% 区间.</p>
+<p><code>Est ± ZQ * SE</code></p>
+<h3 id="T_Confidence_Intervals">T Confidence Intervals</h3>
+<p><code>Est ± TQ * SE</code></p>
+<p>一般如果要进行分组之间的数据比较，会把分级之间的数据差，做 t interval 分析.</p>
+<p>比如 R 里面的 Sleep data, 分别比较两组不同的药物，对人的睡眠质量的影响.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">data(sleep)</div><div class="line">head(sleep)</div><div class="line"></div><div class="line"><span class="comment">##   extra group ID</span></div><div class="line"><span class="comment">## 1   0.7     1  1</span></div><div class="line"><span class="comment">## 2  -1.6     1  2</span></div><div class="line"><span class="comment">## 3  -0.2     1  3</span></div><div class="line"><span class="comment">## 4  -1.2     1  4</span></div><div class="line"><span class="comment">## 5  -0.1     1  5</span></div><div class="line"><span class="comment">## 6   3.4     1  6</span></div><div class="line"></div><div class="line">g1 &lt;- sleep$extra[<span class="number">1</span> : <span class="number">10</span>]</div><div class="line">g2 &lt;- sleep$extra[<span class="number">11</span> : <span class="number">20</span>]</div><div class="line">difference &lt;- g2 - g1</div><div class="line">mn &lt;- mean(difference)</div><div class="line">s &lt;- sd(difference)</div><div class="line">n &lt;- <span class="number">10</span></div><div class="line"></div><div class="line">mn + c(-<span class="number">1</span>, <span class="number">1</span>) * qt(<span class="number">.975</span>, n-<span class="number">1</span>) * s / sqrt(n)</div><div class="line">t.test(difference)</div><div class="line">t.test(g2, g1, paired = <span class="literal">TRUE</span>)</div><div class="line"></div><div class="line"><span class="comment">##        [,1] [,2]</span></div><div class="line"><span class="comment">## [1,] 0.7001 2.46</span></div><div class="line"><span class="comment">## [2,] 0.7001 2.46</span></div></pre></td></tr></table></figure>
+
+<p>上面的比较是把数据认为是 <code>paired = TRUE</code> 的.</p>
+<p>那如果是<strong>独立</strong>分组的数据的 t interval (<strong>恒定标准差</strong>的情况下) 怎么计算呢?<br>假如我们要计算 μᵧ - μₓ 的 (1 - α) * 100% 信心区间,</p>
+<p><code>Y - X ± tₙₓ₊ₙᵧ₋₂ * Sₚ * ( 1 / nₓ + 1 / nᵧ)^0.5</code></p>
+<p><code>Sₚ² = {(nₓ - 1) * Sₓ² + (nᵧ - 1) * Sᵧ²} / (nₓ + nᵧ - 2)</code></p>
+<p>下面的比较是把数据认为是 <code>paired = FALSE</code> 的.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sp &lt;- sqrt( ((n1 - <span class="number">1</span>) * sd(x1)^<span class="number">2</span> + (n2-<span class="number">1</span>) * sd(x2)^<span class="number">2</span>) / (n1 + n2-<span class="number">2</span>))</div><div class="line">semd &lt;- sp*sqrt(<span class="number">1</span>/n1+<span class="number">1</span>/n2)</div><div class="line"></div><div class="line">md + c(-<span class="number">1</span>,<span class="number">1</span>) * qt(<span class="number">.975</span>,n1+n2-<span class="number">2</span>) * semd</div><div class="line">t.test(g2, g1, paired = <span class="literal">FALSE</span>, var.equal = <span class="literal">TRUE</span>)$conf</div><div class="line"></div><div class="line"><span class="comment">##         [,1]  [,2]</span></div><div class="line"><span class="comment">## [1,] -0.2039 3.364</span></div><div class="line"><span class="comment">## [2,] -0.2039 3.364</span></div></pre></td></tr></table></figure>
+
+<p>可见两次的结果是非常不同的.  那到底怎么决定数据是否是 pair, 是否是独立的呢？</p>
+<p>比如说, 如果我们要检测非吸烟者和吸烟者的 BMI 指数, 因为这两组人群是完全不同的, 所以就是独立的.<br>或者说如果测试完全分开的两组一员, 一组使用药物, 一组使用安慰剂来测试药物的效用, 这也是独立的.</p>
+<p>但如果说测试是同一组人员, 使用药物前后的比较, 那就应该是 paired.</p>
+<p>那如果是<strong>独立</strong>分组的数据的 t interval (<strong>非恒定标准差</strong>的情况下) 怎么计算呢?</p>
+<p><code>Y - X ± tdf * ( Sₓ² / nₓ + Sᵧ² / nᵧ)^0.5</code></p>
+<p>tdf 里面的 degree of freedom 的计算为:</p>
+<p><code>df = ( Sₓ² / nₓ + Sᵧ² / nᵧ)² / {(Sₓ² / nₓ)² / (nₓ - 1) + (Sᵧ² / nᵧ)² / (nᵧ - 1)}</code></p>
+<p>参考链接: <a href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals.html" target="_blank" rel="external">http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals.html</a></p>
+<h2 id="Hypothesis_testing">Hypothesis testing</h2>
+<h3 id="定义">定义</h3>
+<p>H₀, H-nought, 通常代表 “没有关联”, “没有影响” 的观点，又称为零假设.  它是目前要测试和证明的假设, 通常先被假定为正确的, 然后希望用统计数据来证明为错误或者需要慎重考虑的假设.</p>
+<p>Hₐ, (alternative hypothesis) 就是对应的希望被证明为正确的假设.</p>
+<p>比如说, Centers for Disease Control (CDC) 报道了从 1960 到 2002 年的身高体重质量指数趋势.  报告认为美国人在 2002 年比 1960 年重了很多, 而只是高了一点; 无论男女平均大约增加 24 磅.  在 2002 年, 男性平均体重为 191 磅.  假定有调查者认为到 2006 年, 也就是说男性平均体重将多于 191 磅.  那我们就可以把体重没有变化的推测定义为 H₀.</p>
+<pre><code><span class="constant">Null</span> <span class="constant">Hypothesis</span>      <span class="constant">H</span>₀<span class="symbol">:</span> μ = <span class="number">191</span>         (没变化)
+<span class="input"><span class="prompt">Research Hypothesis  Hₐ: μ &gt;</span> <span class="number">191</span>         (调查人员的假定推测)</span>
+</code></pre><p>为了验证这个假定, 我们在 2006 年随机选定了一组美国男性来测量体重.  如果我们抽取的样本为 n = 100 人, 测量结果为: <code>X = 197.1, s = 25.6</code>:</p>
+<p><code>P(X &gt; 197.1) = P(Z &gt; (197.1 - 191) / (25.6 / √100)) = P(Z &gt; 2.38) = 1 - 0.9913 = 0.0087</code></p>
+<p>也就是说, 如果说体重没有变化, 取样得到平均値为 197.1 的可能性还不到 1%.  那我们说 H₀ 是否成立呢?</p>
+<p>样例取自: <a href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_HypothesisTest-Means-Proportions/" target="_blank" rel="external">http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_HypothesisTest-Means-Proportions/</a></p>
+<h3 id="错误类型">错误类型</h3>
+<p><strong>Type I Error</strong>:  当事实为 H₀ 时，我们推测出的结果为 Hₐ<br><strong>Type II Error</strong>:  当事实为 Hₐ 时，我们推测出的结果为 H₀</p>
+<p>现在我们尝试把场景应用到法律当中, H₀ 为被控方是无罪的.  那么我们就需要找到一个标准来断定他是有罪的 (Reject H₀).  假如标准太高, 把无罪的人错误定罪的可能性就变高了 (Type I Error).  相反标准低了, Type II Error 就高了.</p>
+<p>所以, 其中一种做法就是选出一个常量 C (Critical Value), 使得样本的平均值 X 比它大时, 我们可以 Reject H₀.  要得到这个 C, 我们先要定出 α (level of significance), 来表示说如果在 H₀ 为真的时候, 我们却 Reject 了它的可能性, 也就是 Type I Error <code>P(X &gt; C; H₀) = 5%</code>.</p>
+<h3 id="Upper,_Lower,_and_Two_Failed_Test">Upper, Lower, and Two Failed Test</h3>
+<p>一般来说, 对应 H₀, Hₐ 有下面三种形式:</p>
+<pre><code><span class="input"><span class="prompt">H₁ : μ &lt; μ₀
+H₂ : μ ≠ μ₀
+H₃ : μ &gt;</span> μ₀</span>
+</code></pre><p>所以, 如果说 <code>TS (Test Statistic) = (X - μ) / (s/√n)</code> 的话, 以下的情况就分别可以 Reject H₀:</p>
+<pre><code> TS  ≤ Zₐ
+<span class="string">|TS| ≥ Z₁₋ₐ∕₂</span>
+ TS  ≥ Z₁₋ₐ
+</code></pre><h3 id="和_Confidence_Interval_的关系">和 Confidence Interval 的关系</h3>
+<p>对于 μ 来说, (1 - α) * 100% 的 confidence interval 范围内的所有的值, 都无法 (Failed to) Reject H₀.</p>
+<h2 id="P-values">P-values</h2>
+<p>P-value 就是在 H₀ 的前提下, 观测到的样本值出现的可能性.  如果这个可能性很少, 要么 H₀ 为真, 并且我们观测到的值很极端, 要么 H₀ 为假.</p>
+<p>P-value 和 α (level of significance) 是不同的.  P-value 只是简单描述了在 H₀ 情况下, 某值出现的可能性. α 则是我们选定的用来判定是否 Reject H₀ 的标准.  当 P-value 小于 α 的时候，我们就可以 Reject H₀.</p>
+<p>two sided hypothesis test, double the smaller of the two “one sided hypothesis test P-values”.</p>
+<p>比如下面一个例子:</p>
+<p>有 18 位肥胖人士, 随机抽取 9 位服用新的减肥药, 9 位服用安慰剂.  4 星期后测量的 BMI 指数的平均变化为, 服用减肥药的为 -3kg/m2, 服用安慰剂的为 1kg/m2.  两组人员的标准差为 1.5kg/m2 和 1.8kg/m2.  那么现在的 BMI 变化对使不使用减肥药有区别吗?  假定数据是正态的, 并且 population variance 是相同的, 尝试给出 two sided t test 的 P-value.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">n1 &lt;- n2 &lt;- <span class="number">9</span></div><div class="line">x1 &lt;- -<span class="number">3</span>  <span class="comment">## treated</span></div><div class="line">x2 &lt;- <span class="number">1</span>  <span class="comment">## placebo</span></div><div class="line">s1 &lt;- <span class="number">1.5</span>  <span class="comment">## treated</span></div><div class="line">s2 &lt;- <span class="number">1.8</span>  <span class="comment">## placebo</span></div><div class="line">s &lt;- sqrt(((n1 - <span class="number">1</span>) * s1^<span class="number">2</span> + (n2 - <span class="number">1</span>) * s2^<span class="number">2</span>)/(n1 + n2 - <span class="number">2</span>))  <span class="comment"># 恒定标准差, 独立分组的数据</span></div><div class="line">ts &lt;- (x1 - x2) / (s * sqrt(<span class="number">1</span>/n1 + <span class="number">1</span>/n2))  <span class="comment"># Test statistic</span></div><div class="line"><span class="number">2</span> * pt(ts, n1 + n2 - <span class="number">2</span>)</div></pre></td></tr></table></figure>
+
+<h2 id="Power">Power</h2>
+<p>当事实为 Hₐ 时, 我们推测出的结果为 Hₐ 的可能性 (sensitivity).</p>
+<p>Power = 1 - β (Type II error rate)</p>
+<p>假如我们要推测的 Hₐ 为 μ &gt; μ₀:</p>
+<p>Power = P((X - μ₀) / (σ/√n) &gt; z₁₋ₐ | μ = μₐ)  # 当 μₐ 趋近 μ₀ 时, Power 趋近 α<br>      = P((X - μₐ + μₐ - μ₀) / (σ/√n) &gt; z₁₋ₐ | μ = μₐ)<br>      = P((X - μₐ) / (σ/√n) &gt; z₁₋ₐ - (μₐ - μ₀) / (σ/√n) | μ = μₐ)<br>      = P(Z &gt; z₁₋ₐ - (μₐ - μ₀) / (σ/√n) | μ = μₐ)<br>      = P(Z &gt; zβ)</p>
+<p><em>z₁₋ₐ 为标准正态分布在 α 的区域值如 1.645 (5%)</em></p>
+<p>假定在 H₀:μ = μ₀ 的情况下, 统计数据为 N(0, 1) 的正态分布, 那么在 Hₐ:μ = μₐ 的情况下, 统计数据就为 N((μₐ - μ₀) / (σ/√n), 1) 的正态分布.  所以，也可以通过 <code>pnorm(1.645, mean = (μₐ - μ₀) / (σ/√n), sd = 1, lower.tail = F)</code> 来计算出 Power.</p>
+<p>根据上面的推理, 我们还可以得出一个等式: <code>z₁₋ₐ - (μₐ - μ₀) / (σ/√n) = zβ</code>.<br>也就是说 Power 和 <code>(μₐ - μ₀) / (σ/√n)</code> 的比值相关.  <code>(μₐ - μ₀) / σ</code> 为 effect size.</p>
+<h2 id="Multiple_testing">Multiple testing</h2>
+<h3 id="Types_of_Error">Types of Error</h3>
+<pre><code><span class="attribute">              β </span>=<span class="string"> 0   β ≠ 0   Hypotheses
+Claim β = 0   U       T       m - R
+Claim β ≠ 0   V       S       R
+Claims        m₀      m - m₀  m</span>
+</code></pre><p><strong>m</strong> - total number of hypotheses tested<br><strong>m₀</strong> - number of true H₀<br><strong>m - m₀</strong> - number of true Hₐ<br><strong>V</strong> - number of false positive (Type I error / false discoveries)<br><strong>S</strong> - number of true positive (true discoveries)<br><strong>T</strong> - number of false negative (Type II error)<br><strong>U</strong> - number of true negative<br><strong>R</strong> - number of rejected H₀</p>
+<h3 id="Error_Rates">Error Rates</h3>
+<p><strong>False positive rate</strong> - The rate at which false results (β = 0) are called significant: E[V/m₀]<br><strong>Family wise error rate (FWER)</strong> - The probability of at least one false positive Pr(V ≥ 1)<br><strong>False discovery rate (FDR)</strong> - The rate at which claims of significance are false E[V/R]</p>
+<h3 id="Correction">Correction</h3>
+<p><strong>Controlling FWER</strong> - Bonferroni correction</p>
+<p>假定做 m 次测试, 要把 FWER 控制在 α, 也就是 Pr(V ≥ 1) &lt; α.<br>然后把新的 α 设置为 α / m, 所有小于这个新的 α 的 P-value 就是 significant 的.<br>这种方法的优点就是容易计算, 缺点就是得出的值会非常保守.</p>
+<p><strong>Controlling FDR</strong></p>
+<p>假定做 m 次测试, 要把 FDR 控制在 α, 也就是 E[V/R].<br>把 P-value 从小到大排好序 P(1), …, P(m), 任何 P(i) ≤ α * i/m 都是 significant 的.<br>这种方法的优点就是相对容易计算, 没那么保守, 缺点就是 false positive 可能性增加, 而且关联数据可能表现诡异.</p>
+<p><strong>Adjusted P-values</strong></p>
+<p>注意, 修正过的就已经不能算是 P-values 了.<br>假定我们有 P(1), …, P(m), 我们可以把每一个 P-values * m, 最大值为 1. 如果得出来的值小于 α, 那就是在 Control FWER 上是 significant 的.</p>
+<h2 id="Resampled_inference">Resampled inference</h2>
+<p>不断的从已有数据集中取数据出来创造新的数据集.  R 里面有两个很有用的工具:</p>
+<h3 id="jackknife">jackknife</h3>
+<p>原理是从一组数据中每次删除一个值, 然后用剩下的 (n - 1) 个数据来计算推测要推导的结论.  所以也就是说会有 n 种数据组合和 n 次推导值.  这种做法通常会用在推算偏差和标准误上面.  像中值 (mean) 这种 unbiased 的数据是不用 jackknife 来做的.</p>
+<p>计算过程是这样的:</p>
+<ul>
+<li>X₁, …, Xₙ 是一组测量数据值</li>
+<li>假定 θ 是用以上数据全集推导出来的值 (比如 median)</li>
+<li>θᵢ 是把 Xᵢ 删除后推导出来的值</li>
+<li>假定 θbar = 1/n * ∑ⁿθᵢ</li>
+</ul>
+<p>jackknife 算出来的偏差就是 <code>(n - 1) * (θbar - θ)</code>, 标准误就是 <code>[(n - 1)/n * ∑ⁿ(θᵢ - θbar)²] ^ 0.5</code></p>
+<h3 id="bootstrap">bootstrap</h3>
+<p>bootstrap 是 non-parametric 的.  通常用于 confidence internal 和标准误上面.  bootstrap 原则是指 using the distribution defined by the data to approximate its sampling distribution.</p>
+<p>实际操作上来说, bootstrap 原则都是通过模拟来的执行的.  一般都是不断的从观测的数据中取样计算分布状况, 来模拟完整的数据集的分布.<br>从多次的模拟计算中得到的统计概率去计算 confidence interval 或者标准误.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(UsingR)</div><div class="line"><span class="keyword">library</span>(bootstrap)</div><div class="line">data(father.son)</div><div class="line"></div><div class="line">x &lt;- father.son$sheight</div><div class="line">n &lt;- length(x)</div><div class="line">B &lt;- <span class="number">1000</span></div><div class="line"></div><div class="line">resamples &lt;- matrix(sample(x, n * B, replace = <span class="literal">TRUE</span>), B, n)</div><div class="line">medians &lt;- apply(resamples, <span class="number">1</span>, median)</div><div class="line">sd(medians)</div><div class="line"><span class="comment">## [1] 0.08452927</span></div><div class="line"></div><div class="line">quantile(medians, c(<span class="number">0.025</span>, <span class="number">0.975</span>))</div><div class="line"><span class="comment">##     2.5%    97.5%</span></div><div class="line"><span class="comment">## 68.44474 68.81588</span></div></pre></td></tr></table></figure>
+
+]]></content>
+    
+    
+      <category term="Statistics" scheme="http://www.thinkingincrowd.me/tags/Statistics/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
   </entry>
-  {% endfor %}
+  
+  <entry>
+    <title><![CDATA[2014 半年小结]]></title>
+    <link href="http://www.thinkingincrowd.me/2014/07/31/half-year-summary/"/>
+    <id>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</id>
+    <published>2014-07-31T12:35:17.000Z</published>
+    <updated>2014-07-31T12:30:43.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Coursera">Coursera</h2>
+<p>本来今年是要把 <em>Algorithms 4th Edition</em> 这本书看了的。后来机缘巧合的发现在 <a href="https://www.coursera.org/" target="_blank" rel="external">Coursera</a> 上就有作者本人的教学课程，<br>所以就直接在上面上课去了。第一部分有6周课程，讲的是基本的算法概念和排序。课程，作业和考试都很有趣。<br>里面各种可视化来教学的东西让我觉得非常有趣。</p>
+<p>上完课后，决定温习一下和用 AngularJS 做点好玩的东西，就把之前看 @左耳朵耗子 哥介绍的可视化排序网站自己做了一下。<br>放到 <a href="https://github.com/kenspirit/visual-alg" target="_blank" rel="external">Github</a> 和自己的<a href="http://www.thinkingincrowd.me/algorithm" target="_blank" rel="external">博客</a>上。 没想到这个东西经一些微博上的大牛转发，粉丝涨不少，博客也瞬时增加 2K 多的访问量。<br>更好玩的是 ZoomQuiet 大妈叫我到珠海 GDG 上面去讲一下做这东西的历程。虽然说最后来听讲的人，因为天气原因，只有 4 个。<br>但是中间和大妈讨论怎么把演讲<a href="http://www.slideshare.net/chengusky/ss-35096187" target="_blank" rel="external">幻灯片</a> (要翻墙，在 Slideshare 上) 做好，怎么向小白讲清楚一些细节，可是花了不少心思。</p>
+<h2 id="Data_Science">Data Science</h2>
+<p>自从在 Coursera 上看到各种可视化的东西后，觉得很有意思，所以想往这方面上去玩一下。因为我觉得如何可视的，简单明了的说明一些问题，很有意思。<br>在可视化方面，最流行的，莫属于大数据了。虽然我并不热衷于它的流行，但是觉得这确实是应用可视化的一个不错的领域。<br>无论是个人，还是企业，可视化分析数据都非常有用。所以，就又在 Coursera 上开始了 <a href="https://www.coursera.org/specialization/jhudatascience/1" target="_blank" rel="external">Data Science</a> 的 Specialization 的学习。</p>
+<p>目前还在学习当中，教学用的是 <strong>R</strong> 语言。虽说它是数理统计方面很重要的一门语言，但是可能只是上面支持的数据结构，语法特点很适合做统计用和已经有大量的 API 包的原因。<br>但我觉得如果作为一门语言，它的语法，包的命名和参数使用相当不统一和协调。<strong>Python</strong> 可能比它更好，而且听说 <strong>Python</strong> 的数理统计能力也很强。<br>不过可能因为我接触的还是很表面，也没有跳出我的舒适区，所以还没有适应它而已。</p>
+<p>话说回来，无论是 <strong>R</strong> 还是 <strong>Python</strong>，它们都只是工具。虽说欲善其事，必利其器，但我觉得重要的是数理统计的思想和提问题的能力。<br>之后重点学习的应该是基础的统计学和如何对数据思考和提问。这才是要锻炼自己的地方。</p>
+<h2 id="为公司做的小玩意">为公司做的小玩意</h2>
+<p>其实一直以来就苦恼自己喜欢的玩意没法在公司里派上用场。但是还是一有机会就做一些东西。<br>这些东西都搞完后，打算和同事们往 JS Unit Test 上面去实践了。<br>之前是在 Maven 下和项目结合来搞，但是申请加 jar 包去公司的 maven repository 里就麻烦的要死。所以，我们后来用 Node.js 搭起来了，反正在本地想怎么弄都行。目前正在进行中。</p>
+<p><strong><a href="https://github.com/kenspirit/ExtPromise" target="_blank" rel="external">ExtPromise</a></strong></p>
+<p>这个去年就做出来的了，虽然还没怎么用，之后在项目 Code Review 时，一定要用上去。因为已知有地方需要。</p>
+<p><strong><a href="https://github.com/kenspirit/ws-monitor" target="_blank" rel="external">ws-monitor</a></strong></p>
+<p>之前老板想解决 QA 和 PP 测试效率的问题，希望可以在这个环节节省时间，让我在其中一个 Release 的后面阶段去留意一下问题在哪，看有什么办法解决。<br>说实在，问题多得很，这就不细说了，但是在我能力范围内能掌控的，非流程上的东西，可改进地方没多少。<br>所以我觉得短时间内，就是有个东西检测 WebService 服务是否可用，能在小范围内验证 WebService 结果的正确性上。<br>花了几天时间，做了这个出来，实测已经达到目的，但是似乎没得到多少人认同，之后自己再往上面加各种测试监控用例，最后再证明给其它人看它的效率。</p>
+<p><strong><a href="https://github.com/kenspirit/kanban-cfd" target="_blank" rel="external">kanban-cfd</a></strong></p>
+<p>做为在公司内用 Kanban 的少数人之一，目前在 Rally 上是没法做出 Kanban CFD (Cumulative Flow Diagram) 图的。所以，我必须手动每天记录各个状态的 WIP 数量。<br>这个实在是太烦了，也容易出错。除了催别人更新 Rally 的状态，如果还要做这个事情的话，实在太没有效率了。目前 Kanban 实践得很差。<br>所以，用 Node.js 和 Rally 提供的 WS 来做一个小应用。另一个需求就是老婆那边也希望有类似的东西。等我把这个做出来之后，<br>就可以看到整个团队的 CFD 图，每个人的 CFD 图和每一个 WIP 的 Kanban cycle 了，还可以作为团队每个成员的效率的比较。想想就觉得不错。</p>
+]]></content>
+    
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[2014 杭JS 杂谈]]></title>
+    <link href="http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/"/>
+    <id>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</id>
+    <published>2014-06-25T14:21:00.000Z</published>
+    <updated>2014-06-26T10:00:33.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="杂谈">杂谈</h2>
+<p><img alt="HangJS Badge" src="http://thinkingincrowd.u.qiniudn.com/HangJS%20Badge.jpg?imageView/2/w/100" style="position: relative; float: left; margin-right: 5px; border: 0px;"></p>
+<p>在6.21号这个特殊的一天，我的生日，献给了今年的<a href="http://2014.jsconf.cn/" target="_blank" rel="external">杭JS</a>而不是家人。</p>
+<p>路程还是挺周折的。周五下午 3:15 的飞机晚点到 3:45 后，6 点就到了杭州了。然后再花了两小时坐机场大巴，再转地铁到了酒店附近。不知道搞什么，每次找 JSConf 所在的地方，都要花我不少时间，但其实它已经在我面前。回来的时候飞机从晚上 8 点多推到 10:45，到珠海家里已经 1:30 了，直接 verify production cutover 后才睡，累死了。</p>
+<p>话说回来，21号到了酒店已经在附近找不到东西吃了，见到上海小朋友<a href="http://weibo.com/liyinkan" target="_blank" rel="external">@Yinkan_Li</a>后，从他那贪污过一瓶八宝粥干掉，再吃了些从珠海带给他尝尝的桂味荔枝，澳门猪肉干和杏仁饼，也总算饱了。他竟然还送了本 <a href="http://weibo.com/jslouvre" target="_blank" rel="external">@司徒正美</a> 的书给我。虽然觉得可能是他看完了不想要了，但是还是很感动的，特别为我这老人家写上那些肉麻的祝福语。</p>
+<p>好了，不说废话了，流水记录一下会议两天的情况和感受。</p>
+<h2 id="第一天">第一天</h2>
+<p>一开始是<a href="http://weibo.com/zensh" target="_blank" rel="external">@严清</a>讲<strong>JS异步处理</strong>的几种做法。<a href="http://2014.jsconf.cn/slides/%E4%B8%A5%E6%B8%85-JavaScript%E5%BC%82%E6%AD%A5%E5%BA%93%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AF%B9%E6%AF%94.key.zip" target="_blank" rel="external">幻灯片</a>内容很丰富，callback, promise, co的比较都有。然后介绍了他的 <a href="https://github.com/teambition/then.js" target="_blank" rel="external">Then.js</a> 和比较了一下其它的 Promise 库。一开始就黑了我选用的 <a href="https://github.com/petkaantonov/bluebird" target="_blank" rel="external">bluebird</a>，体积过大。 Yinkan 马上拍了一下我的肩膀，嘲笑了我一下。当时我选库的时候，是被 bluebird 的API, Error handling 吸引，再加上当时它是最快的。<br>杭JS前在微博上其实看到严清说 Then.js 已经比 bluebird 快时和他聊了几句，说目前我粗浅上看，觉得它比不上 bluebird 的就是文档和 Error handling 方面，然后就没有然后了，呵呵。后面严清说了一下他新写的 <a href="https://github.com/teambition/thunk" target="_blank" rel="external">Thunk</a>，也说这比 promise 和 <a href="https://github.com/visionmedia/co" target="_blank" rel="external">co</a> 要好。我没看过 co，之前瞄了一下 Thunk，被那些 () 吓坏了。虽然我之前一开始看 Scheme 的时候，也很不习惯，但是那边的括号风格还算是比较统一的。但是 Thunk 里面用的方式，我觉得在 JS 里面把同步的和异步的写成那样，还是不容易接受。可能我的功力还是差太多吧。个人觉得 Promise 的方式和语法，看起来还是比较符合一般写同步代码的风格，还好些。顺便广告一下去年翻译的一篇我觉得<a href="http://www.thinkingincrowd.me/2013/11/13/callbacks-are-imperative/" target="_blank" rel="external">讲 Promise 挺好的文章</a>。</p>
+<p>然后是 Atom 编辑器的作者赵成讲 <a href="http://2014.jsconf.cn/slides/Practice%20on%20embedding%20Node.js%20into%20Atom%20Editor.pdf" target="_blank" rel="external">Atom-Shell 的实践</a> 和 Node-webkit 的不同之处和在 Atom-Shell 里面怎么处理多个 Environment 的问题，比较高深。但还是基本可以理解。中间还穿插 Github 里围绕这个的各种八卦。</p>
+<p>第三讲是赫门的<a href="http://2014.jsconf.cn/slides/herman-taobaoweb/index.html" target="_blank" rel="external">淘宝前后端分离实践</a>，他的辫子，胡子，和演讲风格还是很拉风和活跃全场气氛的。前后端的分离实践，他讲的多数可以说是工程问题。但整个下来，里面要处理的问题，其实我并没有感受到多少是一定要用 Node.js 来做的，他们的分离是为了什么。作为一名长时间的后端混搭前端的企业开发者，我觉得开发中最大的问题是业务逻辑共享，所以我才觉得用 Node.js 是优势，为一套代码两用提供可能性。Slide 69 页说的用 Node.js 可以做的一些事情，我觉得后端 JAVA 做也没什么不可以，只是因为很多前端不会 JAVA，然后想把浏览器上的页面一些优化搬到 server 上来提高性能，没有熟悉的 JS 的话，就不好动手了。如果交给一些纯后端来做又增加沟通成本，或因为没前端概念而做不好。所以现在有了 Node.js，可以把以前浏览器上的 JS 逻辑，拆一些到 server，就爽多了。其实前后端分离，有一部分是前端逻辑后移，不知道我是不是没有 get 到重点。我知道说到这里肯定拉不少仇恨，其实我目前是喜欢 JS 多于 Java，而且什么都用 Node.js 先写写，但我也不想让语言绑住自己。</p>
+<p>下午是苏培欣的<a href="http://2014.jsconf.cn/slides/JSConf%20-%20Google%20BigQuery%20API%20Node.js%E5%AF%A6%E4%BD%9C%E8%A8%98%E9%8C%84.pdf" target="_blank" rel="external">Google BigQuery API Node.js实践</a>，其实主要是讲怎么用 OAuth 和 Google API 打交道，他写了个库来方便使用。</p>
+<p>然后就到了顶顶大名的 <a href="https://github.com/substack" target="_blank" rel="external">@substack</a> 神了。其实他还是和上次<a href="http://weibo.com/jingjs2013" target="_blank" rel="external">京JS</a>一样，在<a href="https://github.com/substack/hangjs-2014" target="_blank" rel="external">布道</a>模块化的好处和如何同其它人用无数小的模块来拼成一个系统。个人对这些观点还是认同的，再看到大神飘忽的打字速度，反正就是叹为观止了。但是宣讲的内容价值并不高。</p>
+<p>后面到了 Belleve Invis 讲他的 <strong>Patrisika</strong>，说实在话，虽然之前看过了一些 CPS 和 Scheme，但是他里面讲的一些推导和原理，和飞快的语速，实在有不少地方还是 lost 了。级别差太多。</p>
+<p>再后面到了芋头的<a href="http://2014.jsconf.cn/slides/Rabbit.js-MVC.pdf" target="_blank" rel="external">如何快速构建MVC应用</a>，按他的意思就是一个遵循他的编程风格和习惯包装了一下 Express 和一些常用框架的框架(有点拗口了)。当然每个程序员都有自己喜爱的风格，所以就看多不多人买账了。</p>
+<p>最后是 Berg 的 <a href="http://2014.jsconf.cn/slides/BlendUI.pdf" target="_blank" rel="external">BlendUI</a>，一个轻应用框架。按照我的理解就是一套统一了上层接口，让里面可以轻松调用 Webview 或者 Native 的代码。在一个页面里，有性能问题的时候，通过组合多个 Webview 和 Native 组件的方式，实现组件最小化，性能可控。<br>像 Yinkan 说的，这种方式其实就是在机器性能跟不上的时候，做的一种补尝。其实我们也在想，如果这样一有性能问题就混搭，那最后会不会整个东西就变成 Native App 了呢？呵呵。没做过移动开发，所以不好评论。</p>
+<p>第一天就这样结束了，因为下雨，<strong>After Party</strong> 所在的小酒吧几乎挤满了，吃的东西和去年一样，一上就差不多被抢光。我们的策略就是站在门边附近，吃饱了再找人聊天。个人认为今年的 After Party 找的地方格调不对。虽然中间什么唱歌表演的很 High，但是完全无法在酒吧里和其它人好好聊天。所以我们之后都拉了 substack 出去了。我觉得去年京JS的地方就很不错，聊天可以很尽兴。</p>
+<p>不过今年没聊的太尽兴，也是因为自己没准备好什么话题找大神。自己去年总结的经验都没用上，唉，打脸。去年的 H 神原来就是 EF 的架构师 Michael，不过我们没和他聊上。晚上我和 Yinkan 的主要目的都是找 substack 闲聊。今年好像他在做 P2P 相关的东西，聊天的很多内容都是这样。中间调侃性的问了他对使用了 Stream 的 Gulp 怎么看，因为去年问过 Grunt 了。他还是说用 bash 就好了。但是个人认为 Gulp 对组织大型项目还是很有帮助的，不是每个人都是神和那么熟悉 bash。对于工程管理来说，我认为 bash 太乱了。最后我认为自己问了他一个对我来说最有价值的问题，就是“一般来说，普通人都是做一个可以看到有具体功能的一个 App 或者应用。为什么你可以或者会想到做那么多底层的模块呢？” 神是这样答复我的：“<strong>当你要做一个大的应用出来的时候，需要花的时间比较长，如果进展不顺利，可能会灰心。或者说本来想分享一下，但久久不能实现，就心累了。而我想东西是从底层开始构建起来的，做好了一个小模块就可以分享了。</strong>” 其实这就体现大神和我的差别，别人一看东西，都到底层的，把整个系统分解的很好。这个答案确实让我展开了思路，日后努力实践。</p>
+<p>晚上在雨中走回酒店，洗澡后就累趴了，一觉睡到 6:30。本打算像去年那样当早鸟和抢书，7 点就到了会场，但是发现因为前一天主持已经泄漏天机，会场已经有 10 个人左右了。就不想像傻 B 那样守在书摊前了。又不是买不起，也不想增加自己行李负担，还要回去叫醒那个 Yinkan。所以还是溜了。</p>
+<h2 id="第二天">第二天</h2>
+<p>一开场是 <a href="http://weibo.com/isofish" target="_blank" rel="external">@Sofish</a> 的<a href="http://sofi.sh/2412" target="_blank" rel="external">优化你的Angular Web App</a>。内容基本之前都知道，网上其实说 AngularJS 优化的也是差不多了。但是 Sofish 的语速，难易程度和幻灯片内容的组织，觉得在这种大型会议上做得很好。不太深，也能引起一定的思考。</p>
+<p>然后就郭宇的<a href="https://github.com/jsconfcn/hangjs/blob/gh-pages/slides/GuoYu-%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%AE%A1%E7%90%86%E4%B8%8E%E7%BB%B4%E6%8A%A4-%E6%88%91%E7%9A%84%E5%BC%80%E6%BA%90%E4%B8%80%E5%B9%B4.md" target="_blank" rel="external">开源项目的管理与维护</a>，其实是他的开源心路历程，中间穿插一个很冷的 callback 笑话。他中间对选什么开源来做提的几点建议，我觉得还是挺有用的：有趣的，成长中的 (Node.js)，爆发的(像近期的 Bitcoin， Swift 教程翻译)等。</p>
+<p>接着就是 <a href="https://github.com/mikaelkaron" target="_blank" rel="external">@Michael</a> 的 <a href="http://2014.jsconf.cn/slides/mikaelkaron-massivejs/massive-js.html" target="_blank" rel="external">Massive Javascript Development</a>，一开始幻灯没准备好的时候，主持人叫他讲讲笑话，他说他只会 dirty joke。果然是 H 神，去年和他聊天的时候就知道他擅长这个。这个演讲个人认为是最有价值，可能也是深有感触吧。Yinkan 和我想问他的问题不谋而合。其实他在里面说到这样的大型系统，每个组件都要足够小。组件间的通信，可以用类似 Event 通知机制来做，再有一个 Root App 从中做管理。这个我们都认同。只是在实际操作中，怎么能做到 Event Subscriber 和 Publisher 之间的关系能管理好，并不是那么容易。就像 SOA WS 架构里面的 WS Registration 一样，做的不好的话，很容易导致 Event 有多少 Consumer 并不清楚。上下游关系不清的话，上游有改动，下游容易出问题。下游不再监听了，上游也不知道是否可以移除。所以，会上我们提了这个问题，他初步也以下建议：<strong>1.</strong> Event 一但发布，不再改动。或者加新的，或者加版本号。 <strong>2.</strong> 通过监控手段，了解各个监听情况。这个就要在 Root App 上做的比较好了。<strong>3.</strong> 文档。因为文档容易过时，他说他们用 JsDoc/JsDuck 来生成。</p>
+<p>紧接着 Garry Yao 的 <a href="http://2014.jsconf.cn/slides/garryyao-troopjs/scalable-web-application-with-troopjs.html" target="_blank" rel="external">Scalable Web Application with TroopJS</a> 其实就是 Michael 他们做出来的，就是说他们用这个框架来解决他说的问题。具体细节没有听到多少，因为一边听，我们一边直接去官方网站研究了。初步印象不是太震撼，就是他们自己也说了有和 AngularJS 很像的 data-binding，但是其实他们在知道 AngularJS 之前已经做了。他们的还可以移除绑定来着，有点意思。有时间再看看。</p>
+<p>后面到了 <a href="http://weibo.com/lifesinger" target="_blank" rel="external">@玉伯也叫射雕</a> 的<a href="http://2014.jsconf.cn/slides/how-to-continue-to-grow-up.pdf" target="_blank" rel="external">如何持续技术学习</a>。其实我和 Yinkan 的想法基本一致是不打算听的。这里没有看不起的意思。主要是因为我们两个也算是可以持续学习的人吧，另一方面是想抽时间去找 Michael 继续探讨那个 Massive Javascript Development 的问题。后来发现 Michael 不见了，只好听了。印象中有些槽点，现在不记得了。但是玉伯说的有一点是挺赞同的。就是学习时，生怕什么都漏了，什么都订阅或者 Mark 再看等等，其实对自己的进步并不大。最主要是要 Output。</p>
+<p>然后特意去找 <a href="http://weibo.com/sharpmaster" target="_blank" rel="external">@民工精髓V</a> 聊了一下，中途很傻B的找错了人。问了他一个 AngularJS View 改了值，Model 迟了半拍才改过来，要改用 $watch 才行。他说没碰过这情况，可以试着绑定一个 Promise。后来 Yinkan 来了我们又向他了解了一下他目前在苏宁的状况。</p>
+<p>突然看到有个样子好，身材突出的国外女讲师说的什么 Edge.js 是可以在 Node.js 里面用 .Net，然后还可以在 Linux 上玩。我都不知道这有什么用，真是不忍吐槽，为了结合而结合。我之前想要在 Node.js 调用 Java 也只是觉得 Node.js 缺乏成熟的库才有这样跨语言的需求。后来想想调用的方法不如用 Web Service 做成 SOA 好了。</p>
+<p>再之后就是 Twitter 美女的讲的 Storm，也听懂了，大概了解到它的工作原理。陈本峰 的 Web Components 也是基本概念。</p>
+<h2 id="建议和总结">建议和总结</h2>
+<p>对于这种宣讲会，其实很同意<a href="http://weibo.com/youxiachai" target="_blank" rel="external">@游戏阿柴</a> <a href="http://www.html-js.com/article/2112" target="_blank" rel="external">流水帐</a>的一些观点的。宣讲会里，我觉得最重要的是说一些能引起别人思考的东西。这说起来简单，但我觉得做起来很难，而且还要照顾听众的水平。</p>
+<p>宣讲会里的主题，基本上是自己做了个什么东西出来，发明了一个轮子。其实这很值得讲，但是我觉得重点要讲这个东西和同类的有什么不同。我为什么要做个新的轮子，好在哪。其实点不用太多，能有一两个方面吸引人去了解你的轮子就够了，因为时间不够，而且也没有提问和思考时间。具体一些代码怎么写，大概有个样子看看就知道了，不用每个功能都讲。就像阿柴讲的 @严清 老师的分享那样。</p>
+<p>另一类就是纯粹理论的东西，像赫门的<strong>《淘宝前后端分离实践》</strong>，没有具体例子，很难脑补具体场景。虽然一些大概念知道，但是不同公司和系统，实现和出现的问题都不同。如果可以抽样例出来说，就知道分和不分的差别。</p>
+<p>其实像这样的大会，高手一般不需要从中再获得什么，而是要带领新人了解什么。当然如果高手有什么新技术出来，同理也是带领不了解的人，对它感兴趣。我觉得这种宣讲，就是要带人入门，提起兴趣和思考。然后 After Party 的任务，就可以分开各个阵营或者会场，人们再去和嘉宾深入聊那些感兴趣的话题了。</p>
+<p>最后，希望明年有机会能站在上面和大家分享，而不只是听，不知道可否像上次 珠海 GDG 那样说着就成真了。呵呵。</p>
+<p>没去过 京JS 的同学，有兴趣的话，也可以看看去年我总结的<a href="http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/" target="_blank" rel="external">帖子</a>。</p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="HangJS" scheme="http://www.thinkingincrowd.me/tags/HangJS/"/>
+    
+      <category term="JSConf" scheme="http://www.thinkingincrowd.me/tags/JSConf/"/>
+    
+      <category term="NodeJS" scheme="http://www.thinkingincrowd.me/tags/NodeJS/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[2013 Retrospect and 2014 Goal Setting]]></title>
+    <link href="http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/"/>
+    <id>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</id>
+    <published>2014-01-04T00:00:00.000Z</published>
+    <updated>2015-01-04T06:01:09.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="工作">工作</h2>
+<p>工作上没有什么太大的变动，可以说趋于平淡。对于项目基本框架的使用已经没有什么问题，所以主要已经是在忙于实现项目业务功能模块上。但是还是痛苦挣扎于一些框架的限制，跨部门的约束，低效率的流程上，感觉效能无法有效提升。</p>
+<p>组内的新人，经历了一两年的成长，基本上能够独立做事情。不像以前那样，还没想清楚就乱写代码，有问题又不问，最后又推倒重来。技术水平有些提升，代码也好看了些，所以我的介入相对少了很多。但是还有待提高，特别是那些低级错误，类似变量命名上打错字的问题经常让我发现，这让我非常恼火。因为这足以侧面知道做事认真仔细程度到哪。</p>
+<p>去年我主要的侧重是集中精力帮他们提升思考能力和业务理解上，最重要的是怎么去思考业务需求带来系统设计的要求。在组内尽量推动的 Peer Code Review，对成员间的沟通，业务的理解，技术的提高上确实有很大的帮助，今年要再加强。希望今年组内每个成员都达到一定水平后，整体效率可以有效提升。</p>
+<p>从团队管理上来说，我并不是做得太好。由于我还要参于很多开发工作，能留给我做些流程或其它方面的改进的时间并不多。计划和进度上也并不是控制的很好，我也始终在看，究竟何时及如何引入 Kanban。看是否能够引入责任人机制，透明化流程，让每个人责任感更强和对计划进度上控制更好。</p>
+<h2 id="自我提升">自我提升</h2>
+<h3 id="读书">读书</h3>
+<p>有些书去年积累到现在都还没有看，主要是技术类的。因为水平有限，技术类的书，用零散时间看的话，真的不容易吸收，特别是没有实践配合的话。所以一直用 Kindle 在零散时间还是看非技术类的多。</p>
+<p>不过近期 Kindle 被我基本抛弃在一边了。不是不读书了，而是我已经抱着 MBA 随处边看书，边写代码了。这真是太爽了，虽然对我的颈椎好像有点伤害，不过，这确实可以让我边看书，边实践，榨取更多的时间来 Coding。所以今后将会多看技术类书和实践。</p>
+<p><strong>技术类</strong></p>
+<ul>
+<li>Functional Programming for the Object-Oriented Programmer by Brian Marick</li>
+<li><em>NOSQL Distilled by Pramod J. Sadalage, Martin Fowler</em></li>
+<li><em>Patterns of Enterprise Application Development by Martin Fowler</em></li>
+<li>Domain-Driven Design by Eric Evans</li>
+<li><em>The Art of UNIX Programming by Eric S. Raymond</em></li>
+</ul>
+<p><strong>非技术类</strong></p>
+<ul>
+<li><em>The Lean Startup by Eric Ries</em></li>
+<li>The Pragmatic Programmer by Andrew Hunt, David Thomas</li>
+<li><em>Mythical Man-Month by Frederick P. Brooks</em></li>
+<li><em>YouTube 创始人陈士俊自传</em></li>
+<li><em>打造 Facebook by 王淮</em></li>
+<li><em>至关重要的关系 by 李开复</em></li>
+<li><em>MackTalk: 人生元编程 by 池建强</em></li>
+</ul>
+<p><em>注：斜体的已阅</em></p>
+<p>今年在看和计划要看完的主要为以下三本最基础的技术书，尽量年内搞定。</p>
+<ul>
+<li>Structure and Interpretation of Computer Programs by Harold Abelson and Gerald Jay</li>
+<li>Introduction to Algorithms by Thomas H Cormen</li>
+<li>Algorithms 4th Edition by Robert Sedgewick and Kevin Wayne</li>
+<li>Computer Systems - A Programmer’s Perspective (2nd) by Bryant and O’Hallaron</li>
+</ul>
+<h3 id="打造关系网">打造关系网</h3>
+<p>在看完《至关重要的关系》后，深有<a href="http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network/" target="_blank" rel="external">感触</a>, 觉得之前并没有打造一个优质的职业和学习关系网，迫切渴望找到一些志同道合之人，可以一起学习进步。所以去年做了好几样事情：</p>
+<ol>
+<li>加入珠海 GDG，时不时去当一下志愿者和参加聚会</li>
+<li>花血本从珠海飞北京参加了两次会议，一次是 AgileChina2013，一次是京JS。</li>
+<li>约几个旧同事和好友，组织起来一起学习和交流</li>
+</ol>
+<p>几件事情下来，还是有点体会的。</p>
+<p>首先，珠海 GDG 的参于还是挺让人兴奋的。参加者因为多为学生，演讲主题都主要是入门级的。真要按照营养上来说的话，对我受益不大。但是有机会认识大妈，刘鑫老师和其他一些组员还是挺高兴的，还让自己增添不少活力。不过以后要参加，就要尽量看能否上去做分享，而不是去听。</p>
+<p>至于参加一些行业会议，我的目的本来就很坦然，就是看什么会议是值得去的，什么不值得。所以，目标完全实现。AgileChina2013 那次主要是要去听 David 亲自授课，所以感觉很好。后面的大会，因为讲的是方法论什么的多，这些不亲自实践是没办法了解的，而我近期主要攻技术，所以，敏捷这类大会就不会再去了。京JS 给我的感觉也还可以，虽然会议上难免各种对自己作品的广告，但是还是能和一些大神交流，了解他们的看法，新动向等，还是不错的，明年的 JS 大会应该还会去。经过这些行业会议，体会就是，你如果想和牛人有更多话题，让他们关注和看得起你，自己得先变成牛人。今看还是会留预算去参加一到两个这些会议，看几时能让别人看得起。</p>
+<p>最后一个自我组织朋友来一起交流学习的事情，好坏参半。目前情况基本可以说告一段落。虽然大家有聚在一些玩了一些东西，但是感觉每个人的兴趣偏好和对聚会的期望都不尽相同，最后这个聚会基本可以说是失败的。但是中间也学习到不少，和知道自己想要什么。有些事情强求不来，步子迈大了就扯着蛋了。</p>
+<h3 id="开源和项目">开源和项目</h3>
+<p>本来是计划做一个 Pet Project，但是做一半后，像上面说的，想约三五朋友一起去做一个更大的东西，一个像 Salesforce 那样的一个 Multi-tenant 的企业系统。可惜没人搭理我，后面自己在考虑怎么在 MongoDB 动态分配空间，和实现了一下后，感觉这东西太大了，先放了下来，后面再找机会继续。</p>
+<p>在学习和实践期间，做了两个小玩意出来，一个是用于在 Node.js 和浏览器共享代码的 <a href="https://github.com/kenspirit/webassemble" target="_blank" rel="external">webassemble</a>, 还有一个是在 ExtJS 里面用 Promise 的 <a href="https://github.com/kenspirit/ExtPromise" target="_blank" rel="external">ExtPromise</a>。前一个今年如果自己不做什么项目的话，估计使用就会比较少了。希望后一个能什么时候在公司项目里用上。</p>
+<p>自己还算是开源的踊跃支持者的，并有幸被 AngularJS 接纳了一个 enhancemnt patch，非常高兴。今年看书以外如果有时间看源码，还会挑一些开源的 JS 项目来参于一下，目前考虑 AngularJS 和 React。</p>
+<h2 id="时间安排">时间安排</h2>
+<p>学习时间：<br>基本上是按照去年的时间安排走。上下班车里的30分钟，还有其它一切可能的坐车时间，现在都在用 MBA 看书和写代码。早上5:30左右起来，一直到7点，大概1小时多点而已，周末时间长点。周末午休时间也大概有2小时。基本上就这么多了。</p>
+<p>家庭时间：<br>和去年差不多，占个人时间大头。但是还是一个不懂怎么培养孩子的父亲，因为时间花在考虑怎么培养自己上面了。只希望给他带个好头，别学坏了就好。每每看到 Michelle 带她女儿体验什么，学习什么，各种惭愧。</p>
+<p>锻炼时间：<br>中间有段时间断了一下，因为身体受伤，杂七杂八事情，没能很好坚持每天早上固定15分钟左右的锻炼时间。最近恢复，跳绳为主。今年还是得加强一下，身体是本钱。好玩的事情是人生第一次参加公司篮球比赛，虽然偶尔有上场，但主要是抱同组里年轻小伙的大腿，拿到人生的第一个第一名。</p>
+<h2 id="善事">善事</h2>
+<p>这方面去年贡献不多，主要是个人精力不足，所以违背了去年美好的想法，每月固定给壹基金和联合国儿间基金会捐助一点。事后证明我行的确实是伪善。</p>
+<h2 id="总结">总结</h2>
+<p>工作还凑合，仍需努力和把自己的爱好用在公司项目上。自己喜爱的东西，很难在公司派上用场，感觉真不太爽，看今后怎么操作吧。虽然已经在不断努力学习，也做了一些东西，但是离10000小时原则的强度和积累还是差太远了，今年必须更加努力。正如前面安排，把自己基础巩固好，希望后面能有效提升效能，不断参于开源，写 Blog 和分享总结。还有一件事就是希望可以做个有趣的人，从生活中找找灵感，看能做些什么好玩意没有，反正是随心写代码。</p>
+]]></content>
+    
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[How to use Ext Ajax in Promise style and test it]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/"/>
+    <id>http://www.thinkingincrowd.me/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/</id>
+    <published>2013-11-25T00:50:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/" target="_blank" rel="external">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.  </p>
+<p><a href="https://github.com/kenspirit/ExtPromise" target="_blank" rel="external">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird" target="_blank" rel="external">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.  </p>
+<p>It didn’t took long to implement the ExtPromise wrapper but it took me some time to test it.  </p>
+<p>Originally, I thought I could use the <a href="http://www.thinkingincrowd.me/blog/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/" target="_blank" rel="external">jasmine-ajax</a> I enhanced and shared before about how to test Ajax call in ExtJs.  However, it doesn’t work as expected.  Testing Async method in <a href="http://pivotal.github.com/jasmine/" target="_blank" rel="external">Jasmine</a> seems very awkward because the API in version 1.4 and 2.0 are dramaticlly different.  Even worst, many strange issues messed around all the way.  </p>
+<p>I finally gave up and search other alternative approaches.  <a href="http://github.com/cjohansen/Sinon.JS" target="_blank" rel="external">Sinon.js</a> and <a href="http://github.com/visionmedia/mocha/" target="_blank" rel="external">Mocha</a> come to rescure.  It is pretty easy to test the Ajax call using the <code>useFakeXMLHttpRequest</code> provided by Sinon and the Async testing in Mocha looks more intuitive (Jasmine 2.0 use the same way).  Let’s see how the testing (BDD style) is setup.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">describe(<span class="string">"Ajax should be now working in promise style"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    <span class="keyword">var</span> xhr, ajax;</div><div class="line"></div><div class="line">    before(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        xhr = sinon.useFakeXMLHttpRequest();</div><div class="line">        xhr.onCreate = <span class="function"><span class="keyword">function</span><span class="params">(xhr)</span> </span>{</div><div class="line">            ajax = xhr;</div><div class="line">        }</div><div class="line">    })</div><div class="line"></div><div class="line">    after(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        xhr.restore();</div><div class="line">    });</div><div class="line"></div><div class="line">    describe(<span class="string">'ExtPromise.Ajax'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        it(<span class="string">"#success case"</span>, <span class="function"><span class="keyword">function</span><span class="params">(done)</span> </span>{</div><div class="line">            ExtPromise.Ajax().request({url: <span class="string">'foo'</span>})</div><div class="line">            .then(<span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>{</div><div class="line">                expect(result.responseText).to.equal(<span class="string">'Bar'</span>);</div><div class="line">                done();</div><div class="line">            })</div><div class="line">            .catch(done);</div><div class="line"></div><div class="line">            ajax.respond(<span class="number">200</span>, { <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span> }, <span class="string">'Bar'</span>);</div><div class="line">        });</div><div class="line">    });</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>It’s quite straightforward.  Before test spec runs, it’s required to stub the XMLHttpRequest using Sinon’s <code>useFakeXMLHttpRequest</code> API and obtain a reference in the <code>onCreate</code> method so that later it can be used to stub a response.  </p>
+<p>Passing a <code>done</code> parameter in the test spec function tells Mocha that this spec is for Async testing and callinig <code>done()</code> will end it.  One thing to notice here is this part.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.catch(done);</div></pre></td></tr></table></figure>
+
+<p>If you don’t do this, and the assertion in the test spec failed, the error it shows will be a timeout error instead of telling the true assertion error.  </p>
+<p>When testing failure case, the style written like below doesn’t look good and error-prone because <code>done()</code> is called twice although you might think the success resolver doesnot require as it should not be called.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">ExtPromise.Ajax().request({url: <span class="string">'foo'</span>, scope: scopeObj})</div><div class="line">    .then(scopeObj.getName)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>{</div><div class="line">        expect(result).to.equal(<span class="string">'Bar In scope'</span>);</div><div class="line">        done();</div><div class="line">    }, <span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>{</div><div class="line">        expect(result.status).to.equal(<span class="number">500</span>);</div><div class="line">        done();</div><div class="line">    })</div><div class="line">    .catch(done);</div><div class="line"></div><div class="line">ajax.respond(<span class="number">500</span>, { <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span> }, <span class="string">'Error'</span>);</div></pre></td></tr></table></figure>
+
+<p>You may rewrite the call to <code>done</code> in a then call.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">ExtPromise.Ajax().request({url: <span class="string">'foo'</span>, scope: scopeObj})</div><div class="line">    .then(scopeObj.getName)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>{</div><div class="line">        expect(result).to.equal(<span class="string">'Bar In scope'</span>);</div><div class="line">    }, <span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>{</div><div class="line">        expect(result.status).to.equal(<span class="number">500</span>);</div><div class="line">    })</div><div class="line">    .then(done)</div><div class="line">    .catch(done);</div><div class="line"></div><div class="line">ajax.respond(<span class="number">500</span>, { <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span> }, <span class="string">'Error'</span>);</div></pre></td></tr></table></figure>
+
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="Promise" scheme="http://www.thinkingincrowd.me/tags/Promise/"/>
+    
+      <category term="ExtJs" scheme="http://www.thinkingincrowd.me/tags/ExtJs/"/>
+    
+      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
+    
+      <category term="Ajax" scheme="http://www.thinkingincrowd.me/tags/Ajax/"/>
+    
+      <category term="Jasmine" scheme="http://www.thinkingincrowd.me/tags/Jasmine/"/>
+    
+      <category term="Mocha" scheme="http://www.thinkingincrowd.me/tags/Mocha/"/>
+    
+      <category term="Sinon.js" scheme="http://www.thinkingincrowd.me/tags/Sinon-js/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[京JS 2013 之挖坑自埋与神打击]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/"/>
+    <id>http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/</id>
+    <published>2013-11-14T12:21:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p><img alt="JingJS Badge" src="http://thinkingincrowd.u.qiniudn.com/JingJS_Badge.jpg?imageView/2/w/100" style="position: relative; float: left; margin-right: 5px; border: 0px;">首先要吐槽一下 <a href="http://weibo.com/jingjs2013" target="_blank" rel="external">@京JS</a>。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 <a href="https://github.com/substack" target="_blank" rel="external">@substack</a>，<a href="http://isaacmao.com/" target="_blank" rel="external">Issac</a> 和讲 Data Visualization 的 Nick。第二天早上的主题还是相当给力的，下午 Kim, Jakob 也还不错。</p>
+<p>晚上的活动还是要狠狠表扬一下 @京JS。第一晚包了车库咖啡，晚饭虽然是 Pizza 等，但是量也算足，只是地方有点小，不过也是逼着和别人站着交流的好机会。星期天的晚上还有去 Bar 的 after-party，可惜我要赶飞机回珠海，就没法去了，但估计也会很棒。</p>
+<p>第一天晚上，看到 @substack 来了后，我坚定不移地过去和他搭话，接着各种好玩，技术黑和大神间（当然这不包我）的对话就来了。首先声明，可以肯定我的智商是完全没法跟上大神的，加上没法肯定听力上能跟上多少。所以下面的一些神吐糟不保证 100％ 正确，有错误的话也是我这译者的错误，并且这里的技术黑都不是拉仇恨啊。 Please forgive my poor English for any potential misleading.</p>
+<p>我和他搭话是因为我最近看的一篇<a href="http://www.thinkingincrowd.me/blog/2013/11/13/callbacks-are-imperative/" target="_blank" rel="external">关于 Promise 的文章</a>，个人感觉不错的，想问他对比 Callback 有什么看法。原来他并不太喜欢 Promise。（好了，整晚挖坑自埋的节奏开始了）。他指点我去看看 <a href="http://callbackhell.com" target="_blank" rel="external">callbackhell.com</a>，还有他的 <a href="https://github.com/substack/stream-handbook" target="_blank" rel="external">stream-handbook</a>。说如果我按照那样做了，也应该不会碰到什么 Hell 的问题。他说即使他以后遇到，也是首先偏向于用 <a href="https://github.com/caolan/async" target="_blank" rel="external">Async</a> 的。</p>
+<p><img alt="Substack Signature" src="http://thinkingincrowd.u.qiniudn.com/Substack_Signature.jpg?imageView/2/w/500" style="border: 0px;"></p>
+<p>接着一个同学拿着 Douglas Crockford 的书给他签名，他说虽然和他有点过节还是观点不同什么来着（他用的词忘了），但还是签了（他的签名很有趣，就是上面这幅机器人漫画，幸亏我也拿到一个）。我就八卦了一下问是他说的是什么情况，他举例说那个什么 <a href="http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html" target="_blank" rel="external">Hoisting</a> 就是胡扯。我当然也很赞同的说是的，应该定义在离它最近使用的地方。好像记得 <a href="http://weibo.com/lifesinger" target="_blank" rel="external">@玉伯也叫射雕</a> 也是持同样观点的。</p>
+<p>然后 <a href="http://weibo.com/fool2fish" target="_blank" rel="external">@fool2fish</a> 出现了，问他关于一些测试方面怎么区分浏览器 Tab 独立线程，监测 CPU，等什么的（好像是说这些吧，中间没太跟上）。然后他不断解说和演示他的 <a href="https://github.com/substack/testling" target="_blank" rel="external">testling</a> 可以拿来怎么用。</p>
+<p>之后 @fool2fish 就问可以在 testling 里用什么测试框架，@substack 又把自己的 <a href="https://github.com/substack/tape" target="_blank" rel="external">tape</a> 搬出来耍了。@fool2fish 再问能否集成 <a href="https://github.com/visionmedia/mocha" target="_blank" rel="external">Mocha</a> 之类的框架时，@substack 说可以的。但是他不喜欢用那些框架，一堆的全局变量，evil，不是 Node 可以直接运行的程序。还有 <a href="https://github.com/pivotal/jasmine" target="_blank" rel="external">Jasmine</a> 什么的更烂。估计喜欢这两个的，听到这都晕了。</p>
+<p>然后转到问是否支持 <a href="http://en.wikipedia.org/wiki/Asynchronous_module_definition" target="_blank" rel="external">AMD</a>，<a href="http://wiki.commonjs.org/wiki/CommonJS" target="_blank" rel="external">CommonJS</a> 的主题上。@fool2fish 就给他瞄了一眼 <a href="https://github.com/seajs/seajs" target="_blank" rel="external">SeaJS</a> define 的用法，可能本想把它推出国门。没想到他说他知道 SeaJS，但这不是 CommonJS，是 fake 的写法。@fool2fish 脸都绿了，都想拉 @玉伯也叫射雕 来抵抗一下了，没等反应过来。@substack 又搬出了他的 <a href="https://github.com/substack/node-browserify" target="_blank" rel="external">browserify</a> 来说明怎么把 Node 的代码和浏览器分享（这个观点我一直是比较赞同的，所以之前也基于 <a href="https://github.com/medikoo/modules-webmake" target="_blank" rel="external">webmake</a> 搞了个 <a href="https://github.com/kenspirit/webassemble" target="_blank" rel="external">webassemble</a>。因为我觉的生产环境基本都是打包好再用的，哪有什么异步再去拿文件，异步也是拿另一个大 bundle。require 在 Node 的写法，如果在浏览器能通用确实挺好的。回头细想是不是偏后端程序员没看到前端看到的另一些东西，我再想想）。旁边的另一个鬼佬（抱歉不认识是哪位神），看到我们被打击的样子，几乎笑的不行了，都和 @substack 说你别再打击他们了，可是神才不鸟你，继续打击。</p>
+<p>后面，他们都走了，我犯贱又去问 @substack 怎么看那些前端的 MVC 或者 MVVM 的框架，比如 <a href="http://angularjs.org" target="_blank" rel="external">AngularJS</a>。他说他还没看懂到底它最终要解决什么问题，一堆的东西，什么 DI，Databinding 等。我说 Databinding 很好啊，可以免得我们写一堆代码拿值赋值等，declarative 语法也不错啊。他说他只是写纯粹的 JS，那些拿值赋值的可以什么把原生操作抽象和模块化，举例说把复杂的 Form 抽象成模块，只在里头处理赋值拿值之类的。我说那不是 JS 和 HTML 混一起了吗？他好像说只要模块化的好就没有问题了。晕。（这里不敢苟同，可能我还没到那种境界）</p>
+<p>最后，又再一次嘴贱的问他那个 tape 能不能集成到 <a href="http://gruntjs.com/‎" target="_blank" rel="external">Grunt</a>。没想到他说他也没看明白 Grunt 有什么用，我就知道我又挖坑埋自己了。他啪啪啪敲键盘和让我看他怎么用 NPM 的 test 命令，自定义命令和直接结合 Script 来做到一系列的集成操作的。</p>
+<p>@substack 真是 geek 到不行啊。他追求纯粹，简洁，和模块化可以说到极致的境地，不喜欢那些大而全的框架，真的是和我最近看的 “Art of Unit Programming” 那本书说到 “Only do one thing and do it really well”，然后通过组合把一些小工具结合成更强大的工具的思想非常吻合。</p>
+<p>后面 H神 来了之后，被打击对象转到他头上了。是的，神喷神了，哈哈。以下可能和原话有偏差，因为大神间的对话，我有时实在很难跟上。</p>
+<p>H神 在做的是 <a href="http://vertx.io/" target="_blank" rel="external">Vert.x</a>。他一开始说它们直接支持在 npm 跑还是改了加了什么新功能来着。（一开始我在纠结那个 Vertx 发音是什么东西，迷失了一下）。@substack 就说你们那么改的原因是什么？带来什么好处？没好处改来干什么？（另一个神被打击的样子很有趣 :D ）。后来说 Vert.x 特性是 Polyglot，说到支持 Java，Python 等，@substack 意思好像是说为什么要那么做？那些垃圾语言支持来干嘛？（Python 差点被拖累了，他后来改口说 Python 不烂）我永远都不要写 JAVA。H神 也脸绿了，我也帮口说在商业大项目里，因为系统和团队的多和杂，Polyglot 和 JAVA 都是需要的，虽然我现在也不喜欢 JAVA。其实无论我们怎么说，神的观点都不会变，他就说我不会遇到这样的情况，哈哈。H神 后来问 @substack Vert.x 怎么才能被他们 buyin (接受)，@substack 就不断 blablabla 说什么你们的 api 要保持和 npm 一致，要在 npm 上容易安装，可以通过 -g 参数那样装了后，命令运行等，不然你看现在没人鸟你们，然后各种建议给他。</p>
+<p>两大神后来开始缅怀小时候几岁的时候玩什么技术之类的，我的智商和听力就彻底跟不上了。后来 H神 说他用 SQL 去考他妈妈，他妈妈竟然只需要问它那个语句是干什么的，然后她妈妈竟然可以从汇编，指令和寄存器的角度指出它哪里有问题了。靠，开挂了吧。H神 还想请 @substack 去他们上海公司给员工感受一下什么叫做 live for code，而不是 code for live 的精神。说费用他包，问有没有兴趣。@substack 好像说会在中国待 3 星期，没什么问题，之后可能还要到深圳来骑车什么的。深圳的同学们有关系的话，就看能不能请到他去玩了。后面我们扯着扯着就讲到为什么国内那么难找到这样的人，什么独生政策，教育，压力的都来了。中间我还讥讽 H神 也还不是 code for live。他说不是，他是因为写 code 是让他可以赚最多钱的工作。其实他还可以搞建筑什么的，还说他的床上功夫也不错，笑死我。 我们就这样一直聊到 10 点散场了才走了。</p>
+<p>整个晚上和 @substack 及其他大神的一些直接对话真比在会场听一天感悟还多。所以意见是大家以后听会议，一定要准备问题，尽量和各种大神聊天。只是听讲座和拍几张PPT或大神照片就没什么用了。</p>
+<p><img alt="Group" src="http://thinkingincrowd.u.qiniudn.com/JingJS_AfterParty.JPG?imageView/2/w/500" style="border: 0px;"></p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="JingJS" scheme="http://www.thinkingincrowd.me/tags/JingJS/"/>
+    
+      <category term="JSConf" scheme="http://www.thinkingincrowd.me/tags/JSConf/"/>
+    
+      <category term="NodeJS" scheme="http://www.thinkingincrowd.me/tags/NodeJS/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/11/13/callbacks-are-imperative/"/>
+    <id>http://www.thinkingincrowd.me/2013/11/13/callbacks-are-imperative/</id>
+    <published>2013-11-13T13:43:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>我之前都有接触过关于 <a href="http://en.wikipedia.org/wiki/Promise_(programming)" target="_blank" rel="external">Promise</a> 的一些文章，但是对它的感觉并不大。因为觉得虽然<a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)" target="_blank" rel="external">回调</a>风格确实有问题，但我写的代码还没有复杂到那种程度，所以，要去使用的感觉并不强烈。</p>
+<p>但是，后面碰到一个问题真的好像用回调的风格来写的话，会比较糟糕。加上看到了这一篇从另一侧面来看 Promise 对函数式编程的思维方面的转变，觉得很不错。值得一看，所以在有其它大神也翻译过的情况下，自己也译一次，顺便深入学习。</p>
+<p>原文链接： <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/" target="_blank" rel="external">Callbacks are imperative, promises are functional: Node’s biggest missed opportunity</a></p>
+<blockquote>
+<p>Promise的本质就是他们不随着环境的变化而变化。</p>
+<p>  —— Frank Underwood，‘纸牌屋’</p>
+</blockquote>
+<p>你经常会听到说 JavaScript 是一门 “函数式” 编程语言。通常我们这样描述它的时候是因为函数在它里面是作为 “一等公民” 而存在的。但是其它 “函数式” 编程语言里面的特性，比如：数据不可改变，代数类型系统，使用迭代优于循环，避免副作用都统统忽略了。虽然函数作为 “一等公民” 是非常有用的，并且决定用户能够在需要的时候使用函数式风格来编写代码。但是 JS 是函数式的观点却常常忽略了函数式编程的核心思想：面向值编程。</p>
+<p>“函数式编程” 的命名其实会产生误导，以至于人们认为它的意义在于，相对于 “面向对象编程” 来说，它是 “面向函数编程”。但是如果面向对象编程是把所有东西都从对象角度考虑，那函数式编程就是把所有东西都作为值来处理，而不仅仅是把函数考虑为值。很明显，数值当然包含那些数字，字符，列表和其它数据值，但其实它也包含其它面向对象编程的粉丝通常没有考虑过的一些东西：IO 操作和其它副作用，GUI 事件流，空值检查，甚至函数调用的顺序。如果你曾经听说过 “<a href="http://en.wikipedia.org/wiki/Monad_(functional_programming)" target="_blank" rel="external">可编程分号</a>” 的话，你应该知道我想说的是什么了.</p>
+<p>函数式编程最大的好处是它是声明式的。在命令式编程里面，我们需要写一系列的指令来告诉计算机是怎么去实现我们想要做的事情的。在函数式编程里面，我们只是需要描述值之间的计算关系，计算机就会自己想办法得出需要的计算指令顺序。</p>
+<p>如果你使用过 Excel 的话，你其实已经用过函数式编程了：你只需要描述一个图表里面的值，是怎么相互计算出来的。当有新数据插入的时候，Excel 就会自己得出图表里有什么地方的值和效果要更新，而你并不需要再为它写出任何指令，它也可以帮你计算出来。</p>
+<p>在阐述了这些基本概念的基础上，我想说明一下我觉得 Node.js 在设计上最大的失误是什么: 这就是在它的设计早期，决定了倾向于使用回调风格的 API 而不是 promise 风格.</p>
+<blockquote>
+<p>所有人都使用回调。如果你发布了一个返回 promise 的模块，根本没有人会关注和使用你那个模块。</p>
+<p>如果我写了一个小模块，它需要和 Redis 交互，我所需要做的唯一一件事情就是传递一个回调函数给 Redis。当我们遇到<a href="http://callbackhell.com/" target="_blank" rel="external">回调无底洞</a>的时候，其实这根本不是什么问题: 因为同样有<a href="http://en.wikipedia.org/wiki/Coroutine" target="_blank" rel="external">协程</a>和 <a href="http://en.wikipedia.org/wiki/Monad_(functional_programming)" target="_blank" rel="external">monad</a> 无底洞。因为如果你把任何一个抽象使用地足够频繁的话，都同样会创造一个无底洞。</p>
+<p>在 90% 的情况下，你只需要做一件事情，回调如此简单的接口使得你只是需要简单的缩进一下就可以了。如果你遇到了非常复杂的用例，你和其它在 npm 里面的 827 个模块一样，使用 async 就好了.</p>
+<p>—— Mikeal Rogers，LXJS 2012</p>
+</blockquote>
+<p>这段话是从 Mikeal Rogers 最近的一次涵盖了好些 Node 设计哲学的演讲里摘取出来的:</p>
+<blockquote>
+<p>在 Node 的初期设计目标里面，我希望可以让更多的非专家级别的程序员可以很容易编写出快速，支持并行的网络程序，虽然我知道这个想法有点违背生产效率。Promises 其实可以使得程序在运行时自动控制数据流动，而不是靠程序员通过显式指令控制，所以能更加容易组织正确清晰和最大化并行操作的程序.</p>
+</blockquote>
+<p>要写出正确的并行程序基本上需要你实现尽可能多的并行工作的同时，保证操作指令还是以正确的顺序执行。虽然 JavaScript 是单线程的，但我们依然有可能因为在异步操作的情况下触发了竞争机制: 任何涉及 IO 的操作都会在它等待回调的时候把 CPU 时间腾到其它操作上面。多个并发操作就有可能同时访问同一段内存数据，或者产生一系列重叠的操作数据库或者 DOM 的指令。所以，我希望在这篇文章里可以告诉大家，promies 能够像 Excel 一样，提供一种只需要描述值之间的关系模型，你的工具就能够自动寻求最佳解决方案给你。而不是需要你自己控制程序流.</p>
+<p>我希望可以清除掉一个误区就是 promises 的使用就是为了让语法结构看起来比基于回调的异步操作更清晰。其实它们可以帮助你用一个完全不同的方式来建模。它们的作用比简化语法来得更深层次。事实上，它们完全从语意角度改变你解决问题的方式。</p>
+<p>首先，我想先重温一下几年前写的一篇文章。它是关于 promises 是怎么在异步编程上作为一个 monad 的角色而存在的。这里的核心思想就是 monad 其实是帮助你组织函数的工具，比如说，当一个函数的返回值要做为下一个函数的输入的时候，建立数据管道。数据关系的结构化是实现的关键。</p>
+<p>在这里的，我还是需要用到 Haskell 的类型注解来帮助说明一下。在 Haskell 里，注解 foo :: bar 表示 “foo 是 bar 的类型“。注解 foo :: Bar -&gt; Qux 表示 “foo 是一个接受输入值为 Bar 类型和返回值为 Qux 类型的函数“。如果输入输出的类别并不重要的话，我们会用单一小写字母，foo :: a -&gt; b。如果函数 foo 可以接受多个参数的化，我们会添加多个箭头，比如：“ foo :: a -&gt; b -&gt; c ” 表示 foo 接收两个分别为类型 a 和 b 的参数并返回类型 c 的值.</p>
+<p>我们来看一个 Node 函数吧，比如，fs.readFile()。这个函数接收一个 String 类型的路径参数，还有一个回调函数，并且没有任何返回值。回调函数会接收一个可能为空的 Error 类型和一个包含了文件内容的 Buffer 类型的参数，并且也没有返回值。那我们就可以把 readFile 的类型用注解表示为:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">readFile</span> :: <span class="type">String</span> -&gt; <span class="type">Callback</span> -&gt; ()</div></pre></td></tr></table></figure>
+
+<p>() 在 Haskell 注解中表示空值类型。这里的 callback 是另一个函数，它的注解可以表示为:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">Callback</span> :: <span class="type">Error</span> -&gt; <span class="type">Buffer</span> -&gt; ()</div></pre></td></tr></table></figure>
+
+<p>把它们放在一起的话，我们可以说 readFile 接收两个参数，一个 String 类型，一个是接收 Buffer 参数的函数:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">readFile</span> :: <span class="type">String</span> -&gt; (<span class="type">Error</span> -&gt; <span class="type">Buffer</span> -&gt; ()) -&gt; ()</div></pre></td></tr></table></figure>
+
+<p>现在，我们来想象一下假如 Node 使用 promises 会是怎么样的。这样的情况下，readFile 可以简单的接收一个 String 类型参数然后返回一个 Buffer 的 promise:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="title">readFile</span> :: <span class="type">String</span> -&gt; <span class="type">Promise</span> <span class="type">Buffer</span></div></pre></td></tr></table></figure>
+
+<p>一般来说，我们可以认为回调风格的函数接收一些参数和一个函数，这个函数将会被最终调用并传递返回值作为它的输入；promises 风格的函数就是接收一些参数，和返回一个带结果的 promise:</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="title">callback</span> :: a -&gt; (<span class="type">Error</span> -&gt; b -&gt; ()) -&gt; ()</div><div class="line"><span class="title">promise</span> :: a -&gt; <span class="type">Promise</span> b</div></pre></td></tr></table></figure>
+
+<p>那些回调风格返回的空值其实就是为什么使用回调风格来编程会很困难的根本原因: 回调风格不返回任何值，所以难以组合。一个没有返回值的函数执行的效果其实是利用它的副作用 – 一个没有返回值和利用副作用的函数其实就是一个黑洞。所以，使用回调风格来编程无法避免会是指令式的，它实际上是通过把一系列严重依赖于副作用的操作安排好执行顺序，而不是通过函数的调用来把输入输出值对应好。它是通过人手组织程序执行流程而不是靠理顺值的关系来解决问题的。这正是编写正确的并行程序困难的原因.</p>
+<p>相反，基于 promise 的函数总是让你把函数返回值作为一个不依赖于时间的值来考虑的。当你调用一个回调风格的函数时，在你的函数调用和它的回调函数被调用之间，在程序里面我们没办法找到一个最终结果的表现形式.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">fs.readFile(<span class="string">'file1.txt'</span>,</div><div class="line">  <span class="comment">// some time passes...</span></div><div class="line">  <span class="function"><span class="keyword">function</span><span class="params">(error，buffer)</span> </span>{</div><div class="line">    <span class="comment">// the result now pops into existence</span></div><div class="line">  }</div><div class="line">);</div></pre></td></tr></table></figure>
+
+<p>从基于回调和事件的函数里面取得结果基本上意味着 “你必须在恰当的时间和地点”。如果你在事件被触发之后才绑定你的事件监听器，或者你没有在恰当的地方回调你的函数，那么恭喜你，你将无法得到你要的结果了。这些事情使得人们在 Node 里写 HTTP 服务器相当困难。如果你的控制流不对，你的程序就无法按期望运行.</p>
+<p>相反，Promises 并不关心执行的顺序。你可以在 promise 兑现前或后注册监听器，但你总能拿到它的返回值。因此，那些马上返回的 promises 其实是给了你一个代表结果的值，让你可以把它当作一等公民，然后传递给其它函数。中间不需要等待一个回调或任何丢失事件的可能性。只要你手中拿着一个 promise 的引用，你就能从它得到你想要的值.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> Promise();</div><div class="line">p1.then(<span class="built_in">console</span>.log);</div><div class="line">p1.resolve(<span class="number">42</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> Promise();</div><div class="line">p2.resolve(<span class="number">2013</span>);</div><div class="line">p2.then(<span class="built_in">console</span>.log);</div><div class="line"></div><div class="line"><span class="comment">// prints:</span></div><div class="line"><span class="comment">// 42</span></div><div class="line"><span class="comment">// 2013</span></div></pre></td></tr></table></figure>
+
+<p>即便 then() 这个方法似乎隐含一些关于操作顺序 – 事实上这只是它的副作用 – 你可以把它想象成叫做 unwrap。Promise 是一个未知值的容器，那么 then 的工作就是从 promise 中把值取出来并交给另一个函数: 它其实是 monad 的 bind 函数。其实上面的代码里没有任何地方提及什么时候这个值是存在的，或事情是按照什么顺序发生的，它只是表达了一些依赖关系在里面: 你必须首先知道那个值是什么，然后才能够把它打印出来。程序的顺序是从值的依赖关系中衍生出来的。这里其实只有很小的区别，我们在后面讨论到延迟 promise 的时候会看得更清楚.</p>
+<p>到目前为止，这些区别都很微小；很少函数单单和其它函数交互。我们现在来处理一些复杂一点的问题，以便看到 promises 更加强大之处。假设我们现在有一些代码，通过使用 fs.stat() 来取得一些文件的 mtimes。如果是同步的操作，我们只是需要调用 paths.map(fs.stat) 就可以了，但是因为用 mapping 来处理异步的问题是很困难的，我们看看用上 async 模块是什么样子.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> async = <span class="built_in">require</span>(<span class="string">'async'</span>),</div><div class="line">    fs    = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> paths = [<span class="string">'file1.txt'</span>，<span class="string">'file2.txt'</span>，<span class="string">'file3.txt'</span>];</div><div class="line"></div><div class="line">async.map(paths，fs.stat，<span class="function"><span class="keyword">function</span><span class="params">(error，results)</span> </span>{</div><div class="line">  <span class="comment">// use the results</span></div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>(是的，我知道 fs 的函数有同步版本，但大多数涉及 I/O 的操作都没法这么做，就陪我玩一玩吧。)</p>
+<p>这样看起来都还不错，直到我们决定要拿到 file1 的大小来做其它不相关的任务的时候。当然，我们可以再拿一次那个文件的状态:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> paths = [<span class="string">'file1.txt'</span>，<span class="string">'file2.txt'</span>，<span class="string">'file3.txt'</span>];</div><div class="line"></div><div class="line">async.map(paths，fs.stat，<span class="function"><span class="keyword">function</span><span class="params">(error，results)</span> </span>{</div><div class="line">  <span class="comment">// use the results</span></div><div class="line">});</div><div class="line"></div><div class="line">fs.stat(paths[<span class="number">0</span>]，<span class="function"><span class="keyword">function</span><span class="params">(error，stat)</span> </span>{</div><div class="line">  <span class="comment">// use stat.size</span></div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>这样显然没有问题，但是我们现在取了那个文件的状态两次。当然，本地的文件操作是没有问题的，但如果我们正在通过 https 来获取大文件的时候，那麻烦就大了。所以，我们只能访问文件一次。这样，我们就要修改一下前面的代码来特殊处理一下第一个文件:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> paths = [<span class="string">'file1.txt'</span>，<span class="string">'file2.txt'</span>，<span class="string">'file3.txt'</span>];</div><div class="line"></div><div class="line">async.map(paths，fs.stat，<span class="function"><span class="keyword">function</span><span class="params">(error，results)</span> </span>{</div><div class="line">  <span class="keyword">var</span> size = results[<span class="number">0</span>].size;</div><div class="line">  <span class="comment">// use size</span></div><div class="line">  <span class="comment">// use the results</span></div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>这初看也没有问题，但是获取文件大小的任务就必须等到整个列表都处理完了才能够开始。如果其中任何一个文件处理出错，我们就无法得到第一个文件的结果了。这种方案并不好，那我们来试一试另一种方式: 我们把第一个文件分开单独处理.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> paths = [<span class="string">'file1.txt'</span>，<span class="string">'file2.txt'</span>，<span class="string">'file3.txt'</span>],</div><div class="line">    file1 = paths.shift();</div><div class="line"></div><div class="line">fs.stat(file1，<span class="function"><span class="keyword">function</span><span class="params">(error，stat)</span> </span>{</div><div class="line">  <span class="comment">// use stat.size</span></div><div class="line">  async.map(paths，fs.stat，<span class="function"><span class="keyword">function</span><span class="params">(error，results)</span> </span>{</div><div class="line">    results.unshift(stat);</div><div class="line">    <span class="comment">// use the results</span></div><div class="line">  });</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>这样当然可行，但是现在我们的程序并不是并行的了: 它将需要更长的时间去运行，因为我们必须等到第一个文件处理完才能开始处理那个列表里的文件。之前，它们都是同步进行的。还有，我们现在还必须对第一个文件特殊处理而引入一些数组的操作.</p>
+<p>好吧，最后一击。我们现在要做的是得到所有文件的详情，每个文件只读取一次，如果第一个文件读取成功了我们要做些特殊处理，并且如果整个列表里的文件都处理成功，我们要对整个列表再进行一些操作。让我们用 async 来在代码里表达出这个需求的依赖关系看看.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> paths = [<span class="string">'file1.txt'</span>，<span class="string">'file2.txt'</span>，<span class="string">'file3.txt'</span>],</div><div class="line">    file1 = paths.shift();</div><div class="line"></div><div class="line">async.parallel([</div><div class="line">  <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>{</div><div class="line">    fs.stat(file1，<span class="function"><span class="keyword">function</span><span class="params">(error，stat)</span> </span>{</div><div class="line">      <span class="comment">// use stat.size</span></div><div class="line">      callback(error，stat);</div><div class="line">    });</div><div class="line">  },</div><div class="line">  <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>{</div><div class="line">    async.map(paths，fs.stat，callback);</div><div class="line">  }</div><div class="line">]，<span class="function"><span class="keyword">function</span><span class="params">(error，results)</span> </span>{</div><div class="line">  <span class="keyword">var</span> stats = [results[<span class="number">0</span>]].concat(results[<span class="number">1</span>]);</div><div class="line">  <span class="comment">// use the stats</span></div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>好了，这样就达到要求了: 每个文件只读取一次，所有的工作都是并行处理的，我们也可以独立的访问第一个文件的结果，并且相互依赖的任务都是尽早执行完毕的。搞定!</p>
+<p>其实，并不能说完全搞定了。我认为这样的代码真的很丑陋，并且当问题变的复杂的时候，这样的代码很难扩展。为了让它正常工作，我们需要考虑大量的代码执行顺序问题。 而且设计意图并不明显以至于后面的维护很可能会不经意把它破坏掉。当我们引入了一个特殊需求后，原本问题的解决策略被迫同一些后续的跟进操作混杂在一起，并且我们还要对数组作出那么恶心的操作。</p>
+<p>所有的问题其实都来自于我们尝试通过控制程序流来作为主要的解决问题的手段，而不是依赖于数据之间的关系。不是说 “为了能够运行这个任务，我需要这个数据”，并让运行环境去寻找优化手段，而是显式声明运行时什么应该并行，什么应该串行，所以导致我们的解决方案是如此脆弱.</p>
+<p>那么，promises 如何改善这种情况呢? 我们需要一些操作文件系统的函数是可以返回 promises 而不是接收一个回调函数的。但是与其手写一个这样的函数，我们可以用元编程的方式写一个函数，使得它可以转换任何其它函数返回 promises。比如说，它可以接收如下一个函数定义为</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">String</span> -&gt; (<span class="type">Error</span> -&gt; <span class="type">Stat</span> -&gt; ()) -&gt; ()</div></pre></td></tr></table></figure>
+
+<p>并且返回以下类型</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">String</span> -&gt; <span class="type">Promise</span> <span class="type">Stat</span></div></pre></td></tr></table></figure>
+
+<p>下面就是这个元编程的函数:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// promisify :: (a -&gt; (Error -&gt; b -&gt; ()) -&gt; ()) -&gt; (a -&gt; Promise b)</span></div><div class="line"><span class="keyword">var</span> promisify = <span class="function"><span class="keyword">function</span><span class="params">(fn，receiver)</span> </span>{</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    <span class="keyword">var</span> slice   = <span class="built_in">Array</span>.prototype.slice,</div><div class="line">        args    = slice.call(<span class="built_in">arguments</span>，<span class="number">0</span>，fn.length - <span class="number">1</span>),</div><div class="line">        promise = <span class="keyword">new</span> Promise();</div><div class="line"></div><div class="line">    args.push(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">      <span class="keyword">var</span> results = slice.call(<span class="built_in">arguments</span>),</div><div class="line">          error   = results.shift();</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (error) promise.reject(error);</div><div class="line">      <span class="keyword">else</span> promise.resolve.apply(promise，results);</div><div class="line">    });</div><div class="line"></div><div class="line">    fn.apply(receiver，args);</div><div class="line">    <span class="keyword">return</span> promise;</div><div class="line">  };</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<p>(这还不是一个通用方案，但是足够在我们的场景里使用了.)</p>
+<p>我们现在可以重新对我们的业务问题建模。我们基本上要做的就把一个列表的文件路径，转换为一个列表的文件状态 promises:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs_stat = promisify(fs.stat);</div><div class="line"></div><div class="line"><span class="keyword">var</span> paths = [<span class="string">'file1.txt'</span>，<span class="string">'file2.txt'</span>，<span class="string">'file3.txt'</span>];</div><div class="line"></div><div class="line"><span class="comment">// [String] -&gt; [Promise Stat]</span></div><div class="line"><span class="keyword">var</span> statsPromises = paths.map(fs_stat);</div></pre></td></tr></table></figure>
+
+<p>从这里就可以看出分别了: 通过使用 async.map() ， 你必须等到整个列表处理完了，你才能拿到数据进行处理。但是如果你有了一个列表的 promises，你可以直接拿第一个 promise 来操作:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">statsPromises[<span class="number">0</span>].then(<span class="function"><span class="keyword">function</span><span class="params">(stat)</span> </span>{ <span class="comment">/* use stat.size */</span> });</div></pre></td></tr></table></figure>
+
+<p>所以，通过使用 promise，我们把大部分问题都解决了: 我们并行得到所有文件的状态，并且可以独立访问并不止第一个文件，可以是任何一个文件，而这只需要指定某个数组位就可以了。通过前一种方法，我们需要显式写逻辑特殊处理第一个文件，而且考虑怎么拿到那个文件还非常费事。但是，通过一个列表的 promises 就很容易了.</p>
+<p>当然，这里缺少的部分是当所有的文件状态信息都拿到后，我们应该怎么处理。通过前面，我们得到了一个列表的 文件状态值对象，但这是一个列表的 promises。我们需要等到所有的 promises 都处理完后，拿到一个列表的文件状态。也就是说，我们要把一个列表的 promises 转化成一个 promise 对应于整个列表.</p>
+<p>让我们看看一个简单的 list 方法是怎么做到可以把一个包含了 promises 的列表转化成一个 promise，而且当它里面所有的 promises 都处理完后，它自己也处理了.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// list :: [Promise a] -&gt; Promise [a]</span></div><div class="line"><span class="keyword">var</span> list = <span class="function"><span class="keyword">function</span><span class="params">(promises)</span> </span>{</div><div class="line">  <span class="keyword">var</span> listPromise = <span class="keyword">new</span> Promise();</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> listPromise) promises[k] = listPromise[k];</div><div class="line"></div><div class="line">  <span class="keyword">var</span> results = []，done = <span class="number">0</span>;</div><div class="line"></div><div class="line">  promises.forEach(<span class="function"><span class="keyword">function</span><span class="params">(promise，i)</span> </span>{</div><div class="line">    promise.then(<span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>{</div><div class="line">      results[i] = result;</div><div class="line">      done += <span class="number">1</span>;</div><div class="line">      <span class="keyword">if</span> (done === promises.length) promises.resolve(results);</div><div class="line">    }，<span class="function"><span class="keyword">function</span><span class="params">(error)</span> </span>{</div><div class="line">      promises.reject(error);</div><div class="line">    });</div><div class="line">  });</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (promises.length === <span class="number">0</span>) promises.resolve(results);</div><div class="line">  <span class="keyword">return</span> promises;</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<p><em>(译者注：这里感觉好像 promises 和 listPromise 几个地方反了。作者没开评论，无法确认，不过有时间试一下代码就知道了。)</em></p>
+<p>(这个方法其实和 jQuery.when() 函数类似，它同样接收一个列表的 promises 并返回一个新的 promise。当这个 promise 所有的输入都处理完后，它自己也处理了.)</p>
+<p>我们现在就可以通过把数组包装成一个 promise，然后等所有的处理结果出来就可以了:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">list(statsPromises).then(<span class="function"><span class="keyword">function</span><span class="params">(stats)</span> </span>{ <span class="comment">/* use the stats */</span> });</div></pre></td></tr></table></figure>
+
+<p>那么我们完整的解决方案就会是这样:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs_stat = promisify(fs.stat);</div><div class="line"></div><div class="line"><span class="keyword">var</span> paths = [<span class="string">'file1.txt'</span>，<span class="string">'file2.txt'</span>，<span class="string">'file3.txt'</span>],</div><div class="line">    statsPromises = list(paths.map(fs_stat));</div><div class="line"></div><div class="line">statsPromises[<span class="number">0</span>].then(<span class="function"><span class="keyword">function</span><span class="params">(stat)</span> </span>{</div><div class="line">  <span class="comment">// use stat.size</span></div><div class="line">});</div><div class="line"></div><div class="line">statsPromises.then(<span class="function"><span class="keyword">function</span><span class="params">(stats)</span> </span>{</div><div class="line">  <span class="comment">// use the stats</span></div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>这个解决方案的表达就相当的简洁清晰了。通过一些通用的辅助函数和既有的数组操作函数，我们用一种正确的，有效并且容易调整的方法来实现了。我们也不需要 async 模块的特殊集合类函数，我们只需要让 promises和数组两者的思想相互独立，并通过一种强大的方式把它们组合使用就可以了.</p>
+<p>特别要注意的是，我们的程序在这里并没有说任何部分是应该是并行还是串行处理的。我们只是描述了我们想要什么，任务之间的关系是怎么样的，剩下的都是 promise 组件帮我们优化的.</p>
+<p>事实上，很多在 async 的集合类模块可以很容易用一个列表的 promises 来替代。我们已经看到过 map 是怎么工作的了; 下面的代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">async.map(inputs，fn，<span class="function"><span class="keyword">function</span><span class="params">(error，results)</span> </span>{});</div></pre></td></tr></table></figure>
+
+<p>和下面的是一样的:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">list(inputs.map(promisify(fn))).then(</div><div class="line">    <span class="function"><span class="keyword">function</span><span class="params">(results)</span> </span>{},</div><div class="line">    <span class="function"><span class="keyword">function</span><span class="params">(error)</span> </span>{}</div><div class="line">);</div></pre></td></tr></table></figure>
+
+<p>async.each() 其实就是用 async.map()，然后利用那些被执行的函数的副作用，而把它们的返回值舍弃掉; 你用 map() 就可以了.</p>
+<p>async.mapSeries() (如前所述，async.eachSeries()) 其实就是对一个列表的 promises 上调用 reduce()。那就是，它你的输入列表，使用 reduce 来得到一个依赖于前面 promise 的操作成功后再执行的 promise。我们来举个例子: 实现一个基于 fs.rmdir() 的程序来实现和 rm -rf 相同的功能。下面的代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> dirs = [<span class="string">'a/b/c'</span>，<span class="string">'a/b'</span>，<span class="string">'a'</span>];</div><div class="line">async.mapSeries(dirs，fs.rmdir，<span class="function"><span class="keyword">function</span><span class="params">(error)</span> </span>{});</div></pre></td></tr></table></figure>
+
+<p>和下面的是一样的:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> dirs     = [<span class="string">'a/b/c'</span>，<span class="string">'a/b'</span>，<span class="string">'a'</span>],</div><div class="line">    fs_rmdir = promisify(fs.rmdir);</div><div class="line"></div><div class="line"><span class="keyword">var</span> rm_rf = dirs.reduce(<span class="function"><span class="keyword">function</span><span class="params">(promise，path)</span> </span>{</div><div class="line">  <span class="keyword">return</span> promise.then(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{ <span class="keyword">return</span> fs_rmdir(path) });</div><div class="line">}，unit());</div><div class="line"></div><div class="line">rm_rf.then(</div><div class="line">    <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{},</div><div class="line">    <span class="function"><span class="keyword">function</span><span class="params">(error)</span> </span>{}</div><div class="line">);</div></pre></td></tr></table></figure>
+
+<p>这里的 unit() 只是一个简单的返回一个已经处理的 promise 来开始整个操作链 (如果你知道什么是 monads，这个就是 promises 的返回函数):</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// unit :: a -&gt; Promise a</span></div><div class="line"><span class="keyword">var</span> unit = <span class="function"><span class="keyword">function</span><span class="params">(a)</span> </span>{</div><div class="line">  <span class="keyword">var</span> promise = <span class="keyword">new</span> Promise();</div><div class="line">  promise.resolve(a);</div><div class="line">  <span class="keyword">return</span> promise;</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<p>这个使用 reduce() 的方案简单的使用接收列表中的两个路径值，并使用 promise.then() 来确保前面的文件夹删除成功之后，再删除后面的文件夹。这其实还帮你处理了非空文件夹的情况: 如果前面的 promise 因为任何错误而无法处理，那么整个处理流程就停止了。使用值的依赖关系来强制某种执行顺序是函数式编程使用 monads 来处理副作用的核心思想.</p>
+<p>最后的代码似乎比同样功能的 async 代码更啰嗦，但别因为这样蒙骗了你。最重要的思想是我们通过使用 promise 数值和列表操作来组合程序，而不是依赖于特别的库来控制程序流。正如我们前面看到的，前一种方式可以写出更容易理解的程序.</p>
+<p>前一种程序更容易理解是因为我们把我们思考流程的一部分交给机器去做了。当使用 async 模块的时候，我们的思考流程是这样的:</p>
+<p>A. 在程序里，我们的任务应该是这样相互依赖的,<br>B. 因此，应该要这样把操作组织好,<br>C. 那么，我们现在用代码来表现 B 所描述的流程.  </p>
+<p>利用相互依赖的 promises 可以让你完全把 B 那步抛弃掉。你的代码只需要表达出任务的相互关系就可以了，然后让电脑来决定处理流程。换另一个说法就是，回调风格是显式的控制处理流程来把很多值组织在一起，而 promises 是显式表达出值的关系来把控制流的各个组件连接在一起。回调是指令式的，promises 是函数式的.</p>
+<p>这个主题的讨论只有当我们谈到 promises 的最后一个使用场景，也就是函数式编程的核心思想，延时性，才算完整。Haskell 是一种惰性语言。它和那些从上往下执行的脚本程序不一样，它是从定义了程序最终输出的表达式开始的 – 有什么需要写到标准输出，数据库等，然后反回来向前执行。它首先看最终的表达式是依赖哪些表达式来取得它们的输入值的，然后一直往前遍历整棵树图，直到整个程序为了它的输出结果反过来计算出所需的所有数据为止。只有需要用到的数据才会在程序里计算出来.</p>
+<p>很多时候，计算机领域的问题，最后找到的最佳解决方案都是需要找到最佳的数据结构来建模而得出来的。JavaScript 里有一个跟我刚才描述的情况非常相似的问题: 模块加载。你只想加载那些你的程序需要用到的模块，并且希望越快越好.</p>
+<p>在我们有 CommonJS 和 AMD 这类有了依赖关系意识的规范前，我们有好一些脚本加载库。它们基本的工作原理都是像我们上面的例子一样，通过显式向加载器声明你要加载的脚本哪些是可以并行下载的，哪些是一定要按某种顺序下载。你基本上都要说清楚下载的策略，要正确并有效的做好的是相当困难的。相反，通过描述脚本之间的依赖关系来让加载器优化下载策略就会容易很多.</p>
+<p>现在让我们来看看怎么实现 LazyPromise 的。这是一个 Promise，包含了一个可能会做异步操作的函数。这个函数只有在被调用 then() 这个方法的时候会被执行一次: 我们只有在有需要得到返回结果的时候才会开始执行。我们通过重写 then() 来判断一下如果还没有开始过的话就执行操作.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Promise = <span class="built_in">require</span>(<span class="string">'rsvp'</span>).Promise,</div><div class="line">    util    = <span class="built_in">require</span>(<span class="string">'util'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> LazyPromise = <span class="function"><span class="keyword">function</span><span class="params">(factory)</span> </span>{</div><div class="line">  <span class="keyword">this</span>._factory = factory;</div><div class="line">  <span class="keyword">this</span>._started = <span class="literal">false</span>;</div><div class="line">};</div><div class="line">util.inherits(LazyPromise，Promise);</div><div class="line"></div><div class="line">LazyPromise.prototype.then = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>._started) {</div><div class="line">    <span class="keyword">this</span>._started = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>._factory(<span class="function"><span class="keyword">function</span><span class="params">(error，result)</span> </span>{</div><div class="line">      <span class="keyword">if</span> (error) self.reject(error);</div><div class="line">      <span class="keyword">else</span> self.resolve(result);</div><div class="line">    });</div><div class="line">  }</div><div class="line">  <span class="keyword">return</span> Promise.prototype.then.apply(<span class="keyword">this</span>，<span class="built_in">arguments</span>);</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<p>比如说，下面这个程序什么也不会做: 因为我们没有向 promise 取值，没有需要执行任何操作:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> delayed = <span class="keyword">new</span> LazyPromise(<span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>{</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'Started'</span>);</div><div class="line">  setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'Done'</span>);</div><div class="line">    callback(<span class="literal">null</span>，<span class="number">42</span>);</div><div class="line">  }，<span class="number">1000</span>);</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>但是如果我们添加了下面这一行代码，那么程序就会打印出 Started，然后一秒后再打印出Done，最后打印出42:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">delayed.then(<span class="built_in">console</span>.log);</div></pre></td></tr></table></figure>
+
+<p>因为中间的异步操作是只处理一次的，所以调用 then() 多次会打印最终结果多次，但不会每次再执行异步操作:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">delayed.then(<span class="built_in">console</span>.log);</div><div class="line">delayed.then(<span class="built_in">console</span>.log);</div><div class="line">delayed.then(<span class="built_in">console</span>.log);</div><div class="line"></div><div class="line"><span class="comment">// prints:</span></div><div class="line"><span class="comment">// Started</span></div><div class="line"><span class="comment">// -- 1 second delay --</span></div><div class="line"><span class="comment">// Done</span></div><div class="line"><span class="comment">// 42</span></div><div class="line"><span class="comment">// 42</span></div><div class="line"><span class="comment">// 42</span></div></pre></td></tr></table></figure>
+
+<p>通过把以上简单的通用操作抽象出来，我们很容易就可以打造一个模块优化系统。想象一下我们要把一系列的模块这样处理一下: 每一个模块创建时都绑定了一个名字，一个它依赖的模块列表，和一个构造函数。这个构造函数会在执行时被传入所依赖的模块作为参数，然后返回本身这个模块的 API。这其实和 AMD 工作模式类似.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> A = <span class="keyword">new</span> Module(<span class="string">'A'</span>，[]，<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">  <span class="keyword">return</span> {</div><div class="line">    logBase: <span class="function"><span class="keyword">function</span><span class="params">(x，y)</span> </span>{</div><div class="line">      <span class="keyword">return</span> <span class="built_in">Math</span>.log(x) / <span class="built_in">Math</span>.log(y);</div><div class="line">    }</div><div class="line">  };</div><div class="line">});</div><div class="line"></div><div class="line"><span class="keyword">var</span> B = <span class="keyword">new</span> Module(<span class="string">'B'</span>，[A]，<span class="function"><span class="keyword">function</span><span class="params">(a)</span> </span>{</div><div class="line">  <span class="keyword">return</span> {</div><div class="line">    doMath: <span class="function"><span class="keyword">function</span><span class="params">(x，y)</span> </span>{</div><div class="line">      <span class="keyword">return</span> <span class="string">'B result is: '</span> + a.logBase(x，y);</div><div class="line">    }</div><div class="line">  };</div><div class="line">});</div><div class="line"></div><div class="line"><span class="keyword">var</span> C = <span class="keyword">new</span> Module(<span class="string">'C'</span>，[A]，<span class="function"><span class="keyword">function</span><span class="params">(a)</span> </span>{</div><div class="line">  <span class="keyword">return</span> {</div><div class="line">    doMath: <span class="function"><span class="keyword">function</span><span class="params">(x，y)</span> </span>{</div><div class="line">      <span class="keyword">return</span> <span class="string">'C result is: '</span> + a.logBase(y，x);</div><div class="line">    }</div><div class="line">  };</div><div class="line">});</div><div class="line"></div><div class="line"><span class="keyword">var</span> D = <span class="keyword">new</span> Module(<span class="string">'D'</span>，[B，C]，<span class="function"><span class="keyword">function</span><span class="params">(b，c)</span> </span>{</div><div class="line">  <span class="keyword">return</span> {</div><div class="line">    run: <span class="function"><span class="keyword">function</span><span class="params">(x，y)</span> </span>{</div><div class="line">      <span class="built_in">console</span>.log(b.doMath(x，y));</div><div class="line">      <span class="built_in">console</span>.log(c.doMath(x，y));</div><div class="line">    }</div><div class="line">  };</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>现在我们有了一个钻石模型图: D 依赖于 B 和 C，而它们两个又依赖于 A。这就意味着我们可以加载 A，然后并行加载 B 和 C，当 B 和 C 都加载完后，我们就可以加载 D 了。但是，我们希望我们的工具可以帮我们计算出来，而不是我们自己来实现这个策略.</p>
+<p>我们可以通过把模块建模为 LazyPromise 的子类后很容易的实现。它的构造函数可以通过使用前面的列表 promise 辅助函数来取得它的依赖模块，然后在某一个延时后创建这些依赖模块来模拟异步加载的延时效果.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> DELAY = <span class="number">1000</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> Module = <span class="function"><span class="keyword">function</span><span class="params">(name，deps，factory)</span> </span>{</div><div class="line">  <span class="keyword">this</span>._factory = <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>{</div><div class="line">    list(deps).then(<span class="function"><span class="keyword">function</span><span class="params">(apis)</span> </span>{</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'-- module LOAD: '</span> + name);</div><div class="line">      setTimeout(<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'-- module done: '</span> + name);</div><div class="line">        <span class="keyword">var</span> api = factory.apply(<span class="keyword">this</span>，apis);</div><div class="line">        callback(<span class="literal">null</span>，api);</div><div class="line">      }，DELAY);</div><div class="line">    });</div><div class="line">  };</div><div class="line">};</div><div class="line">util.inherits(Module，LazyPromise);</div></pre></td></tr></table></figure>
+
+<p>因为 Module 是一个 LazyPromise，单纯定义模块并不会加载任何东西回来。只有当我们需要开始使用的时候，加载才会执行:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">D.then(<span class="function"><span class="keyword">function</span><span class="params">(d)</span> </span>{ d.run(<span class="number">1000</span>，<span class="number">2</span>) });</div><div class="line"></div><div class="line"><span class="comment">// prints:</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">// -- module LOAD: A</span></div><div class="line"><span class="comment">// -- module done: A</span></div><div class="line"><span class="comment">// -- module LOAD: B</span></div><div class="line"><span class="comment">// -- module LOAD: C</span></div><div class="line"><span class="comment">// -- module done: B</span></div><div class="line"><span class="comment">// -- module done: C</span></div><div class="line"><span class="comment">// -- module LOAD: D</span></div><div class="line"><span class="comment">// -- module done: D</span></div><div class="line"><span class="comment">// B result is: 9.965784284662087</span></div><div class="line"><span class="comment">// C result is: 0.10034333188799373</span></div></pre></td></tr></table></figure>
+
+<p>正如你所见到的，A 首先加载，当它完成后 B 和 C 开始同时下载，然后当它们都加载完后  D 开始加载，正如我们想要的那样。如果你只是执行 C.then(function() {})，你可以看到只有 A 和 C 加载; 关系图里没需要用到的是没有加载的.</p>
+<p>所以，基本上不需要太多代码，只需要定义好懒 promises 的关系图，我们就实现了一个正确的模块加载器。我们使用的是函数式编程里面的定义值的依赖关系这种方式，而不是显式控制程序执行顺序的方式来解决问题，并且这种方式比起自己控制执行流程更加容易。你可以给出任何非循环依赖关系图来让这个模块加载库帮你优化执行顺序.</p>
+<p>这才是 promises 的真正强大之处。它们并不仅仅从语法层面减少代码嵌套。它们让你再更高的层面来为你的问题抽象建模，和让你的工具帮你做更多的工作。事实上，那应该是我们必须向我们的软件提出的要求。如果 Node 真的希望把并行编程更容易的话，它们应该重新考虑一下 promises.</p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="Promise" scheme="http://www.thinkingincrowd.me/tags/Promise/"/>
+    
+      <category term="Callback" scheme="http://www.thinkingincrowd.me/tags/Callback/"/>
+    
+      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
+    
+      <category term="NodeJS" scheme="http://www.thinkingincrowd.me/tags/NodeJS/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Thanks to everyone, Zach Lendon, Github, AngularJS]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
+    <id>http://www.thinkingincrowd.me/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/</id>
+    <published>2013-09-23T22:24:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog’s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:  </p>
+<ol>
+<li>Total Visits <strong>616</strong>  </li>
+<li>Unique Visitors: <strong>555</strong>  </li>
+<li>Pageviews: <strong>793</strong>  </li>
+<li>Pages / visit: <strong>1.29</strong>  </li>
+<li>% New Visits: <strong>88.31%</strong>  </li>
+</ol>
+<p>Thanks to everyone who visited my blogs and made all those suggestive comments, such as Da.  I will strive to write more valuable articles to keep my knowledge and help others.  Hopefully, the return visits can grow more.  </p>
+<p>I happened to found that This particular <a href="http://www.thinkingincrowd.me/blog/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/" target="_blank" rel="external">article</a> about <a href="http://angularjs.org" target="_blank" rel="external">AngularJS</a> <a href="http://docs.angularjs.org/api/ngMock.$httpBackend" target="_blank" rel="external">$httpBackend</a> brought me <strong>215</strong> visits.  I think that should be due to a patch I submitted to AngularJS in <a href="https://github.com" target="_blank" rel="external">Github</a>.  How valuable for that patch!!  I will try to contribute more to the opensource.  </p>
+<p>Personally, I need to thank Zach Lendon who has referred my blog in his article about <a href="http://zachlendon.github.io/blog/2013/04/02/updated-extjs4-mock-ajax-library-for-jasmine/" target="_blank" rel="external">ExtJS4 Ajax testing</a>.  His referral brought me <strong>8</strong> visits.  I originally want to thank him in his blog but there is no comments enabled there.  So here gives my sincere thanks too.  </p>
+<p>Do not ask but give.  You will earn more.  Thanks guys.</p>
+]]></content>
+    
+    
+      <category term="ExtJs" scheme="http://www.thinkingincrowd.me/tags/ExtJs/"/>
+    
+      <category term="Jasmine" scheme="http://www.thinkingincrowd.me/tags/Jasmine/"/>
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="UnitTest" scheme="http://www.thinkingincrowd.me/tags/UnitTest/"/>
+    
+      <category term="Ajax" scheme="http://www.thinkingincrowd.me/tags/Ajax/"/>
+    
+      <category term="Mock" scheme="http://www.thinkingincrowd.me/tags/Mock/"/>
+    
+      <category term="AngularJS" scheme="http://www.thinkingincrowd.me/tags/AngularJS/"/>
+    
+      <category term="HttpBackend" scheme="http://www.thinkingincrowd.me/tags/HttpBackend/"/>
+    
+      <category term="JSON" scheme="http://www.thinkingincrowd.me/tags/JSON/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[How to support page content i18n in AngularJS]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
+    <id>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</id>
+    <published>2013-08-29T12:16:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n" target="_blank" rel="external">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn’t really help us a lot to do what we want basically for i18n, language change support of the web page content.  </p>
+<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application" target="_blank" rel="external">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org" target="_blank" rel="external">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?  </p>
+<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven’t done performance test for extremely large page yet.  </p>
+<p>Let’s see how it’s done.  </p>
+<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">factory(<span class="string">'LocaleManager'</span>, <span class="function"><span class="keyword">function</span><span class="params">($resource, $rootScope)</span> </span>{</div><div class="line">    <span class="keyword">var</span> langs = {},</div><div class="line">        LocaleManager = $resource(<span class="string">'/js/i18n/resources-locale_:lang.js'</span>,</div><div class="line">            {port: <span class="string">':3000'</span>, lang: <span class="string">'en_US'</span>});</div><div class="line"></div><div class="line">    LocaleManager.load = <span class="function"><span class="keyword">function</span><span class="params">(language)</span> </span>{</div><div class="line">        <span class="keyword">if</span> (langs[language]) {</div><div class="line">            <span class="keyword">if</span> ($rootScope.language !== language) {</div><div class="line">                $rootScope.language = language;</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> LocaleManager.get({lang: language}, <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{</div><div class="line">            langs[language] = data;</div><div class="line">            $rootScope.language = language;</div><div class="line">        });</div><div class="line">    };</div><div class="line"></div><div class="line">    LocaleManager.getText = <span class="function"><span class="keyword">function</span><span class="params">(text, language)</span> </span>{</div><div class="line">        <span class="keyword">if</span> (language === <span class="string">'en_US'</span>) {</div><div class="line">            <span class="keyword">return</span> text;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (langs[language] && langs[language][text]) {</div><div class="line">            <span class="keyword">return</span> langs[language][text];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> text;</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="keyword">return</span> LocaleManager;</div><div class="line">})</div></pre></td></tr></table></figure>
+
+<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope" target="_blank" rel="external">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.  </p>
+<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate" target="_blank" rel="external">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.  </p>
+<pre><code><span class="xml"></span><span class="expression">{{ <span class="variable">LocaleManager.getText</span>('<span class="variable">Login</span>', <span class="variable">language</span>) }}</span><span class="xml"></span>
+</code></pre><p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter" target="_blank" rel="external">$filter</a> for translation instead of calling a method from Service class.  Haven’t tried that yet and will give an update here once done.</p>
+<p>Do you have experience on i18n in AngularJS?  Thoughts and comments are appreciated.</p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="AngularJS" scheme="http://www.thinkingincrowd.me/tags/AngularJS/"/>
+    
+      <category term="i18n" scheme="http://www.thinkingincrowd.me/tags/i18n/"/>
+    
+      <category term="SPA" scheme="http://www.thinkingincrowd.me/tags/SPA/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[至关重要的关系]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/06/29/startup-review-network/"/>
+    <id>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</id>
+    <published>2013-06-28T23:59:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/" target="_blank" rel="external">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY" target="_blank" rel="external">至关重要的关系</a>了。</p>
+<h2 id="比能力重要">比能力重要</h2>
+<p>其实我本人对＂关系＂这个词自然而然的会持否定的态度，因为在很多地方，很多人靠不正当关系和手段，谋取职位或升迁。我不喜欢靠＂关系＂，所以才当程序员，才不去国企，和在小公司待那么久。但工作8年以来，我确实靠关系得到不少机会。正如书中所说：  </p>
+<blockquote>
+<p>斯坦福大学组织行为学教杰弗瑞•菲弗 (Jeffrey Pfeffe) 搜集整理的证据表明人们在升职的时候，人际关系过硬以及与老板的友好关系比能力更重要。这并不是无法无天的任人唯亲和权术 (尽管有时候很不幸确实如此) ，这种做法有令人信服的理由：一个稍许平庸但能很好地处理人际关系并为团队做贡献的人比一个百分之百能力但无法进行团队合作的人对公司更有利。  </p>
+</blockquote>
+<p>不过这些必须是靠能力建立起来的过硬的关系，要不然就真的是＂不正当关系＂了，并不能持久。  </p>
+<h2 id="如何建立">如何建立</h2>
+<h3 id="被动式">被动式</h3>
+<p>如果你懒得建立与维护人脉，那就用 <em>@蔡学墉</em> 一段微博总结的方法吧：  </p>
+<blockquote>
+<p>设法让自己能力强大，把自己变成值得被他人所利用的资源。这么一来，虽然不一定过得太好，但肯定不会过得太差。</p>
+</blockquote>
+<h3 id="付出">付出</h3>
+<p>我之前建立的关系，虽然不是完全这样被动式，但也只是在工作中，任劳任怨，努力把自己变优秀，树立好的形象，并主动帮助别人，分享自己的知识。我之前并不觉得有什么特别，但看了这本书后，才知道其实已经用了书中说的最好的方法，就是<strong>真心帮助别人</strong>。日前，一位其实和我并不太熟悉的旧同事，在跳槽的时候，竟然打电话给我，咨询我的意见，这真是让我觉得颇为惊讶。回头一想，自己能被当作值得信赖或听取一点建议的对象，几年的努力，值得了。  </p>
+<h3 id="不烦人">不烦人</h3>
+<p>一直以来，我都没有刻意去扩大自己的网络。除了因为上面说的一些偏见和我确实认为我没什么技巧去做这些事情外，其实我是内向型的人，就是别人没有对我表示出善意的情况下，我是基本不会先迈出第一步的，还有我很怕会烦到别人。  </p>
+<p>但书中其实有说：  </p>
+<blockquote>
+<p>你一点也不烦人。</p>
+<p>如果说巩固某段关系最好的办法是帮助对方，那么位居第二的方法就是接受对方的帮助。正如本•富兰克林曾说过的：＂如果你想交朋友，让别人帮你个小忙。＂</p>
+</blockquote>
+<p>所以呢，我决定今后多一点去＂打搅＂一些人。各位要有心里准备哦。  </p>
+<h2 id="优质关系网">优质关系网</h2>
+<p>人际关系理论中有个很出名的邓巴数 (Dunbar’s number)，说的是我们每个人可以维持的关系数目最多不超过150个。而且还有个六度分隔理论，就是平均只要通过六个人，你就可以联系到地球上任何一个人。  </p>
+<p>虽然说六度分隔理论，理论上可以让你联系到任何人，但其实链条后面一些关系并不能对你的事业起什么大的作用。能极大影响你的事业和获取信息的是人际关系是前三层，就是一直延伸到你的好朋友(第一层)的好朋友(第二层)的好朋友(第三层)。所以，如果邓巴数里说的主要是你的第一层强关系，算上之后两层的话，你的关系网络数目会远大于邓巴数。这三层中彼此之间都有至少一个强关系纽带，相互认识和引荐的可能性非常高，因为彼此有足够了解和信任。当然强关系中很多是重合的，就是你好朋友的好朋友本来就是你的好朋友。而且可能你们的圈子相近，那么他们获取的信息，可能你也知道了的。  </p>
+<p>所以书中提及另一种关系 - 弱关系，既是那些和你接触不多的人。它比强关系占优的地方是可能可以给你提供额外消息来源。所以如果要结合两种优点，我们必须尝试寻找一些其他圈子来建立强关系，这就需要我们去参加一些社团之类的活动了。  </p>
+<p>所以，基于自己在这方面的短板，我也已经尝试去参加一些行业会议，社区和非自己行业但感兴趣的活动群体，比如英语学习的。我也正在尝试围绕自己，寻找志同道合者，建立一个分享机遇和资源的网络。其实要打造一个网络很难，我一直想做，但都没能做好。鹄言乱语社区刚筹备，看能否得到各位好友支持了。  </p>
+<p>优质网络的基本要求：  </p>
+<blockquote>
+<p>第一，每个人都很优秀。<br>第二，每个群体都有一个共同特征，… 指引大家走到一起。<br>第三，地理密度也很重要。<br>第四，分享和合作风气浓厚。  </p>
+</blockquote>
+<p>从实际情况看，这种优质网络的起源，基本都是在同一公司干过，并同甘共苦之人，比如著名的 PayPal 黑手党。所以，恰当的跳槽，对打造网络也是有好处的。  </p>
+<h2 id="机遇">机遇</h2>
+<p>如果能力上来了，而且关系网能基本建立起来，机会就会逐渐来临了。  </p>
+<blockquote>
+<p>企业家博•皮博迪 (Bo Peabody) 曾说过：＂让幸运来临的最好做法是确保很多事情发生。＂  </p>
+</blockquote>
+<p>所以说，<strong>机会给有准备的人</strong>，我觉得其实一方面的意思是你要通过自己不断地努力尝试，去主动制造而来的。  </p>
+<p>有了机会，其实等于你面前多了一项选择。那你选择什么，是否决定承担某种风险而改变原来的规划，就涉及到风险评估了。  </p>
+<h2 id="风险">风险</h2>
+<p>我个人应该是偏保守的，做事情都想得比较多，看哪种选择能带来最大好处。而且比较犹豫，不够果断。因为我比较怕有什么风险。但其实我们通常会高估风险 (可能不适用于一些盲目炒股人士，呵呵) 。  </p>
+<blockquote>
+<p>神经心理学家里奇•汉森 (Rich Hanson) 是这么说的：＂为了让我们的祖先存活，大自然母亲会时不时地玩弄一下他们，让他们犯三个错误：过高估计风险、过低估计机遇、过低估计资源 (资源是用来应对风险、好好利用机遇的) 。＂  </p>
+</blockquote>
+<p>一般希望稳定的人，都不希望有变动。但这有可能恰恰是更危险的。所以，个人认为所谓稳定的公务员，国企什么的，一些没什么解聘机制的单位，将来风险很高。我们一定要有永久测试心态，适时变动。  </p>
+<blockquote>
+<p>从短期来看，变动少其实也是一种稳定。从长期来看，变动少很容易导致不堪一击，因为它会减弱系统对突发状况的应对能力。  </p>
+</blockquote>
+<p>还有就是一般认为，有多几种后备方案，风险就小点。但其实这和<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/" target="_blank" rel="external">前面</a>说到的＂粗糙＂的心是相违背的。正如我们学习编程语言，如果说打算学学这，学学那，然后什么工作都能找到的话，往往是什么工作都找不到。    </p>
+<blockquote>
+<p>＂保留多重选择＂实际上比专心将一项计划付诸实践更具有风险。</p>
+</blockquote>
+<p>回首自己工作来最大的机遇，可能是之前一位旧老板邀请我去上海和他创业。不过当时放不下另一个在香港的机遇，因为当时自我定位不同，对旧公司的忠心，和对家人的考虑，没接受，有点遗憾。因为在珠海确实没什么 IT 氛围和环境，对自我成长有比较大的约束。但其实也没有后悔，因为家人还是最重要的，继续在自己可接受风险范围寻求突破吧。  </p>
+]]></content>
+    
+    
+      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
+    
+      <category term="Startup" scheme="http://www.thinkingincrowd.me/tags/Startup/"/>
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Network" scheme="http://www.thinkingincrowd.me/tags/Network/"/>
+    
+      <category term="Opportunity" scheme="http://www.thinkingincrowd.me/tags/Opportunity/"/>
+    
+      <category term="Risk" scheme="http://www.thinkingincrowd.me/tags/Risk/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[永久测试之心, 寻求真我]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/"/>
+    <id>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</id>
+    <published>2013-06-25T22:39:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>最近看了李开复作序的书：<a href="http://www.amazon.cn/dp/B00COJ3CVY" target="_blank" rel="external">至关重要的关系</a>，也就是<a href="http://www.amazon.com/dp/B008NXKYNO" target="_blank" rel="external">THE START-UP OF YOU</a>的译本。书的英文原名和它的意图其实想说明的是，每个人其实都是和企业家一样，具备相同的特质。  </p>
+<blockquote>
+<p>广义的企业家精神：自主独立，足智多谋，满怀抱负，灵活变通，并拥有广泛的人脉。企业家精神是一种生活态度，而不是一个商业概念；是伴随一生的观念，而不只是某一代人的想法。</p>
+</blockquote>
+<p>这本是 <a href="www.linkedin.com">LinkedIn</a> 创始人 Reid Hoffman 和 硅谷企业家 Ben Casnocha 一起写的书。其实书的内容并不只讲述如何建立重要的人际网络关系，还阐明当前变幻无常的职业环境下，怎么样才能保持竞争力。不知道怎么译成中文书名，就变成只突出关系了，可能为了迎合国内对关系的依赖心理吧。  </p>
+<blockquote>
+<p>你的竞争优势是由三种各不相同且不断变化的力量相互作用而形成的：你的资产、你的追求/价值观和市场现实，即你的综合能力在竞争市场的供应状况。</p>
+</blockquote>
+<h2 id="真我，追求">真我，追求</h2>
+<p>书中一段让我非常有感触：  </p>
+<blockquote>
+<p>你的内心不存在能通过自省发现并为你指明正确方向的＂真我＂。是的，你的追求塑造了你所做的事，但是追求本身就受到你的行动和经历的限制。个性不是你找到的，而是自己浮现的。  </p>
+</blockquote>
+<p>其实我一直想通过自省来寻找到自我，但发觉真的太难了。身边也缺乏很好的 Mentor，所以一直感觉有点迷茫。我到底应该怎么前行呢？直到看完上面那段话后，终于可以释怀了。回想起前段日子看到 <em>@玉伯也叫射雕</em> 说的＂心要粗糙点＂，<em>@周鸿玮</em> 的这篇<a href="http://m.blog.sina.com.cn/s/blog_49f9228d0101c9pr.html?retcode=0" target="_blank" rel="external">不喜欢的工作，可能通往一个崭新世界</a>，和自己迷茫前走过的路程，也确实是这么走过来的。  </p>
+<p>高考时我就是想考计算机专业，没什么理由。毕业时就是想转行从事软件开发，而不是专业的电子方向 (没考上计算机)。还有就是大学时出国留学的想法以至狂学 TOEFL 和 GRE。 至今我也不知道当时为什么这么想，只是有点一根筋的感觉。  </p>
+<p>之前的工作生涯，领导让做什么我就做什么，说去哪个项目就到哪去，不挑活，只认真干。当时的＂真我＂就是做 BA 或者 Consultant (以前感觉那种职位比码农高级点，现在发现沟通和需求分析根本就是码农必备技能)，而且公司也是主靠这部分业务，所以个人在公司发展可以说一帆风顺。快速学习和解决问题的能力，抗压能力，良好沟通能力也同时在这样情况下培养出来。  </p>
+<h2 id="永久测试之心">永久测试之心</h2>
+<blockquote>
+<p>把职业始终保持在测试阶段，可以强迫自己承认自身还有缺陷，还存在发展空间，还需要适应和进步。不过，这种心态也十分乐观，因为这意味着你有能力改善自己，同时也有能力改变周围的世界。</p>
+</blockquote>
+<p>永久测试其实是对非常流行的观点＂我们必须找到自己心中真正的优势和渴望做的事情，然后坚持不懈的努力下去，终将取得非凡成就＂进行必要的一些补充和修订。  </p>
+<p>虽然如上面所说，自我/价值观需要坚定的去追求，但它也不是一成不变的。因为一开始我们的追求可能是空泛的，含糊的，没有具体步骤和验证过的。我们有时可能只是想当然认为自己想做什么，可以做什么，但不知道能不能做或怎么做。所以必须在实践中验证，也就是不断测试调整的一个过程。  </p>
+<p>永久测试其实也是应对市场现实而提出的要求。如果你的优势和能力，并没有市场需求的话也是白搭。其实这个观点和 <a href="http://www.amazon.com/dp/0307887898" target="_blank" rel="external">LEAN STARTUP</a> 里面的 Build-Measure-Learn 这样一个反馈循环正是异曲同工之处。因为我们面对的是迅速变化的市场和趋势，我们必须像打造一个产品一样，不断测试我们身上的技能是否还满足市场的需求。  </p>
+<p>之前从一家毕业后一直工作了7年的公司离职，除了公司一些长久问题，个人已经不太抱希望管理层能解决外，也是感觉需要去外面的世界看看，测试一下自己能否适应市场的需求。后来面试发现，在珠海这个地方，需要多面手的地方不多，自己看重的广泛技能，英语，沟通和快速学习能力并没多少人欣赏。招聘方看你那么多年经验，基本就是看你在他们想要的技术方面，能深入多少，因为他们多数要的是专才。  </p>
+<p>但这却是我的短板。我并没哪项技术钻研的很深，脚踏的不够坚实。其实我之前也一直缺乏一定自信，总觉得底气不够。所以，我也就正好调整了一下＂真我＂，决心专攻某一样技术，JS。今后嘛，还是保持一颗<strong>钝</strong>和<strong>粗糙</strong>的心，坚持下去并测试以验证之。  </p>
+<blockquote>
+<p>在任何情况下，能够检验我们设想的是行动而非计划。只有在实践过程中才能找到自己努力的方向以及方法。</p>
+</blockquote>
+<h2 id="ABZ计划">ABZ计划</h2>
+<p>这是作者提出来的一种规划手段。  </p>
+<ul>
+<li>A计划：是我们目前从事的事业，一个我们发挥竞争优势的地方。但是在计划执行过程中，我们还是需要时刻根据情况微调，还有试探性寻求B计划。  </li>
+<li>B计划：在执行A计划途中，如果发现目标或实现途径出现比较大的变化，甚至说客观环境发生重大变动等，就要跳到B计划了。但是B计划从哪冒出来的？其实在不断学习和调整方向中得到。它应该是和A计划不同但相关的方向。最好的方式是在执行A计划同时，从兼职开始做起，试探性去尝试一些想法。这个计划不是仔细计划出来的，而是摸索出来的。    </li>
+<li>Z计划：这已经是我们的最差打算了。就是万一失业了，什么都没有了，我们可以怎么做？银行剩下的钱可以支撑多少个月没工作？这段时间是否足够学新技能？  </li>
+</ul>
+<p>其实作者强调的就是<strong>不断学习，寻找和调整方向，而且确保有救生方案支撑转变</strong>。</p>
+<h2 id="确立身份">确立身份</h2>
+<blockquote>
+<p>我们应该确立一种身份地位，使其不受老板、地域以及行业的影响。</p>
+</blockquote>
+<p>这也是文章里让我觉得很重要的一句。因为当今，及往后的职业发展环境，是＂横向＂忠于职业，而非＂纵向＂忠于老板。当然这并非说朝三暮四，到处跳槽。因为无论在哪就职，为所在企业全力拼搏，也是提高自我竞争力，打造人脉的关键。而作者想强调的是，因为世界变化太快了，每个企业，每个行业都有可能发生巨大变化和转折点，比如数码相机的到来导致柯达的没落；智能手机的出现，使得 Nokia 被抛离。所以这种独立于老板，甚至是行业的自身技能身份定位，为日后应对市场变化非常重要。  </p>
+<p>所以，对于我们从事 IT 的人来说，写个博客，多参于一些开源项目和活动，做些工作外的作品，是很有必要的。  </p>
+<p>确保自身技能跟得上变化后，剩下的就是关系问题了。</p>
+]]></content>
+    
+    
+      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
+    
+      <category term="Startup" scheme="http://www.thinkingincrowd.me/tags/Startup/"/>
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
+    
+      <category term="Permanent" scheme="http://www.thinkingincrowd.me/tags/Permanent/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Function definition, this and bind in JavaScript]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
+    <id>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</id>
+    <published>2013-06-14T12:00:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don’t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> TestObj = {</div><div class="line">    a: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'A'</span>);</div><div class="line">    },</div><div class="line">    b: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'B'</span>);</div><div class="line">        <span class="keyword">this</span>.a();</div><div class="line">    }</div><div class="line">};</div><div class="line"></div><div class="line">TestObj.b();</div><div class="line"></div><div class="line"><span class="keyword">var</span> c = TestObj.b;</div><div class="line">c();</div></pre></td></tr></table></figure>
+
+<p>The result will be as below, right?  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">B</div><div class="line">A</div><div class="line">B</div><div class="line">A</div></pre></td></tr></table></figure>
+
+<p>You might suspiciously answer No but If your instint doesnot tell you that and why, then you don’t know JavasScript well either like me.  The result actually is:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">B</div><div class="line">A</div><div class="line">B</div><div class="line"><span class="built_in">TypeError</span>: <span class="built_in">Object</span> [object global] has no method <span class="string">'a'</span></div></pre></td></tr></table></figure>
+
+<p>It is a little bit awkward or counterintuitive at first glance but it’s JavaScript.  It’s the feature and amazing part.  Let’s break it down piece by piece and see why.  </p>
+<h2 id="Function_definition">Function definition</h2>
+<p>The <em>TestObj</em> includes two methods.  The Function definition there actually creates two anonymous functions and then the references to the functions are assigned to the properties <em>a</em> and <em>b</em>.  Those two functions are not owned by <em>TestObj</em> and just referred by the two properties of <em>TestObj</em>.  This is the most important part causes the confusion.  Hence, above code has not much difference than below except now we assign a name <em>B</em> for one of the function:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span><span class="params">()</span> </span>{</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'B'</span>);</div><div class="line">    <span class="keyword">this</span>.a();</div><div class="line">};</div><div class="line"></div><div class="line"><span class="keyword">var</span> TestObj = {</div><div class="line">    a: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'A'</span>);</div><div class="line">    },</div><div class="line">    b: B</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<h2 id="this">this</h2>
+<p>In <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm" target="_blank" rel="external">ECMA-262</a> edition 5.1:  </p>
+<blockquote>
+<p><strong>10.4.3 Entering Function Code</strong><br>The following steps are performed when control enters the execution context for function code contained in<br>function object F, a caller provided thisArg, and a caller provided argumentsList:  </p>
+<ol>
+<li>If the function code is strict code, set the ThisBinding to thisArg.  </li>
+<li>Else if thisArg is null or undefined, set the ThisBinding to the global object.  </li>
+<li>Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).  </li>
+<li>Else set the ThisBinding to thisArg.<br>…</li>
+</ol>
+</blockquote>
+<p><em>this</em> is a special keyword refers to the binding object in the current execution context of the Function.  </p>
+<p>Once we invoke the Function through Object method, the <em>this</em> inside the Function body actually has been set to the <em>TestObj</em> instance.  Hence, <em>TestObj.b()</em> logs B and A consecutively because <em>this.a</em> exists as a property of <em>TestObj</em>.  </p>
+<p>However, below statements mean differently.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> c = TestObj.b;</div><div class="line">c();</div></pre></td></tr></table></figure>
+
+<p>Actually, variable <em>c</em>  is just another reference pointing to Function B.  Hence <em>c()</em> is same as <em>B()</em>.  When directly invoking Function B, the <em>this</em> is bound to global object.  Because there is no <em>a</em> defined in the global object, error occurs.   </p>
+<h2 id="How_to_set_a_particular_object_as_this_to_function">How to set a particular object as <em>this</em> to function</h2>
+<p>It’s commonly known that <em>call</em> and <em>apply</em> method can be called on the Function object providing a specific object as <em>this</em>, say:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> c = TestObj.b;</div><div class="line">c.call(TestObj);</div></pre></td></tr></table></figure>
+
+<p>The result is desirable.  However, this approach invokes the Function immediately.  This is normally not the case that a Function has to be assigned to a Reference and passed around which is meant to be executed dynamically, like:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">dynamic</span><span class="params">(fn)</span> </span>{</div><div class="line">  fn();</div><div class="line">}</div><div class="line"></div><div class="line">dynamic(TestObj.b);</div></pre></td></tr></table></figure>
+
+<p>In this case, we should not use <em>fn.call(TestObj)</em> or <em>fn.apply(TestObj)</em> because it’s a generic Function which should have no knowledge on the Function passed in.  Hence, above is not working.  </p>
+<p>There is still another lifesaver though.  The <em>bind</em> method of Function.  This method can take the passed in Object like what <em>call</em> or <em>apply</em> does, but it returns a new Function whose <em>this</em> binding is set to the Object passed in.  So, above code can be revised as:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">dynamic</span><span class="params">(fn)</span> </span>{</div><div class="line">  fn();</div><div class="line">}</div><div class="line"></div><div class="line">dynamic(TestObj.b.bind(TestObj));</div></pre></td></tr></table></figure>
+
+<p>It’s fun, isn’t it?</p>
+<p>[Edited on 2013/06/17]: Today, I saw another case which maybe confusing too.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> length = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">logLength</span><span class="params">()</span> </span>{</div><div class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.length);</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">var</span> TestObj = {</div><div class="line">    length: <span class="number">2</span>,</div><div class="line">    b: logLength,</div><div class="line">    c: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        (<span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>{</div><div class="line">            <span class="built_in">arguments</span>[<span class="number">0</span>]();</div><div class="line">        })(logLength);</div><div class="line">    }</div><div class="line">};</div><div class="line"></div><div class="line">TestObj.b();</div><div class="line">TestObj.c();</div></pre></td></tr></table></figure>
+
+<p>What do you think the console should log?  Will it be <em>2</em> and <em>3</em>?  Actually, the result is <em>2</em> and <em>1</em>.  Because the <em>TestObj.c()</em> actually is calling the function <em>logLength</em> on the arguments Object, and then the <em>this.length</em> is referring to its own length, which is <em>1</em>.  </p>
+<p>More fun, right?</p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="Function definition" scheme="http://www.thinkingincrowd.me/tags/Function-definition/"/>
+    
+      <category term="this" scheme="http://www.thinkingincrowd.me/tags/this/"/>
+    
+      <category term="bind" scheme="http://www.thinkingincrowd.me/tags/bind/"/>
+    
+      <category term="Execution context" scheme="http://www.thinkingincrowd.me/tags/Execution-context/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[How to verify JSON data with AngularJS $httpBackend]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
+    <id>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</id>
+    <published>2013-06-08T14:17:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it’s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend" target="_blank" rel="external">$httpBackend</a> in ngMock module.  </p>
+<p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.  </p>
+<blockquote>
+<p><strong>expect(method, url, data, headers)</strong><br>Creates a new request expectation.</p>
+<p>Parameters  </p>
+<ul>
+<li>method – {string} – HTTP method.  </li>
+<li>url – {string|RegExp} – HTTP url.  </li>
+<li>data(optional) – {(string|RegExp)=} – HTTP request body.</li>
+</ul>
+</blockquote>
+<p>So normally, below simple case is working as expected:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$httpBackend.expect(<span class="string">'POST'</span>, <span class="string">'http://localhost/timeEntry'</span>, <span class="string">'hello'</span>).respond(<span class="number">200</span>, <span class="string">'Done'</span>);</div><div class="line">$resource(<span class="string">'http://localhost/timeEntry/'</span>).save(<span class="string">'hello'</span>);</div><div class="line">$httpBackend.flush();</div><div class="line"></div><div class="line">$httpBackend.expect(<span class="string">'POST'</span>, <span class="string">'http://localhost/timeEntry'</span>, <span class="regexp">/te/g</span>).respond(<span class="number">200</span>, <span class="string">'Done'</span>);</div><div class="line">$resource(<span class="string">'http://localhost/timeEntry/'</span>).save(<span class="string">'test'</span>);</div><div class="line">$httpBackend.flush();</div></pre></td></tr></table></figure>
+
+<p>However, in real application, the data posted to server is normally in JSON format.  How do we verify JSON data then?  Actually, if we look into the source of the <em>angular-mocks.js</em>, it supports JSON data too although it’s not documented.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.matchData = <span class="function"><span class="keyword">function</span><span class="params">(d)</span> </span>{</div><div class="line">  <span class="keyword">if</span> (angular.isUndefined(data)) <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">  <span class="keyword">if</span> (data && angular.isFunction(data.test)) <span class="keyword">return</span> data.test(d);</div><div class="line">  <span class="keyword">if</span> (data && !angular.isString(data)) <span class="keyword">return</span> angular.toJson(data) == d;</div><div class="line">  <span class="keyword">return</span> data == d;</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<p>So below sample also works.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$httpBackend.expect(<span class="string">'POST'</span>, <span class="string">'http://localhost/timeEntry'</span>, {firstName: <span class="string">'Ken'</span>, lastName: <span class="string">'Chen'</span>}).respond(<span class="number">200</span>, <span class="string">'Done'</span>);</div><div class="line">$resource(<span class="string">'http://localhost/timeEntry/'</span>).save({firstName: <span class="string">'Ken'</span>, lastName: <span class="string">'Chen'</span>});</div><div class="line">$httpBackend.flush();</div></pre></td></tr></table></figure>
+
+<p>As we see, the JSON data validation requires the JSON data posted to be exactly the same as the expect value provided.  How if the JSON data posted is different on each posting, say guid or timestamp field is contained, and we want to verify whether the JSON data is valid based on our special valiation logic?  </p>
+<p>Here is the hack to make AngularJS take our special validation logic.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Validator = (<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    <span class="keyword">return</span> {</div><div class="line">        hasMinimumFields: <span class="function"><span class="keyword">function</span><span class="params">(entry)</span> </span>{</div><div class="line">            <span class="keyword">return</span> StringUtil.isNotBlank(entry.id) && StringUtil.isNotBlank(entry.desc) &&</div><div class="line">                StringUtil.isNotBlank(entry.lastUpdateOn) && StringUtil.isNotBlank(entry.status);</div><div class="line">        },</div><div class="line">        isNewEntry: <span class="function"><span class="keyword">function</span><span class="params">(entry)</span> </span>{</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.hasMinimumFields(entry) && entry.status === <span class="string">'P'</span>;</div><div class="line">        }</div><div class="line">    };</div><div class="line">})();</div><div class="line"></div><div class="line">$scope.desc = <span class="string">'Hello there'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> data = {</div><div class="line">    test: <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{</div><div class="line">        <span class="keyword">var</span> entry = angular.fromJson(data);</div><div class="line">        <span class="keyword">return</span> (entry.desc === $scope.desc) && Validator.isNewEntry(entry);</div><div class="line">    }</div><div class="line">};</div><div class="line">$httpBackend.expect(<span class="string">'POST'</span>, <span class="string">'http://localhost/timeEntry'</span>, data).respond(<span class="number">200</span>, <span class="string">'Done'</span>);</div><div class="line">$scope.saveEntry(); <span class="comment">// Let's assume this method will post the data with model $scope.desc</span></div><div class="line">$httpBackend.flush();</div></pre></td></tr></table></figure>
+
+<p>The hacking as you see is to take advantage of the <em>test</em> method which the <em>RegExp</em> has and AngularJS uses for data matching.  But when the data is not posted as expected, the Unit Test fails with below message:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Chrome <span class="number">27.0</span> (Linux) Unit: Controllers Test EntryCtrl should start entry <span class="keyword">in</span> correct format <span class="keyword">if</span> only entry desc is filled. FAILED</div><div class="line"><span class="built_in">Error</span>: Expected POST http:<span class="comment">//localhost/timeEntry with different data</span></div><div class="line">EXPECTED: {}</div><div class="line">GOT:      {<span class="string">"status"</span>:<span class="string">"P"</span>,<span class="string">"actualStartOn"</span>:<span class="string">"2013/06/08T21:24+0800"</span>,<span class="string">"desc"</span>:<span class="string">"First Unit Test"</span>,<span class="string">"id"</span>:<span class="string">"3849ae1a-4b9c-40be-baa0-60eeaf3af430"</span>,<span class="string">"lastUpdateOn"</span>:<span class="string">"2013/06/08T13:24:44.104+0000"</span>}</div></pre></td></tr></table></figure>
+
+<p>This error message is not quite developer friendly and it doesn’t tell you much about why it failed at first glance.  However, if we make the test data contain the JSON value too, the expect message would be more meaningful.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> data = {</div><div class="line">    desc: $scope.desc,</div><div class="line">    status: <span class="string">'P'</span>,</div><div class="line">    id: <span class="string">'SHOULD NOT BLANK'</span>,</div><div class="line">    lastUpdateOn: <span class="string">'SHOULD NOT BLANK'</span>,</div><div class="line">    test: <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{</div><div class="line">        <span class="keyword">var</span> entry = angular.fromJson(data);</div><div class="line">        <span class="keyword">return</span> (entry.desc !== $scope.desc) && Validator.isNewEntry(entry);</div><div class="line">    }</div><div class="line">};</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EXPECTED: {<span class="string">"desc"</span>:<span class="string">"First Unit Test"</span>,<span class="string">"status"</span>:<span class="string">"P"</span>,<span class="string">"id"</span>:<span class="string">"SHOULD NOT BLANK"</span>,<span class="string">"lastUpdateOn"</span>:<span class="string">"SHOULD NOT BLANK"</span>}</div></pre></td></tr></table></figure>
+
+<p><em>[Edited on Aug 09th 2013]</em>: After AngularJS accepted my <a href="https://github.com/angular/angular.js/pull/2981" target="_blank" rel="external">pull request</a> to support Function as validation data last week, we don’t need to use duck-typing for the hack.  The validation logic can be simplified as below and we can even override the Function’s <em>toString()</em> method to give more expressive error message in a cleaner way.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> data = <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{</div><div class="line">    <span class="keyword">var</span> entry = angular.fromJson(data);</div><div class="line">    <span class="keyword">return</span> (entry.desc !== $scope.desc) && Validator.isNewEntry(entry);</div><div class="line">};</div><div class="line">data.toString = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    <span class="keyword">return</span> <span class="string">'The status of the new entry should be "P", desc should be "'</span> + $scope.desc +</div><div class="line">        <span class="string">'" and its id & lastUpdateOn should not be blank.'</span>;</div><div class="line">};</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EXPECTED: The status of the <span class="keyword">new</span> entry should be <span class="string">"P"</span>, desc should be <span class="string">"First Unit Test"</span> and its id & lastUpdateOn should not be blank.</div></pre></td></tr></table></figure>
+
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="UnitTest" scheme="http://www.thinkingincrowd.me/tags/UnitTest/"/>
+    
+      <category term="AngularJS" scheme="http://www.thinkingincrowd.me/tags/AngularJS/"/>
+    
+      <category term="HttpBackend" scheme="http://www.thinkingincrowd.me/tags/HttpBackend/"/>
+    
+      <category term="Jasmine" scheme="http://www.thinkingincrowd.me/tags/Jasmine/"/>
+    
+      <category term="JSON" scheme="http://www.thinkingincrowd.me/tags/JSON/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[一点点对提问，分享和影响力的看法]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/"/>
+    <id>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</id>
+    <published>2013-05-28T13:48:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>一晚和一位旧同事在 KFC 从10点夜谈到凌晨 3 点。很久没那么年轻过了。我们谈了什么？ 主要是提问，指导和分享，人格魅力和影响力，投资等方面。  </p>
+<h2 id="提问，指导和分享">提问，指导和分享</h2>
+<p>谈这个问题的起源是因为他刚换工作，觉得某些＂领导＂交代任务的时候，啥都不说清楚，什么相关文档资料都不给。所以他很郁闷地在想，到底是他太笨还是本该交待的没说清楚。后来直到他去问时，对方才像挤牙膏那么挤出来那么一点指引，和给他本该先交出的文档。  </p>
+<p>到底应该怎么问问题，怎样才算是好的指导和分享呢？  </p>
+<h3 id="什么该交代">什么该交代</h3>
+<p>对于交代任务，到底什么应该说清楚？ 从我的自身体验来讲，无论对方是否对所要交代的任务有经验，任务<strong>需求</strong>和项目内<strong>约定俗成</strong>的东西，比如代码规范，公司或项目里特殊的工具环境配置，代码库结构等，是必须交代清楚，至少文档齐备。当然还有一个是任务的<strong>时间要求</strong>，因为这是提供给接收任务方做好时间安排和判断应该什么时候寻求帮助的重要条件。如果这些东西缺失了，就是交代任务的人的责任了。  </p>
+<p>我一般的做法，是先把文档给出去，可是不会先详细说明。这是因为不同的人，对资料吸收能力不同，我会期望任务接收者先花时间看了，心中有了问题，再针对情况进一步决定是否需要更进一步解说。这样既有针对性，还可以用以初步判断一个人的自学和领悟能力。  </p>
+<h3 id="什么可以问，怎么问">什么可以问，怎么问</h3>
+<p>对于接收任务的一方来说，如果发现上面提到的应有资料有缺失，我觉得是完全可以而且应该先索取和问清楚，因为你不具备这个责任和条件知道这方面的知识。   </p>
+<p>拿到资料后，通常在问问题之前，我觉得都必须<strong>认真看过资料 30 分钟到 1 小时的时间</strong>。时间短了，感觉并不能了解清楚；时间长了，如果对文档所说的还是没什么头绪的话，就不应该再闷头苦猜，而是应该求教于交代任务的人，以避免浪费无谓时间。毕竟工作任务都是有时间限制的。  </p>
+<p>在看资料的时候，我觉得需要了解的，是各个文档的大概内容，相互关系和在任务里各自起的作用。完后，就可以向交代任务的人确定任务开始的方向和提出看文档后产生的具体疑问了。问问题，最好是可以<strong>一次把所有问题有条理的列出来，一次去问。而不是碰到一个问题，问一个</strong>。  </p>
+<p>正如前面提及，你问的问题，交代任务的人可以用以推断你的能力。需求方面的问题，可以推断出你的逻辑思维能力和对业务的理解。这方面的问题，一开始的时候不懂，是情有可原的，因为毕竟缺乏业务背景。系统设计或技术方面的问题，就可以看出你的经验，技术功底了。对于行业公共技术，应先尽可能 Google 找资料，没办法了，再去问，一方面避免问了些小白问题，另一方面可以提高自己学习能力。对于公司内部特有的技术或框架，我觉得能理解当然最好，时间紧迫的话，求助也无妨。  </p>
+<h3 id="怎样才算是好的指导和分享">怎样才算是好的指导和分享</h3>
+<p>当同事或下属向你请教，或者你发现他们有什么地方做的不够好的时候，及时向他们提供指导和经验分享，才是一位称职的专业人士。但是怎样的指导才叫好呢？那晚，那个同事和我提到他之前遇到的几种指导的风格：  </p>
+<ol>
+<li><p>手把手风格<br> 这种指导方式，是每个新手最喜欢的。因为领导事无巨细，把要完成任务的每一个步骤，都详细解说一遍。最重要的是，讲到你明白为止，而且还是极有耐心，毫无怨言那种。  </p>
+</li>
+<li><p>详尽风格<br> 这种风格，也会交代出要完成任务的主要步骤，只是没那么详尽，所以也不会向第一种那样毫无怨言的讲到明白为止啦。  </p>
+</li>
+<li><p><strong>启发性风格</strong><br> 这种风格，只会提示重要的点或者步骤，甚至只发个网上的链接让发问者参考，可能就完事了。还是不懂的话，再针对大流程和框架解说一下。反正基本原则是怎么都不轻易把答案直接告诉你。  </p>
+</li>
+</ol>
+<p>你们喜欢哪种？你们觉得我是哪种呢？  </p>
+<p>那位旧同事说，他现在觉得最后一种，才是最好的。这是因为<strong>授人以鱼不如授人以渔</strong>。如果教会你在某个公司，某个项目里，特定的某些做法，让你可以顺利地完成任务，可能只是一时受益。但是长远来说，如果养成依赖，靠别人指导，而不是自己分析解决问题，其实一点用处都没有。相反，如果能一步步启发思考，尽量让你自己解决问题，以后无论什么环境，都能很好适应。  </p>
+<p>其实我的风格是第三种 (别说我自夸啊，不信去问那个家伙) 。但是当初他刚毕业，我带他做项目时，他被我折磨地痛苦的要死。他和另一个人老是在琢磨该不该问我问题。看我脸色不太对劲的话，就不敢问了。回想起来，那时候，他不会我们系统的框架，不懂 Javascript，只想写 JAVA。而我不断逼他自己主要看JS代码，教他怎么猜测代码块的上下文，在不懂全部方法的情况下，猜测 Bug 可能在什么地方，怎么忽略代码细节，领略大意等。也是难为他了。  </p>
+<p>其实我相信我做的是对的，可是为什么他那时那么痛苦呢？  </p>
+<ol>
+<li><p>语气问题<br> 有时候我的语气感觉比较凶和严，所以他会认为我不够耐心。其实用第三种风格的话，每次提醒的点是不多的，所以一旦语气不好，别人就会认为你没耐心，不想教。我的情况是，对女的态度好点，对聊得来或关系好的朋友说话会没那么多顾虑，对一些感觉学习态度有问题，或者自己不仔细思考的人我会没耐心。他是第二种。  </p>
+</li>
+<li><p>解释是否通俗易懂<br> 他说他现在的一个同事，在向他解释一些他不懂的技术概念的时候，讲的很通俗易懂。而我，当时给他的感觉是解释的不够容易理解。除了上面的语气和耐心也有影响外，一个人要把事情解释到通俗易懂，他必须对要解释的事物有深刻了解，然后能从听众的角度，简化概念，尽量转换成比较容易理解的事物类比。这点我确实是做得不够好的。因为以前我的技术功底确实不深厚 (当然现在也还不行)，要能做到深入浅出确实不行。而且我有时没能从听众角度出发，也是造成难理解的原因。  </p>
+</li>
+</ol>
+<h2 id="人格魅力与影响力">人格魅力与影响力</h2>
+<p>那天晚上，我们聊到了电影中国合伙人，俞敏洪，罗永浩，马云等。我那个同事说以前他以为新东方火的原因是上课幽默。其实后来想想应该不是，主要应该是俞敏洪乐于分享，而且难能可贵的是把自己失败的地方和人分享，把自己和听众拉到同一平面上，产生共鸣，另听众感同身受。不像一些只会宣传自己成功经验的人，虽然一时能让听众产生仰慕之情，但感觉高高在上，经验之谈也飘渺不切实际。  </p>
+<p>我至今碰到的，和尊敬的有非凡人格魅力的人或公司，都是肯无私分享自己实际经验，技能和想法，让别人觉得能从你身上学到东西的人或公司。一旦你身边围绕着一群向你学习的忠实听众，人格魅力和影响力就出来了。像马云，罗永浩还有现在 IT 领域各种大牛等，凭借他们无私的演讲，博客，对开源贡献等积累的忠实听众，为他们的公司，产品营销，创业起了多大的作用。在 <a href="http://www.amazon.com/Rework-Jason-Fried/dp/0307463745" target="_blank" rel="external">Rework</a> 里面 <strong>Build an Audience</strong> 那节说的很好：    </p>
+<blockquote>
+<p>the most fortunate companies have <em>audiences</em>.<br>…<br>When you build an audience, you don’t have to buy people’s attention—they give it to you. This is a<br>huge advantage. So build an audience. Speak, write, blog, tweet, make videos, whatever. Share<br>information that’s valuable and you’ll slowly but surely build a loyal audience. Then, when you need<br>to get the word out, the right people will already be listening.</p>
+</blockquote>
+<p>在此，我也要向之前无私教导我的人，Google 公司，令我获益的各位大牛和博客致敬，努力成为分享的一员。</p>
+]]></content>
+    
+    
+      <category term="Share" scheme="http://www.thinkingincrowd.me/tags/Share/"/>
+    
+      <category term="Influence" scheme="http://www.thinkingincrowd.me/tags/Influence/"/>
+    
+      <category term="Management" scheme="http://www.thinkingincrowd.me/tags/Management/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[打造 Facebook 读后感]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/"/>
+    <id>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</id>
+    <published>2013-04-24T22:10:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>看完<em><a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product" target="_blank" rel="external">YouTube 创始人陈士俊自传</a></em>后，很快我又把<em><a href="http://www.amazon.cn/dp/B00ANI5YXW" target="_blank" rel="external">打造 Facebook</a></em>看完了。但感觉这没上本书过＂瘾＂，我看得更快和粗略。  </p>
+<p>笔者王淮主要是为外部人士揭秘 Facebook  内部一些流程和机制，包括招聘，人员培养，团队合作，项目流程等。本书内容叙述直白，但略显平淡和笼统。揭秘的 Facebook 流程，其实也和其他一些关于敏捷，管理等文章提及的好的做法没太大差别。这其实也在意料之中，因为核心机密也没可能爆料，加上好的做法本来就那些，关键看怎么做，执行力如何和团队配合，而且最主要是配合不同公司文化，架构和流程作调整。  </p>
+<p>下面我只抽 Facebook 做得比多数公司好的其它关键说说。  </p>
+<h2 id="制胜关键">制胜关键</h2>
+<h3 id="重视内部工具，平台搭建">重视内部工具，平台搭建</h3>
+<p>可能是和 Facebook 的工程师文化驱动文化也有关，Facebook 内部竟然还有专门的团队负责所有工程师要用的工具和平台的搭建，而且最重要的是这个团队还是被放在最高优先级和重要的位置上，而不是说把二流的人放在那。  </p>
+<p>这就应该和其他大多数公司很不同。很多公司都是把重心和一流人才放在产品上面，但却不知道这样一个打造工具和平台的团队，其实才是打造公司核心技术，和提高工程师生产率的重要基石。如果一个公司能为项目工程师提供一键搭建环境，和各种提高生产率以及沟通的工具，那这家公司的技术功底和自动化流程做得有多好啊。  </p>
+<h3 id="所有人以_Facebook_的整体利益为考虑出发点">所有人以 Facebook 的整体利益为考虑出发点</h3>
+<p>这可不是说那么容易的。特别是大公司，各个部门各自为政，以部门利益为出发点，在人员调配，项目进度安排上可以说是协调的噩梦。每每总要等待各个部门的老大的最顶层上司直接命令下来才能成事。想想中间要花费多少功夫。书中虽然没有提及细节，但好几处都提到和体现这个整体利益。无论在人员换组，项目人手调配，进度安排上，感觉他们都能比较好的处理好，这相当不容易。  </p>
+<p>作为一个曾经体验过部门之间要人和不放人，被不同 Manager 带过都被打上不同标签和不平等对待的人，真是气不打一处来。当时还是在家小公司啊。还有就是项目组之间如果有依赖，优先级和协调的重要性现在更是深有体会。  </p>
+<p>在 Facebook 里，整体利益的另一体现就是 Don’t reinvent the wheel。  笔者提到的就是他们项目里的核心机器学习的组件，当初考虑到是放在自己支付安全组内还是放在 Anti-Spam 那边。因为那边已经有现成的框架，最后平衡考虑还是放在别组，然后协调和推进。可是很多公司，往往因为只顾部门利益，总想自己造些什么出来显露功绩。即使有现成的东西也不用，造成资源浪费。</p>
+<h3 id="发挥工程师创意">发挥工程师创意</h3>
+<p>和 Google 的 20% 自由时间差不多，Facebook 也有内部的 Hackathon 来鼓励工程师做各种好玩的事情，甚至可以推迟项目时间。真是难得。</p>
+<h2 id="八卦">八卦</h2>
+<p>书里也提到了关于 Facebook 请公关公司炮制散布 Google 负面新闻的事情。Mark 在内部向所有员工说明并要求大家要支持 Marketing 部门，因为它们平常都在保护公司的利益。现在即使犯一点错，也应该得到体谅。  </p>
+<p>书里也提到 Mark 很在意公司保密的原则，一但有人出错，坚决处理。  </p>
+<p>这里隐含的意思就有点意思了。Mark 是一个很看重公司机密的人。他也很注意公司团结，员工应该一致向外。个人感觉这件事情上，Facebook 的 Marketing 应该不会在老板没出声的情况下，自己乱来吧？何况书中也说到 Mark 在关键问题的产品把控上是很严的。所以，小人之心猜测那也是 Mark 本人的意思。</p>
+]]></content>
+    
+    
+      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
+    
+      <category term="Startup" scheme="http://www.thinkingincrowd.me/tags/Startup/"/>
+    
+      <category term="Management" scheme="http://www.thinkingincrowd.me/tags/Management/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[我能否20个月赚130亿?]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/"/>
+    <id>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</id>
+    <published>2013-04-16T13:36:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>你是否看到这个标题，想鄙视我而冲进来了？呵呵，我承认是有点标题党，所以我马上告诉你答案，不能。因为看完<a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product" target="_blank" rel="external">YouTube 创始人陈士俊自传</a>，我发现我不具备他，或者说硅谷人的特质，至少暂时。这就是他书里反复提到的，其实看书时也强烈感受到的，＂瘾＂。  </p>
+<p>这本书周五在亚马逊下单，周六下午收到，周日晚就看完了。是在带儿子的零星时间看完的。之所以可以看的那么快，除了我看得快，没太关注些八卦细节外，重要的是书写的流畅，活跃，富有激情。真的使我拿起来就不想放下。感觉他就像和我对话，讲故事一样。推荐看看，也可以找我借。  </p>
+<h2 id="瘾">瘾</h2>
+<p>说回这本书，如果说他的成功是因为从他打小就对计算机感兴趣，和可能内在有天才工程师的基因有关，不如说是他深深的那种写代码和创造产品的瘾。他可以在一台没有硬盘的电脑上重敲一次程序展示给父母看他的成果，可以连续写代码20小时，可以放弃 Google 工作和奖金重新出来创业＂折腾＂。这就是在他们 Paypal 帮里共同存在的因子，硅谷人的因子，也是造就成功的因子。说来也巧，他也一度面临肿瘤这样的病痛，像乔帮主一样知道自己的＂瘾＂的存在，而为之奋斗。</p>
+<p>我想，除了这个不为金钱的瘾外，没任何东西是能让他们这类人如此成功的。我能否培养或者挖掘这种瘾出来，然后不顾后果的去追寻呢？我觉得很难，因为我向来的性格是求稳，做事情会想很多方面，希望求最稳妥的方式，和他极其不同。就像他说的：  </p>
+<blockquote>
+<p>在创业这件事上，我不希望＂退可守＂，我不想设定好退路，过于安稳的尝试性的投入岂非过于无聊？实际上，如果有一天我在一个寂静的森林里迷失，而前面又有两条路可以选择的话，我一定会在观望很久后放弃充满车辙的那一条，接下来选择杂草丛生的那条，因为我觉得，走可以预期结果的路，那样真的没意思。</p>
+</blockquote>
+<p>暂时我还做不了这点，但我隐约感觉内心有想做点事情，和创业的冲动，或许现在，我能做的是保持内心这么点冲动，和打磨自己的技术，并紧跟潮流。</p>
+<h2 id="书里一些我比较同意的观点">书里一些我比较同意的观点</h2>
+<h3 id="公司架构和管理">公司架构和管理</h3>
+<blockquote>
+<p>PayPal 在招聘时就刻意寻找志同道合的＂自己人＂，因此让推行这种平等自由的文化变的容易起来。<br>…<br>他们在招聘于自己类似的人。</p>
+</blockquote>
+<p>其实我非常赞同这种找人的观点。虽然管理上有说法，招聘者不应该只找自己类型的人，应该在团队里有各种不同类型的人，用以互补之类的。但我觉得，互补的，主要应该是技术专业特长，但他们还是一些拥有核心共同特质的，一些相同的原则，比如说开放和接受改变挑战的心态，积极的勤奋的负责任的态度，团队合作妥协和支持的精神等。反而技术水平，专业领域不是第一考虑。当然，那些 Level A 的工程师，选人时当然尽量只选能力也是同样 Level 的同事，这可以理解。但是就像书里那个有点极端的例子，真的到了这种心态的顶峰了：面试听到说面试者喜欢打篮球的，就不要了，因为他印象中，那些打篮球的旧同学，没几个靠谱的。  </p>
+<p>就敏捷来说，我也觉得必须管理层和团队里每个人都有敏捷的心态才行。不一定都要是编程高手，但一定是内心要不断求变，求改进，对敏捷的核心思想的认可，而不是简单的流程的 follow。</p>
+<blockquote>
+<p>仅仅管理者自己做到尊重团队是不够的。公司管理架构的设置，有的时候，会从一开始就决定了管理和沟通的难度。</p>
+<p>潘宇的总结：＂在创业公司，你是生产创意，而在稳定的大公司，你首先得在同事当中销售这些点子，得证明你的是最好的才行。＂</p>
+</blockquote>
+<p>在小公司待了近8年时间的我，可以说，真的是很不习惯大公司的沟通和效率。大公司按职能分各种团队，导致人员项目协调费时费力，出问题还很容易导致推卸责任而不是集体负责。这在书里的例子，即使是 eBay 这样的算是软件业巨头，也不能幸免。所以说，公司架构的设置，可能就已经决定问题的存在。不改变架构，是无法改变这种情况的。  </p>
+<p>书中提到的潘宇的总结，其实就是看你的主意到底要说服多少人，和哪些人。如果都是在创业公司里的自己人，事情就好办了。但如果是涉及大公司里不同部门，特别是不同利益团体，那就悲催了。所以在 Conway’s law 有说:  </p>
+<blockquote>
+<p>organizations which design systems … are constrained to produce designs which are copies of the communication structures of these organizations.</p>
+</blockquote>
+<p>在软件工程里，沟通占据绝大多数时间和比重。公司架构这种影响沟通的客观屏障，也就不可避免的影响了系统设计。  </p>
+<p>我心中的理想团队，就是那么几个志同道合的人，几个工程师，一两个设计人员，当中有一个核心的令人敬仰和最后拍板的头头，说做就做，同进退。</p>
+<h3 id="创业">创业</h3>
+<blockquote>
+<p>每一个创业的成功当然都免不了运气的成分，<br>…<br>也就是俗称的＂在正确的时间做正确的事＂。<br>…<br>创业者们得培养自己分析和理解技术趋势的眼光，要不然只能任运气溜走。</p>
+<p>新闻每天都在发生。但对于敏感的创业者来说，这些事件，如果你搞清楚它们背后的联系，总会意味着某些意想不到的机会。</p>
+<p>YouTube 和点评网站 Yelp 都从 Paypal 那里学到一个有价值的经验 —— 头一个想法往往不是最好的。</p>
+<p>＂奥卡姆剃刀＂这个这个哲学原理崇尚＂如无必要，勿增实体＂，尽量简单有效。</p>
+</blockquote>
+<h3 id="人">人</h3>
+<blockquote>
+<p>在这个世界上，有的人就是擅长维持一个公司的运转，有的人则擅长不断创新突破，这两种选择本就无所谓对错，只是，要选择最适合你自己的。</p>
+</blockquote>
+<p>我还不知道自己属于哪种人。我算是有点典型工程师心态，对一些繁琐的流程和企业架构和事务感觉很没效率，不爽，也很不喜欢办公室政治等。维持公司运转要比这烦多了。作技术突破创新吧，技术底和那种专注技术难点的死劲还不够，创新能力也有待培养。再按感觉走走看，攻一下技术吧，这也算是硬通货。  </p>
+<h2 id="八卦">八卦</h2>
+<ol>
+<li>一个 Google 高管，跳槽去 Facebook 前，向他打探 YouTube 的战略。Facebook 还请公关公司炮制散布 Google 负面新闻。  </li>
+<li>他很短时间就娶了 Google 韩国第一美女。求婚过程还很有趣的。  </li>
+</ol>
+]]></content>
+    
+    
+      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
+    
+      <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
+    
+      <category term="Destiny" scheme="http://www.thinkingincrowd.me/tags/Destiny/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Share code between Node.js and browser]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/"/>
+    <id>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</id>
+    <published>2013-04-13T04:59:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Background">Background</h2>
+<p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.  </p>
+<p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.  </p>
+<p>Hence, the code sharing between Node.js and browser requires the code to be used as the same way in browser.</p>
+<h2 id="Situations_and_Solutions">Situations and Solutions</h2>
+<p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = xxx;</div><div class="line">a.foo();</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'b'</span>);</div><div class="line">b.bar();</div></pre></td></tr></table></figure>
+
+<p>There are two kinds of situations:  </p>
+<h3 id="Modularization_already_realized_for_browser_code">Modularization already realized for browser code</h3>
+<p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/" target="_blank" rel="external">RequireJS</a>, or <a href="http://seajs.org/" target="_blank" rel="external">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.  </p>
+<p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">'./b'</span>], <span class="function"><span class="keyword">function</span> <span class="params">(b)</span> </span>{</div><div class="line">    <span class="keyword">var</span> a = xxx;</div><div class="line">    a.foo();</div><div class="line">    b.bar();</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> {</div><div class="line">        bla: <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'bla'</span>);</div><div class="line">        }</div><div class="line">    };</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.  </p>
+<p>To overcome this incompatibility, there are two main approaches.  </p>
+<ul>
+<li><p>Directly add boilerplate code in one side to fit the other  </p>
+<ol>
+<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html" target="_blank" rel="external">here</a>.  </li>
+<li><a href="https://github.com/ajaxorg/node-amd-loader" target="_blank" rel="external">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.  </li>
+<li>The <a href="https://github.com/jrburke/amdefine" target="_blank" rel="external">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer" target="_blank" rel="external">RequireJS Optimizer</a>.  </li>
+</ol>
+</li>
+<li><p>Build process to handle the boilerplate  </p>
+<ol>
+<li><a href="https://github.com/substack/node-browserify" target="_blank" rel="external">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.  </li>
+<li><a href="https://github.com/medikoo/modules-webmake" target="_blank" rel="external">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.  </li>
+<li><a href="https://github.com/kenspirit/webassemble" target="_blank" rel="external">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.  </li>
+</ol>
+</li>
+</ul>
+<p>Personally, I prefer introducing extra build process to handle the boilerplate for me.  </p>
+<p>The advantages of build process boilerplate are:  </p>
+<ol>
+<li>Boilerplate code is brittle and subject to change.  Adding it to every file makes future change harder.  If some build process can automatically remove them, why not use the build process to automatically add them?  </li>
+<li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.  </li>
+<li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.  </li>
+</ol>
+<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/" target="_blank" rel="external">Grunt</a>, it’s just a couple of seconds’ waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.  </p>
+<h3 id="Legacy_or_namespace_browser_code_style">Legacy or namespace browser code style</h3>
+<p>Although it’s seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it’s actually easier to share your Node.js code under this circumstance.  </p>
+<p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.  </p>
+<p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P  </p>
+<p>So tell me what is yours.  </p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="NodeJS" scheme="http://www.thinkingincrowd.me/tags/NodeJS/"/>
+    
+      <category term="Webassemble" scheme="http://www.thinkingincrowd.me/tags/Webassemble/"/>
+    
+      <category term="Modularization" scheme="http://www.thinkingincrowd.me/tags/Modularization/"/>
+    
+      <category term="AMD" scheme="http://www.thinkingincrowd.me/tags/AMD/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
+    <id>http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/</id>
+    <published>2013-02-13T13:40:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。  </p>
+<h2 id="Lean_Startup"><a href="http://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898" target="_blank" rel="external">Lean Startup</a></h2>
+<p>这本书我总体来说看的比较粗略，主要因为前面的章节在目前身处非创业型企业文化下不太容易适用得上，所以目的只是大概了解作者思想。后面的 <em>Part Three ACCELERATE</em> 部分倒是有些是可以相对容易地应用在成熟，或者说已经某程度上固化并寻求改变的企业上。我说的是不太容易和相对容易，因为任何改变，重则涉及文化，轻亦涉及利益，都是难事。那如何建立一个 Adaptive 的企业环境呢？  </p>
+<h3 id="突破点">突破点</h3>
+<p>Five Whys 是在第11章 <em>Adapt</em> 里提到的一个很好的方法。其实就是中国人说的打破砂盆问到底。看来还是古人智慧无穷啊。这个 Five Whys 除了带来它显而易见的好处，也就是了解到事件的根源之外，其实还可以让一个企业或团队控制解决问题的程度和节奏。问五次，不至于太少而了解不到真相，也不至于太多，而浪费过多精力。  </p>
+<p>我们很常在开发或团队建设中碰到不少问题，比如说每次代码改动后要浪费很长时间部署，某某人改动代码后部署不成功了，新人不了解系统框架，部分人写代码很不好读等。很多人听到这些问题都会抛出一个大而全的答案，机器慢，没 CI 环境，没培训，没标准等。这种答案因为太笼统和没有边际，导致解决方案看起来需要大量人力物力去解决问题，后来不了了之，说了白说。  </p>
+<p>所以，Five Whys 的实施要求是 <strong>Be Small，Be Specific</strong>。  </p>
+<p>比如前面说代码改动后部署慢，原因可能是要重新编译打包和 Web 容器启动慢。那为什么要重新编译打包，可能是因为某些系统服务编译和打包的脚本绑定在一起。那可不可以把它们分开？如何分开？能否借助工具做 Hot Deploy？那为什么容器启动慢？能否不用 EAR 来部署，减少解压缩时间？能否换用轻量级容器？能否禁用不必要插件？ 这些其实就是一些细小而精确的建议和想法。再比如书本举出的很常见的例子，就是培训。多少的培训才足够，覆盖范围要多广？还是说，在碰到问题后，才写出对应的 Guideline 来避免错误再次发生？这样的 Incremental 式的累积，会否更省时间，更有效针对问题？  </p>
+<p>其实 Be Small，Be Specific 还有另一个好处就是避免由 Five Whys 而产生出 Five Blames。把问题精确化，细化，可以尽量避免问题扩大化，责任推诿，相互指责，无法确定责任人，最后无法解决。  </p>
+<h3 id="实施细节">实施细节</h3>
+<p>另两条原则呢，可以引用原话来说：  </p>
+<blockquote>
+<ol>
+<li>Be tolerant of all mistakes the first time.  </li>
+<li>Never allow the same mistake to be make twice.  </li>
+</ol>
+</blockquote>
+<p>还有一些比如说，不要带上历史包袱，把历史遗留问题等到重新出现时再解决；讨论问题原因和解决方案时，一定要所有牵扯到的人员在场，无论位处任何部门，级别等都是需要注意的事项，推荐各位去细看。  </p>
+<h3 id="后台要硬">后台要硬</h3>
+<p>这里可能说的有点黑，但其实中国人很能理解它的含义。因为要想做事，首先必须得到领导支持。要有开明的文化和环境，必须要有开明的领导。所以，充分让领导认识到 Five Whys 的好处，实施的原则，可能带来的后果和对团队文化的冲突，并取得全力支持，才能确保有效执行。  </p>
+<h2 id="电影_Lincoln"><a href="http://www.imdb.com/title/tt0443272/" target="_blank" rel="external">电影 Lincoln</a></h2>
+<p>Lincoln 每次说话，要么风趣睿智，要么充满激情。那一字一顿，不紧不慢而又坚定的语气，让我感受到这位历史伟人，对解放奴隶制的理想是多么执着。从以下欧几里德定理都可以看到人人生而平等，真是可贵，或者还是只能说他对此执着到何等程度。  </p>
+<blockquote>
+<p>It is a self evident truth that things which are equal to the same thing are equal to each other.</p>
+</blockquote>
+<p>电影里也描述了他作为一位父亲和丈夫的一面，那些为国而牺牲家庭对他带来的愧疚。总体来说，这是一部不错的电影，让我看到当中的一些人性转变，慷慨激昂，推荐大家看看。  </p>
+<h3 id="懂得如何前行">懂得如何前行</h3>
+<p>电影里的一段他对 Mr. Steven 说的话，我觉得深有感触。听写可能有差别，但大意应该没错：  </p>
+<blockquote>
+<p>A compass, I learnt when I was surfing in hill, will point you to the true north where you are standing, but it has got no advice about the swamps, deserts, chasms, along the way.  You can pursuit to go the destination, you plunge your head ahead, heedlessly of the obstacles, achieving nothing more than sinking in the swamp?  What is the use of knowing the true north?</p>
+</blockquote>
+<p>其实这里说的道理就是，即使你知道真理和正确的方向，如果因为鲁莽地直行，被途中困难所牵绊而无法到达目的地，那手握真理意义何在？  </p>
+<p>正如去年我的目标是 Drive the Change，如果说我只顾四处宣扬，不顾各方抵触，而不是实在的迂回实施，那意义何在？ 所以说，求变，也要懂得如何带领别人跟随而变。自己独变，往往成为异类，无法生存。带领众变，才能成为改变历史的潮流。  </p>
+<h2 id="电影_The_VOW"><a href="http://www.imdb.com/title/tt1606389" target="_blank" rel="external">电影 The VOW</a></h2>
+<p>这可能算是老套的爱情桥段电影了。女主角撞车失忆，她丈夫尽一切办法想她恢复，但都无能为力。放手离开后，女主角重过生活，发现后来，还是沿旧轨迹，邂逅男主角，重续前缘。  </p>
+<p>老婆看的纸巾浪费无数，我也被男主角的无私的爱而折服。情爱的观点基本共通，我也就不说了。此外的感悟是，一个人，即使让你重新走一次走过的路，可能你还是会沿旧有的轨迹再走一次。你就是你，无论何时何刻，那一刻的反应，那一刻的抉择，都是你内心的反映。所以，不必后悔说，如果回到某时某刻，可能你就不会那样做了。也不用对一些事情犹豫不决，不知道做了学了，对日后是否有益处。要做的，还是跟随自己的心，在当前时刻，做一个自己的决定，走自己的路。最终回首，一些看不起眼的决定，都是为你的 Destiny 而铺设的。正如乔帮主的名言，过去不起眼的点，在最后都会连成线，成就你自己。</p>
+<blockquote>
+<p>Again, you can’t connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever. This approach has never let me down, and it has made all the difference in my life.</p>
+</blockquote>
+<p>所以说，自己认为该做的就去做，该放手时，还是应该放手。是你的，总会回来。不是你的，放手后，可能你的才会来。谋事在人，成事在天。Make things happen，but don’t force things happen。  </p>
+]]></content>
+    
+    
+      <category term="Adapt" scheme="http://www.thinkingincrowd.me/tags/Adapt/"/>
+    
+      <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
+    
+      <category term="Destiny" scheme="http://www.thinkingincrowd.me/tags/Destiny/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[2012 Retrospect and 2013 Goal Setting]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/"/>
+    <id>http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/</id>
+    <published>2013-02-05T14:37:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。  </p>
+<h2 id="翻墙">翻墙</h2>
+<p>比较大的事件就是这个。难的换工作后有机会肉体翻墙，去拜访了万恶的资本主义老大 - 美国，还真见识了一把。蔚蓝的天空，PM2.5超低的空气，见人即停的车，真让人羡慕嫉妒恨，更加强了我内心深处的出国欲望。可惜家庭的顾虑和牵挂已经无法轻易撇去，只能留它作为追寻的梦想，不断激励自身奋斗，以应付未来这个诡异的国度的各种变化。  </p>
+<h2 id="工作">工作</h2>
+<p>本来换工作主要目的就是转攻前端，可是计划赶不上变化，翻墙的代价就是去熟悉后台相应开发技术。所以，过去一年，在部门里还主要是负责 JAVA 开发。编码和设计功底变化不大，只是要适应新框架和在框架的限制内做最有效的挣扎。本是小角色一名，只需专心写代码。后来人士变动，变成 Sub-group lead，发现开会时间暴增，写代码时间变少，碎片化。无效率的开会真是万恶之源。  </p>
+<p>去年技术方面成长速度并不太理想。要熟悉新框架，新业务，新团队，和新项目起步各种混乱，还有各种会议，让我各方面耗费不少时间。思考和学习如何敏捷，如何不断寻找可改进领域，有效推进事情而尽可能少侵犯既有利益团体可以说是对技术成长缓慢的补偿。要在大公司里推进一些事情，真是比小团队难多了。只能从自身，从小，从内部做起。  </p>
+<p>明年听说有点变动。老板理想很美好，关键看流程和各部门如何相应变革协调，而这正是当前主要问题所在。碰到转变的契机可不容易，无论是好是坏，都可学习到东西。我就拭目以待，并尽全力推进，看事态如何发展再说吧。  </p>
+<p>个人方面，明年希望做事可以更有效率，看能否借助自己正在做的 Pet Project 来帮助管理和理清自己的时间花在什么地方和更好的榨取之。在技术和团队上，已经基本和 Team Lead 沟通过，未来可能主要负责注重项目整体技术和设计，希望推动引入防打扰时间，Code Review，CI 持续集成等。</p>
+<h2 id="看书，学习">看书，学习</h2>
+<p>一直以来，都尽量找时间用 Kindle 看书。只是突然从看盗版PDF，变成乐意去购买原版。虽然花了我不少银子，可是心里舒坦。也觉得作为知识工作者，应该尊重其他人的劳动成果。回头如果未来自己有什么产出，同样希望得到回报。去年一下买了不少书，主要因为之前两三年从老婆怀孕到照顾儿子期间，学习少了，积累不少书债。加之不少好书涌出和推荐，一下忍不了手。下面是主要书单：  </p>
+<p><strong>技术类</strong></p>
+<ul>
+<li>Functional Programming for the Object-Oriented Programmer by Brian Marick</li>
+<li>NOSQL Distilled by Pramod J. Sadalage, Martin Fowler</li>
+<li>Patterns of Enterprise Application Development by Martin Fowler</li>
+<li>Domain-Driven Design by Eric Evans</li>
+<li>The Art of UNIX Programming by Eric S. Raymond</li>
+<li><em>Async JavaScript by Trevor Burnham</em></li>
+<li><em>JavaScript: The Good Parts by Douglas Crockford</em></li>
+<li><em>Stylin’ with CSS by Charles Wyke-Smith</em></li>
+</ul>
+<p><strong>非技术类</strong></p>
+<ul>
+<li>The Lean Startup by Eric Ries</li>
+<li>The Pragmatic Programmer by Andrew Hunt, David Thomas</li>
+<li>Mythical Man-Month by Frederick P. Brooks</li>
+<li><em>Kanban by David J. Anderson</em></li>
+<li><em>More Joel on Software by Joel Spolsky</em></li>
+<li><em>Getting Real by Jason Fried</em></li>
+<li><em>Rework by Jason Fried</em></li>
+<li><em>Driving Technical Change by Terrence Ryan</em></li>
+<li><em>Hackers and Painters by Paul Graham</em></li>
+</ul>
+<p><em>注：斜体的已经看了</em></p>
+<p>个人感觉书看的有点快，多少有点囫囵吞枣的感觉。可能是书债太多，怕看少了跟不上时代了，呵呵。其实还有一部分想法是，首先初读，让大脑先接触多领域的思想和知识，然后再精读，反复读，并且在实践中结合，才能吸收和强化理解。无论是技术类或非技术类的方法论书籍，不尝试去自己写代码，不实践方法，是无法体会的。第一遍，要大概了解里面主要讲到什么点和最感触的是什么，以便日常工作学习实践。然后再精读来慢慢巩固吸收。好书，读三遍也不为过。  </p>
+<p>之前看的是非技术类书多点，因为利用零散的时间来看书的话，看技术类的，不容易入脑。这个月再争取看完 The Lean Startup 和 Mythical Man-Month，然后集中精力看剩下的技术类书。日后为了巩固知识和真正理解，看完一本书必须写写心得和书评。</p>
+<p>技术方面的学习，只要还是集中在前端，Javascript 和 Functional Programming 方面。目前主要是利用 Pet Project 来摆弄一下 AngularJS，MongoDB 和 NodeJS。</p>
+<h2 id="时间安排">时间安排</h2>
+<p>学习时间：<br>零散时间基本就只有平时上下班车里的30分钟，还有其它一切可能的坐车时间。这些时间都是用来看书，写 Blog，或者看看 Google Reader，微博。连续的时间最多只在早上。由于家人比较早睡觉，大概9:30-10:00就休息了，所以我也只能早睡早起以避免打扰。早上4:30-5:00期间起床，洗漱15分钟，到6:45分基本有1.5小时，周末的话，家人比较晚起，可以有2小时。这段时间主要先用30分钟左右看看微博，或者书。再写写代码。最后还有周末午休时间，大概3小时，也主要用来写代码或者Blog。</p>
+<p>家庭时间：<br>其实就是在我工作和学习之外的几乎所有时间支出了。或者应该说是在工作和家庭时间之外的所有时间，我再榨取出我的学习时间。优先级来说，还是以家庭优先。这里主要用在陪伴儿子上面。每晚陪他玩一玩，下下棋，周末出去逛逛，接触一下户外，基本就这样过了。还没什么特定模式和游戏来开发他的智力潜能什么的。这个老爸还是有点懒，明年看看有什么可以改进的。为人父母真的不容易，压力山大啊。  </p>
+<p>锻炼时间：<br>每天早上固定15分钟左右，跳绳，哑铃，俯卧撑，仰卧起坐等。不过最近运动减少，因为前段时间儿子生病没有上幼儿园，老妈腰也不舒服，所以要帮忙做饭买菜什么的，再加上有时自己在学习时又放不下手，就忽略了点。明年还是得加强一下，学习也不差那15分钟了。</p>
+<h2 id="善事">善事</h2>
+<p>公益组织方面，现在是月捐150元给世界儿童组织，因为好像已经没有什么公益组织可以信得过了。壹基金之前也通过招行信用卡月捐了一年。后来因为卡太多而取消了，明年看要不要其它途径重启一下。个人方面，之前看到一个江门的人，老婆有血液病，艰难的生了个健康的小孩出来。但是他老婆的病还没钱做手术，拖延着治疗着。详情可以看<a href="http://t.cn/zjBs02D" target="_blank" rel="external">江门日报</a>和她老婆的<a href="http://weibo.com/u/2785731123" target="_blank" rel="external">微博</a>。 连续几个月捐了些吧，只是一个人也撑不了太长时间，就也帮她在微博宣传一下。谁有心的，也可以帮助一下。  </p>
+<p>我的帮助原则是，个人优于组织。已经在微博上被很多大人物推广出来的，我就不捐了，因为他们已经得到很多关注。困难的是一些没有办法得到别人更多关注的普通人，特别是没什么文化的。我关注的对象主要是一些父母或者小朋友。毕竟为人父亲，懂得家庭责任和有困难的痛处。  </p>
+<p>其实实际意义上来说，我做的也并不算什么善事。可能还只是伪善，出了点钱，安慰一下自己。本来也想像 Ailsa 她们那样去探访一些需要帮助的人，只是还是私心重些，希望陪家人多点。像她那样初为人母，还这样不遗余力，才是真善。我那个相形见绌。等儿子在老家放假时再参于一下吧。其实我本来是有计划想等儿子长大点，找个家附近或者珠海的需要帮助的人，除了捐钱外，还可以时不时带儿子去探望一下，也可以教育他，让他懂得怜爱和帮助别人。明年再看看这想法能不能实施。</p>
+<h2 id="总结">总结</h2>
+<p>工作还凑合，总体得到肯定。有些想法，因为有家在身，顾虑太多，已经不容易实施。我是一个顾家的人，那些舍家人而出去闯的事，不是不想，只是做不出来。不过，也不甘虚度日子，不断努力学习技术是王道，也为日后万一所需。为实践10000小时原则，还需要下不少功夫。看书还需要继续，但是要更专注和深入理解别人的思想以融为已用。在做的 Pet Project 5月前要做出来。当然还是要继续写 Blog 来做分享和总结。总体来说，没什么大成就。对自己而言，也算是已经尽最大努力平衡家庭，工作和学习。  </p>
+<p>最后祝支持我的家人和朋友们新年如意，身体健康。</p>
+]]></content>
+    
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
+    <link href="http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
+    <id>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</id>
+    <published>2013-02-02T06:32:00.000Z</published>
+    <updated>2014-03-28T14:10:40.000Z</updated>
+    <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org" target="_blank" rel="external">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch" target="_blank" rel="external">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest" target="_blank" rel="external">$digest()</a> is the root cause.  </p>
+<h2 id="Requirement">Requirement</h2>
+<p>I am making some workout entries as a list and one special requirement is to group the records by the date.  </p>
+<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span></div><div class="line">    <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">font-family</span>:<span class="value"> <span class="string">'Lucida Grande'</span>, <span class="string">'Lucida Sans'</span>, Arial, sans-serif</span></span>;<span class="rule">}</span></span></div><div class="line">    <span class="tag">ul</span> <span class="tag">li</span> <span class="rules">{<span class="rule"><span class="attribute">list-style-type</span>:<span class="value"> none</span></span>;<span class="rule">}</span></span></div><div class="line">    <span class="class">.actionDateGroup</span> <span class="rules">{<span class="rule"><span class="attribute">font-weight</span>:<span class="value"> bold</span></span>; <span class="rule"><span class="attribute">color</span>:<span class="value"> red</span></span></span>}</div><div class="line"><span class="tag">&lt;/<span class="title">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"content"</span> <span class="attribute">ng-controller</span>=<span class="value">"EntryCtrl"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"entries"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">ul</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"entry in entries"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-switch</span> <span class="attribute">on</span>=<span class="value">"isNewDateGroup(entry.actionDate)"</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-switch-when</span>=<span class="value">"true"</span> <span class="attribute">class</span>=<span class="value">"actionDateGroup"</span>&gt;</span>{{entry.actionDate}}<span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">span</span>&gt;</span>{{entry.desc}}<span class="tag">&lt;/<span class="title">span</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="title">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./js/angular/angular.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">EntryCtrl</span><span class="params">($scope, $location)</span> </span>{</div><div class="line">        $scope.entries = [{</div><div class="line">            desc: <span class="string">'Rope jumping count 1000'</span>,</div><div class="line">            actionDate: <span class="string">'2012-01-31'</span>,</div><div class="line">        },{</div><div class="line">            desc: <span class="string">'Jogging 3000M'</span>,</div><div class="line">            actionDate: <span class="string">'2012-01-31'</span></div><div class="line">        },{</div><div class="line">            desc: <span class="string">'Situp 40 * 3'</span>,</div><div class="line">            actionDate: <span class="string">'2012-01-30'</span></div><div class="line">        }];</div><div class="line">        $scope.lastActionDate = <span class="literal">null</span>;</div><div class="line">        $scope.calledCount = <span class="number">0</span>;</div><div class="line"></div><div class="line">        $scope.isNewDateGroup = <span class="function"><span class="keyword">function</span><span class="params">(actionDate)</span> </span>{</div><div class="line">            $scope.calledCount++;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Function called count: '</span> + $scope.calledCount);</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Entry date vs Scope date: '</span> + actionDate + <span class="string">' vs '</span> + $scope.lastActionDate);</div><div class="line">            <span class="keyword">if</span> ($scope.lastActionDate === <span class="literal">null</span> || $scope.lastActionDate !== actionDate) {</div><div class="line">                $scope.lastActionDate = actionDate;</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        };</div><div class="line">    }</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<h2 id="Expectation">Expectation</h2>
+<ol>
+<li><em>actionDate</em> of the first entry will always be shown as it’s the first group.  </li>
+<li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.  </li>
+</ol>
+<h2 id="Phenomenon">Phenomenon</h2>
+<p>When the sample data is as above (case #1), the effect looks like it’s behaving correctly as below:  </p>
+<ul><br>    <li style="list-style-type: none;"><br>        <div style="font-weight: bold; color: red">2012-01-31</div><br>        <span>Rope jumping count 1000</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Jogging 3000M</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <div style="font-weight: bold; color: red">2012-01-30</div><br>        <span>Situp 40 * 3</span><br>    </li><br></ul>
+
+<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn’t it supposed to show only the first one as all entries have the same <em>actionDate</em>?  </p>
+<h4 id="Expected_result:">Expected result:</h4>
+<ul><br>    <li style="list-style-type: none;"><br>        <div style="font-weight: bold; color: red">2012-01-31</div><br>        <span>Rope jumping count 1000</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Jogging 3000M</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Situp 40 * 3</span><br>    </li><br></ul>
+
+<h4 id="Actual_result:">Actual result:</h4>
+<ul><br>    <li style="list-style-type: none;"><br>        <span>Rope jumping count 1000</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Jogging 3000M</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Situp 40 * 3</span><br>    </li><br></ul>
+
+<p>Now if you check the calledCount in the debug message, you will find that it’s called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:  </p>
+<ol>
+<li>The <em>isNewDateGroup</em> function is called more than the entries’ count.  (Guess this, right?)  </li>
+<li>The called count is different when the data is different.  (how about this?)  </li>
+</ol>
+<h2 id="Causes">Causes</h2>
+<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch" target="_blank" rel="external">$watch</a> API:  </p>
+<blockquote>
+<ul>
+<li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest" target="_blank" rel="external">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest" target="_blank" rel="external">$digest()</a> and should be <strong>idempotent</strong>.  </li>
+<li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> …</li>
+<li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.<br>…<br>(Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)</li>
+</ul>
+</blockquote>
+<h3 id="Issue_#1">Issue #1</h3>
+<p>The <em>isNewDateGroup</em> being watched whose calculation relies on value of <em>lastActionDate</em> is not idempotent and so during initial run stage, <em>lastActionDate</em> is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.</p>
+<h3 id="Issue_#2">Issue #2</h3>
+<p>In below code, if I comment out <strong>$scope.lastActionDate = actionDate;</strong> or change the <strong>return true;</strong> to <strong>return false;</strong>, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> ($scope.lastActionDate === <span class="literal">null</span> || $scope.lastActionDate !== actionDate) {</div><div class="line">    $scope.lastActionDate = actionDate;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let’s see what the return value is for watch expression <em>isNewDateGroup</em> after each run.  </p>
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:  </p>
+<p><br><table style="font-size: 0.85em;"><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;"></td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">1st <br>(initial)</td><br>        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">true (‘2012-01-31’ !== ‘2012-01-30’;<br><br>        $scope.lastActionDate = ‘2012-01-30’)<br>        </td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">2nd</td><br>        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate !== ‘2012-01-31’)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">true</td><br>    </tr><br></table><br></p>
+
+<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:  </p>
+<p><br><table style="font-size: 0.85em;"><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;"></td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">1st <br>(initial)</td><br>        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">2nd</td><br>        <td style="padding: 5px; border: 1px solid black;">false (change compared to last run)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">3rd</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>    </tr><br></table><br></p>
+
+<p>So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.</p>
+]]></content>
+    
+    
+      <category term="AngularJS" scheme="http://www.thinkingincrowd.me/tags/AngularJS/"/>
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="ngRepeat" scheme="http://www.thinkingincrowd.me/tags/ngRepeat/"/>
+    
+      <category term="Directive" scheme="http://www.thinkingincrowd.me/tags/Directive/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
+  
 </feed>

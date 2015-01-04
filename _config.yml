@@ -79,6 +79,10 @@ disqus_shortname: thinkingincrowd
 
 # Extensions
 ## Plugins: https://github.com/tommy351/hexo/wiki/Plugins
+plugins:
+  - hexo-generator-feed
+  - hexo-generator-sitemap
+
 ## Themes: https://github.com/tommy351/hexo/wiki/Themes
 theme: pacman
 exclude_generator:
@@ -107,3 +111,8 @@ deploy:
 
 sitemap:
     path: sitemap.xml
+
+feed:
+    type: atom
+    path: atom.xml
+    limit: 20
