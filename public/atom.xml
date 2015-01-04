@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2015-01-04T07:17:55.346Z</updated>
+  <updated>2015-01-04T15:07:57.122Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,51 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[2014 Retrospect and 2015 Goal Setting]]></title>
+    <link href="http://www.thinkingincrowd.me/2015/01/04/2014-retrospect-and-2015-goal-setting/"/>
+    <id>http://www.thinkingincrowd.me/2015/01/04/2014-retrospect-and-2015-goal-setting/</id>
+    <published>2015-01-04T14:53:24.000Z</published>
+    <updated>2015-01-04T15:07:08.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="总结">总结</h2>
+<h3 id="个人学习">个人学习</h3>
+<p>主要是今年年中做的<a href="http://www.thinkingincrowd.me/2014/07/31/half-year-summary/" target="_blank" rel="external">小结</a>里面说的东西，其实上半年还是私人时间比较足，做了些东西。下半年就疲于公司项目和加班，加上个人精力好像没之前那么旺盛了，所以书也没什么看，也没什么大的产出，博客更是没越来越少的样子。</p>
+<h3 id="工作">工作</h3>
+<p>2015 年初是最上面管理层定下的项目上线的 Deadline 了，各部门的 PM, BA 开始密集的看目前有什么缺失的功能在上线前必须要提供给用户才能完成整个业务流程，然后各种需求都涌出来了。项目管理，各部门协作的问题变得更乱，”敏捷” 变为按 Deadline 倒推出每个功能必需完成的时间点。情况可想而知。</p>
+<p>去年的团队发生了比较大的变动。我的小组从 6 人，断断续续变成了 3 人。其中一个主要的并且也是最复杂的模块的主程和副程都陆续离开了。而且有一段时间，还要借两个人到别的小组去帮助完成他们的模块。人员的管理和工作的安排让我很头疼。因为人手不足，我写代码时间必需增大，但是同时还是要应付各种沟通, 产品线上支持等，真是感觉力不从心。</p>
+<p><a href="http://en.wikipedia.org/wiki/Kanban" target="_blank" rel="external">Kanban</a> 在上半年引入和实施了一小会，团队还没找到太多感觉，再加上上面说的一些原因，很难实施下去。去年希望加强的 Code Review 和 Unit Test 这些更是想都不用想了。</p>
+<p>2/3 个月前，我负责的一个模块，因为个人疏忽，导致上线后产生重大影响，当天需要紧急回滚。后面连续两三个星期需要白天响应用户和解决问题，晚上加班加点的对数据打补丁，真是焦头烂额。唯一值得庆幸的是，当年我重点培养的新人，也是作为我的副手，在这次事件和我一起解决问题和加班，算是让我得到一点安慰。感觉当初的选择和花时间来教他都是值得的。</p>
+<h3 id="时间安排">时间安排</h3>
+<p>学习时间：<br>今年后半年自由时间比较少了，精力也感觉没那么足。最多就上下班车里的30分钟，和晚上 10 点到 11 点。早上 5:30 起不来了，变成了 6:30。有时帮忙带一下儿子，有时跳一会绳，走门前的时间就没怎么剩下了。还只是尽量挤挤吧。</p>
+<p>家庭时间：<br>一直占个人时间大头。需要尽量陪儿子多一些，分担一下老妈的精神和肉体压力。儿子性格目前像老婆，做一些事情上不能逼太急。但是老妈又是做事比较急那种，什么刷牙，吃饭，洗澡，出门上学，老是要唠叨他。而且他还比较有自己的想法，不太愿意按大人说的做，尤其是在我们语气比较硬的情况下，他就会像是对着干是的。感觉他的心理压力有点大，晚上睡个觉都还可以做梦和他人争论个什么东西。所以，首要任务是用更耐心和引导的方式让他做一些事情，舒缓他的压力。也让老妈在一些小事上就尽量由他，自己也不用那么动气，免得血压高。因为毕竟让他自己定个时间做，他还是可以做完的。</p>
+<p>锻炼时间：<br>还是要尽量坚持每天早上固定30分钟左右的锻炼时间。去年中跳绳 1500 下基本满足，后期身体抱恙后又懈怠了些。明年继续。</p>
+<h3 id="善事">善事</h3>
+<p>还在给联合国儿童基金会捐助一点。壹基金的停了。原因是中间只是想换个帐号来处理，后来这个换帐号还搞得很麻烦，索性停了。今年最有意思的是，人生第一次去当志愿者，探望聋哑儿童，是和老婆，儿子一起去的。算是把前年的想法，实现了一点点。</p>
+<h2 id="展望">展望</h2>
+<h3 id="做什么">做什么</h3>
+<p>其实自己一直想做个什么东西出来，主要是用自己喜欢的技术来尝试实现前公司一些没有做好的部分。这个东西就是一个多租户，自定义表单，自定义业务流程的系统。之前是想做一个适用于企业 ERP 的自定义流程的系统出来。但是接触过一些不同的企业 ERP 才深知流程的复杂。这样的怪兽系统不是我一个人的能力可以做到的。所以，今年，或者今后，闲时就专注做一个围绕 Kanban 的项目管理系统。小则练技术和架构，大则做产品让大家使用。</p>
+<h3 id="为什么">为什么</h3>
+<ol>
+<li>技术上看，它天然是个多租户系统。必须支持多企业，多项目进行管理。自定义表单也是需要的，因为各企业对项目故事点，任务等都需要加适合自己的字段。关于自定义流程，因为已经是基于 Kanban，所以流程是会通过 Kanban 反映出来，不像企业 ERP 那些流程那么复杂，应该还在我能力范围之内。</li>
+<li>Kanban 是我很喜欢的一个理论方法。虽然我的实践还很少，但是它的一些理念我甚是喜欢，比如，限定在做工作项 (WIP)，从已有流程中演进，促进各团队相互协作，提高自主性，找出瓶颈和优化流程的 Kaizen 的文化。我承认我的想法是有点理想化，但是让程序员少加班，减少浪费，工作生活平衡是我的梦想。</li>
+<li>去年在公司里面遇到的团队和项目管理问题，希望能够在今年能够好好的处理。如何激励团队，应用 Kanban 来合理化项目流程是我觉得最主要的切入点。深入实践 Kanban 在团队的应用取得的经验可以让我完善这样的一个系统。</li>
+</ol>
+<h3 id="不同点">不同点</h3>
+<p>现在的项目管理系统这么多，我想做的这个和他们有什么不同呢？</p>
+<p>现在的项目管理系统据我所知，有传统的复合型，如收费昂贵的 Rally, 平民的 Jira, 和免费的 Redmine 等。它们不附属任何理论方法，上面可以用 Scrum / XP / Kanban，包罗万有。但是一般以 Scrum 和 XP 多一些，因为 Kanban 比较新。还有另一种是简易卡片型的，初看上去像 Todo list 或者 Kanban 系统。出名的有 Trello，国内很多如 Teambition，Tower 等。而我想做出来的是完全基于 Kanban 的，为 Kanban 订制的。</p>
+<h3 id="目前状况">目前状况</h3>
+<p>目前用的是 Node.js，MongoDB 和 AngularJS，自己一个慢慢磨。悲剧的是工作量还不小，我这个伪前端除了把后端的逻辑写完，前端凑合的页面设计真是惨不忍睹。只能在功能实现前凑合一下了，呵呵。功能实现后再把前端设计搞好，估计可以从伪前端升级成初级的了。</p>
+]]></content>
+    
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Statistical Inference 课后小结]]></title>
@@ -1355,77 +1400,6 @@ Claims        m₀      m - m₀  m</span>
       <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Expression in AngularJS must be idempotent and for multiple calls]]></title>
-    <link href="http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/"/>
-    <id>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</id>
-    <published>2013-02-02T06:32:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
-    <content type="html"><![CDATA[<p>Recently, I encounter two very interesting issues when using ng-repeat in <a href="http://angularjs.org" target="_blank" rel="external">AngularJS</a>.  Not completely understanding the <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch" target="_blank" rel="external">$watch</a> and <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest" target="_blank" rel="external">$digest()</a> is the root cause.  </p>
-<h2 id="Requirement">Requirement</h2>
-<p>I am making some workout entries as a list and one special requirement is to group the records by the date.  </p>
-<p>In order to break the entries to different groups, I use a scope level variable <em>$scope.lastActionDate</em> to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.  </p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span></div><div class="line">    <span class="tag">body</span> <span class="rules">{<span class="rule"><span class="attribute">font-family</span>:<span class="value"> <span class="string">'Lucida Grande'</span>, <span class="string">'Lucida Sans'</span>, Arial, sans-serif</span></span>;<span class="rule">}</span></span></div><div class="line">    <span class="tag">ul</span> <span class="tag">li</span> <span class="rules">{<span class="rule"><span class="attribute">list-style-type</span>:<span class="value"> none</span></span>;<span class="rule">}</span></span></div><div class="line">    <span class="class">.actionDateGroup</span> <span class="rules">{<span class="rule"><span class="attribute">font-weight</span>:<span class="value"> bold</span></span>; <span class="rule"><span class="attribute">color</span>:<span class="value"> red</span></span></span>}</div><div class="line"><span class="tag">&lt;/<span class="title">style</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"content"</span> <span class="attribute">ng-controller</span>=<span class="value">"EntryCtrl"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"entries"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">ul</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"entry in entries"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-switch</span> <span class="attribute">on</span>=<span class="value">"isNewDateGroup(entry.actionDate)"</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">ng-switch-when</span>=<span class="value">"true"</span> <span class="attribute">class</span>=<span class="value">"actionDateGroup"</span>&gt;</span>{{entry.actionDate}}<span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">span</span>&gt;</span>{{entry.desc}}<span class="tag">&lt;/<span class="title">span</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">li</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="title">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">src</span>=<span class="value">"./js/angular/angular.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">EntryCtrl</span><span class="params">($scope, $location)</span> </span>{</div><div class="line">        $scope.entries = [{</div><div class="line">            desc: <span class="string">'Rope jumping count 1000'</span>,</div><div class="line">            actionDate: <span class="string">'2012-01-31'</span>,</div><div class="line">        },{</div><div class="line">            desc: <span class="string">'Jogging 3000M'</span>,</div><div class="line">            actionDate: <span class="string">'2012-01-31'</span></div><div class="line">        },{</div><div class="line">            desc: <span class="string">'Situp 40 * 3'</span>,</div><div class="line">            actionDate: <span class="string">'2012-01-30'</span></div><div class="line">        }];</div><div class="line">        $scope.lastActionDate = <span class="literal">null</span>;</div><div class="line">        $scope.calledCount = <span class="number">0</span>;</div><div class="line"></div><div class="line">        $scope.isNewDateGroup = <span class="function"><span class="keyword">function</span><span class="params">(actionDate)</span> </span>{</div><div class="line">            $scope.calledCount++;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Function called count: '</span> + $scope.calledCount);</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'Entry date vs Scope date: '</span> + actionDate + <span class="string">' vs '</span> + $scope.lastActionDate);</div><div class="line">            <span class="keyword">if</span> ($scope.lastActionDate === <span class="literal">null</span> || $scope.lastActionDate !== actionDate) {</div><div class="line">                $scope.lastActionDate = actionDate;</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        };</div><div class="line">    }</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
-
-<h2 id="Expectation">Expectation</h2>
-<ol>
-<li><em>actionDate</em> of the first entry will always be shown as it’s the first group.  </li>
-<li><em>actionDate</em> of the remaining entries will be shown if its value is not the same as the previous one.  </li>
-</ol>
-<h2 id="Phenomenon">Phenomenon</h2>
-<p>When the sample data is as above (case #1), the effect looks like it’s behaving correctly as below:  </p>
-<ul><br>    <li style="list-style-type: none;"><br>        <div style="font-weight: bold; color: red">2012-01-31</div><br>        <span>Rope jumping count 1000</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Jogging 3000M</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <div style="font-weight: bold; color: red">2012-01-30</div><br>        <span>Situp 40 * 3</span><br>    </li><br></ul>
-
-<p>However, if you change the <em>actionDate</em> of the last entry to be also <strong>2012-01-31</strong> (case #2), you will find the result is that no date group is shown.  Why?  Isn’t it supposed to show only the first one as all entries have the same <em>actionDate</em>?  </p>
-<h4 id="Expected_result:">Expected result:</h4>
-<ul><br>    <li style="list-style-type: none;"><br>        <div style="font-weight: bold; color: red">2012-01-31</div><br>        <span>Rope jumping count 1000</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Jogging 3000M</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Situp 40 * 3</span><br>    </li><br></ul>
-
-<h4 id="Actual_result:">Actual result:</h4>
-<ul><br>    <li style="list-style-type: none;"><br>        <span>Rope jumping count 1000</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Jogging 3000M</span><br>    </li><br>    <li style="list-style-type: none;"><br>        <span>Situp 40 * 3</span><br>    </li><br></ul>
-
-<p>Now if you check the calledCount in the debug message, you will find that it’s called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:  </p>
-<ol>
-<li>The <em>isNewDateGroup</em> function is called more than the entries’ count.  (Guess this, right?)  </li>
-<li>The called count is different when the data is different.  (how about this?)  </li>
-</ol>
-<h2 id="Causes">Causes</h2>
-<p>In AngularJS <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$watch" target="_blank" rel="external">$watch</a> API:  </p>
-<blockquote>
-<ul>
-<li>Since <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest" target="_blank" rel="external">$digest()</a> reruns when it detects changes the watchExpression can execute multiple times per <a href="http://docs.angularjs.org/api/ng.$rootScope.Scope#$digest" target="_blank" rel="external">$digest()</a> and should be <strong>idempotent</strong>.  </li>
-<li>The listener is called only when the value from the current watchExpression and the previous call to watchExpression are not equal <strong>(with the exception of the initial run, see below)</strong> …</li>
-<li>The watch listener may change the model, which may trigger other listeners to fire. This is achieved by <strong>rerunning the watchers until no changes are detected</strong>. The rerun iteration limit is 10 to prevent an infinite loop deadlock.<br>…<br>(Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)</li>
-</ul>
-</blockquote>
-<h3 id="Issue_#1">Issue #1</h3>
-<p>The <em>isNewDateGroup</em> being watched whose calculation relies on value of <em>lastActionDate</em> is not idempotent and so during initial run stage, <em>lastActionDate</em> is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.</p>
-<h3 id="Issue_#2">Issue #2</h3>
-<p>In below code, if I comment out <strong>$scope.lastActionDate = actionDate;</strong> or change the <strong>return true;</strong> to <strong>return false;</strong>, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> ($scope.lastActionDate === <span class="literal">null</span> || $scope.lastActionDate !== actionDate) {</div><div class="line">    $scope.lastActionDate = actionDate;</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>Remember what the API states: <strong>rerunning the watchers until no changes are detected</strong>?  Let’s see what the return value is for watch expression <em>isNewDateGroup</em> after each run.  </p>
-<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-30</strong>:  </p>
-<p><br><table style="font-size: 0.85em;"><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;"></td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">1st <br>(initial)</td><br>        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">true (‘2012-01-31’ !== ‘2012-01-30’;<br><br>        $scope.lastActionDate = ‘2012-01-30’)<br>        </td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">2nd</td><br>        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate !== ‘2012-01-31’)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">true</td><br>    </tr><br></table><br></p>
-
-<p>If the <em>actionDate</em> of the last entry is <strong>2012-01-31</strong>:  </p>
-<p><br><table style="font-size: 0.85em;"><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;"></td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Rope jumping</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Jogging</td><br>        <td style="padding: 5px; border: 1px solid black; font-weight: bold;">Situp</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">1st <br>(initial)</td><br>        <td style="padding: 5px; border: 1px solid black;">true ($scope.lastActionDate === null)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">2nd</td><br>        <td style="padding: 5px; border: 1px solid black;">false (change compared to last run)</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>    </tr><br>    <tr><br>        <td style="padding: 5px; border: 1px solid black;">3rd</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>        <td style="padding: 5px; border: 1px solid black;">false</td><br>    </tr><br></table><br></p>
-
-<p>So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.</p>
-]]></content>
-    
-    
-      <category term="AngularJS" scheme="http://www.thinkingincrowd.me/tags/AngularJS/"/>
-    
-      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
-    
-      <category term="ngRepeat" scheme="http://www.thinkingincrowd.me/tags/ngRepeat/"/>
-    
-      <category term="Directive" scheme="http://www.thinkingincrowd.me/tags/Directive/"/>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
   </entry>
   

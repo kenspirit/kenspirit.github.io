@@ -1,4 +1,3 @@
----
 layout: true
 title: "About Ken"
 date: 2012-11-01 21:13
@@ -17,15 +16,15 @@ It's been 7 years before I decided to dive into JS.
 I love the languages which have first-class functions.
 I am playing with Node.JS, MongoDB and AngularJS and hope one day I can build my dream application.
 
-Please free to get in touch with me using any of the method below.
+Feel free to get in touch with me using any of the method below.
 
 
 ##Contacts##
-* __Email__: chengusky (at) gmail.com
-* __LinkedIn__: [Ken Chen](http://cn.linkedin.com/pub/ken-chen/9/168/a15)
+* __Email__: chengusky (at) gmail.com / thinkingincrowd (at) icloud.com
+* __LinkedIn__: [Ken Chen](http://cn.linkedin.com/in/thinkingincrowd)
 * __Weibo__: [鹄思乱想](http://weibo.com/kenspirit)
 * __Twitter__: [kenspirit](http://twitter.com/kenspirit)
-* __Slideshare__: [chengusky] (http://www.slideshare.net/chengusky)
+* __Slideshare__: [chengusky](http://www.slideshare.net/chengusky)
 
 
 ##About this blog##
