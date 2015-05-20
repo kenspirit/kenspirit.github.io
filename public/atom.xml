@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2015-01-05T14:32:47.076Z</updated>
+  <updated>2015-05-20T15:40:13.219Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -15,11 +15,48 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Dive into Kanban (1) - What is it?]]></title>
+    <link href="http://www.thinkingincrowd.me/2015/05/18/Dive-into-Kanban-1-What-is-it/"/>
+    <id>http://www.thinkingincrowd.me/2015/05/18/Dive-into-Kanban-1-What-is-it/</id>
+    <published>2015-05-18T12:55:41.000Z</published>
+    <updated>2015-05-18T14:42:48.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="What_is_Kanban">What is Kanban</h3>
+<p><a href="http://en.wikipedia.org/wiki/Kanban" target="_blank" rel="external">Kanban</a> can be considered as a <strong>pull</strong> system <strong>visualizing</strong> the <strong>work-flow</strong> through <strong>stage transition</strong> under certain <strong>constraints</strong>.  </p>
+<p>It’s still abstract, right?  Please check below sample Kanban board and I will explain each of the highlighted points below.  </p>
+<p><img alt="Kanban Board" src="http://thinkingincrowd.u.qiniudn.com/Kanban_Simple_Flow.png"></p>
+<h3 id="Work-flow_&amp;_Stage_Transition">Work-flow &amp; Stage Transition</h3>
+<p>It’s not hard to understand, when you are trying to get something done, it always involves stage transition.  At least two stages, in progress and done, right?</p>
+<p>In software development field, before one product/feature is available for customer, it normally goes through <strong>collecting requirement</strong>, <strong>requirement analysis</strong>, <strong>design</strong>, <strong>coding</strong>, <strong>testing</strong>, and <strong>release</strong>.  These can be mapped to each column above and considered as the transition stages involved in work-flow especially when each stage is responsible by different person or team.  </p>
+<p>Hence, before applying Kanban methodology to the development process, it’s a must we understand how our process is and how the stages are transtioned.</p>
+<h3 id="Visualize">Visualize</h3>
+<p>Human-beings are better at recognizing and understanding the world visually.  Work process in software development is quite complex when many parties are involved and especially when the governing policies or management is in a mess.  </p>
+<p>By visualizing the process with a board like above, it’s easy for everyone to track the work item’s progress and spot out the blocking issue or bottleneck if there is any.</p>
+<h3 id="Constraints">Constraints</h3>
+<p>The constraints applied in Kanban is called <strong>WIP</strong> (Work in Progress).  This is what differentiates Kanban from other “Card-Wall” style task management system, like <a href="http://trello.com/" target="_blank" rel="external">Trello</a>.  Constraints are those number applied on top of each stage which implies that at most that number of tasks put under that stage in parallel.  In the example above, only 6 tasks can be started in development at the same time.  </p>
+<p>We can simply assume the constraint is the number of people in different teams although one person might not be limited to do one thing at a time.  But this idea should be easier to understand at first and we can start from that.  </p>
+<h3 id="Pull">Pull</h3>
+<p>This is an interesting verb.  It’s the opposite of <strong>Push</strong>.  I think most of the developers can feel the meaning behind it pretty well.  Most of the time, the work items or tasks are assigned/pushed from higher level.  </p>
+<p>But in Kanban, it emphasize that the work items must be pulled from downstream.  Once, the downstream is busy which means the constraints mentioned above is met, then the work-flow has to be stopped until there is vacancy again in downstream.  </p>
+<p>Not hard to imagine, upstream perfers <strong>Push</strong> more than <strong>Pull</strong> while the downstream should feel the opposite.  The reasons are due to out-dated management philosophy and/or level of trust among teams which Kanban is intended to improve.  </p>
+<h3 id="Afterword">Afterword</h3>
+<p>If you have some basic understanding on Kanban now and curious on what real benefits it can bring, I suggest you to read the great intro book <strong><a href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" target="_blank" rel="external">Kanban: Successful Evolutionary Change for Your Technology Business</a></strong> by David J Anderson.  I will share what issues in development process can be addressed by Kanban in the next article.  </p>
+]]></content>
+    
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[2014 Retrospect and 2015 Goal Setting]]></title>
     <link href="http://www.thinkingincrowd.me/2015/01/04/2014-retrospect-and-2015-goal-setting/"/>
     <id>http://www.thinkingincrowd.me/2015/01/04/2014-retrospect-and-2015-goal-setting/</id>
     <published>2015-01-04T14:53:24.000Z</published>
-    <updated>2015-01-04T15:07:08.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="总结">总结</h2>
 <h3 id="个人学习">个人学习</h3>
 <p>主要是今年年中做的<a href="http://www.thinkingincrowd.me/2014/07/31/half-year-summary/" target="_blank" rel="external">小结</a>里面说的东西，其实上半年还是私人时间比较足，做了些东西。下半年就疲于公司项目和加班，加上个人精力好像没之前那么旺盛了，所以书也没什么看，也没什么大的产出，博客更是没越来越少的样子。</p>
@@ -64,7 +101,7 @@
     <link href="http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/"/>
     <id>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</id>
     <published>2014-09-25T14:58:46.000Z</published>
-    <updated>2014-09-25T15:04:05.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>好不容易才把 <a href="https://www.coursera.org/course/statinference" target="_blank" rel="external">Statistical Inference</a> 的课上完, 真是有点吃力.  简略把教的东西列出来吧, 方便日后再复习.</p>
 <h2 id="概率">概率</h2>
 <h3 id="条件概率_(Conditional_Probability)">条件概率 (Conditional Probability)</h3>
@@ -283,7 +320,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2014/07/31/half-year-summary/"/>
     <id>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</id>
     <published>2014-07-31T12:35:17.000Z</published>
-    <updated>2014-07-31T12:30:43.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Coursera">Coursera</h2>
 <p>本来今年是要把 <em>Algorithms 4th Edition</em> 这本书看了的。后来机缘巧合的发现在 <a href="https://www.coursera.org/" target="_blank" rel="external">Coursera</a> 上就有作者本人的教学课程，<br>所以就直接在上面上课去了。第一部分有6周课程，讲的是基本的算法概念和排序。课程，作业和考试都很有趣。<br>里面各种可视化来教学的东西让我觉得非常有趣。</p>
 <p>上完课后，决定温习一下和用 AngularJS 做点好玩的东西，就把之前看 @左耳朵耗子 哥介绍的可视化排序网站自己做了一下。<br>放到 <a href="https://github.com/kenspirit/visual-alg" target="_blank" rel="external">Github</a> 和自己的<a href="http://www.thinkingincrowd.me/algorithm" target="_blank" rel="external">博客</a>上。 没想到这个东西经一些微博上的大牛转发，粉丝涨不少，博客也瞬时增加 2K 多的访问量。<br>更好玩的是 ZoomQuiet 大妈叫我到珠海 GDG 上面去讲一下做这东西的历程。虽然说最后来听讲的人，因为天气原因，只有 4 个。<br>但是中间和大妈讨论怎么把演讲<a href="http://www.slideshare.net/chengusky/ss-35096187" target="_blank" rel="external">幻灯片</a> (要翻墙，在 Slideshare 上) 做好，怎么向小白讲清楚一些细节，可是花了不少心思。</p>
@@ -313,7 +350,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/"/>
     <id>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</id>
     <published>2014-06-25T14:21:00.000Z</published>
-    <updated>2014-06-26T10:00:33.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="杂谈">杂谈</h2>
 <p><img alt="HangJS Badge" src="http://thinkingincrowd.u.qiniudn.com/HangJS%20Badge.jpg?imageView/2/w/100" style="position: relative; float: left; margin-right: 5px; border: 0px;"></p>
 <p>在6.21号这个特殊的一天，我的生日，献给了今年的<a href="http://2014.jsconf.cn/" target="_blank" rel="external">杭JS</a>而不是家人。</p>
@@ -368,7 +405,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/"/>
     <id>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</id>
     <published>2014-01-04T00:00:00.000Z</published>
-    <updated>2015-01-04T06:01:09.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="工作">工作</h2>
 <p>工作上没有什么太大的变动，可以说趋于平淡。对于项目基本框架的使用已经没有什么问题，所以主要已经是在忙于实现项目业务功能模块上。但是还是痛苦挣扎于一些框架的限制，跨部门的约束，低效率的流程上，感觉效能无法有效提升。</p>
 <p>组内的新人，经历了一两年的成长，基本上能够独立做事情。不像以前那样，还没想清楚就乱写代码，有问题又不问，最后又推倒重来。技术水平有些提升，代码也好看了些，所以我的介入相对少了很多。但是还有待提高，特别是那些低级错误，类似变量命名上打错字的问题经常让我发现，这让我非常恼火。因为这足以侧面知道做事认真仔细程度到哪。</p>
@@ -443,7 +480,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/"/>
     <id>http://www.thinkingincrowd.me/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/</id>
     <published>2013-11-25T00:50:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>After translated a <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/" target="_blank" rel="external">blog</a> about how Promise works in a more functional programming way, I tried to build something to make Ext Ajax call to work in Promise style as a practice.  </p>
 <p><a href="https://github.com/kenspirit/ExtPromise" target="_blank" rel="external">ExtPromise</a> is a simple wrapper to Ext.Ajax and Ext.data.Connection to help you do an Ajax call in Promise style instead of passing success/failure callback to it.  The Promise library I used is the <a href="https://github.com/petkaantonov/bluebird" target="_blank" rel="external">bluebird</a>.  I chose it not only because its speed is faster than most of the Promise library, but also its error handling philosophy looks cleaner and more attractive.  </p>
 <p>It didn’t took long to implement the ExtPromise wrapper but it took me some time to test it.  </p>
@@ -490,7 +527,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/"/>
     <id>http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/</id>
     <published>2013-11-14T12:21:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p><img alt="JingJS Badge" src="http://thinkingincrowd.u.qiniudn.com/JingJS_Badge.jpg?imageView/2/w/100" style="position: relative; float: left; margin-right: 5px; border: 0px;">首先要吐槽一下 <a href="http://weibo.com/jingjs2013" target="_blank" rel="external">@京JS</a>。指示牌不清楚，从酒店另一个门进去根本看不到，最悲剧的是酒店的服务员都不知道这个会议。还有就是硬件上相当不给力，没有 WIFI，这不是新10大酷刑之一吗？没午饭，还要我等外地屌丝奔波找吃的。加之第一天的讲座广告水份有点多，个人感觉有趣的和比较好的是 <a href="https://github.com/substack" target="_blank" rel="external">@substack</a>，<a href="http://isaacmao.com/" target="_blank" rel="external">Issac</a> 和讲 Data Visualization 的 Nick。第二天早上的主题还是相当给力的，下午 Kim, Jakob 也还不错。</p>
 <p>晚上的活动还是要狠狠表扬一下 @京JS。第一晚包了车库咖啡，晚饭虽然是 Pizza 等，但是量也算足，只是地方有点小，不过也是逼着和别人站着交流的好机会。星期天的晚上还有去 Bar 的 after-party，可惜我要赶飞机回珠海，就没法去了，但估计也会很棒。</p>
 <p>第一天晚上，看到 @substack 来了后，我坚定不移地过去和他搭话，接着各种好玩，技术黑和大神间（当然这不包我）的对话就来了。首先声明，可以肯定我的智商是完全没法跟上大神的，加上没法肯定听力上能跟上多少。所以下面的一些神吐糟不保证 100％ 正确，有错误的话也是我这译者的错误，并且这里的技术黑都不是拉仇恨啊。 Please forgive my poor English for any potential misleading.</p>
@@ -528,7 +565,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/11/13/callbacks-are-imperative/"/>
     <id>http://www.thinkingincrowd.me/2013/11/13/callbacks-are-imperative/</id>
     <published>2013-11-13T13:43:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>我之前都有接触过关于 <a href="http://en.wikipedia.org/wiki/Promise_(programming)" target="_blank" rel="external">Promise</a> 的一些文章，但是对它的感觉并不大。因为觉得虽然<a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)" target="_blank" rel="external">回调</a>风格确实有问题，但我写的代码还没有复杂到那种程度，所以，要去使用的感觉并不强烈。</p>
 <p>但是，后面碰到一个问题真的好像用回调的风格来写的话，会比较糟糕。加上看到了这一篇从另一侧面来看 Promise 对函数式编程的思维方面的转变，觉得很不错。值得一看，所以在有其它大神也翻译过的情况下，自己也译一次，顺便深入学习。</p>
 <p>原文链接： <a href="http://blog.jcoglan.com/2013/03/30/callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/" target="_blank" rel="external">Callbacks are imperative, promises are functional: Node’s biggest missed opportunity</a></p>
@@ -701,7 +738,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/"/>
     <id>http://www.thinkingincrowd.me/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/</id>
     <published>2013-09-23T22:24:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>Today I just wander around Google Analytics to check my blog’s visits count.  I am so pleased to find that the visit counts keeps increasing.  Below are some figures:  </p>
 <ol>
 <li>Total Visits <strong>616</strong>  </li>
@@ -744,7 +781,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
     <id>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</id>
     <published>2013-08-29T12:16:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n" target="_blank" rel="external">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn’t really help us a lot to do what we want basically for i18n, language change support of the web page content.  </p>
 <p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application" target="_blank" rel="external">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org" target="_blank" rel="external">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?  </p>
 <p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven’t done performance test for extremely large page yet.  </p>
@@ -777,7 +814,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/06/29/startup-review-network/"/>
     <id>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</id>
     <published>2013-06-28T23:59:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/" target="_blank" rel="external">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY" target="_blank" rel="external">至关重要的关系</a>了。</p>
 <h2 id="比能力重要">比能力重要</h2>
 <p>其实我本人对＂关系＂这个词自然而然的会持否定的态度，因为在很多地方，很多人靠不正当关系和手段，谋取职位或升迁。我不喜欢靠＂关系＂，所以才当程序员，才不去国企，和在小公司待那么久。但工作8年以来，我确实靠关系得到不少机会。正如书中所说：  </p>
@@ -856,7 +893,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/"/>
     <id>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</id>
     <published>2013-06-25T22:39:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>最近看了李开复作序的书：<a href="http://www.amazon.cn/dp/B00COJ3CVY" target="_blank" rel="external">至关重要的关系</a>，也就是<a href="http://www.amazon.com/dp/B008NXKYNO" target="_blank" rel="external">THE START-UP OF YOU</a>的译本。书的英文原名和它的意图其实想说明的是，每个人其实都是和企业家一样，具备相同的特质。  </p>
 <blockquote>
 <p>广义的企业家精神：自主独立，足智多谋，满怀抱负，灵活变通，并拥有广泛的人脉。企业家精神是一种生活态度，而不是一个商业概念；是伴随一生的观念，而不只是某一代人的想法。</p>
@@ -922,7 +959,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/"/>
     <id>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</id>
     <published>2013-06-14T12:00:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>I thought I know the Function definition, execution context and the behavior of <em>this</em> in JavaScript.  However, I realized that actually I don’t or the knowlege is still not firmly grounded in my mind when I wrote some code similar to below snippet but have no instinct of the error.  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> TestObj = {</div><div class="line">    a: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'A'</span>);</div><div class="line">    },</div><div class="line">    b: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'B'</span>);</div><div class="line">        <span class="keyword">this</span>.a();</div><div class="line">    }</div><div class="line">};</div><div class="line"></div><div class="line">TestObj.b();</div><div class="line"></div><div class="line"><span class="keyword">var</span> c = TestObj.b;</div><div class="line">c();</div></pre></td></tr></table></figure>
 
@@ -993,7 +1030,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/"/>
     <id>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</id>
     <published>2013-06-08T14:17:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>When we are writing Unit Test for AngularJS Controller or Service, it’s pretty common to verify the data posted to server using <a href="http://docs.angularjs.org/api/ngMock.$httpBackend" target="_blank" rel="external">$httpBackend</a> in ngMock module.  </p>
 <p>Consider the most common method: <em>expect(method, url, data, headers)</em>, from the doc, we find that the data is expected to be either <em>String</em> or <em>RegExp</em>.  </p>
 <blockquote>
@@ -1059,7 +1096,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/"/>
     <id>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</id>
     <published>2013-05-28T13:48:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>一晚和一位旧同事在 KFC 从10点夜谈到凌晨 3 点。很久没那么年轻过了。我们谈了什么？ 主要是提问，指导和分享，人格魅力和影响力，投资等方面。  </p>
 <h2 id="提问，指导和分享">提问，指导和分享</h2>
 <p>谈这个问题的起源是因为他刚换工作，觉得某些＂领导＂交代任务的时候，啥都不说清楚，什么相关文档资料都不给。所以他很郁闷地在想，到底是他太笨还是本该交待的没说清楚。后来直到他去问时，对方才像挤牙膏那么挤出来那么一点指引，和给他本该先交出的文档。  </p>
@@ -1117,7 +1154,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/"/>
     <id>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</id>
     <published>2013-04-24T22:10:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>看完<em><a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product" target="_blank" rel="external">YouTube 创始人陈士俊自传</a></em>后，很快我又把<em><a href="http://www.amazon.cn/dp/B00ANI5YXW" target="_blank" rel="external">打造 Facebook</a></em>看完了。但感觉这没上本书过＂瘾＂，我看得更快和粗略。  </p>
 <p>笔者王淮主要是为外部人士揭秘 Facebook  内部一些流程和机制，包括招聘，人员培养，团队合作，项目流程等。本书内容叙述直白，但略显平淡和笼统。揭秘的 Facebook 流程，其实也和其他一些关于敏捷，管理等文章提及的好的做法没太大差别。这其实也在意料之中，因为核心机密也没可能爆料，加上好的做法本来就那些，关键看怎么做，执行力如何和团队配合，而且最主要是配合不同公司文化，架构和流程作调整。  </p>
 <p>下面我只抽 Facebook 做得比多数公司好的其它关键说说。  </p>
@@ -1153,7 +1190,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/"/>
     <id>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</id>
     <published>2013-04-16T13:36:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>你是否看到这个标题，想鄙视我而冲进来了？呵呵，我承认是有点标题党，所以我马上告诉你答案，不能。因为看完<a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product" target="_blank" rel="external">YouTube 创始人陈士俊自传</a>，我发现我不具备他，或者说硅谷人的特质，至少暂时。这就是他书里反复提到的，其实看书时也强烈感受到的，＂瘾＂。  </p>
 <p>这本书周五在亚马逊下单，周六下午收到，周日晚就看完了。是在带儿子的零星时间看完的。之所以可以看的那么快，除了我看得快，没太关注些八卦细节外，重要的是书写的流畅，活跃，富有激情。真的使我拿起来就不想放下。感觉他就像和我对话，讲故事一样。推荐看看，也可以找我借。  </p>
 <h2 id="瘾">瘾</h2>
@@ -1216,7 +1253,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/"/>
     <id>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</id>
     <published>2013-04-13T04:59:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Background">Background</h2>
 <p>When you are writing a Node.js based web application, it comes to a demand to share code between Node.js and browser because both the frontend and backend are written in JavaScript.  Some utility APIs, such as validation, data processing, are the common cases.  </p>
 <p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.  </p>
@@ -1284,7 +1321,7 @@ Claims        m₀      m - m₀  m</span>
     <link href="http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"/>
     <id>http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/</id>
     <published>2013-02-13T13:40:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
+    <updated>2015-05-20T15:09:56.000Z</updated>
     <content type="html"><![CDATA[<p>这篇 Blog 内容有点杂，是因为这是过年期间做的主要几件事情，几篇 Blog 又太多，况且只是那么些胡思乱想，加上里面确实有些相通的地方，所以还是合体吧。  </p>
 <h2 id="Lean_Startup"><a href="http://www.amazon.com/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/0307887898" target="_blank" rel="external">Lean Startup</a></h2>
 <p>这本书我总体来说看的比较粗略，主要因为前面的章节在目前身处非创业型企业文化下不太容易适用得上，所以目的只是大概了解作者思想。后面的 <em>Part Three ACCELERATE</em> 部分倒是有些是可以相对容易地应用在成熟，或者说已经某程度上固化并寻求改变的企业上。我说的是不太容易和相对容易，因为任何改变，重则涉及文化，轻亦涉及利益，都是难事。那如何建立一个 Adaptive 的企业环境呢？  </p>
@@ -1333,71 +1370,6 @@ Claims        m₀      m - m₀  m</span>
       <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
     
       <category term="Destiny" scheme="http://www.thinkingincrowd.me/tags/Destiny/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[2012 Retrospect and 2013 Goal Setting]]></title>
-    <link href="http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/"/>
-    <id>http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/</id>
-    <published>2013-02-05T14:37:00.000Z</published>
-    <updated>2014-03-28T14:10:40.000Z</updated>
-    <content type="html"><![CDATA[<p>现在写年终总结和新年展望似乎有点晚。其实我是习惯按农历年附近划分的，呵呵。开玩笑，因为前段时间忙前面两篇Blog，并且去年比较大的转折事件也算是农历年后开始，那就歪打正着吧。  </p>
-<h2 id="翻墙">翻墙</h2>
-<p>比较大的事件就是这个。难的换工作后有机会肉体翻墙，去拜访了万恶的资本主义老大 - 美国，还真见识了一把。蔚蓝的天空，PM2.5超低的空气，见人即停的车，真让人羡慕嫉妒恨，更加强了我内心深处的出国欲望。可惜家庭的顾虑和牵挂已经无法轻易撇去，只能留它作为追寻的梦想，不断激励自身奋斗，以应付未来这个诡异的国度的各种变化。  </p>
-<h2 id="工作">工作</h2>
-<p>本来换工作主要目的就是转攻前端，可是计划赶不上变化，翻墙的代价就是去熟悉后台相应开发技术。所以，过去一年，在部门里还主要是负责 JAVA 开发。编码和设计功底变化不大，只是要适应新框架和在框架的限制内做最有效的挣扎。本是小角色一名，只需专心写代码。后来人士变动，变成 Sub-group lead，发现开会时间暴增，写代码时间变少，碎片化。无效率的开会真是万恶之源。  </p>
-<p>去年技术方面成长速度并不太理想。要熟悉新框架，新业务，新团队，和新项目起步各种混乱，还有各种会议，让我各方面耗费不少时间。思考和学习如何敏捷，如何不断寻找可改进领域，有效推进事情而尽可能少侵犯既有利益团体可以说是对技术成长缓慢的补偿。要在大公司里推进一些事情，真是比小团队难多了。只能从自身，从小，从内部做起。  </p>
-<p>明年听说有点变动。老板理想很美好，关键看流程和各部门如何相应变革协调，而这正是当前主要问题所在。碰到转变的契机可不容易，无论是好是坏，都可学习到东西。我就拭目以待，并尽全力推进，看事态如何发展再说吧。  </p>
-<p>个人方面，明年希望做事可以更有效率，看能否借助自己正在做的 Pet Project 来帮助管理和理清自己的时间花在什么地方和更好的榨取之。在技术和团队上，已经基本和 Team Lead 沟通过，未来可能主要负责注重项目整体技术和设计，希望推动引入防打扰时间，Code Review，CI 持续集成等。</p>
-<h2 id="看书，学习">看书，学习</h2>
-<p>一直以来，都尽量找时间用 Kindle 看书。只是突然从看盗版PDF，变成乐意去购买原版。虽然花了我不少银子，可是心里舒坦。也觉得作为知识工作者，应该尊重其他人的劳动成果。回头如果未来自己有什么产出，同样希望得到回报。去年一下买了不少书，主要因为之前两三年从老婆怀孕到照顾儿子期间，学习少了，积累不少书债。加之不少好书涌出和推荐，一下忍不了手。下面是主要书单：  </p>
-<p><strong>技术类</strong></p>
-<ul>
-<li>Functional Programming for the Object-Oriented Programmer by Brian Marick</li>
-<li>NOSQL Distilled by Pramod J. Sadalage, Martin Fowler</li>
-<li>Patterns of Enterprise Application Development by Martin Fowler</li>
-<li>Domain-Driven Design by Eric Evans</li>
-<li>The Art of UNIX Programming by Eric S. Raymond</li>
-<li><em>Async JavaScript by Trevor Burnham</em></li>
-<li><em>JavaScript: The Good Parts by Douglas Crockford</em></li>
-<li><em>Stylin’ with CSS by Charles Wyke-Smith</em></li>
-</ul>
-<p><strong>非技术类</strong></p>
-<ul>
-<li>The Lean Startup by Eric Ries</li>
-<li>The Pragmatic Programmer by Andrew Hunt, David Thomas</li>
-<li>Mythical Man-Month by Frederick P. Brooks</li>
-<li><em>Kanban by David J. Anderson</em></li>
-<li><em>More Joel on Software by Joel Spolsky</em></li>
-<li><em>Getting Real by Jason Fried</em></li>
-<li><em>Rework by Jason Fried</em></li>
-<li><em>Driving Technical Change by Terrence Ryan</em></li>
-<li><em>Hackers and Painters by Paul Graham</em></li>
-</ul>
-<p><em>注：斜体的已经看了</em></p>
-<p>个人感觉书看的有点快，多少有点囫囵吞枣的感觉。可能是书债太多，怕看少了跟不上时代了，呵呵。其实还有一部分想法是，首先初读，让大脑先接触多领域的思想和知识，然后再精读，反复读，并且在实践中结合，才能吸收和强化理解。无论是技术类或非技术类的方法论书籍，不尝试去自己写代码，不实践方法，是无法体会的。第一遍，要大概了解里面主要讲到什么点和最感触的是什么，以便日常工作学习实践。然后再精读来慢慢巩固吸收。好书，读三遍也不为过。  </p>
-<p>之前看的是非技术类书多点，因为利用零散的时间来看书的话，看技术类的，不容易入脑。这个月再争取看完 The Lean Startup 和 Mythical Man-Month，然后集中精力看剩下的技术类书。日后为了巩固知识和真正理解，看完一本书必须写写心得和书评。</p>
-<p>技术方面的学习，只要还是集中在前端，Javascript 和 Functional Programming 方面。目前主要是利用 Pet Project 来摆弄一下 AngularJS，MongoDB 和 NodeJS。</p>
-<h2 id="时间安排">时间安排</h2>
-<p>学习时间：<br>零散时间基本就只有平时上下班车里的30分钟，还有其它一切可能的坐车时间。这些时间都是用来看书，写 Blog，或者看看 Google Reader，微博。连续的时间最多只在早上。由于家人比较早睡觉，大概9:30-10:00就休息了，所以我也只能早睡早起以避免打扰。早上4:30-5:00期间起床，洗漱15分钟，到6:45分基本有1.5小时，周末的话，家人比较晚起，可以有2小时。这段时间主要先用30分钟左右看看微博，或者书。再写写代码。最后还有周末午休时间，大概3小时，也主要用来写代码或者Blog。</p>
-<p>家庭时间：<br>其实就是在我工作和学习之外的几乎所有时间支出了。或者应该说是在工作和家庭时间之外的所有时间，我再榨取出我的学习时间。优先级来说，还是以家庭优先。这里主要用在陪伴儿子上面。每晚陪他玩一玩，下下棋，周末出去逛逛，接触一下户外，基本就这样过了。还没什么特定模式和游戏来开发他的智力潜能什么的。这个老爸还是有点懒，明年看看有什么可以改进的。为人父母真的不容易，压力山大啊。  </p>
-<p>锻炼时间：<br>每天早上固定15分钟左右，跳绳，哑铃，俯卧撑，仰卧起坐等。不过最近运动减少，因为前段时间儿子生病没有上幼儿园，老妈腰也不舒服，所以要帮忙做饭买菜什么的，再加上有时自己在学习时又放不下手，就忽略了点。明年还是得加强一下，学习也不差那15分钟了。</p>
-<h2 id="善事">善事</h2>
-<p>公益组织方面，现在是月捐150元给世界儿童组织，因为好像已经没有什么公益组织可以信得过了。壹基金之前也通过招行信用卡月捐了一年。后来因为卡太多而取消了，明年看要不要其它途径重启一下。个人方面，之前看到一个江门的人，老婆有血液病，艰难的生了个健康的小孩出来。但是他老婆的病还没钱做手术，拖延着治疗着。详情可以看<a href="http://t.cn/zjBs02D" target="_blank" rel="external">江门日报</a>和她老婆的<a href="http://weibo.com/u/2785731123" target="_blank" rel="external">微博</a>。 连续几个月捐了些吧，只是一个人也撑不了太长时间，就也帮她在微博宣传一下。谁有心的，也可以帮助一下。  </p>
-<p>我的帮助原则是，个人优于组织。已经在微博上被很多大人物推广出来的，我就不捐了，因为他们已经得到很多关注。困难的是一些没有办法得到别人更多关注的普通人，特别是没什么文化的。我关注的对象主要是一些父母或者小朋友。毕竟为人父亲，懂得家庭责任和有困难的痛处。  </p>
-<p>其实实际意义上来说，我做的也并不算什么善事。可能还只是伪善，出了点钱，安慰一下自己。本来也想像 Ailsa 她们那样去探访一些需要帮助的人，只是还是私心重些，希望陪家人多点。像她那样初为人母，还这样不遗余力，才是真善。我那个相形见绌。等儿子在老家放假时再参于一下吧。其实我本来是有计划想等儿子长大点，找个家附近或者珠海的需要帮助的人，除了捐钱外，还可以时不时带儿子去探望一下，也可以教育他，让他懂得怜爱和帮助别人。明年再看看这想法能不能实施。</p>
-<h2 id="总结">总结</h2>
-<p>工作还凑合，总体得到肯定。有些想法，因为有家在身，顾虑太多，已经不容易实施。我是一个顾家的人，那些舍家人而出去闯的事，不是不想，只是做不出来。不过，也不甘虚度日子，不断努力学习技术是王道，也为日后万一所需。为实践10000小时原则，还需要下不少功夫。看书还需要继续，但是要更专注和深入理解别人的思想以融为已用。在做的 Pet Project 5月前要做出来。当然还是要继续写 Blog 来做分享和总结。总体来说，没什么大成就。对自己而言，也算是已经尽最大努力平衡家庭，工作和学习。  </p>
-<p>最后祝支持我的家人和朋友们新年如意，身体健康。</p>
-]]></content>
-    
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
