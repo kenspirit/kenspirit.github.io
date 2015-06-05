@@ -2,6 +2,7 @@ title: Dive into Kanban (3) - How Kanban address the estimation headache
 tags:
   - Retrospect
   - Kanban
+  - Lead Time
 comments: true
 categories:
   - Think
@@ -59,7 +60,9 @@ Estimation is hard and often incorrect.  Once it's used with wrong objective, it
 [Dive into Kanban (1) - What is it]: http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/
 [Dive into Kanban (2) - Visualizing Process]: http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/
 [Dive into Kanban (3) - How Kanban address the estimation headache]: http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/
+[Dive into Kanban (4) - Variability and Flow Interruption]: http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/
 
 * [Dive into Kanban (1) - What is it][]  
 * [Dive into Kanban (2) - Visualizing Process][]  
 * [Dive into Kanban (3) - How Kanban address the estimation headache][]  
+* [Dive into Kanban (4) - Variability and Flow Interruption][]  

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2015-05-31T14:58:03.333Z</updated>
+  <updated>2015-06-05T15:26:24.157Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -15,11 +15,88 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Dive into Kanban (4) - Variability and Flow Interruption]]></title>
+    <link href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/"/>
+    <id>http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/</id>
+    <published>2015-06-05T14:49:04.000Z</published>
+    <updated>2015-06-05T15:24:07.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="External_Sources_of_Variability">External Sources of Variability</h2>
+<p>Within the software development cycle, we often face various kinds of flow blocker issues that slows our progress.  Let’s look into some common areas.  </p>
+<h3 id="Requirement">Requirement</h3>
+<p>Responding to change, one key point in Agile manifesto, is embraced in Agile development.  However, normally there also exists enforcement or agreement that after user story is defined or at least after development is started, requirement should not be changed.  For example, in Scrum, change should be scheduled as new item in next iteration and no new item should be added after sprint backlog is confirmed.  </p>
+<p>The reality is that many teams cannot follow the principle well.  From another point of view, do you think it’s better to waste time on doing something we don’t really want and then do it again?  Or it’s better just stop and change it based on new requirement?  </p>
+<p>Clearly, there is no absolute right or wrong answer here.  We should understand our business nature and decide ourselves.  Going to either extreme that no any change can be accepted or any change is welcome anytime without constraints can be terrible.  There must be some disciplines to follow no matter which way you choose.  </p>
+<h4 id="The_Kanban_solutions">The Kanban solutions</h4>
+<p>In Kanban, changing requirement is acceptable but we must agree that it affects lead time.  And we should also have metrics to measure the quality of requirement and priority later on.  </p>
+<ol>
+<li><p>We can either move back the card to “Requirement” stage or mark it as Blocked by REQ under its current stage regarding the change is big enough to impact development or testing.  </p>
+<p>We should have statistics on how many cards ever move back to “Requirement” once started development or how many days are blocked by requirement.  </p>
+<p>For example, below diagram shows the blocked statistics.  Y-Axis shows different stages in one Kanban board and X-Axis show the total time items are blocked under particular stage.  And the time is also grouped by different blocking reason.  Say, in “In Dev” stage, all time is blocked due to “Priority” reason which means priority kept changing after developer starts development and that is unhealthy signal.  </p>
+</li>
+</ol>
+<p><img alt="Blocked_Statistics" src="http://77g8zm.com1.z0.glb.clouddn.com/Blocked_Statistics.png"></p>
+<ol>
+<li><p>If the item is discarded once it’s picked from Backlog, we can also show in Kanban’s Discard area and also we can check how much effort has been wasted on it in the report.  </p>
+</li>
+<li><p>Start as late as possible if we have statistical Lead Time on hand.  Once we have some historical data so that we know on average or 85% case that how long it takes to finish one item, then we can start that item as late as possible to avoid requirement change.  </p>
+</li>
+</ol>
+<h3 id="Environment_Availability">Environment Availability</h3>
+<p>This is a very typical flow blocker.  The impact of this factor is normally tremendous especially when this issue is dragged without a permanent solution because environment availability often happens in large scale projects involving many teams.  </p>
+<p>Say if environment outage takes at least half day to recover, it’s a signal that our recovery and operation capability is weak or the system design need to be reviewed.  And if we don’t solve the issue at the beginning stage of the project, time and cost wasted will increase exponentially every time we do environment preparation, load testing, production release and disaster recovery.  The later stage same thing happens, the more expensive the cost is.  </p>
+<p>We can either have larger WIP or actively pursue issue resolution as described below.  </p>
+<h3 id="Expediting_items">Expediting items</h3>
+<p>Developers often suffers from expediting items as well, for example, overlooked high priority items in backlog, urgent Report requested from manager, production issue support, etc.  </p>
+<p>Defining different classes of services and assigning fixed WIP on each class, or enabling slack in the team has the agility to react.  </p>
+<h2 id="General_Solutions_in_Kanban">General Solutions in Kanban</h2>
+<p>Below are some general approaches used in Kanban to workaround the blocked items, ease the flow or ensure predictable lead time.  Different approachs have its own benefit or drawback.  It should be chosen accordingly.  </p>
+<h3 id="Larger_WIP">Larger WIP</h3>
+<p>The larger WIP, the less tension the team may feel.  Because idle resource can still pull other items in case there are blocked ones.  However, that cause larger and more unprecitable lead time.  Larger WIP also means the people need to multi-tasking and keep switching context.  Empirically multi-tasking often cause bad quality.  </p>
+<p>What is more, less pressure might consequently has less chance of encouraging continuous improvement.  So, this is recommended for immature organization as starting point only.  </p>
+<h3 id="Pursuing_resolution">Pursuing resolution</h3>
+<p>Strict WIP control requires the team to relentlessly pursue issue fixing.  It greatly encourages continuous improvement culture but it also requires a more mature &amp; fully cooperated team.  </p>
+<h3 id="Class_of_Services">Class of Services</h3>
+<p>Separating the work items into different classes of services and also assigning suitable WIP on each class is one useful approach to solve the expediting items or flow interruption issue.  </p>
+<p>Take below graph as example, we have separated our items into several classes of services:</p>
+<ol>
+<li><code>L1 TT</code>: Means level 1 Production issue which is intended to be fixed in 4 hours  </li>
+<li><code>L2 TT</code>: Means level 2 Production issue which is intended to be fixed in 1 day  </li>
+<li><code>Normal</code>: Normal development item or defect  </li>
+<li><code>Intangible</code>: Items has no cost of delay  </li>
+</ol>
+<p>How to assign WIP depends on the nature of the frequency and volume of different levels of items.  If in initial production launch stage, there might be many production support issues so that you have to put fixed resources in <code>L1 TT</code> and <code>L2 TT</code> in order to react quickly and avoid interrupting normal items’ development.  Then the lead time of normal item can still have predictable lead time and people seldom need multi-tasking to ensure quality.  However, if the system is already kind of stable, insteada of assigning fixed resources to the first two classes, you can arrange some resources in Intagible class who can jump into production issue support when needed.  </p>
+<p><img alt="Class_of_Services" src="http://77g8zm.com1.z0.glb.clouddn.com/Class_of_Services.png"></p>
+<h3 id="Slack_Capacity">Slack Capacity</h3>
+<p>Enabling slack in the team helps to face any unexpected situation, remove regular though not urgent blocker, apply automation to shorten lead time or reduce WIP.  Unless the team has slack, continuous improvement can be luxury because they are all busy chasing after business items.  </p>
+<h2 id="Afterword">Afterword</h2>
+<p>Variability is the major impact on the flow and so we should examine carefully and address on every source in our own process flow.  To analyze existing flow blocker and work out the strategies in Kanban is not easy.  It should be done as part of <a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">visualizing process</a>.  </p>
+<p>Later on, we will explore how to define WIP and classes of services in-depth.  And if you would like to have more idea on sources of variability, chapter 19 in <a href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" target="_blank" rel="external">Kanban: Successful Evolutionary Change for Your Technology Business</a> is a good reference.  </p>
+<h3 id="Series">Series</h3>
+<ul>
+<li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
+</ul>
+]]></content>
+    
+    
+      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
+    
+      <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
+    
+      <category term="Flow" scheme="http://www.thinkingincrowd.me/tags/Flow/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Dive into Kanban (3) - How Kanban address the estimation headache]]></title>
     <link href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/"/>
     <id>http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/</id>
     <published>2015-05-31T05:06:14.000Z</published>
-    <updated>2015-05-31T14:57:46.000Z</updated>
+    <updated>2015-06-05T15:25:47.000Z</updated>
     <content type="html"><![CDATA[<p>Beside <a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">visualizing the Process</a> to reduce communication overhead and unnecessary process, Kanban addresses the common estimation headache in development process from different perspectives.  </p>
 <h2 id="Reality">Reality</h2>
 <ol>
@@ -54,6 +131,7 @@
 <li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
 </ul>
 ]]></content>
     
@@ -61,6 +139,8 @@
       <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
     
       <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
+    
+      <category term="Lead Time" scheme="http://www.thinkingincrowd.me/tags/Lead-Time/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
@@ -71,7 +151,7 @@
     <link href="http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/"/>
     <id>http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/</id>
     <published>2015-05-29T16:20:10.000Z</published>
-    <updated>2015-05-31T14:19:39.000Z</updated>
+    <updated>2015-06-05T15:26:03.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Process_and_Visualization">Process and Visualization</h2>
 <p>I think no one will question the importance of process, but it actually also kills a company’s agility and creativity if it becomes some bureaucracy procedures for doing certain things.  </p>
 <p>It’s very easy to add process which possibly is some governace on an incident happened once only but it’s hard to remove an established one.  That is because almost no one can tell the historical reason of adding it or has the guts to suggest removing it.  It is hard to provide compelling reason or evidence to prove that removing it has great benefit or the people is afraid of taking the responsibility for something bad happened if removing it.  </p>
@@ -125,6 +205,7 @@
 <li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
 </ul>
 ]]></content>
     
@@ -132,6 +213,12 @@
       <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
     
       <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
+    
+      <category term="Process" scheme="http://www.thinkingincrowd.me/tags/Process/"/>
+    
+      <category term="Flow" scheme="http://www.thinkingincrowd.me/tags/Flow/"/>
+    
+      <category term="Visualization" scheme="http://www.thinkingincrowd.me/tags/Visualization/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
@@ -142,7 +229,7 @@
     <link href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/"/>
     <id>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</id>
     <published>2015-05-20T12:55:41.000Z</published>
-    <updated>2015-05-31T14:19:44.000Z</updated>
+    <updated>2015-06-05T15:26:12.000Z</updated>
     <content type="html"><![CDATA[<h2 id="What_is_Kanban">What is Kanban</h2>
 <p><a href="http://en.wikipedia.org/wiki/Kanban" target="_blank" rel="external">Kanban</a> can be considered as a <strong>pull</strong> system <strong>visualizing</strong> the <strong>work-flow</strong> through <strong>stage transition</strong> under certain <strong>constraints</strong>.  </p>
 <p>It’s still abstract, right?  Please check below sample Kanban board and I will explain each of the highlighted points below.  </p>
@@ -168,6 +255,7 @@
 <li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
 </ul>
 ]]></content>
     
@@ -1309,69 +1397,6 @@ Claims        m₀      m - m₀  m</span>
       <category term="Startup" scheme="http://www.thinkingincrowd.me/tags/Startup/"/>
     
       <category term="Management" scheme="http://www.thinkingincrowd.me/tags/Management/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[我能否20个月赚130亿?]]></title>
-    <link href="http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/"/>
-    <id>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</id>
-    <published>2013-04-16T13:36:00.000Z</published>
-    <updated>2015-05-20T15:09:56.000Z</updated>
-    <content type="html"><![CDATA[<p>你是否看到这个标题，想鄙视我而冲进来了？呵呵，我承认是有点标题党，所以我马上告诉你答案，不能。因为看完<a href="http://www.amazon.cn/gp/product/B0060E1LIK/ref=ox_ya_os_product" target="_blank" rel="external">YouTube 创始人陈士俊自传</a>，我发现我不具备他，或者说硅谷人的特质，至少暂时。这就是他书里反复提到的，其实看书时也强烈感受到的，＂瘾＂。  </p>
-<p>这本书周五在亚马逊下单，周六下午收到，周日晚就看完了。是在带儿子的零星时间看完的。之所以可以看的那么快，除了我看得快，没太关注些八卦细节外，重要的是书写的流畅，活跃，富有激情。真的使我拿起来就不想放下。感觉他就像和我对话，讲故事一样。推荐看看，也可以找我借。  </p>
-<h2 id="瘾">瘾</h2>
-<p>说回这本书，如果说他的成功是因为从他打小就对计算机感兴趣，和可能内在有天才工程师的基因有关，不如说是他深深的那种写代码和创造产品的瘾。他可以在一台没有硬盘的电脑上重敲一次程序展示给父母看他的成果，可以连续写代码20小时，可以放弃 Google 工作和奖金重新出来创业＂折腾＂。这就是在他们 Paypal 帮里共同存在的因子，硅谷人的因子，也是造就成功的因子。说来也巧，他也一度面临肿瘤这样的病痛，像乔帮主一样知道自己的＂瘾＂的存在，而为之奋斗。</p>
-<p>我想，除了这个不为金钱的瘾外，没任何东西是能让他们这类人如此成功的。我能否培养或者挖掘这种瘾出来，然后不顾后果的去追寻呢？我觉得很难，因为我向来的性格是求稳，做事情会想很多方面，希望求最稳妥的方式，和他极其不同。就像他说的：  </p>
-<blockquote>
-<p>在创业这件事上，我不希望＂退可守＂，我不想设定好退路，过于安稳的尝试性的投入岂非过于无聊？实际上，如果有一天我在一个寂静的森林里迷失，而前面又有两条路可以选择的话，我一定会在观望很久后放弃充满车辙的那一条，接下来选择杂草丛生的那条，因为我觉得，走可以预期结果的路，那样真的没意思。</p>
-</blockquote>
-<p>暂时我还做不了这点，但我隐约感觉内心有想做点事情，和创业的冲动，或许现在，我能做的是保持内心这么点冲动，和打磨自己的技术，并紧跟潮流。</p>
-<h2 id="书里一些我比较同意的观点">书里一些我比较同意的观点</h2>
-<h3 id="公司架构和管理">公司架构和管理</h3>
-<blockquote>
-<p>PayPal 在招聘时就刻意寻找志同道合的＂自己人＂，因此让推行这种平等自由的文化变的容易起来。<br>…<br>他们在招聘于自己类似的人。</p>
-</blockquote>
-<p>其实我非常赞同这种找人的观点。虽然管理上有说法，招聘者不应该只找自己类型的人，应该在团队里有各种不同类型的人，用以互补之类的。但我觉得，互补的，主要应该是技术专业特长，但他们还是一些拥有核心共同特质的，一些相同的原则，比如说开放和接受改变挑战的心态，积极的勤奋的负责任的态度，团队合作妥协和支持的精神等。反而技术水平，专业领域不是第一考虑。当然，那些 Level A 的工程师，选人时当然尽量只选能力也是同样 Level 的同事，这可以理解。但是就像书里那个有点极端的例子，真的到了这种心态的顶峰了：面试听到说面试者喜欢打篮球的，就不要了，因为他印象中，那些打篮球的旧同学，没几个靠谱的。  </p>
-<p>就敏捷来说，我也觉得必须管理层和团队里每个人都有敏捷的心态才行。不一定都要是编程高手，但一定是内心要不断求变，求改进，对敏捷的核心思想的认可，而不是简单的流程的 follow。</p>
-<blockquote>
-<p>仅仅管理者自己做到尊重团队是不够的。公司管理架构的设置，有的时候，会从一开始就决定了管理和沟通的难度。</p>
-<p>潘宇的总结：＂在创业公司，你是生产创意，而在稳定的大公司，你首先得在同事当中销售这些点子，得证明你的是最好的才行。＂</p>
-</blockquote>
-<p>在小公司待了近8年时间的我，可以说，真的是很不习惯大公司的沟通和效率。大公司按职能分各种团队，导致人员项目协调费时费力，出问题还很容易导致推卸责任而不是集体负责。这在书里的例子，即使是 eBay 这样的算是软件业巨头，也不能幸免。所以说，公司架构的设置，可能就已经决定问题的存在。不改变架构，是无法改变这种情况的。  </p>
-<p>书中提到的潘宇的总结，其实就是看你的主意到底要说服多少人，和哪些人。如果都是在创业公司里的自己人，事情就好办了。但如果是涉及大公司里不同部门，特别是不同利益团体，那就悲催了。所以在 Conway’s law 有说:  </p>
-<blockquote>
-<p>organizations which design systems … are constrained to produce designs which are copies of the communication structures of these organizations.</p>
-</blockquote>
-<p>在软件工程里，沟通占据绝大多数时间和比重。公司架构这种影响沟通的客观屏障，也就不可避免的影响了系统设计。  </p>
-<p>我心中的理想团队，就是那么几个志同道合的人，几个工程师，一两个设计人员，当中有一个核心的令人敬仰和最后拍板的头头，说做就做，同进退。</p>
-<h3 id="创业">创业</h3>
-<blockquote>
-<p>每一个创业的成功当然都免不了运气的成分，<br>…<br>也就是俗称的＂在正确的时间做正确的事＂。<br>…<br>创业者们得培养自己分析和理解技术趋势的眼光，要不然只能任运气溜走。</p>
-<p>新闻每天都在发生。但对于敏感的创业者来说，这些事件，如果你搞清楚它们背后的联系，总会意味着某些意想不到的机会。</p>
-<p>YouTube 和点评网站 Yelp 都从 Paypal 那里学到一个有价值的经验 —— 头一个想法往往不是最好的。</p>
-<p>＂奥卡姆剃刀＂这个这个哲学原理崇尚＂如无必要，勿增实体＂，尽量简单有效。</p>
-</blockquote>
-<h3 id="人">人</h3>
-<blockquote>
-<p>在这个世界上，有的人就是擅长维持一个公司的运转，有的人则擅长不断创新突破，这两种选择本就无所谓对错，只是，要选择最适合你自己的。</p>
-</blockquote>
-<p>我还不知道自己属于哪种人。我算是有点典型工程师心态，对一些繁琐的流程和企业架构和事务感觉很没效率，不爽，也很不喜欢办公室政治等。维持公司运转要比这烦多了。作技术突破创新吧，技术底和那种专注技术难点的死劲还不够，创新能力也有待培养。再按感觉走走看，攻一下技术吧，这也算是硬通货。  </p>
-<h2 id="八卦">八卦</h2>
-<ol>
-<li>一个 Google 高管，跳槽去 Facebook 前，向他打探 YouTube 的战略。Facebook 还请公关公司炮制散布 Google 负面新闻。  </li>
-<li>他很短时间就娶了 Google 韩国第一美女。求婚过程还很有趣的。  </li>
-</ol>
-]]></content>
-    
-    
-      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
-    
-      <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
-    
-      <category term="Destiny" scheme="http://www.thinkingincrowd.me/tags/Destiny/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
