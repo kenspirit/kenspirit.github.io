@@ -51,7 +51,7 @@ Not hard to imagine, upstream perfers **Push** more than **Pull** while the down
 
 ## Afterword
 
-If you have some basic understanding on Kanban now and curious on what real benefits it can bring, I suggest you to read the great intro book **[Kanban: Successful Evolutionary Change for Your Technology Business][]** by David J Anderson.  I will share what issues in development process can be addressed by Kanban in the next article.  
+If you have some basic understanding on Kanban now and curious on what real benefits it can bring, I suggest you to read the great intro book **[Kanban: Successful Evolutionary Change for Your Technology Business][]** by David J Anderson.  
 
 ### Series
 [Dive into Kanban (1) - What is it]: http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/
