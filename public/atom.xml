@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2015-06-29T15:02:32.022Z</updated>
+  <updated>2015-06-30T14:59:48.170Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -96,22 +96,23 @@
     <link href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/"/>
     <id>http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/</id>
     <published>2015-05-31T05:06:14.000Z</published>
-    <updated>2015-06-29T14:56:40.000Z</updated>
+    <updated>2015-06-30T10:23:55.000Z</updated>
     <content type="html"><![CDATA[<p><a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Visualizing the process in Kanban</a> can reduce communication overhead and unnecessary process.  Besides, it can also help to addresses the common estimation headache in development process from a different perspective.  </p>
 <h2 id="Reality">Reality</h2>
-<p>Traditional manangement or planning style is that, provding how many man-days or man-hours we have in a typical iteration and the estimation on the items we want to do, manager or product owner picks the items that match the man power and item priority.  However, we still meet a typical situation that the expected time of item is delayed, no matter requirement, development or testing, and so we can only postpone or cut the scope.  Either way affects the original plan.  That is because estimation is often, if not always, wrong.  Frederick Brooks has spent a whole Chapter 2 in his influential software project manangement book, <a href="http://www.amazon.com/Mythical-Man-Month-Software-Engineering-Anniversary/dp/0201835959" target="_blank" rel="external">The Mythical Man-Month</a>, to discuss about that many years ago.  If we are taking estimation as commitment, we might have a lot of trouble.  </p>
+<p>Traditional manangement or planning style is that, provding how many man-days or man-hours we have in a typical iteration and the estimation on the items we want to do, manager or product owner picks the items that match the man power and item priority.  However, we still meet a typical situation that the expected time of item is delayed, no matter requirement, development or testing.  we can only postpone or cut the scope when we realized that.  Either way affects the original plan and also has additional cost.  The reason is that estimation is often, if not always, wrong.  Frederick Brooks has spent a whole Chapter 2 in his influential software project manangement book, <a href="http://www.amazon.com/Mythical-Man-Month-Software-Engineering-Anniversary/dp/0201835959" target="_blank" rel="external">The Mythical Man-Month</a>, to discuss about that many years ago.  If we are taking estimation as commitment, we might have a lot of trouble.  </p>
 <h2 id="Do_we_still_need_estimation">Do we still need estimation</h2>
 <p>If the estimation we have always been doing is not accurate, and we should not use it for commitment and scheduling, is it still useful?  We should ask ourselves what we originally want it to help us to achieve first.  Below listed some common usages:  </p>
 <ol>
 <li><p>Resource Utilization  </p>
-<p>High utilization is intended to do more thing in fixed time.  However, there will be high risk if we plan our man-days to fully match the time we have in a iteration.  Once there is any issue blocker or change, schedule is affected.  And then we have to adjust or replan which is also cost and might lead to degrade of quality.  </p>
+<p>High utilization is intended to do more thing in fixed time.  However, there will be high risk if we plan our man-days to fully match the time we have in a iteration.  Once there is any issue blocker or change, schedule is affected.  And then we have to adjust or replan which is also costly and might also lead to degrade of quality.  </p>
 <p>If another intention of high utilization is to eliminate any slack, like the old way to manage physical worker, that is pathetic.  This thinking assumes that slack does no good to the company or the team.  In fact, this is some kind of trustness issue and treating knowledge worker as cost instead of asset.  </p>
 </li>
 <li><p>Prioritization  </p>
 <p>Sometime we use the estimation to help prioritize items, so call evaluating ROI (Return on Investment).  </p>
 </li>
 <li><p>Scheduling</p>
-<p>To prevent any accident, many people adds some buffer time into the estimation.  For example, a task required 2 man-days to complete might normally be estimated as 2.5 man-days.  However, how much buffer is appropriate highly relies on personal experience.  Although we can decrease error margin through peer evaluation, task breakdown into smaller unit, etc, many influential factors are without control, such as low productivity due to multi-tasking, priority shifting, resource turnover, etc.  </p>
+<p>There are different purposes for planning or scheduling: When should I start if I want something to be completed at a particular time, when something can be completed if I start it now, or what is the max possible outcome given some resources.  </p>
+<p>In order to make sure things can be done as planned, many people add some buffer time into the estimation.  For example, a task required 2 man-days to complete might normally be estimated as 2.5 man-days.  However, how much buffer is appropriate highly relies on personal experience.  Although we can decrease error margin through peer evaluation, task breakdown into smaller unit, etc, many influential factors are out of control, such as low productivity due to multi-tasking, priority shifting, resource turnover, etc.  </p>
 </li>
 </ol>
 <p>Martin Fowler has also written a good article, <a href="http://martinfowler.com/bliki/PurposeOfEstimation.html" target="_blank" rel="external">Purpose Of Estimation</a>.  There is no absolute right or wrong on estimation.  It depends on how we use it.  Effort estimation can still be used for roughly comparing the difficulty among tasks, evaluating whether there is risk on an item so we should come up a simplified version if needed, or prioritizing tasks if they are really equally important.  However, if we use it incorrect or the benefits it brings can be achieved through other methods, then we might not need estimation at all.  Actually, in Agile community, there are some voices about discarding effort estimation and also a movement called #NoEstimates.  If you have interest, you can take a look on below articles:  </p>
@@ -124,12 +125,11 @@
 <p>However, Kanban doesn’t encourage achieving 100% utilization on each stage as well, because slack is important for continuous improvement and creativity.  Like Google’s 20% freetime, LinkedIn’s InCubator, Apple’s Blue Sky and Microsoft’s The Garage program, different company takes similar approach to encourage that.  (<em>Notes: Seems Google took back that already but there are still many companies think it’s useful.</em>)  Purely achieving high utilization should not be the way to manage knowledge worker in the new era anymore.  Peter F. Drucker has written many great books about management which are highly recommended.  </p>
 </li>
 <li><p>Prioritization  </p>
-<p>Real prioritization does not really require estimation to assist.  It should NOT be defined as high, medium, low.  Instead, it should be in sequence of one, two, three, etc.  It means we still don’t know what the the most important thing is if we cannot do that.  If there is something very important and cannot be broken down, we should always spent all our resource and time on it, right?  </p>
-<p>In case that we cannot tell the priority of some tasks, surely we can use the estimation as reference.  Kanban cannot help on prioritization.  However, it can transparently shows them on board for everyone and make sure we focus on flow to complete the task as fast and smooth as possible.  </p>
+<p>Real prioritization does not really require estimation to assist.  It should NOT be defined as high, medium, low.  Instead, it should be in sequence of one, two, three, etc.  If we cannot set priority in sequence, it means we still don’t know what the most important thing is yet.  If there is something very important and cannot be broken down, we should always spent all resource and time on it, right?  In case that we cannot tell the priority of some tasks, surely we can use the estimation as reference.  </p>
+<p>Kanban cannot help on prioritization.  However, it can transparently shows them on board for everyone and make sure we focus on flow to complete the task as fast and smooth as possible.  </p>
 </li>
 <li><p>Scheduling  </p>
-<p>Purpose of planning or scheduling is to decide when I should start one thing if I want it to be completed at a particular time.  Or if I start one thing now, when it’s going to be completed.  When we use effort estimation and focus on individual item to do scheduling, the accuracy might be low due to the reasons above.  </p>
-<p>In Kanban, the metrics we used is lead time.  Because it’s actual time, it includes all possible external factors, say environment, people, task difficulty, etc.  What is more, by looking into this figure statistically, we use statistics to decrease the error margin.  It will be safer to decide how long it takes for the same class of service (say, Story, Support, or Defect) to complete in 85% or 98% of the cases.</p>
+<p>In Kanban, the metrics we used is lead time.  Because it’s actual time, it includes all possible external factors, say environment, people, task difficulty, etc.  What is more, by looking into this figure statistically, we use statistics to decrease the error margin.  We can understand the team’s delivery productivity once having statistical lead time on hand.  Knowing how long it takes for the same class of service (say, Story, Support, or Defect) to complete in 85% or 98% of the cases than using estimation.</p>
 </li>
 </ol>
 <p>Kanban cannot solve all the problems we have, but it helps us to concentrate on the right thing we should care about.  </p>
