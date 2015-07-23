@@ -67,17 +67,21 @@ Here is how the process integrates within the Kanban board.
 
 Hence, visualizing the process in Kanban helps us clearly know in which stage the working item is and what followup actions are required to continue the process or clear the blocking issues. A picture is worth a thousand words.  
 
+
 ## Afterword
 
-Process visualization in Kanban is the most essential step.  And we **must reflect the real process** in the company/team instead of copying a existing Kanban board from others or design an ideal version in your mind.  
+Process visualization in Kanban is the most essential step.  The difficulty on visualization is how to make policies explicit for everyone in the process.  And we **must reflect the real process** in the company/team instead of copying a existing Kanban board from others or design an ideal version in your mind.  
+
 
 ### Series
 [Dive into Kanban (1) - What is it]: http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/
 [Dive into Kanban (2) - Visualizing Process]: http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/
 [Dive into Kanban (3) - How Kanban address the estimation headache]: http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/
 [Dive into Kanban (4) - Variability and Flow Interruption]: http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/
+[Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption]: http://www.thinkingincrowd.me/2015/07/23/Difficulty-and-Resisted-Opinions-on-Adoption/
 
 * [Dive into Kanban (1) - What is it][]  
 * [Dive into Kanban (2) - Visualizing Process][]  
 * [Dive into Kanban (3) - How Kanban address the estimation headache][]  
 * [Dive into Kanban (4) - Variability and Flow Interruption][]  
+* [Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption][]  

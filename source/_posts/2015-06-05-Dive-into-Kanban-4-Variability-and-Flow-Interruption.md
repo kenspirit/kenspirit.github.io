@@ -23,7 +23,7 @@ Clearly, there is no absolute right or wrong answer here.  We should understand 
 
 #### The Kanban solutions
 
-In Kanban, changing requirement is acceptable but we must agree that it affects lead time.  And we should also have metrics to measure the quality of requirement and priority later on.  
+In Kanban, changing requirement is acceptable but we must agree that it affects lead time.  And we should also have metrics to measure the quality of requirement and prioritization later on.  
 
 1. We can either move back the card to "Requirement" stage or mark it as Blocked by REQ under its current stage regarding the change is big enough to impact development or testing.  
 
@@ -36,7 +36,7 @@ In Kanban, changing requirement is acceptable but we must agree that it affects 
 
 2. If the item is discarded once it's picked from Backlog, we can also show in Kanban's Discard area and also we can check how much effort has been wasted on it in the report.  
 
-3. Start as late as possible if we have statistical Lead Time on hand.  Once we have some historical data so that we know on average or 85% case that how long it takes to finish one item, then we can start that item as late as possible to avoid requirement change.  
+3. Start as late as possible if we have statistical Lead Time on hand.  Once we have some historical data so that we know on average, 85%, or 98% case that how long it takes to finish one item, then we can start that item as late as possible to avoid requirement change.  
 
 ### Environment Availability
 
@@ -54,11 +54,11 @@ Defining different classes of services and assigning fixed WIP on each class, or
 
 ## General Solutions in Kanban
 
-Below are some general approaches used in Kanban to workaround the blocked items, ease the flow or ensure predictable lead time.  Different approachs have its own benefit or drawback.  It should be chosen accordingly.  
+Below are some general approaches used in Kanban to workaround the blocked items, ease the flow to ensure predictable lead time.  Different approachs have its own benefits or drawbacks.  It should be chosen accordingly.  
 
 ### Larger WIP
 
-The larger WIP, the less tension the team may feel.  Because idle resource can still pull other items in case there are blocked ones.  However, that cause larger and more unprecitable lead time.  Larger WIP also means the people need to multi-tasking and keep switching context.  Empirically multi-tasking often cause bad quality.  
+The larger WIP, the less tension the team may feel.  Because idle resource can still pull other items in case there are blocked ones.  However, that cause larger and more unprecitable lead time.  Larger WIP also means the people need to multi-tasking and keep switching context.  Empirically, multi-tasking often cause bad quality.  
 
 What is more, less pressure might consequently has less chance of encouraging continuous improvement.  So, this is recommended for immature organization as starting point only.  
 
@@ -77,7 +77,7 @@ Take below graph as example, we have separated our items into several classes of
 3. `Normal`: Normal development item or defect  
 4. `Intangible`: Items has no cost of delay  
 
-How to assign WIP depends on the nature of the frequency and volume of different levels of items.  If in initial production launch stage, there might be many production support issues so that you have to put fixed resources in `L1 TT` and `L2 TT` in order to react quickly and avoid interrupting normal items' development.  Then the lead time of normal item can still have predictable lead time and people seldom need multi-tasking to ensure quality.  However, if the system is already kind of stable, insteada of assigning fixed resources to the first two classes, you can arrange some resources in Intagible class who can jump into production issue support when needed.  
+How to assign WIP depends on the nature of the frequency and volume of different levels of items.  If in initial production launch stage, there might be many production support issues so that you have to put fixed resources in `L1 TT` and `L2 TT` in order to react quickly and avoid interrupting normal items' development.  Then the lead time of normal item can still be predictable and the people responsible for normal item development seldom need multi-tasking, ensuring quality.  However, if the system is already kind of stable, instead of assigning fixed resources to the first two classes, you can arrange some resources in Intagible class who can jump into production issue support when needed.  
 
 <img alt="Class_of_Services" src="http://77g8zm.com1.z0.glb.clouddn.com/Class_of_Services.png"/>
 
@@ -95,13 +95,16 @@ Variability is the major impact on the flow and so we should examine carefully a
 
 Later on, we will explore how to define WIP and classes of services in-depth.  And if you would like to have more idea on sources of variability, chapter 19 in [Kanban: Successful Evolutionary Change for Your Technology Business][] is a good reference.  
 
+
 ### Series
 [Dive into Kanban (1) - What is it]: http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/
 [Dive into Kanban (2) - Visualizing Process]: http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/
 [Dive into Kanban (3) - How Kanban address the estimation headache]: http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/
 [Dive into Kanban (4) - Variability and Flow Interruption]: http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/
+[Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption]: http://www.thinkingincrowd.me/2015/07/23/Difficulty-and-Resisted-Opinions-on-Adoption/
 
 * [Dive into Kanban (1) - What is it][]  
 * [Dive into Kanban (2) - Visualizing Process][]  
 * [Dive into Kanban (3) - How Kanban address the estimation headache][]  
 * [Dive into Kanban (4) - Variability and Flow Interruption][]  
+* [Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption][]  
