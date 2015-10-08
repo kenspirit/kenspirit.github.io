@@ -98,10 +98,12 @@ It requires mindset change when using Kanban, no matter on management or executi
 [Dive into Kanban (2) - Visualizing Process]: http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/
 [Dive into Kanban (3) - How Kanban address the estimation headache]: http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/
 [Dive into Kanban (4) - Variability and Flow Interruption]: http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/
-[Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption]: http://www.thinkingincrowd.me/2015/07/23/Difficulty-and-Resisted-Opinions-on-Adoption/
+[Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption]: http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/
+[Dive into Kanban (6) - Scrum vs Kanban]: http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/
 
 * [Dive into Kanban (1) - What is it][]  
 * [Dive into Kanban (2) - Visualizing Process][]  
 * [Dive into Kanban (3) - How Kanban address the estimation headache][]  
 * [Dive into Kanban (4) - Variability and Flow Interruption][]  
 * [Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption][]  
+* [Dive into Kanban (6) - Scrum vs Kanban][]

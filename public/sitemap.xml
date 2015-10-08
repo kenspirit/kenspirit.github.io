@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/</loc>
+    <lastmod>2015-10-08T13:52:59.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/</loc>
-    <lastmod>2015-07-23T13:55:15.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</loc>
-    <lastmod>2015-07-23T13:49:12.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/</loc>
-    <lastmod>2015-07-23T13:49:04.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/</loc>
-    <lastmod>2015-07-23T13:48:47.000Z</lastmod>
+    <lastmod>2015-10-08T13:52:39.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/</loc>
-    <lastmod>2015-07-23T13:48:37.000Z</lastmod>
+    <lastmod>2015-10-08T13:52:34.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/</loc>
+    <lastmod>2015-10-08T13:52:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/</loc>
+    <lastmod>2015-10-08T13:52:15.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</loc>
+    <lastmod>2015-10-08T13:52:05.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -82,12 +82,12 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -117,12 +117,12 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -162,12 +162,12 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -177,7 +177,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -202,12 +202,12 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -292,7 +292,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -308,6 +308,11 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2005/10/12/types-of-people-you-need-to-treasure/</loc>
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
