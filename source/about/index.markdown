@@ -25,6 +25,7 @@ Feel free to get in touch with me using any of the method below.
 * __Weibo__: [鹄思乱想](http://weibo.com/kenspirit)
 * __Twitter__: [kenspirit](http://twitter.com/kenspirit)
 * __Slideshare__: [chengusky](http://www.slideshare.net/chengusky)
+* __Wechat__: thinkincrowd
 
 
 ##About this blog##
