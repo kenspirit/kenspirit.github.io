@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2015-12-31T15:51:17.422Z</updated>
+  <updated>2016-01-02T14:13:02.726Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,132 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Modulization and Bundling with TypeScript and Webpack for JavaScript Full Stack Project]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/"/>
+    <id>http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/</id>
+    <published>2016-01-02T08:09:39.000Z</published>
+    <updated>2016-01-02T14:12:12.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Modulization">Modulization</h2>
+<p>In a Full Stack JS project, the essence is how to write code consistently and easy to share and maintain because code sharing between server and browser is unavoidably.  Before talking about what strategy we are taking, let’s have a review on the trend of the modulization first.</p>
+<h3 id="Ancient_history">Ancient history</h3>
+<p>There is no such thing and all things are global.  This causes potentially naming conflict and it’s not good for maintenance.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> logo = <span class="string">'KanbanizeIT'</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span><span class="params">(name)</span> </span>{</div><div class="line">  alert(logo + <span class="string">' wish you a happy new year, '</span> + name);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Package/Namespace_Concept">Package/Namespace Concept</h3>
+<p>Some well-known library, like ExtJS, takes package/namespace concept and they manage the source in this structure.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Ext.ns(<span class="string">'com.kanbanizeit'</span>);</div><div class="line"></div><div class="line">Ext.apply(com.kanbanizeit.SubModule, {</div><div class="line">  oneThousand: <span class="number">1024</span>,</div><div class="line">  oneThousandInComputer: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    <span class="keyword">return</span> oneThousand;</div><div class="line">  }</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<h3 id="Immediately-Invoked-Function-Expression_(IIFE)">Immediately-Invoked-Function-Expression (IIFE)</h3>
+<p>This approach reduce the hassle of long namespace and groups all internal stuffs encapsulated.  Many small library adopts this style, e.g. jQuery.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> kanbanizeIT = (<span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">  <span class="keyword">var</span> privateField = <span class="number">1024</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> {</div><div class="line">    publicStuff: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">      <span class="keyword">return</span> privateField;</div><div class="line">    }</div><div class="line">  };</div><div class="line">})();</div></pre></td></tr></table></figure>
+
+<h3 id="CommonJS/Node-js">CommonJS/Node.js</h3>
+<p>This style went popular due to the popularity of Node.js.  Each file is a module and all variables defined within that file are only visible in that file.  If you have public API want to publish, you need to export it.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// logo.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="string">'KanbanizeIT'</span>;</div><div class="line"></div><div class="line"><span class="comment">// sayHello.js</span></div><div class="line"><span class="keyword">var</span> logo = <span class="built_in">require</span>(<span class="string">'./logo'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = {</div><div class="line">  sayHello: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">    <span class="keyword">return</span> <span class="string">'Welcome to join '</span> + logo;</div><div class="line">  }</div><div class="line">};</div></pre></td></tr></table></figure>
+
+<h3 id="AMD/CMD">AMD/CMD</h3>
+<p>CommonJS is suited for server-side JS loading because it’s synchronous file loading in Node.js.  But for browser, script loading is asynchronous and so other groups of people propose different styles target for browser-side JS loading.</p>
+<p><a href="http://www.requirejs.org/" target="_blank" rel="external">RequireJS</a> is the representative for AMD style.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="function"><span class="keyword">function</span><span class="params">(a, b)</span> </span>{</div><div class="line">  a.doSomething();</div><div class="line"></div><div class="line">  b.doAnotherThing();</div><div class="line">}]);</div></pre></td></tr></table></figure>
+
+<p><a href="http://seajs.org/docs/en.html" target="_blank" rel="external">sea.js</a> is the representative for CMD style.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">define(<span class="function"><span class="keyword">function</span><span class="params">(require, exports, module)</span>) </span>{</div><div class="line">  <span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'a'</span>);</div><div class="line">  a.doSomething();</div><div class="line"></div><div class="line">  <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'b'</span>);</div><div class="line">  b.doAnotherThing();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="ES6">ES6</h3>
+<p>The latest ECMAScript 6 standard has below syntax.  However, this is not supported in most of the JS execution environment yet.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// xxx.js</span></div><div class="line">export <span class="keyword">default</span> xxx;</div><div class="line"></div><div class="line"><span class="comment">// yyy.js</span></div><div class="line">import xxx from <span class="string">'./xxx'</span>;</div></pre></td></tr></table></figure>
+
+<h3 id="My_strategy">My strategy</h3>
+<p>About 2 years ago, I wrote an article “<a href="http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/" target="_blank" rel="external">Share code between Node.js and browser</a>“ about this topic already.  At that time, I explain why I decided to choose to write the code in Node.js style and then use tools like <a href="https://github.com/substack/node-browserify" target="_blank" rel="external">browserify</a> (Now we has Webpack too) to do the bundling for browser.  I still consider my choice is the right way to go.  </p>
+<p>Now I just changed to <strong>write all JavaScript in ES6 format no matter for browser-side or server-side</strong>, then do the bundling for browser.  This choice enables me to have consistent coding style regardless which environment it’s targeted to.  One more reason for me to abandon the hassle introduced from AMD or CMD is that when the HTTP2 era comes, I have no need to do the bundling anymore and just have to skip this step without changing any code.</p>
+<p>But browser doesn’t support ES6 syntax now.  No worry, you should use a transpiler.  Checkout my article <a href="http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/" target="_blank" rel="external">TypeScript vs Babel</a> if you know nothing about it.</p>
+<h2 id="Bundling">Bundling</h2>
+<p>To me, <strong>The No. 1 principle of bundling is <a href="https://en.wikipedia.org/wiki/Single_Source_of_Truth" target="_blank" rel="external">Single Source of Truth</a></strong>.</p>
+<p>How is that?  Normally, we need to have some configuration to define a bundle name and file selectors to decide what files to be included in the bundle, like the <a href="https://jawr.java.net/" target="_blank" rel="external">JAWR</a> used in my company.  It is really ugly and error-prone.</p>
+<p>Now, if we make use of the modulization and control the dependency through ES6 <code>import</code> and <code>export</code>, then we can base on this relationship to control the bundling as well.  What we need to do is to specify a bootstrap JS file as entry point and let the tools to figure out all dependencies to be included.  No other configuration should be needed unless special requirement is raised, such as bundle splitting for lazy load, etc.  </p>
+<p>Hence, <strong>the dependency specified in the source code itself should be the only single truth</strong>.  </p>
+<h3 id="TypeScript_config_&amp;_folder_structure">TypeScript config &amp; folder structure</h3>
+<p>Sample <code>tsconfig.json</code> setting is as below which compiles all TypeScript source to be compatible with ES5 standard and use CommonJS style for module usage.  Folder structure is simply separated to <code>common</code>, <code>client</code> and <code>server</code> for illustrating purpose.  You can further arrange based on your preference.  </p>
+<p>The compiled source is output to <code>build</code> directory and retains the original folder structure.</p>
+<p><img alt="Source Folder Structure" src="http://77g8zm.com1.z0.glb.clouddn.com/js_typescript_folder_structure.png" style="position: relative; float: right; margin-left: 5px; border: 0px; padding: 0px;"></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">  "<span class="attribute">compilerOptions</span>": <span class="value">{</span></div><div class="line">    "<span class="attribute">target</span>": <span class="value"><span class="string">"es5"</span></span>,</div><div class="line">    "<span class="attribute">module</span>": <span class="value"><span class="string">"commonjs"</span></span>,</div><div class="line">    "<span class="attribute">outDir</span>": <span class="value"><span class="string">"build"</span></span></div><div class="line">  },</div><div class="line">  "<span class="attribute">exclude</span>": <span class="value">[</span></div><div class="line">    <span class="string">"node_modules"</span>,</div><div class="line">    <span class="string">"dist"</span>,</div><div class="line">    <span class="string">"build"</span></div><div class="line">  ]</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Webpack_integration">Webpack integration</h3>
+<p>When integrating Webpack with TypeScript support, we need to use <code>ts-loader</code> to compile the <code>.ts</code> file.  Sample <code>webpack.config.js</code> is as below when I am testing to bundle the client-side JavaScript for browser usage:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>),</div><div class="line">    path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = {</div><div class="line">    context: __dirname + <span class="string">'/src'</span>,</div><div class="line">    entry: {</div><div class="line">      index: <span class="string">'./client/index'</span></div><div class="line">    },</div><div class="line">    output: {</div><div class="line">        path: __dirname + <span class="string">'/dist'</span>,</div><div class="line">        publicPath: <span class="string">'/'</span>,</div><div class="line">        filename: <span class="string">'[name].bundle.js'</span></div><div class="line">    },</div><div class="line">    resolve: {</div><div class="line">      root: __dirname,</div><div class="line">      extensions: [<span class="string">''</span>, <span class="string">'.ts'</span>, <span class="string">'.js'</span>]</div><div class="line">    },</div><div class="line">    <span class="built_in">module</span>: {</div><div class="line">      loaders: [</div><div class="line">        { test: <span class="regexp">/\.ts$/</span>, loaders: [<span class="string">'ts-loader'</span>], exclude: <span class="regexp">/node_modules/</span> }</div><div class="line">      ]</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>There are two issues discovered after the testing:</p>
+<ul>
+<li>Any compile warning can possibly block the webpack build process.  To fix this, we can add a <code>ts</code> config in webpack and ignore some particular errors.  </li>
+</ul>
+<p><img src="http://77g8zm.com1.z0.glb.clouddn.com/js_typescript_error.png" alt="TypeScript Warning"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = {</div><div class="line">  ts: {</div><div class="line">    ignoreDiagnostics: [<span class="number">2339</span>]</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<ul>
+<li>Normally, we only need to bundle the code for browser, so the webpack <code>entry</code> only specify entries for client-side script.  Even though the <code>ts-loader</code> still use the <code>tsconfig.json</code> to compile all TypeScript, the compiled TypeScript is not output to the <code>outDir</code> specified in <code>tsconfig.json</code> and so the server-side TypeScript is not compiled to JavaScript.  Then how can Node.js use the TypeScript then?  </li>
+</ul>
+<p>There is one approach to use <a href="https://github.com/theblacksmith/typescript-require" target="_blank" rel="external">typescript-require</a> extension and put <code>require(‘typescript-require’);</code> to the bootstrap entry js executed by Node.js, <code>.ts</code> module can be loaded just like the <code>.js</code> module.</p>
+<p>However, I don’t want to go with it because it introduces some exception (Entry <code>.js</code> file for Node.js and this special extension).  I still want all TypeScript source be compiled out to a build folder with exact folder structure.</p>
+<h3 id="Gulp_Integration">Gulp Integration</h3>
+<p>I have to bring in Gulp to control the process instead.  First compiles all TypeScript and then calls Webpack to do the bundling by pointing to the <code>build</code> folder instead of original <code>src</code> folder.  Hence, <code>ts-loader</code> in <code>webpack.config.js</code> is not necessary anymore.</p>
+<p><code>gulpfile.js</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'./gulp'</span>);</div></pre></td></tr></table></figure>
+
+<p><code>index.js</code> under gulp folder.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="pi">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"></div><div class="line"><span class="built_in">require</span>(<span class="string">'./typescript'</span>);</div><div class="line"><span class="built_in">require</span>(<span class="string">'./webpack'</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'default'</span>, [<span class="string">'typescript'</span>, <span class="string">'webpack'</span>]);</div></pre></td></tr></table></figure>
+
+<p><code>typescript.js</code> under gulp folder.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="pi">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"><span class="keyword">var</span> ts = <span class="built_in">require</span>(<span class="string">'gulp-typescript'</span>);</div><div class="line"><span class="keyword">var</span> tsconfig = <span class="built_in">require</span>(process.cwd() + <span class="string">'/tsconfig.json'</span>);</div><div class="line"><span class="keyword">var</span> tsProject = ts.createProject(<span class="string">'tsconfig.json'</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'typescript'</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{</div><div class="line">  <span class="keyword">var</span> tsResult = tsProject.src() <span class="comment">// instead of gulp.src(...) </span></div><div class="line">    .pipe(ts(tsProject));</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> tsResult.js.pipe(gulp.dest(tsconfig.compilerOptions.outDir));</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p><code>webpack.js</code> under gulp folder.  To be aware that the <code>webpack</code> task has defined a dependency on <code>typescript</code> task so that it will waits under the <code>typescript</code> task to complete before it starts.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="pi">'use strict'</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">'gulp'</span>);</div><div class="line"><span class="keyword">var</span> gutil = <span class="built_in">require</span>(<span class="string">'gulp-util'</span>);</div><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</div><div class="line"><span class="keyword">var</span> webpackConfig = <span class="built_in">require</span>(process.cwd() + <span class="string">'/webpack.config'</span>);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'webpack'</span>, [<span class="string">'typescript'</span>], <span class="function"><span class="keyword">function</span><span class="params">(callback)</span> </span>{</div><div class="line">    <span class="comment">// run webpack</span></div><div class="line">    webpack(webpackConfig, <span class="function"><span class="keyword">function</span><span class="params">(err, stats)</span> </span>{</div><div class="line">        <span class="keyword">if</span>(err) <span class="keyword">throw</span> <span class="keyword">new</span> gutil.PluginError(<span class="string">'webpack'</span>, err);</div><div class="line">        gutil.log(<span class="string">'[webpack]'</span>, stats.toString({</div><div class="line">            <span class="comment">// output options</span></div><div class="line">        }));</div><div class="line">        callback();</div><div class="line">    });</div><div class="line">});</div></pre></td></tr></table></figure>
+
+<p>The execution is as below.</p>
+<p><img src="http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp.png" alt="Gulp and Webpack"></p>
+<p>Till now, you should have basic idea on how to work with TypeScript and Webpack for JavaScript full stack project.  But there is one more thing, how about CSS?  Can it be the same?</p>
+<h3 id="CSS_dependency">CSS dependency</h3>
+<p>For example, my app uses AngularJS and Bootstrap and I want to include them all like below.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// &lt;reference path="typings/angularjs/angular.d.ts" /&gt;</span></div><div class="line"><span class="comment">// &lt;reference path="typings/angularjs/angular-route.d.ts" /&gt;</span></div><div class="line"></div><div class="line">import <span class="string">'angular'</span>;</div><div class="line">import <span class="string">'angular-route'</span>;</div><div class="line">import <span class="string">'angular-ui-bootstrap'</span>;</div><div class="line">import <span class="string">'bootstrap.css'</span>;</div></pre></td></tr></table></figure>
+
+<p>How can I setup the Webpack and bundle all dependencies?  Here is the complete <code>webpack.config.js</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>),</div><div class="line">    ExtractTextPlugin = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>),</div><div class="line">    HtmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">'html-webpack-plugin'</span>),</div><div class="line">    path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = {</div><div class="line">    context: __dirname + <span class="string">'/build/src'</span>,</div><div class="line">    entry: {</div><div class="line">      index: <span class="string">'./client/index'</span></div><div class="line">    },</div><div class="line">    output: {</div><div class="line">        path: __dirname + <span class="string">'/dist'</span>,</div><div class="line">        publicPath: <span class="string">'/'</span>,</div><div class="line">        filename: <span class="string">'[name].bundle.js'</span></div><div class="line">    },</div><div class="line">    resolve: {</div><div class="line">      alias: {</div><div class="line">        <span class="string">'bootstrap.css'</span>: path.join(__dirname, <span class="string">'/node_modules/bootstrap/dist/css/bootstrap.min.css'</span>)</div><div class="line">      },</div><div class="line">      root: __dirname,</div><div class="line">      extensions: [<span class="string">''</span>, <span class="string">'.css'</span>, <span class="string">'.js'</span>]</div><div class="line">    },</div><div class="line">    <span class="built_in">module</span>: {</div><div class="line">      loaders: [</div><div class="line">        {</div><div class="line">            test: <span class="regexp">/\.(eot|woff|woff2|ttf|svg|png|jpg)$/</span>,</div><div class="line">            loader: <span class="built_in">require</span>.resolve(<span class="string">"url-loader"</span>) + <span class="string">'?name=[name]-[hash].[ext]'</span></div><div class="line">        }</div><div class="line">        , { test: <span class="regexp">/\.css$/</span>, loader: ExtractTextPlugin.extract(<span class="string">'style-loader'</span>, <span class="string">'css-loader'</span>) }</div><div class="line">      ]</div><div class="line">    },</div><div class="line">    plugins: [</div><div class="line">      <span class="keyword">new</span> HtmlWebpackPlugin({</div><div class="line">        inject: <span class="literal">true</span>,</div><div class="line">        template: <span class="string">'./src/client/index.html'</span>,</div><div class="line">        chunks: [<span class="string">'index'</span>]</div><div class="line">      })</div><div class="line">      , <span class="keyword">new</span> ExtractTextPlugin(<span class="string">'[name].css'</span>, {</div><div class="line">        allChunks: <span class="literal">true</span></div><div class="line">      })</div><div class="line">    ]</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>There are couples of setting took me a while to figure out.</p>
+<ol>
+<li><p><code>alias</code> for <code>bootstrap.css</code> is necessary so that it can be correctly resolved.  </p>
+</li>
+<li><p>Without the <code>require.resolve(&quot;url-loader&quot;)</code>, when parsing the CSS file, it complaints <code>Cannot resolve module &#39;url-loader&#39;</code>.  </p>
+</li>
+<li><p><code>ExtractTextPlugin</code> is used to output the CSS as a separated file instead of being embedded in the bundled JS and dynamically generated as a <code>&lt;style&gt;</code> tag in HTML file during page load.</p>
+</li>
+<li><p><code>HtmlWebpackPlugin</code> is used to automatically inject the generated CSS and JS files into the appropriate location in the entry HTML file as below.</p>
+</li>
+</ol>
+<p><img src="http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp_final_result.png" alt="Final HTML result"></p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="TypeScript" scheme="http://www.thinkingincrowd.me/tags/TypeScript/"/>
+    
+      <category term="AngularJS" scheme="http://www.thinkingincrowd.me/tags/AngularJS/"/>
+    
+      <category term="Webpack" scheme="http://www.thinkingincrowd.me/tags/Webpack/"/>
+    
+      <category term="browserify" scheme="http://www.thinkingincrowd.me/tags/browserify/"/>
+    
+      <category term="bundling" scheme="http://www.thinkingincrowd.me/tags/bundling/"/>
+    
+      <category term="CSS" scheme="http://www.thinkingincrowd.me/tags/CSS/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Sword/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[2015 Retrospect and 2016 Goal Setting]]></title>
@@ -1420,72 +1546,6 @@ Claims        m₀      m - m₀  m</span>
       <category term="Opportunity" scheme="http://www.thinkingincrowd.me/tags/Opportunity/"/>
     
       <category term="Risk" scheme="http://www.thinkingincrowd.me/tags/Risk/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[永久测试之心, 寻求真我]]></title>
-    <link href="http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/"/>
-    <id>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</id>
-    <published>2013-06-25T22:39:00.000Z</published>
-    <updated>2015-05-20T15:09:56.000Z</updated>
-    <content type="html"><![CDATA[<p>最近看了李开复作序的书：<a href="http://www.amazon.cn/dp/B00COJ3CVY" target="_blank" rel="external">至关重要的关系</a>，也就是<a href="http://www.amazon.com/dp/B008NXKYNO" target="_blank" rel="external">THE START-UP OF YOU</a>的译本。书的英文原名和它的意图其实想说明的是，每个人其实都是和企业家一样，具备相同的特质。  </p>
-<blockquote>
-<p>广义的企业家精神：自主独立，足智多谋，满怀抱负，灵活变通，并拥有广泛的人脉。企业家精神是一种生活态度，而不是一个商业概念；是伴随一生的观念，而不只是某一代人的想法。</p>
-</blockquote>
-<p>这本是 <a href="www.linkedin.com">LinkedIn</a> 创始人 Reid Hoffman 和 硅谷企业家 Ben Casnocha 一起写的书。其实书的内容并不只讲述如何建立重要的人际网络关系，还阐明当前变幻无常的职业环境下，怎么样才能保持竞争力。不知道怎么译成中文书名，就变成只突出关系了，可能为了迎合国内对关系的依赖心理吧。  </p>
-<blockquote>
-<p>你的竞争优势是由三种各不相同且不断变化的力量相互作用而形成的：你的资产、你的追求/价值观和市场现实，即你的综合能力在竞争市场的供应状况。</p>
-</blockquote>
-<h2 id="真我，追求">真我，追求</h2>
-<p>书中一段让我非常有感触：  </p>
-<blockquote>
-<p>你的内心不存在能通过自省发现并为你指明正确方向的＂真我＂。是的，你的追求塑造了你所做的事，但是追求本身就受到你的行动和经历的限制。个性不是你找到的，而是自己浮现的。  </p>
-</blockquote>
-<p>其实我一直想通过自省来寻找到自我，但发觉真的太难了。身边也缺乏很好的 Mentor，所以一直感觉有点迷茫。我到底应该怎么前行呢？直到看完上面那段话后，终于可以释怀了。回想起前段日子看到 <em>@玉伯也叫射雕</em> 说的＂心要粗糙点＂，<em>@周鸿玮</em> 的这篇<a href="http://m.blog.sina.com.cn/s/blog_49f9228d0101c9pr.html?retcode=0" target="_blank" rel="external">不喜欢的工作，可能通往一个崭新世界</a>，和自己迷茫前走过的路程，也确实是这么走过来的。  </p>
-<p>高考时我就是想考计算机专业，没什么理由。毕业时就是想转行从事软件开发，而不是专业的电子方向 (没考上计算机)。还有就是大学时出国留学的想法以至狂学 TOEFL 和 GRE。 至今我也不知道当时为什么这么想，只是有点一根筋的感觉。  </p>
-<p>之前的工作生涯，领导让做什么我就做什么，说去哪个项目就到哪去，不挑活，只认真干。当时的＂真我＂就是做 BA 或者 Consultant (以前感觉那种职位比码农高级点，现在发现沟通和需求分析根本就是码农必备技能)，而且公司也是主靠这部分业务，所以个人在公司发展可以说一帆风顺。快速学习和解决问题的能力，抗压能力，良好沟通能力也同时在这样情况下培养出来。  </p>
-<h2 id="永久测试之心">永久测试之心</h2>
-<blockquote>
-<p>把职业始终保持在测试阶段，可以强迫自己承认自身还有缺陷，还存在发展空间，还需要适应和进步。不过，这种心态也十分乐观，因为这意味着你有能力改善自己，同时也有能力改变周围的世界。</p>
-</blockquote>
-<p>永久测试其实是对非常流行的观点＂我们必须找到自己心中真正的优势和渴望做的事情，然后坚持不懈的努力下去，终将取得非凡成就＂进行必要的一些补充和修订。  </p>
-<p>虽然如上面所说，自我/价值观需要坚定的去追求，但它也不是一成不变的。因为一开始我们的追求可能是空泛的，含糊的，没有具体步骤和验证过的。我们有时可能只是想当然认为自己想做什么，可以做什么，但不知道能不能做或怎么做。所以必须在实践中验证，也就是不断测试调整的一个过程。  </p>
-<p>永久测试其实也是应对市场现实而提出的要求。如果你的优势和能力，并没有市场需求的话也是白搭。其实这个观点和 <a href="http://www.amazon.com/dp/0307887898" target="_blank" rel="external">LEAN STARTUP</a> 里面的 Build-Measure-Learn 这样一个反馈循环正是异曲同工之处。因为我们面对的是迅速变化的市场和趋势，我们必须像打造一个产品一样，不断测试我们身上的技能是否还满足市场的需求。  </p>
-<p>之前从一家毕业后一直工作了7年的公司离职，除了公司一些长久问题，个人已经不太抱希望管理层能解决外，也是感觉需要去外面的世界看看，测试一下自己能否适应市场的需求。后来面试发现，在珠海这个地方，需要多面手的地方不多，自己看重的广泛技能，英语，沟通和快速学习能力并没多少人欣赏。招聘方看你那么多年经验，基本就是看你在他们想要的技术方面，能深入多少，因为他们多数要的是专才。  </p>
-<p>但这却是我的短板。我并没哪项技术钻研的很深，脚踏的不够坚实。其实我之前也一直缺乏一定自信，总觉得底气不够。所以，我也就正好调整了一下＂真我＂，决心专攻某一样技术，JS。今后嘛，还是保持一颗<strong>钝</strong>和<strong>粗糙</strong>的心，坚持下去并测试以验证之。  </p>
-<blockquote>
-<p>在任何情况下，能够检验我们设想的是行动而非计划。只有在实践过程中才能找到自己努力的方向以及方法。</p>
-</blockquote>
-<h2 id="ABZ计划">ABZ计划</h2>
-<p>这是作者提出来的一种规划手段。  </p>
-<ul>
-<li>A计划：是我们目前从事的事业，一个我们发挥竞争优势的地方。但是在计划执行过程中，我们还是需要时刻根据情况微调，还有试探性寻求B计划。  </li>
-<li>B计划：在执行A计划途中，如果发现目标或实现途径出现比较大的变化，甚至说客观环境发生重大变动等，就要跳到B计划了。但是B计划从哪冒出来的？其实在不断学习和调整方向中得到。它应该是和A计划不同但相关的方向。最好的方式是在执行A计划同时，从兼职开始做起，试探性去尝试一些想法。这个计划不是仔细计划出来的，而是摸索出来的。    </li>
-<li>Z计划：这已经是我们的最差打算了。就是万一失业了，什么都没有了，我们可以怎么做？银行剩下的钱可以支撑多少个月没工作？这段时间是否足够学新技能？  </li>
-</ul>
-<p>其实作者强调的就是<strong>不断学习，寻找和调整方向，而且确保有救生方案支撑转变</strong>。</p>
-<h2 id="确立身份">确立身份</h2>
-<blockquote>
-<p>我们应该确立一种身份地位，使其不受老板、地域以及行业的影响。</p>
-</blockquote>
-<p>这也是文章里让我觉得很重要的一句。因为当今，及往后的职业发展环境，是＂横向＂忠于职业，而非＂纵向＂忠于老板。当然这并非说朝三暮四，到处跳槽。因为无论在哪就职，为所在企业全力拼搏，也是提高自我竞争力，打造人脉的关键。而作者想强调的是，因为世界变化太快了，每个企业，每个行业都有可能发生巨大变化和转折点，比如数码相机的到来导致柯达的没落；智能手机的出现，使得 Nokia 被抛离。所以这种独立于老板，甚至是行业的自身技能身份定位，为日后应对市场变化非常重要。  </p>
-<p>所以，对于我们从事 IT 的人来说，写个博客，多参于一些开源项目和活动，做些工作外的作品，是很有必要的。  </p>
-<p>确保自身技能跟得上变化后，剩下的就是关系问题了。</p>
-]]></content>
-    
-    
-      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
-    
-      <category term="Startup" scheme="http://www.thinkingincrowd.me/tags/Startup/"/>
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
-    
-      <category term="Permanent" scheme="http://www.thinkingincrowd.me/tags/Permanent/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
