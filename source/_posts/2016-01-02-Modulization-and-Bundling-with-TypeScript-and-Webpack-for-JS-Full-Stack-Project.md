@@ -362,3 +362,5 @@ There are couples of setting took me a while to figure out.
 4. `HtmlWebpackPlugin` is used to automatically inject the generated CSS and JS files into the appropriate location in the entry HTML file as below.
 
 ![Final HTML result](http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp_final_result.png)
+
+I haven't talked about how to include internal CSS or HTML yet.  However, I think you can figure out yourself based on the sample and strategy described here.  

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-01-02T14:13:02.726Z</updated>
+  <updated>2016-03-05T12:25:18.228Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -15,11 +15,153 @@
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[有经验和没有经验的程序员的区别]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/03/04/Novice-vs-Experienced/"/>
+    <id>http://www.thinkingincrowd.me/2016/03/04/Novice-vs-Experienced/</id>
+    <published>2016-03-03T17:30:45.000Z</published>
+    <updated>2016-03-03T23:55:40.000Z</updated>
+    <content type="html"><![CDATA[<p>近来我一直都需要带些毕业生（怎么我的队伍就那么多新人呢，呵呵），发现很多人在解决问题的方法上都存在一些问题。解决问题，其实是每个程序员每天都在干的事情。但是方法好还是不好，我觉得正是有经验和没有经验的程序员之间很重要的区别。刚好最近又看到了余晟公众号（yurii-says）的《砍伐大树 v.s. 收割庄稼》里面阐述的解决问题的四个步骤。所以，我想根据身边的案例详细一点解释一下这四个步骤。</p>
+<h2 id="认识和定位问题">认识和定位问题</h2>
+<p>一般来说，新手进入一个公司和团队之后，team lead 会分配一两个简单的任务让新人练练手。所以，首先要做的事情就是搭环境，和认识已有的系统和代码。</p>
+<p>在搭环境和做任务的过程中，新人经常遇到问题或异常后就蒙了，不知道怎么继续下去。然后就求救说：“出错了，怎么办？”。我都会反问一句：“哪里出错了？你定位到问题在哪里了吗？”。可是一般收到的答案都是“不知道”。像我们公司的系统架构，把后端分了两层，一层专门服务于表现层，另一层专门访问数据库和提供 web service。系统的架构就简单如下图所示。如果在浏览器发起的一个 Ajax 请求有异常返回，那异常到底是在哪一层，或者是哪一个传输环节？如果在传输环节可能是因为对象类型，属性不一致导致。如果在 Domain 层可能是业务逻辑，数据库操作出现问题等。</p>
+<p><img alt="Company System Architecture" src="http://77g8zm.com1.z0.glb.clouddn.com/company_system_architecture.png"></p>
+<p>​认识和定位问题的能力应该是程序员技能宝典里面的 101，并且是要持续修炼的能力。<strong>看日志</strong>和<strong>看代码</strong>是获取这种能力的两种最基础的手段。</p>
+<h3 id="看日志">看日志</h3>
+<p>在没有源码的情况下，看日志可以说是唯一定位问题的方法了。再说，即便有源码，也不可能全都看一通，或者顺着源头一直 debug 下去，直到遇到问题为止。所以，定位问题的起点一般都是先看日志。</p>
+<p>日志来源基本可以分为几大类：</p>
+<ol>
+<li>程序：项目代码  </li>
+<li>框架：团队或者公司内部框架，因为不少公司还有专门制造内部轮子的部门  </li>
+<li>中间件，外部组件：广义地指所有外部的组件，包括数据库，Web 服务器，Application 服务器，以及云平台等。  </li>
+</ol>
+<p>一般来说，我们都先从第一种着手。因为一个好的项目，第一大类的日志应该是要把内部框架和所有外部系统组件的异常都封装好。异常处理设计的好，从这里的日志出发就可以较容易地追溯至真正问题所在。可是如果看完第一大类的日志都没能确定问题的原因，很可能是自身项目没有做好异常的捕捉处理，把外部系统或组件的异常给吞吃和隐藏了；又或者是因为一些运行时异常没有被捕捉到，然后就被写到外层的框架或者容器的日志里，比如说 Weblogic/Tomcat。</p>
+<p>所以，经验首先就在于懂得在什么地方找日志；先看什么，后看什么；以及在项目自身日志不健全情况下，如何寻求第二或者第三大类的日志，看出错时间点的前后到底有什么信息可以帮助推断真正问题所在。</p>
+<h3 id="看代码">看代码</h3>
+<p>当定位到要改动的源码的位置时，很多新人面对着一个从未接触过的庞大的项目代码库，在 IDE 里面跳转多几次就乱了。他们遇到每一个方法调用都想进去看个明白。但是，一开始就想看懂整个系统的代码是不现实的。除了代码量庞大，或者找不到源码作者咨询以外，我们可能还有时间的压力，必须尽快找到问题和解决方案。那么，我们就必须有<strong>猜代码</strong>的能力。如何忽略细节，不迷失在茫茫代码海洋里，迅速定位和看懂自己的任务需要涉及和修改的代码是哪一块，是非常重要的。就像浏览文章一样，找段落大意，猜不同的代码大概是完成什么功能，然后再决定是否应该深入去研究某一块，而不是一次搞懂所有的代码。</p>
+<h2 id="认清问题">认清问题</h2>
+<p>其实就是<strong>知其然，知其所以然</strong>。</p>
+<h3 id="从技术上来看">从技术上来看</h3>
+<p>准确定位到问题或者异常发生在什么地方了，并不代表要修改的代码就是且只是那一块。我们不能头痛医头，脚痛医脚。</p>
+<p>比如说，我们对外提供的一个 Web Service，因为浏览器或者调用方传的参数不全，报了 NullPointerException，我们要怎么改？改调用方还是提供方？首先，根据健壮性原则，也就是 <strong>Postel’s law</strong>，看起来应该是改提供方这边：</p>
+<blockquote>
+<p>Be conservative in what you do, be liberal in what you accept from others</p>
+</blockquote>
+<p>但是，除了改提供方，我们还要考虑为什么调用方会提供少了一个参数，是所有的情况下都少了吗？还是某一些场景才会？尤其是当调用方是从一个具有复杂的业务操作逻辑的页面过来的时候，我们更需要全面分析。这才不至于说见一个洞，补一个洞，其实还漏了几个洞。</p>
+<h3 id="从做产品或者功能设计来看">从做产品或者功能设计来看</h3>
+<p>明白用户的功能使用场景和背后的动机，是产品功能的设计，如何取舍技术难点等的重要决策依据。</p>
+<p>举个栗子，船运公司的单据录入部门其实有一份标准的操作指南。录入人员要根据托运人是谁，运什么货，从哪运到哪，要不要报关等一大堆的信息，决定应该怎么录入单据。那份操作指南其实就像一个问答系统，或者更像是一颗决策树一样。从成百上千种分门别类，如货物，航线，费用，报关等的问题找到那对应的决策路径来获知最后该怎么做。</p>
+<p>那么，如果我们要做一个指南维护页面，怎么让用户容易找到他想要修改的条目，和清晰展现出来就要有一些考量了。对查找这个功能，开发人员一开始把那些门类和问题都做为下拉框展示出来以作为查询条件，并且还算聪明地实现了级联过滤，不至于用户因为门类和问题数目过多而不好找到他想要的东西。但是用户反映说那个问题的下拉框不能有级联。为什么？原因其实是有些问题是通用的。它们有可能出现在很多门类当中。所以，一种场景是他们已经知道要改的是某一个具体的问题，他想找出相关的所有门类。那么，我们把问题那个下拉框做成级联，他们就悲剧了。因为他们根本就不知道什么门类下有那个问题，怎么可能要求他们先选好门类，再选问题来查找呢？就问题这个下拉框，换另一种思路，做自动补全，让用户输入关键字就能过滤就好了。</p>
+<h2 id="可行性分析">可行性分析</h2>
+<p>在定位好问题和界定范围后，下一步就要看能采取什么方法来解决问题。</p>
+<p>拿最近让新人做的一个开发任务来说吧。有一个页面，需要把数据库的数据，按照树的结构渲染出来和进行数据维护。这里，我们要考虑的东西有什么呢？</p>
+<ol>
+<li><p>页面生成树要用什么前端技术，它的特点是什么？它生成树形结构的表现形式时，需要的数据结构是什么样的，是不是就是对应的树状数据结构还是没有要求？对树的结点进行页面上的操作时，数据就会自动更新吗，还是说我们要另外再独立更新数据？</p>
+</li>
+<li><p>页面的数据结构和数据库的结构一样吗？中间要经过多少次的转换？转换放在前台还是后台做？页面到底有一些什么业务操作，以及这些业务操作其实最后反映到数据库层面的形态是什么样的？界面操作后如何把信息带回后台，要带回什么数据（比如 ID，操作类型标记等）?  </p>
+</li>
+<li><p>后台的数据更新逻辑是怎么样的？每次更新都需要整颗树的全部信息进行全量更新吗？</p>
+</li>
+</ol>
+<p>动手编码之前，对这些问题有初步的认识是相当重要的。有初步的想法之后，怎么做才能用最少的时间和精力来验证是否可行？如果还没有搞清楚，一下子就上手编码是很危险的。这个开发任务，也正是因为上面说的某几个方面没有做好，中间一些实现推倒重来了几次，进度比预期长了很多。</p>
+<p>另一种非常重要的情况就是，我们想到或者碰到的技术难点，可能在实际应用场景根本碰到的情况就不高。如果避开那种场景来考虑的话，系统设计和实现方式可能就大大不同了。对于怎么舍弃一些技术细节问题，曹政的公众号（caozsay）的《如何应对并发(3) - 需求裁剪》就针对一个案例说得很清楚，大家可以看看。</p>
+<p>还有，可行路径的选择，当然也受计划的影响。一个月，还是三个月时间的实现方案当然会有所不同。</p>
+<h2 id="估算">估算</h2>
+<p>估算和可行性分析其实密切相关。只有经过充分的可行性分析，估算才相对有意义。我觉得不是说有经验的人，估算的时间就比较准。而是有经验的人大概知道什么地方有坑，把上面的可行性分析和任务拆分做得更细，考虑得更全面一些。</p>
+<p>其实人对时间的估算是非常不准确的，也不应当仅仅依赖于时间估算来做计划或者确定项目期限。我个人对估算的想法在之前写的 Kanban 系列里面有一篇文章也讲了一下。有兴趣可以看看。</p>
+<ul>
+<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a></li>
+</ul>
+]]></content>
+    
+    
+      <category term="Experience" scheme="http://www.thinkingincrowd.me/tags/Experience/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何授权和分配工作]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/01/31/How-to-delegate/"/>
+    <id>http://www.thinkingincrowd.me/2016/01/31/How-to-delegate/</id>
+    <published>2016-01-31T07:43:05.000Z</published>
+    <updated>2016-03-05T12:24:58.000Z</updated>
+    <content type="html"><![CDATA[<p>最近在看李笑来推荐的《领导梯队》。其中描述了从管理自己到管理他人的转变，其中一项不容易适应的事情是要懂得授权和分配工作。</p>
+<p><strong>懂得授权和分配工作是成为管理者道路上要习得的首要技能</strong>。因为这点非常重要，并且是不少人第一次从个人贡献者转变成一线管理者时做得不好的地方。</p>
+<h2 id="目的">目的</h2>
+<p>授权和分配工作任务其实只是手段。这样做的最主要的<strong>目的是多人协作，达成目标并同时提高每个人的能力</strong>。</p>
+<h2 id="心态">心态</h2>
+<p><strong>人要适应变化，首要必须是心态上的调整和适应</strong>。很多人没法把一件事情做好，很多情况下是因为心态没有改变过来，而不是他没有那种能力。其实如果能把握好上面说的目的，心态已经是调整好一大半了。</p>
+<p>在个人贡献阶段，每个人基本只要为自己做的事情负责，做得又快又好就行。这个阶段对个人硬技能的修炼提高是比较明显的。所以，个人也能比较容易得从中获取安全感和成就感。</p>
+<p>一旦个人能力提高到一定程度，很多公司就很自然的让他领导或者管理他人一起做事情了。那么，他用自己的专业技能来做事的时间比例就会减少，有相当一部分，甚至可能是大部分的时间都要花在管理和协调上面。</p>
+<p>这种转变其实对个人的心理变化会有很大影响。因为，这意味着他要舍弃熟悉和一直依赖的专业技能，去做一些虚而杂的管理，心理安全感上面会有很大的压力。特别是近年来全球都推崇组织扁平化，削减不必要的层级，还有一些管理人员失业后不好找工作的消息，让不少刚上升或准备上升一线管理的人都心有顾忌，放不下自己的专业技能。所以，很多人对这种转变是心有抵触的。</p>
+<p>但是，软件开发领域，一旦涉及多人协作，少至两人，尤其当你是担当组织领导这样的角色的时候，必须懂得如何授权和分配工作。并不是说你一定是成为管理者后才要习得的技能。</p>
+<p>再说，这样做对自己也有很大的好处。你可以把自己熟悉，但是对别人来说有挑战的工作交给别人尝试，然后自己腾出时间来做更有挑战的工作。但是，这并不意味着授权和分配工作就是把自己厌恶的工作交给别人做。下面会说到这个问题。</p>
+<p>那么我们要如何授权和分配任务呢？<strong>授权，首要的是要能放心</strong>。如果你的下属，没有一个能让你放心的话，是没法授权的。放不下心是很多管理人员做不好这点的原因。但是，我们要搞清楚，放不下心是下属的能力，做事态度的问题，还是我们自己的心理问题而已。</p>
+<p>一般来说，你带领的团队，可能能力会比你弱一点，你也才会担当或者被任免为领导角色。所以，如果只是下属的能力还暂时不胜任，你要做的是指导他，让他的能力慢慢提升，从而胜任工作并解决问题。而不是你觉得他做的不够你快和好，就自己下场抢了下属的工作来做。这样的话，他永远无法提升，你也无法放心。就软件开发而言，下属要下场写代码，你最好只是审查他的代码，分析他哪写的逻辑不清晰，需要重构等。</p>
+<h2 id="方式">方式</h2>
+<p>如果你能做到放心，并且愿意授权和分配工作了，那应该怎么分配呢？</p>
+<h3 id="分配原则">分配原则</h3>
+<h4 id="擅长什么做什么">擅长什么做什么</h4>
+<p>软件行业一直有前端，后端，数据库管理，测试和运维等分工。所以，按擅长的领域来分工也是很明显和自然的一种方法，当然你的下属可能也会按这样的原则来揽任务。再说，项目期限紧的情况下，多是只能这样安排。</p>
+<h4 id="不擅长什么做什么">不擅长什么做什么</h4>
+<p>可能不是很多人会采取这种策略。而且，不少技术人员，尤其是比较资深的，有一些不恰当的歧视心态，并且不愿意走出舒适区，只想干自己喜欢的技术。比如，开发看不起测试，后端看不起前端，XX 语言看不起 YY 语言等。</p>
+<p>但是，如果时间充裕，在培养新人或者有机会挑战自我的时候，我都会时不时专门挑下属不熟悉或者不擅长的领域，让他去死磕一下。一方面可能是我在的公司团队都比较小，要做的事情都比较杂。无论是前端后端，数据库等都要自己搞。另一方面，我也想通过这种手段来让大家有机会扩充知识面，并了解不同的领域有什么不同和相通之处。并更好的理解上下游合作伙伴，减少歧视的心态。</p>
+<h4 id="想做什么安排什么">想做什么安排什么</h4>
+<p>这就没什么特别好说的，只要团队内沟通协调良好，大家互相支持，尽量都可以这样安排并结合上面两点来考虑。</p>
+<h4 id="不能长期把垃圾工作交给他人">不能长期把垃圾工作交给他人</h4>
+<p>这一点是特别要注意的地方。当你承担了分配工作的重任，不是说随心所欲的按自己喜好，下属亲疏来分配的。所以，即便上面说了，可以把自己熟悉的工作分配出去，但不代表你可以把你不想做的垃圾工作都给别人。一方面，这样做并不能锻炼你的下属，他的能力无法得到提高。另一方面，他会对你这个领导产生厌恶感，你和团队之间凝聚力就会变差，而且以后他还会很不愿意听你的安排和意见。</p>
+<p>相反，我通常是把垃圾工作自己揽过来处理。真要交出去的时候，可以和下属讨论怎么减少这类型的工作，或者有没有什么好办法来解决。比如说写一些自动化的脚本或者工具，运用新的技术等。这样，就可以将无聊的事情变得有趣，并且对大家的能力，眼界也有所提高。</p>
+<h3 id="跟进，不是放任自理">跟进，不是放任自理</h3>
+<p>其实，我觉得授权和分配工作只是第一步。重要的一步是如何跟进和指导，不是分配完就不管，最后到期限时追进度而已。</p>
+<h4 id="目标明确">目标明确</h4>
+<p>其实这点不能说是在跟进时才考虑，因为一开始分配任务的时候，也应该清楚的解释好工作任务的内容和目标。不同的任务类型，处理手段或隐含的目标是不同的。而且，有些人做着做着，可能就深入细节，偏离了大方向，延误了进度。所以，跟进的过程中，要时不时确保目标明确。</p>
+<p>之前我安排一个下属通过 POC (Proof of Concept) 来确定 Solr 是否可以用来取代数据库 SQL 查询以提高性能，另一个下属是做一个新功能的页面原型，和通过 POC 来确定初步构想页面结构和操作能否实现，有没有技术难点，并让业务分析人员尽早确定。你们觉得各自的“目标”是什么呢？他们清楚吗？</p>
+<p>虽然两个任务都涉及技术的 POC，但是分析角度和要求有细微不同。</p>
+<p>第一个的任务，因为是针对旧功能的改造。首要的是充分了解旧的 SQL 查询是怎样的逻辑。如果换成用文本检索的方式，新的数据存储结构和字符的模糊匹配特性，能否完全模拟出原来 SQL 查询的功能？即便不行，那是否还满足当前业务的要求？这边对技术细节的理解和对比要相当清楚，以免换技术方案后，对原功能造成大影响。</p>
+<p>另一边的页面原型，主要则是把握大的方向没有问题，主要的交互功能点能实现出来就可以了。一些很细的技术边角，即使后面真的出现并无法解决，可能再和业务商量一些替代方案就好了。而且还处在我们向业务方出提议阶段，时间上希望能尽快先有一个版本。如果业务对我们提议的页面原型有些修改意见，原先的技术问题可能都不用解决。</p>
+<h4 id="授之于渔">授之于渔</h4>
+<p>当下属遇到问题不知道怎么样解决的时候，我看过不少领导直接上来就给具体方法或者答案，手把手教怎么做，代码该怎么写，有什么 API，哪里有类似的代码可以抄等。</p>
+<p>可是，我是相当不喜欢这种方式。因为：</p>
+<ol>
+<li><p>解决问题的方法不见得只有一种。</p>
+</li>
+<li><p>直接照搬，下属就缺少思考锻炼，下次也不会举一反三</p>
+</li>
+</ol>
+<p>看到下属遇到问题，我一般至少准备分两三次来进行指导。</p>
+<ol>
+<li><p>首先我会询问他目前卡在什么地方，分析的思路是怎么样的？如果方向偏了，我会提示解决方向，然后就让他再自己摸索。</p>
+</li>
+<li><p>再隔一段时间，我再问他问题解决得怎么样？如果这个时候，他已经按提示方向摸到了门道，基本就可以了。如果还是没有头绪，我会再慢慢解释思考的思路，目标原则或者有什么要取舍的。再让他尝试按解释了的思路去解决问题。</p>
+</li>
+<li><p>最后基本就是再做代码审查了。</p>
+</li>
+</ol>
+<p>这里要把握好中间间隔的时间，提示的程度需要看情况而定。项目的松紧，人的能力等都要考虑。</p>
+<h4 id="不接受意见怎么办？">不接受意见怎么办？</h4>
+<p>当你对下属做出指导，提供意见或者别的方案的时候，他可能并不买帐。</p>
+<p>这种问题其实很难解决。要降低这种问题出现后能温和的处理，首先当然不能粗暴地命令。正如上面所说的，解决问题的答案不止一种，就像编程语言和框架一样。所以，你往往需要从技术或者业务上，<strong>真诚和耐心的详细分析</strong>，你们的方案主要区别是在哪里，为什么说你的考虑可能在目前情况下更优。有些时候，可能真的是技术上来说他们的方案确实更完善。但是从项目性质或者进度上来考虑，需要舍弃一些东西，没必要做得太复杂。有时我们还可以尝试寻求可测试或可量度的手段来进行比较，又或再拉几个人来讨论，发表见解和投票等。</p>
+<p>一般来说，优秀的 IT 人员，在摆事实和讲道理后，都会接受合理的意见的。如果作为领导，一直都是很真诚的教导下属，更容易共同寻求最终两方都能接受的方案。</p>
+]]></content>
+    
+    
+      <category term="Experience" scheme="http://www.thinkingincrowd.me/tags/Experience/"/>
+    
+      <category term="Delegation" scheme="http://www.thinkingincrowd.me/tags/Delegation/"/>
+    
+      <category term="Leadership" scheme="http://www.thinkingincrowd.me/tags/Leadership/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Modulization and Bundling with TypeScript and Webpack for JavaScript Full Stack Project]]></title>
     <link href="http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/"/>
     <id>http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/</id>
     <published>2016-01-02T08:09:39.000Z</published>
-    <updated>2016-01-02T14:12:12.000Z</updated>
+    <updated>2016-01-03T05:00:43.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Modulization">Modulization</h2>
 <p>In a Full Stack JS project, the essence is how to write code consistently and easy to share and maintain because code sharing between server and browser is unavoidably.  Before talking about what strategy we are taking, let’s have a review on the trend of the modulization first.</p>
 <h3 id="Ancient_history">Ancient history</h3>
@@ -117,6 +259,7 @@
 </li>
 </ol>
 <p><img src="http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp_final_result.png" alt="Final HTML result"></p>
+<p>I haven’t talked about how to include internal CSS or HTML yet.  However, I think you can figure out yourself based on the sample and strategy described here.  </p>
 ]]></content>
     
     
@@ -1436,118 +1579,6 @@ Claims        m₀      m - m₀  m</span>
       <category term="JSON" scheme="http://www.thinkingincrowd.me/tags/JSON/"/>
     
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[How to support page content i18n in AngularJS]]></title>
-    <link href="http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/"/>
-    <id>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</id>
-    <published>2013-08-29T12:16:00.000Z</published>
-    <updated>2015-05-20T15:09:56.000Z</updated>
-    <content type="html"><![CDATA[<p><a href="http://code.angularjs.org/1.0.8/docs/guide/i18n" target="_blank" rel="external">i18n</a> (Internationalization) is one of the development guide section in AngularJS.  However, the doc doesn’t really help us a lot to do what we want basically for i18n, language change support of the web page content.  </p>
-<p>As an <a href="http://en.wikipedia.org/wiki/Single-page_application" target="_blank" rel="external">SPA</a> (Single Page Application), the view in <a href="http://angularjs.org" target="_blank" rel="external">AngularJS</a> is partially loaded, rendered and even cached at client side.  When user switches the language, how can we rerender the page with another language?  </p>
-<p>My idea is to make the label or web page content as a binding model linked with the language.  If the language value is changed when users switch language, those label models should be updated.  It works smoothly but I haven’t done performance test for extremely large page yet.  </p>
-<p>Let’s see how it’s done.  </p>
-<p>First, I need to define a Service which is used to fetch language resource file, cache them locally, and do the translation.  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">factory(<span class="string">'LocaleManager'</span>, <span class="function"><span class="keyword">function</span><span class="params">($resource, $rootScope)</span> </span>{</div><div class="line">    <span class="keyword">var</span> langs = {},</div><div class="line">        LocaleManager = $resource(<span class="string">'/js/i18n/resources-locale_:lang.js'</span>,</div><div class="line">            {port: <span class="string">':3000'</span>, lang: <span class="string">'en_US'</span>});</div><div class="line"></div><div class="line">    LocaleManager.load = <span class="function"><span class="keyword">function</span><span class="params">(language)</span> </span>{</div><div class="line">        <span class="keyword">if</span> (langs[language]) {</div><div class="line">            <span class="keyword">if</span> ($rootScope.language !== language) {</div><div class="line">                $rootScope.language = language;</div><div class="line">            }</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> LocaleManager.get({lang: language}, <span class="function"><span class="keyword">function</span><span class="params">(data)</span> </span>{</div><div class="line">            langs[language] = data;</div><div class="line">            $rootScope.language = language;</div><div class="line">        });</div><div class="line">    };</div><div class="line"></div><div class="line">    LocaleManager.getText = <span class="function"><span class="keyword">function</span><span class="params">(text, language)</span> </span>{</div><div class="line">        <span class="keyword">if</span> (language === <span class="string">'en_US'</span>) {</div><div class="line">            <span class="keyword">return</span> text;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (langs[language] && langs[language][text]) {</div><div class="line">            <span class="keyword">return</span> langs[language][text];</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> text;</div><div class="line">    };</div><div class="line"></div><div class="line">    <span class="keyword">return</span> LocaleManager;</div><div class="line">})</div></pre></td></tr></table></figure>
-
-<p>You can find that there is a <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$rootScope" target="_blank" rel="external">$rootScope</a> level variable <em>language</em>  which is set to the user selected language when <em>LocaleManager.load</em> is called.  </p>
-<p>Later if we use the <a href="http://code.angularjs.org/1.0.8/docs/api/ng.$interpolate" target="_blank" rel="external">$interpolate</a> like below in the view, the text value can be updated whenever the <em>$rootScope.language</em> is changed.  </p>
-<pre><code><span class="xml"></span><span class="expression">{{ <span class="variable">LocaleManager.getText</span>('<span class="variable">Login</span>', <span class="variable">language</span>) }}</span><span class="xml"></span>
-</code></pre><p>An alternative approach is to define a <a href="http://docs.angularjs.org/api/ng.$filter" target="_blank" rel="external">$filter</a> for translation instead of calling a method from Service class.  Haven’t tried that yet and will give an update here once done.</p>
-<p>Do you have experience on i18n in AngularJS?  Thoughts and comments are appreciated.</p>
-]]></content>
-    
-    
-      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
-    
-      <category term="AngularJS" scheme="http://www.thinkingincrowd.me/tags/AngularJS/"/>
-    
-      <category term="i18n" scheme="http://www.thinkingincrowd.me/tags/i18n/"/>
-    
-      <category term="SPA" scheme="http://www.thinkingincrowd.me/tags/SPA/"/>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[至关重要的关系]]></title>
-    <link href="http://www.thinkingincrowd.me/2013/06/29/startup-review-network/"/>
-    <id>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</id>
-    <published>2013-06-28T23:59:00.000Z</published>
-    <updated>2015-05-20T15:09:56.000Z</updated>
-    <content type="html"><![CDATA[<p>经过<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/" target="_blank" rel="external">前面</a>的自我打造后，现在就要建立<a href="http://www.amazon.cn/dp/B00COJ3CVY" target="_blank" rel="external">至关重要的关系</a>了。</p>
-<h2 id="比能力重要">比能力重要</h2>
-<p>其实我本人对＂关系＂这个词自然而然的会持否定的态度，因为在很多地方，很多人靠不正当关系和手段，谋取职位或升迁。我不喜欢靠＂关系＂，所以才当程序员，才不去国企，和在小公司待那么久。但工作8年以来，我确实靠关系得到不少机会。正如书中所说：  </p>
-<blockquote>
-<p>斯坦福大学组织行为学教杰弗瑞•菲弗 (Jeffrey Pfeffe) 搜集整理的证据表明人们在升职的时候，人际关系过硬以及与老板的友好关系比能力更重要。这并不是无法无天的任人唯亲和权术 (尽管有时候很不幸确实如此) ，这种做法有令人信服的理由：一个稍许平庸但能很好地处理人际关系并为团队做贡献的人比一个百分之百能力但无法进行团队合作的人对公司更有利。  </p>
-</blockquote>
-<p>不过这些必须是靠能力建立起来的过硬的关系，要不然就真的是＂不正当关系＂了，并不能持久。  </p>
-<h2 id="如何建立">如何建立</h2>
-<h3 id="被动式">被动式</h3>
-<p>如果你懒得建立与维护人脉，那就用 <em>@蔡学墉</em> 一段微博总结的方法吧：  </p>
-<blockquote>
-<p>设法让自己能力强大，把自己变成值得被他人所利用的资源。这么一来，虽然不一定过得太好，但肯定不会过得太差。</p>
-</blockquote>
-<h3 id="付出">付出</h3>
-<p>我之前建立的关系，虽然不是完全这样被动式，但也只是在工作中，任劳任怨，努力把自己变优秀，树立好的形象，并主动帮助别人，分享自己的知识。我之前并不觉得有什么特别，但看了这本书后，才知道其实已经用了书中说的最好的方法，就是<strong>真心帮助别人</strong>。日前，一位其实和我并不太熟悉的旧同事，在跳槽的时候，竟然打电话给我，咨询我的意见，这真是让我觉得颇为惊讶。回头一想，自己能被当作值得信赖或听取一点建议的对象，几年的努力，值得了。  </p>
-<h3 id="不烦人">不烦人</h3>
-<p>一直以来，我都没有刻意去扩大自己的网络。除了因为上面说的一些偏见和我确实认为我没什么技巧去做这些事情外，其实我是内向型的人，就是别人没有对我表示出善意的情况下，我是基本不会先迈出第一步的，还有我很怕会烦到别人。  </p>
-<p>但书中其实有说：  </p>
-<blockquote>
-<p>你一点也不烦人。</p>
-<p>如果说巩固某段关系最好的办法是帮助对方，那么位居第二的方法就是接受对方的帮助。正如本•富兰克林曾说过的：＂如果你想交朋友，让别人帮你个小忙。＂</p>
-</blockquote>
-<p>所以呢，我决定今后多一点去＂打搅＂一些人。各位要有心里准备哦。  </p>
-<h2 id="优质关系网">优质关系网</h2>
-<p>人际关系理论中有个很出名的邓巴数 (Dunbar’s number)，说的是我们每个人可以维持的关系数目最多不超过150个。而且还有个六度分隔理论，就是平均只要通过六个人，你就可以联系到地球上任何一个人。  </p>
-<p>虽然说六度分隔理论，理论上可以让你联系到任何人，但其实链条后面一些关系并不能对你的事业起什么大的作用。能极大影响你的事业和获取信息的是人际关系是前三层，就是一直延伸到你的好朋友(第一层)的好朋友(第二层)的好朋友(第三层)。所以，如果邓巴数里说的主要是你的第一层强关系，算上之后两层的话，你的关系网络数目会远大于邓巴数。这三层中彼此之间都有至少一个强关系纽带，相互认识和引荐的可能性非常高，因为彼此有足够了解和信任。当然强关系中很多是重合的，就是你好朋友的好朋友本来就是你的好朋友。而且可能你们的圈子相近，那么他们获取的信息，可能你也知道了的。  </p>
-<p>所以书中提及另一种关系 - 弱关系，既是那些和你接触不多的人。它比强关系占优的地方是可能可以给你提供额外消息来源。所以如果要结合两种优点，我们必须尝试寻找一些其他圈子来建立强关系，这就需要我们去参加一些社团之类的活动了。  </p>
-<p>所以，基于自己在这方面的短板，我也已经尝试去参加一些行业会议，社区和非自己行业但感兴趣的活动群体，比如英语学习的。我也正在尝试围绕自己，寻找志同道合者，建立一个分享机遇和资源的网络。其实要打造一个网络很难，我一直想做，但都没能做好。鹄言乱语社区刚筹备，看能否得到各位好友支持了。  </p>
-<p>优质网络的基本要求：  </p>
-<blockquote>
-<p>第一，每个人都很优秀。<br>第二，每个群体都有一个共同特征，… 指引大家走到一起。<br>第三，地理密度也很重要。<br>第四，分享和合作风气浓厚。  </p>
-</blockquote>
-<p>从实际情况看，这种优质网络的起源，基本都是在同一公司干过，并同甘共苦之人，比如著名的 PayPal 黑手党。所以，恰当的跳槽，对打造网络也是有好处的。  </p>
-<h2 id="机遇">机遇</h2>
-<p>如果能力上来了，而且关系网能基本建立起来，机会就会逐渐来临了。  </p>
-<blockquote>
-<p>企业家博•皮博迪 (Bo Peabody) 曾说过：＂让幸运来临的最好做法是确保很多事情发生。＂  </p>
-</blockquote>
-<p>所以说，<strong>机会给有准备的人</strong>，我觉得其实一方面的意思是你要通过自己不断地努力尝试，去主动制造而来的。  </p>
-<p>有了机会，其实等于你面前多了一项选择。那你选择什么，是否决定承担某种风险而改变原来的规划，就涉及到风险评估了。  </p>
-<h2 id="风险">风险</h2>
-<p>我个人应该是偏保守的，做事情都想得比较多，看哪种选择能带来最大好处。而且比较犹豫，不够果断。因为我比较怕有什么风险。但其实我们通常会高估风险 (可能不适用于一些盲目炒股人士，呵呵) 。  </p>
-<blockquote>
-<p>神经心理学家里奇•汉森 (Rich Hanson) 是这么说的：＂为了让我们的祖先存活，大自然母亲会时不时地玩弄一下他们，让他们犯三个错误：过高估计风险、过低估计机遇、过低估计资源 (资源是用来应对风险、好好利用机遇的) 。＂  </p>
-</blockquote>
-<p>一般希望稳定的人，都不希望有变动。但这有可能恰恰是更危险的。所以，个人认为所谓稳定的公务员，国企什么的，一些没什么解聘机制的单位，将来风险很高。我们一定要有永久测试心态，适时变动。  </p>
-<blockquote>
-<p>从短期来看，变动少其实也是一种稳定。从长期来看，变动少很容易导致不堪一击，因为它会减弱系统对突发状况的应对能力。  </p>
-</blockquote>
-<p>还有就是一般认为，有多几种后备方案，风险就小点。但其实这和<a href="http://www.thinkingincrowd.me/blog/2013/06/26/startup-review-permanent-beta/" target="_blank" rel="external">前面</a>说到的＂粗糙＂的心是相违背的。正如我们学习编程语言，如果说打算学学这，学学那，然后什么工作都能找到的话，往往是什么工作都找不到。    </p>
-<blockquote>
-<p>＂保留多重选择＂实际上比专心将一项计划付诸实践更具有风险。</p>
-</blockquote>
-<p>回首自己工作来最大的机遇，可能是之前一位旧老板邀请我去上海和他创业。不过当时放不下另一个在香港的机遇，因为当时自我定位不同，对旧公司的忠心，和对家人的考虑，没接受，有点遗憾。因为在珠海确实没什么 IT 氛围和环境，对自我成长有比较大的约束。但其实也没有后悔，因为家人还是最重要的，继续在自己可接受风险范围寻求突破吧。  </p>
-]]></content>
-    
-    
-      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
-    
-      <category term="Startup" scheme="http://www.thinkingincrowd.me/tags/Startup/"/>
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Network" scheme="http://www.thinkingincrowd.me/tags/Network/"/>
-    
-      <category term="Opportunity" scheme="http://www.thinkingincrowd.me/tags/Opportunity/"/>
-    
-      <category term="Risk" scheme="http://www.thinkingincrowd.me/tags/Risk/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
   </entry>
   
