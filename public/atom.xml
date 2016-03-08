@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-03-05T12:25:18.228Z</updated>
+  <updated>2016-03-08T14:27:28.805Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,10 +16,10 @@
   
   <entry>
     <title><![CDATA[有经验和没有经验的程序员的区别]]></title>
-    <link href="http://www.thinkingincrowd.me/2016/03/04/Novice-vs-Experienced/"/>
-    <id>http://www.thinkingincrowd.me/2016/03/04/Novice-vs-Experienced/</id>
-    <published>2016-03-03T17:30:45.000Z</published>
-    <updated>2016-03-03T23:55:40.000Z</updated>
+    <link href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/"/>
+    <id>http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/</id>
+    <published>2016-03-08T14:40:45.000Z</published>
+    <updated>2016-03-08T14:27:14.000Z</updated>
     <content type="html"><![CDATA[<p>近来我一直都需要带些毕业生（怎么我的队伍就那么多新人呢，呵呵），发现很多人在解决问题的方法上都存在一些问题。解决问题，其实是每个程序员每天都在干的事情。但是方法好还是不好，我觉得正是有经验和没有经验的程序员之间很重要的区别。刚好最近又看到了余晟公众号（yurii-says）的《砍伐大树 v.s. 收割庄稼》里面阐述的解决问题的四个步骤。所以，我想根据身边的案例详细一点解释一下这四个步骤。</p>
 <h2 id="认识和定位问题">认识和定位问题</h2>
 <p>一般来说，新手进入一个公司和团队之后，team lead 会分配一两个简单的任务让新人练练手。所以，首先要做的事情就是搭环境，和认识已有的系统和代码。</p>
@@ -82,10 +82,10 @@
   
   <entry>
     <title><![CDATA[如何授权和分配工作]]></title>
-    <link href="http://www.thinkingincrowd.me/2016/01/31/How-to-delegate/"/>
-    <id>http://www.thinkingincrowd.me/2016/01/31/How-to-delegate/</id>
-    <published>2016-01-31T07:43:05.000Z</published>
-    <updated>2016-03-05T12:24:58.000Z</updated>
+    <link href="http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/"/>
+    <id>http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/</id>
+    <published>2016-03-08T14:33:05.000Z</published>
+    <updated>2016-03-08T14:26:51.000Z</updated>
     <content type="html"><![CDATA[<p>最近在看李笑来推荐的《领导梯队》。其中描述了从管理自己到管理他人的转变，其中一项不容易适应的事情是要懂得授权和分配工作。</p>
 <p><strong>懂得授权和分配工作是成为管理者道路上要习得的首要技能</strong>。因为这点非常重要，并且是不少人第一次从个人贡献者转变成一线管理者时做得不好的地方。</p>
 <h2 id="目的">目的</h2>

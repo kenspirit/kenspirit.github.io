@@ -1,5 +1,5 @@
 title: 如何授权和分配工作
-date: 2016-01-31 15:43:05
+date: 2016-03-08 22:33:05
 tags:
   - Experience
   - Delegation

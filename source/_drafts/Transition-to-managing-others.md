@@ -1,15 +1,35 @@
-title: Transition to managing others
+title: 我在转变到“管理他人”的路上摔倒的地方
 tags:
+  - Experience
+  - Delegation
+  - Leadership
+  - Management
+categories:
+  - Think
 ---
 
-From Managing Self to Managing Others
+一直以来，我都不太喜欢 Management，而倾向于喜欢 Leadership 这个词。原因是我对那些单纯的命令或者军事性的管理嗤之以鼻，也认为那是对知识管理者的不恰当的方式。看过管理大师 Peter F. Drucker 的 Effective Executive 那本书后，对他的新时代管理方式的理念比较认同。
 
-days of the "military manager" has passed
+[Management Pipeline]: xxx
 
-employee
-  - has tremendous amount of access to information
-  - expect to make decision
-  - expect diretion but have freedom to make their own way
+但是，仅仅因为我不喜欢旧的管理方式，其实我却把另一些无论是 Leadership 还是 Management 都要做的东西给忽略掉。最近看李笑来老师分绍的那本 [Management Pipeline][]，更是清楚自己缺失了什么。在整个管理升级通道上，最底层的是从管理自己到管理他人的转变。这里也就主要讲讲这个我正在经历的阶段。
+
+## 有什么改变
+
+书中有一个很好的表格详细阐述了从个人贡献者到一个一线管理者在各个方面的变化。如下图：
+
+<img alt="Contributor vs First Line Manager - Skills" src="http://77g8zm.com1.z0.glb.clouddn.com/contributor_vs_first_line_manager_skill.png"/>
+
+<img alt="Contributor vs First Line Manager - Time and Value" src="http://77g8zm.com1.z0.glb.clouddn.com/contributor_vs_first_line_manager_time_value.png"/>
+
+## 容易出现的问题
+
+### 授权
+
+
+
+## 如何帮助新一线管理者的转变
+
 
 
 Managing Others
@@ -45,7 +65,7 @@ Managing Others
       vs
 
       Daily Discipline
-      Meeting personal due date for projects - usualling short term by managing own time
+      Meeting personal due date for projects - usually short term by managing own time
 
     Work Values
       Getting results through others
@@ -71,7 +91,7 @@ Managing Others
 
       * Figure out what needs to do and who needs to do
       * let go of work.  How to delegate, regular review, follow-up, problem solving, measurement, reward, coach
-      * How to hire people with matched work style and beliefs or organization
+      * How to hire people with matched work style and beliefs of organization
 
 
     2. Enabling direct reports to do the work by monitoring, coaching, providing feedback, acquiring resources, problem solving, and communicating.
@@ -104,11 +124,10 @@ Managing Others
       * Suppliers, Customers and Other Relevant Individuals
       
 
-      * 
 
   - How to do them
 
-    1. Preparation: Cleary communicate the skills, time applications, and work values required at this passage and provide training that helps people make necessary change.
+    1. Preparation: Clearly communicate the skills, time applications, and work values required at this passage and provide training that helps people make necessary change.
 
       * Individual contributors need to understand what's required of them in specific rather than general terms.
 
@@ -123,7 +142,7 @@ Managing Others
       * Observation: Sit in on first-line manager's interactions with their direct reports and determine whether they're exhibiting the skills leadership level requires.
         How others view the behavior and attitudes of first-time managers.  Direct report can provide insight.
 
-      * Gap Analysis: Question first-time managers about their perceptions of their skills, time applications and values.  Contrast theri answers with the observation and make them aware of the gap.
+      * Gap Analysis: Question first-time managers about their perceptions of their skills, time applications and values.  Contrast their answers with the observation and make them aware of the gap.
 
         Intervention: Provide regular feedback and coaching to help people make this transition.  There are many forms:
 
