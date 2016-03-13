@@ -109,7 +109,7 @@ deploy:
   message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
   repo:
     github: git@github.com:kenspirit/kenspirit.github.io.git,master
-    gitcafe: git@gitcafe.com:thinkingincrowd/thinkingincrowd.git,gitcafe-pages
+    ## gitcafe: git@gitcafe.com:thinkingincrowd/thinkingincrowd.git,gitcafe-pages
 
 sitemap:
     path: sitemap.xml
