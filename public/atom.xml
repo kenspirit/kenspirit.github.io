@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-06-05T16:03:29.067Z</updated>
+  <updated>2016-06-05T16:09:06.307Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/"/>
     <id>http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/</id>
     <published>2016-06-05T16:05:00.000Z</published>
-    <updated>2016-06-05T16:03:23.000Z</updated>
+    <updated>2016-06-05T16:08:27.000Z</updated>
     <content type="html"><![CDATA[<h2 id="The_reason_behind">The reason behind</h2>
 <p>Recursion is a powerful form of loop which repeats itself in similar form, but it should have terminal condition to prevent endless loop.  <a href="http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/" target="_blank" rel="external">Last time</a>, we even use it with the combination of <code>setTimeout</code> to prevent “Not responsive script” warning of long running loop.  </p>
 <p>However, normal recursion can possibly generate “Stack overflow” error if it repeats itself too many times.  Let’s see a famous recursion example in math, <code>factorial</code>.</p>
@@ -28,7 +28,7 @@
 <p>How does the stack looks like?  Why is its size exceeded?  </p>
 <p><img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/factorial_stack_change_flow.png"></p>
 <p>Here introduces a term called <a href="http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/" target="_blank" rel="external">Execution Context</a> and you can read more following the link.  Simply say, every times a function is called, an execution context is created.  Hence, they are stacked together and increase as the recursion goes deeper.  You can imagine the stack size of <code>factorial(32768)</code> given this from <code>factorial(3)</code>.</p>
-<h2 id="Tail_call_elimination_comes_to_rescure">Tail call elimination comes to rescure</h2>
+<h2 id="Tail_call_elimination_comes_to_rescue">Tail call elimination comes to rescue</h2>
 <blockquote>
 <p><strong>Tail calls can be implemented without adding a new stack frame to the call stack.</strong> Most of the frame of the current procedure is not needed any more, and it can be replaced by the frame of the tail call, modified as appropriate (similar to overlay for processes, but for function calls). The program can then jump to the called subroutine. Producing such code instead of a standard call sequence is called tail call elimination.</p>
 </blockquote>

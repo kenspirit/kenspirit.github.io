@@ -40,7 +40,7 @@ How does the stack looks like?  Why is its size exceeded?
 Here introduces a term called [Execution Context][] and you can read more following the link.  Simply say, every times a function is called, an execution context is created.  Hence, they are stacked together and increase as the recursion goes deeper.  You can imagine the stack size of `factorial(32768)` given this from `factorial(3)`.
 
 
-## Tail call elimination comes to rescure
+## Tail call elimination comes to rescue
 
 [Tail call elimination]: https://en.wikipedia.org/wiki/Tail_call
 [ready in Node.js V8]: https://github.com/v8/v8/commit/6131ab1edd6e78be01ac90b8f0b0f4f27f308071
