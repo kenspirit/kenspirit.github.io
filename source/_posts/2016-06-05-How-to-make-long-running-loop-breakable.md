@@ -7,7 +7,6 @@ tags:
   - Async
 categories:
   - Sword
-  - Think
 ---
 
 ## The reason behind
@@ -50,10 +49,10 @@ function repeat(operation, num) {
     console.log('end: ' + j);
     return;
   }
-  
+
   console.log(j);
   operation();
-  
+
   function async() {
     repeat(operation, --num);
   }
@@ -69,4 +68,4 @@ function repeat(operation, num) {
 repeat(operation, 100000000);
 ```
 
-Some minor adjustment above, the value of `j` can be printed out consecutively and without causing Firefox to complaint again.  Actually, now you can take a step further and inject some logic to check other condition, like total executing time, to decide whether to break out this loop or not.
+Here, we combine the usage of recursion and `setTimeout`, the value of `j` can be printed out consecutively and without causing Firefox to complaint again.  Actually, now you can take a step further and inject some logic to check other condition, like total executing time, to decide whether to break out this loop or not.

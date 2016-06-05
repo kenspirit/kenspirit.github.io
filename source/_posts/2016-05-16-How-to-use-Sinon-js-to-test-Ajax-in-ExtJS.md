@@ -8,7 +8,6 @@ tags:
   - Promise
 categories:
   - Sword
-  - Think
 ---
 
 ## Ajax Usage Sample in ExtJS
