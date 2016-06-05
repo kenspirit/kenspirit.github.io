@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-05-16T14:37:07.805Z</updated>
+  <updated>2016-06-05T02:32:34.486Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,44 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[How to make long running loop breakable?]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/"/>
+    <id>http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/</id>
+    <published>2016-06-05T02:40:07.000Z</published>
+    <updated>2016-06-05T02:32:22.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="The_reason_behind">The reason behind</h2>
+<p>Loop is a very common concept in programming.  Normally we will not do below silly thing to loop a long long time like:  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">100000000</span>; i++) {</div><div class="line">  j++;</div><div class="line">}</div><div class="line"><span class="built_in">console</span>.log(j);</div></pre></td></tr></table></figure>
+
+<p>If it is run in browser, such as Firefox, it may prompt a warning box like below:  </p>
+<p><img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/firefox_script_not_responsive_warning.png"></p>
+<p>However, <strong>sometimes we might not know how many times the operation will be executed and how long each operation takes</strong>.  The loop count might depend on how many records retrieved by RESTful web serivce from our own or other external applications.  The operation speed might be affected by what browser user’s is using, IE or Chrome, current workload of user’s machine.  Hence, <strong>if your logic potentially deal with large volume of data or need to be compatible with old-fashion browser, it maybe worthy to think ahead to prevent</strong>.</p>
+<p>A real case happened in our company’s internal system is that tons of unread notification received when an supervisor logined after he has a long vacation. The browser crashed every time the supervisor logined.  The developer haven’t considered this extreme case and so he pull everything out at one shot and looping to show them on screen.</p>
+<h2 id="How_to_prevent?">How to prevent?</h2>
+<p>Not to mention that we should do some lazy-loading or data paging in above case first, how can we make the potentially long running loop breakable if something unusual happened?</p>
+<p>In Firefox, the unresponsive script warning is shown normally when the executing scripts takes longer than <code>10 second</code>.  It can be configured if you typed <code>about:config</code> in address bar and update <code>dom.max_script_run_time</code> parameter.  However, this should not be the way because you cannot ask user to change the config themselves.</p>
+<p>Hence, if we want to prevent the warning, we should try to break the long running script from executing once to executing each portion consecutively.  <code>setTimeout</code> is a handy tool to step in.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">operation</span><span class="params">()</span> </span>{</div><div class="line">  j++;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">repeat</span><span class="params">(operation, num)</span> </span>{</div><div class="line">  <span class="keyword">if</span> (num &lt;= <span class="number">0</span>) {</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'end: '</span> + j);</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="built_in">console</span>.log(j);</div><div class="line">  operation();</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">async</span><span class="params">()</span> </span>{</div><div class="line">    repeat(operation, --num);</div><div class="line">  }</div><div class="line"></div><div class="line">  <span class="comment">// The batch size and timeout interval can be adjusted for your case.</span></div><div class="line">  <span class="keyword">if</span> (num % <span class="number">10</span> === <span class="number">0</span>) {</div><div class="line">    setTimeout(async);</div><div class="line">  } <span class="keyword">else</span> {</div><div class="line">    async();</div><div class="line">  }</div><div class="line">}</div><div class="line"></div><div class="line">repeat(operation, <span class="number">100000000</span>);</div></pre></td></tr></table></figure>
+
+<p>Some minor adjustment above, the value of <code>j</code> can be printed out consecutively and without causing Firefox to complaint again.  Actually, now you can take a step further and inject some logic to check other condition, like total executing time, to decide whether to break out this loop or not.</p>
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
+    
+      <category term="Loop" scheme="http://www.thinkingincrowd.me/tags/Loop/"/>
+    
+      <category term="Async" scheme="http://www.thinkingincrowd.me/tags/Async/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Sword/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[How to use Sinon.js and ExtPromise to test Ajax in ExtJS]]></title>
@@ -1420,81 +1458,6 @@ Claims        m₀      m - m₀  m</span>
       <category term="JSConf" scheme="http://www.thinkingincrowd.me/tags/JSConf/"/>
     
       <category term="NodeJS" scheme="http://www.thinkingincrowd.me/tags/NodeJS/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[2013 Retrospect and 2014 Goal Setting]]></title>
-    <link href="http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/"/>
-    <id>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</id>
-    <published>2014-01-04T00:00:00.000Z</published>
-    <updated>2015-05-20T15:09:56.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="工作">工作</h2>
-<p>工作上没有什么太大的变动，可以说趋于平淡。对于项目基本框架的使用已经没有什么问题，所以主要已经是在忙于实现项目业务功能模块上。但是还是痛苦挣扎于一些框架的限制，跨部门的约束，低效率的流程上，感觉效能无法有效提升。</p>
-<p>组内的新人，经历了一两年的成长，基本上能够独立做事情。不像以前那样，还没想清楚就乱写代码，有问题又不问，最后又推倒重来。技术水平有些提升，代码也好看了些，所以我的介入相对少了很多。但是还有待提高，特别是那些低级错误，类似变量命名上打错字的问题经常让我发现，这让我非常恼火。因为这足以侧面知道做事认真仔细程度到哪。</p>
-<p>去年我主要的侧重是集中精力帮他们提升思考能力和业务理解上，最重要的是怎么去思考业务需求带来系统设计的要求。在组内尽量推动的 Peer Code Review，对成员间的沟通，业务的理解，技术的提高上确实有很大的帮助，今年要再加强。希望今年组内每个成员都达到一定水平后，整体效率可以有效提升。</p>
-<p>从团队管理上来说，我并不是做得太好。由于我还要参于很多开发工作，能留给我做些流程或其它方面的改进的时间并不多。计划和进度上也并不是控制的很好，我也始终在看，究竟何时及如何引入 Kanban。看是否能够引入责任人机制，透明化流程，让每个人责任感更强和对计划进度上控制更好。</p>
-<h2 id="自我提升">自我提升</h2>
-<h3 id="读书">读书</h3>
-<p>有些书去年积累到现在都还没有看，主要是技术类的。因为水平有限，技术类的书，用零散时间看的话，真的不容易吸收，特别是没有实践配合的话。所以一直用 Kindle 在零散时间还是看非技术类的多。</p>
-<p>不过近期 Kindle 被我基本抛弃在一边了。不是不读书了，而是我已经抱着 MBA 随处边看书，边写代码了。这真是太爽了，虽然对我的颈椎好像有点伤害，不过，这确实可以让我边看书，边实践，榨取更多的时间来 Coding。所以今后将会多看技术类书和实践。</p>
-<p><strong>技术类</strong></p>
-<ul>
-<li>Functional Programming for the Object-Oriented Programmer by Brian Marick</li>
-<li><em>NOSQL Distilled by Pramod J. Sadalage, Martin Fowler</em></li>
-<li><em>Patterns of Enterprise Application Development by Martin Fowler</em></li>
-<li>Domain-Driven Design by Eric Evans</li>
-<li><em>The Art of UNIX Programming by Eric S. Raymond</em></li>
-</ul>
-<p><strong>非技术类</strong></p>
-<ul>
-<li><em>The Lean Startup by Eric Ries</em></li>
-<li>The Pragmatic Programmer by Andrew Hunt, David Thomas</li>
-<li><em>Mythical Man-Month by Frederick P. Brooks</em></li>
-<li><em>YouTube 创始人陈士俊自传</em></li>
-<li><em>打造 Facebook by 王淮</em></li>
-<li><em>至关重要的关系 by 李开复</em></li>
-<li><em>MackTalk: 人生元编程 by 池建强</em></li>
-</ul>
-<p><em>注：斜体的已阅</em></p>
-<p>今年在看和计划要看完的主要为以下三本最基础的技术书，尽量年内搞定。</p>
-<ul>
-<li>Structure and Interpretation of Computer Programs by Harold Abelson and Gerald Jay</li>
-<li>Introduction to Algorithms by Thomas H Cormen</li>
-<li>Algorithms 4th Edition by Robert Sedgewick and Kevin Wayne</li>
-<li>Computer Systems - A Programmer’s Perspective (2nd) by Bryant and O’Hallaron</li>
-</ul>
-<h3 id="打造关系网">打造关系网</h3>
-<p>在看完《至关重要的关系》后，深有<a href="http://www.thinkingincrowd.me/blog/2013/06/29/startup-review-network/" target="_blank" rel="external">感触</a>, 觉得之前并没有打造一个优质的职业和学习关系网，迫切渴望找到一些志同道合之人，可以一起学习进步。所以去年做了好几样事情：</p>
-<ol>
-<li>加入珠海 GDG，时不时去当一下志愿者和参加聚会</li>
-<li>花血本从珠海飞北京参加了两次会议，一次是 AgileChina2013，一次是京JS。</li>
-<li>约几个旧同事和好友，组织起来一起学习和交流</li>
-</ol>
-<p>几件事情下来，还是有点体会的。</p>
-<p>首先，珠海 GDG 的参于还是挺让人兴奋的。参加者因为多为学生，演讲主题都主要是入门级的。真要按照营养上来说的话，对我受益不大。但是有机会认识大妈，刘鑫老师和其他一些组员还是挺高兴的，还让自己增添不少活力。不过以后要参加，就要尽量看能否上去做分享，而不是去听。</p>
-<p>至于参加一些行业会议，我的目的本来就很坦然，就是看什么会议是值得去的，什么不值得。所以，目标完全实现。AgileChina2013 那次主要是要去听 David 亲自授课，所以感觉很好。后面的大会，因为讲的是方法论什么的多，这些不亲自实践是没办法了解的，而我近期主要攻技术，所以，敏捷这类大会就不会再去了。京JS 给我的感觉也还可以，虽然会议上难免各种对自己作品的广告，但是还是能和一些大神交流，了解他们的看法，新动向等，还是不错的，明年的 JS 大会应该还会去。经过这些行业会议，体会就是，你如果想和牛人有更多话题，让他们关注和看得起你，自己得先变成牛人。今看还是会留预算去参加一到两个这些会议，看几时能让别人看得起。</p>
-<p>最后一个自我组织朋友来一起交流学习的事情，好坏参半。目前情况基本可以说告一段落。虽然大家有聚在一些玩了一些东西，但是感觉每个人的兴趣偏好和对聚会的期望都不尽相同，最后这个聚会基本可以说是失败的。但是中间也学习到不少，和知道自己想要什么。有些事情强求不来，步子迈大了就扯着蛋了。</p>
-<h3 id="开源和项目">开源和项目</h3>
-<p>本来是计划做一个 Pet Project，但是做一半后，像上面说的，想约三五朋友一起去做一个更大的东西，一个像 Salesforce 那样的一个 Multi-tenant 的企业系统。可惜没人搭理我，后面自己在考虑怎么在 MongoDB 动态分配空间，和实现了一下后，感觉这东西太大了，先放了下来，后面再找机会继续。</p>
-<p>在学习和实践期间，做了两个小玩意出来，一个是用于在 Node.js 和浏览器共享代码的 <a href="https://github.com/kenspirit/webassemble" target="_blank" rel="external">webassemble</a>, 还有一个是在 ExtJS 里面用 Promise 的 <a href="https://github.com/kenspirit/ExtPromise" target="_blank" rel="external">ExtPromise</a>。前一个今年如果自己不做什么项目的话，估计使用就会比较少了。希望后一个能什么时候在公司项目里用上。</p>
-<p>自己还算是开源的踊跃支持者的，并有幸被 AngularJS 接纳了一个 enhancemnt patch，非常高兴。今年看书以外如果有时间看源码，还会挑一些开源的 JS 项目来参于一下，目前考虑 AngularJS 和 React。</p>
-<h2 id="时间安排">时间安排</h2>
-<p>学习时间：<br>基本上是按照去年的时间安排走。上下班车里的30分钟，还有其它一切可能的坐车时间，现在都在用 MBA 看书和写代码。早上5:30左右起来，一直到7点，大概1小时多点而已，周末时间长点。周末午休时间也大概有2小时。基本上就这么多了。</p>
-<p>家庭时间：<br>和去年差不多，占个人时间大头。但是还是一个不懂怎么培养孩子的父亲，因为时间花在考虑怎么培养自己上面了。只希望给他带个好头，别学坏了就好。每每看到 Michelle 带她女儿体验什么，学习什么，各种惭愧。</p>
-<p>锻炼时间：<br>中间有段时间断了一下，因为身体受伤，杂七杂八事情，没能很好坚持每天早上固定15分钟左右的锻炼时间。最近恢复，跳绳为主。今年还是得加强一下，身体是本钱。好玩的事情是人生第一次参加公司篮球比赛，虽然偶尔有上场，但主要是抱同组里年轻小伙的大腿，拿到人生的第一个第一名。</p>
-<h2 id="善事">善事</h2>
-<p>这方面去年贡献不多，主要是个人精力不足，所以违背了去年美好的想法，每月固定给壹基金和联合国儿间基金会捐助一点。事后证明我行的确实是伪善。</p>
-<h2 id="总结">总结</h2>
-<p>工作还凑合，仍需努力和把自己的爱好用在公司项目上。自己喜爱的东西，很难在公司派上用场，感觉真不太爽，看今后怎么操作吧。虽然已经在不断努力学习，也做了一些东西，但是离10000小时原则的强度和积累还是差太远了，今年必须更加努力。正如前面安排，把自己基础巩固好，希望后面能有效提升效能，不断参于开源，写 Blog 和分享总结。还有一件事就是希望可以做个有趣的人，从生活中找找灵感，看能做些什么好玩意没有，反正是随心写代码。</p>
-]]></content>
-    
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
