@@ -28,7 +28,7 @@ Mold.prototype.brand = 'KC';
 var instance = new Mold();
 var instance2 = new Mold();  
 
-console.log(instance.size)   // => '10x10x10';
+console.log(instance.sizes)   // => [10, 20, 30];
 console.log(instance2.brand) // => 'KC';  
 
 // Adds property with same name shadows the one in prototype
