@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-06-05T16:09:06.307Z</updated>
+  <updated>2016-06-10T04:07:32.944Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,77 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/"/>
+    <id>http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/</id>
+    <published>2016-06-09T02:16:25.000Z</published>
+    <updated>2016-06-10T04:06:53.000Z</updated>
+    <content type="html"><![CDATA[<p>As we know, JavaScript differs from other class based inheritance language.  Constructor (function) uses its <code>prototype</code> property to implement <strong>prototype-based inheritance</strong> and <strong>shared property</strong>.  </p>
+<p>From ECMA Spec:</p>
+<blockquote>
+<p>In a class-based object-oriented language, in general, state is carried by instances, methods are carried by classes, and inheritance is only of structure and behaviour. In ECMAScript, the state and methods are carried by objects, while structure, behaviour, and state are all inherited.</p>
+</blockquote>
+<p>Let’s see below example.  Instances created by <code>new Mold()</code> inherits the property from its prototype.  You can see different behaviors if we change different property in different levels.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Mold</span><span class="params">()</span> </span>{</div><div class="line">}  </div><div class="line"></div><div class="line">Mold.prototype.sizes = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>];</div><div class="line">Mold.prototype.brand = <span class="string">'KC'</span>;  </div><div class="line"></div><div class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> Mold();</div><div class="line"><span class="keyword">var</span> instance2 = <span class="keyword">new</span> Mold();  </div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(instance.size)   <span class="comment">// =&gt; '10x10x10';</span></div><div class="line"><span class="built_in">console</span>.log(instance2.brand) <span class="comment">// =&gt; 'KC';  </span></div><div class="line"></div><div class="line"><span class="comment">// Adds property with same name shadows the one in prototype</span></div><div class="line">instance.brand = <span class="string">'K & W'</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(instance.brand); <span class="comment">// =&gt; 'K & W'</span></div><div class="line"><span class="built_in">console</span>.log(Mold.prototype.brand); <span class="comment">// =&gt; 'KC'</span></div><div class="line"></div><div class="line"><span class="comment">// Changed on prototype affects instance that doesn't have property with same name</span></div><div class="line">Mold.prototype.brand = <span class="string">'K & W & L'</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(instance.brand); <span class="comment">// =&gt; 'K & W'</span></div><div class="line"><span class="built_in">console</span>.log(instance2.brand); <span class="comment">// =&gt; 'K & W & L'</span></div><div class="line"></div><div class="line"><span class="comment">// Changed on property which is Array or Object type in prototoype affects all</span></div><div class="line">instance.sizes[<span class="number">0</span>] = <span class="number">40</span>;</div><div class="line">Mold.prototype.sizes[<span class="number">2</span>] = <span class="number">60</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(Mold.prototype.sizes); <span class="comment">// =&gt; [40, 20, 60]</span></div><div class="line"><span class="built_in">console</span>.log(instance2.sizes) <span class="comment">// =&gt; [40, 20, 60]</span></div></pre></td></tr></table></figure>
+
+<p>I think most of the JSer know the concept &amp; behavior above.  However, do you know the relationship between <code>__proto__</code>, <code>prototype</code> and <code>constructor</code>?  </p>
+<p>Here is what the ECMAScript Spec said.</p>
+<p><strong>What is prototype chain</strong>:</p>
+<blockquote>
+<p>Every object created by a constructor has an implicit reference (called the object’s prototype) to the value of its constructor’s “prototype” property. Furthermore, a prototype may have a non-null implicit reference to its prototype, and so on; this is called the prototype chain. When a reference is made to a property in an object, that reference is to the property of that name in the first object in the prototype chain that contains a property of that name. In other words, first the object mentioned directly is examined for such a property; if that object contains the named property, that is the property to which the reference refers; if that object does not contain the named property, the prototype for that object is examined next; and so on.</p>
+</blockquote>
+<p><strong>Explanation on Object and Function prototype object</strong>:</p>
+<blockquote>
+<p>The Object prototype object is the intrinsic object %ObjectPrototype%. The Object prototype object is an ordinary object.</p>
+<p>The value of the [[Prototype]] internal slot of the Object prototype object is null</p>
+<p>…</p>
+<p>The Function prototype object is the intrinsic object %FunctionPrototype%. The Function prototype object is itself a built-in function object. When invoked, it accepts any arguments and returns undefined. It does not have a [[Construct]] internal method so it is not a constructor.</p>
+<p>NOTE The Function prototype object is specified to be a function object to ensure compatibility with ECMAScript code that was created prior to the ECMAScript 2015 specification.</p>
+<p>The value of the [[Prototype]] internal slot of the Function prototype object is the intrinsic object %ObjectPrototype% (19.1.3).</p>
+<p>The Function prototype object does not have a prototype property.<br>The value of the length property of the Function prototype object is 0.<br>The value of the name property of the Function prototype object is the empty String</p>
+</blockquote>
+<p>Honestly, for me, it took me a long long time to try to understand that.  I have extract some important concepts here and try to be brief:  </p>
+<ol>
+<li>Function instances that can be used as a constructor have a <code>prototype</code> property.  When we use <code>new</code> with this function to create instances, the object pointed by the <code>prototype</code> property will be assigned as the prototype of the instances.  </li>
+<li><code>__proto__</code> is the actual object that is used in the property lookup chain.  All objects have this property.  </li>
+<li><code>constructor</code> is a function object that creates and initializes objects.  It’s a property in the Prototype Object;</li>
+</ol>
+<p>Maybe the wording is still not as expressive as the graph as below.  </p>
+<p><img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/JS_prototype_chain.png"></p>
+<p>At first glance, this diagram might seems messy.  Let’s examine it piece by piece from the easiest part and pay attention to some important points.  </p>
+<ol>
+<li><code>prototype</code> property doesn’t exists in instances created by Mold.  Only function has.  </li>
+<li>Each function’s prototype has a <code>constructor</code> property points to itself.  </li>
+<li><code>__proto__</code> points to the <code>prototype</code> of its constructor.  The <code>Mold</code> instance points to <code>Mold</code> function, the <code>Mold</code> function points to <code>Function</code> function, the <code>Function</code> function points to itself and <code>Object</code> function points to <code>Function</code> function.  </li>
+<li><code>prototype</code> property in Object doesn’t have <code>__proto__</code>.  </li>
+<li><code>__proto__</code> of the Function prototype object is <code>Object.prototype</code>.</li>
+</ol>
+<p>Here is some script for you to understand it.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="keyword">typeof</span> instance instance.prototype <span class="comment">// =&gt; 'undefined'</span></div><div class="line"></div><div class="line"><span class="comment">// 2</span></div><div class="line">Mold.prototype.constructor === Mold</div><div class="line"><span class="built_in">Function</span>.prototype.constructor === <span class="built_in">Function</span></div><div class="line"><span class="built_in">Object</span>.prototype.constructor === <span class="built_in">Object</span></div><div class="line"></div><div class="line"><span class="comment">// 3</span></div><div class="line">instance.__proto__ === Mold.prototype</div><div class="line">Mold.__proto__ === <span class="built_in">Function</span>.prototype</div><div class="line"><span class="built_in">Object</span>.__proto__ === <span class="built_in">Function</span>.prototype</div><div class="line"><span class="built_in">Function</span>.__proto__ === <span class="built_in">Function</span>.prototype</div><div class="line"></div><div class="line"><span class="comment">// 4</span></div><div class="line"><span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span></div><div class="line"></div><div class="line"><span class="comment">// 5</span></div><div class="line"><span class="built_in">Function</span>.prototype.__proto__  === <span class="built_in">Object</span>.prototype</div><div class="line">Mold.prototype.__proto__  === <span class="built_in">Object</span>.prototype</div></pre></td></tr></table></figure>
+
+<p>How about take some exams to test see if you understand what I and ECMA spec said above?  :)  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typeof</span> <span class="built_in">Function</span>.prototype === ?</div><div class="line"><span class="keyword">typeof</span> <span class="built_in">Function</span>.prototype.prototype === ?</div><div class="line"><span class="built_in">Function</span>.prototype.length === ?</div><div class="line"></div><div class="line">instance.constructor === ?</div><div class="line">instance.__proto__.constructor === ?</div><div class="line"></div><div class="line">Mold.constructor === ?</div><div class="line">Mold.__proto__.constructor === ?</div></pre></td></tr></table></figure>
+
+]]></content>
+    
+    
+      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
+    
+      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
+    
+      <category term="Prototype Chain" scheme="http://www.thinkingincrowd.me/tags/Prototype-Chain/"/>
+    
+      <category term="Prototype" scheme="http://www.thinkingincrowd.me/tags/Prototype/"/>
+    
+      <category term="Inheritance" scheme="http://www.thinkingincrowd.me/tags/Inheritance/"/>
+    
+      <category term="Constructor" scheme="http://www.thinkingincrowd.me/tags/Constructor/"/>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[How to avoid Stack overflow error on recursion]]></title>
@@ -1433,36 +1504,6 @@ Claims        m₀      m - m₀  m</span>
       <category term="Statistics" scheme="http://www.thinkingincrowd.me/tags/Statistics/"/>
     
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[2014 半年小结]]></title>
-    <link href="http://www.thinkingincrowd.me/2014/07/31/half-year-summary/"/>
-    <id>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</id>
-    <published>2014-07-31T12:35:17.000Z</published>
-    <updated>2015-05-20T15:09:56.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Coursera">Coursera</h2>
-<p>本来今年是要把 <em>Algorithms 4th Edition</em> 这本书看了的。后来机缘巧合的发现在 <a href="https://www.coursera.org/" target="_blank" rel="external">Coursera</a> 上就有作者本人的教学课程，<br>所以就直接在上面上课去了。第一部分有6周课程，讲的是基本的算法概念和排序。课程，作业和考试都很有趣。<br>里面各种可视化来教学的东西让我觉得非常有趣。</p>
-<p>上完课后，决定温习一下和用 AngularJS 做点好玩的东西，就把之前看 @左耳朵耗子 哥介绍的可视化排序网站自己做了一下。<br>放到 <a href="https://github.com/kenspirit/visual-alg" target="_blank" rel="external">Github</a> 和自己的<a href="http://www.thinkingincrowd.me/algorithm" target="_blank" rel="external">博客</a>上。 没想到这个东西经一些微博上的大牛转发，粉丝涨不少，博客也瞬时增加 2K 多的访问量。<br>更好玩的是 ZoomQuiet 大妈叫我到珠海 GDG 上面去讲一下做这东西的历程。虽然说最后来听讲的人，因为天气原因，只有 4 个。<br>但是中间和大妈讨论怎么把演讲<a href="http://www.slideshare.net/chengusky/ss-35096187" target="_blank" rel="external">幻灯片</a> (要翻墙，在 Slideshare 上) 做好，怎么向小白讲清楚一些细节，可是花了不少心思。</p>
-<h2 id="Data_Science">Data Science</h2>
-<p>自从在 Coursera 上看到各种可视化的东西后，觉得很有意思，所以想往这方面上去玩一下。因为我觉得如何可视的，简单明了的说明一些问题，很有意思。<br>在可视化方面，最流行的，莫属于大数据了。虽然我并不热衷于它的流行，但是觉得这确实是应用可视化的一个不错的领域。<br>无论是个人，还是企业，可视化分析数据都非常有用。所以，就又在 Coursera 上开始了 <a href="https://www.coursera.org/specialization/jhudatascience/1" target="_blank" rel="external">Data Science</a> 的 Specialization 的学习。</p>
-<p>目前还在学习当中，教学用的是 <strong>R</strong> 语言。虽说它是数理统计方面很重要的一门语言，但是可能只是上面支持的数据结构，语法特点很适合做统计用和已经有大量的 API 包的原因。<br>但我觉得如果作为一门语言，它的语法，包的命名和参数使用相当不统一和协调。<strong>Python</strong> 可能比它更好，而且听说 <strong>Python</strong> 的数理统计能力也很强。<br>不过可能因为我接触的还是很表面，也没有跳出我的舒适区，所以还没有适应它而已。</p>
-<p>话说回来，无论是 <strong>R</strong> 还是 <strong>Python</strong>，它们都只是工具。虽说欲善其事，必利其器，但我觉得重要的是数理统计的思想和提问题的能力。<br>之后重点学习的应该是基础的统计学和如何对数据思考和提问。这才是要锻炼自己的地方。</p>
-<h2 id="为公司做的小玩意">为公司做的小玩意</h2>
-<p>其实一直以来就苦恼自己喜欢的玩意没法在公司里派上用场。但是还是一有机会就做一些东西。<br>这些东西都搞完后，打算和同事们往 JS Unit Test 上面去实践了。<br>之前是在 Maven 下和项目结合来搞，但是申请加 jar 包去公司的 maven repository 里就麻烦的要死。所以，我们后来用 Node.js 搭起来了，反正在本地想怎么弄都行。目前正在进行中。</p>
-<p><strong><a href="https://github.com/kenspirit/ExtPromise" target="_blank" rel="external">ExtPromise</a></strong></p>
-<p>这个去年就做出来的了，虽然还没怎么用，之后在项目 Code Review 时，一定要用上去。因为已知有地方需要。</p>
-<p><strong><a href="https://github.com/kenspirit/ws-monitor" target="_blank" rel="external">ws-monitor</a></strong></p>
-<p>之前老板想解决 QA 和 PP 测试效率的问题，希望可以在这个环节节省时间，让我在其中一个 Release 的后面阶段去留意一下问题在哪，看有什么办法解决。<br>说实在，问题多得很，这就不细说了，但是在我能力范围内能掌控的，非流程上的东西，可改进地方没多少。<br>所以我觉得短时间内，就是有个东西检测 WebService 服务是否可用，能在小范围内验证 WebService 结果的正确性上。<br>花了几天时间，做了这个出来，实测已经达到目的，但是似乎没得到多少人认同，之后自己再往上面加各种测试监控用例，最后再证明给其它人看它的效率。</p>
-<p><strong><a href="https://github.com/kenspirit/kanban-cfd" target="_blank" rel="external">kanban-cfd</a></strong></p>
-<p>做为在公司内用 Kanban 的少数人之一，目前在 Rally 上是没法做出 Kanban CFD (Cumulative Flow Diagram) 图的。所以，我必须手动每天记录各个状态的 WIP 数量。<br>这个实在是太烦了，也容易出错。除了催别人更新 Rally 的状态，如果还要做这个事情的话，实在太没有效率了。目前 Kanban 实践得很差。<br>所以，用 Node.js 和 Rally 提供的 WS 来做一个小应用。另一个需求就是老婆那边也希望有类似的东西。等我把这个做出来之后，<br>就可以看到整个团队的 CFD 图，每个人的 CFD 图和每一个 WIP 的 Kanban cycle 了，还可以作为团队每个成员的效率的比较。想想就觉得不错。</p>
-]]></content>
-    
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
   </entry>
   
