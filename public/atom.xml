@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-06-10T15:08:30.278Z</updated>
+  <updated>2016-07-09T23:53:37.682Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,35 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[人生中哪一个阶段才是最重要的？]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/07/10/Milestones-in-Life/"/>
+    <id>http://www.thinkingincrowd.me/2016/07/10/Milestones-in-Life/</id>
+    <published>2016-07-10T00:00:00.000Z</published>
+    <updated>2016-07-09T23:52:59.000Z</updated>
+    <content type="html"><![CDATA[<p>我们的人生其实分了很多个阶段：幼儿园，小学，中学，大学，工作，结婚，升级打小怪物等。  </p>
+<p>这些阶段，很多都是世俗的约定，到了某个年龄，就自然要踏入另一个阶段了。在你成为“成年人”以前，大学前的几个阶段，基本都是由父母决定的，自己选择和决定空间不大。不少人在前面的阶段感觉被迫接受父母的安排，大学就报一些离家远远的学校，打算充分享受自由。大学后面的阶段，即便也会有人对你做各种干涉，但毕竟你已经是“成年人”，自主决定权就大很多了。</p>
+<p>那哪个阶段是最重要的呢？已为人父的我，当然也想知道。但是，你们真的相信会有统一的答案吗？其实谁都没法说清楚，最重要的，起决定性作用的是哪个阶段。我承认我标题党了。不少人，大学前是学霸，但是上了大学就歇菜了。相反，也有不少人读书时期经常打游戏，考前报佛脚，分数也是及格线多点，甚至要重修。但是，工作后如鱼得水，成了人生赢家。还有一些小时候坏事做尽，甚至曾经承受牢狱之灾，但是后来却能突然大彻大悟，痛改前非，出人头地。</p>
+<p>人的一生，前面的每一个阶段都是后面的积累。后面的主要是延续，但也有可能蜕变。至于怎么延续怎么变，起决定作用的，还是自己的心。心之所向，路之所往。只有自己主动地把握人生，自己把的舵，才知道下一阶段走的有没有意义。<strong>每一个阶段，尤其是你主动把握的阶段，都是重要的</strong>。正如 Steve Jobs 所说：</p>
+<blockquote>
+<p>You cann’t connect the dots looking forward; you can only connect them looking backwards.</p>
+</blockquote>
+<p>大学毕业 12 年了。前面的 7 年，因为感恩和战友情，我宁可收入少点，还是坚持在一家小公司拼搏，并收获了敏捷的做事方式和较为广阔的技术背景。后面因为技术方向调整和深入的需要，还是决定去大公司体会一下。5 年后的今天，我又决定要为了一个男人和事业理想，远飘北方，“抛妻弃子”，承受背井离乡之苦。</p>
+<p>很多人觉得每次我选择的转变，都很突然，随性，而又坚决。其实，我的内心已经挣扎和拖沓了一段时间。很些人觉得我勇于挑战自己，跳出舒适区。其实，我觉得自己并没有很好地安排和规划人生。我觉得自己走的并不算好，可这就是人生。自己走的路，过去已经无法回头，最重要的是自己主动把握的下一个阶段。</p>
+<p>我以前一直都期望能有一个好的导师，在迷茫的时候，稍微为我指明一下方向，引领我前行。人常说，去一个好的公司，不如找到一个好的领导。可是后来我才慢慢醒悟，导师只是在你人生道路上的某一段，在某个特定的时刻，出现并帮助你那么一下的人。伴随一生的导师，可遇而不可求。而且最重要是，只有你已经在路上探索了，才有可能碰到导师。甚至，你还必须主动去找那些能成为你导师的人。所以，自己永远是自己最好的导师，最终只有靠不断地读书思考和虚心求教，跟随自己的直觉和信念，不断尝试和碰壁，不断寻求真正属于自己的道路。</p>
+<p>我很喜欢李笑来的<strong>七年就是一辈子</strong>的文章和书（后来改名叫<strong>新生</strong>了），以及他说的一句话：“<strong>我的一生只有一个职业 — 学生</strong>”。</p>
+<p>新的旅程已经摆在我眼前，我知道我必须要选择经历这一次历练。在这里要特别感谢老婆和家人的支持。没有他们，我没法踏出这一步。虽然我也不知道能在这个阶段历练多久，但哪怕短短一两年，它也是我一生中很重要的一个点。</p>
+]]></content>
+    
+    
+      <category term="Milestone" scheme="http://www.thinkingincrowd.me/tags/Milestone/"/>
+    
+      <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript]]></title>
@@ -1285,225 +1314,6 @@
       <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Statistical Inference 课后小结]]></title>
-    <link href="http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/"/>
-    <id>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</id>
-    <published>2014-09-25T14:58:46.000Z</published>
-    <updated>2015-05-20T15:09:56.000Z</updated>
-    <content type="html"><![CDATA[<p>好不容易才把 <a href="https://www.coursera.org/course/statinference" target="_blank" rel="external">Statistical Inference</a> 的课上完, 真是有点吃力.  简略把教的东西列出来吧, 方便日后再复习.</p>
-<h2 id="概率">概率</h2>
-<h3 id="条件概率_(Conditional_Probability)">条件概率 (Conditional Probability)</h3>
-<p>当 B 发生的概率为 P(B) 时, A 发生的概率为 <code>P(A|B) = P(A ∩ B) / P(B)</code>.<br>如果 A 和 B 是完全独立的事件, 那么 <code>P(A|B) = P(A)P(B) / P(B) = P(A)</code>.</p>
-<h3 id="Bayes’_rule">Bayes’ rule</h3>
-<p><code>P(B|A) = P(A|B)P(B) / (P(A|B)P(B) + P(A|B𝑐)P(B𝑐))</code></p>
-<p><code>P(B𝑐) = 1 - P(B)</code></p>
-<h3 id="诊断测试_(Diagnostic_test)">诊断测试 (Diagnostic test)</h3>
-<p>首先, 诊断测试里面有几个定义先要搞清楚：</p>
-<ul>
-<li><em>+</em> 测试为患病的情况</li>
-<li><em>-</em> 测试为没有患病的情况</li>
-<li><em>D</em> 确定患病的情况</li>
-<li><em>D𝑐</em> 确定没有患病的情况</li>
-<li><em>sensitivity</em> 当确实患病时, 测试为患病的概率 <code>P(+ | D)</code></li>
-<li><em>specificity</em> 当确实没有患病时, 测试为没有患病的概率 <code>P(- | D𝑐)</code></li>
-<li><em>positive predictive value</em> <code>P(D | +)</code></li>
-<li><em>negative predictive value</em> <code>P(D𝑐 | -)</code></li>
-<li><em>prevalance of the disease</em> <code>P(D)</code></li>
-</ul>
-<p>有个很有趣的例子：<br>假如在一项 HIV 的研究中, 有一种 HIV 抗体检查的 sensitivity 是 99.7%, specificity 是 98.5%. (看起来这个抗体检查应该很准, 对吧？)  如果一个人, 从 0.1% prevalence HIV 的群体中抽出来, 他做了这个抗体检查后, 结果是阳性也就是检查结果显示他应该有 HIV.  那么, 你觉得他确实患病的概率有多高呢？</p>
-<p>那我们来看看 positive predictive value 也就是 <code>P(D | +)</code> 概率是多少.  用 Bayes’ rule 公式代入去算一下可得 0.062.  不是很高吧？这么低的数值是由于低 prevalence 造成的。但是如果说你知道那个人是有用毒品习惯, 并且和 HIV 人士有接触。你会不会觉得他患病的概率更高？  其实影响的因素 prevalence 一点没变, 可是我们对所谓证据的诠释不同了.</p>
-<p><strong>Likelihood ratios</strong></p>
-<p><strong>DLR+</strong>, diagnostic likeihood ratio of a positive test, is <code>P(+ | D) / P(+ | D𝑐)</code></p>
-<pre><code><span class="code">`sensitivity / (1 - specificity)`</span>
-</code></pre><p><strong>DLR-</strong>, diagnostic likeihood ratio of a negative test, is <code>P(- | D) / P(- | D𝑐)</code></p>
-<pre><code><span class="code">`(1 - sensitivity) / specificity`</span>
-</code></pre><p>根据 Bayes’ rule 可以推导出：</p>
-<p><code>P(D | +) / P(D𝑐 | +) = DLR+ * P(D) / P(D𝑐)</code></p>
-<p>post-test odds of D = DLR+ * pre-test odds of D  (odds: 一个概率除以 1 减去它)</p>
-<p>相同道理： <code>P(D | -) / P(D𝑐 | -) = DLR- * P(D) / P(D𝑐)</code></p>
-<p><strong>IID</strong></p>
-<ul>
-<li><em>Independent</em>: statistically unrelated from one and another</li>
-<li><em>Identically distributed</em>: all having been drawn from the same population distribution</li>
-</ul>
-<h2 id="期望值_(Expected_Value)">期望值 (Expected Value)</h2>
-<p><strong>Mean</strong>: 分布的中值特征<br><strong>Variance</strong> 和 <strong>Standard Deviation</strong>: 分布性的特征 (How spread out)</p>
-<p>Sample expected values 是用来推测 population 的特征的。</p>
-<p><code>E[X] = ∑ xp(x)</code> 表示了数据分布的位置和权重的中值。比如, 丟硬币:</p>
-<p><code>E[X] = 0 * 0.5 + 1 * 0.5 = 0.5</code></p>
-<p>如果说硬币正反不是概率均等, 而是正面的概率为 <code>p</code>, 那 <code>E[X] = 0 * (1 - p) + 1 * p = p</code></p>
-<p>同理掷骰子, 数字面值的中值, 那就是 <code>E[X] = 1 * 1/6 + 2 * 1/6 + ... + 6 * 1/6 = 3.5</code></p>
-<h3 id="Mean">Mean</h3>
-<p>通过取样, 来获取中值, 这个中值本身, 其实也是随机变量, 它的分布也是有个中值的。这个中值, 如果和它原来要推导的中值本身是一致的, 我们就会说这个推导是公正的 (unbiased)。</p>
-<p>这个说法有点拗口, 其实是这样的是. 比如说, 丟硬币本身的中值是 0.5.  那么, 我们有两种做法：</p>
-<ol>
-<li>一种是丢一次硬币, 记录下一次 0 或者 1, 重复丢 n 次, 然后算它本身的中值就是 0.5.  无限下去的理论值就是 population mean.</li>
-<li>另一种就是丢 m 次硬币, 先算一次中值 (sample mean), 记录下这个中值, 再重复丢 n 次, 最后再算一次中值. 其实也就是中值的中值.</li>
-</ol>
-<p><em>中值的中值</em> 如果说和 population mean 是一致的, 那这个推导就是公正的了. 而且, 如果算 sample mean 的数据 (上面的 m) 越多, 那么中值分布的质量函数 (density / mass function) 最越集中在 population mean.</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">GetSampleMean &lt;- <span class="keyword">function</span>(count) {</div><div class="line">  data.frame(mean = replicate(<span class="number">5000</span>, mean(sample(c(<span class="number">0</span>, <span class="number">1</span>), count, replace = <span class="literal">T</span>))), cnt = count)</div><div class="line">}</div><div class="line"></div><div class="line">data.df &lt;- rbind(GetSampleMean(<span class="number">10</span>), GetSampleMean(<span class="number">20</span>), GetSampleMean(<span class="number">30</span>))</div><div class="line"></div><div class="line"><span class="keyword">library</span>(ggplot2)</div><div class="line">qplot(x = mean, data = data.df, facets = . ~ cnt, fill = cnt)</div></pre></td></tr></table></figure>
-
-<p><img alt="Sample Mean" src="http://thinkingincrowd.u.qiniudn.com/sample_mean.png"></p>
-<h3 id="方差_(Variance)">方差 (Variance)</h3>
-<p>随机变量到中值的距离 <code>Var(X) = E[(X - μ)2] = E[X²] - E[X]²</code></p>
-<p>假如一个硬币正面的概率是 p.  那它的 Variance 就是:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">E</span>[X] = <span class="number">0</span> * (<span class="number">1</span> - p) + <span class="number">1</span> * p = p</div><div class="line"><span class="keyword">E</span>[X²] = <span class="keyword">E</span>[X] = p</div><div class="line">Var(X) = <span class="keyword">E</span>[X²] - <span class="keyword">E</span>[X]² = p - p² = p(<span class="number">1</span> - p)</div></pre></td></tr></table></figure>
-
-<p><strong>标准差 (Standard Deviation)</strong>: Variance 的平方根, S<br><strong>标准误 (Standard Error)</strong>: S/√n</p>
-<p>同中值一样, 样本的 Variance, S², 也是随机变量, 它的分布也是集中在 population variance, σ².</p>
-<h2 id="常见的概率分布模型">常见的概率分布模型</h2>
-<h3 id="伯努利分布_(Bernoulli_distribution)">伯努利分布 (Bernoulli distribution)</h3>
-<p>又名两点分布或者 0-1 分布.  通常定 1 值的概率为 p, 0 值的概率为 (1 - p).  它的中值为 p, 方差为 p(1 - p).</p>
-<p><strong>伯努利試驗 (Binomial trial)</strong></p>
-<p>这个试验的随机变量，其实是伯努利分布随机值的总和 <code>X = ∑ⁿXᵢ</code>, Xᵢ 为 Bernoulli(p).</p>
-<p>它的质量函数 (mass function) 是: <code>P(X = x) = (n x) * pˣ * (1 - p)ⁿ⁻ˣ</code>. <code>(n x)</code> 是从 n 中取 x 的组合数.</p>
-<p>举个例子说，如果一个家庭有 8 个孩子, 7 个是女的，没有孪生.  如果生男生女的概率为 0.5, 那么 8 个孩子中，生 7 个或以上的女孩概率是多大?</p>
-<p><code>(8 7) * 0.5⁷ * (1 - 0.5)¹ + (8 8) * 0.5⁸ * (1 - 0.5)⁰ ≈ 0.04</code></p>
-<p>对应的 R 代码为:</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">choose(<span class="number">8</span>, <span class="number">7</span>) * <span class="number">0.5</span>^<span class="number">8</span> + choose(<span class="number">8</span>, <span class="number">8</span>) * <span class="number">0.5</span>^<span class="number">8</span></div><div class="line"></div><div class="line">pbinom(<span class="number">6</span>, size = <span class="number">8</span>, prob = <span class="number">0.5</span>, lower.tail = <span class="literal">FALSE</span>)</div></pre></td></tr></table></figure>
-
-<h3 id="正态分布_(Normal_distribution)">正态分布 (Normal distribution)</h3>
-<p>如果它的中值是 μ, 方差是 σ², 它的表达式可以写成 <code>X ~ N(μ, σ²)</code>.  如果 μ = 0, σ² = 1, 它就是标准正态分布, 通常用 Z 来表示.</p>
-<p>如果一个随机分布是正态分布 <code>X ~ N(μ, σ²)</code>, 那么经过 <code>(X - μ) / σ</code> 转换后的随机变量就会是标准正态分布.<br>反过来，如果 Z 是标准正态分布, <code>X = μ + σZ ~ N(μ, σ²)</code>.</p>
-<p><strong>正态分布的特性</strong></p>
-<ol>
-<li>68%, 95%, 99% 的正态质量在 1, 2, 3 的标准差内.</li>
-<li>-1.28， -1.645， -1.96， -2.33 分别是标准正态分布的 10th, 5th, 2.5th, 1st 区域</li>
-<li>由于对称性, 1.28， 1.645， 1.96， 2.33 分别是标准正态分布的 90th, 95th, 97.5th, 99th 区域</li>
-</ol>
-<p>比如说 N(μ, σ²) 分布的 95th percentile 是多少?</p>
-<p><code>μ + σ * 1.645</code> 或者</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">qnorm(<span class="number">.95</span>, mean = μ, sd = σ)`</div></pre></td></tr></table></figure>
-
-<p>再举个例.  如果一个网面的点击数平均值在 1020, 标准差在 50, 那么点击数超过 1160 的概率是多少?</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pnorm(<span class="number">1160</span>, mean = <span class="number">1120</span>, sd = <span class="number">50</span>, lower.tail = <span class="literal">F</span>)</div></pre></td></tr></table></figure>
-
-<h3 id="(Poisson_distribution)">(Poisson distribution)</h3>
-<p>它的中值和方差都是 λ.  可用于对 counts, event-time or survival data, contingency table 进行建模.<br>当随机变量的 n 很大，概率 p 很小的时候，Poisson 的分布可以用于近似于 Binomial 分布.</p>
-<p>当它用来对速率的随机变量建模时:</p>
-<p><code>X ~ Poisson(λt)</code></p>
-<ul>
-<li>λ = E[X/t] 表示在单位时间内的数量</li>
-<li>t 是总时间</li>
-</ul>
-<p>比如说人出现在公交站的数量是 Poisson 分布.  假如每小时 2.5 个人, 如果我们观察 4 个小时, 3 个或者少于 3 个人的概率是多大?</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ppois(<span class="number">3</span>, lambda = <span class="number">2.5</span> * <span class="number">4</span>)</div></pre></td></tr></table></figure>
-
-<h2 id="渐近_(Asymptotics)">渐近 (Asymptotics)</h2>
-<h3 id="大数定律_(Law_of_Large_Number)">大数定律 (Law of Large Number)</h3>
-<p>对于 IID 的随机值来说, 只要取的样本足够多, 它的平均值, 最终会和理论的 population mean 是一致的.</p>
-<h3 id="中心极限定理_(Central_Limit_Theorem)">中心极限定理 (Central Limit Theorem)</h3>
-<p>对于 IID 的随机值来说, 只要取的样本足够多, 它的平均值的分布会呈现出正态分布.</p>
-<p>样本 Xₙ 可以说是基本呈现出为 <code>N(μ, σ²/n)</code> 的正态分布.</p>
-<h3 id="Confidence_Intervals">Confidence Intervals</h3>
-<p>对于正态分布来说，随机值 X 大于 <code>μ + 2σ/√n</code> 或者小于 <code>μ - 2σ/√n</code> 的概率只有 5%.  那么 <code>X ± 2σ/√n</code> 就叫做 μ 的 95% 区间.</p>
-<p><code>Est ± ZQ * SE</code></p>
-<h3 id="T_Confidence_Intervals">T Confidence Intervals</h3>
-<p><code>Est ± TQ * SE</code></p>
-<p>一般如果要进行分组之间的数据比较，会把分级之间的数据差，做 t interval 分析.</p>
-<p>比如 R 里面的 Sleep data, 分别比较两组不同的药物，对人的睡眠质量的影响.</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">data(sleep)</div><div class="line">head(sleep)</div><div class="line"></div><div class="line"><span class="comment">##   extra group ID</span></div><div class="line"><span class="comment">## 1   0.7     1  1</span></div><div class="line"><span class="comment">## 2  -1.6     1  2</span></div><div class="line"><span class="comment">## 3  -0.2     1  3</span></div><div class="line"><span class="comment">## 4  -1.2     1  4</span></div><div class="line"><span class="comment">## 5  -0.1     1  5</span></div><div class="line"><span class="comment">## 6   3.4     1  6</span></div><div class="line"></div><div class="line">g1 &lt;- sleep$extra[<span class="number">1</span> : <span class="number">10</span>]</div><div class="line">g2 &lt;- sleep$extra[<span class="number">11</span> : <span class="number">20</span>]</div><div class="line">difference &lt;- g2 - g1</div><div class="line">mn &lt;- mean(difference)</div><div class="line">s &lt;- sd(difference)</div><div class="line">n &lt;- <span class="number">10</span></div><div class="line"></div><div class="line">mn + c(-<span class="number">1</span>, <span class="number">1</span>) * qt(<span class="number">.975</span>, n-<span class="number">1</span>) * s / sqrt(n)</div><div class="line">t.test(difference)</div><div class="line">t.test(g2, g1, paired = <span class="literal">TRUE</span>)</div><div class="line"></div><div class="line"><span class="comment">##        [,1] [,2]</span></div><div class="line"><span class="comment">## [1,] 0.7001 2.46</span></div><div class="line"><span class="comment">## [2,] 0.7001 2.46</span></div></pre></td></tr></table></figure>
-
-<p>上面的比较是把数据认为是 <code>paired = TRUE</code> 的.</p>
-<p>那如果是<strong>独立</strong>分组的数据的 t interval (<strong>恒定标准差</strong>的情况下) 怎么计算呢?<br>假如我们要计算 μᵧ - μₓ 的 (1 - α) * 100% 信心区间,</p>
-<p><code>Y - X ± tₙₓ₊ₙᵧ₋₂ * Sₚ * ( 1 / nₓ + 1 / nᵧ)^0.5</code></p>
-<p><code>Sₚ² = {(nₓ - 1) * Sₓ² + (nᵧ - 1) * Sᵧ²} / (nₓ + nᵧ - 2)</code></p>
-<p>下面的比较是把数据认为是 <code>paired = FALSE</code> 的.</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sp &lt;- sqrt( ((n1 - <span class="number">1</span>) * sd(x1)^<span class="number">2</span> + (n2-<span class="number">1</span>) * sd(x2)^<span class="number">2</span>) / (n1 + n2-<span class="number">2</span>))</div><div class="line">semd &lt;- sp*sqrt(<span class="number">1</span>/n1+<span class="number">1</span>/n2)</div><div class="line"></div><div class="line">md + c(-<span class="number">1</span>,<span class="number">1</span>) * qt(<span class="number">.975</span>,n1+n2-<span class="number">2</span>) * semd</div><div class="line">t.test(g2, g1, paired = <span class="literal">FALSE</span>, var.equal = <span class="literal">TRUE</span>)$conf</div><div class="line"></div><div class="line"><span class="comment">##         [,1]  [,2]</span></div><div class="line"><span class="comment">## [1,] -0.2039 3.364</span></div><div class="line"><span class="comment">## [2,] -0.2039 3.364</span></div></pre></td></tr></table></figure>
-
-<p>可见两次的结果是非常不同的.  那到底怎么决定数据是否是 pair, 是否是独立的呢？</p>
-<p>比如说, 如果我们要检测非吸烟者和吸烟者的 BMI 指数, 因为这两组人群是完全不同的, 所以就是独立的.<br>或者说如果测试完全分开的两组一员, 一组使用药物, 一组使用安慰剂来测试药物的效用, 这也是独立的.</p>
-<p>但如果说测试是同一组人员, 使用药物前后的比较, 那就应该是 paired.</p>
-<p>那如果是<strong>独立</strong>分组的数据的 t interval (<strong>非恒定标准差</strong>的情况下) 怎么计算呢?</p>
-<p><code>Y - X ± tdf * ( Sₓ² / nₓ + Sᵧ² / nᵧ)^0.5</code></p>
-<p>tdf 里面的 degree of freedom 的计算为:</p>
-<p><code>df = ( Sₓ² / nₓ + Sᵧ² / nᵧ)² / {(Sₓ² / nₓ)² / (nₓ - 1) + (Sᵧ² / nᵧ)² / (nᵧ - 1)}</code></p>
-<p>参考链接: <a href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals.html" target="_blank" rel="external">http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals.html</a></p>
-<h2 id="Hypothesis_testing">Hypothesis testing</h2>
-<h3 id="定义">定义</h3>
-<p>H₀, H-nought, 通常代表 “没有关联”, “没有影响” 的观点，又称为零假设.  它是目前要测试和证明的假设, 通常先被假定为正确的, 然后希望用统计数据来证明为错误或者需要慎重考虑的假设.</p>
-<p>Hₐ, (alternative hypothesis) 就是对应的希望被证明为正确的假设.</p>
-<p>比如说, Centers for Disease Control (CDC) 报道了从 1960 到 2002 年的身高体重质量指数趋势.  报告认为美国人在 2002 年比 1960 年重了很多, 而只是高了一点; 无论男女平均大约增加 24 磅.  在 2002 年, 男性平均体重为 191 磅.  假定有调查者认为到 2006 年, 也就是说男性平均体重将多于 191 磅.  那我们就可以把体重没有变化的推测定义为 H₀.</p>
-<pre><code><span class="constant">Null</span> <span class="constant">Hypothesis</span>      <span class="constant">H</span>₀<span class="symbol">:</span> μ = <span class="number">191</span>         (没变化)
-<span class="input"><span class="prompt">Research Hypothesis  Hₐ: μ &gt;</span> <span class="number">191</span>         (调查人员的假定推测)</span>
-</code></pre><p>为了验证这个假定, 我们在 2006 年随机选定了一组美国男性来测量体重.  如果我们抽取的样本为 n = 100 人, 测量结果为: <code>X = 197.1, s = 25.6</code>:</p>
-<p><code>P(X &gt; 197.1) = P(Z &gt; (197.1 - 191) / (25.6 / √100)) = P(Z &gt; 2.38) = 1 - 0.9913 = 0.0087</code></p>
-<p>也就是说, 如果说体重没有变化, 取样得到平均値为 197.1 的可能性还不到 1%.  那我们说 H₀ 是否成立呢?</p>
-<p>样例取自: <a href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_HypothesisTest-Means-Proportions/" target="_blank" rel="external">http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_HypothesisTest-Means-Proportions/</a></p>
-<h3 id="错误类型">错误类型</h3>
-<p><strong>Type I Error</strong>:  当事实为 H₀ 时，我们推测出的结果为 Hₐ<br><strong>Type II Error</strong>:  当事实为 Hₐ 时，我们推测出的结果为 H₀</p>
-<p>现在我们尝试把场景应用到法律当中, H₀ 为被控方是无罪的.  那么我们就需要找到一个标准来断定他是有罪的 (Reject H₀).  假如标准太高, 把无罪的人错误定罪的可能性就变高了 (Type I Error).  相反标准低了, Type II Error 就高了.</p>
-<p>所以, 其中一种做法就是选出一个常量 C (Critical Value), 使得样本的平均值 X 比它大时, 我们可以 Reject H₀.  要得到这个 C, 我们先要定出 α (level of significance), 来表示说如果在 H₀ 为真的时候, 我们却 Reject 了它的可能性, 也就是 Type I Error <code>P(X &gt; C; H₀) = 5%</code>.</p>
-<h3 id="Upper,_Lower,_and_Two_Failed_Test">Upper, Lower, and Two Failed Test</h3>
-<p>一般来说, 对应 H₀, Hₐ 有下面三种形式:</p>
-<pre><code><span class="input"><span class="prompt">H₁ : μ &lt; μ₀
-H₂ : μ ≠ μ₀
-H₃ : μ &gt;</span> μ₀</span>
-</code></pre><p>所以, 如果说 <code>TS (Test Statistic) = (X - μ) / (s/√n)</code> 的话, 以下的情况就分别可以 Reject H₀:</p>
-<pre><code> TS  ≤ Zₐ
-<span class="string">|TS| ≥ Z₁₋ₐ∕₂</span>
- TS  ≥ Z₁₋ₐ
-</code></pre><h3 id="和_Confidence_Interval_的关系">和 Confidence Interval 的关系</h3>
-<p>对于 μ 来说, (1 - α) * 100% 的 confidence interval 范围内的所有的值, 都无法 (Failed to) Reject H₀.</p>
-<h2 id="P-values">P-values</h2>
-<p>P-value 就是在 H₀ 的前提下, 观测到的样本值出现的可能性.  如果这个可能性很少, 要么 H₀ 为真, 并且我们观测到的值很极端, 要么 H₀ 为假.</p>
-<p>P-value 和 α (level of significance) 是不同的.  P-value 只是简单描述了在 H₀ 情况下, 某值出现的可能性. α 则是我们选定的用来判定是否 Reject H₀ 的标准.  当 P-value 小于 α 的时候，我们就可以 Reject H₀.</p>
-<p>two sided hypothesis test, double the smaller of the two “one sided hypothesis test P-values”.</p>
-<p>比如下面一个例子:</p>
-<p>有 18 位肥胖人士, 随机抽取 9 位服用新的减肥药, 9 位服用安慰剂.  4 星期后测量的 BMI 指数的平均变化为, 服用减肥药的为 -3kg/m2, 服用安慰剂的为 1kg/m2.  两组人员的标准差为 1.5kg/m2 和 1.8kg/m2.  那么现在的 BMI 变化对使不使用减肥药有区别吗?  假定数据是正态的, 并且 population variance 是相同的, 尝试给出 two sided t test 的 P-value.</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">n1 &lt;- n2 &lt;- <span class="number">9</span></div><div class="line">x1 &lt;- -<span class="number">3</span>  <span class="comment">## treated</span></div><div class="line">x2 &lt;- <span class="number">1</span>  <span class="comment">## placebo</span></div><div class="line">s1 &lt;- <span class="number">1.5</span>  <span class="comment">## treated</span></div><div class="line">s2 &lt;- <span class="number">1.8</span>  <span class="comment">## placebo</span></div><div class="line">s &lt;- sqrt(((n1 - <span class="number">1</span>) * s1^<span class="number">2</span> + (n2 - <span class="number">1</span>) * s2^<span class="number">2</span>)/(n1 + n2 - <span class="number">2</span>))  <span class="comment"># 恒定标准差, 独立分组的数据</span></div><div class="line">ts &lt;- (x1 - x2) / (s * sqrt(<span class="number">1</span>/n1 + <span class="number">1</span>/n2))  <span class="comment"># Test statistic</span></div><div class="line"><span class="number">2</span> * pt(ts, n1 + n2 - <span class="number">2</span>)</div></pre></td></tr></table></figure>
-
-<h2 id="Power">Power</h2>
-<p>当事实为 Hₐ 时, 我们推测出的结果为 Hₐ 的可能性 (sensitivity).</p>
-<p>Power = 1 - β (Type II error rate)</p>
-<p>假如我们要推测的 Hₐ 为 μ &gt; μ₀:</p>
-<p>Power = P((X - μ₀) / (σ/√n) &gt; z₁₋ₐ | μ = μₐ)  # 当 μₐ 趋近 μ₀ 时, Power 趋近 α<br>      = P((X - μₐ + μₐ - μ₀) / (σ/√n) &gt; z₁₋ₐ | μ = μₐ)<br>      = P((X - μₐ) / (σ/√n) &gt; z₁₋ₐ - (μₐ - μ₀) / (σ/√n) | μ = μₐ)<br>      = P(Z &gt; z₁₋ₐ - (μₐ - μ₀) / (σ/√n) | μ = μₐ)<br>      = P(Z &gt; zβ)</p>
-<p><em>z₁₋ₐ 为标准正态分布在 α 的区域值如 1.645 (5%)</em></p>
-<p>假定在 H₀:μ = μ₀ 的情况下, 统计数据为 N(0, 1) 的正态分布, 那么在 Hₐ:μ = μₐ 的情况下, 统计数据就为 N((μₐ - μ₀) / (σ/√n), 1) 的正态分布.  所以，也可以通过 <code>pnorm(1.645, mean = (μₐ - μ₀) / (σ/√n), sd = 1, lower.tail = F)</code> 来计算出 Power.</p>
-<p>根据上面的推理, 我们还可以得出一个等式: <code>z₁₋ₐ - (μₐ - μ₀) / (σ/√n) = zβ</code>.<br>也就是说 Power 和 <code>(μₐ - μ₀) / (σ/√n)</code> 的比值相关.  <code>(μₐ - μ₀) / σ</code> 为 effect size.</p>
-<h2 id="Multiple_testing">Multiple testing</h2>
-<h3 id="Types_of_Error">Types of Error</h3>
-<pre><code><span class="attribute">              β </span>=<span class="string"> 0   β ≠ 0   Hypotheses
-Claim β = 0   U       T       m - R
-Claim β ≠ 0   V       S       R
-Claims        m₀      m - m₀  m</span>
-</code></pre><p><strong>m</strong> - total number of hypotheses tested<br><strong>m₀</strong> - number of true H₀<br><strong>m - m₀</strong> - number of true Hₐ<br><strong>V</strong> - number of false positive (Type I error / false discoveries)<br><strong>S</strong> - number of true positive (true discoveries)<br><strong>T</strong> - number of false negative (Type II error)<br><strong>U</strong> - number of true negative<br><strong>R</strong> - number of rejected H₀</p>
-<h3 id="Error_Rates">Error Rates</h3>
-<p><strong>False positive rate</strong> - The rate at which false results (β = 0) are called significant: E[V/m₀]<br><strong>Family wise error rate (FWER)</strong> - The probability of at least one false positive Pr(V ≥ 1)<br><strong>False discovery rate (FDR)</strong> - The rate at which claims of significance are false E[V/R]</p>
-<h3 id="Correction">Correction</h3>
-<p><strong>Controlling FWER</strong> - Bonferroni correction</p>
-<p>假定做 m 次测试, 要把 FWER 控制在 α, 也就是 Pr(V ≥ 1) &lt; α.<br>然后把新的 α 设置为 α / m, 所有小于这个新的 α 的 P-value 就是 significant 的.<br>这种方法的优点就是容易计算, 缺点就是得出的值会非常保守.</p>
-<p><strong>Controlling FDR</strong></p>
-<p>假定做 m 次测试, 要把 FDR 控制在 α, 也就是 E[V/R].<br>把 P-value 从小到大排好序 P(1), …, P(m), 任何 P(i) ≤ α * i/m 都是 significant 的.<br>这种方法的优点就是相对容易计算, 没那么保守, 缺点就是 false positive 可能性增加, 而且关联数据可能表现诡异.</p>
-<p><strong>Adjusted P-values</strong></p>
-<p>注意, 修正过的就已经不能算是 P-values 了.<br>假定我们有 P(1), …, P(m), 我们可以把每一个 P-values * m, 最大值为 1. 如果得出来的值小于 α, 那就是在 Control FWER 上是 significant 的.</p>
-<h2 id="Resampled_inference">Resampled inference</h2>
-<p>不断的从已有数据集中取数据出来创造新的数据集.  R 里面有两个很有用的工具:</p>
-<h3 id="jackknife">jackknife</h3>
-<p>原理是从一组数据中每次删除一个值, 然后用剩下的 (n - 1) 个数据来计算推测要推导的结论.  所以也就是说会有 n 种数据组合和 n 次推导值.  这种做法通常会用在推算偏差和标准误上面.  像中值 (mean) 这种 unbiased 的数据是不用 jackknife 来做的.</p>
-<p>计算过程是这样的:</p>
-<ul>
-<li>X₁, …, Xₙ 是一组测量数据值</li>
-<li>假定 θ 是用以上数据全集推导出来的值 (比如 median)</li>
-<li>θᵢ 是把 Xᵢ 删除后推导出来的值</li>
-<li>假定 θbar = 1/n * ∑ⁿθᵢ</li>
-</ul>
-<p>jackknife 算出来的偏差就是 <code>(n - 1) * (θbar - θ)</code>, 标准误就是 <code>[(n - 1)/n * ∑ⁿ(θᵢ - θbar)²] ^ 0.5</code></p>
-<h3 id="bootstrap">bootstrap</h3>
-<p>bootstrap 是 non-parametric 的.  通常用于 confidence internal 和标准误上面.  bootstrap 原则是指 using the distribution defined by the data to approximate its sampling distribution.</p>
-<p>实际操作上来说, bootstrap 原则都是通过模拟来的执行的.  一般都是不断的从观测的数据中取样计算分布状况, 来模拟完整的数据集的分布.<br>从多次的模拟计算中得到的统计概率去计算 confidence interval 或者标准误.</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(UsingR)</div><div class="line"><span class="keyword">library</span>(bootstrap)</div><div class="line">data(father.son)</div><div class="line"></div><div class="line">x &lt;- father.son$sheight</div><div class="line">n &lt;- length(x)</div><div class="line">B &lt;- <span class="number">1000</span></div><div class="line"></div><div class="line">resamples &lt;- matrix(sample(x, n * B, replace = <span class="literal">TRUE</span>), B, n)</div><div class="line">medians &lt;- apply(resamples, <span class="number">1</span>, median)</div><div class="line">sd(medians)</div><div class="line"><span class="comment">## [1] 0.08452927</span></div><div class="line"></div><div class="line">quantile(medians, c(<span class="number">0.025</span>, <span class="number">0.975</span>))</div><div class="line"><span class="comment">##     2.5%    97.5%</span></div><div class="line"><span class="comment">## 68.44474 68.81588</span></div></pre></td></tr></table></figure>
-
-]]></content>
-    
-    
-      <category term="Statistics" scheme="http://www.thinkingincrowd.me/tags/Statistics/"/>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
   </entry>
   
