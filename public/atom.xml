@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-08-03T15:47:40.324Z</updated>
+  <updated>2016-08-28T03:06:31.438Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,81 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[编程是什么？我要学吗？]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/"/>
+    <id>http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/</id>
+    <published>2016-08-28T03:04:46.000Z</published>
+    <updated>2016-08-28T03:06:18.000Z</updated>
+    <content type="html"><![CDATA[<p>很多人觉得编程是很高端神秘的事情，觉得自己可能学不来。但是了解到程序员的工资比较高，所以又蠢蠢欲动，想进入这个领域。那么，在回答这个问题前，我们先了解一下什么是编程吧。</p>
+<h2 id="什么是编程">什么是编程</h2>
+<p>编程，也叫程序设计，其实就是用编程语言处理数据，以达到你想要的效果。有一本书的名字很清楚表达了这个观点。</p>
+<p><strong>Algorithms</strong> + <strong>Data Structures</strong> = <strong>Programs</strong></p>
+<p><strong>算法</strong> + <strong>数据结构</strong> = <strong>程序</strong></p>
+<h3 id="什么是数据结构">什么是数据结构</h3>
+<p>数据结构其实就是数据存储的方式。我们不妨用下面几个生活中的例子来理解。</p>
+<ul>
+<li>地铁站X光机上的一件件行李</li>
+</ul>
+<p>行李是排成一排，顺序进入 X 光机处理的。排最前面的，先处理。最后进的，最后处理。如果把行李看作是数据，这种数据结构其实是队列。<strong>队列的特点是先进先出</strong>。</p>
+<ul>
+<li>超市里叠在一起的一箱箱牛奶</li>
+</ul>
+<p>叠在一起的箱子，最开始放置的肯定是最下面的那个，然后一箱一箱往上垒。要拿出来的时候，当然是先拿最上面的，最下面的最后才拿。这种结构就是栈。<strong>栈的特点是先进后出</strong>。</p>
+<ul>
+<li>电脑的文件夹</li>
+</ul>
+<p>文件夹可以包含有子文件夹和文件，子文件夹又可以再包含下一层的文件夹和文件。这个结构可以理解为树型结构。文件是树的叶子节点，子文件夹可以是树的分支，也可以是叶子。<strong>树的特点是分支和层级关系</strong></p>
+<h3 id="什么是算法">什么是算法</h3>
+<p><strong>算法就是对数据进行处理的方法</strong>。</p>
+<p>从数据层面看，结构不同一般需要不同的处理方式。从处理效率看，对同一种数据结构，也可以有多种不同的处理方式。有些算法，可能要处理的数据量越大，时间就会成倍增加。有些却无论数据多大，时间都基本恒定。举一个例子：</p>
+<p>假设你买了一个圆柱型的水果软糖，里面有 9 粒糖果。如果它的包装开口是在某一边，你需要拿第 5 粒，那么你就必须先把前面 4 粒拿出来，才能拿到第 5 粒。而且你想拿的糖果在越后面，花费时间就越多。但是，假设有一种包装是横着把圆柱形打开（结构不同了），你一次可以看到和拿到 9 粒糖果。那么无论你拿哪一粒，花费的时间都是一样的。</p>
+<h3 id="在电脑里是怎样的？">在电脑里是怎样的？</h3>
+<p>假设我把上面的糖果问题抽象到计算机里面，是什么样子的呢？下面用一段 JavaScript 代码来模拟吧。<em>懂编程的朋友，别吐槽顺序取的代码，我知道可以按位置，这里只是说明一下。</em></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showMeTheCandy</span><span class="params">(candy)</span> </span>{</div><div class="line">  <span class="built_in">console</span>.log(candy)</div><div class="line">}</div><div class="line"></div><div class="line"><span class="comment">// 排成列，顺序取</span></div><div class="line"><span class="keyword">var</span> candy = [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span>, <span class="string">'G'</span>, <span class="string">'H'</span>, <span class="string">'I'</span>] <span class="comment">// 我有9粒字母糖果</span></div><div class="line"><span class="keyword">var</span> toPickCandyLocation = <span class="number">5</span> <span class="comment">// 我要取的糖果是第5粒</span></div><div class="line"><span class="keyword">var</span> currentCandyLocation = <span class="number">1</span> <span class="comment">// 现在我要开始取的是第1粒</span></div><div class="line"><span class="keyword">var</span> candyPicked = <span class="literal">null</span> <span class="comment">// 我取的糖果要放这，但现在还不存在</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> (currentCandyLocation &lt;= <span class="number">5</span>) { <span class="comment">// 当我要取的糖果还不是第5粒的话，重复下面的事情</span></div><div class="line">  candyPicked = candy.shift() <span class="comment">// 从最前面取1粒</span></div><div class="line">  currentCandyLocation = currentCandyLocation + <span class="number">1</span> <span class="comment">// 挪到下一个位置</span></div><div class="line">}</div><div class="line"></div><div class="line">showMeTheCandy(candyPicked) <span class="comment">// 看看拿到的糖果是什么字母</span></div><div class="line"><span class="comment">// -&gt; 'E'</span></div><div class="line"></div><div class="line"><span class="comment">// 做成特定的，可按位置/编号取的结构</span></div><div class="line"><span class="keyword">var</span> candy = {</div><div class="line">  <span class="string">'1'</span>: <span class="string">'A'</span>,</div><div class="line">  <span class="string">'2'</span>: <span class="string">'B'</span>,</div><div class="line">  <span class="string">'3'</span>: <span class="string">'C'</span>,</div><div class="line">  <span class="string">'4'</span>: <span class="string">'D'</span>,</div><div class="line">  <span class="string">'5'</span>: <span class="string">'E'</span>,</div><div class="line">  <span class="string">'6'</span>: <span class="string">'F'</span>,</div><div class="line">  <span class="string">'7'</span>: <span class="string">'G'</span>,</div><div class="line">  <span class="string">'8'</span>: <span class="string">'H'</span>,</div><div class="line">  <span class="string">'9'</span>: <span class="string">'I'</span>,</div><div class="line">}</div><div class="line"></div><div class="line">showMeTheCandy(candy[<span class="string">'9'</span>])</div><div class="line"><span class="comment">// -&gt; 'E'</span></div></pre></td></tr></table></figure>
+
+<p>从上面可以看到，同样的数据，可以按照不同的结构来存放。不同的处理逻辑/算法，效率不同。所以，从这种角度来看，<strong>学习编程和程序设计，是学会抽象</strong>，学会如何把现实问题，在计算机里面表现出来。<strong>还有数据处理</strong>。</p>
+<p>从另一种角度来看，<strong>编程和程序设计，就像写作</strong>。从上面第一段顺序取数据的代码看，我就像写作一样。我在用计算机能理解的语言，写操作指引出来。一个好的程序员，写的代码，一定像好文章那样容易理解。不同的语言，指令有点不同，但不差太远。所以学会一种语言，再学一种难度就没那么大。</p>
+<h2 id="应该不应该学习编程">应该不应该学习编程</h2>
+<p>其实编程和程序设计并不难，尤其是当你能把它和实际问题结合，理解。回到最开始的问题，我应该学编程吗？首先，问问你自己，你学编程的目的是什么？</p>
+<ol>
+<li><p>你觉得通过指尖敲击的指令，就能创造无限可能，这实在是太酷了。  —  你绝对应该学习。</p>
+</li>
+<li><p>你目前遇到些繁琐而重复的事情，想看一下计算机能否代劳。  —  你应该尝试。</p>
+</li>
+<li><p>你想找一份工资相对高的工作，不用搬搬抬抬，还能在办公室吹空调。  —  这也是不错的选择。</p>
+</li>
+<li><p>你想学到一种编程语言让你当金饭碗用，拿高工资。  —  早早死了心算了。</p>
+</li>
+</ol>
+<p>计算机应该是变化越来越快的领域，虽说有不少语言诞生的时间已经几十年，但是它们也是持续演化的。说不准你刚学会没多久的懂，两三年后就没什么人用了，就像现在的前端框架。所以，如果你想把程序设计作为你的职业，请做好长期持续学习的准备。</p>
+<p>但是，即便你不需要把它当作职业，我认为，多少具备一些编程的能力，让计算机辅助你解决问题，提升思考方式和效率，真的非常有好处。送上 Linus 大神的话：</p>
+<blockquote>
+<p>Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program.</p>
+</blockquote>
+<h2 id="怎么开始？">怎么开始？</h2>
+<p>如果你已经下定决心要学习程序开发。那怎么开始？</p>
+<h3 id="从问题出发">从问题出发</h3>
+<p>你想解决什么问题？处理什么数据？最后达到什么效果？从事哪个领域？</p>
+<p>比如说，如果你要处理 Excel，做各式各样的报表。或者要从固定格式的 Excel 里面抽取数据。那你可能只要学习 VBA 就可以了，或者用 JAVA。因为 Excel 这种企业级的东西，你用回微软自家的语言会方便些。企业级的 JAVA 语言也是不错的选择，因为已经很多写好的工具，你学会拿来用就可以了。但是如果你非要选 Node.js 和 JavaScript 来处理，就真有点作死。</p>
+<p>还有，很多人想学数据分析，一上来就学什么 Spark, Hadoop，搞大数据，但我觉得那是不对的。只学会搭建工具环境，却不会数据分析的基础，难道不是本末倒置吗？况且，工具和框架更新换代比语言变化的还快，一年后说不定又换新了。数据分析最主要的是有数据思维，基本的统计学知识和数据分析的能力。如果你用 Excel, SQL 就能挖掘出数据里面的商业价值，看到别人看不到的规律，那就牛了。当然你还可以学习 Python 或者 R 这种最基础的数据分析领域的语言，因为它们提供丰富的数据分析算法和展示工具，让数据分析工作更简单。所以，我觉得只有真的具备一定的基础，而且数据真的大到一定程度，你才需要去用那些大数据的处理工具。</p>
+<p>Web Application 开发领域，无论前端后端，我觉得肯定要学的是 JavaScript, HTML, CSS。如果你打算在前端发展，不管你是打算用 jQuery, AngularJS，React 或者 VueJS 也好，原生 JavaScript 都是基础。即便你想从事后端，拥有基本的前端知识，可以让你方便和前端沟通合作。后端的语言选择相对较多，一般是 Ruby, Node.js, Python，PHP, Java。Java 在传统企业领域用的比较多，初创公司一般选其它的来起步。Go, Rust, Clojure 比较新，用的人相对少一些。</p>
+<h3 id="怎么开始">怎么开始</h3>
+<p>现在互联网如此发达，书，视频，在线教育和练习编程开发的资源都相当地多，对于一个稍微有点编程经验的人来说。自学应该完全不是问题，不愁没有资源。但是，对于一个完全是自学起步，没有任何编程背景的人来说，最好<strong>找一个靠谱的师傅来指引起步</strong>。</p>
+<p>首先，从上面说的问题出发，新手是不可能有答案的。即便在论坛上提问，用什么语言，什么建议都会有。你可要知道程序员最喜欢讨论什么语言，什么框架好。所以有个笑话说，你想让程序员们吵起来，只要在里面喊一句，XXX 语言是最好的语言就可以了。</p>
+<p>其次，开始学习编程开发遇到的最大的障碍是搭建环境。很多新手都是在最开始的时候就遇到各种环境问题，导致完全无法跟教程练手，挫败感太强而放弃。所以，如果有人在身边指导，至少先把搭建环境这关过了，后面会顺畅很多。</p>
+<p>再说，一个有经验的靠谱的老师，还可以告诉你<strong>学习使用某一种语言的最少必要知识</strong>，不至于让你迷失在太多技术细节中，真的可以事半功倍。</p>
+<p>如果确实身边和网络上找不到这样的朋友，老师，又不舍得花钱去培训班，要如何降低遇到障碍的可能性和提高问题解决效率呢？<strong>最好选择 Mac 来开发，学会如何使用 Google，和正确提问</strong>。</p>
+<p>最后，无论有没有老师，<strong>学编程最重要就是：模仿，模仿，模仿。练习，练习，练习</strong>。</p>
+]]></content>
+    
+    
+      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[如何保证自己最重要的财富不被偷走？]]></title>
@@ -1380,52 +1455,6 @@
       <category term="Flow" scheme="http://www.thinkingincrowd.me/tags/Flow/"/>
     
       <category term="Visualization" scheme="http://www.thinkingincrowd.me/tags/Visualization/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Dive into Kanban (1) - What is it?]]></title>
-    <link href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/"/>
-    <id>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</id>
-    <published>2015-05-20T12:55:41.000Z</published>
-    <updated>2015-12-19T12:57:36.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="What_is_Kanban">What is Kanban</h2>
-<p><a href="http://en.wikipedia.org/wiki/Kanban" target="_blank" rel="external">Kanban</a> can be considered as a <strong>pull</strong> system <strong>visualizing</strong> the <strong>work-flow</strong> through <strong>stage transition</strong> under certain <strong>constraints</strong>.  </p>
-<p>It’s still abstract, right?  Please check below sample Kanban board and I will explain each of the highlighted points below.  </p>
-<p><img alt="Kanban Board" src="http://thinkingincrowd.u.qiniudn.com/Kanban_Simple_Flow.png"></p>
-<h2 id="Work-flow_&amp;_Stage_Transition">Work-flow &amp; Stage Transition</h2>
-<p>It’s not hard to understand, when you are trying to get something done, it always involves stage transition.  At least two stages, in progress and done, right?</p>
-<p>In software development field, before one product/feature is available for customer, it normally goes through <strong>collecting requirement</strong>, <strong>requirement analysis</strong>, <strong>design</strong>, <strong>coding</strong>, <strong>testing</strong>, and <strong>release</strong>.  These can be mapped to each column above and considered as the transition stages involved in work-flow especially when each stage is responsible by different person or team.  </p>
-<p>Hence, before applying Kanban methodology to the development process, it’s a must we understand how our process is and how the stages are transtioned.</p>
-<h2 id="Visualize">Visualize</h2>
-<p>Human-beings are better at recognizing and understanding the world visually.  Work process in software development is quite complex when many parties are involved and especially when the governing policies or management is in a mess.  </p>
-<p>By visualizing the process with a board like above, it’s easy for everyone to track the work item’s progress and spot out the blocking issue or bottleneck if there is any.</p>
-<h2 id="Constraints">Constraints</h2>
-<p>The constraints applied in Kanban is called <strong>WIP</strong> (Work in Progress).  This is what differentiates Kanban from other “Card-Wall” style task management system, like <a href="http://trello.com/" target="_blank" rel="external">Trello</a>.  Constraints are those number applied on top of each stage which implies that at most that number of tasks put under that stage in parallel.  In the example above, only 6 tasks can be started in development at the same time.  </p>
-<p>We can simply assume the constraint is the number of people in different teams although one person might not be limited to do one thing at a time.  But this idea should be easier to understand at first and we can start from that.  </p>
-<h2 id="Pull">Pull</h2>
-<p>This is an interesting verb.  It’s the opposite of <strong>Push</strong>.  I think most of the developers can feel the meaning behind it pretty well.  Most of the time, the work items or tasks are assigned/pushed from higher level.  </p>
-<p>But in Kanban, it emphasize that the work items must be pulled from downstream.  Once, the downstream is busy which means the constraints mentioned above is met, then the work-flow has to be stopped until there is vacancy again in downstream.  </p>
-<p>Not hard to imagine, upstream perfers <strong>Push</strong> more than <strong>Pull</strong> while the downstream should feel the opposite.  The reasons are due to out-dated management philosophy and/or level of trust among teams which Kanban is intended to improve.  </p>
-<h2 id="Afterword">Afterword</h2>
-<p>If you have some basic understanding on Kanban now and curious on what real benefits it can bring, I suggest you to read the great intro book <strong><a href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" target="_blank" rel="external">Kanban: Successful Evolutionary Change for Your Technology Business</a></strong> by David J Anderson.  </p>
-<h3 id="Series">Series</h3>
-<ul>
-<li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/" target="_blank" rel="external">Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/" target="_blank" rel="external">Dive into Kanban (6) - Scrum vs Kanban</a></li>
-</ul>
-]]></content>
-    
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
