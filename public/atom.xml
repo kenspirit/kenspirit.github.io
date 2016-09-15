@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-09-04T13:30:25.284Z</updated>
+  <updated>2016-09-15T09:58:44.858Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,90 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[学习编程需要具备的基本能力 - 抽象]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/"/>
+    <id>http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/</id>
+    <published>2016-09-15T09:25:49.000Z</published>
+    <updated>2016-09-15T09:56:51.000Z</updated>
+    <content type="html"><![CDATA[<p>很多人说，要学好编程，需要有抽象的能力。但<em>抽象</em>这个词本身就太抽象了。怎么样才叫有抽象的能力啊？。<strong>抽象是相对于具象而言的</strong>。我觉得，与其说学习编程要具备抽象的能力，不如说<strong>编程应该具备具象与抽象之间转换的能力</strong>。我们通过下面的例子来了解怎么在这两者之间转换吧。这篇文章对学编程的新手来说可能有点高能，但慢慢理解。</p>
+<h2 id="数据与算法">数据与算法</h2>
+<p>一般来说，计算机和编程最终都会落实到解决生活的具体问题上。把这些生活的具象映射到计算机的程序代码里面，本身就是一次抽象的过程。最基本的抽象，莫过于把具象的物体，赋予抽象的数据和结构，当然还有处理这些数据的算法。数据结构和算法的简单类比和介绍，编程和写作的对比，可以参看之前的一篇文章<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/" target="_blank" rel="external">编程是什么？我要学吗？</a>。</p>
+<p>生活中我们很可能就会应用到一些算法。假如公司有 1000 人吧，打印了 1000 张有序号的表格发出去让大家填了。如果收回来都乱了，怎么能快速整理好？很简单，把小于 500 的放左边，大于 500 的放右边，先分开两块。然后再把两边的，再对半分。一直到最后两到某种程度，比如每一叠都只剩下 10 - 20 张的时候，稍微排一下序就好了。最后全部按顺序叠在一起就好。这种做法抽象出来就类似经典的<strong>快速排序</strong>算法。</p>
+<p>如果我们再往上抽象一层，其实它属于<strong>分治法</strong>（Divide and conquer）。根据 Wiki 的解释：</p>
+<blockquote>
+<p>“分而治之”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。</p>
+</blockquote>
+<p>分治法是多分支<strong>递归</strong>的一种形态。很多人在学习编程的时候，会觉得递归非常难理解。但是，如果紧紧抓住这个分治法的核心，怎么把复杂问题分解成相似的子问题，并合并所有的子问题的解答，就会容易很多。</p>
+<p>比方说，我在自己正在写的 JavaScript 入门书里面举的例子，如果我们要计算 <code>1 + 2 + 3 + ... + 8 + 9 + 10</code> 这个算式怎么做？我们当然可以像人工点计算器那样，一直简单地重复加下去。但是，我们还可以换成这个思路来理解。上面的算式，其实也就是 <code>10</code> 和算式 <code>1 + 2 + 3 + ... + 8 + 9</code> 的和；算式 <code>1 + 2 + 3 + ... + 8 + 9</code> 其实又是 <code>9</code> 和算式 <code>1 + 2 + 3 + ... + 8</code> 的和，以此类推。</p>
+<p>这种思路其实就是分治的思路。那么，如果我们稍微抽象一下，用一个简单的符号来表示最开始那个要计算的算式，比如 <code>additionOfNumbersUpTo(10)</code>。它其实就等价于 <code>10 + additionOfNumbersUpTo(9)</code> 了。这样理解的话，你们应该就可以看懂这段用 JavaScript 写的递归函数代码了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">additionOfNumbersUpTo</span><span class="params">(max)</span> </span>{</div><div class="line">  <span class="keyword">if</span> (max == <span class="number">1</span>) {</div><div class="line">    <span class="keyword">return</span> max</div><div class="line">  } <span class="keyword">else</span> {</div><div class="line">    <span class="keyword">return</span> max + additionOfNumbersUpTo(max - <span class="number">1</span>)</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="模式、范例">模式、范例</h2>
+<p>学习编程语言，最常听到的就是各种模式或者范式。下面简单抽几个最出名的例子来说明一下。</p>
+<h3 id="命令式、声明式">命令式、声明式</h3>
+<p>编程语言有两大范式：命令式和声明式。怎么理解呢？我们继续看具体的例子。比如说，我们要实现一个简单的网页效果，在浏览器上显示如下的文本样式。  </p>
+<ul>
+<li>Cake  </li>
+<li>Fruit  </li>
+<li>Steak  </li>
+</ul>
+<p><strong>命令式写法</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">id</span>=<span class="value">"foodList"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">  <span class="keyword">var</span> food = [<span class="string">'Cake'</span>, <span class="string">'Fruit'</span>, <span class="string">'Steak'</span>]</div><div class="line"></div><div class="line">  <span class="keyword">var</span> foodListElement = <span class="built_in">document</span>.getElementById(<span class="string">'foodList'</span>)</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; food.length; i++) {</div><div class="line">    <span class="keyword">var</span> child = <span class="built_in">document</span>.createElement(<span class="string">'li'</span>)</div><div class="line">    child.innerHTML = food[i]</div><div class="line">    foodListElement.appendChild(child)</div><div class="line">  }</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>上面的代码是什么意思呢？  </p>
+<ol>
+<li><p><code>var foodListElement = document.getElementById(&#39;foodList&#39;)</code>。帮我把 ID 为 <code>foodList</code> 的东西找到，先放到一个叫 <code>foodListElement</code> 的地方。  </p>
+</li>
+<li><p><code>for (var i = 0; i &lt; food.length; i++) { ... }</code>。按照 <code>food</code> 的数量，把 <code>{}</code> 里面的那一段重复做几次。  </p>
+</li>
+<li><p><code>var child = document.createElement(&#39;li&#39;)</code>。创造一个叫 <code>li</code> 的东西。  </p>
+</li>
+<li><p><code>child.innerHTML = food[i]</code>。把它里面要显示的文字，设置为第几个事物的名字。  </p>
+</li>
+<li><p><code>foodListElement.appendChild(child)</code>。把这个新创造出来的 <code>li</code>，放到之前找到的 <code>foodListElement</code> 里面。  </p>
+</li>
+</ol>
+<p>所以，<strong>命令式编程强调地是把如何完成一项任务的具体步骤都列出来</strong>。要像下达指令一样，告诉电脑第一步做什么，第二步做什么，最后达成你的目标。这里有一个地方是声明式的，就是 HTML 的 <code>&lt;ul id=&quot;foodList&quot;&gt;</code>。</p>
+<p><strong>声明式写法</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">ul</span> <span class="attribute">ng-controller</span>=<span class="value">"FoodController"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"foodName in food"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">  angular.controller(<span class="string">'FoodController'</span>, <span class="function"><span class="keyword">function</span><span class="params">($scope)</span> </span>{</div><div class="line">    $scope.food = [<span class="string">'Cake'</span>, <span class="string">'Fruit'</span>, <span class="string">'Steak'</span>]</div><div class="line">  })</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>这一段代码是不是简洁很多？说不定你们都看懂了。  </p>
+<ol>
+<li><p><code>&lt;ul ng-controller=&quot;FoodController&quot;&gt;</code>。<code>ul</code> 的行为受一个叫 <code>FoodController</code> 的东西控制。  </p>
+</li>
+<li><p><code>&lt;li ng-repeat=&quot;name in food&quot;&gt;&lt;/li&gt;</code>。根据 <code>food</code> 的数量，重复生成几个 <code>li</code>，并且显示相应的食物名字在里面。  </p>
+</li>
+<li><p><code>&lt;script&gt;</code> 里面包含那段就告诉浏览器 <code>FoodController</code> 长什么样子，<code>food</code> 里面有什么东西。</p>
+</li>
+</ol>
+<p><strong>指令式编程是指把你只要告诉电脑你要达成的目标是什么，至于怎么做，它自己解决。</strong>这里，我们就不像命令式那样，要一步步教浏览器怎么做了。</p>
+<p>要注意的是，这里借助了一个叫 <em>AngularJS</em> 的工具，从而做到了用同一种语言，不同的写法。  <strong>不一定不同的编程语言才有不同的书写范式。同一种编程语言，也可以自己本身有不同的书写范式，或者通过工具来增强改变</strong>。<em>AngularJS</em> 这个工具，就是创作者帮我们抽象了教浏览器如何做事情的过程。</p>
+<h3 id="面向对象、函数式">面向对象、函数式</h3>
+<p>要数最热火朝天的编程范式，非这两个莫属了。  前一篇文章<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/" target="_blank" rel="external">编程是什么？我要学吗？</a>里面说过，<strong>算法 + 数据结构 = 程序</strong>。</p>
+<p><strong>面向对象的特点就是，把数据，和相应的处理算法或者说行为都放到一个相应的容器里面。承载数据和行为的容器就是对象</strong>。咋一听可能不好理解。比如，我要在电脑里面模拟一个人，这个人可以看做是一个容器或者对象。他包含了一些数据，一双眼睛，手，腿，黑色的头发等。我们还可以在这个对象上面加上<em>行走</em>这样的行为。行走可以根据这个对象有没有手或者腿来决定行走的行为是怎么样的。也可以根据你给不给他穿鞋子，或者穿什么鞋子而不同。  </p>
+<p><strong>函数式里面很重要的一个特点就是，算法本身也可以被看作一种特殊的数据，然后传给其它算法使用</strong>。这个概念如果不看代码的话，真的是不好理解。前方小高能一下。  假设我们有一些数字，我想做两个事情，一个是把它们都乘以 2，一个是算它们的平方。  </p>
+<p>下面简单抽象了两个算法 <code>doubleArray</code> 和 <code>squareArray</code>，每个都是根据传进去的数字进行一个个查看，然后做相应的操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">doubleArray</span><span class="params">(numbers)</span> </span>{</div><div class="line">  <span class="keyword">var</span> result = []</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numbers.length; i++) {</div><div class="line">    result[i] = numbers[i] * <span class="number">2</span> <span class="comment">// 乘以 2</span></div><div class="line">  }</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">squareArray</span><span class="params">(numbers)</span> </span>{</div><div class="line">  <span class="keyword">var</span> result = []</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; numbers.length; i++) {</div><div class="line">    result[i] = numbers[i] * numbers[i] <span class="comment">// 乘方</span></div><div class="line">  }</div><div class="line"></div><div class="line">  <span class="keyword">return</span> result</div><div class="line">}</div><div class="line"></div><div class="line">doubleArray(numbers)</div><div class="line"><span class="comment">// -&gt; [ 2, 4, 6, 8, 10 ]</span></div><div class="line">squareArray(numbers)</div><div class="line"><span class="comment">// -&gt; [ 1, 4, 9, 16, 25 ]</span></div></pre></td></tr></table></figure>
+
+<p><em>//-&gt; 表示运算结果</em></p>
+<p>你们如果仔细看的话，上面的 <code>doubleArray</code> 和 <code>squareArray</code> 只有那么一点点不同啊。如果我们进一步抽象，可以变成下面的样子。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">double</span><span class="params">(num)</span> </span>{</div><div class="line">  <span class="keyword">return</span> num * <span class="number">2</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(num)</span> </span>{</div><div class="line">  <span class="keyword">return</span> num * num;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">map</span><span class="params">(data, fn)</span> </span>{</div><div class="line">  <span class="keyword">var</span> results = [];</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; data.length; i++) {</div><div class="line">    results.push(fn(data[i]));</div><div class="line">  }</div><div class="line"></div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">}</div><div class="line"></div><div class="line">map(numbers, double)</div><div class="line"><span class="comment">// -&gt; [ 2, 4, 6, 8, 10 ]</span></div><div class="line">map(numbers, square)</div><div class="line"><span class="comment">// -&gt; [ 1, 4, 9, 16, 25 ]</span></div></pre></td></tr></table></figure>
+
+<p>你们可以看到，<code>double</code> 和 <code>square</code> 把不同的地方抽象出来了。<code>map</code> 则是把公共的部分抽象出来了。使用的时候，<code>double</code> 和 <code>square</code> 被当作数据一样传进去，然后使用。这就是函数式里面一个很重要的高阶函数的概念。  </p>
+<h2 id="总结">总结</h2>
+<p>学习编程，到处都是抽象的概念。这个时候，需要我们从抽象到具象的转换来辅助我们的理解和思考。所以，这就是为什么我一开始就强调学习编程是要有具象与抽象之间转换的能力。这个不应该是单向，而是双向的。</p>
+<p>具备抽象的思维方式，目的就为能举一反三，解决通用问题。具备这种能力，对解决实际问题都是有很大的用途。所以，这也是为什么我觉得无论是否从事编程领域，都应该学习一定的编程知识。</p>
+<p>上面这些如果你都看懂了，你肯定不用担心学不会编程。如果不懂也没有关系，因为它们真的不是那么容易。</p>
+]]></content>
+    
+    
+      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[我为什么选择囚徒健身？]]></title>
@@ -1389,85 +1473,6 @@
       <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
     
       <category term="Adoption" scheme="http://www.thinkingincrowd.me/tags/Adoption/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Dive into Kanban (4) - Variability and Flow Interruption]]></title>
-    <link href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/"/>
-    <id>http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/</id>
-    <published>2015-06-05T14:49:04.000Z</published>
-    <updated>2015-12-19T12:57:56.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="External_Sources_of_Variability">External Sources of Variability</h2>
-<p>Within the software development cycle, we often face various kinds of flow blocker issues that slows our progress.  Let’s look into some common areas.  </p>
-<h3 id="Requirement">Requirement</h3>
-<p>Responding to change, one key point in Agile manifesto, is embraced in Agile development.  However, normally there also exists enforcement or agreement that after user story is defined or at least after development is started, requirement should not be changed.  For example, in Scrum, change should be scheduled as new item in next iteration and no new item should be added after sprint backlog is confirmed.  </p>
-<p>The reality is that many teams cannot follow the principle well.  From another point of view, do you think it’s better to waste time on doing something we don’t really want and then do it again?  Or it’s better just stop and change it based on new requirement?  </p>
-<p>Clearly, there is no absolute right or wrong answer here.  We should understand our business nature and decide ourselves.  Going to either extreme that no any change can be accepted or any change is welcome anytime without constraints can be terrible.  There must be some disciplines to follow no matter which way you choose.  </p>
-<h4 id="The_Kanban_solutions">The Kanban solutions</h4>
-<p>In Kanban, changing requirement is acceptable but we must agree that it affects lead time.  And we should also have metrics to measure the quality of requirement and prioritization later on.  </p>
-<ol>
-<li><p>We can either move back the card to “Requirement” stage or mark it as Blocked by REQ under its current stage regarding the change is big enough to impact development or testing.  </p>
-<p>We should have statistics on how many cards ever move back to “Requirement” once started development or how many days are blocked by requirement.  </p>
-<p>For example, below diagram shows the blocked statistics.  Y-Axis shows different stages in one Kanban board and X-Axis show the total time items are blocked under particular stage.  And the time is also grouped by different blocking reason.  Say, in “In Dev” stage, all time is blocked due to “Priority” reason which means priority kept changing after developer starts development and that is unhealthy signal.  </p>
-</li>
-</ol>
-<p><img alt="Blocked_Statistics" src="http://77g8zm.com1.z0.glb.clouddn.com/Blocked_Statistics.png"></p>
-<ol>
-<li><p>If the item is discarded once it’s picked from Backlog, we can also show in Kanban’s Discard area and also we can check how much effort has been wasted on it in the report.  </p>
-</li>
-<li><p>Start as late as possible if we have statistical Lead Time on hand.  Once we have some historical data so that we know on average, 85%, or 98% case that how long it takes to finish one item, then we can start that item as late as possible to avoid requirement change.  </p>
-</li>
-</ol>
-<h3 id="Environment_Availability">Environment Availability</h3>
-<p>This is a very typical flow blocker.  The impact of this factor is normally tremendous especially when this issue is dragged without a permanent solution because environment availability often happens in large scale projects involving many teams.  </p>
-<p>Say if environment outage takes at least half day to recover, it’s a signal that our recovery and operation capability is weak or the system design need to be reviewed.  And if we don’t solve the issue at the beginning stage of the project, time and cost wasted will increase exponentially every time we do environment preparation, load testing, production release and disaster recovery.  The later stage same thing happens, the more expensive the cost is.  </p>
-<p>We can either have larger WIP or actively pursue issue resolution as described below.  </p>
-<h3 id="Expediting_items">Expediting items</h3>
-<p>Developers often suffers from expediting items as well, for example, overlooked high priority items in backlog, urgent Report requested from manager, production issue support, etc.  </p>
-<p>Defining different classes of services and assigning fixed WIP on each class, or enabling slack in the team has the agility to react.  </p>
-<h2 id="General_Solutions_in_Kanban">General Solutions in Kanban</h2>
-<p>Below are some general approaches used in Kanban to workaround the blocked items, ease the flow to ensure predictable lead time.  Different approachs have its own benefits or drawbacks.  It should be chosen accordingly.  </p>
-<h3 id="Larger_WIP">Larger WIP</h3>
-<p>The larger WIP, the less tension the team may feel.  Because idle resource can still pull other items in case there are blocked ones.  However, that cause larger and more unprecitable lead time.  Larger WIP also means the people need to multi-tasking and keep switching context.  Empirically, multi-tasking often cause bad quality.  </p>
-<p>What is more, less pressure might consequently has less chance of encouraging continuous improvement.  So, this is recommended for immature organization as starting point only.  </p>
-<h3 id="Pursuing_resolution">Pursuing resolution</h3>
-<p>Strict WIP control requires the team to relentlessly pursue issue fixing.  It greatly encourages continuous improvement culture but it also requires a more mature &amp; fully cooperated team.  </p>
-<h3 id="Class_of_Services">Class of Services</h3>
-<p>Separating the work items into different classes of services and also assigning suitable WIP on each class is one useful approach to solve the expediting items or flow interruption issue.  </p>
-<p>Take below graph as example, we have separated our items into several classes of services:</p>
-<ol>
-<li><code>L1 TT</code>: Means level 1 Production issue which is intended to be fixed in 4 hours  </li>
-<li><code>L2 TT</code>: Means level 2 Production issue which is intended to be fixed in 1 day  </li>
-<li><code>Normal</code>: Normal development item or defect  </li>
-<li><code>Intangible</code>: Items has no cost of delay  </li>
-</ol>
-<p>How to assign WIP depends on the nature of the frequency and volume of different levels of items.  If in initial production launch stage, there might be many production support issues so that you have to put fixed resources in <code>L1 TT</code> and <code>L2 TT</code> in order to react quickly and avoid interrupting normal items’ development.  Then the lead time of normal item can still be predictable and the people responsible for normal item development seldom need multi-tasking, ensuring quality.  However, if the system is already kind of stable, instead of assigning fixed resources to the first two classes, you can arrange some resources in Intagible class who can jump into production issue support when needed.  </p>
-<p><img alt="Class_of_Services" src="http://77g8zm.com1.z0.glb.clouddn.com/Class_of_Services.png"></p>
-<h3 id="Slack_Capacity">Slack Capacity</h3>
-<p>Enabling slack in the team helps to face any unexpected situation, remove regular though not urgent blocker, apply automation to shorten lead time or reduce WIP.  Unless the team has slack, continuous improvement can be luxury because they are all busy chasing after business items.  </p>
-<h2 id="Afterword">Afterword</h2>
-<p>Variability is the major impact on the flow and so we should examine carefully and address on every source in our own process flow.  To analyze existing flow blocker and work out the strategies in Kanban is not easy.  It should be done as part of <a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">visualizing process</a>.  </p>
-<p>Later on, we will explore how to define WIP and classes of services in-depth.  And if you would like to have more idea on sources of variability, chapter 19 in <a href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" target="_blank" rel="external">Kanban: Successful Evolutionary Change for Your Technology Business</a> is a good reference.  </p>
-<h3 id="Series">Series</h3>
-<ul>
-<li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/" target="_blank" rel="external">Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/" target="_blank" rel="external">Dive into Kanban (6) - Scrum vs Kanban</a></li>
-</ul>
-]]></content>
-    
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
-    
-      <category term="Flow" scheme="http://www.thinkingincrowd.me/tags/Flow/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     

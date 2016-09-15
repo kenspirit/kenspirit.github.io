@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/</loc>
+    <lastmod>2016-09-15T09:56:51.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
     <lastmod>2016-09-04T13:30:03.000Z</lastmod>
   </url>
@@ -128,11 +133,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -407,6 +407,11 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/</loc>
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/404.html</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
@@ -417,7 +422,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
