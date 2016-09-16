@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
+    <lastmod>2016-09-16T14:25:19.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/</loc>
     <lastmod>2016-09-15T09:56:51.000Z</lastmod>
   </url>
@@ -132,12 +137,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/21/i18n-extjs-and-jawr/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -222,12 +222,12 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   
@@ -412,6 +412,11 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/</loc>
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/404.html</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
@@ -422,7 +427,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/07/21/i18n-extjs-and-jawr/</loc>
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
   </url>
   

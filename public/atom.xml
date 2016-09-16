@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-09-15T09:58:44.858Z</updated>
+  <updated>2016-09-16T14:25:30.403Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,88 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[学习编程需要具备的基本能力 - 问题分解]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/"/>
+    <id>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</id>
+    <published>2016-09-16T14:20:55.000Z</published>
+    <updated>2016-09-16T14:25:19.000Z</updated>
+    <content type="html"><![CDATA[<p>我一直都说，计算机和编程是用来解决问题。问题的分解肯定是非常重要的，也必须具备的能力。相比我在<a href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/" target="_blank" rel="external">学习编程需要具备的基本能力 - 抽象</a>谈的<em>抽象和具象</em>，大家应该能理解什么是问题分解的能力。不过上次也有人给我留言，说那篇文章说的就是分析和分解问题的能力。其实它们还是有点不同。</p>
+<p><strong>抽象和具象关注在理解事物的定义；问题分解关注在分析和理解事物的组成</strong>。有时候，问题分解能够辅助定义的理解，但有时候是理解定义后才更好帮助你拆解问题。比如前面说的递归，一开始学习这个概念的时候，你可能用抽象和具象来帮助你理解它是什么。等你掌握核心理念后，如果遇到一个你认为能用递归来解决的问题，你就需要拆解，找出什么是相似和重复处理的逻辑，什么是边界和基准条件。  </p>
+<p>因为这篇文章是给打算学习编程的人看，所以一开始讲一些生活中我们如何分解问题。后面再举一些编程内的例子。其实学会分解问题，无论是否学习编程都相当有益。</p>
+<h2 id="生活">生活</h2>
+<h3 id="写作">写作</h3>
+<p>写作竟然也要分解问题？其实我读书时期是相当不喜欢写作的。反而现在编程后，越来越觉得写作和编程的关系是多么的紧密。编程其实就是写一篇逻辑严谨，简洁的文章。</p>
+<p>话说回来，写作的时候，我们要怎么分解问题？首先，我们先明确<strong>分解问题的目的是什么？</strong>。</p>
+<p><strong>写作的目的，是为了清楚表达你的观点</strong>。要清楚表达其实包含两方面，我们来分解一下。</p>
+<ol>
+<li><p>从论述观点的角度</p>
+<ul>
+<li>我这次想表达的核心观点是什么？  </li>
+<li>细分的子观点有哪些？  </li>
+<li>每个观点有哪些论据可以使用？  </li>
+<li>有没有反面观点？  </li>
+<li>我的观点和反面的区别在什么地方？  </li>
+</ul>
+</li>
+<li><p>从清楚表达的角度</p>
+<ul>
+<li>我的目标人群是谁？  </li>
+<li>有没有贴合的事物可以类比？  </li>
+<li>他们本来可能持有什么观点？  </li>
+<li>为什么他们原来的观点可能不正确或者不完整？  </li>
+</ul>
+</li>
+</ol>
+<p>我相信，如果我们在写作之前，至少按照上面的问题来分解，并解决了它们，整篇文章的骨架就基本成型了，剩下的就是填充细节，和打磨文字。</p>
+<h3 id="教育">教育</h3>
+<p>我的儿子已经 7 岁了。可能因为他老爸是程序员吧，我喜欢买的玩具，都是拼图，乐高，棋类的东西。教他玩，学习和做事情的方式，都或多或少教他怎么通过分解问题来考虑。  </p>
+<p>比如玩拼图的时候，我就教他先按照颜色的相似度来分成几大堆，同时还把四个角，和四条边上的先找出来。拼出外围框架后，再围绕颜色突出的图案开始拼。还有，教他两位数加法的时候，比如 18 + 7，就把 18 分成 10 + 8，然后把 8 + 7 先算出来，得到 15 后，再和 10 去加。当然他自己也慢慢学会分解问题，他教我跳街舞的时候，就学会怎么把动作分拆成一步步教我。</p>
+<h3 id="_统筹方法">　统筹方法</h3>
+<p>可能很多人都听说过泡茶的统筹规划问题。进得了厨房的女士可能不自觉就应用了这项技能。比如，一顿简单的饭可能包含下面几个步骤。  </p>
+<ul>
+<li>淘米  </li>
+<li>下米煲饭  </li>
+<li>浸泡青菜  </li>
+<li>洗菜  </li>
+<li>炒菜  </li>
+<li>洗肉  </li>
+<li>蒸肉  </li>
+</ul>
+<p>上面的步骤其实分了存在明显依赖关系的三大块：<code>淘米 -&gt; 下米煲饭</code>，<code>浸泡青菜 -&gt; 洗菜 -&gt; 炒菜</code>, <code>洗肉 -&gt; 蒸肉</code>。其实还有一些不明显的依赖关系：<code>淘米 -&gt; 浸泡青菜</code>，<code>下米煲饭 10 分钟后 -&gt; 蒸肉</code>。因为用淘米水浸泡一下青菜可以节省一点水，还有我必须在恰当的时间放肉到电饭煲里面蒸，早了导致碟子积水太多，晚了肉可能蒸不熟。所以呢，我安排任务的顺序就是这样：<code>淘米 -&gt; 下米煲饭 -&gt; 浸泡青菜 -&gt; 洗肉 -&gt; 洗菜 -&gt; 蒸肉 -&gt; 炒菜</code>。  </p>
+<p>虽然这个例子和编程八杆子也搭不上，但是统筹方法在计算机领域相当常见。什么事情可以同时处理（并行计算），什么时候一定要按顺序处理（串行计算），什么东西一定要前面完成，或者放最后。这样的决定，必须依靠把问题分解成尽量独立的小块，才能做出正确的判断。比如，做前端的要考虑页面哪些部分是首屏，也就是用户第一眼就看到的东西，需要优先加载；做数据报表的，要考虑 ETL (Extract-Transform-Load) 涉及从哪些地方抽取数据，依赖关系如何，什么数据转换任务可以同时做，要经过多少时间转换和生成报表。</p>
+<h2 id="编程">编程</h2>
+<p>我之前写过一篇<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/" target="_blank" rel="external">有经验和没有经验的程序员的区别</a>，里面说的很多都和问题分解有关系。所以这里就简单带一下，详细的可以参看那篇文章。</p>
+<h3 id="定位错误">定位错误</h3>
+<p>学习编程的新手，经常会碰到各种莫名奇怪的问题，也最怕碰到问题。这也是很多人感到重大挫折而中途放弃的原因。我想说的是，老手也会碰到莫名奇怪的问题，只是我们懂得如何分析和分解问题，然后定位错误。</p>
+<h3 id="任务拆分，估算">任务拆分，估算</h3>
+<p>现在很多人学习 Web 编程，基本都是学习如何搭建一个网站，或者论坛。但是很多人，要么觉得系统太庞大，不知道如何入手。要么以为很简单，低估问题的难度，一开始信心满满，后面遇到各种小问题冒出来，就迷失方向，抓不到重点了。</p>
+<p>假设我要做一个类似电商类网站，我可以怎么分解呢？</p>
+<ol>
+<li>用户模块：包括用户注册，登录，个人信息。用户还要分普通用户，商家。  </li>
+<li>商品模块：商家产品上架，下架。  </li>
+<li>订单模块：用户购物车，下订单，支付，取消订单。</li>
+<li>物流模块：产品库存管理，发货。</li>
+</ol>
+<p>上面几大模块，往横向分析的话，相互之间还有依赖关系和交互，比如没有库存就不能下订单，发货后就不能取消订单等。纵向深入分析的话，比如注册要手机还是邮件验证，还是用社交帐号登录，支付要接入微信，银联还是支付宝等。当你把系统分解完，就可以找出哪些是核心和必不可少的部分，然后决定 MVP 应该包含什么。  </p>
+<p>还有，上次有人和我说，他是做股票分析的，想学习一点编程，然后帮助他筛选出股票。他想做的东西比如是拿今天所有的股票，看有多少站到五日均线以上。那我就帮他分析，和拆解他要面对的问题是什么。</p>
+<ol>
+<li>你如何获取股票数据？有现成的，还是要学如何写爬虫，自己抓取？</li>
+<li>什么叫做站到五日均线以上，获取的数据里面就有，还是自己算？</li>
+<li>要自己算的话，你有学过基本的数据统计分析知识吗？</li>
+</ol>
+<p>这样一路下来，你就可以针对自己要做的事情，把每一个点逐一拆解，直至基本无法更细的程度。最后，重点要关注什么地方，什么地方花钱可以搞定，什么地方是自己必须自己学习和重点掌握的，就比较清晰了。</p>
+<h2 id="总结">总结</h2>
+<p>问题分解可以说无论什么领域都适合也应该使用。计算机和编程的不断发展，其实也越来越往专业领域拆分。现在涌现出来的各种 PaaS, SaaS 云平台，包括网络主机供应商，静态资源图片存储和加速，网络安全防护，认证登录系统，网络数据库等都是把以前的搭建，部署和维护系统整件事，拆解成各个小问题，然后抽象出共性来作为一种服务提供。</p>
+]]></content>
+    
+    
+      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[学习编程需要具备的基本能力 - 抽象]]></title>
@@ -1397,82 +1479,6 @@
       <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
     
       <category term="Scrum" scheme="http://www.thinkingincrowd.me/tags/Scrum/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Dive into Kanban (5) - Difficulties and Resisted Opinions on Adoption]]></title>
-    <link href="http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/"/>
-    <id>http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/</id>
-    <published>2015-07-23T13:50:49.000Z</published>
-    <updated>2015-12-19T12:58:01.000Z</updated>
-    <content type="html"><![CDATA[<p>As you have gone this far to know what Kanban is and the benefits it can bring, do you eagerly attempt to adopt in your team or company?  Hold on a little bit first and you should know what difficulties or resisted opinions you may encounter.  </p>
-<h2 id="Management_level">Management level</h2>
-<h3 id="Adoption">Adoption</h3>
-<p>It’s said that Kanban can evolve from bottom to top, which means you can adopt it within the team you can control first and then gradually influence your partners or external parties.  However, this approach is still very difficult.  </p>
-<p>You should have some power to say NO.  The reason is that you have to control the tasks/items pushed from the higher level or external parties.  Else, it’s difficult to setup WIP and your team can be frequently interruptted if the tasks/items arrives everywhere.  Hence, it’s better if you can leverage your tasks and resources.  </p>
-<p>Do you feel desperate if you don’t have positional power or it’s hard to say no?  There is still chance.  Remember that the first step of applying Kanban is to visualize the process and showing the exact situation your team is encountering.  Hence, it’s good chance to sell the Kanban idea if there is some kind of figures can that how messy the situation is, how much effort is wasted, how many tasks per person concurrently, how many recurring blocking issues or requirement quality is not good, etc.  </p>
-<h3 id="WIP_Limit">WIP Limit</h3>
-<p>It’s hard to persuade the management that there is WIP limit set to the team and NO work can be accepted if resource is full.  Same as above that you can show what the current situation is and see if you can get figures that, concurrently how many tasks each member normally works on.  </p>
-<p>David once shared a funny story.  He met with the development and marketing head for one of his consultation client.  Marketing head is complaining that their requests are not being served well and the lead time is too long.  The development head said that each person in his team is already handling average 7 items concurrently.  David asked the marketing head whether they think development team is already doing their best they can?  What do you think about 7 items per person?  Is it too many or too few?  The marketing head has no hesitation on expressing that 7 items per person is too many but he also thinks 1 item per person doesn’t sound realistic.  After David gradually increase the WIP, marketing head agree on around 3/4 items per person.  </p>
-<p>Actually, it’s obvious and intuitive that most of the people can do one thing best without interruption and cannot do things well when multi-tasking.  Afraid of setting WIP is because management is concern on the resource utilization when there is blocking issue.  </p>
-<h4 id="Supporting_arguments">Supporting arguments</h4>
-<p>Once you encounter above situation, you might need some supporting theories or arguments.  </p>
-<ol>
-<li><p>Change from utilization to flow management.  </p>
-<p> A smooth flow enables us to react and change facing the challenging reality due to the nature that development process contains many variabilities.  In parking lot, we can emphasize on utilization because there is almost no variability affecting parking space.  But on the road, we need to measure and consider how cars flow smoothly because there are too many variabilities.  Lower WIP and enabling slack, which likes limiting number of cars on the road, are ways to achieve agility.  </p>
-</li>
-<li><p>Multi-tasking has negative impact on quality.  </p>
-<p> First, there is causation between WIP and average lead time, and the relationship is linear.  That is described by Little’s Law in Queuing Theory.  Second, there is also observation shared by David in his <a href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" target="_blank" rel="external">book</a>:  </p>
-<blockquote>
-<p>Longer lead times seem to be associated with significantly poorer quality. In fact, an approximately six-and-a-half times increase in average lead time resulted in a greater than 30-fold increase in initial defects. Longer average lead times result from greater amounts of work-in-progress.</p>
-</blockquote>
-<p> Hence, smaller WIP can bring good quality beside shorter lead time.  </p>
-</li>
-</ol>
-<h3 id="Defer_Commitment">Defer Commitment</h3>
-<p>I met one development head who shares that their boss would prefer to be told that their requests are already being taken and holding in someone’s hand even though that guy hasn’t really spent much quality of time on it.  In the end, the quality might not be good for all items and the lead time for them are all increased because the boss might check the team from time to time and interrupt their progress if he thinks his item is being accepted.  </p>
-<p>Obviously, this example shows that, the management don’t understand well when it’s best for the commitment to be made.  They misunderstand that once the team is acknowledged on the tasks, they are committed to it.  I think we can take the canteen as an example.  The people who lines up are not guaranteed to be served and we obviously should not count the meal ready time starting from waiting in line.  The commitment hasn’t been made by the canteen yet.  You can complaint too many guests but not blame serving you poorly.  So, when the commitment is made by the canteen?  The time order is taken.  </p>
-<p>Similarly, we should defer our commitment to the stage which indicates we really accept the item.  It should most likely be the time we pulled the item from Requirement stage to In-Dev stage.  Aligning the real starting stage of commitment can better set the expectation and ensure predictable lead time.  </p>
-<h2 id="Execution_level">Execution level</h2>
-<h3 id="Changing_Communication_Channel">Changing Communication Channel</h3>
-<p>At the beginning stage, the behavior of the teams is still using the old habit that communicates through phone, IM or email.  Upstreams don’t create tasks through Kanban cards but offline assign them.  In this case, the communication is NOT through cards and it’s not following pull principle.  The consequence is that downstreams are kept interrupted and they actually know what they need to do without checking or updating on board.  </p>
-<p>Hence, the most important thing on execution is that the whole team, especially upstream parties, should communicate with downstreams through Kanban cards and stick to the rule that tasks are pulled instead of being pushed.  </p>
-<p>You may wonder that how if there is some really urgent thing that need interruption on the team or even I have to specifically assign a task to someone?  </p>
-<ol>
-<li><p>First checks the board to see what the team or the person is doing which means checking the urgency between your new tasks, the tasks they are working on, and the cards waiting to be pulled.  </p>
-</li>
-<li><p>Create a card on board, adjust the priority or put to different lane to indicate different classes of services.  </p>
-</li>
-<li><p>If it’s really an urgent issue like production support case, after doing above, also offline communicates with the team or specific person to realize that there is really something more important need immediately handle.  Then they would decide themselves whether immediately stop and mark the current card as blocked or wait until current tasks is completed.  </p>
-</li>
-</ol>
-<p>It’s understandable that we cannot avoid adhoc urgent issue and offline communication.  However, we should try our best to indicate it in our communication channel, Kanban board and cards.  Actually, when this is done, it encourages the available team resource to check and pick tasks themselves.  Anyone think they can do the job can pick it up.  Proactive attitude and responsibility can grow and lessen the “It’s not my business” atmosphere.  </p>
-<p>There is one thing to notice though.  If it’s not easy for the people to put a new card on Kanban board, they are not willing to do so.  For example, the software or website is tremendously slow or there are too many restrictions, rules or requirements about what should or should not be in the card.  </p>
-<h3 id="Resisting_Being_Spied">Resisting Being Spied</h3>
-<p>I think no one is willing to be monitored or spied on.  Although Kanban can really shows all workload if we put all tasks on board and communicate through it, by no means it’s intended to spy on everyone.  As mentioned in previous article, Kanban appreciate slack and doesn’t intend to achieve 100% utilization.  Kanban just helps to increase transparency, encourage self-management and pro-active collaboration for problem solving.  </p>
-<p>From another perspective, if a boss is really intended to spy on the team, no matter using Kanban or not, he will come up his own method.  So the worse thing is that the team must collect data everywhere to demonstrate that the resource is already fully utilized.  But using Kanban, we don’t need to waste time on those boring, time-consuming and meaningless data collection and the boss can see how busy you are right on Kanban board.  </p>
-<h2 id="Afterword">Afterword</h2>
-<p>It requires mindset change when using Kanban, no matter on management or execution level.  Human nature resists change.  When we decide to adopt it, we must understand the benefits it brings and what existing problems it can address.  If everyone evaluates that the benefits are more than drawbacks, change is easier.  If not, we should know the reasons behind it.  If you want to persuade someone, interesting thing is that you should know he’s using System 1 or System 2 to argue with you, then you can come up more appropriate solutions.  You can take a look at related books about the different systems, like <a href="http://www.amazon.com/Thinking-Fast-Slow-Daniel-Kahneman/dp/0374533555" target="_blank" rel="external">Thinking, Fast and Slow</a>.  Try recall the scene that you argued with your girlfriend or wife and no consensus was made.  You two were probably arguing with different systems.  Adopting Kanban requires us to make it flow around the rock like water.  </p>
-<h3 id="Series">Series</h3>
-<ul>
-<li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/" target="_blank" rel="external">Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/" target="_blank" rel="external">Dive into Kanban (6) - Scrum vs Kanban</a></li>
-</ul>
-]]></content>
-    
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
-    
-      <category term="Adoption" scheme="http://www.thinkingincrowd.me/tags/Adoption/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
