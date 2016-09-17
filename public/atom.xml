@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Swan flying in the immense sky]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-09-16T14:25:30.403Z</updated>
+  <updated>2016-09-17T08:33:52.117Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -13,6 +13,88 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[学习编程需要具备的基本能力 - 正确提问]]></title>
+    <link href="http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/"/>
+    <id>http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/</id>
+    <published>2016-09-17T03:18:28.000Z</published>
+    <updated>2016-09-17T08:32:49.000Z</updated>
+    <content type="html"><![CDATA[<p>这真的是陈词滥调了。网上一搜其实一大堆这些文章，包括自己在 2013 年写的<a href="http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/" target="_blank" rel="external">一点点对提问，分享和影响力的看法</a>也提到一些。不过当时是稍微针对已经在公司的人写的，这里为自学的朋友补充一些之前没有提到的。先强调一下，最好用英语和 Google，可以节省大量寻找答案时间。  </p>
+<h2 id="怎么问">怎么问</h2>
+<p>这一大点是网络上大部分文章涵盖的内容。<a href="http://www.catb.org/esr/faqs/smart-questions.html" target="_blank" rel="external">How To Ask Questions The Smart Way</a> 写的非常详细，具体可以去仔细看看。我这里把关键的一些点抽出来，并作一些具体解释和增补，因为文章里面很多细节都是围绕这些点展开的。</p>
+<h3 id="找对地方">找对地方</h3>
+<p>这个错一般不会犯的太离谱，因为对于新手来说，也不会说找到什么 IRC，mailing list 等主要为高级技术人员而存在的地方。一般你确定好学习什么语言，在搜索引擎上找 “xxx 论坛” 就能找到一些提问的地方。  </p>
+<p>个人首推国外的 <a href="http://stackoverflow.com/。这个是综合性网站，需要自己打对标签，要稍微注意别发错地方。" target="_blank" rel="external">http://stackoverflow.com/。这个是综合性网站，需要自己打对标签，要稍微注意别发错地方。</a></p>
+<p>国内的综合性网站可以看看 <a href="https://segmentfault.com/，http://www.csdn.net/，http://www.oschina.net/。专业性的有" target="_blank" rel="external">https://segmentfault.com/，http://www.csdn.net/，http://www.oschina.net/。专业性的有</a> Ruby 的 <a href="https://ruby-china.org，Python" target="_blank" rel="external">https://ruby-china.org，Python</a> 的 <a href="http://www.pythontab.com/" target="_blank" rel="external">http://www.pythontab.com/</a> 等。</p>
+<h3 id="别问愚蠢的问题">别问愚蠢的问题</h3>
+<p>程序员基本上来说还算是比较友好和乐于助人的物种。但是如果你提的问题一看就比较白痴，而且是没有自己思考，在加上态度差的话。好的情况是没人理。差的话，分分钟某人以严肃脸，说反话回答的方式把你带坑里去。</p>
+<p>怎么样才不至于问愚蠢的问题：</p>
+<ol>
+<li><p>如果你是跟着教程来学习，<strong>请确保认真逐字阅读，别漏了步骤</strong>。当然，也别太死板，全部照抄，有些像用户名什么的还是要改成自己的，但是原教程应该是有说明的。  </p>
+</li>
+<li><p>自己花时间在搜索引擎，相关论坛认真寻找过，确保没有被解答过的类似问题。为什么说<em>类似</em>而不是<em>相同</em>？因为很多新手认为相同就真的是要一模一样。但是，为了你自己，请稍微动脑子看看那些类似的问题，看多几个解决方案，你可能就自己找到答案了。  </p>
+</li>
+</ol>
+<h3 id="目的是什么">目的是什么</h3>
+<p>记得要描述你想实现的效果或者目的，而不仅仅是你的步骤。为什么表达清楚目的很重要。因为有时候你的做法根本就不对，方向错误。搞不好绕半天回来，别人和你说你本来怎么怎么做就可以了，根本不应该这样。这就是典型的 <a href="http://xyproblem.info/" target="_blank" rel="external">XY 问题</a>。</p>
+<p>所以，正确的表达顺序应该是：</p>
+<ul>
+<li>想做什么  </li>
+<li>思路/方法  </li>
+<li>步骤  </li>
+<li>出错信息/与期望不同的结果  </li>
+</ul>
+<h3 id="具体信息">具体信息</h3>
+<p>在编程软件开发世界，影响结果的因素真的比较多，没有相关信息的配合，外人隔在千里之外真的不容易帮你判断。你必须提供的信息有：  </p>
+<ol>
+<li>操作系统及版本号（Mac, Windows 或者具体 Linux）  </li>
+<li>使用的开发语言环境及版本号（Node.js，Ruby, Python 等）。一般在你敲命令后面加 <code>--version</code>，<code>version</code> 或者 <code>-v</code> 都可以得到。</li>
+<li>涉及到的相关软件环境及版本号，比如什么浏览器或者数据库。</li>
+<li>重现的步骤，如果有的话。</li>
+<li>截图，<strong>相关的</strong>源代码，日志等。这个要求比较高，新手不容易判断什么是相关的，很容易全部一股脑都丢上去。这是没人愿意看的。如果你真的判断不出来，有几个办法：<ul>
+<li>把所有的代码放在 <a href="https://github.com/" target="_blank" rel="external">https://github.com/</a> 上给别人去看  </li>
+<li>在 <a href="https://gist.github.com/" target="_blank" rel="external">https://gist.github.com/</a> 上按源码类别，创建临时链接</li>
+<li>如果是前端相关，可以把代码都放在 <a href="https://jsbin.com，http://codepen.io，https://jsfiddle.net" target="_blank" rel="external">https://jsbin.com，http://codepen.io，https://jsfiddle.net</a> 或者 <a href="http://runjs.cn/" target="_blank" rel="external">http://runjs.cn/</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="让别人更乐意看">让别人更乐意看</h3>
+<ol>
+<li>有礼貌，有礼貌，有礼貌。</li>
+<li>不要打紧急之类的字眼，没人有责任尽快帮你看。</li>
+<li>简明扼要。这里就考验你写作和表达能力了。</li>
+<li>贴上一些找过的资料，描述它们没法解决你的问题。可选，证明你有自己思考，不是伸手党。</li>
+</ol>
+<h2 id="追问">追问</h2>
+<p>前面说的都是如何像别人提问。这里是希望你能向自己提问，甚至追问。怎么追问呢？遵循著名的 <a href="https://en.wikipedia.org/wiki/5_Whys" target="_blank" rel="external">5 Whys 原则</a>，能帮助我们无论从技术角度还是从业务角度，找到问题的根本原因。解决根本的问题。这个原则的创始人是 Sakichi Toyoda 并在 Toyota 里广泛推行的。其中拿来说明的例子是这样的：</p>
+<ol>
+<li>为什么我们的机器停了？电路过载了，导致保险丝熔断</li>
+<li>为什么电路过载？轴承的润滑油不够，锁死了</li>
+<li>为什么润滑油不够？因为机器的油泵出油不畅通</li>
+<li>为什么出油不畅通？油泵吸入口被金属屑堵住了</li>
+<li>为什么有金属屑？因为油泵没有过滤嘴</li>
+</ol>
+<p>这样问下来，是不是就非常接近事情的根本原因了？</p>
+<p>在编程开发里面的例子可能是这样的。</p>
+<ol>
+<li>为什么我们的网站突然那么慢？服务器内存占用率很高</li>
+<li>为什么服务器内存占用率那么高？因为新加的查询功能，没有在数据库加索引</li>
+<li>为什么没有加索引？xxx 是新人，没有经验</li>
+<li>为什么没有培训和 code review？我的错，没有时间</li>
+<li>为什么你没有时间？老是被你拉去开会（老板黑线脸）</li>
+</ol>
+<p>开玩笑。其实，5 Whys 不一定非要问到第五个，或者可以问更多。最重要的是尽可能接近事情的根本原因，知道事后补救和解决方案以避免重复发生。从不同的角度去考虑和解决问题，包括短期和长期的方案。</p>
+<h2 id="总结">总结</h2>
+<p>不管是问别人还是自己，如何提出恰当的问题是找到正确解决方案的关键。  </p>
+]]></content>
+    
+    
+      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[学习编程需要具备的基本能力 - 问题分解]]></title>
@@ -101,7 +183,7 @@
     <link href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/"/>
     <id>http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/</id>
     <published>2016-09-15T09:25:49.000Z</published>
-    <updated>2016-09-15T09:56:51.000Z</updated>
+    <updated>2016-09-17T01:12:12.000Z</updated>
     <content type="html"><![CDATA[<p>很多人说，要学好编程，需要有抽象的能力。但<em>抽象</em>这个词本身就太抽象了。怎么样才叫有抽象的能力啊？。<strong>抽象是相对于具象而言的</strong>。我觉得，与其说学习编程要具备抽象的能力，不如说<strong>编程应该具备具象与抽象之间转换的能力</strong>。我们通过下面的例子来了解怎么在这两者之间转换吧。这篇文章对学编程的新手来说可能有点高能，但慢慢理解。</p>
 <h2 id="数据与算法">数据与算法</h2>
 <p>一般来说，计算机和编程最终都会落实到解决生活的具体问题上。把这些生活的具象映射到计算机的程序代码里面，本身就是一次抽象的过程。最基本的抽象，莫过于把具象的物体，赋予抽象的数据和结构，当然还有处理这些数据的算法。数据结构和算法的简单类比和介绍，编程和写作的对比，可以参看之前的一篇文章<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/" target="_blank" rel="external">编程是什么？我要学吗？</a>。</p>
@@ -153,7 +235,7 @@
 <li><p><code>&lt;script&gt;</code> 里面包含那段就告诉浏览器 <code>FoodController</code> 长什么样子，<code>food</code> 里面有什么东西。</p>
 </li>
 </ol>
-<p><strong>指令式编程是指把你只要告诉电脑你要达成的目标是什么，至于怎么做，它自己解决。</strong>这里，我们就不像命令式那样，要一步步教浏览器怎么做了。</p>
+<p><strong>声明式编程是指把你只要告诉电脑你要达成的目标是什么，至于怎么做，它自己解决。</strong>这里，我们就不像命令式那样，要一步步教浏览器怎么做了。</p>
 <p>要注意的是，这里借助了一个叫 <em>AngularJS</em> 的工具，从而做到了用同一种语言，不同的写法。  <strong>不一定不同的编程语言才有不同的书写范式。同一种编程语言，也可以自己本身有不同的书写范式，或者通过工具来增强改变</strong>。<em>AngularJS</em> 这个工具，就是创作者帮我们抽象了教浏览器如何做事情的过程。</p>
 <h3 id="面向对象、函数式">面向对象、函数式</h3>
 <p>要数最热火朝天的编程范式，非这两个莫属了。  前一篇文章<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/" target="_blank" rel="external">编程是什么？我要学吗？</a>里面说过，<strong>算法 + 数据结构 = 程序</strong>。</p>
@@ -1395,92 +1477,6 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Sword/Think/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Dive into Kanban (6) - Scrum vs Kanban]]></title>
-    <link href="http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/"/>
-    <id>http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/</id>
-    <published>2015-10-08T13:47:57.000Z</published>
-    <updated>2015-12-21T09:18:03.000Z</updated>
-    <content type="html"><![CDATA[<p>As a Kanban fan, I attended a Scrum-Master training organized by the company.  This is a good chance for me to know Scrum more from an experienced person beside reading books, blogs or other documentations.  </p>
-<p>Here I will try to compare some core concept in Scrum with the same or similar idea in Kanban.  </p>
-<h2 id="Timebox">Timebox</h2>
-<p>Timebox is important in Scrum.  Sprint is the crucial one which is normally 2 ~ 4 weeks.  It’s used to control pacing for delivering usable feature instead of mockup or prototype.  </p>
-<p>There is NO prescribed Timebox in Kanban.  Kanban can have different Cadence for Replenishment and Delivery.  What is more, it can be on demand like release whenever there is something useful for users.  </p>
-<h3 id="Pressure_&amp;_Goal">Pressure &amp; Goal</h3>
-<p>From my perspective, the most important benefit or purpose of the Timebox is the pressure &amp; goal it imposed.  The whole team is driven by a hard deadline limitation &amp; commitment to plan &amp; deliver.  This can provide a shared goal &amp; understanding to the whole team.  </p>
-<p>This sounds like deadline driven and many people don’t like it.  But I think what we hate is that the deadline is unreasonably set by some managers regardless of the task difficulty and reality.  The Scrum Timebox is not that kind of a thing.  It’s fixed for steady pacing and the team control what items are included in one Sprint.  Commitment is made by the team together.  </p>
-<p>In Kanban, The steady pacing is controlled by WIP.  It makes sure everyone can try to focus on one item at at time and reduce multi-tasking.  For the pressure &amp; goal, there is no explicit thing imposed in Kanban.  It’s not so obvious but it exists when you really pay attention on the flow effeciency of the item.  This can be a good thing or bad depending on the preference &amp; maturity of the team.  </p>
-<h3 id="Evil_of_endless_item_splitting">Evil of endless item splitting</h3>
-<p>Many people don’t quite agree on such rude approach when fitting an item in a box, because cases happen that some team end up splitting the backlog item into finest level as technical items because it is too big to fit into a desired sprint Timebox.  Hence, they argue that the Timebox approach causes the undesired consequence.  </p>
-<p>However, before blaming on it, we should know that:  </p>
-<ol>
-<li><p>Reducing the length of Timebox is NOT the goal of agility  </p>
-<p>We should not merely pursue the goal of reducing length of Timebox in order to prove that we are more agile than before.  There is always a boundary or limitation for your business.  Too short Timebox can also introduce overhead.  Length of the Timebox should be chosen depending on how often we want and actually can deliver belancing the cost it takes.  It’s not by merely using item splitting to reduce the timebox while it might need some other technical breakthrough, like introducing the automatic testing.  </p>
-</li>
-<li><p>No matter use Scrum or Kanban, to be agile, we always want to split the item as small as possible but still should be a usable unit for user to perform testing.  </p>
-<p>The purpose for this is to let user validate the output as soon as possible and get feedback.  Make the item to be small shorten the feedback loop.  Don’t split just for fitting into something.  Also, item splitting is not purely development team’s decision and it also need PO’s contribution.  </p>
-<p>In an ERP system, to implement a form containing 1000 fields in 5 tabs, is it acceptable to incrementally implement tab by tab or even section by section in one tab?  The strategy might also be different between developing a new product and doing a migration project.  For migration project, to the user, only when the new system that fully provide what old system has, the new system can be regarded as usable and can replace the old one.  During development phase, PO needs to align with user to accept “incrementally growing” version and do UAT gradually as well.  Of course, how development team guarantee that the new feature doesn’t break the old one is also a huge challenge.</p>
-</li>
-<li><p>Just let it be if the item really cannot be further broken down.  </p>
-<p>It happens and also some workable units are still not releasable from business perspective.  Then we have to disable the function or rollback the change.  The process is the same when things go wrong that originally planned item cannot be completed within Sprint.  The challenge here is not using Scrum or Kanban.  It’s whether and how the Source Code Management, Testing &amp; Release process supports these kinds of scenarios.  If we have technical level support here, we can more easily balance the Timebox length and item size or take the more flexible and on-demand delivery approach without the restriction of Timebox.  </p>
-</li>
-</ol>
-<h2 id="Roles">Roles</h2>
-<p>Roles are defined in Scrum and not particularly mentioned in Kanban.  And one of opinion in the Kanban is that because no role or job title changed or external role introduced, resistance of change from management or employees should be minimal. But is that means that Kanban doesn’t have any of the role defined in Scrum?</p>
-<h3 id="Product_Owner">Product Owner</h3>
-<p>No matter what agile methodology or old-fashion water-fall, we always want and need to have PO.  This role is very important and makes final decision on Product, including requirement, priority, scope, etc.  Especially when a Kanban board serves multiple Product, it even requires to involve multiple PO to have alignment on item priority as well.  </p>
-<h3 id="Team">Team</h3>
-<p>In Scrum, it emphasizes that the team is cross-functional and should be responsible for development, testing, release and anything required for delivering the usable features after each Sprint.  When all things are controlled within one team, for sure life is easier.  </p>
-<p>However, traditional organization structure might breakdown the team by speicialty, like development team, testing team, UI/UX team, Release team, Infrastructure team, etc.  When this kind of company need to introduce Scrum into their development process, it requires to do structural change.  Without structure change, it does not work.  </p>
-<p>How does Kanban Team looks like then?  How to define starting &amp; ending stage in a Kanban board?  How many team or different parties involved?</p>
-<p>One of the selling point in Kanban is that it doesn’t require the company to do structural change.  The essence of Kanban is to change as little as possible, visualize the existing development process and map the value stream instead of introducing any imaginary ideal process or borrowing one from external success story.  Sounds very promising, right?  </p>
-<p>There are pros and cons of it.</p>
-<p>To define the start and end point for the Kanban board, David mentioned in his <a href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402" target="_blank" rel="external">book</a>:  </p>
-<blockquote>
-<p>Successful teams have tended to stick to adopting workflow visualization with cards and limiting WIP within their own political sphere of control, and negotiating a new way of interacting with immediate upstream and downstream partners.</p>
-</blockquote>
-<p>For example, when initially adopt Kanban within development team, the start and end point can only cover the development stages, because upstream who provides requirement and downstream who provides testing services are not in control.  So in this case, there is just one team involved here.  </p>
-<p>Because the team doing Kanban might not necessary controls the item flow from end to end, it might be more difficult to become real agile from the considering from the whole business flow.  For example, when controlling the WIP at the first stage of Kanban board, the development manager must have agreement with PO.  What is more, chance of the improvement area is to block PO from sending urgent requests from time to time which interrupts the normal development flow and affects quality.  If development manager has less political power than PO and PO doesn’t realize the agility of the company needs his own improvement, it’s difficult for the whole company to become agile.  Power from higher level’s is required then.  </p>
-<p>The structure of the team in Kanban depends on the flow visualized in Kanban.  It can be as narrowed as only one development team, or cross department.  Hence, this requires full cooperation from upstream and downstream and the person who introduces Kanban need to have great ability to influence them.  The other side, the person who introduces Scrum most likely has political power and ambition to do the structure change to break down the barriers already.  </p>
-<p>Hence, knowing what is in front is important before choosing the radical way of Scrum to reorganize the company structure or the incremental way of Kanban to influence upstream and downstream.  </p>
-<p>No matter which way to choose, management must have the ability to drive change among teams or departments.  It’s not just simply adopting a process by following rules and then hoping the company becomes agile one day.  The training on Kanban and Scrum actually should be more on the management level to understand the prerequisite instead of the team to understand the process concept.  It’s more like the growing a culture.</p>
-<h3 id="Scrum_Master">Scrum Master</h3>
-<p>I heard a special saying that “Actively doing nothing”.  A Scrum Master should be just like a Sheep Dog or Coach who actively do nothing on the team.  </p>
-<p>In Kanban, there is no such role because it encourages that everyone involved in the Kanban process looks for the bottleneck and area to improve because everything is transparent and reflected on the board.  </p>
-<p>One question may arise that if one day the team can do Scrum very well and nothing needs Scrum Master to coach, will the Scrum Master role be redundant?  </p>
-<p>I think the existence of this role depends on whether you think a dedicated facilitator, coach, issue spotter or change driver is required.  To be honest, I think the Kanban way is the ideal situation to pursue because to stay agile, everyone in the team must have agile thinking and culture.  But that is really not easy and sometimes an outsider can more easily facilitate necessary Kanban activities, spot out the problems in the process.  Sometimes we need a neutral judge on the conflict or need a coach because we don’t know the unknown.  </p>
-<p>Lately, I am more inclined to have a dedicated “Kanban Master”.</p>
-<h2 id="Work_Item_Restriction">Work Item Restriction</h2>
-<p>Scrum limits total items committed by the team at the beginning of the Sprint.  When there is a change requested from PO, normally it should be planned on next Sprint.  </p>
-<p>Kanban limits the WIP per workflow state.  When upstream wants to introduce urgent item, it’s OK to accept but required to pull out another one if the WIP limit is reached.  And there must be consensus that the lead time of that item will be enlarged.  </p>
-<p>Different business model might be suited for different methods or use both in a combination way.  For purely new product development, Scrum and Kanban should be both fine.  But if the team is both developing new product or feature and also need to handle urgent production support, Kanban might be more suitable.  Taking the Scrum approach requires you to consider how the urgent issue should be handled because production urgent issue normally is not accepable to wait until next Sprint.  </p>
-<h2 id="Afterword">Afterword</h2>
-<p>There is a good mini-book about the difference between Scrum and Kanban in <a href="http://www.infoq.com/minibooks/kanban-scrum-minibook" target="_blank" rel="external">InfoQ</a> and I suggest you to take a look on it.  I like one statement in the foreword very much.</p>
-<blockquote>
-<p>these are just tools, and what you really want to do is have a full toolkit, understand the strengths and limitations of each tool and how to use them all.</p>
-</blockquote>
-<h3 id="Series">Series</h3>
-<ul>
-<li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/" target="_blank" rel="external">Dive into Kanban (1) - What is it</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/" target="_blank" rel="external">Dive into Kanban (2) - Visualizing Process</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/" target="_blank" rel="external">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" target="_blank" rel="external">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/" target="_blank" rel="external">Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/" target="_blank" rel="external">Dive into Kanban (6) - Scrum vs Kanban</a></li>
-</ul>
-]]></content>
-    
-    
-      <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
-    
-      <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
-    
-      <category term="Scrum" scheme="http://www.thinkingincrowd.me/tags/Scrum/"/>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
   </entry>
   
