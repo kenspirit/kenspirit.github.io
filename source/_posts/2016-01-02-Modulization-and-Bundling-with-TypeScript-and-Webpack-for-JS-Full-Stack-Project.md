@@ -10,7 +10,6 @@ tags:
   - CSS
 categories:
   - Sword
-  - Think
 ---
 
 ## Modulization

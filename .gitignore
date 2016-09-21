@@ -14,3 +14,4 @@ db.json
 debug.log
 public
 .deploy
+.deploy_git

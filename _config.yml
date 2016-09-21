@@ -1,6 +1,6 @@
 # Hexo Configuration
 ## Docs: http://zespia.tw/hexo/docs/configuration.html
-## Source: https://github.com/tommy351/hexo/
+## Source: https://hexo.io/
 
 # Site
 title: Thinking in Crowd / 鹄思乱想
@@ -53,12 +53,25 @@ archive: 2
 category: 2
 tag: 2
 
+skip_render:
+  - algorithm/css/**
+  - algorithm/js/**
+  - kanban/bower_components/**
+  - kanban/*.js
+  - kanban/*.css
+  - kanban/*.html
+
 # Server
 ## Hexo uses Connect as a server
 ## You can customize the logger format as defined in
 ## http://www.senchalabs.org/connect/logger.html
-port: 4000
-server_ip: 0.0.0.0
+server:
+  port: 4000
+  log: false
+  ip: 0.0.0.0
+  compress: false
+  header: true
+
 logger: false
 logger_format:
 
@@ -77,13 +90,7 @@ pagination_dir: page
 # Disqus
 disqus_shortname: thinkingincrowd
 
-# Extensions
-## Plugins: https://github.com/tommy351/hexo/wiki/Plugins
-plugins:
-  - hexo-generator-feed
-  - hexo-generator-sitemap
-
-## Themes: https://github.com/tommy351/hexo/wiki/Themes
+## Themes: https://hexo.io/wiki/Themes
 theme: pacman
 exclude_generator:
 

@@ -44,7 +44,7 @@ categories:
 
 假设我把上面的糖果问题抽象到计算机里面，是什么样子的呢？下面用一段 JavaScript 代码来模拟吧。_懂编程的朋友，别吐槽顺序取的代码，我知道可以按位置，这里只是说明一下。_
 
-```
+```javascript
   function showMeTheCandy(candy) {
     console.log(candy)
   }

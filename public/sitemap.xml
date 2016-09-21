@@ -2,458 +2,626 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/</loc>
-    <lastmod>2016-09-17T08:32:49.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/</loc>
-    <lastmod>2016-09-17T01:12:12.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
-    <lastmod>2016-09-16T14:25:19.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
-    <lastmod>2016-09-04T13:30:03.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
-    <lastmod>2016-08-31T15:11:20.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/</loc>
-    <lastmod>2016-08-28T03:08:34.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/03/How-to-protect-your-most-valuable-treasure/</loc>
-    <lastmod>2016-08-03T15:45:33.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/07/10/Milestones-in-Life/</loc>
-    <lastmod>2016-07-09T23:52:59.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/</loc>
-    <lastmod>2016-06-10T14:26:31.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/</loc>
-    <lastmod>2016-06-05T16:08:27.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/</loc>
-    <lastmod>2016-06-05T07:16:34.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
-    <lastmod>2016-06-05T07:16:30.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
-    <lastmod>2016-04-21T00:11:16.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/03/18/I-believe-I-can-change/</loc>
-    <lastmod>2016-03-18T12:54:11.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/03/13/transition-to-managing-others/</loc>
-    <lastmod>2016-03-18T12:39:29.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/</loc>
-    <lastmod>2016-03-08T14:28:40.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/</loc>
-    <lastmod>2016-03-08T14:26:51.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/</loc>
-    <lastmod>2016-01-03T05:00:43.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/12/31/2015-retrospect-and-2016-goal-setting/</loc>
-    <lastmod>2015-12-31T15:51:04.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/01/04/2014-retrospect-and-2015-goal-setting/</loc>
-    <lastmod>2015-12-31T13:27:24.000Z</lastmod>
+    
+    <lastmod>2016-09-21T15:33:12.000Z</lastmod>
+    
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/</loc>
-    <lastmod>2015-12-31T00:09:49.000Z</lastmod>
+    
+    <lastmod>2016-09-21T15:32:59.000Z</lastmod>
+    
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/about/index.html</loc>
-    <lastmod>2015-12-27T13:10:45.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/</loc>
+    
+    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
+    
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/</loc>
-    <lastmod>2015-12-21T09:18:03.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/</loc>
+    
+    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
+    
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/</loc>
-    <lastmod>2015-12-19T12:58:01.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
+    
+    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
+    
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/</loc>
-    <lastmod>2015-12-19T12:57:56.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
+    
+    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
+    
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/</loc>
-    <lastmod>2015-12-19T12:57:50.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/</loc>
-    <lastmod>2015-12-19T12:57:43.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</loc>
-    <lastmod>2015-12-19T12:57:36.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/11/13/callbacks-are-imperative/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/07/28/manugistics-consultant-the-beginning/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/12/types-of-people-you-need-to-treasure/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/18/mom-and-dad-get-old-already/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2005/11/14/many-things-happened-all-unhappy/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/03/06/cleaner-code/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/06/15/excelavoidvaliationlostafterpoi/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/20/enhance-performance-of-extjs-grid-record-set-value/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/03/06/marching-on/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/12/16/9-things-that-motivate-employee-more-than-money/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/21/i18n-extjs-and-jawr/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/404.html</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/google9ce141ccc8bc7537.html</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
+    
+    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
+    
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/algorithm/index.html</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+    <lastmod>2016-08-28T09:30:37.000Z</lastmod>
+    
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/kanban/board.html</loc>
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    <loc>http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/</loc>
+    
+    <lastmod>2016-08-28T03:08:34.000Z</lastmod>
+    
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/kanban/card.html</loc>
+    <loc>http://www.thinkingincrowd.me/2016/08/03/How-to-protect-your-most-valuable-treasure/</loc>
+    
+    <lastmod>2016-08-03T15:45:33.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/07/10/Milestones-in-Life/</loc>
+    
+    <lastmod>2016-07-09T23:52:59.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/</loc>
+    
+    <lastmod>2016-06-10T14:26:31.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/</loc>
+    
+    <lastmod>2016-06-05T16:08:27.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/</loc>
+    
+    <lastmod>2016-06-05T07:16:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
+    
+    <lastmod>2016-06-05T07:16:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
+    
+    <lastmod>2016-04-21T00:11:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/03/18/I-believe-I-can-change/</loc>
+    
+    <lastmod>2016-03-18T12:54:11.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/03/13/transition-to-managing-others/</loc>
+    
+    <lastmod>2016-03-18T12:39:29.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/</loc>
+    
+    <lastmod>2016-03-08T14:28:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/</loc>
+    
+    <lastmod>2016-03-08T14:26:51.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/12/31/2015-retrospect-and-2016-goal-setting/</loc>
+    
+    <lastmod>2015-12-31T15:51:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/01/04/2014-retrospect-and-2015-goal-setting/</loc>
+    
+    <lastmod>2015-12-31T13:27:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/about/index.html</loc>
+    
+    <lastmod>2015-12-27T13:10:45.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/</loc>
+    
+    <lastmod>2015-12-21T09:18:03.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/</loc>
+    
+    <lastmod>2015-12-19T12:58:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/</loc>
+    
+    <lastmod>2015-12-19T12:57:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/</loc>
+    
+    <lastmod>2015-12-19T12:57:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/</loc>
+    
+    <lastmod>2015-12-19T12:57:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</loc>
+    
+    <lastmod>2015-12-19T12:57:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</loc>
+    
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/09/24/thanks-to-everyone-zach-lendon-github-angularjs/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/11/13/callbacks-are-imperative/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/07/28/manugistics-consultant-the-beginning/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/12/types-of-people-you-need-to-treasure/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/18/mom-and-dad-get-old-already/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/11/14/many-things-happened-all-unhappy/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/03/06/marching-on/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/07/20/enhance-performance-of-extjs-grid-record-set-value/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/03/06/cleaner-code/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/06/15/excelavoidvaliationlostafterpoi/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/12/16/9-things-that-motivate-employee-more-than-money/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/07/21/i18n-extjs-and-jawr/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/08/13/extjs-jasmine-unit-test-part-1-philosophy-and-test-for-store/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/404.html</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/google9ce141ccc8bc7537.html</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/kanban/index.html</loc>
+    
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
   </url>
   
 </urlset>

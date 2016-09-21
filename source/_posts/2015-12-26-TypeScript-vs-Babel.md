@@ -6,7 +6,6 @@ tags:
   - ES6
 categories:
   - Sword
-  - Think
 date: 2015-12-26 18:38:00
 ---
 
