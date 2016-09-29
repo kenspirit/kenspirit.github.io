@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-09-21T15:25:55.000Z</updated>
+  <updated>2016-09-29T05:03:34.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>这些年，放下，前行的点滴和感触</title>
+    <link href="http://www.thinkingincrowd.me/2016/09/29/Leave-the-past-behind-and-move-on/"/>
+    <id>http://www.thinkingincrowd.me/2016/09/29/Leave-the-past-behind-and-move-on/</id>
+    <published>2016-09-29T05:05:46.000Z</published>
+    <updated>2016-09-29T05:03:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>现在独自一个人在北京，就剩下看电影这项娱乐了。所以，最近又翻出「阿甘正传」来重温了一次。第一次看这部电影的时候，觉得他真的是傻人有傻福，好人有好报啊。做什么事情，最后都有意想不到的好结果。最为广泛流传的一句经典台词就是：<strong>“Life was like a box of chocolates, you never know what you’re gonna get.”</strong>。我自然也继续坚持着<strong>”但行好事，莫问前程”</strong>的理念。</p>
+<p>这次重温完电影，突然对另一句感慨更深。在他将要结束长时间的跑步生涯时，他回忆到他妈妈经常和他说的一句话：<strong>“You got to put the past behind you before you can move on.”</strong>。我细细回想了一下我的过去。</p>
+<h2 id="出国？"><a href="#出国？" class="headerlink" title="出国？"></a>出国？</h2><p>大学的时候，我一开始是“盲目地”坚持着出国的想法。所以，每天早起在宿舍楼顶，或者校区的山上读英语，然后泡在图书馆或者教学楼自习。当时我就是这么一个别人眼中的“学霸”，所以收获了现任老婆。当时她一开始只是怀着跟学霸一起自习的心态而已。</p>
+<p>为什么说“盲目地”呢？因为我虽然想去国外读计算机硕士，但是除了学习英语外，从没有花更多的额外时间在计算机上。最后考完 GRE 后，想要报志愿的时候，发现一点想法也没有。自己想在计算机哪个领域发展都不知道，我怎么说服别人给我奖学金啊？再加上当时也结识了女朋友，如果出去了，分隔两地肯定没法维系了。况且她其实不怎么喜欢国外，想和父母更近些。所以我后来就还是决定留下来了。</p>
+<p>这里有一个很大的教训。我并没有及时考虑清楚并做出正确的决定。没放弃考 GRE 是因为我还在犹豫，并不甘心自己在上面花的时间和成本。但是，其实这对后面的找工作带来很大的影响。如果我能够及时放弃，转而把时间放到加强自学计算机编程上面，可能找工作会顺利很多。<strong>很多人没法放下过去，重新开始，就是因为放不下曾经花费的金钱或时间，也就是所谓的沉默成本，结果越险越深</strong>。  </p>
+<h2 id="留广州？"><a href="#留广州？" class="headerlink" title="留广州？"></a>留广州？</h2><p>因为我不是计算机专业，大学期间也只顾学英语，没怎么更深入自学计算机，所以也没有做什么成果出来。最后发现在广州找工作可谓一个难啊。努力学习的英语，基本用不上。</p>
+<p>我们的专业其实也有一些师兄师姐在广州的汇丰银行做开发。但我去做了一个笔试后就没什么下文了。后来，很幸运地被一家港资的珠海小公司看上，我想都不想就决定去那边实习了。大概过了一个月左右，广州汇丰银行打电话来让我过去。但是当时我赌气不去了：你当时没看上我，我就要在别的地方做得比你更好，证明给你看。</p>
+<p>这个决定，我觉得现在来看还是正确的。虽说工资收入肯定差了不少，但是当时我在珠海那家公司可谓成长迅速。身边牛人的工作方式，优良的系统设计，让我知道什么是好的设计，敏捷的合作方式。英语和粤语的优势让我有非常多的机会。如果我一开始就去一些大的传统公司，接触一些老旧的系统框架，经历耗时的协作模式，我估计水平眼界会差很多。  </p>
+<p><strong>有时候，你不知道你放弃了一些东西，后面是否能收获更多。但只有踏出了那一步，并坚持走下去，才可能有意外收获</strong>。</p>
+<h2 id="去上海？"><a href="#去上海？" class="headerlink" title="去上海？"></a>去上海？</h2><p>当时在那家公司，某个领导带我做了一个项目，后来他和公司老板方向不合，离开了。在我被公司派去香港出差，帮 Lane Crawford 做一个 BI 项目的时候，他打电话给我，问我要不要一起过去闯一下。但是我后来放弃了这个要约。原因有三个：</p>
+<ul>
+<li>当时内心还是很感激当前公司给的各种机会，报答心理还在。  </li>
+<li>刚结婚不久，打算要小孩，不太合适和老婆分开两地或者带她去上海奔波。  </li>
+<li>缺乏自信，感觉还要跟在牛人后面学习，怕没法独自承担 Dev Lead 的角色。  </li>
+</ul>
+<p>回想起这个机会，还是有那么一点点后悔。当时如果去了上海，可能成长和发展会更快一些。<strong>有些时候，如果等到你觉得什么都准备好了，才出发，可能机会就已经错过了。潜力有时是逼出来的，能力是在路上才习得的。</strong></p>
+<h2 id="留香港？"><a href="#留香港？" class="headerlink" title="留香港？"></a>留香港？</h2><p>我当时是按优才计划受雇于香港的分公司，按规定的话，工作满七年就可以拿香港身份证。我其实是想一直在香港，感觉机会更多一些，但是老婆并不太喜欢这个城市。待了刚好一年，老婆怀孕了。即便当时我是每周从香港来回一次珠海，但是我觉得我需要更多时间照顾她，所以也马上提出转回珠海分公司。<strong>有些时候，放弃意味着你知道对自己最重要的是什么。</strong></p>
+<h2 id="去北京"><a href="#去北京" class="headerlink" title="去北京?"></a>去北京?</h2><p>在第一家公司任职差不多 8 年后，我已经是珠海最资深的员工了。当时我看好 JS 方向，但是公司却放弃了它，我只好离职了。进了新公司，本来想好好写写 JS，但是却意外被派去美国，接手后端。由于经验相对比较多，加上沟通协作能力还不错，所以在新公司的 5 年，更多地承担谈需求，带团队的工作，写代码时间越来越少。  </p>
+<p>心里一直想更多实践的技术，公司应用的场景有限，附近也没多少志同道合的小伙伴。而且工作那么这么多年，我都是从事面向企业系统的开发，很想接触一下互联网行业和面向个人的领域，看看这些领域的思考方式有什么不同。机缘巧合的情况下，发现我比较敬佩的一个人想找全栈工程师，并在培训和教育领域做一些事情，就想都没想跑北京来了。  </p>
+<p>人的一生到底是自我选择，还是命运？阿甘在电影里说了一句：<strong>“I don’t know if we each have a destiny, or if we’re all just floating around accidental—like on a breeze.  But I think maybe it’s both.  Maybe both are happening at the same time.”</strong>。他决定了一件事情，就努力做好。他一直都没刻意地去追求什么，然而成功却在毫无功利意识的努力中悄然而至了。  </p>
+<h2 id="前行的勇气"><a href="#前行的勇气" class="headerlink" title="前行的勇气"></a>前行的勇气</h2><p>电影里的阿甘，并没有多少牵挂，似乎很容易就能做出每一个决定。他突然想到什么事情，然后就出发了。  </p>
+<p>在现实生活里，放下并前行，有时候并不是一件容易的事情。你需要得到父母和伴侣的体谅和支持。这么多年，无论奔赴珠海这个偏远渔村，宁愿留在工资少的小公司而不去大公司，还是突然就跑来北京，都离不开心爱的老婆的支持。其实<strong>前行的勇气有时并不仅仅在自己，而更多的是背后的支持</strong>。在这里，我谨以这微不足道的文字，来表示对老婆的由衷感谢。亲爱的，我爱你。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现在独自一个人在北京，就剩下看电影这项娱乐了。所以，最近又翻出「阿甘正传」来重温了一次。第一次看这部电影的时候，觉得他真的是傻人有傻福，好人有好报啊。做什么事情，最后都有意想不到的好结果。最为广泛流传的一句经典台词就是：&lt;strong&gt;“Life was like a bo
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="人生" scheme="http://www.thinkingincrowd.me/tags/%E4%BA%BA%E7%94%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>学习编程需要具备的基本能力 - 正确提问</title>
@@ -418,7 +462,7 @@
     <link href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/"/>
     <id>http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/</id>
     <published>2016-08-28T03:04:46.000Z</published>
-    <updated>2016-08-28T03:08:34.000Z</updated>
+    <updated>2016-09-21T15:48:43.000Z</updated>
     
     <content type="html"><![CDATA[<p>很多人觉得编程是很高端神秘的事情，觉得自己可能学不来。但是了解到程序员的工资比较高，所以又蠢蠢欲动，想进入这个领域。那么，在回答这个问题前，我们先了解一下什么是编程吧。</p>
 <h2 id="什么是编程"><a href="#什么是编程" class="headerlink" title="什么是编程"></a>什么是编程</h2><p>编程，也叫程序设计，其实就是用编程语言处理数据，以达到你想要的效果。有一本书的名字很清楚表达了这个观点。</p>
@@ -441,7 +485,7 @@
 <p>从数据层面看，结构不同一般需要不同的处理方式。从处理效率看，对同一种数据结构，也可以有多种不同的处理方式。有些算法，可能要处理的数据量越大，时间就会成倍增加。有些却无论数据多大，时间都基本恒定。举一个例子：</p>
 <p>假设你买了一个圆柱型的水果软糖，里面有 9 粒糖果。如果它的包装开口是在某一边，你需要拿第 5 粒，那么你就必须先把前面 4 粒拿出来，才能拿到第 5 粒。而且你想拿的糖果在越后面，花费时间就越多。但是，假设有一种包装是横着把圆柱形打开（结构不同了），你一次可以看到和拿到 9 粒糖果。那么无论你拿哪一粒，花费的时间都是一样的。</p>
 <h3 id="在电脑里是怎样的？"><a href="#在电脑里是怎样的？" class="headerlink" title="在电脑里是怎样的？"></a>在电脑里是怎样的？</h3><p>假设我把上面的糖果问题抽象到计算机里面，是什么样子的呢？下面用一段 JavaScript 代码来模拟吧。<em>懂编程的朋友，别吐槽顺序取的代码，我知道可以按位置，这里只是说明一下。</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">function showMeTheCandy(candy) &#123;</div><div class="line">  console.log(candy)</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 排成列，顺序取</div><div class="line">var candy = [&apos;A&apos;, &apos;B&apos;, &apos;C&apos;, &apos;D&apos;, &apos;E&apos;, &apos;F&apos;, &apos;G&apos;, &apos;H&apos;, &apos;I&apos;] // 我有9粒字母糖果</div><div class="line">var toPickCandyLocation = 5 // 我要取的糖果是第5粒</div><div class="line">var currentCandyLocation = 1 // 现在我要开始取的是第1粒</div><div class="line">var candyPicked = null // 我取的糖果要放这，但现在还不存在</div><div class="line"></div><div class="line">while (currentCandyLocation &lt;= 5) &#123; // 当我要取的糖果还不是第5粒的话，重复下面的事情</div><div class="line">  candyPicked = candy.shift() // 从最前面取1粒</div><div class="line">  currentCandyLocation = currentCandyLocation + 1 // 挪到下一个位置</div><div class="line">&#125;</div><div class="line"></div><div class="line">showMeTheCandy(candyPicked) // 看看拿到的糖果是什么字母</div><div class="line">// -&gt; &apos;E&apos;</div><div class="line"></div><div class="line">// 做成特定的，可按位置/编号取的结构</div><div class="line">var candy = &#123;</div><div class="line">  &apos;1&apos;: &apos;A&apos;,</div><div class="line">  &apos;2&apos;: &apos;B&apos;,</div><div class="line">  &apos;3&apos;: &apos;C&apos;,</div><div class="line">  &apos;4&apos;: &apos;D&apos;,</div><div class="line">  &apos;5&apos;: &apos;E&apos;,</div><div class="line">  &apos;6&apos;: &apos;F&apos;,</div><div class="line">  &apos;7&apos;: &apos;G&apos;,</div><div class="line">  &apos;8&apos;: &apos;H&apos;,</div><div class="line">  &apos;9&apos;: &apos;I&apos;,</div><div class="line">&#125;</div><div class="line"></div><div class="line">showMeTheCandy(candy[&apos;9&apos;])</div><div class="line">// -&gt; &apos;E&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showMeTheCandy</span>(<span class="params">candy</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(candy)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 排成列，顺序取</span></div><div class="line"><span class="keyword">var</span> candy = [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span>, <span class="string">'G'</span>, <span class="string">'H'</span>, <span class="string">'I'</span>] <span class="comment">// 我有9粒字母糖果</span></div><div class="line"><span class="keyword">var</span> toPickCandyLocation = <span class="number">5</span> <span class="comment">// 我要取的糖果是第5粒</span></div><div class="line"><span class="keyword">var</span> currentCandyLocation = <span class="number">1</span> <span class="comment">// 现在我要开始取的是第1粒</span></div><div class="line"><span class="keyword">var</span> candyPicked = <span class="literal">null</span> <span class="comment">// 我取的糖果要放这，但现在还不存在</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> (currentCandyLocation &lt;= <span class="number">5</span>) &#123; <span class="comment">// 当我要取的糖果还不是第5粒的话，重复下面的事情</span></div><div class="line">  candyPicked = candy.shift() <span class="comment">// 从最前面取1粒</span></div><div class="line">  currentCandyLocation = currentCandyLocation + <span class="number">1</span> <span class="comment">// 挪到下一个位置</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">showMeTheCandy(candyPicked) <span class="comment">// 看看拿到的糖果是什么字母</span></div><div class="line"><span class="comment">// -&gt; 'E'</span></div><div class="line"></div><div class="line"><span class="comment">// 做成特定的，可按位置/编号取的结构</span></div><div class="line"><span class="keyword">var</span> candy = &#123;</div><div class="line">  <span class="string">'1'</span>: <span class="string">'A'</span>,</div><div class="line">  <span class="string">'2'</span>: <span class="string">'B'</span>,</div><div class="line">  <span class="string">'3'</span>: <span class="string">'C'</span>,</div><div class="line">  <span class="string">'4'</span>: <span class="string">'D'</span>,</div><div class="line">  <span class="string">'5'</span>: <span class="string">'E'</span>,</div><div class="line">  <span class="string">'6'</span>: <span class="string">'F'</span>,</div><div class="line">  <span class="string">'7'</span>: <span class="string">'G'</span>,</div><div class="line">  <span class="string">'8'</span>: <span class="string">'H'</span>,</div><div class="line">  <span class="string">'9'</span>: <span class="string">'I'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">showMeTheCandy(candy[<span class="string">'9'</span>])</div><div class="line"><span class="comment">// -&gt; 'E'</span></div></pre></td></tr></table></figure>
 <p>从上面可以看到，同样的数据，可以按照不同的结构来存放。不同的处理逻辑/算法，效率不同。所以，从这种角度来看，<strong>学习编程和程序设计，是学会抽象</strong>，学会如何把现实问题，在计算机里面表现出来。<strong>还有数据处理</strong>。</p>
 <p>从另一种角度来看，<strong>编程和程序设计，就像写作</strong>。从上面第一段顺序取数据的代码看，我就像写作一样。我在用计算机能理解的语言，写操作指引出来。一个好的程序员，写的代码，一定像好文章那样容易理解。不同的语言，指令有点不同，但不差太远。所以学会一种语言，再学一种难度就没那么大。</p>
 <h2 id="应该不应该学习编程"><a href="#应该不应该学习编程" class="headerlink" title="应该不应该学习编程"></a>应该不应该学习编程</h2><p>其实编程和程序设计并不难，尤其是当你能把它和实际问题结合，理解。回到最开始的问题，我应该学编程吗？首先，问问你自己，你学编程的目的是什么？</p>
@@ -1358,95 +1402,6 @@
       <category term="Retrospect" scheme="http://www.thinkingincrowd.me/tags/Retrospect/"/>
     
       <category term="Goal" scheme="http://www.thinkingincrowd.me/tags/Goal/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TypeScript vs Babel</title>
-    <link href="http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/"/>
-    <id>http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/</id>
-    <published>2015-12-26T10:38:00.000Z</published>
-    <updated>2016-09-21T15:32:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Transpiler-or-not"><a href="#Transpiler-or-not" class="headerlink" title="Transpiler or not?"></a>Transpiler or not?</h2><p>Before discussing TypeScript and Babel, what we need to decide is <strong>whether to use a transpiler or not</strong>.</p>
-<p>I was once opponent on using transpiler language when I first saw CoffeeScript, ClojureScript.  I think that is purely the programmer’s ingrained habit and that is why it goes popular mostly in particular communities (e.g. Python, Ruby, Lisp).  </p>
-<p>There are also other languages (e.g. GWT, Dart) that can be used for web frontend development but they don’t feel right either, not to mention other transpiler that compiles some tranditional backend language like JAVA, Ruby or Python to JavaScript.  I don’t know why such scenario exists.  Just because they don’t want to learn JavaScript?</p>
-<p>However, now I am a proponent of using “advanced” language and then transpiling to raw Javascript.  The main reasons are as below:</p>
-<h3 id="Catch-up-the-great-features-in-ES6-standard"><a href="#Catch-up-the-great-features-in-ES6-standard" class="headerlink" title="Catch up the great features in ES6 standard"></a>Catch up the great features in ES6 standard</h3><p>ES6 standard includes a lot of great features while not every JS environment (Browsers, Node.js, etc.) supports them well and consistently.  It’s a huge benefit if the code can be written in latest standard once and reusabled in every JS environment especially working in full stack JS project.</p>
-<p>Transpiler can address this issue pretty well.</p>
-<h3 id="Unevitable-build-stage"><a href="#Unevitable-build-stage" class="headerlink" title="Unevitable build stage"></a>Unevitable build stage</h3><p>Another reason I oppose transpiler before is the worry on the quality &amp; readability of the code transpiled and the hassle of adding unnecessary build stages.</p>
-<p>But now, modulization, code sharing between browser and backend, bundling require a build stage anyway.  What is more, there are plenty of solutions to realize code hot-reload to greatly streamline development process already.  Hence, adding transpilation step is not a problem anymore.</p>
-<h3 id="Code-written-in-TypeScript-and-Babel-IS-standard-Javascript"><a href="#Code-written-in-TypeScript-and-Babel-IS-standard-Javascript" class="headerlink" title="Code written in TypeScript and Babel IS standard Javascript"></a>Code written in TypeScript and Babel IS standard Javascript</h3><p>With Babel, you just use any new feature it supports in JavaScript way.</p>
-<p>TypeScript is so called a typed superset of JavaScript.  In theory, any existing JavaScript can be processed by TypeScript after renaming <code>.js</code> to <code>.ts</code> directly.  Although actually some edge cases disobey this rule, it’s easy to identify and fix.</p>
-<p>Using TypeScript and Babel for transpilation differs from CoffeeScript and other alternatives.  We are actually writing the future JavaScript for the moment.  Enjoy it.</p>
-<h2 id="TypeScript-vs-Babel"><a href="#TypeScript-vs-Babel" class="headerlink" title="TypeScript vs Babel"></a>TypeScript vs Babel</h2><h3 id="ES6-new-feature-support"><a href="#ES6-new-feature-support" class="headerlink" title="ES6 new feature support"></a>ES6 new feature support</h3><p>Please go check ECMAScript 6 compatibility <a href="https://kangax.github.io/compat-table/es6/" target="_blank" rel="external">table</a>.  In general, TypeScript support on new ES6 feature cannot catch up Babel.  If you have big concern on this, the only option is Babel.</p>
-<h3 id="Transpiled-code-readability"><a href="#Transpiled-code-readability" class="headerlink" title="Transpiled code readability"></a>Transpiled code readability</h3><p>Refering to a simple class defined as below.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Greeter &#123;</div><div class="line">  greeting: string;</div><div class="line"></div><div class="line">  constructor(message: string) &#123;</div><div class="line">    this.greeting = message;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  greet() &#123;</div><div class="line">      return this.greeting;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>TypeScript</strong> transpiled code is more clean, recognizable and familiar to the approach we used to define class before.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var Greeter = (function () &#123;</div><div class="line">      function Greeter(message) &#123;</div><div class="line">          this.greeting = message;</div><div class="line">      &#125;</div><div class="line">      Greeter.prototype.greet = function () &#123;</div><div class="line">          return this.greeting;</div><div class="line">      &#125;;</div><div class="line">      return Greeter;</div><div class="line">  &#125;)();</div></pre></td></tr></table></figure>
-<p><strong>Babel</strong> transpiled result code takes advantage on using the new Object method but makes the code a little complex.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">var _createClass = (function () &#123; function defineProperties(target, props) &#123; for (var i = 0; i &lt; props.length; i++) &#123; var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (&quot;value&quot; in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); &#125; &#125; return function (Constructor, protoProps, staticProps) &#123; if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; &#125;; &#125;)();</div><div class="line"></div><div class="line">  Object.defineProperty(exports, &quot;__esModule&quot;, &#123;</div><div class="line">    value: true</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  function _classCallCheck(instance, Constructor) &#123; if (!(instance instanceof Constructor)) &#123; throw new TypeError(&quot;Cannot call a class as a function&quot;); &#125; &#125;</div><div class="line"></div><div class="line">  var Greeter = exports.Greeter = (function () &#123;</div><div class="line">    // transform-class-properties</div><div class="line"></div><div class="line">    function Greeter(message) &#123;</div><div class="line">      _classCallCheck(this, Greeter);</div><div class="line"></div><div class="line">      this.greeting = message;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    _createClass(Greeter, [&#123;</div><div class="line">      key: &apos;greet&apos;,</div><div class="line">      value: function greet() &#123;</div><div class="line">        return this.greeting;</div><div class="line">      &#125;</div><div class="line">    &#125;]);</div><div class="line"></div><div class="line">    return Greeter;</div><div class="line">  &#125;)();</div></pre></td></tr></table></figure>
-<h3 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h3><p>In ES6, it is exactly one module per file and one file per module.  <code>import</code> and <code>export</code> keyword are used to reference other modules or publish its own API.</p>
-<p>Babel exactly supports same syntax and can transpile to CommonJS, AMD and other style.</p>
-<p>In TypeScript, there are two different concepts:</p>
-<ol>
-<li>Internal Module (Namespaces)</li>
-<li>External Module</li>
-</ol>
-<p>I don’t want to go to the extent of explaining the difference of them.  If you really want to know about it, you can check it out in the TypeScript <a href="http://www.typescriptlang.org/Handbook#modules" target="_blank" rel="external">handbook</a>.  The external one is just like the ES6 standard.</p>
-<p>What you must know is that, <strong>DON’T mix them together</strong>.  And you should have <strong>NO CHOICE but to use the external module</strong>.  However, if you are telling me you don’t have to use any 3rd-party library, then you can go with the internal one.</p>
-<p><a href="https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/" target="_blank" rel="external">https://www.stevefenton.co.uk/2015/05/Stop-Mixing-TypeScript-Internal-And-External-Modules/</a></p>
-<p>Some usage syntax of external module used in TypeScript are as below for backwards compatibility with CommonJS and AMD style modules:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// xxx.js</div><div class="line">export = xxx;</div><div class="line"></div><div class="line">// yyy.js</div><div class="line">import xxx = require(&apos;./xxx&apos;);</div></pre></td></tr></table></figure>
-<p>However, above usage should be legacy soon.  In order to take advantage of ES6 and write uniform code, I think it’s better to use the exact ES6 syntax instead.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// xxx.js</div><div class="line">export default xxx;</div><div class="line"></div><div class="line">// yyy.js</div><div class="line">import xxx from &apos;./xxx&apos;;</div></pre></td></tr></table></figure>
-<h3 id="Type-and-IDE-support"><a href="#Type-and-IDE-support" class="headerlink" title="Type and IDE support"></a>Type and IDE support</h3><p><strong>TypeScript</strong></p>
-<p>As JSer, I once believed that type and compiler support are not so much important.  I might also be one of the main reason that people thinks it’s flexible and love it.  However, quality control is really not that easy if the codebase is large and many people involved, especially when it’s used heavily in system with complex business logic like ERP while no Unit Test exists.  If we can have type support and compilation checking with little cost, it should be worthy.</p>
-<p>Type support is the first principle in TypeScript and you can tell from its definition of position (typed supperset of JavaScript).  What is more, the <a href="http://definitelytyped.org/" target="_blank" rel="external">DefinitelyTyped</a> project provides type support on many existing 3rd-party JavaScript libraries.  It seems the whole JavaScript world supports type suddently and you don’t need to start from scratch.</p>
-<p>Let’s use Sublime Text 3 with TypeScript plugin as an example to see how it’s working.  </p>
-<p><strong>Install TypeScript &amp; Definition manager</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install -g typescript tsd</div><div class="line">tsd install angular angular-route</div></pre></td></tr></table></figure>
-<p>After the installation completes, there is a <code>typings</code> folder generated under the location you execute <code>tsd</code> command.  The definition files are located there and refering these definition files in your JavaScript is very simple.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// &lt;reference path=&quot;typings/angularjs/angular.d.ts&quot; /&gt;</div><div class="line">// &lt;reference path=&quot;typings/angularjs/angular-route.d.ts&quot; /&gt;</div><div class="line"></div><div class="line">import &apos;angular&apos;;</div><div class="line">import &apos;angular-route&apos;;</div></pre></td></tr></table></figure>
-<p><strong>Code Tips and auto-complete</strong></p>
-<p><img alt="Code Tips" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Code-Tips.png"></p>
-<p><strong>Jump to definition and many support shortcuts</strong></p>
-<p><img alt="Plugin-Features" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Plugin-Features.png"></p>
-<p><strong>Warning about missing properties</strong></p>
-<p><code>Show Error List</code> shows all error in your project.  </p>
-<p><img alt="Miss-Properties-1" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Miss-Properties1.png"></p>
-<p><img alt="Miss-Properties-2" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Miss-Properties2.png"></p>
-<p><strong>Warning about incorrect function signature</strong></p>
-<p>Status bar shows the error focusing on.</p>
-<p><img alt="Unmatch-Interface" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Interface.png"></p>
-<p><strong>Warn but not block</strong></p>
-<p>When you compiles the TypeScript to normal JavaScript, it warns but not blocks on code generation by default.  This is great because it allows for gradual evolvement after you mass renaming <code>.js</code> file to <code>.ts</code> format for the transition.</p>
-<p><img alt="Warn-Not-Block" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Not-Block.png"></p>
-<p>So far, you have a glimpse on how fascinating the IDE support is for TypeScript.  I haven’t tried the famous Webstorm and Visual Studio, but they should have great support as well.</p>
-<p><strong>Babel</strong></p>
-<p>There is a project called <a href="http://flowtype.org/" target="_blank" rel="external">Flow</a> for type support in Babel.  However, it doesn’t support Windows environment yet.  It also have no support for <a href="http://definitelytyped.org/" target="_blank" rel="external">DefinitelyTyped</a> project yet although it [plans][] to.</p>
-<p>For IDE, Sublime’s Flow plugin doesn’t seem to have much feature.  Facebook has built an IDE called <a href="http://nuclide.io/" target="_blank" rel="external">Nuclide</a> as suite of packages on top of Atom.  From my experience, installing <a href="http://nuclide.io/" target="_blank" rel="external">Nuclide</a> packages is very slow and causes the Atom to halt with high CPU.  I have to give it up in Mac.  You may have a try though.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p><img alt="TypeScript_Babel_Decision" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript_Babel_Decision.png"></p>
-<p>Above sudo code is just for funny purpose.  It’s really a choice of taste and there is no aboslute right or wrong for the selection.  Actually, there are other things to consider as well.  Which works better with Webpack and Node.js?  How to fit into the build process?  I will illustrate these areas’ consideration in another article later.  </p>
-<p>For me, I decided to take the shot for TypeScript because I evaluated that type support is more important than purely pursuing edge feature support and it has great IDE support.  What is more, AngularJS 2 are written with it.  They are my best bet for future.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Transpiler-or-not&quot;&gt;&lt;a href=&quot;#Transpiler-or-not&quot; class=&quot;headerlink&quot; title=&quot;Transpiler or not?&quot;&gt;&lt;/a&gt;Transpiler or not?&lt;/h2&gt;&lt;p&gt;Before d
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
-    
-      <category term="TypeScript" scheme="http://www.thinkingincrowd.me/tags/TypeScript/"/>
-    
-      <category term="Babel" scheme="http://www.thinkingincrowd.me/tags/Babel/"/>
-    
-      <category term="ES6" scheme="http://www.thinkingincrowd.me/tags/ES6/"/>
     
   </entry>
   
