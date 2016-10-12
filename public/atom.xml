@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-10-12T15:33:44.000Z</updated>
+  <updated>2016-10-12T16:00:14.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.thinkingincrowd.me/2016/10/12/Importance-of-Breakdown-and-read-thoroughly/"/>
     <id>http://www.thinkingincrowd.me/2016/10/12/Importance-of-Breakdown-and-read-thoroughly/</id>
     <published>2016-10-12T15:35:58.000Z</published>
-    <updated>2016-10-12T15:33:44.000Z</updated>
+    <updated>2016-10-12T16:00:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近在做一个新的系统，所以刚刚在<a href="https://www.qingcloud.com/" target="_blank" rel="external">青云</a>上面部署和搭环境。期间遇到一个小问题，也花了我们二三十分钟的时间。虽然这是一个挺小的问题，但是能很好的说明我之前在<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>里面提到的<strong>认识和定位问题</strong>，以及<a href="http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/">学习编程需要具备的基本能力 - 问题分解</a>里面提到的<strong>问题分解</strong>，所以还是决定稍微写一下，顺便也可以让想学习计算机领域的朋友了解一下这种典型的思考和解决问题的方式。</p>
 <p>在青云上，我们部署了两台云主机，一个负载均衡，一个路由器。它们的关系如下图。作为用户，要能够访问一个网站，其实还经过了一个叫 DNS 的东西，所以我也把它放进去大概意思一下。</p>
@@ -37,7 +37,7 @@
 <li>负载均衡显示活跃，<strong>C 通路正常</strong>  </li>
 <li>直接通过外网 IP（10.123.32.1）访问，浏览器显示错误，<strong>B 通路有问题</strong>  </li>
 </ol>
-<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><p>因为负载均衡是买的，日志什么的都没法看，所以在<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>提到的分析日志的方式根本做不到。我只好再一次<strong>查看负载均衡配置文档</strong>，但是没发现有什么遗漏。由于我对运维和青云的东西还是没什么经验，这时候有点抓瞎。  </p>
+<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><p>因为负载均衡是买的，所以没法通过<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>提到的分析日志的方式来进一步分析。由于我对运维和青云的东西还是没什么经验，这时候有点抓瞎。  </p>
 <p>CTO 问我什么错误代码，我说 504。他然后上 DNSPOD 看了一下配置。不看不知道，一看吓一跳。不知道为什么竟然同一域名下配了两条不同 IP 的记录。改完后，用命令跟踪域名，这时 IP 才解析对了，补充确认<strong>DNS 通路正常</strong>了。可是，再测试发现通过域名还是无法访问。  </p>
 <p>CTO 问了一下，是不是路由器的防火墙没设置。他去改了一下，发现还是不行。</p>
 <p>我突然就想，是不是负载均衡也有防火墙啊？再看了一下负载均衡的设置页面，还真的有。（事实是它的文档有蓝色字说明，我竟然没有看到。唉，这是有多粗心）。然后 CTO 在负载均衡开放了 80 端口，就可以通过域名访问了。</p>
@@ -1291,11 +1291,11 @@
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
     
-      <category term="Experience" scheme="http://www.thinkingincrowd.me/tags/Experience/"/>
-    
       <category term="Delegation" scheme="http://www.thinkingincrowd.me/tags/Delegation/"/>
     
       <category term="Leadership" scheme="http://www.thinkingincrowd.me/tags/Leadership/"/>
+    
+      <category term="Experience" scheme="http://www.thinkingincrowd.me/tags/Experience/"/>
     
   </entry>
   
