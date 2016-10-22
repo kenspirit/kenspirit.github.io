@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-10-22T10:19:02.000Z</updated>
+  <updated>2016-10-22T10:35:59.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,15 +16,15 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>回归基本 - 微信开发小记</title>
+    <title>第一原理 - 微信开发小记</title>
     <link href="http://www.thinkingincrowd.me/2016/10/22/Back-to-basics-Wechat-Development/"/>
     <id>http://www.thinkingincrowd.me/2016/10/22/Back-to-basics-Wechat-Development/</id>
     <published>2016-10-22T10:20:51.000Z</published>
-    <updated>2016-10-22T10:19:02.000Z</updated>
+    <updated>2016-10-22T10:35:59.000Z</updated>
     
     <content type="html"><![CDATA[<p>继上次青云部署遇到点小问题，最近又在微信开发中的语音播放上碰到点问题。回头来看也是定位问题上面没有做好。这次我过度相信我认为有经验的人士，走错方向，忽视了最基本的问题检测。</p>
 <p>这次遇到问题的功能其实是要在一个微信里面打开的 H5 页面（使用了 audio 标签）里播放音频。在开发这个功能前，我咨询过前端的同学，能在页面播放的音频格式是什么。他说 mp3 在 iPhone 和 Android 都能支持，我给 mp3 的格式就好。</p>
-<p>到了集成测试的时候，他却发现 H5 页面里的音频在微信播放不了，但是用浏览器直接打开就可以，这就奇怪了。他还顺口说：“新生大学的论坛里面都没问题的啊”。然后我第一反应就是<strong>参考已有的成功样例（但是事实证明这次不是好的选择）</strong>，所以提议到：“不如你拿一个在新生大学论坛里面可以播放的音频文件给我看看吧？” 他给我一看。这个音频文件哪里是 mp3 格式的啊，是 wav 的啊。你这不是坑我吗？前端那位同学说：“这我不太知道啊，你去问问后端。”</p>
+<p>到了集成测试的时候，他却发现 H5 页面里的音频在微信播放不了，但是用浏览器直接打开就可以，这就奇怪了。他还顺口说：“新生大学的论坛里面都没问题的啊”。然后我第一反应就是<strong>参考已有的成功样例（但是事实证明这不是好的选择）</strong>，所以提议到：“不如你拿一个在新生大学论坛里面可以播放的音频文件给我看看吧？” 他给我一看。这个音频文件哪里是 mp3 格式的啊，是 wav 的啊。你这不是坑我吗？前端那位同学说：“这我不太知道啊，你去问问后端。”</p>
 <p>然后我和后端的同学对了一下，发现他和我提供音频的方式是一样的，但是在测试环境里面就真的没发现有多少 mp3 格式的音频数据，反而是 wav 的多。活见鬼了。“你这 wav 和 mp3 是怎么生成的啊？怎么代码和我一样，最后格式不同？” 后端同学也有点发蒙了，他折腾了好一会，翻看了旧数据和源码，感觉有点不一致，只能帮我在测试环境测试。</p>
 <p>在这空隙，我先给前端同学临时转成 wav 去测试。他拿了我给的 wav 音频后，发现可以在微信开发者工具中打开的页面播放，但是在手机微信里面打开就不行了。我靠，这又是什么鬼？<strong>不同的运行环境是很大的影响因素，尤其是前端。这也是为什么有时程序员会说，我做的时候可以的啊。</strong>有时这真不是推脱，而是环境不同。</p>
 <p>在我们都百思不得其解的时候，那位后端同学回来和我们说：“测试后发现论坛那边用的也是 mp3 格式的，但是我们的文件名有 mp3 后缀。你们那个没有，可能浏览器不支持。” 我听了心想：“那你们之前生成和使用的 wav 是什么鬼啊。而且没有 mp3 后缀也应该可以啊，现在的浏览器应该都能识别。” 不过，我暂时没和他们深究这个问题了，因为他们其实也不太清楚了。最重要的是目前基本确认 mp3 是能在手机打开的页面里播放的。</p>
@@ -45,7 +45,7 @@
 <p>这个也是没有估计到的。不同类型的音频文件在两个地方表现不同，也导致我们分析问题的方向产生偏差。（后面的开发还证明，其它不少地方也是两边有不同表现）</p>
 </li>
 </ul>
-<p>采取 <strong>参考已有的成功样例（analogy）</strong> 这种方法其实必须具备一个前提：样例与当前分析案例的差异性必须很小，而且差异的地方不能对结果产生重大的影响。所以说，经验的适用性取决于应用场景的相似性。我们在依赖经验做出判断之前，最好还是先把最基础的判断做好。</p>
+<p>采取 <strong>参考已有的成功样例（analogy）必须具备一个前提：样例与当前分析案例的差异性必须很小，而且差异的地方不能对结果产生重大的影响。</strong>所以说，<strong>经验的适用性取决于应用场景的相似性</strong>。我们在<strong>依赖经验做出判断之前，最好还是先把最基础的判断做好</strong>。</p>
 <p>这次真的深刻体会到 Elon Musk 说的这句话的用意：</p>
 <blockquote>
 <p>I think it’s important to reason from first principles rather than by analogy,<br>…<br>[With <a href="https://en.wikipedia.org/wiki/First_principle" target="_blank" rel="external">first principles</a>] you boil things down to the most fundamental truths … and then reason up from there.”  </p>
