@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-10-22T10:35:59.000Z</updated>
+  <updated>2016-10-22T10:45:03.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.thinkingincrowd.me/2016/10/22/Back-to-basics-Wechat-Development/"/>
     <id>http://www.thinkingincrowd.me/2016/10/22/Back-to-basics-Wechat-Development/</id>
     <published>2016-10-22T10:20:51.000Z</published>
-    <updated>2016-10-22T10:35:59.000Z</updated>
+    <updated>2016-10-22T10:45:03.000Z</updated>
     
     <content type="html"><![CDATA[<p>继上次青云部署遇到点小问题，最近又在微信开发中的语音播放上碰到点问题。回头来看也是定位问题上面没有做好。这次我过度相信我认为有经验的人士，走错方向，忽视了最基本的问题检测。</p>
 <p>这次遇到问题的功能其实是要在一个微信里面打开的 H5 页面（使用了 audio 标签）里播放音频。在开发这个功能前，我咨询过前端的同学，能在页面播放的音频格式是什么。他说 mp3 在 iPhone 和 Android 都能支持，我给 mp3 的格式就好。</p>
@@ -48,7 +48,7 @@
 <p>采取 <strong>参考已有的成功样例（analogy）必须具备一个前提：样例与当前分析案例的差异性必须很小，而且差异的地方不能对结果产生重大的影响。</strong>所以说，<strong>经验的适用性取决于应用场景的相似性</strong>。我们在<strong>依赖经验做出判断之前，最好还是先把最基础的判断做好</strong>。</p>
 <p>这次真的深刻体会到 Elon Musk 说的这句话的用意：</p>
 <blockquote>
-<p>I think it’s important to reason from first principles rather than by analogy,<br>…<br>[With <a href="https://en.wikipedia.org/wiki/First_principle" target="_blank" rel="external">first principles</a>] you boil things down to the most fundamental truths … and then reason up from there.”  </p>
+<p>I think it’s important to reason from first principles rather than by analogy,<br>…<br>The normal way we conduct our lives is we reason by analogy,” he said. “[With analogy] we are doing this because it’s like something else that was done, or it is like what other people are doing.<br>…<br>[With <a href="https://en.wikipedia.org/wiki/First_principle" target="_blank" rel="external">first principles</a>] you boil things down to the most fundamental truths … and then reason up from there.”  </p>
 </blockquote>
 ]]></content>
     
