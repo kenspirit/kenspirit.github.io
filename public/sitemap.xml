@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/</loc>
+    
+    <lastmod>2016-11-13T08:21:54.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2016/10/22/Back-to-basics-Wechat-Development/</loc>
     
     <lastmod>2016-10-22T10:45:03.000Z</lastmod>
@@ -51,6 +58,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
+    
+    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
@@ -59,13 +73,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/</loc>
-    
-    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
     
@@ -226,14 +233,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -261,14 +261,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -282,7 +282,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/02/05/2012-retrospect-and-2013-goal-setting/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -324,14 +324,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -380,14 +380,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</loc>
+    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
+    <loc>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -401,14 +401,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/07/28/manugistics-consultant-the-beginning/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -422,7 +422,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/07/28/manugistics-consultant-the-beginning/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -443,6 +443,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2005/11/14/many-things-happened-all-unhappy/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -457,14 +464,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -485,28 +492,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/06/15/excelavoidvaliationlostafterpoi/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2011/07/20/enhance-performance-of-extjs-grid-record-set-value/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -520,6 +506,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2011/06/15/excelavoidvaliationlostafterpoi/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -527,14 +520,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -562,14 +555,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/21/i18n-extjs-and-jawr/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -583,7 +569,21 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2012/08/06/extjs-jasmine-maven-integration/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/07/21/i18n-extjs-and-jawr/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -611,6 +611,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/404.html</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -625,14 +632,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/24/my-practices-on-time-management/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     

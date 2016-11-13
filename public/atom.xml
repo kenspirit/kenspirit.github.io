@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-10-22T10:45:03.000Z</updated>
+  <updated>2016-11-13T08:21:54.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,80 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Node.js 微信后台搭建系列 - 数据建模</title>
+    <link href="http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/"/>
+    <id>http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/</id>
+    <published>2016-11-13T08:20:39.000Z</published>
+    <updated>2016-11-13T08:21:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这偏文章是 Node.js 搭建微信后台，实现图片交换功能文章第一篇。前序准备书籍，工具可参考 Github 项目 <a href="https://github.com/kenspirit/javascript-study-group" target="_blank" rel="external">javascript-study-group</a>。感兴趣者也可加入学习小组。  </p>
+<p>TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generator 生成 Model，也就是 What and How，那可以直接跳到最后。  </p>
+<h2 id="数据建模"><a href="#数据建模" class="headerlink" title="数据建模"></a>数据建模</h2><p>什么是<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1" target="_blank" rel="external">数据建模</a>？Wiki 上的解释是这样的：</p>
+<blockquote>
+<p>在软件工程中，数据建模是运用正式的数据建模技术，建立信息系统的数据模型的过程。<br>……<br>一个概念数据模型的实现可能需要多个逻辑数据模型。数据建模中的最后一步是确定逻辑数据模型到物理数据模型中到对数据，访问，性能和存储的具体要求。数据建模定义的不只是数据元素，也包括它们的结构和它们之间的关系。  </p>
+</blockquote>
+<p>这里强调的是在软件工程中的解释，因为它和数据分析领域的建模不太一样。<strong>数据建模其实就是为后台 MVC 模式里面的 Model 建模</strong>。小到一个功能，大到整个系统，数据建模的重要性都不容置疑。所以希望大家能认真结合实际项目理解清楚。上面的定义和解释比较抽象，但是每个词都可圈可点，尤其是第二段值得大家细细品味，我们通过下面的例子来说明一下。  </p>
+<p>假如现在你要实现的系统，需要存储用户上传的图片，然后可以在要实现的图片交换功能上使用。那我们来想想，这个数据模型要怎么建立？  </p>
+<h3 id="从归属和分区考虑"><a href="#从归属和分区考虑" class="headerlink" title="从归属和分区考虑"></a>从归属和分区考虑</h3><p>首先，应该不难理解，下面两大信息是要记录的。</p>
+<ul>
+<li>上传图片的用户信息  </li>
+<li>图片信息  </li>
+</ul>
+<p>有没有说了等于白说的感觉？别着急。  </p>
+<h4 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h4><p>一般来说，每个系统都要求用户必须注册后才能够操作。用户信息通常每个系统都存在，不论你是帐号密码登录，还是微博，微信登录等。  </p>
+<p>在用脚手架 <a href="https://github.com/kenspirit/generator-evergrow" target="_blank" rel="external">Evergrow</a> 一键生成的系统里面，已经有现成的 User Model，在文件 <code>user-model.js</code> 里面。本教程使用的是 Node.js 系统一般会用到的 MongoDB 来存储数据。<code>mongoose</code> 是数据库的 <code>client</code>。后端编程无论什么语言，如果需要操作数据库，都必须有相应语言的 client 才行。你先不用太深究为什么这么写，因为这就是<strong>套路</strong>。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema</div><div class="line"></div><div class="line"><span class="keyword">var</span> userSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  loginId: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>, unique: <span class="literal">true</span>&#125;,</div><div class="line">  phone: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  email: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  password: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  isAdmin: &#123;type: <span class="built_in">Boolean</span>, required: <span class="literal">true</span>, <span class="keyword">default</span>: <span class="literal">false</span>&#125;,</div><div class="line">  emailResetId: <span class="built_in">String</span>,</div><div class="line">  deleted: &#123;type: <span class="built_in">Boolean</span>, <span class="keyword">default</span>: <span class="literal">false</span>&#125;</div><div class="line">&#125;, &#123;strict: <span class="literal">false</span>, timestamps: &#123; createdAt: <span class="string">'createdAt'</span>, updatedAt: <span class="string">'updatedAt'</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'User'</span>, userSchema)</div></pre></td></tr></table></figure>
+<p>从上面看到，User Model 有登录帐号 <code>loginId</code>，电话 <code>phone</code>，邮箱 <code>email</code>，密码 <code>password</code> 等其它信息。你可以猜出什么字段是必须有数据的，分别是什么数据类型，哪些是系统必须唯一（不允许重复的）。当前的模型完全没有任何放微信信息的地方，等我们讲到和微信集成的时候，会回头来看怎么修改。  </p>
+<h4 id="图片信息"><a href="#图片信息" class="headerlink" title="图片信息"></a>图片信息</h4><p>用户信息已经有地方存了，那图片信息应该放什么地方？  </p>
+<ul>
+<li>和用户信息放一起  </li>
+<li>另外建立一个模型  </li>
+</ul>
+<p>有计算机基础的同学可能觉得第一个选择太愚蠢。但是，不一定每次的选择都那么明显的。<strong>数据怎么放由什么决定？</strong>最基本两点需要考虑的是：<strong>数据的关系</strong>和<strong>存储系统的特点</strong>。</p>
+<p>从数据角度考虑，可以说图片信息属于用户，因为是用户上传的，就像是文章的评论属于文章。而且，它们的关系是一对多的关系。一个用户可以多次上传图片，一篇文章可以有很多评论。如果我们是使用关系型数据库（如 Oracle, MySQL 等），一对多关系的数据一般都分开独立的表存储才符合<a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%84%E8%8C%83%E5%8C%96" target="_blank" rel="external">数据库设计范式</a>。这里不细说，有兴趣自己查看。  </p>
+<p>从存储系统的特点来考虑，MongoDB 是<strong>文档型数据库</strong>，它可以存储复杂 JavaScript Object 对象，支持层级嵌套，我们其实可以把从属关系的数据都放一起。  </p>
+<p>那我们要不要把图片信息塞到 User Model 里面呢？不行，主要有两个原因：</p>
+<ol>
+<li><p>太深入嵌套的数据在 MongoDB 查找不方便。后期我们可能要单独查找 Image Model 的数据，因为要随机挑图片。  </p>
+</li>
+<li><p>图片和用户的关系不像是车轮和汽车的关系，有限并可控。图片的数量是可以无限增长的。MongoDB 里面一个文档不能存太大的数据，所以不适合放一起。  </p>
+</li>
+</ol>
+<h3 id="从功能，性能考虑"><a href="#从功能，性能考虑" class="headerlink" title="从功能，性能考虑"></a>从功能，性能考虑</h3><p>既然我们决定了图片数据要分开另一个模型来存储，那它里面应该有什么数据呢？它可以是下面的样子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema</div><div class="line"></div><div class="line"><span class="keyword">var</span> imageSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  userId: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  url: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;</div><div class="line">&#125;, &#123;timestamps: &#123; createdAt: <span class="string">'createdAt'</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'Image'</span>, imageSchema)</div></pre></td></tr></table></figure>
+<p>首先肯定有 <code>userId</code>，它标记了是哪个用户上传的图片。还有一个是 <code>url</code>，里面应该要存放图片的路径，无论用户上传的图片是放在服务器的硬盘，还是云服务商。数据看情况而定，但总归应该有一个图片的路径。  </p>
+<p>如果你玩过和菜头公众号的图片交换功能，它可以让你选择你随机拿到的图片是男用户，女用户，或者任何用户上传的。那这个性别信息我们应该放什么地方？性别本来是属于用户信息的一部分，理应存在 User Model。但是，从功能和性能考虑，需要作出一点点调整。  </p>
+<p>为什么呢？如果我们用的是关系型数据库，在不违反设计范式的情况下，性别应该放在存放用户信息的地方。在需要查询使用的时候，可以把放图片信息的表和用户信息表关联起来。但是，MongoDB 是不支持两个表（在 MongoDB 里面叫 Collection）关联的。如果你把性别的字段只是放在 User Model，那么要实现这个功能的时候，就要先查一下 User 那边看哪些是满足性别的用户，后头再去找 Image 看这些用户有什么图片，然后随机拿一个出来。如果把性别放在 Image Model，那就只看一个地方就可以了。  </p>
+<p>这种做法叫<strong>数据冗余</strong>。如果把它用在关系型数据库里，其实不符合范式。但是在 MongoDB 里面比较常需要用到这种做法。  </p>
+<h2 id="用-Evergrow-Generator-生成-Model"><a href="#用-Evergrow-Generator-生成-Model" class="headerlink" title="用 Evergrow Generator 生成 Model"></a>用 Evergrow Generator 生成 Model</h2><p>想清楚你要怎么设计模型后，要生成就简单了。下面一句命令就搞定：</p>
+<p><code>yo evergrow:model Image</code></p>
+<p>后面的 <code>Image</code> 代表模型的名字，你可以按照自己的喜好命名。运行了命令之后，你会看到它提醒你生成下面的目录和文件。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">create module/image/image-routes.js</div><div class="line">create module/image/image-model.js</div><div class="line">create module/image/image-manager.js</div><div class="line">create module/image/image-controller.js</div></pre></td></tr></table></figure>
+<p>现在你只需要关心 <code>image-model.js</code> 就好了。后面的章节会再详细说明它们有什么用。</p>
+<p><code>image-model.js</code> 里面的内容默认是下面那样的。你可以自己加 <code>url</code> 字段，删除一些不必要的信息，比如 updatedXXX 那些。改过后的文件我放在 <code>project</code> 目录的项目里，可供参考。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema</div><div class="line"></div><div class="line"><span class="keyword">var</span> ImageSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  createdUserId: &#123;type: Schema.Types.ObjectId, required: <span class="literal">true</span>&#125;,</div><div class="line">  createdUser: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  updatedUserId: &#123;type: Schema.Types.ObjectId, required: <span class="literal">true</span>&#125;,</div><div class="line">  updatedUser: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  deleted: &#123;type: <span class="built_in">Boolean</span>, <span class="keyword">default</span>: <span class="literal">false</span>&#125;</div><div class="line">&#125;, &#123; timestamps: &#123; createdAt: <span class="string">'createdAt'</span>, updatedAt: <span class="string">'updatedAt'</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'Image'</span>, ImageSchema)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这偏文章是 Node.js 搭建微信后台，实现图片交换功能文章第一篇。前序准备书籍，工具可参考 Github 项目 &lt;a href=&quot;https://github.com/kenspirit/javascript-study-group&quot; target=&quot;_blank&quot; r
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
+    
+      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
+    
+      <category term="Data Modeling" scheme="http://www.thinkingincrowd.me/tags/Data-Modeling/"/>
+    
+  </entry>
   
   <entry>
     <title>第一原理 - 微信开发小记</title>
@@ -1277,78 +1351,6 @@
     
     
       <category term="Experience" scheme="http://www.thinkingincrowd.me/tags/Experience/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何授权和分配工作</title>
-    <link href="http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/"/>
-    <id>http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/</id>
-    <published>2016-03-08T14:33:05.000Z</published>
-    <updated>2016-03-08T14:26:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在看李笑来推荐的《领导梯队》。其中描述了从管理自己到管理他人的转变，其中一项不容易适应的事情是要懂得授权和分配工作。</p>
-<p><strong>懂得授权和分配工作是成为管理者道路上要习得的首要技能</strong>。因为这点非常重要，并且是不少人第一次从个人贡献者转变成一线管理者时做得不好的地方。</p>
-<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>授权和分配工作任务其实只是手段。这样做的最主要的<strong>目的是多人协作，达成目标并同时提高每个人的能力</strong>。</p>
-<h2 id="心态"><a href="#心态" class="headerlink" title="心态"></a>心态</h2><p><strong>人要适应变化，首要必须是心态上的调整和适应</strong>。很多人没法把一件事情做好，很多情况下是因为心态没有改变过来，而不是他没有那种能力。其实如果能把握好上面说的目的，心态已经是调整好一大半了。</p>
-<p>在个人贡献阶段，每个人基本只要为自己做的事情负责，做得又快又好就行。这个阶段对个人硬技能的修炼提高是比较明显的。所以，个人也能比较容易得从中获取安全感和成就感。</p>
-<p>一旦个人能力提高到一定程度，很多公司就很自然的让他领导或者管理他人一起做事情了。那么，他用自己的专业技能来做事的时间比例就会减少，有相当一部分，甚至可能是大部分的时间都要花在管理和协调上面。</p>
-<p>这种转变其实对个人的心理变化会有很大影响。因为，这意味着他要舍弃熟悉和一直依赖的专业技能，去做一些虚而杂的管理，心理安全感上面会有很大的压力。特别是近年来全球都推崇组织扁平化，削减不必要的层级，还有一些管理人员失业后不好找工作的消息，让不少刚上升或准备上升一线管理的人都心有顾忌，放不下自己的专业技能。所以，很多人对这种转变是心有抵触的。</p>
-<p>但是，软件开发领域，一旦涉及多人协作，少至两人，尤其当你是担当组织领导这样的角色的时候，必须懂得如何授权和分配工作。并不是说你一定是成为管理者后才要习得的技能。</p>
-<p>再说，这样做对自己也有很大的好处。你可以把自己熟悉，但是对别人来说有挑战的工作交给别人尝试，然后自己腾出时间来做更有挑战的工作。但是，这并不意味着授权和分配工作就是把自己厌恶的工作交给别人做。下面会说到这个问题。</p>
-<p>那么我们要如何授权和分配任务呢？<strong>授权，首要的是要能放心</strong>。如果你的下属，没有一个能让你放心的话，是没法授权的。放不下心是很多管理人员做不好这点的原因。但是，我们要搞清楚，放不下心是下属的能力，做事态度的问题，还是我们自己的心理问题而已。</p>
-<p>一般来说，你带领的团队，可能能力会比你弱一点，你也才会担当或者被任免为领导角色。所以，如果只是下属的能力还暂时不胜任，你要做的是指导他，让他的能力慢慢提升，从而胜任工作并解决问题。而不是你觉得他做的不够你快和好，就自己下场抢了下属的工作来做。这样的话，他永远无法提升，你也无法放心。就软件开发而言，下属要下场写代码，你最好只是审查他的代码，分析他哪写的逻辑不清晰，需要重构等。</p>
-<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><p>如果你能做到放心，并且愿意授权和分配工作了，那应该怎么分配呢？</p>
-<h3 id="分配原则"><a href="#分配原则" class="headerlink" title="分配原则"></a>分配原则</h3><h4 id="擅长什么做什么"><a href="#擅长什么做什么" class="headerlink" title="擅长什么做什么"></a>擅长什么做什么</h4><p>软件行业一直有前端，后端，数据库管理，测试和运维等分工。所以，按擅长的领域来分工也是很明显和自然的一种方法，当然你的下属可能也会按这样的原则来揽任务。再说，项目期限紧的情况下，多是只能这样安排。</p>
-<h4 id="不擅长什么做什么"><a href="#不擅长什么做什么" class="headerlink" title="不擅长什么做什么"></a>不擅长什么做什么</h4><p>可能不是很多人会采取这种策略。而且，不少技术人员，尤其是比较资深的，有一些不恰当的歧视心态，并且不愿意走出舒适区，只想干自己喜欢的技术。比如，开发看不起测试，后端看不起前端，XX 语言看不起 YY 语言等。</p>
-<p>但是，如果时间充裕，在培养新人或者有机会挑战自我的时候，我都会时不时专门挑下属不熟悉或者不擅长的领域，让他去死磕一下。一方面可能是我在的公司团队都比较小，要做的事情都比较杂。无论是前端后端，数据库等都要自己搞。另一方面，我也想通过这种手段来让大家有机会扩充知识面，并了解不同的领域有什么不同和相通之处。并更好的理解上下游合作伙伴，减少歧视的心态。</p>
-<h4 id="想做什么安排什么"><a href="#想做什么安排什么" class="headerlink" title="想做什么安排什么"></a>想做什么安排什么</h4><p>这就没什么特别好说的，只要团队内沟通协调良好，大家互相支持，尽量都可以这样安排并结合上面两点来考虑。</p>
-<h4 id="不能长期把垃圾工作交给他人"><a href="#不能长期把垃圾工作交给他人" class="headerlink" title="不能长期把垃圾工作交给他人"></a>不能长期把垃圾工作交给他人</h4><p>这一点是特别要注意的地方。当你承担了分配工作的重任，不是说随心所欲的按自己喜好，下属亲疏来分配的。所以，即便上面说了，可以把自己熟悉的工作分配出去，但不代表你可以把你不想做的垃圾工作都给别人。一方面，这样做并不能锻炼你的下属，他的能力无法得到提高。另一方面，他会对你这个领导产生厌恶感，你和团队之间凝聚力就会变差，而且以后他还会很不愿意听你的安排和意见。</p>
-<p>相反，我通常是把垃圾工作自己揽过来处理。真要交出去的时候，可以和下属讨论怎么减少这类型的工作，或者有没有什么好办法来解决。比如说写一些自动化的脚本或者工具，运用新的技术等。这样，就可以将无聊的事情变得有趣，并且对大家的能力，眼界也有所提高。</p>
-<h3 id="跟进，不是放任自理"><a href="#跟进，不是放任自理" class="headerlink" title="跟进，不是放任自理"></a>跟进，不是放任自理</h3><p>其实，我觉得授权和分配工作只是第一步。重要的一步是如何跟进和指导，不是分配完就不管，最后到期限时追进度而已。</p>
-<h4 id="目标明确"><a href="#目标明确" class="headerlink" title="目标明确"></a>目标明确</h4><p>其实这点不能说是在跟进时才考虑，因为一开始分配任务的时候，也应该清楚的解释好工作任务的内容和目标。不同的任务类型，处理手段或隐含的目标是不同的。而且，有些人做着做着，可能就深入细节，偏离了大方向，延误了进度。所以，跟进的过程中，要时不时确保目标明确。</p>
-<p>之前我安排一个下属通过 POC (Proof of Concept) 来确定 Solr 是否可以用来取代数据库 SQL 查询以提高性能，另一个下属是做一个新功能的页面原型，和通过 POC 来确定初步构想页面结构和操作能否实现，有没有技术难点，并让业务分析人员尽早确定。你们觉得各自的“目标”是什么呢？他们清楚吗？</p>
-<p>虽然两个任务都涉及技术的 POC，但是分析角度和要求有细微不同。</p>
-<p>第一个的任务，因为是针对旧功能的改造。首要的是充分了解旧的 SQL 查询是怎样的逻辑。如果换成用文本检索的方式，新的数据存储结构和字符的模糊匹配特性，能否完全模拟出原来 SQL 查询的功能？即便不行，那是否还满足当前业务的要求？这边对技术细节的理解和对比要相当清楚，以免换技术方案后，对原功能造成大影响。</p>
-<p>另一边的页面原型，主要则是把握大的方向没有问题，主要的交互功能点能实现出来就可以了。一些很细的技术边角，即使后面真的出现并无法解决，可能再和业务商量一些替代方案就好了。而且还处在我们向业务方出提议阶段，时间上希望能尽快先有一个版本。如果业务对我们提议的页面原型有些修改意见，原先的技术问题可能都不用解决。</p>
-<h4 id="授之于渔"><a href="#授之于渔" class="headerlink" title="授之于渔"></a>授之于渔</h4><p>当下属遇到问题不知道怎么样解决的时候，我看过不少领导直接上来就给具体方法或者答案，手把手教怎么做，代码该怎么写，有什么 API，哪里有类似的代码可以抄等。</p>
-<p>可是，我是相当不喜欢这种方式。因为：</p>
-<ol>
-<li><p>解决问题的方法不见得只有一种。</p>
-</li>
-<li><p>直接照搬，下属就缺少思考锻炼，下次也不会举一反三</p>
-</li>
-</ol>
-<p>看到下属遇到问题，我一般至少准备分两三次来进行指导。</p>
-<ol>
-<li><p>首先我会询问他目前卡在什么地方，分析的思路是怎么样的？如果方向偏了，我会提示解决方向，然后就让他再自己摸索。</p>
-</li>
-<li><p>再隔一段时间，我再问他问题解决得怎么样？如果这个时候，他已经按提示方向摸到了门道，基本就可以了。如果还是没有头绪，我会再慢慢解释思考的思路，目标原则或者有什么要取舍的。再让他尝试按解释了的思路去解决问题。</p>
-</li>
-<li><p>最后基本就是再做代码审查了。</p>
-</li>
-</ol>
-<p>这里要把握好中间间隔的时间，提示的程度需要看情况而定。项目的松紧，人的能力等都要考虑。</p>
-<h4 id="不接受意见怎么办？"><a href="#不接受意见怎么办？" class="headerlink" title="不接受意见怎么办？"></a>不接受意见怎么办？</h4><p>当你对下属做出指导，提供意见或者别的方案的时候，他可能并不买帐。</p>
-<p>这种问题其实很难解决。要降低这种问题出现后能温和的处理，首先当然不能粗暴地命令。正如上面所说的，解决问题的答案不止一种，就像编程语言和框架一样。所以，你往往需要从技术或者业务上，<strong>真诚和耐心的详细分析</strong>，你们的方案主要区别是在哪里，为什么说你的考虑可能在目前情况下更优。有些时候，可能真的是技术上来说他们的方案确实更完善。但是从项目性质或者进度上来考虑，需要舍弃一些东西，没必要做得太复杂。有时我们还可以尝试寻求可测试或可量度的手段来进行比较，又或再拉几个人来讨论，发表见解和投票等。</p>
-<p>一般来说，优秀的 IT 人员，在摆事实和讲道理后，都会接受合理的意见的。如果作为领导，一直都是很真诚的教导下属，更容易共同寻求最终两方都能接受的方案。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近在看李笑来推荐的《领导梯队》。其中描述了从管理自己到管理他人的转变，其中一项不容易适应的事情是要懂得授权和分配工作。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;懂得授权和分配工作是成为管理者道路上要习得的首要技能&lt;/strong&gt;。因为这点非常重要，并且是不少人第一次从个人贡献者转
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Experience" scheme="http://www.thinkingincrowd.me/tags/Experience/"/>
-    
-      <category term="Delegation" scheme="http://www.thinkingincrowd.me/tags/Delegation/"/>
-    
-      <category term="Leadership" scheme="http://www.thinkingincrowd.me/tags/Leadership/"/>
     
   </entry>
   
