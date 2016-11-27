@@ -8,7 +8,7 @@ wordpress_id: 225
 categories:
 - Sword
 tags:
-- ExtJs
+- ExtJS
 - i18n
 - Javascript
 - JAWR

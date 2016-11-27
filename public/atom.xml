@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-11-13T08:32:02.000Z</updated>
+  <updated>2016-11-27T08:32:59.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,11 +16,55 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Node.js 微信后台搭建系列 - 业务逻辑层</title>
+    <link href="http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/"/>
+    <id>http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/</id>
+    <published>2016-11-27T08:35:39.000Z</published>
+    <updated>2016-11-27T08:32:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一章我们说到，<strong>数据建模其实就是为后台 MVC 模式里面的 Model 建模</strong>。那是不是 <a href="https://en.wikipedia.org/wiki/Model–view–controller" target="_blank" rel="external">MVC</a> 的 M 就仅仅是数据模型而已？其实 M 并不仅仅包含数据模型，它还包含对数据的处理，也就是业务逻辑部分。  </p>
+<p>那数据的处理包含什么？什么算是业务逻辑呢？我们根据脚手架生成的代码来看一下。  </p>
+<h2 id="CRUD"><a href="#CRUD" class="headerlink" title="CRUD"></a>CRUD</h2><p>大家可以看上次通过命令 <code>yo evergrow:model Image</code> 生成出来的文件 <code>image-manager.js</code>，里面包含这样一部分代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>)</div><div class="line"><span class="keyword">var</span> ImageModel = <span class="built_in">require</span>(<span class="string">'./image-model'</span>)</div><div class="line"><span class="keyword">var</span> executeQuery = <span class="built_in">require</span>(<span class="string">'../../system/db-manager'</span>).executeQuery</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  list: list,</div><div class="line">  load: load,</div><div class="line">  create: create,</div><div class="line">  update: update,</div><div class="line">  remove: remove</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这些代码是什么意思呢？<code>image-manager.js</code> 这个文件其实是一个模块，它后面可以被其它模块使用。同时它也引用了安装过的全局模块 <code>lodash</code> 和我们项目本身的 <code>image-model</code> 和 <code>db-manager</code> 这个两个模块。项目本身的模块用文件相对路径来引用，全局模块只需要名字就可以了。模块的概念现在在前端非常重要，虽然这在后端已经实践很久。<strong>分模块就是把代码分拆的足够小又不至于太小，也就是高度相关的应该放在一起，可以独立复用的就拆分</strong>。  </p>
+<p><code>image-manager.js</code> 这个模块当被其它模块引用的时候，它提供了几个基础方法：<code>create</code> (C - Create), <code>load</code> (R - Read), <code>update</code> (U - Update), <code>remove</code> (D - Delete), <code>list</code> (批量 Read)。业界说的 <strong>CRUD 其实就是对最基本的数据操作</strong>。基本上任何系统，我们都需要 CRUD。  </p>
+<h2 id="业务逻辑"><a href="#业务逻辑" class="headerlink" title="业务逻辑"></a>业务逻辑</h2><p>那业务逻辑是什么呢？简单来说，<strong>业务逻辑就是基于特定的条件，才做上面的基本数据操作</strong>。比如，数据处理前的验证，不同数据模型的相关性处理等。我们要实现的随机挑选图片的操作，就是一个业务逻辑。因为它的要求是<strong>可根据用户喜好，选择男性，女性或者任意用户上传的图片</strong>。这里就读 Read 这个操作做了特定条件的限制。所以，我们可以在这个 <code>image-manager.js</code> 里面添加一个叫 <code>random</code> 的方法。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getRandomIntInclusive = <span class="built_in">require</span>(<span class="string">'../../system/util'</span>).getRandomIntInclusive</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params">sex</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> params = &#123;&#125;</div><div class="line">  <span class="keyword">if</span> (sex) &#123;</div><div class="line">    params.sex = sex</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> list(params)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">matchedImages</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (matchedImages.totalCount === <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">null</span></div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">var</span> imageToPick = getRandomIntInclusive(<span class="number">0</span>, matchedImages.totalCount - <span class="number">1</span>)</div><div class="line">      <span class="keyword">return</span> matchedImages.records[imageToPick]</div><div class="line">    &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们一起来看看这个方法。它只依赖一个可选的参数 <code>sex</code>，也就是代表用户的偏好。如果有指定，就按照指定的性别查找，没有的话就什么条件都不用了。这个方法复用了 <code>list</code> 这个批量读取的方法，然后 (then) 调用一个获取随机整数的函数，从上一步获取的所有匹配的图片中，抽取一张。  </p>
+<h2 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h2><p>延伸阅读的内容不是必须掌握的部分，也不影响你完成整个项目。大概了解概念也就可以了，有兴趣可以根据相关的链接，顺藤摸瓜地探索。  </p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p><code>evergrow</code> 这个脚手架的操作，都是基于 Promise。有兴趣了解 Promise 的，可以看看我用的 bluebird 库的<a href="http://bluebirdjs.com/docs/getting-started.html" target="_blank" rel="external">文档</a>。从 <a href="http://bluebirdjs.com/docs/why-promises.html" target="_blank" rel="external">Why Promise</a> 看起。  </p>
+<p>如果你目前觉得它太难，可以先不深入理解它的概念。你只要知道，你可以一直在后面接着 <code>then</code> 这样的套路也可以。<code>then</code> 其实就是<strong>然后</strong>的意思。<code>then</code> 的串就像是数据处理流水线一样，做完一步，拿着上一步的处理结果，再进行下一步。  </p>
+<h3 id="ORM-和-Active-Record"><a href="#ORM-和-Active-Record" class="headerlink" title="ORM 和 Active Record"></a>ORM 和 Active Record</h3><p>当我们的数据存放在数据库的时候，我们怎么通过编程语言来和它打交道呢？在广泛使用 RDBMS 的时候，和数据库打交道一般都是通过 SQL 来处理。但是这在后端编程语言里面嵌入使用并不是太方便，尤其表的关联处理。那么在面向对象语言的风潮里，一个叫 ORM (Object-relational mapping) 的东西出来了。它的基本目的就是帮助我们把数据库的数据，映射到编程语言里面的一个对象上面，比如 JAVA 领域的 Hibernate。ORM 主要是让开发人员可以用回通过面向对象的数据处理手段来操作数据库，比直接 SQL 这个独立的语言简单些。  </p>
+<p><a href="https://en.wikipedia.org/wiki/Active_record_pattern" target="_blank" rel="external">Active Record</a> 其实是一种架构模式，是 ORM 的一种特例。在 RDBMS 里，它把数据库的一个表映射到一个类上面。我们这里的情况是，<code>image-model.js</code> 里面引用的 <code>mongoose</code> 就是一个 ORM 框架，使用它可以把 MongoDB 里面的 collection 映射到一个 JavaScript 的对象里。<code>image-manager.js</code> 引用的 <code>ImageModel</code> 就是这样的一个对象。它默认带有 <code>create</code>, <code>update</code>, <code>remove</code> 等方法。我们通过操作这个对象，调用它的方法，修改它生成的新对象的属性，就可以修改数据库的值，添加或删除数据，进行数据库的操作。这种架构模式很方便，但是也有它的坏处。因为它把数据库的操作和单纯的数据对象绑定到一起，违反了单一责任的原则 (Single Responsibility Principle)，会导致不容易测试等问题。当你想单纯地创建一个数据对象的时候，你可能就要初始化依赖的数据库包。  </p>
+<p>我这里写的 <code>image-manager.js</code> 其实把 <code>mongoose</code> 包了一层。除了统一写法外，我不想把对 <code>mongoose</code> 的依赖，把数据库的操作暴露到 MVC 的 C (Controller) 层。如果我以后不用 <code>mongoose</code>, 用回 <code>mongodb-native</code> 库，甚至要换数据库，都可以尽量降低影响面。后面讲 MVC 的 C 层时，会进一步详述怎么和 M 这一层分离。  </p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>我们如果要给图片加上一个状态，刚上传的图片默认是等待审核，也就是不能在 <code>random</code> 方法里面返回的。要等管理员审核通过后，才能用于交换。你能够修改相应的 Model，改 <code>random</code> 方法，和加一个 <code>approve</code> 的方法吗？  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一章我们说到，&lt;strong&gt;数据建模其实就是为后台 MVC 模式里面的 Model 建模&lt;/strong&gt;。那是不是 &lt;a href=&quot;https://en.wikipedia.org/wiki/Model–view–controller&quot; target=&quot;_blank
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
+    
+      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
+    
+      <category term="Business Logic" scheme="http://www.thinkingincrowd.me/tags/Business-Logic/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Node.js 微信后台搭建系列 - 数据建模</title>
     <link href="http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/"/>
     <id>http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/</id>
     <published>2016-11-13T08:20:39.000Z</published>
-    <updated>2016-11-13T08:32:02.000Z</updated>
+    <updated>2016-11-27T08:28:07.000Z</updated>
     
     <content type="html"><![CDATA[<p>这篇是 Node.js 搭建微信后台，实现图片交换功能教程的第一篇文章。前序准备书籍，工具可参考 Github 项目 <a href="https://github.com/kenspirit/javascript-study-group" target="_blank" rel="external">javascript-study-group</a>。感兴趣者也可加入学习小组。  </p>
 <p>TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generator 生成 Model，也就是 What and How，那可以直接跳到最后。  </p>
@@ -68,6 +112,12 @@
 <p>现在你只需要关心 <code>image-model.js</code> 就好了。后面的章节会再详细说明它们有什么用。</p>
 <p><code>image-model.js</code> 里面的内容默认是下面那样的。你可以自己加 <code>url</code> 字段，删除一些不必要的信息，比如 updatedXXX 那些。改过后的文件我放在 <code>project</code> 目录的项目里，可供参考。  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>)</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema</div><div class="line"></div><div class="line"><span class="keyword">var</span> ImageSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  createdUserId: &#123;type: Schema.Types.ObjectId, required: <span class="literal">true</span>&#125;,</div><div class="line">  createdUser: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  updatedUserId: &#123;type: Schema.Types.ObjectId, required: <span class="literal">true</span>&#125;,</div><div class="line">  updatedUser: &#123;type: <span class="built_in">String</span>, required: <span class="literal">true</span>&#125;,</div><div class="line">  deleted: &#123;type: <span class="built_in">Boolean</span>, <span class="keyword">default</span>: <span class="literal">false</span>&#125;</div><div class="line">&#125;, &#123; timestamps: &#123; createdAt: <span class="string">'createdAt'</span>, updatedAt: <span class="string">'updatedAt'</span>&#125;&#125;)</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = mongoose.model(<span class="string">'Image'</span>, ImageSchema)</div></pre></td></tr></table></figure>
+<h2 id="总结与练习"><a href="#总结与练习" class="headerlink" title="总结与练习"></a>总结与练习</h2><p>数据模型在编程领域可谓是最重要的部分了。正如以前我在「<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/">编程是什么？我要学吗？</a>」里面提到：<strong>Algorithms + Data Structures = Programs</strong>。我的「<a href="http://leanpub.com/tasting-javascript" target="_blank" rel="external">Tasting JavaScript</a>」第 4 章也摘录了首届图灵奖的获得者 Alan J. Perlis 说过的一句话：  </p>
+<blockquote>
+<p>It is better to have 100 functions operate on one data structure than 10 functions on 10 data structures.<br>   –  Alan J. Perlis</p>
+</blockquote>
+<p>可见，一个好的数据结构是多么重要。所以，我建议你根据上面提到的两大角度，<strong>从归属和分区考虑</strong>，<strong>从功能，性能考虑</strong>，时不时回顾你的数据模型，看是否合理和高效。  </p>
+<p>学习完这一章，你不妨想一想你打算实现的系统功能，它的数据模型应该要怎么样设计。  </p>
 ]]></content>
     
     <summary type="html">
@@ -1106,13 +1156,13 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
+      <category term="ExtJS" scheme="http://www.thinkingincrowd.me/tags/ExtJS/"/>
+    
       <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
     
       <category term="Promise" scheme="http://www.thinkingincrowd.me/tags/Promise/"/>
     
       <category term="Sinon.js" scheme="http://www.thinkingincrowd.me/tags/Sinon-js/"/>
-    
-      <category term="ExtJS" scheme="http://www.thinkingincrowd.me/tags/ExtJS/"/>
     
       <category term="Unit Test" scheme="http://www.thinkingincrowd.me/tags/Unit-Test/"/>
     
@@ -1286,71 +1336,6 @@
       <category term="Delegation" scheme="http://www.thinkingincrowd.me/tags/Delegation/"/>
     
       <category term="Leadership" scheme="http://www.thinkingincrowd.me/tags/Leadership/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>有经验和没有经验的程序员的区别</title>
-    <link href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/"/>
-    <id>http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/</id>
-    <published>2016-03-08T14:40:45.000Z</published>
-    <updated>2016-03-08T14:28:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>近来我一直都需要带些毕业生（怎么我的队伍就那么多新人呢，呵呵），发现很多人在解决问题的方法上都存在一些问题。解决问题，其实是每个程序员每天都在干的事情。但是方法好还是不好，我觉得正是有经验和没有经验的程序员之间很重要的区别。刚好最近又看到了余晟公众号（yurii-says）的《砍伐大树 v.s. 收割庄稼》里面阐述的解决问题的四个步骤。所以，我想根据身边的案例详细一点解释一下这四个步骤。</p>
-<h2 id="认识和定位问题"><a href="#认识和定位问题" class="headerlink" title="认识和定位问题"></a>认识和定位问题</h2><p>一般来说，新手进入一个公司和团队之后，team lead 会分配一两个简单的任务让新人练练手。所以，首先要做的事情就是搭环境，和认识已有的系统和代码。</p>
-<p>在搭环境和做任务的过程中，新人经常遇到问题或异常后就蒙了，不知道怎么继续下去。然后就求救说：“出错了，怎么办？”。我都会反问一句：“哪里出错了？你定位到问题在哪里了吗？”。可是一般收到的答案都是“不知道”。像我们公司的系统架构，把后端分了两层，一层专门服务于表现层，另一层专门访问数据库和提供 web service。系统的架构就简单如下图所示。如果在浏览器发起的一个 Ajax 请求有异常返回，那异常到底是在哪一层，或者是哪一个传输环节？如果在传输环节可能是因为对象类型，属性不一致导致。如果在 Domain 层可能是业务逻辑，数据库操作出现问题等。</p>
-<p><img alt="Company System Architecture" src="http://77g8zm.com1.z0.glb.clouddn.com/company_system_architecture.png"></p>
-<p>​认识和定位问题的能力应该是程序员技能宝典里面的 101，并且是要持续修炼的能力。<strong>看日志</strong>和<strong>看代码</strong>是获取这种能力的两种最基础的手段。</p>
-<h3 id="看日志"><a href="#看日志" class="headerlink" title="看日志"></a>看日志</h3><p>在没有源码的情况下，看日志可以说是唯一定位问题的方法了。再说，即便有源码，也不可能全都看一通，或者顺着源头一直 debug 下去，直到遇到问题为止。所以，定位问题的起点一般都是先看日志。</p>
-<p>日志来源基本可以分为几大类：</p>
-<ol>
-<li>程序：项目代码  </li>
-<li>框架：团队或者公司内部框架，因为不少公司还有专门制造内部轮子的部门  </li>
-<li>中间件，外部组件：广义地指所有外部的组件，包括数据库，Web 服务器，Application 服务器，以及云平台等。  </li>
-</ol>
-<p>一般来说，我们都先从第一种着手。因为一个好的项目，第一大类的日志应该是要把内部框架和所有外部系统组件的异常都封装好。异常处理设计的好，从这里的日志出发就可以较容易地追溯至真正问题所在。可是如果看完第一大类的日志都没能确定问题的原因，很可能是自身项目没有做好异常的捕捉处理，把外部系统或组件的异常给吞吃和隐藏了；又或者是因为一些运行时异常没有被捕捉到，然后就被写到外层的框架或者容器的日志里，比如说 Weblogic/Tomcat。</p>
-<p>所以，经验首先就在于懂得在什么地方找日志；先看什么，后看什么；以及在项目自身日志不健全情况下，如何寻求第二或者第三大类的日志，看出错时间点的前后到底有什么信息可以帮助推断真正问题所在。</p>
-<h3 id="看代码"><a href="#看代码" class="headerlink" title="看代码"></a>看代码</h3><p>当定位到要改动的源码的位置时，很多新人面对着一个从未接触过的庞大的项目代码库，在 IDE 里面跳转多几次就乱了。他们遇到每一个方法调用都想进去看个明白。但是，一开始就想看懂整个系统的代码是不现实的。除了代码量庞大，或者找不到源码作者咨询以外，我们可能还有时间的压力，必须尽快找到问题和解决方案。那么，我们就必须有<strong>猜代码</strong>的能力。如何忽略细节，不迷失在茫茫代码海洋里，迅速定位和看懂自己的任务需要涉及和修改的代码是哪一块，是非常重要的。就像浏览文章一样，找段落大意，猜不同的代码大概是完成什么功能，然后再决定是否应该深入去研究某一块，而不是一次搞懂所有的代码。</p>
-<h2 id="认清问题"><a href="#认清问题" class="headerlink" title="认清问题"></a>认清问题</h2><p>其实就是<strong>知其然，知其所以然</strong>。</p>
-<h3 id="从技术上来看"><a href="#从技术上来看" class="headerlink" title="从技术上来看"></a>从技术上来看</h3><p>准确定位到问题或者异常发生在什么地方了，并不代表要修改的代码就是且只是那一块。我们不能头痛医头，脚痛医脚。</p>
-<p>比如说，我们对外提供的一个 Web Service，因为浏览器或者调用方传的参数不全，报了 NullPointerException，我们要怎么改？改调用方还是提供方？首先，根据健壮性原则，也就是 <strong>Postel’s law</strong>，看起来应该是改提供方这边：</p>
-<blockquote>
-<p>Be conservative in what you do, be liberal in what you accept from others</p>
-</blockquote>
-<p>但是，除了改提供方，我们还要考虑为什么调用方会提供少了一个参数，是所有的情况下都少了吗？还是某一些场景才会？尤其是当调用方是从一个具有复杂的业务操作逻辑的页面过来的时候，我们更需要全面分析。这才不至于说见一个洞，补一个洞，其实还漏了几个洞。</p>
-<h3 id="从做产品或者功能设计来看"><a href="#从做产品或者功能设计来看" class="headerlink" title="从做产品或者功能设计来看"></a>从做产品或者功能设计来看</h3><p>明白用户的功能使用场景和背后的动机，是产品功能的设计，如何取舍技术难点等的重要决策依据。</p>
-<p>举个栗子，船运公司的单据录入部门其实有一份标准的操作指南。录入人员要根据托运人是谁，运什么货，从哪运到哪，要不要报关等一大堆的信息，决定应该怎么录入单据。那份操作指南其实就像一个问答系统，或者更像是一颗决策树一样。从成百上千种分门别类，如货物，航线，费用，报关等的问题找到那对应的决策路径来获知最后该怎么做。</p>
-<p>那么，如果我们要做一个指南维护页面，怎么让用户容易找到他想要修改的条目，和清晰展现出来就要有一些考量了。对查找这个功能，开发人员一开始把那些门类和问题都做为下拉框展示出来以作为查询条件，并且还算聪明地实现了级联过滤，不至于用户因为门类和问题数目过多而不好找到他想要的东西。但是用户反映说那个问题的下拉框不能有级联。为什么？原因其实是有些问题是通用的。它们有可能出现在很多门类当中。所以，一种场景是他们已经知道要改的是某一个具体的问题，他想找出相关的所有门类。那么，我们把问题那个下拉框做成级联，他们就悲剧了。因为他们根本就不知道什么门类下有那个问题，怎么可能要求他们先选好门类，再选问题来查找呢？就问题这个下拉框，换另一种思路，做自动补全，让用户输入关键字就能过滤就好了。</p>
-<h2 id="可行性分析"><a href="#可行性分析" class="headerlink" title="可行性分析"></a>可行性分析</h2><p>在定位好问题和界定范围后，下一步就要看能采取什么方法来解决问题。</p>
-<p>拿最近让新人做的一个开发任务来说吧。有一个页面，需要把数据库的数据，按照树的结构渲染出来和进行数据维护。这里，我们要考虑的东西有什么呢？</p>
-<ol>
-<li><p>页面生成树要用什么前端技术，它的特点是什么？它生成树形结构的表现形式时，需要的数据结构是什么样的，是不是就是对应的树状数据结构还是没有要求？对树的结点进行页面上的操作时，数据就会自动更新吗，还是说我们要另外再独立更新数据？</p>
-</li>
-<li><p>页面的数据结构和数据库的结构一样吗？中间要经过多少次的转换？转换放在前台还是后台做？页面到底有一些什么业务操作，以及这些业务操作其实最后反映到数据库层面的形态是什么样的？界面操作后如何把信息带回后台，要带回什么数据（比如 ID，操作类型标记等）?  </p>
-</li>
-<li><p>后台的数据更新逻辑是怎么样的？每次更新都需要整颗树的全部信息进行全量更新吗？</p>
-</li>
-</ol>
-<p>动手编码之前，对这些问题有初步的认识是相当重要的。有初步的想法之后，怎么做才能用最少的时间和精力来验证是否可行？如果还没有搞清楚，一下子就上手编码是很危险的。这个开发任务，也正是因为上面说的某几个方面没有做好，中间一些实现推倒重来了几次，进度比预期长了很多。</p>
-<p>另一种非常重要的情况就是，我们想到或者碰到的技术难点，可能在实际应用场景根本碰到的情况就不高。如果避开那种场景来考虑的话，系统设计和实现方式可能就大大不同了。对于怎么舍弃一些技术细节问题，曹政的公众号（caozsay）的《如何应对并发(3) - 需求裁剪》就针对一个案例说得很清楚，大家可以看看。</p>
-<p>还有，可行路径的选择，当然也受计划的影响。一个月，还是三个月时间的实现方案当然会有所不同。</p>
-<h2 id="估算"><a href="#估算" class="headerlink" title="估算"></a>估算</h2><p>估算和可行性分析其实密切相关。只有经过充分的可行性分析，估算才相对有意义。我觉得不是说有经验的人，估算的时间就比较准。而是有经验的人大概知道什么地方有坑，把上面的可行性分析和任务拆分做得更细，考虑得更全面一些。</p>
-<p>其实人对时间的估算是非常不准确的，也不应当仅仅依赖于时间估算来做计划或者确定项目期限。我个人对估算的想法在之前写的 Kanban 系列里面有一篇文章也讲了一下。有兴趣可以看看。</p>
-<ul>
-<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/">Dive into Kanban (3) - How Kanban address the estimation headache</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;近来我一直都需要带些毕业生（怎么我的队伍就那么多新人呢，呵呵），发现很多人在解决问题的方法上都存在一些问题。解决问题，其实是每个程序员每天都在干的事情。但是方法好还是不好，我觉得正是有经验和没有经验的程序员之间很重要的区别。刚好最近又看到了余晟公众号（yurii-says）
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Experience" scheme="http://www.thinkingincrowd.me/tags/Experience/"/>
     
   </entry>
   

@@ -3,12 +3,12 @@ comments: true
 date: 2011-07-20 15:25:39
 layout: post
 slug: enhance-performance-of-extjs-grid-record-set-value
-title: Enhance Performance of ExtJs Grid Record set value operation
+title: Enhance Performance of ExtJS Grid Record set value operation
 wordpress_id: 54
 categories:
 - Sword
 tags:
-- ExtJs
+- ExtJS
 - Javascript
 - Performance
 ---

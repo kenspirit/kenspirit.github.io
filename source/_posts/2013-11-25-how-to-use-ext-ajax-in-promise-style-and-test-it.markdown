@@ -8,7 +8,7 @@ categories:
 tags:
 - Javascript
 - Promise
-- ExtJs
+- ExtJS
 - Functional Programming
 - Ajax
 - Jasmine

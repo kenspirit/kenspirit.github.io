@@ -8,7 +8,7 @@ wordpress_id: 326
 categories:
 - Sword
 tags:
-- ExtJs
+- ExtJS
 - Jasmine
 - Javascript
 - UnitTest

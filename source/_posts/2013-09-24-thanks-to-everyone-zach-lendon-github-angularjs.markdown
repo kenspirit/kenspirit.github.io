@@ -6,7 +6,7 @@ comments: true
 categories: 
 - Sword
 tags:
-- ExtJs
+- ExtJS
 - Jasmine
 - Javascript
 - UnitTest

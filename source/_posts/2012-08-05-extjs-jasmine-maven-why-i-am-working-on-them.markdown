@@ -8,7 +8,7 @@ wordpress_id: 311
 categories:
 - Sword
 tags:
-- ExtJs
+- ExtJS
 - Jasmine
 - Javascript
 - Maven
