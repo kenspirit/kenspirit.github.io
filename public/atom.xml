@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-11-27T08:32:59.000Z</updated>
+  <updated>2016-12-23T14:26:30.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,136 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Node.js 微信后台搭建系列 - 路由和控制器</title>
+    <link href="http://www.thinkingincrowd.me/2016/12/23/Node-js-Wechat-Web-App-Tutorial-Controller-Routing/"/>
+    <id>http://www.thinkingincrowd.me/2016/12/23/Node-js-Wechat-Web-App-Tutorial-Controller-Routing/</id>
+    <published>2016-12-23T15:00:39.000Z</published>
+    <updated>2016-12-23T14:26:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这一章我们要讲的是 <a href="https://en.wikipedia.org/wiki/Model–view–controller" target="_blank" rel="external">MVC</a> 的 C，也就是 Controller。在 Web Application 里谈到 Controller，我们就不可避免地要了解 <strong>MVC 对数据处理的流程</strong>和涉及<strong>路由</strong>这个概念。大家可以通过这个简略的流程图来辅助理解下面的一些概念。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-mvc-flow.png" alt="MVC Flow"></p>
+<h2 id="MVC-处理流程和路由"><a href="#MVC-处理流程和路由" class="headerlink" title="MVC 处理流程和路由"></a>MVC 处理流程和路由</h2><p><a href="http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/">http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/</a></p>
+<p>通过在浏览器输入上面的网址（URL），我们就能看到相应的网页内容。这背后其实是有相应的服务器，根据网址把与其相对应的内容返回给你。服务器由域名，也就是 <strong>www.thinkingincrowd.me</strong> 部分决定。而具体内容就是根据路径 <strong>2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic</strong> 来定位的。  </p>
+<p><strong>MVC 中的路由，就是路径和 Controller 的对应关系</strong>。</p>
+<p>路由大致可分为两种：静态文件，和动态内容。但是它们的原理是一样的。静态文件的路由，就是那个路径直接对应了服务器背后的图片，HTML，JS 或者 CSS 等静态文件，服务器不需要额外处理，找到了就直接返回文件的内容。<strong>Web Application 中处理动态内容的路由，需要通过调用绑定的 Controller，再经过 Model 或业务逻辑层处理，最后把结果返回</strong>。服务器如果根据路径找不到对应的 Controller，一般会返回 404 状态，而你们就有可能见到这种类似的页面。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-404.png" alt="404 Page"></p>
+<h2 id="Controller-控制器"><a href="#Controller-控制器" class="headerlink" title="Controller 控制器"></a>Controller 控制器</h2><p>Controller 的功能是什么呢？  </p>
+<h3 id="收集用户提交的数据"><a href="#收集用户提交的数据" class="headerlink" title="收集用户提交的数据"></a>收集用户提交的数据</h3><p>浏览网页的时候，用户可能不需要提供额外的数据给服务器，只需要网址 URL 就可以了。但是，比如当我们要查询酒店信息，下订单的时候，我们还是要提交相应的数据让服务器处理。  </p>
+<p>用户和服务器打交道，其实是通过 HTTP 协议提供的 GET, POST, PUT, PATCH, DELETE 等操作来实现的。  </p>
+<ul>
+<li><p>GET: 这种操作是从服务器获取数据。<strong>它不应该对你要获取的数据做任何的修改</strong>。当我们通过 GET 操作和服务器沟通的时候，数据是同 URL 网址一起传到服务器的，会受到长度的限制。  </p>
+</li>
+<li><p>POST: 这种操作是创建或更改后台数据。POST 操作的数据是放在请求体里面，并没有数据大小的限制。  </p>
+</li>
+</ul>
+<p>大多数情况，我们用的是这两种 HTTP 操作，其它几种在一些旧的服务器中并不支持。所以，我们暂时了解 GET 和 POST 的不同，以及要注意的地方就够了。大家有时间可以看看<a href="http://www.restapitutorial.com/lessons/httpmethods.html" target="_blank" rel="external">这个简易教程</a>来了解其它 HTTP 操作，但不是必须。  </p>
+<h3 id="转交给业务逻辑层处理"><a href="#转交给业务逻辑层处理" class="headerlink" title="转交给业务逻辑层处理"></a>转交给业务逻辑层处理</h3><p>很多新手，都会把大量的代码写到 Controller，使之变得越来越臃肿，庞大。究其原因，就是因为他们没法很好区分 M 和 C 的区别，并把代码组织得更加合理。我们写代码的时候，应该时刻考虑它们是应该放到 Controller，还是业务逻辑层。  </p>
+<p>最关键的判断依据就是：<strong>Controller 里面只放和 V (View) 相关的逻辑，不同的 V，通常有不同的 C 来对应和处理。业务逻辑层的代码，不应该和 View 有关系，而是应该可以给不同的 Controller 和 View 共用</strong>。  </p>
+<p>View 是什么？就是不同的表现层，不同的前端界面。同样的一个业务逻辑，是可以提供给不同的界面，比如 Web 页面，iOS，Android，邮件或者外部系统等。当然，现在大家可能无法很好的理解这一点。先留个印象，代码写的越多，就越有体会。  </p>
+<h3 id="把业务逻辑层处理后的结果，按照要求的格式返回"><a href="#把业务逻辑层处理后的结果，按照要求的格式返回" class="headerlink" title="把业务逻辑层处理后的结果，按照要求的格式返回"></a>把业务逻辑层处理后的结果，按照要求的格式返回</h3><p>什么叫要求的格式呢？谁提出来的要求？前端。  </p>
+<ul>
+<li>对于静态页面来说，返回的是某一个 HTML 文件内容  </li>
+<li>对于动态页面来说，返回的是填充了内容的 HTML 页面模板  </li>
+<li>对于 Ajax 请求来说，返回的是 JSON 或者 XML 格式的数据  </li>
+</ul>
+<p>其实不同的格式要求，也是可以看作是不同 View 的其中一种情况。  </p>
+<h2 id="evergrow-脚手架的路由和控制器"><a href="#evergrow-脚手架的路由和控制器" class="headerlink" title="evergrow 脚手架的路由和控制器"></a>evergrow 脚手架的路由和控制器</h2><p>现在我们来结合 evergrow 脚手架生成的代码，进一步理解上面说的基本概念和使用套路。  </p>
+<h3 id="定义-Controller"><a href="#定义-Controller" class="headerlink" title="定义 Controller"></a>定义 Controller</h3><p>在<a href="./05-business-logic.md">业务逻辑层那一章</a>，我们讲到 CRUD 这四个最基本的数据操作。Controller <code>module/image/image-controller.js</code> 其实也包含了对应的几个方法：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  listImagePage: listImagePage,</div><div class="line">  loadImagePage: loadImagePage,</div><div class="line">  listImage: listImage,</div><div class="line">  loadImage: loadImage,</div><div class="line">  createImage: createImage,</div><div class="line">  updateImage: updateImage,</div><div class="line">  removeImage: removeImage</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em><code>listImagePage</code> 和 <code>loadImagePage</code> 是打开图片列表页和详情页的，就像你上淘宝或者京东那种产品列表和产品详情页。这个我们回头讲 View 的时候再展开，我们先来看其它的 CRUD 方法。</em>  </p>
+<p>首先，我们来看读取单一图片数据的方法：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImage</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  ImageManager.load(req.params.id)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">entity</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> res.json(buildApiResponse(entity))</div><div class="line">    &#125;)</div><div class="line">    .catch(next)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法是我们 MVC 的一个 Controller，但其实也是一个 <a href="http://expressjs.com/en/guide/writing-middleware.html" target="_blank" rel="external">Express 框架的中间件</a>。中间件是什么呢？我们来看下图：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-express-middleware.png" alt="Express Middleware"></p>
+<ul>
+<li>Req 是请求。它承载着请求的HTTP 操作（GET/POST），路径（URL），和参数等。  </li>
+<li>Res 是回复。我们通过它决定什么时候返回，以及返回什么数据给发出请求的人或系统。  </li>
+<li>Middleware 就是 Express 的中间件。  <ol>
+<li>对应一个 URL 路径，我们可以设置一到多个中间件  </li>
+<li>请求依次通过每一个中间件，如果没有中途返回（红色那些虚线）的话  </li>
+</ol>
+</li>
+</ul>
+<p>我们可以把中间件想像成流水线上负责不同生产步骤的工人。每一个工人都拿着上游传递过来的半成品（Req）进行检查或处理。如果某一位置的工人处理时发现半成品有问题，可以中途打回，如果没问题，加工后再传递到下一层。能顺利通过所有的检查和处理的，就到达业务逻辑层，最后经由（Res）返回成品。  </p>
+<p>所以，上面的方法 <code>loadImage</code> 其实是最后一个 Middleware。数据到达这里开始交给业务逻辑层 <code>ImageManager</code> 处理。然后（then）通过调用 <code>res.json()</code> 方法返回 JSON (JavaScript Object Notation) 格式的数据。  </p>
+<p>大家如果仔细看文件 <code>image-controller.js</code> 里面几个不同的 Controller，会发现有几个微小的 <code>req</code> 用法差异：</p>
+<ul>
+<li><code>req.query</code>  </li>
+<li><code>req.params.id</code>  </li>
+<li><code>req.body</code>  </li>
+</ul>
+<p>它们的作用都是从 <code>req</code> 里面获取用户请求的数据。具体的使用方法，将在下面讲解路由的时候结合说明。  </p>
+<h4 id="延伸内容"><a href="#延伸内容" class="headerlink" title="延伸内容"></a>延伸内容</h4><p>Controller 里面有两个比较特别的东西。这里只做基本的解释，如果大家暂时觉得不好理解，可以先记住它们的作用，学会在框架里使用这种套路就好。  </p>
+<ul>
+<li><code>next</code>：它是一个函数。调用方法 <code>next()</code> 其实就会把控制权交到下一个 Middleware，把请求交给它处理。  </li>
+<li><code>catch</code>：它能捕获上面处理业务逻辑时候的错误。把 <code>next</code> 放在这里，作用就是，当有错误发生的时候，Express 注册的<a href="http://expressjs.com/en/guide/error-handling.html" target="_blank" rel="external">错误处理中间件</a>就会处理这个错误。  </li>
+</ul>
+<h3 id="定义路由"><a href="#定义路由" class="headerlink" title="定义路由"></a>定义路由</h3><p>前面说到：<strong>MVC 中的路由，就是路径和 Controller 的对应关系</strong>。那在这个框架里面，我们怎么定义这个对应关系呢？答案就在 <code>module/image/image-routes.js</code>。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  method: <span class="string">'get'</span>,</div><div class="line">  path: <span class="string">'/'</span>,</div><div class="line">  summary: <span class="string">'Gets all Images'</span>,</div><div class="line">  description: <span class="string">''</span>,</div><div class="line">  action: ImageController.listImage,</div><div class="line">  validators: &#123;</div><div class="line">    query: joi.object().keys(&#123;</div><div class="line">      sort: joi.string().valid(<span class="string">'createdAt'</span>, <span class="string">'updatedAt'</span>),</div><div class="line">      direction: joi.string().valid(<span class="string">'desc'</span>, <span class="string">'asc'</span>).default(<span class="string">'desc'</span>),</div><div class="line">      limit: joi.number().integer().max(<span class="number">100</span>).default(<span class="number">10</span>),</div><div class="line">      page: joi.number().integer()</div><div class="line">    &#125;).with(<span class="string">'sort'</span>, <span class="string">'direction'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;,</div><div class="line">&#123;</div><div class="line">  method: <span class="string">'post'</span>,</div><div class="line">  path: <span class="string">'/'</span>,</div><div class="line">  summary: <span class="string">'Creates Image'</span>,</div><div class="line">  description: <span class="string">''</span>,</div><div class="line">  action: ImageController.createImage</div><div class="line">&#125;,</div><div class="line">&#123;</div><div class="line">  method: <span class="string">'get'</span>,</div><div class="line">  path: <span class="string">'/:id'</span>,</div><div class="line">  summary: <span class="string">'Load Image profile'</span>,</div><div class="line">  description: <span class="string">''</span>,</div><div class="line">  action: ImageController.loadImage</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这三个路由，分别定义的对应关系是：  </p>
+<ul>
+<li>HTTP <code>GET</code> 和 URL <code>&#39;/&#39;</code> 对应了 <code>listImage</code>，也就是批量读取图片。  </li>
+<li>HTTP <code>POST</code> 和 URL <code>&#39;/&#39;</code> 对应了 <code>createImage</code>，也就是创建图片。  </li>
+<li>HTTP <code>GET</code> 和 URL <code>&#39;/:id&#39;</code> 对应了 <code>loadImage</code>，也就是读取单一图片。  </li>
+</ul>
+<p>因为在 <code>image-routes.js</code> 里还有这么一段：<code>module.exports.basePath = &#39;/image&#39;</code>，所以，批量读取图片的完整 URL 路径就是 <code>/image/</code>。<code>basePath</code> 的作用是为了隔离不同模块。  </p>
+<p>这里有两大点要注意:  </p>
+<ol>
+<li>路由的定义和匹配，是按 HTTP 方法 + URL 两者来标识的。  </li>
+<li>路由定义的顺序是有讲究的。在 <code>module.exports.routes</code> 数组里面，URL 和 Controller 的对应关系，是按顺序注册到 Express 框架里面的。所以，如果一不小心，顺序安排不当，前端发起的请求很可能就被意料之外的 Controller 拦截。  </li>
+</ol>
+<h3 id="REST-API-服务的测试"><a href="#REST-API-服务的测试" class="headerlink" title="REST API 服务的测试"></a>REST API 服务的测试</h3><p>到这里，其实我们可以测试一下那些能操作图片数据的服务了。没有页面测不了？作为后端开发者，肯定不能说要依赖页面才能测试自己写好的 REST API。下面我们来看看怎么使用 <a href="https://www.getpostman.com/" target="_blank" rel="external">Postman</a> 来做测试。  </p>
+<p>我们先启动我们的项目。在命令行，进入项目目录，输入 <code>node index.js</code>。项目启动成功应该会输出类似的日志。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-server-started.png" alt="Server Started"></p>
+<p>然后我们启动 Postman：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-postman-started.png" alt="Postman Started"></p>
+<h4 id="C-Create"><a href="#C-Create" class="headerlink" title="C - Create"></a>C - Create</h4><p>我们先通过它来创建一条图片记录：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-create.png" alt="Create Image"></p>
+<p>大家在红色框的地方输入相应的参数，然后点击 Send 按钮，就可以看到服务器给予正确的返回了。这样就表示数据库已经成功地创建了一条记录。  </p>
+<p>Controller 里面使用的 <code>req.body</code> 所获取的数据，就是我们在 <code>Body</code> 这里输入的 JSON 数据。大家可以尝试一下，在 JSON 数据里面加多一些属性，比如 width, height 之类的，看能否保存到数据库。  </p>
+<p>另外，我们其实还可以对传过去的参数做一定的限制和检查。如果我们把路由的定义稍微改一下，你们看如果一些数据不传有什么结果。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  method: <span class="string">'post'</span>,</div><div class="line">  path: <span class="string">'/'</span>,</div><div class="line">  summary: <span class="string">'Creates Image'</span>,</div><div class="line">  description: <span class="string">''</span>,</div><div class="line">  action: ImageController.createImage,</div><div class="line">  validators: &#123;</div><div class="line">    body: joi.object().keys(&#123;</div><div class="line">      url: joi.string().required(),</div><div class="line">      createdUserId: joi.string().required(),</div><div class="line">      sex: joi.string()</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/hapijs/joi" target="_blank" rel="external">joi</a> 还有更多有趣的用法，有兴趣的可以自己去了解一下。</p>
+<h4 id="R-Read"><a href="#R-Read" class="headerlink" title="R - Read"></a>R - Read</h4><p>通过上面的练习和尝试，我们应该已经创建出来一些测试数据了。现在我们来测试读取记录。  </p>
+<p>首先是读取某一条记录：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-load.png" alt="Load Image"></p>
+<p>服务器怎么知道我要读哪一条记录？Controller 里使用的 <code>req.params.id</code> 其实对应的是路由里配置的 <code>&#39;/:id&#39;</code>，它通过和真正的URL <code>http://localhost:3000/image/585699146c7b082fba163580</code> 进行匹配。截取出来的最后一段，就是记录的 <code>id</code>。  </p>
+<p>批量读取多条记录的方式就如下图：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-list.png" alt="List Image"></p>
+<p>大家可以看到，GET 请求的另一种传递参数方式是如何拼接到 URL 上面的。在 Controller 里面通过 <code>req.query</code> 就能获取到这些参数。大家可以通过在 Controller 里加上 <code>console.log(req.query)</code> 的方法来调试并打印数据出来看看。你们看到那些特殊的参数，是 evergrow 框架在批量读取数据时，支持的一些特定的系统参数。它们的作用是指示后台如何在数据量比较多的时候，分页返回记录。  </p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ul>
+<li>你能够为 <code>Updates Image profile</code> 这个路由，完善好 <code>body</code> 的验证部分吗？可以给前面一章新加的 <code>approve</code> 方法，加对应的 Controller 和路由吗？  </li>
+</ul>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul>
+<li>大家看到 Controller 和 Manager 这个业务逻辑层有什么不同吗？哪些代码放在 Controller，哪些放在业务层？什么是和 View 相关的处理逻辑？  </li>
+</ul>
+<ul>
+<li>扩展阅读：<a href="http://expressjs.com/en/guide/routing.html" target="_blank" rel="external">Express Routing Guide</a>。为什么我的写法和 Express 的不同？猜猜我为什么要这样定义，和尝试寻找在什么地方和 Express 结合的？  </li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这一章我们要讲的是 &lt;a href=&quot;https://en.wikipedia.org/wiki/Model–view–controller&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MVC&lt;/a&gt; 的 C，也就是 Controller。在 Web A
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
+    
+      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
+    
+      <category term="Controller" scheme="http://www.thinkingincrowd.me/tags/Controller/"/>
+    
+      <category term="Routing" scheme="http://www.thinkingincrowd.me/tags/Routing/"/>
+    
+  </entry>
   
   <entry>
     <title>Node.js 微信后台搭建系列 - 业务逻辑层</title>
@@ -1292,50 +1422,6 @@
       <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
     
       <category term="Believe" scheme="http://www.thinkingincrowd.me/tags/Believe/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>转变到“管理他人”的路上最容易摔倒的地方</title>
-    <link href="http://www.thinkingincrowd.me/2016/03/13/transition-to-managing-others/"/>
-    <id>http://www.thinkingincrowd.me/2016/03/13/transition-to-managing-others/</id>
-    <published>2016-03-13T06:10:16.000Z</published>
-    <updated>2016-03-18T12:39:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>一直以来，我都不太喜欢 Management，而倾向于喜欢 Leadership 这个词。我对那些单纯的命令或者军事性的管理也嗤之以鼻，认为那是对知识管理者的不恰当管理的方式。看过管理大师 Peter F. Drucker 的 <a href="http://www.amazon.com/Effective-Executive-Definitive-Harperbusiness-Essentials/dp/0060833459" target="_blank" rel="external">The Effective Executive: The Definitive Guide to Getting the Right Things Done</a> 那本书后，我对他说的的新时代下做事和管理方式的理念更是认同。</p>
-<p>但是，仅仅因为不喜欢旧的管理方式，我却把另一些无论是 Leadership 还是 Management 都要做的东西给忽略掉了。最近看过李笑来老师介绍的 <a href="http://www.amazon.com/Leadership-Pipeline-Build-Powered-Company/dp/8126531223" target="_blank" rel="external">The Leadership Pipeline: How to Build the Leadership Powered Company</a>，更是清楚认识到自己缺失了什么。</p>
-<p>在整个领导力升级通道里，最底层的是从管理自己到管理他人的转变。可以说我也正在经历这个阶段。那就在这里说说自己的感受吧。</p>
-<h2 id="个人贡献者和管理者的差异"><a href="#个人贡献者和管理者的差异" class="headerlink" title="个人贡献者和管理者的差异"></a>个人贡献者和管理者的差异</h2><p>书中有一个很好的表格详细阐述了从个人贡献者到一个一线管理者在各个方面所需要的转变。可以看到，两种不同的角色在各个方面的差异还是蛮大的，所以转变过程其实会碰到不少问题。</p>
-<p><img alt="Contributor vs First Line Manager - Skills" src="http://77g8zm.com1.z0.glb.clouddn.com/contributor_vs_first_line_manager_skill.png"></p>
-<p><img alt="Contributor vs First Line Manager - Time and Value" src="http://77g8zm.com1.z0.glb.clouddn.com/contributor_vs_first_line_manager_time_value.png"></p>
-<h2 id="容易出现的问题"><a href="#容易出现的问题" class="headerlink" title="容易出现的问题"></a>容易出现的问题</h2><h3 id="无法放下技术"><a href="#无法放下技术" class="headerlink" title="无法放下技术"></a>无法放下技术</h3><p>余晟最近在公众号写了篇《<a href="http://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&amp;mid=402149740&amp;idx=1&amp;sn=d97eb29c3a115919f8c82564b58cd53b&amp;scene=0#wechat_redirect" target="_blank" rel="external">技术领导必须更懂技术吗？</a>》。我一直到现在也还是有他说的困惑。因为自己的技术底子并不深厚，所以觉得如果我放弃了技术，完全转型管理的话，感觉非常没有安全感。再说，虽然我并不是说怕下属比自己厉害而丢脸，但是也不想做一个瞎指挥的领导。只是，是否只要能抱着谦虚的心态，和像他介绍的肉饼铺子的 Robbin 说的那样就好了呢？</p>
-<blockquote>
-<p>我的做法比较狠，把下属研发团队变成我自己学习新技术的延伸大脑，鼓励他们不断学习和尝试，然后讲给我听，我再提出问题让他们给我解决。这样我就可以用最少的时间和精力，快速积累更多的知识。</p>
-</blockquote>
-<p>我还没有完全解决这个问题。等我试过并成功后再告诉大家。</p>
-<h3 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h3><p>一些优秀的个人贡献者，特别是无法放下技术的情况下，在这方面就适应不过来。因为个人的能力比下属优秀，所以在旁边看不下去或者等得干着急了，就把下属的事情抢过来自己做了。这种领导往往把自己累的半死，而下属也永远成长不起来。</p>
-<p>另一种极端是我们平常厌恶的那些“只懂得指点别人干活”的管理者。其实他们做的并不是真正的授权。真正的授权要做的事情可不单单把任务交出去那么简单。它还包括懂得怎么平衡优先级，分配任务，教导，监控进度，保护下属不受干扰等。被视为“只懂得指点别人干活”，多半是因为这些事情没做好。</p>
-<p>所以，当一个管理者对下属说：“细节我不看，只看最后的结果”的时候，下属其实会有两种截然不同的反应。好的反应是，他知道上司不插手自己怎么做一件事情，他可以有发挥的空间（这也是知识工作者喜欢的）。同时，上司的目标是清晰的，沟通也清楚。最重要的是，他知道真正遇到困难的时候，他可以向上司寻求帮助，共同解决问题。另一种不好的反应就是，“妈的，只知道要我干活，对我不管也不问。又要加班加点搞。”</p>
-<p>在授权这点上，自问自己做得还算可以吧。之前也写了一篇关于《<a href="http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/">如何授权</a>》的文章，有兴趣的朋友可以看看，给些意见。</p>
-<h3 id="建立关系，推动事情"><a href="#建立关系，推动事情" class="headerlink" title="建立关系，推动事情"></a>建立关系，推动事情</h3><p>这一方面是我忽略和最不擅长的部分。虽然我对自己的团队做得还行，但是我并不善于对外和其它部门建立关系，以及推动事情。</p>
-<p>一直以来在我心中，理想的状态是领导和公司都有比较清晰的目标和任务安排。大家都能向着这一个正确的目标在努力，互相配合。实际情况下，先不说目标不清，多头并进的情况。即便从根本上来说，公司的目标只有一个，各个部门为这个目标都会有自己的安排，都有各自的利益。对你来说很重要，但需要其它部门配合的事情，可能对他们来说优先级不高。如何能寻求共同利益，更主动得把事情推动下去，我一直没有什么好办法。我一直有点依赖，觉得这些涉及多部门的，都只能靠寻求更高层的职位权力来决定。</p>
-<p>我感觉这可以说是最难习得，而且是技术转做管理和创业最需要培养的能力了。而且它不像技术，还很难单单靠看书和自己多练习就能学会。我还在摸索，谁有比较好的意见和想法，可以分享一下。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一直以来，我都不太喜欢 Management，而倾向于喜欢 Leadership 这个词。我对那些单纯的命令或者军事性的管理也嗤之以鼻，认为那是对知识管理者的不恰当管理的方式。看过管理大师 Peter F. Drucker 的 &lt;a href=&quot;http://www.ama
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Management" scheme="http://www.thinkingincrowd.me/tags/Management/"/>
-    
-      <category term="Delegation" scheme="http://www.thinkingincrowd.me/tags/Delegation/"/>
-    
-      <category term="Leadership" scheme="http://www.thinkingincrowd.me/tags/Leadership/"/>
     
   </entry>
   
