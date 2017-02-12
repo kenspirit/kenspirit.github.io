@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2016-12-31T03:49:52.000Z</updated>
+  <updated>2017-02-12T07:21:34.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,11 +16,105 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Node.js 微信后台搭建系列 - 视图</title>
+    <link href="http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/"/>
+    <id>http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/</id>
+    <published>2017-02-12T07:25:00.000Z</published>
+    <updated>2017-02-12T07:21:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>虽然后端开发人员并不一定要学前端，自测也可以借助别的工具完成。但是，了解前端开发的特性，困难点，你才能更好地设计 API，成为一个前端人员乐意合作的好伙伴。  </p>
+<h2 id="evergrow-脚手架生成的视图"><a href="#evergrow-脚手架生成的视图" class="headerlink" title="evergrow 脚手架生成的视图"></a>evergrow 脚手架生成的视图</h2><p>用 <code>evergrow</code> 脚手架生成视图相关的文件是非常方便的。要接着构建 <code>Image</code> 模块的视图，只需要用命令 <code>yo evergrow:view Image</code> 就能够生成表格和详情视图所需的 4 个基本文件。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/07-view-boilerplate.png" alt="View Boilerplate"></p>
+<h3 id="模板引擎（Template-Engine）"><a href="#模板引擎（Template-Engine）" class="headerlink" title="模板引擎（Template Engine）"></a>模板引擎（Template Engine）</h3><p>生成上面的几个基本文件后，其实你在浏览器输入 <code>http://localhost:3000/image/page/list</code> 就能够看到如下的默认表格视图。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/07-view-default-list.png" alt="Default List"></p>
+<p>根据上一章节的教程，应该不难从代码里找到路由对应的 Controller 为：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">listImagePage</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  res.render(<span class="string">'image/imageList'</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>和之前介绍的 RESTful API 不同，<code>res</code> 在这里调用的是 <code>render</code> 方法。这个方法调用模板引擎去寻找匹配的视图模板，处理后返回给前端。<strong>模板引擎最基本的作用</strong>是什么呢？  </p>
+<ul>
+<li><strong>编译</strong>。浏览器要渲染的视图，是 HTML 格式的文本。我们可以用其它格式（如 Jade）来编写视图模板，再由模板引擎编译成 HTML。  </li>
+<li><strong>填充动态数据，控制显示样式</strong>。比如，论坛页面可以根据打开用户判断，自己发的帖子或回复能有编辑按钮，其它人就没有。  </li>
+</ul>
+<p>具体 Express 框架里怎么使用模板引擎我就不详细介绍了，感兴趣的同学可以看<a href="http://expressjs.com/en/guide/using-template-engines.html" target="_blank" rel="external">官方文档</a>。在 evergrow 框架里面，具体的配置在 <code>server-manager.js</code>：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// View engine</span></div><div class="line">app.set(<span class="string">'views'</span>, <span class="string">'./view/'</span>) <span class="comment">// 模板放置的文件夹</span></div><div class="line">app.set(<span class="string">'view engine'</span>, <span class="string">'html'</span>)</div><div class="line">app.engine(<span class="string">'html'</span>, <span class="built_in">require</span>(<span class="string">'ejs-mate'</span>)) <span class="comment">// 我们选择的模板引擎是 EJS</span></div></pre></td></tr></table></figure>
+<h2 id="HTML-amp-CSS"><a href="#HTML-amp-CSS" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h2><p>上述路由对应的页面 <code>/view/image/imageList.html</code> 是一个包含了表格的视图。表格是一种相当常见的表现形式，尤其在企业级系统和后台管理页面。它多数用于展示多个同级别的数据。  </p>
+<p>实现这个页面的代码其实很简单，HTML 的视图模板和 JavaScript 加起来才 100 行左右的代码。必须注意的是<strong>一开始别深入细节，先从整体结构上面来理解</strong>。  </p>
+<p>我们来解构一下 HTML 视图模板。页面分了五大部分：  </p>
+<ol>
+<li>标题（<code>h2</code> 标签）  </li>
+<li>工具栏按钮（<code>button</code> 标签）  </li>
+<li>表格（<code>table</code> 标签，下图中的蓝色框部分）  </li>
+<li>编辑数据的弹窗（<code>modal</code>，默认隐藏，绿色框部分）  </li>
+<li>外部 JavaScript 文件引用（最下面）  </li>
+</ol>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/07-view-default-list-code.png" alt="Default List Code"></p>
+<p>HTML 语言强调的是页面布局。默认情况下，块状元素 <code>h2</code>, <code>table</code>, <code>div</code> 它们就像叠积木一样从上往下堆叠在一起。所以，写前端最基本就是要想好整个页面，是怎么切割成一个个盒子模型（box model），然后组装在一起。  </p>
+<p>CSS 能更丰富和精确地定位和布局页面。非纯前端不用了解太细，碰到什么常见的，看得懂就差不多了。比如说，<code>class=&quot;col-sm-12&quot;</code> 是 Bootstrap 框架的 <a href="http://getbootstrap.com/css/#grid" target="_blank" rel="external">Grid System</a>。Grid System 其实就是把你的屏幕像栅栏那样平均分割成 12 列。那个 CSS 的意思就是它的大小占满整个屏幕。  </p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>用 HTML 和 CSS 完成页面布局后，我们就需要用 JavaScript 来为页面的元素赋予行为，比如为用户的鼠标点击做出反应。页面最下方 <code>&lt;% ... %&gt;</code> 中间的部分，其实是在后台被模板引擎执行的。怎么用你先不用理会，只要知道引用了 <code>common.js</code> 和 <code>imageList.js</code> 两个文件就可以了。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">  &lt;%</div><div class="line">    block(<span class="string">'moduleScript'</span>).append(</div><div class="line">      Loader(<span class="string">'/public/build/imageList.min.js'</span>)</div><div class="line">        .js(<span class="string">'/public/js/common/common.js'</span>)</div><div class="line">        .js(<span class="string">'/public/js/image/imageList.js'</span>)</div><div class="line">        .done(assets, config.site_static_host)</div><div class="line">    )</div><div class="line">  %&gt;</div><div class="line"><span class="string">``</span><span class="string">`  </span></div><div class="line"></div><div class="line">### Vue.js</div><div class="line"></div><div class="line">这个框架是一个轻量级的**双向数据绑定**的前端框架，我们只需要知道最基本的使用方法就够了。我们对着 `/public/js/image/imageList.js<span class="string">` 里面的代码一点点来看吧。  </span></div><div class="line"></div><div class="line">首先 `el: <span class="string">'#imageList'</span><span class="string">` 对应了上图红色框框 `</span>id=<span class="string">"imageList"</span><span class="string">` 部分。它表示 Vue.js 框架监控这个 `</span>id<span class="string">` 对应的元素里面包含的所有元素。  </span></div><div class="line"></div><div class="line">#### 数据</div><div class="line"></div><div class="line">[Data Binding]: http://v1.vuejs.org/guide/syntax.html</div><div class="line"></div><div class="line">`data<span class="string">` 部分是 Vue.js 要监控的 **数据**。如果页面的元素用到了这些数据，当你代码改变这些数据的时候，页面引用的地方也会相应更改。`</span>url<span class="string">` 在黄色框框的 `</span>:data-url=<span class="string">"url"</span><span class="string">` 使用了。`</span>:<span class="string">` 这个小冒号就是让 Vue.js 监控它的意思，并把 `</span>url<span class="string">` 对应的数据 `</span><span class="string">'/image'</span><span class="string">` 赋值给 `</span>data-url<span class="string">` 这个给 `</span>bootstrap-table<span class="string">` 库在绘制表格时用到的参数。小冒号是 `</span>v-bind:<span class="string">` 的缩写。都是 Vue.js 的 [Data Binding][] 语法。仔细看看 `</span>pageList<span class="string">` 在页面的使用有什么不同？  </span></div><div class="line"></div><div class="line">`<span class="string">``</span>javascript</div><div class="line">  data: &#123;</div><div class="line">    url: <span class="string">'/image'</span>,</div><div class="line">    pageList: [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>],</div><div class="line">    errorMsg: <span class="string">''</span></div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h4 id="行为"><a href="#行为" class="headerlink" title="行为"></a>行为</h4><p><code>methods</code> 部分是 Vue.js 监控的<strong>行为</strong>。第一个行为就是点击工具栏的 <code>Create</code> 按钮的时候，页面跳转到新建图片的页面。它的绑定方式是 <code>v-on:click=&quot;createImage&quot;</code>。另一个行为是在弹窗里修改完图片资料后，点击 Save 保存的。绑定的方式是 <code>@click=&quot;saveImage()&quot;</code>。后面一种写法也是缩写。无论绑定方法名，还是像后一种那样绑定表达式都是可以的。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">methods: &#123;</div><div class="line">  createImage: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">window</span>.location = <span class="string">'/image/page/load'</span></div><div class="line">  &#125;,</div><div class="line">  saveImage: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> id = $(<span class="string">'#imageId'</span>).val()</div><div class="line"></div><div class="line">    <span class="keyword">let</span> params = &#123;</div><div class="line">      method: <span class="string">'post'</span>,</div><div class="line">      url: <span class="string">'/image/'</span> + id,</div><div class="line">      data: &#123;&#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ajaxRequest(params, (data) =&gt; &#123;</div><div class="line">      $(<span class="string">'#imageTable'</span>).bootstrapTable(<span class="string">'refresh'</span>)</div><div class="line">      $(<span class="string">'#imageDialog'</span>).modal(<span class="string">'toggle'</span>)</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Vue.js 的这些绑定方式，在编程里属于<strong>声明式编程</strong>。HTML 和 CSS 语言其实也是声明式编程。下面我们通过对 jQuery 的学习，来对比一下<strong>命令式编程</strong>的不同之处。  </p>
+<h3 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h3><h4 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h4><p>仅仅在 HTML 里面用一个 <code>table</code> 标签其实是不足够的，里面的标题和内容还需要 <code>thead</code>，<code>tbody</code>，<code>tr</code> 和 <code>td</code> 等标签才能完成。所以，代码里其实通过调用 <code>bootstrap-table</code> 这个库，按照我们的配置，包括获取数据的路由，和要显示的列等生成你们看到的表格。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> columns = [&#123;</div><div class="line">  field: <span class="string">'createdAt'</span>,</div><div class="line">  title: <span class="string">'Created At'</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span>,</div><div class="line">  formatter: timeFormatter</div><div class="line">&#125;, &#123;</div><div class="line">  field: <span class="string">'createdUser'</span>,</div><div class="line">  title: <span class="string">'Created By'</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span></div><div class="line">&#125;, &#123;</div><div class="line">  field: <span class="string">'updatedAt'</span>,</div><div class="line">  title: <span class="string">'Updated At'</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span>,</div><div class="line">  formatter: timeFormatter</div><div class="line">&#125;, &#123;</div><div class="line">  field: <span class="string">'updatedUser'</span>,</div><div class="line">  title: <span class="string">'Updated By'</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span></div><div class="line">&#125;, &#123;</div><div class="line">  field: <span class="string">'deleted'</span>,</div><div class="line">  title: <span class="string">''</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span>,</div><div class="line">  formatter: <span class="function"><span class="keyword">function</span>(<span class="params">value, row, index</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> value === <span class="literal">true</span> ? <span class="string">'Deleted'</span> : <span class="string">''</span></div><div class="line">  &#125;</div><div class="line">&#125;, &#123;</div><div class="line">  field: <span class="string">''</span>,</div><div class="line">  title: <span class="string">''</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span>,</div><div class="line">  events: &#123;</div><div class="line">    <span class="string">'click .edit'</span>: (e, value, row, index, activeBtn) =&gt; &#123;</div><div class="line">      $(<span class="string">'#imageId'</span>).val(row._id)</div><div class="line">      $(<span class="string">'#imageDialog'</span>).modal(<span class="string">'toggle'</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  formatter: <span class="function"><span class="keyword">function</span>(<span class="params">value, row, index</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">`&lt;div class="btn-group dropdown"&gt;</span></div><div class="line">      &lt;button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;</div><div class="line">        Action &lt;span class="caret"&gt;&lt;/span&gt;</div><div class="line">      &lt;/button&gt;</div><div class="line">      &lt;ul class="dropdown-menu"&gt;</div><div class="line">        &lt;li class="edit"&gt;&lt;a href="#"&gt;Edit&lt;/a&gt;&lt;/li&gt;</div><div class="line">      &lt;/ul&gt;</div><div class="line">    &lt;/div&gt;`</div><div class="line">  &#125;</div><div class="line">&#125;]</div><div class="line"></div><div class="line"><span class="comment">// 省略中间部分</span></div><div class="line"></div><div class="line">ready: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  $(<span class="string">'#imageTable'</span>).bootstrapTable(&#123;</div><div class="line">    columns: columns,</div><div class="line">    queryParams: (p) =&gt; &#123;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> v <span class="keyword">in</span> self.params) &#123;</div><div class="line">        p[v] = self.params[v]</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">return</span> p</div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当页面的元素准备好后， <code>ready</code> 方法会被调用。jQuery 库（也就是这个美元符号 <code>$</code>）根据我们提供的 ID <code>#imageTable</code>，还有表格列的定义 <code>columns</code> 来生成。  </p>
+<p>那么，我们要在表格加上 <code>image-model.js</code> 里面用到的 <code>gender</code> 和 <code>url</code> 数据，只需要多加两列的配置就可以了。通过提供一个 <code>formatter</code> 方法，还能自定义数据的显示方式。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  field: <span class="string">'url'</span>,</div><div class="line">  title: <span class="string">'Image'</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span>,</div><div class="line">  formatter: <span class="function"><span class="keyword">function</span>(<span class="params">value, row, index</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (value) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="string">`&lt;a href="/image/page/load/<span class="subst">$&#123;row._id&#125;</span>"&gt;&lt;img src="<span class="subst">$&#123;value&#125;</span>" width="50px" height="50px"&gt;&lt;/a&gt;`</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="string">''</span></div><div class="line">  &#125;</div><div class="line">&#125;, &#123;</div><div class="line">  field: <span class="string">'gender'</span>,</div><div class="line">  title: <span class="string">'Gender'</span>,</div><div class="line">  width: <span class="number">60</span>,</div><div class="line">  align: <span class="string">'center'</span>,</div><div class="line">  halign: <span class="string">'center'</span>,</div><div class="line">  formatter: <span class="function"><span class="keyword">function</span>(<span class="params">value, row, index</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span>(value) &#123;</div><div class="line">      <span class="keyword">case</span> <span class="string">'F'</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">'女'</span></div><div class="line">      <span class="keyword">case</span> <span class="string">'M'</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">'男'</span></div><div class="line">      <span class="keyword">default</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">''</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/07-view-customized-list.png" alt="Customized List"></p>
+<h4 id="弹窗"><a href="#弹窗" class="headerlink" title="弹窗"></a>弹窗</h4><p>打开详情页是编辑数据的一种方式。不过，在单页面应用，或者想提供一种更便捷的数据更改方式的话，弹窗也是一种使用手段。  </p>
+<p>在操作列有一个下拉菜单，里面的选项通过 <code>li</code> 标签实现。把它的 <code>class</code> 属性值 <code>edit</code> 和事件定义 <code>events</code> 里面的点击事件（<code>click</code>）绑定后，点菜单项就会触发 Event Handler 里面的两行代码，弹窗就显示出来了。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">events: &#123;</div><div class="line">  <span class="string">'click .edit'</span>: (e, value, row, index, activeBtn) =&gt; &#123;</div><div class="line">    $(<span class="string">'#imageId'</span>).val(row._id)</div><div class="line">    $(<span class="string">'#imageDialog'</span>).modal(<span class="string">'toggle'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 省略中间部分</span></div><div class="line"></div><div class="line">&lt;li <span class="class"><span class="keyword">class</span></span>=<span class="string">"edit"</span>&gt;&lt;a href="#"&gt;Edit&lt;/a&gt;&lt;/li&gt;</div></pre></td></tr></table></figure>
+<p>Event Handler 里面的两行代码其实就是命令式编程的形式（一步一步教电脑怎么做）：  </p>
+<ol>
+<li>获取页面 ID 为 <code>imageId</code> 的元素：<code>$(&#39;#imageId&#39;)</code>  </li>
+<li>把数据 ID 赋值给它：<code>.val(row._id)</code>  </li>
+<li>获取弹窗元素：<code>$(&#39;#imageDialog&#39;)</code>  </li>
+<li>显示：<code>.modal(&#39;toggle&#39;)</code>  </li>
+</ol>
+<p>相应的，<code>saveImage</code> 方法里面也是一步步列出保存数据到服务器前要经过的步骤：  </p>
+<ol>
+<li>获取数据  </li>
+<li>准备参数并提交服务器  </li>
+<li>成功后刷新表格，隐藏弹窗  </li>
+</ol>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/07-view-default-modal.png" alt="Detaul Modal"></p>
+<p>默认的弹窗只有些象征性的文字，我们可通过下面的代码，实现修改 Model 里的 <code>gender</code> 和 <code>deleted</code> 数据的功能。（虽然图片链接不能直接改，但是因为接口限制了数据 <code>url</code> 不能为空，所以还是加上隐藏元素，保存时也一起发给服务器）  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">id</span>=<span class="string">"imageUrl"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"gender"</span>&gt;</span>Gender<span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"gender"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"F"</span>&gt;</span>Female<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"M"</span>&gt;</span>Male<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"checkbox"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">id</span>=<span class="string">"deleted"</span>&gt;</span> Deleted？</div><div class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">events: &#123;</div><div class="line">  <span class="string">'click .edit'</span>: (e, value, row, index, activeBtn) =&gt; &#123;</div><div class="line">    $(<span class="string">'#imageId'</span>).val(row._id)</div><div class="line">    $(<span class="string">'#imageUrl'</span>).val(row.url)</div><div class="line">    $(<span class="string">'#gender'</span>).val(row.gender)</div><div class="line">    $(<span class="string">'#deleted'</span>).prop(<span class="string">'checked'</span>, row.deleted)</div><div class="line">    $(<span class="string">'#imageDialog'</span>).modal(<span class="string">'toggle'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 省略中间部分</span></div><div class="line"></div><div class="line">saveImage: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> id = $(<span class="string">'#imageId'</span>).val()</div><div class="line">  <span class="keyword">var</span> gender = $(<span class="string">'#gender'</span>).val()</div><div class="line">  <span class="keyword">var</span> url = $(<span class="string">'#imageUrl'</span>).val()</div><div class="line"></div><div class="line">  <span class="keyword">var</span> params = &#123;</div><div class="line">    method: <span class="string">'post'</span>,</div><div class="line">    url: <span class="string">'/image/'</span> + id,</div><div class="line">    data: &#123;</div><div class="line">      gender: gender,</div><div class="line">      url: url</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ajaxRequest(params, (data) =&gt; &#123;</div><div class="line">    $(<span class="string">'#imageTable'</span>).bootstrapTable(<span class="string">'refresh'</span>)</div><div class="line">    $(<span class="string">'#imageDialog'</span>).modal(<span class="string">'toggle'</span>)</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/07-view-customized-modal.png" alt="Customized Modal"></p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ul>
+<li>修改详情页 <code>/view/image/imageProfile.html</code> 和 <code>/js/image/imageProfile.js</code> 实现图片和字段 <code>gender</code>, <code>deleted</code> 的显示，并且能够修改字段 <code>gender</code>, <code>deleted</code>。</li>
+</ul>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul>
+<li>前端页面通过 Ajax 拿数据和 JavaScript 逻辑也可以动态往页面添加数据和控制样式，那用模板引擎来处理有什么好处呢？  </li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;虽然后端开发人员并不一定要学前端，自测也可以借助别的工具完成。但是，了解前端开发的特性，困难点，你才能更好地设计 API，成为一个前端人员乐意合作的好伙伴。  &lt;/p&gt;
+&lt;h2 id=&quot;evergrow-脚手架生成的视图&quot;&gt;&lt;a href=&quot;#evergrow-脚手架生成的
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
+    
+      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
+    
+      <category term="View" scheme="http://www.thinkingincrowd.me/tags/View/"/>
+    
+  </entry>
+  
+  <entry>
     <title>2016 会是我的转折点吗？</title>
     <link href="http://www.thinkingincrowd.me/2016/12/31/2016-retrospect-and-2017-goal-setting/"/>
     <id>http://www.thinkingincrowd.me/2016/12/31/2016-retrospect-and-2017-goal-setting/</id>
     <published>2016-12-31T03:14:30.000Z</published>
-    <updated>2016-12-31T03:49:52.000Z</updated>
+    <updated>2016-12-31T03:54:48.000Z</updated>
     
     <content type="html"><![CDATA[<p>2016 年对我和我的家人来说，是变化很大的一年。我离职了，从传统企业开发领域转到互联网领域，从珠海转战北京，只身漂泊异地。老婆年末也刚离职，打算专心在家休养和负责儿子的教育一段时间。  </p>
 <h2 id="我为什么去北京"><a href="#我为什么去北京" class="headerlink" title="我为什么去北京"></a>我为什么去北京</h2><h3 id="外部诱因"><a href="#外部诱因" class="headerlink" title="外部诱因"></a>外部诱因</h3><p>当初，我加入了李笑来老师的「新生大学」社群，那时的社群 App 非常不稳定，经常有问题。有一次，我在 App 的群里收发不到消息，笑来老师做客服，让我加他微信。就这样，我加到了崇拜已久的人的微信。虽然正常来说没什么卵用。笑来老师一般不聊天，只发朋友圈。  </p>
@@ -77,7 +171,15 @@
 <li><a href="http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/">学习编程需要具备的基本能力 - 正确提问</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2016/09/29/Leave-the-past-behind-and-move-on/">这些年，放下，前行的点滴和感触</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2016/10/12/Importance-of-Breakdown-and-read-thoroughly/">问题分解和逐字阅读的重要性 - 青云部署小记</a>  </li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704313&amp;idx=1&amp;sn=c2ce04c42fb3a54c3338d958cc8211d2&amp;chksm=f1791d73c60e9465e9dca0ce33c3bef44e378dbe55a06c7e297b2207acec752ee837cba90990&amp;scene=21#wechat_redirect" target="_blank" rel="external">雾霾中的一缕阳光和小确幸</a>  </li>
 <li><a href="http://www.thinkingincrowd.me/2016/10/22/Back-to-basics-Wechat-Development/">第一原理 - 微信开发小记</a>  </li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704320&amp;idx=1&amp;sn=3aadf88f808e51f1d05a0089865b6ebd&amp;chksm=f1791d8ac60e949c8584cd36c1f8e32ee6eb482b6da5b81bb290c13da2ccdee7a20a6456b72d&amp;scene=21#wechat_redirect" target="_blank" rel="external">打算建一个 JavaScript 学习群</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704323&amp;idx=1&amp;sn=e536097904fcc880b7fcb5be68d6777e&amp;chksm=f1791d89c60e949f19752a082c6945ba9c13c2c697c23a47767711e2a5b8b5b3c77fcd1dfa81&amp;scene=21#wechat_redirect" target="_blank" rel="external">如何一个命令生成 Node.js Web Application</a>  </li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704326&amp;idx=1&amp;sn=f8c07cbef0c287980a549387db25f7c7&amp;chksm=f1791d8cc60e949a6673ba2901f6f6b7080bb635d92bb7ecf4a78fce33c8596e02cfa3666fca&amp;scene=21#wechat_redirect" target="_blank" rel="external">写作，英语，编程，我到底应该学哪个？怎么够时间？</a>  </li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704333&amp;idx=1&amp;sn=c8f5e3b7ed51f42afef4de0ca01aa25f&amp;chksm=f1791d87c60e94912e8be19221574df48fa0f78499e344e35bccc0568e159fcffe309fc4e733&amp;scene=21#wechat_redirect" target="_blank" rel="external">人性的弱点，是如何影响独立思考和发表见解</a>  </li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704339&amp;idx=1&amp;sn=a415945b8ecc8f3181a1a8f44ae813e1&amp;chksm=f1791d99c60e948f6823cd78fe69eedeff76951fae767803eae10b89a4e7811b3c34c3009242&amp;scene=21#wechat_redirect" target="_blank" rel="external">答一位前端初学者的困惑</a>  </li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704348&amp;idx=1&amp;sn=2127f084087ceb491378060b3b814afd&amp;chksm=f1791d96c60e948010d12d22dc6b590de7923e85cb30177ace92d6e156b5989a82bd843be5ff&amp;scene=21#wechat_redirect" target="_blank" rel="external">「垫底辣妹」背后的力量</a>  </li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzI0NDEwMDk2NQ==&amp;mid=2649704358&amp;idx=1&amp;sn=f00f2756fb62d7c1bcedcde60afa61f4&amp;chksm=f1791dacc60e94bad1b9506ba1f4946721a4d2cd1596bf0396e54507d0d3d25293b70ea36813&amp;scene=21#wechat_redirect" target="_blank" rel="external">永远值得尊重的专业人士</a>  </li>
 </ul>
 <h3 id="JavaScript-全栈培训系列"><a href="#JavaScript-全栈培训系列" class="headerlink" title="JavaScript 全栈培训系列"></a>JavaScript 全栈培训系列</h3><p>因为本来打算在 JavaScript 培训做些事情嘛，同时自己总结和回顾一些知识，所以做了下面一些不同的东西。  </p>
 <h4 id="Tasting-JavaScript"><a href="#Tasting-JavaScript" class="headerlink" title="Tasting JavaScript"></a>Tasting JavaScript</h4><p>自己为了锻炼英语和写作，就尝试写这一本英文版的 JavaScript <a href="https://leanpub.com/tasting-javascript" target="_blank" rel="external">入门书</a>。从 06-22 日第一个 Commit 到现在。写了 7 章，基本把第一大部分 JavaScript 的基础写完了。包括：  </p>
@@ -1400,92 +1502,6 @@
       <category term="Sinon.js" scheme="http://www.thinkingincrowd.me/tags/Sinon-js/"/>
     
       <category term="Unit Test" scheme="http://www.thinkingincrowd.me/tags/Unit-Test/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>什么样的读书姿势才正确</title>
-    <link href="http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/"/>
-    <id>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</id>
-    <published>2016-04-21T00:19:09.000Z</published>
-    <updated>2016-04-21T00:11:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>读了那么多年书了，还不会读吗？别说，可能你还真的不会。这里的“读”要看你怎么定义。</p>
-<h2 id="读书的目标"><a href="#读书的目标" class="headerlink" title="读书的目标"></a>读书的目标</h2><p>当我们决定要拿本书来读的时候，一般怀着下面三种不同的目标：</p>
-<ul>
-<li>娱乐</li>
-<li>获取信息</li>
-<li>增长知识</li>
-</ul>
-<p>书的分类，一般和我们的阅读目标挂钩。想娱乐休闲的，可能会找些小说来看看。国家地理杂志或者旅游攻略可以让你查询一些信息。为了不挂科，大学的学生估计要抱着高数死啃。很少人拿本相对论来看着娱乐，拿本漫画书来增长知识。不过，即便<strong>看同一本书，目标如果不同，“读”的方法就不同</strong>。就比如读《三国演义》，目标可以是寻求娱乐，学习名著的文学风格，或者想从中侧面了解历史信息。但这三种目标的读书方法就应该有很大的差别。</p>
-<p>上面说的三种目标的前两种，基本不需要特别的学习方法。接受过初等教育，认识字，有基本的理解语句的能力就可以了。所以，我这里要说的“正确的读书姿势”主要是针对第三种目标的。</p>
-<h2 id="怎样读才能增长知识"><a href="#怎样读才能增长知识" class="headerlink" title="怎样读才能增长知识"></a>怎样读才能增长知识</h2><p>我们如果是想通过读书来增长知识，首先是假定书里面包含一些我们不知道的知识和作者在某些方面比我们有学识。那么，只有我们把作者那些从前不知道的学识都“完全理解”，我们才能够达到真正意义上的“增长知识”。单纯获取信息是“知其然”，<strong>增长知识则应该要达到“知其所以然”</strong>。</p>
-<p>当我们确定需要深入阅读某一本书的时候，要通过<strong>分析式阅读</strong>的方法来帮助我们“完全理解”书中的观点，并“知其所以然”。它具体包含下面一些步骤。  </p>
-<h3 id="分析式阅读的第一个阶段"><a href="#分析式阅读的第一个阶段" class="headerlink" title="分析式阅读的第一个阶段"></a>分析式阅读的第一个阶段</h3><p>这个阶段的<strong>目的是了解整本书的主要内容和整体结构</strong>。</p>
-<ol>
-<li><p>判定书的类型  </p>
-<p>能为我们增长知识的书，一般都解释或阐明一些事物或道理。这类书我们一般都能比较容易分辨出来。所以，这里说的判定类别是更详细的分类，比如是历史，社会科学，还是哲学或者物理学等。在精读一本书以前，应该用检阅式阅读的方式，通过看它的标题，前言，目录等来先为其分类，形成初步的了解。  </p>
-</li>
-<li><p>用一句或者简短的几句话来概括整本书的内容  </p>
-<p>在完成前面的那一步分类后，我们已经大概知道一本书是关于什么的。但是这还不够，第二步要做的是简短地把内容<strong>完整清晰地表达</strong>出来，也就是提炼主题和中心思想。</p>
-</li>
-<li><p>陈述书的主要部分，并描述各部分是如何组织和安排的  </p>
-<p>一个完整的整体或者复杂的事物，必然是由很多细小的部分组成。像一台完整的电脑，应当有显示部件，CPU，存储部件，主电路板和输入部件。只有当这些单元衔接和配合得当才能让电脑运作流畅。同理，一本阐述某种观点或者理论的书，一定包含论述和论证的依据。同样讲计算机原理的书，为什么有些书讲的深入浅出，有些不知所云？其中一种原因可能就是不同的作者，组织论述的顺序和论证的方法不同导致。所以找到书的主题后，我们要了解作者是如何展开说明的。  </p>
-</li>
-<li><p>找到作者面对的问题和困难是什么  </p>
-<p>作者的问题是什么？怎么发生的？某种特殊情况才会出现？会有什么后果？和其它类似事情有什么关系？用什么方法才能解决这个问题？你或许觉得，这个要求和前面的其实是有一定的重叠的。没错，但是通过寻求问题和提问的方式来探寻书中的观点，或许能帮我们从另一个角度去理解，甚至有可能发现作者没有看到的问题。</p>
-</li>
-</ol>
-<h3 id="分析式阅读的第二个阶段"><a href="#分析式阅读的第二个阶段" class="headerlink" title="分析式阅读的第二个阶段"></a>分析式阅读的第二个阶段</h3><p>这个阶段的目的就不单单是描绘出书的整体结构和了解它的大体内容了，而是<strong>真正理解书的内容和作者的思想</strong>。  </p>
-<ol>
-<li><p>找到书中的关键词，并与作者达成一致的理解  </p>
-<p>这其实包含两个部分。一是找出关键词，另一部分是<strong>精确地理解关键词</strong>用在文中的意思。这一步很重要，尤其是后面一部分。  </p>
-<p>同一个词，用在不同地方可以表达不同的意思。另外一种情况是，意思还是一样，只是隐含了一定的前提假设或者特定的场景。这些情况，都有可能让我们对某一个词的理解，和作者想表达的意思有偏差。所以，尽量揣摩透作者的用意是非常重要的。也正因为这样，当我们不知道一些用词是什么意思的时候，不应该马上查字典，而是应该先通过这个字词周边那些我们可以理解的部分来推敲。  </p>
-<p>《独立宣言》里面短短的一句“人皆生而平等”，每个字都可以说值得细细推敲。特别是“平等”一词，到底是什么平等，怎么样才算平等，它其实包含非常丰富的内容在里面并需要诠释。</p>
-</li>
-<li><p>找到关键的句子，并找出里面表达的观点和主张  </p>
-<p>句子和字词差不多，也是构成文章和书籍的基本单元。如果说书中的观点和主张是支撑人的骨架，我们要找到的关键句子，就是这个骨架的组成部分。一个完整的人当然不只是骨架，还有皮肉。所以我们要分清楚哪些句子是骨架，哪些句子是修饰和辅助理解的例子，论证等。  </p>
-<p>怎么样才知道自己是否“完全理解”了作者的观点和主张？<strong>用你自己的语言来表达复述</strong>可以说是最好的检验方法，然后还应当<strong>尝试联想现实的例子</strong>来说明。如果没有办法达到这两项要求，可能你还没有达到“完全理解”的程度。拿回上面的例子来说，如果“人皆生而平等”，是否可以说每个人都有自由言论的权利？怎么样的言论才能够自由发表？那什么情况下会被冠以“诽谤”罪名？  </p>
-</li>
-<li><p>用这些关键的句子来定位和构建书中表达的基本理据  </p>
-<p>需要注意的是，除非有理据支持，不然作者的主张仅仅是观点的表达，不能当作正确的知识来接纳。我们不只是想知道他的观点，更要清楚为什么他觉得我们应当被他说服。不过在这一个阶段，我们只是需要先了解清楚作者的主张和论证，而不是批判。这样做的目的是为了“完全理解”，为后面第三个阶段做准备。不然可能很容易因为发现作者一点小问题，或者没有理解清楚作者隐含的前提假设，以偏概全的否定了作者的正确主张。  </p>
-<p>所以，我们这一步的重点是寻求支撑他观点的理据，和安排这些理据来分析论证的顺序以及逻辑推论。首先我们要清楚他是先铺设推理过程再总结，还是先摆出结论再一步一步分析。然后看他是通过一些具体的事例，进一步归纳出普适的结论，还是通过一系列的理论来演绎出最后的结论。最后，就要分析中间用到的理据，哪些是前提假设，是否已经被验证，哪些是显而易见的事实等。  </p>
-</li>
-<li><p>找到作者面对问题的解决方案  </p>
-<p>对应于前面第一个阶段的最后一点：找到作者面对的问题和困难是什么。第二个阶段的最后一点就是列出作者自己寻求到的解决方案是什么了。他是成功解决？还是证明那个问题无法解决？是否有新的问题提出来？</p>
-</li>
-</ol>
-<h3 id="分析式阅读的第三个阶段"><a href="#分析式阅读的第三个阶段" class="headerlink" title="分析式阅读的第三个阶段"></a>分析式阅读的第三个阶段</h3><p>前面两个阶段的完成，可以说是已经“完全理解”作者的观点，并“知其所以然”了。但是读书这件事，不是说前面两个阶段完成了就结束了。最后应该由读者作出评价和判断才算完结。所以，第三个阶段要做的事情，是<strong>公正地评价</strong>。  </p>
-<p>大家都应该听说过<strong>批判性思维</strong>这个说法，它是从 <strong>critical thinking</strong> 翻译过来的。根据维基百科的<a href="https://zh.wikipedia.org/wiki/%E6%89%B9%E5%88%A4%E6%80%A7%E6%80%9D%E7%BB%B4" target="_blank" rel="external">定义</a>，它是一种求清晰、求理性的思考方式。但是，因为 critical，criticize，“批判”这几个词都有负面批评的意思，所以很多人都有一个误区，认为只有表达不同意才算是“批判性思维”。其实 critical 和 criticize 都有全面而仔细地评判事物优缺点的意思。所以，critical thinking 其实可以包含同意和不同意。</p>
-<ol>
-<li><p>只有在你能“完全理解”作者观点的基础上，你才有资格说“我同意”，“我不同意”。要么你只能说“我还不能作出判断”</p>
-<p>那些说“虽然我不太理解你的说法，但是我不同意你的观点”的人，其实是很无耻，也没有必要理会的。我们自己也要谨记不要犯这样的错误。不加理解的同意是愚蠢的，不加理解的反对是粗鲁的。</p>
-</li>
-<li><p>当你反对的时候，请理性地讨论，而不是争论  </p>
-<p>我们人类虽然懂得理性思考问题，但是我们也还是情感动物。所以，有些时候当我们和其他人就不同的观点而辩论的时候，一不小心就会变成是争论。怎样才能避免争论？我认为是辩论的时候，出发点一定要设立正确，就是辩论是为了寻求真理，而不是为了说服对方。所以，辩论过后，任何一方都应当是有可能转变了他们的立场，支持了手持真理的另一方。只有意识到，你的观点是有可能存在纰漏，对方的观点反而是正确的，带着同理心来讨论并向往真理，才能尽最大可能避免争论。</p>
-</li>
-<li><p>对你做的任何思辨性的评论，请通过理据来表达知识理论而不仅仅是阐述自己的观点</p>
-<p>前面说过，除非有充分的理据支撑，任何人的主张都只是他个人的观点，而不能被算作是正确的知识。同理，辩论其实是在提出我们认为正确的知识，我们也应该通过理据来说服对方。  </p>
-</li>
-</ol>
-<p>以上是我看完《<a href="http://www.amazon.com/How-Read-Book-Classic-Intelligent/dp/B0092GBLHY" target="_blank" rel="external">How to Read a Book: The Classic Guide to Intelligent Reading</a>》第二部分的小结。刚好和菜头的《<a href="http://mp.weixin.qq.com/s?__biz=MjM5MjAzODU2MA==&amp;mid=2652779640&amp;idx=1&amp;sn=7331869fc477fe9d730bd760baf49064&amp;scene=0#wechat_redirect" target="_blank" rel="external">书中之书，众妙之门</a>》也推荐了这本书，大家可以顺便看看他的评论。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;读了那么多年书了，还不会读吗？别说，可能你还真的不会。这里的“读”要看你怎么定义。&lt;/p&gt;
-&lt;h2 id=&quot;读书的目标&quot;&gt;&lt;a href=&quot;#读书的目标&quot; class=&quot;headerlink&quot; title=&quot;读书的目标&quot;&gt;&lt;/a&gt;读书的目标&lt;/h2&gt;&lt;p&gt;当我们决定要拿本书
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Book" scheme="http://www.thinkingincrowd.me/tags/Book/"/>
-    
-      <category term="Analytical Reading" scheme="http://www.thinkingincrowd.me/tags/Analytical-Reading/"/>
-    
-      <category term="Critical Thinking" scheme="http://www.thinkingincrowd.me/tags/Critical-Thinking/"/>
     
   </entry>
   
