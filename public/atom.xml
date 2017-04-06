@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-02-25T15:18:16.000Z</updated>
+  <updated>2017-04-06T13:08:59.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,11 +16,241 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>怎么样才算得上是全栈</title>
+    <link href="http://www.thinkingincrowd.me/2017/04/01/what-is-full-stack/"/>
+    <id>http://www.thinkingincrowd.me/2017/04/01/what-is-full-stack/</id>
+    <published>2017-04-01T02:14:32.000Z</published>
+    <updated>2017-04-06T13:08:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="全栈的起源"><a href="#全栈的起源" class="headerlink" title="全栈的起源"></a>全栈的起源</h2><p>全栈 (Full-Stack) 这个词，我印象中它是出现在 Node.js 开始流行后。当 JavaScript 可以通过 Node.js 运行在服务端的时候，很多人都说 JavaScript 可以统一世界了。甚至还有一句话：「凡是能用 JavaScript 实现的，最终都会用 JavaScript 实现！」。这句话比「PHP 是全世界最好的语言」还要霸气吧？  </p>
+<p>其实这句话的<a href="https://blog.codinghorror.com/the-principle-of-least-power/" target="_blank" rel="external">来源</a>是 Jeff Atwood 的 Atwood’s Law。他的原话是这么说的：  </p>
+<blockquote>
+<p>any application that can be written in JavaScript, will eventually be written in JavaScript.</p>
+</blockquote>
+<p>Jeff Atwood 是著名的 Coding Horror 博主，也是 Stack Overflow 的 co-founder。当然我不知道他宣布这个定律时是不是纯属开玩笑。他说这句话的时候，还列了一些其它技术大牛的<a href="http://www.globalnerdy.com/2007/07/18/laws-of-software-development/" target="_blank" rel="external">关于软件开发的定律</a>。他声称他的定律是从 Tim Berners-Lee 的 The Principle of Least Power 推导过来的。Tim Berners-Lee 又是谁呢？Wikipedia 上面是这么描述的：Inventor of World Wide Web。他的 Principle of Least Power 是这么一段话：  </p>
+<blockquote>
+<p>Computer Science in the 1960s to 80s spent a lot of effort making languages which were as powerful as possible. Nowadays we have to appreciate the reasons for picking not the most powerful solution but the least powerful. The less powerful the language, the more you can do with the data stored in that language. If you write it in a simple declarative from, anyone can write a program to analyze it.</p>
+</blockquote>
+<p><em>Notes: 个人觉得最后的 declarative from 应该是 declarative form。</em></p>
+<p>大意就是说，计算机科学领域花了很多年月和精力，一直追求把编程语言设计得尽可能地强大。可现在，我们应该意识到，要选择的应该是最不强大的语言，而不是反过来。原因是，语言越不强大，我们就能在它之上做更多事情。如果你使用一种简单的声明式手法编写了一个语言，任何人都可以写另一个程序来分析它。  </p>
+<p>JavaScript 确实并不是一种最强大的语言。它其实是 Brendan Eich 在 Netscape 时，为 Web 和 HTML 创造的一种<em>胶水</em>语言，来让 Web 变得更动态。这门语言是他花了 10 天的时间写出来的。JavaScript 其实一直被很多人鄙视，觉得它根本不是一门正式的语言。还有很多人用下面的一幅图来说明它的优劣之差。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/chapter1-good-parts.jpg" alt="The Good Parts vs Definitive Guide"></p>
+<p>现在的 JavaScript 相比当初，已经变得很强大。同时，围绕着它，伟大的工程师们创造了很多的工具和框架。所以，很多人把它比喻成 Web 的汇编语言，最基础的语言。我们甚至可以把很多用其它一些高级的语言写的程序，转译为 JavaScript 的代码，然后在 Web 运行。听起来很神奇吧？  </p>
+<p>那是不是真的学会了 JavaScript，你就可以称自己为全栈工程师呢？  </p>
+<h2 id="为什么有全栈这种说法"><a href="#为什么有全栈这种说法" class="headerlink" title="为什么有全栈这种说法"></a>为什么有全栈这种说法</h2><p>要了解全栈，我们首先来了解一下栈是什么东西。在我之前写的，被新生大学引用的文章，「<a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/">编程是什么？我要学吗？</a>」里面，我作了一个类比：栈就像超市里叠在一起的一箱箱牛奶。栈是一种叠在一起的形态。你远看它是一个整体，但是其实它分很多层。既然有分层，那全栈的最朴素的定义，就是所有的层。  </p>
+<p>所以，当你说一个人是全栈工程师，就是说他能包干所有的事情。  </p>
+<p>所有的事情到底包含了什么？上面的定义还是太模糊了。我们不妨从技术和产品两个层面来细分一下。  </p>
+<h3 id="技术层面的分层"><a href="#技术层面的分层" class="headerlink" title="技术层面的分层"></a>技术层面的分层</h3><p>技术层面，有一个专门的名词，叫<em>技术栈</em>。它就是用分层的角度，来看待一个产品背后用到的所有的技术。  </p>
+<p>拿大家最熟悉的 Web Application，其实也就是网站，来简单说明一下吧。  </p>
+<ol>
+<li><p>第一层统称前端。<br> 这一层包括网页的视觉，设计，布局和交互。现在我们接触的网页，都不仅仅是信息展示了。大部分都为用户提供一些操作和交互，以达到特定的目的。比如，大家上携程订酒店，可以输入日期，城市，酒店名，然后查找相关信息。如果你填入日期不对，网页上还会给予你提醒。  </p>
+</li>
+<li><p>第二层统称后端。<br> 这一层为前端提供数据，负责业务逻辑处理，存储数据，与外部系统集成等。比如，当你选择好酒店，根据页面的引导确认订单，然后利用微信，支付宝或者银行付款。那么，从生成订单的逻辑，保存你的资料数据，和微信集成，到最后给你发确认邮件等，都和后端密切相关。  </p>
+</li>
+</ol>
+<p>上面只是很笼统的分了两层。其实无论是在传统的 IT 企业，还是互联网公司，计算机技术类职位有很多分类。  </p>
+<p>前端很大，可以拆分出视觉设计，交互，和 Web 页面开发。有些大公司甚至还把 Web 页面开发分拆出专门写 CSS 和专门写 JavaScript 交互逻辑的团队。另一些公司的前端可能还包括 iOS, Android 开发。  </p>
+<p>后端其实也还能分出好几层。有写业务逻辑的开发团队，有数据库管理人员也就是 DBA，运维，和安全等。即便是写业务逻辑的开发团队，也可能根据使用的语言再细分，比如 JAVA, Go, Ruby, Node.js 等。  </p>
+<h3 id="产品层面的分层"><a href="#产品层面的分层" class="headerlink" title="产品层面的分层"></a>产品层面的分层</h3><p>从打造一个完整的产品的角度，栈的分层就有另外一种方式。  </p>
+<ol>
+<li>栈的最顶层，是产品经理，业务分析人员等。他们负责对整个产品的方向和功能，做详细的规划和定位。  </li>
+<li>接下来的一层负责开发，成员可以包括架构师，开发团队，设计团队等负责实际打造整个产品的人。测试团队有可能同属于开发，也有可能是分拆出来的另一个团队。  </li>
+<li>产品上线后，市场和运营的部门需要负责推广和运作。当然，这一层并不一定在最底层。有些工作甚至早于开发。  </li>
+</ol>
+<h3 id="为什么有分层"><a href="#为什么有分层" class="headerlink" title="为什么有分层"></a>为什么有分层</h3><p>虽然上面的分层方式非常简单粗暴，但我相信大家无论是从技术层面，还是整个产品层面，现在对它们各自的技能栈都有了大概的了解。  </p>
+<p>那为什么会这样分层，这是由什么决定的呢？我相信大家其实都能猜到。这和开发这个产品的团队，企业组织架构有密切关系。其实在软件开发和系统设计领域就有一条著名的康威定律，<a href="https://en.wikipedia.org/wiki/Conway&#39;s_law" target="_blank" rel="external">Conway’s_law</a>：</p>
+<blockquote>
+<p>organizations which design systems … are constrained to produce designs which are copies of the communication structures of these organizations</p>
+</blockquote>
+<p>它的意思是说，企业设计的系统，其实做出来的设计是受限于它本身的内部沟通架构的。虽然这个定律说的是系统设计，但是我觉得道理是相通的。所以，一般情况下，企业越大，组织架构层级或者部门越复杂，分层可能越多越细。而小的团队，里面每个人承担的责任更广泛，更杂。  </p>
+<h3 id="什么是全栈"><a href="#什么是全栈" class="headerlink" title="什么是全栈"></a>什么是全栈</h3><p>我相信到这里，大家可能对「怎么样才算得上是全栈」有一定的想法了。  </p>
+<p>从技术的角度来说，大部分人的想法就是，全栈就是所有的技术都懂。能够从视觉设计，页面交互，后台业务逻辑，做到服务器管理运维等。也就是说，全栈就要求这个人是技术大拿，会很多编程语言，精通各种领域。  </p>
+<p>如果从这种观点出发，其实没几个人敢声称自己是全栈，因为很容易被其它技术人员拎起其它技术就抡过去，说：“XXX 你懂吗？不懂？那还好意思说全栈。” 所以，你们可以理解，为什么之前因为 JavaScript 能写后端了，就能刮起一股全栈风，声称学会 JavaScript 就能包打天下，就是一名全栈开发者。但同时，也有不少技术人员，鄙视或者调侃这种观点和这些人。大家现在也能够体会，为什么笑来老师在微博上说，一个人如果不笨，通过一年的学习时间，也是可以成长为全栈工程师，并且搞全栈班培训，被黑的多么厉害了吧？  </p>
+<p>从产品的角度来说，一些技术人员胆敢声称是自己是全栈的时候，另外又会有一波人拿其它方面的能力来质问他：“你会 YYY 吗？只懂技术算个毛。那些单枪匹马的成功创业者才有资格说自己是全栈。”  </p>
+<p>所以说，关于全栈，每个人都有不同的定义。  </p>
+<h2 id="我的全栈观"><a href="#我的全栈观" class="headerlink" title="我的全栈观"></a>我的全栈观</h2><p>我认为，全栈是一种态度和学习能力。它代表一种思考和对待问题的方式，而不是一种最终的状态。  </p>
+<p>首先，态度的意思就是不给自己设限。通常情况下，一个团队里面分不同的角色，我们各自都在某一个领域努力。但是，如果其它领域的负责人离职或请假，系统的瓶颈已经不在你负责的领域，团队需要你学习跨领域的知识来解决问题的时候，你不能说我不懂，这个问题不是我负责的，是前端或者后端的，然后就不管。  </p>
+<p>有了端正的态度，还需要一定的学习能力。如果说，要你去解决一个问题，还要等你去培训学习那么一年半载回来再说，那肯定不行了。通常情况都要求我们自己马上寻找资料，现学现用来解决问题。  </p>
+<p>具备了前面两种条件，要做的就是为实现自己的目标和产品，持续不断地学习任何需要的技能。计算机领域变化的那么快，现在需要的技术栈，可能几年后就被淘汰了。  </p>
+<p>全栈虽然确实需要有一定的技术广度，但并不是一定要精通所有的技术。而是当工作或者项目需要的时候，你能很乐意并迅速学习和使用新的技术，而不是一直待在原来的舒适区。甚至，有时候要求你学习的不是一门新的语言，一项技术，而是要求你学美术设计，学习产品，运营或者项目管理等其它技能。  </p>
+<p>所以说，全栈不是一种最终的状态，而是一条永无止境的道路，一种追求。我也才刚刚启程。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;全栈的起源&quot;&gt;&lt;a href=&quot;#全栈的起源&quot; class=&quot;headerlink&quot; title=&quot;全栈的起源&quot;&gt;&lt;/a&gt;全栈的起源&lt;/h2&gt;&lt;p&gt;全栈 (Full-Stack) 这个词，我印象中它是出现在 Node.js 开始流行后。当 JavaScript 可
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Full-Stack" scheme="http://www.thinkingincrowd.me/tags/Full-Stack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>亲密关系的沟通没你想的那么简单</title>
+    <link href="http://www.thinkingincrowd.me/2017/03/31/intimate-communication-is-not-as-easy-as-you-think/"/>
+    <id>http://www.thinkingincrowd.me/2017/03/31/intimate-communication-is-not-as-easy-as-you-think/</id>
+    <published>2017-03-31T13:13:17.000Z</published>
+    <updated>2017-04-06T13:26:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在「<a href="http://www.thinkingincrowd.me/2017/03/25/The-most-important-thing-to-invest-in-and-you-may-forget/">最值得投资的东西，你却可能把它忘了</a>」里说到，最值得投资的，应该是对你重要的人。很明显，如果你已经有了伴侣，Ta 无疑是最重要的人了，没有之一。下面就信守上篇文章的承诺，谈谈我自己的经历和想法。</p>
+<p>有一次和老婆吵了一架，心情降到极点，什么心情都没有。不止怎么的，在知乎 Live 看到了李松蔚和冼艺哲Casper 一些关于沟通，亲密关系的 Live，然后我一口气买了 6 个，听了两天。</p>
+<p>说说我听了他们的 Live 后的感受和根据自身情况的总结吧。</p>
+<h2 id="小心你固化了-Ta-和你的沟通模式"><a href="#小心你固化了-Ta-和你的沟通模式" class="headerlink" title="小心你固化了 Ta 和你的沟通模式"></a>小心你固化了 Ta 和你的沟通模式</h2><p>在李松蔚的「如何应对亲密关系中的困境与冲突」Live 里面说到，沟通的类型分两种：对称型沟通，互补型沟通。</p>
+<ul>
+<li>对称型沟通：双方冷战，或者像军备竞赛那样不断升级争吵。双方地位平等。  </li>
+<li>互补型沟通：一方主动抱怨，一方被动接受。或者一方忽略，另一方主动迎合。双方不平等地位。  </li>
+</ul>
+<p>争吵情况下，我和我老婆的沟通，通常属于互补型。因为多数是她在抱怨（抱怨在这里是中性词），而我主要在听，不怎么回答和说话。形成这种局面其实是有原因的。首先，我成长的主要处事方式就是“被动地处理”一些发生了和要面对的事情，而且在处理亲密关系方面也不成熟，过错多数在我。即便我不认同她一些观点，由于害怕冲突，担心影响我们的关系，所以，在面对激烈的争吵时，我也不会太激烈地辩驳。</p>
+<p>一般情况下，固化了的对称型沟通，双方没有一方肯先服软。固化了的互补型沟通，弱势方不敢升级为对称型。可是，李松蔚在 Live 里说到：<strong>良好的关系，要能在这两种沟通类型中转换的</strong>。研究婚姻闻名的 John Gottman 也有观点表示，防止和避免冲突其实会破坏婚姻。而亲密关系中的双方，<strong>只要让正面与负面的互动比例高于 3:1，就是良性和稳定的关系，并不需要完全零冲突</strong>。</p>
+<p>所以，双方应当注意沟通类型的恰当转换。如果你一直是弱势方，你不妨主动寻求变动，有时候恰当的冲突，未尝不是好事。如果你一直是强势方，或许应该考虑一下恰当弱化，让对方和你保持对称型沟通。比如说，我应当更主动道歉或者平静地回应，或者我老婆应当稍微引导我回应，虽然这对于在气头上的女人来说，要求有点高。</p>
+<p>还有，李松蔚在他的 Live 提到双方关系里非常重要的一个概念，<strong>授权</strong>。你别看授权像是主动性的词语，其实我的被动，不回应，在争吵状态下，也是授权对方成为互补型的主动方。同样，其实我老婆在气头上时对我的不理睬，也是授权了我处于互补型被动方。</p>
+<h2 id="沟通的重点是情感诉求"><a href="#沟通的重点是情感诉求" class="headerlink" title="沟通的重点是情感诉求"></a>沟通的重点是情感诉求</h2><p>我想，每一个女人都能深刻理解这个观点，但是我觉得大多数的男人并不知道。很多男的，包括我，都认为平时相安无事，平平静静地生活就是万幸了。自己如果还要挑起一些东西来说，简直就是作大死。（冼艺哲Casper 的 Live 「你和你的伴侣真的在沟通吗？」里的话）</p>
+<p>可是，有研究表明，女人一天要通过表情，肢体，语言等发出 20000 个交流信号，而男性只需要 7000 个。所以为什么说男的下班回家都几乎不用说话，女的还想扯老公聊这聊那，矛盾也容易由此产生。</p>
+<p>我不知道这个研究的真实性，不过听了冼艺哲Casper 的 Live 后，我终于能理解真正的沟通不在于语言，而是情感的交流。每次当女方想沟通的时候，她其实发起了一次情感交流的要约。她可能想男方理解她的委屈，或者把对方关注点转到她身上，又或者是期望一起参与某些事情来保持亲密的感觉。<strong>谈话的内容并不是重点，而是内容背后的情感诉求。而且，面对沟通要约，最重要的是男方要表现出一种面对，而不是背对的态度</strong>。</p>
+<p>举一个简单的例子，在外逛街的时候，老婆会问我想吃什么，并让我做主。可是，我往往又把这个问题丢回给她，问她想吃什么。这时就出问题了。我只看到内容谈话的内容是吃什么，没理解背后的诉求是她想我做主，希望寻求一种被宠爱和照顾的感觉。我对吃没要求，但是我知道她相对有选择，所以希望满足她的需要，反过来问她。大家的关注点不一样。另外，我把问题丢回给她，我表现出来的感觉就是背对的，而不是面对的态度，所以她会感觉很不好。</p>
+<p>回到我们吵架的场景时，我的心理状态是什么呢？由于我是典型男生思维，觉得平时相安无事就没问题了。所以在她抱怨的时候，我是有点措手不及的，我其实在认真听，和思考是不是真的自己做的不对。所以，我表现出来的现象就是沉默。不过，即便我发现是自己做的不对了，我也沉默很久了，不敢道歉，也不会去哄哄。所以，经常给对方的感觉也是在背对她的沟通。</p>
+<p>这都是我做的不好的地方。刘轩（公众号「轩言」）最近刚和赖佩霞开了个直播，说到道歉是家庭关系中很重要的部分。“道歉，应该是来自于对人的爱、对整个家庭的爱、对自己的爱”。回头我也要看看。</p>
+<h2 id="争论的关键不在于谁正确"><a href="#争论的关键不在于谁正确" class="headerlink" title="争论的关键不在于谁正确"></a>争论的关键不在于谁正确</h2><p>夫妻间的争论和抱怨是不可能避免的。而且，研究婚姻闻名的 John Gottman 也说，夫妻之间三分之二的争吵其实是“无解的”。既然无解，为什么还要吵，而且可能还互不迁就，吵得不可开交。其中，很大部分原因就是大家只看到吵架的内容，一直想证明自己是对的，对方是错的，却没有注意背后真正的心理诉求。</p>
+<p>李松蔚在他的「如何应对亲密关系中的困境与冲突」Live 中特别举例说明这一点。他还提到<strong>元沟通</strong>的概念。其实，最近涌出所谓的元认知，元学习等概念也是一样的。本质上就是必须意识到自己在思考，学习，和沟通。就像是自己的意识跳出自己的身体，作为旁人来审视自己一样。<strong>元沟通目的不是从自己出发，而是为了让双方看到大家的诉求，拼起来看到双方要在关系里头共同完成什么</strong>。</p>
+<p>之前，在儿子犯错后，关于如何批评教育的方式，我和老婆有着不同的见解。儿子的性格有时比较倔，我觉得应该态度相对温和，在不激怒他的情况下好好讲道理，这样他才能更容易听进去。她就觉得我有时说话太软，没有效果，应该更强硬地用一些禁止性的手段和话语。其实，这两种方法都秉持着同样的目的，只是从两种不同的角度来考虑，并没有完全对错。正如之前写的「<a href="http://www.thinkingincrowd.me/2017/03/04/frequent-anxiety-might-due-to-prevention-focused-personality/">时常感到焦虑可能因为你是防御型人格</a>」一文提到 Promotion 和 Prevention Goal。</p>
+<p>此外，我老婆不说的话，我还不知道背后原来还有截然不同的情绪的诉求。当年老婆生了后没有辞职，我爸妈也没退休，所以我儿子是我母亲在乡下带大的，儿子的情感依托都在我妈身上多。儿子小时候有一次不听话，老婆打了他手一下，小家伙就记仇了。加上她身体不太好，所以经常都是我带儿子出去玩。慢慢地，儿子就相对听我妈和我的话，也亲近些。但是和我老婆的关系就相对疏远些。所以，在教育方面当我和我老婆有不同的意见的时候，儿子当然倾向于听我的，老婆就感觉在家庭里被疏远了。这就更加造成我老婆必须和我要争论谁是正确的了。</p>
+<p>所以，如果从对错出发，我如果错了并顺从老婆的做法，她的感觉就会不同。如果我能更早察觉到背后的情感诉求，大家的沟通可能会更有效些。</p>
+<h2 id="正面的基调"><a href="#正面的基调" class="headerlink" title="正面的基调"></a>正面的基调</h2><p>在冼艺哲Casper 的 Live 里面，反复强调一点就是大家<strong>沟通的时候要确保是良好的出发点和基调</strong>。沟通的目的不是为了战胜对方，证明对方是错的。</p>
+<p>所以，大家一定要秉持一种信念，双方还是相爱的，希望对方变得更好。这样，即使你是在抱怨，也尽量用一些中性的词汇。后者用表达负面感觉的词汇时，加一些正面的词汇，尽量不去刺激对方。</p>
+<p>我觉得基调和信念真的很重要。如果某一方放弃 Ta 所坚持的信念，可能就无法挽回了。以前网上还是哪里不是有一个笑话吗？一个女的老是怀疑自己老公有外遇，本来他老公是没有的，但最后就破罐子破摔了。因为既然她老婆都不信任他，干脆真去找一个好了。其实外遇不是导致婚姻问题的原因，而是结果。</p>
+<h2 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h2><p>其实写完这篇文章，一开始我真不太敢发。后来想想其实没什么，所有的关系都存在各种问题。况且，<strong>能正确的面对自己，认识到自己的不足，才有可能改变和进步</strong>。上面写的大条道理，但是我也不敢说认识到这些问题的做法后以后就不会犯错了。只是我的认知上有了更清晰的指引。</p>
+<p>其实我之前决定离开珠海到北京工作，除了自己追寻事业外，还希望让老婆不工作，好好休息，并让儿子和她有更多亲密接触的机会，也把教育儿子的重任教给她，信任她。目前来看，儿子和她的关系确实好了非常多，而且她变得比我更有耐心。我们都进步了，我真的非常高兴。</p>
+<p>最后，还是要推荐一下李松蔚和冼艺哲Casper 的知乎 Live。里面还有其它精彩内容和实例，包括蔡格尼克记忆效应，男女的情绪特点，比如男生情绪可能不容易爆发，但不知不觉跌落更快，更无法挽回等。我建议有伴侣的都可以买来听听，真觉得不错。下面是我自己听的，也觉得不错的几个：</p>
+<p>李松蔚：北大心理学博士。他是偏理性的理工男风格，比较客观分析心理现象。<br>冼艺哲Casper：港大，婚姻与家庭治疗的临床心理工作者。她是偏感性的知性女人。听她的 Live 就觉得哇塞，原来女的是那么想的，又觉得她懂男性的心理，说的很对。</p>
+<ul>
+<li><a href="https://www.zhihu.com/lives/779765069494878208" target="_blank" rel="external">李松蔚 - 如何应对亲密关系中的困境与冲突</a></li>
+<li><a href="https://www.zhihu.com/lives/752271603613564928" target="_blank" rel="external">李松蔚- 人际互动的奥秘</a></li>
+<li><a href="https://www.zhihu.com/lives/743228787038113792" target="_blank" rel="external">冼艺哲Casper - 你和你的伴侣真的在沟通吗？</a></li>
+<li><a href="https://www.zhihu.com/lives/780455259406364672" target="_blank" rel="external">冼艺哲Casper - 异地恋，这一段独立而丰盛的旅程</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在「&lt;a href=&quot;http://www.thinkingincrowd.me/2017/03/25/The-most-important-thing-to-invest-in-and-you-may-forget/&quot;&gt;最值得投资的东西，你却可能把它忘了&lt;/a&gt;」里说到，
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
+    
+      <category term="Communication" scheme="http://www.thinkingincrowd.me/tags/Communication/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最值得投资的东西，你却可能把它忘了</title>
+    <link href="http://www.thinkingincrowd.me/2017/03/25/The-most-important-thing-to-invest-in-and-you-may-forget/"/>
+    <id>http://www.thinkingincrowd.me/2017/03/25/The-most-important-thing-to-invest-in-and-you-may-forget/</id>
+    <published>2017-03-25T02:08:47.000Z</published>
+    <updated>2017-03-25T02:10:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="值得投资的东西太多"><a href="#值得投资的东西太多" class="headerlink" title="值得投资的东西太多"></a>值得投资的东西太多</h2><p>什么东西最值得投资？不同的人有不同的答案。  </p>
+<p>最直接的想法，投资嘛，股票，比特币，房子都是最值得投资的，尤其是大家炒的热火朝天的时候。每次只是恨自己怎么不早点知道。  </p>
+<p>健身风潮来的时候，又有很多人会说，最重要的是身体和健康。因为没有了健康，就什么都没有了。身体是本钱，根基。  </p>
+<p>最近学习风潮很猛烈，说是开启和进入了知识付费和变现的年代。各种直播，学习的平台都推出教大家如何自我管理，理财，长眼界等投资自己的课程。最值得投资的，变成了知识，能力，成长，注意力等。  </p>
+<p>其实什么东西才是最值得投资的东西呢？  </p>
+<h2 id="什么才最重要"><a href="#什么才最重要" class="headerlink" title="什么才最重要"></a>什么才最重要</h2><p>3 月 23 号晚上，笑来老师在得到为他的「通往财富自由之路」专栏做直播。直播里提取了专栏讲到的一些重要的概念，当然就有注意力，投资，心态等。  </p>
+<p>可是，让我感触最深，直播完后我第一时间和朋友说的一个观念就是：“<strong>重要的是把精力放在你身边对你很重要的人身上。以身作则地影响 Ta，改变 Ta，和 Ta 一起变得更好。</strong>”  </p>
+<h2 id="谁才重要的人"><a href="#谁才重要的人" class="headerlink" title="谁才重要的人"></a>谁才重要的人</h2><p>他们可能是你的大学舍友，同事，父母，伴侣，或者儿女，就是那些<strong>和你接触时间最长的人</strong>。  </p>
+<p>试想一下，  </p>
+<p>如果你不愿意去帮助你的同事，教导你的下属，他们遇到问题的时候，你老是抱怨他们能力不够而不是耐心培训他们，你怎么可能解脱出来，去做更有挑战性的事情？工作那么多年来，任何同事有问题来找我，我都努力帮助他们。我也从无保留地传递我认为有价值的知识和信息给我带过的团队成员。所以，一直以来，我也比不少人有更多机会和较好的口碑。  </p>
+<p>如果你的父母，老是干涉你的生活，唠叨你去找男女朋友，或者用不恰当的价值观评判你现男女朋友，而你却不肯花时间慢慢和他们聊天，改变他们的想法，你怎么可能用你想要的方式生活。或者他们三天两头吵架，你成了磨心，时不时收到投诉电话，那怎么可能安心生活和工作。  </p>
+<p>如果你的伴侣，经常对你抱怨，或者在儿女的教育方法上和你产生分歧和争吵，你怎么可能静心在家里学习和自我成长。可能你都不愿意下班回家。  </p>
+<p>如果你的儿女，经常在外面闯祸，被老师投诉，你想想你能有多少时间安下心做自己想做的事情。  </p>
+<p>或许，你可以说，我不管还不行吗？如果真的可以，那他们并不能被定义为对你来说重要的人。如果你真的可以不管和离开，那他们和路人可能没什么区别。除非你真的真的真的能彻底离开，否则是没法放弃治疗的。  </p>
+<h2 id="如何处理亲密关系"><a href="#如何处理亲密关系" class="headerlink" title="如何处理亲密关系"></a>如何处理亲密关系</h2><p>这是一个超级复杂的问题，对我来说超级头疼。  </p>
+<p>以前，我仅仅是一个“听话的儿子”，所以身份相对简单，家庭也比较和谐。所以，一直以来，我只需要关注“自己的”成长，没有或者很少<strong>「主动地关注」身边最重要的人的需要</strong>。很多时候，我都在<strong>「被动地处理」一些发生了和要面对的事情</strong>。  </p>
+<p>这种生活和行为方式一直比较适用。现在，我已经是人之夫，和有了自己的儿子。当我的角色发生那么多的变化后，以前那种模式肯定是无法满足需求的。可是，我这方面的学习的转变一直比较慢，真是辛苦我的夫人了。  </p>
+<p>留个悬念，下篇文章再说说我自己的经历和想法。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;值得投资的东西太多&quot;&gt;&lt;a href=&quot;#值得投资的东西太多&quot; class=&quot;headerlink&quot; title=&quot;值得投资的东西太多&quot;&gt;&lt;/a&gt;值得投资的东西太多&lt;/h2&gt;&lt;p&gt;什么东西最值得投资？不同的人有不同的答案。  &lt;/p&gt;
+&lt;p&gt;最直接的想法，投资嘛，
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="成长" scheme="http://www.thinkingincrowd.me/tags/%E6%88%90%E9%95%BF/"/>
+    
+      <category term="关系" scheme="http://www.thinkingincrowd.me/tags/%E5%85%B3%E7%B3%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>时常感到焦虑可能因为你是防御型人格</title>
+    <link href="http://www.thinkingincrowd.me/2017/03/04/frequent-anxiety-might-due-to-prevention-focused-personality/"/>
+    <id>http://www.thinkingincrowd.me/2017/03/04/frequent-anxiety-might-due-to-prevention-focused-personality/</id>
+    <published>2017-03-04T13:20:17.000Z</published>
+    <updated>2017-04-06T13:28:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在听 Audible Book「Succeed: How We Can Reach Our Goals」。作者在某一章的开头举了一个例子，我觉得真的和我一模一样。</p>
+<p>作者的小儿子在学走路的时候，虽然她和她丈夫都怀着希望他能掌握这门技能的目的，但是他们夫妻二人的心态和策略是完全不同的。作者始终担忧她儿子摔伤，各种小心和保护，甚至楼梯也不让上。但是她丈夫就乐于看他儿子挑战各种环境。</p>
+<p>也就是说，对于同样期望儿子学会走路的目的，他们各自的关注点是不同的：</p>
+<ul>
+<li>尽量不受伤（Prevention focus）  </li>
+<li>尽量接受挑战（Promotion focus）  </li>
+</ul>
+<p><strong>不同性格的人，要实现不同的目标，他们倾向于从不同的角度来分析和前进。不同的思考方式，对推进的速度，坚持时间的长短，实现目标或失败后的感受，都有不同的影响。</strong></p>
+<p>读完那章书，我发现自己是非常偏向于防御型的。为什么这么说呢？</p>
+<ul>
+<li>购物的时候，我更关注于耐用性，可靠性，口碑，而不是潮流，新颖和花俏的功能  </li>
+<li>旅游的时候，家人的安全，甚至高于享受嬉戏和游乐的感觉  </li>
+<li>工作的时候，我更多是认为要完成的任务是应尽的责任，避免批评和责备，而不是追求表扬和荣誉  </li>
+<li>投资的时候，我的策略相对保守，并稍微分散投资  </li>
+<li>开车的时候，我尽量和前车隔较远的距离，提前刹车  </li>
+<li>吃饭的时候，我基本都是菜剩下的多，因为怕后面有饭没有菜了  </li>
+</ul>
+<p><strong>进取型（Promotion）性格的人，更多是从最大化收益，提高自身满足感到理想中的状态这种角度来考虑的。而防御型（Prevention）性格的人，则是希望评估所有风险，尽量减少损失，觉得要做的事情都是应该要做的，尤其是满足生存需要的事情</strong>。就因为防御型性格的人，对他关注的事情都认为是「生存所需」，所以一旦无法达成，会感到生命受到威胁，从而产生焦虑的情绪。防御型性格的人，有更强的危机感。</p>
+<p>但是进取型的人，目标对他们来说是理想中期望能额外获得的东西。所以，即便失败了，感受到的则多是失望和伤心而已。</p>
+<p>所以，如果你时常焦虑，你可以分析一下自己是不是偏向于防御型性格的人。</p>
+<p>文章里还有一句话，我觉得非常精准地描述出防御型性格的人的普遍心理状态：</p>
+<blockquote>
+<p>Too much self-admiration, it seems, feels dangerous to them.</p>
+</blockquote>
+<p>过多的自我崇拜，对他们来说是非常危险的事情。所以，一般这些人都比较谦虚，信心不足。</p>
+<p>当然，<strong>防御型性格的人，不是做任何事情都持防御心态的。只是每个人都会以倾向于某种类型为主。一个人做不同类型的事情，甚至同一件事情的不同阶段，关注点都可能会不同</strong>。比如，当一个人被游说去健身房，这时候他可能是被美好身段的理想状态而吸引，受进取型思维的影响来启动和推进，热情也相对较高。但是，到了后面，那些没有转换成防御型心态的人，没把维持好的身体作为目标，可能到了平台期，或者受到一点失败挫折，就放弃了。</p>
+<p>所以，并不是说防御型性格就不如进取型性格好。为了能更好地实现你的目标，用自己感觉最舒服，和目标最匹配的方式来推进和维持是最好的。</p>
+<p>回到焦虑的问题上，我目前也没有答案说如何帮助防御型性格的人解除焦虑。但是，至少现在我能从一个新的角度来认知自己。这其实就是元认知，只有认识到自己是如何思考，才有可能会改变。而且，以后应对各种事情，我都会尽量从 Promotion 和 Prevention 两种角度来思考，看哪种方式更合适。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近在听 Audible Book「Succeed: How We Can Reach Our Goals」。作者在某一章的开头举了一个例子，我觉得真的和我一模一样。&lt;/p&gt;
+&lt;p&gt;作者的小儿子在学走路的时候，虽然她和她丈夫都怀着希望他能掌握这门技能的目的，但是他们夫妻二人
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Prevention" scheme="http://www.thinkingincrowd.me/tags/Prevention/"/>
+    
+      <category term="Anxiety" scheme="http://www.thinkingincrowd.me/tags/Anxiety/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Node.js 微信后台搭建系列 - 登录验证和授权</title>
     <link href="http://www.thinkingincrowd.me/2017/02/25/Node-js-Wechat-Web-App-Tutorial-Access-Control/"/>
     <id>http://www.thinkingincrowd.me/2017/02/25/Node-js-Wechat-Web-App-Tutorial-Access-Control/</id>
     <published>2017-02-25T15:20:00.000Z</published>
-    <updated>2017-02-25T15:18:16.000Z</updated>
+    <updated>2017-03-25T02:09:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>帐号登录验证和权限设置，可以说是任何一个系统都必须具备的基本功能。无论是电商，社交，还是企业系统，甚至连输入法等工具，都可以让你注册一个帐号。方式从最传统的帐号密码登录，到用社交帐号绑定不等。  </p>
 <h2 id="登录验证（Authentication）"><a href="#登录验证（Authentication）" class="headerlink" title="登录验证（Authentication）"></a>登录验证（Authentication）</h2><p>登录有什么用呢？最基本的目的当然是为了让系统在茫茫人海中认得你。你上次来干什么了，做到哪一步，这次需要接着做吗？当然，验证的部分是为了不让其他人冒充你。所以，最基本的功能就是：  </p>
@@ -99,7 +329,7 @@
     
     </summary>
     
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
       <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
@@ -117,7 +347,7 @@
     <link href="http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/"/>
     <id>http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/</id>
     <published>2017-02-12T07:25:00.000Z</published>
-    <updated>2017-02-12T07:21:34.000Z</updated>
+    <updated>2017-03-25T02:09:50.000Z</updated>
     
     <content type="html"><![CDATA[<p>虽然后端开发人员并不一定要学前端，自测也可以借助别的工具完成。但是，了解前端开发的特性，困难点，你才能更好地设计 API，成为一个前端人员乐意合作的好伙伴。  </p>
 <h2 id="evergrow-脚手架生成的视图"><a href="#evergrow-脚手架生成的视图" class="headerlink" title="evergrow 脚手架生成的视图"></a>evergrow 脚手架生成的视图</h2><p>用 <code>evergrow</code> 脚手架生成视图相关的文件是非常方便的。要接着构建 <code>Image</code> 模块的视图，只需要用命令 <code>yo evergrow:view Image</code> 就能够生成表格和详情视图所需的 4 个基本文件。  </p>
@@ -193,7 +423,7 @@
     
     </summary>
     
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
       <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
@@ -324,7 +554,7 @@
     <link href="http://www.thinkingincrowd.me/2016/12/23/Node-js-Wechat-Web-App-Tutorial-Controller-Routing/"/>
     <id>http://www.thinkingincrowd.me/2016/12/23/Node-js-Wechat-Web-App-Tutorial-Controller-Routing/</id>
     <published>2016-12-23T15:00:39.000Z</published>
-    <updated>2016-12-23T14:26:30.000Z</updated>
+    <updated>2017-03-25T02:09:45.000Z</updated>
     
     <content type="html"><![CDATA[<p>这一章我们要讲的是 <a href="https://en.wikipedia.org/wiki/Model–view–controller" target="_blank" rel="external">MVC</a> 的 C，也就是 Controller。在 Web Application 里谈到 Controller，我们就不可避免地要了解 <strong>MVC 对数据处理的流程</strong>和涉及<strong>路由</strong>这个概念。大家可以通过这个简略的流程图来辅助理解下面的一些概念。  </p>
 <p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-mvc-flow.png" alt="MVC Flow"></p>
@@ -434,7 +664,7 @@
     
     </summary>
     
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
       <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
@@ -454,7 +684,7 @@
     <link href="http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/"/>
     <id>http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/</id>
     <published>2016-11-27T08:35:39.000Z</published>
-    <updated>2016-11-27T08:32:59.000Z</updated>
+    <updated>2017-03-25T02:09:42.000Z</updated>
     
     <content type="html"><![CDATA[<p>上一章我们说到，<strong>数据建模其实就是为后台 MVC 模式里面的 Model 建模</strong>。那是不是 <a href="https://en.wikipedia.org/wiki/Model–view–controller" target="_blank" rel="external">MVC</a> 的 M 就仅仅是数据模型而已？其实 M 并不仅仅包含数据模型，它还包含对数据的处理，也就是业务逻辑部分。  </p>
 <p>那数据的处理包含什么？什么算是业务逻辑呢？我们根据脚手架生成的代码来看一下。  </p>
@@ -480,7 +710,7 @@
     
     </summary>
     
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
       <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
@@ -498,7 +728,7 @@
     <link href="http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/"/>
     <id>http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/</id>
     <published>2016-11-13T08:20:39.000Z</published>
-    <updated>2016-11-27T08:28:07.000Z</updated>
+    <updated>2017-03-25T02:09:39.000Z</updated>
     
     <content type="html"><![CDATA[<p>这篇是 Node.js 搭建微信后台，实现图片交换功能教程的第一篇文章。前序准备书籍，工具可参考 Github 项目 <a href="https://github.com/kenspirit/javascript-study-group" target="_blank" rel="external">javascript-study-group</a>。感兴趣者也可加入学习小组。  </p>
 <p>TLDR; 如果你想知道 Why，应该看前面的分析。如果你只是想寻找套路和捷径，怎么用 Generator 生成 Model，也就是 What and How，那可以直接跳到最后。  </p>
@@ -560,7 +790,7 @@
     
     </summary>
     
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
       <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
@@ -1335,217 +1565,6 @@
       <category term="Habit" scheme="http://www.thinkingincrowd.me/tags/Habit/"/>
     
       <category term="Value" scheme="http://www.thinkingincrowd.me/tags/Value/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>人生中哪一个阶段才是最重要的？</title>
-    <link href="http://www.thinkingincrowd.me/2016/07/10/Milestones-in-Life/"/>
-    <id>http://www.thinkingincrowd.me/2016/07/10/Milestones-in-Life/</id>
-    <published>2016-07-10T00:00:00.000Z</published>
-    <updated>2016-07-09T23:52:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们的人生其实分了很多个阶段：幼儿园，小学，中学，大学，工作，结婚，升级打小怪物等。  </p>
-<p>这些阶段，很多都是世俗的约定，到了某个年龄，就自然要踏入另一个阶段了。在你成为“成年人”以前，大学前的几个阶段，基本都是由父母决定的，自己选择和决定空间不大。不少人在前面的阶段感觉被迫接受父母的安排，大学就报一些离家远远的学校，打算充分享受自由。大学后面的阶段，即便也会有人对你做各种干涉，但毕竟你已经是“成年人”，自主决定权就大很多了。</p>
-<p>那哪个阶段是最重要的呢？已为人父的我，当然也想知道。但是，你们真的相信会有统一的答案吗？其实谁都没法说清楚，最重要的，起决定性作用的是哪个阶段。我承认我标题党了。不少人，大学前是学霸，但是上了大学就歇菜了。相反，也有不少人读书时期经常打游戏，考前报佛脚，分数也是及格线多点，甚至要重修。但是，工作后如鱼得水，成了人生赢家。还有一些小时候坏事做尽，甚至曾经承受牢狱之灾，但是后来却能突然大彻大悟，痛改前非，出人头地。</p>
-<p>人的一生，前面的每一个阶段都是后面的积累。后面的主要是延续，但也有可能蜕变。至于怎么延续怎么变，起决定作用的，还是自己的心。心之所向，路之所往。只有自己主动地把握人生，自己把的舵，才知道下一阶段走的有没有意义。<strong>每一个阶段，尤其是你主动把握的阶段，都是重要的</strong>。正如 Steve Jobs 所说：</p>
-<blockquote>
-<p>You cann’t connect the dots looking forward; you can only connect them looking backwards.</p>
-</blockquote>
-<p>大学毕业 12 年了。前面的 7 年，因为感恩和战友情，我宁可收入少点，还是坚持在一家小公司拼搏，并收获了敏捷的做事方式和较为广阔的技术背景。后面因为技术方向调整和深入的需要，还是决定去大公司体会一下。5 年后的今天，我又决定要为了一个男人和事业理想，远飘北方，“抛妻弃子”，承受背井离乡之苦。</p>
-<p>很多人觉得每次我选择的转变，都很突然，随性，而又坚决。其实，我的内心已经挣扎和拖沓了一段时间。很些人觉得我勇于挑战自己，跳出舒适区。其实，我觉得自己并没有很好地安排和规划人生。我觉得自己走的并不算好，可这就是人生。自己走的路，过去已经无法回头，最重要的是自己主动把握的下一个阶段。</p>
-<p>我以前一直都期望能有一个好的导师，在迷茫的时候，稍微为我指明一下方向，引领我前行。人常说，去一个好的公司，不如找到一个好的领导。可是后来我才慢慢醒悟，导师只是在你人生道路上的某一段，在某个特定的时刻，出现并帮助你那么一下的人。伴随一生的导师，可遇而不可求。而且最重要是，只有你已经在路上探索了，才有可能碰到导师。甚至，你还必须主动去找那些能成为你导师的人。所以，自己永远是自己最好的导师，最终只有靠不断地读书思考和虚心求教，跟随自己的直觉和信念，不断尝试和碰壁，不断寻求真正属于自己的道路。</p>
-<p>我很喜欢李笑来的<strong>七年就是一辈子</strong>的文章和书（后来改名叫<strong>新生</strong>了），以及他说的一句话：“<strong>我的一生只有一个职业 – 学生</strong>”。</p>
-<p>新的旅程已经摆在我眼前，我知道我必须要选择经历这一次历练。在这里要特别感谢老婆和家人的支持。没有他们，我没法踏出这一步。虽然我也不知道能在这个阶段历练多久，但哪怕短短一两年，它也是我一生中很重要的一个点。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我们的人生其实分了很多个阶段：幼儿园，小学，中学，大学，工作，结婚，升级打小怪物等。  &lt;/p&gt;
-&lt;p&gt;这些阶段，很多都是世俗的约定，到了某个年龄，就自然要踏入另一个阶段了。在你成为“成年人”以前，大学前的几个阶段，基本都是由父母决定的，自己选择和决定空间不大。不少人在前面
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
-    
-      <category term="Milestone" scheme="http://www.thinkingincrowd.me/tags/Milestone/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript</title>
-    <link href="http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/"/>
-    <id>http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/</id>
-    <published>2016-06-09T02:16:25.000Z</published>
-    <updated>2016-06-10T14:26:31.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>As we know, JavaScript differs from other class based inheritance language.  Constructor (function) uses its <code>prototype</code> property to implement <strong>prototype-based inheritance</strong> and <strong>shared property</strong>.  </p>
-<p>From ECMA Spec:</p>
-<blockquote>
-<p>In a class-based object-oriented language, in general, state is carried by instances, methods are carried by classes, and inheritance is only of structure and behaviour. In ECMAScript, the state and methods are carried by objects, while structure, behaviour, and state are all inherited.</p>
-</blockquote>
-<p>Let’s see below example.  Instances created by <code>new Mold()</code> inherits the property from its prototype.  You can see different behaviors if we change different property in different levels.  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Mold</span>(<span class="params"></span>) </span>&#123;</div><div class="line">&#125;  </div><div class="line"></div><div class="line">Mold.prototype.sizes = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>];</div><div class="line">Mold.prototype.brand = <span class="string">'KC'</span>;  </div><div class="line"></div><div class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> Mold();</div><div class="line"><span class="keyword">var</span> instance2 = <span class="keyword">new</span> Mold();  </div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(instance.sizes)   <span class="comment">// =&gt; [10, 20, 30];</span></div><div class="line"><span class="built_in">console</span>.log(instance2.brand) <span class="comment">// =&gt; 'KC';  </span></div><div class="line"></div><div class="line"><span class="comment">// Adds property with same name shadows the one in prototype</span></div><div class="line">instance.brand = <span class="string">'K &amp; W'</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(instance.brand); <span class="comment">// =&gt; 'K &amp; W'</span></div><div class="line"><span class="built_in">console</span>.log(Mold.prototype.brand); <span class="comment">// =&gt; 'KC'</span></div><div class="line"></div><div class="line"><span class="comment">// Changed on prototype affects instance that doesn't have property with same name</span></div><div class="line">Mold.prototype.brand = <span class="string">'K &amp; W &amp; L'</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(instance.brand); <span class="comment">// =&gt; 'K &amp; W'</span></div><div class="line"><span class="built_in">console</span>.log(instance2.brand); <span class="comment">// =&gt; 'K &amp; W &amp; L'</span></div><div class="line"></div><div class="line"><span class="comment">// Changed on property which is Array or Object type in prototoype affects all</span></div><div class="line">instance.sizes[<span class="number">0</span>] = <span class="number">40</span>;</div><div class="line">Mold.prototype.sizes[<span class="number">2</span>] = <span class="number">60</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(Mold.prototype.sizes); <span class="comment">// =&gt; [40, 20, 60]</span></div><div class="line"><span class="built_in">console</span>.log(instance2.sizes) <span class="comment">// =&gt; [40, 20, 60]</span></div></pre></td></tr></table></figure>
-<p>I think most of the JSer know the concept &amp; behavior above.  However, do you know the relationship between <code>__proto__</code>, <code>prototype</code> and <code>constructor</code>?  </p>
-<p>Here is what the ECMAScript Spec said.</p>
-<p><strong>What is prototype chain</strong>:</p>
-<blockquote>
-<p>Every object created by a constructor has an implicit reference (called the object’s prototype) to the value of its constructor’s “prototype” property. Furthermore, a prototype may have a non-null implicit reference to its prototype, and so on; this is called the prototype chain. When a reference is made to a property in an object, that reference is to the property of that name in the first object in the prototype chain that contains a property of that name. In other words, first the object mentioned directly is examined for such a property; if that object contains the named property, that is the property to which the reference refers; if that object does not contain the named property, the prototype for that object is examined next; and so on.</p>
-</blockquote>
-<p><strong>Explanation on Object and Function prototype object</strong>:</p>
-<blockquote>
-<p>The Object prototype object is the intrinsic object %ObjectPrototype%. The Object prototype object is an ordinary object.</p>
-<p>The value of the [[Prototype]] internal slot of the Object prototype object is null</p>
-<p>…</p>
-<p>The Function prototype object is the intrinsic object %FunctionPrototype%. The Function prototype object is itself a built-in function object. When invoked, it accepts any arguments and returns undefined. It does not have a [[Construct]] internal method so it is not a constructor.</p>
-<p>NOTE The Function prototype object is specified to be a function object to ensure compatibility with ECMAScript code that was created prior to the ECMAScript 2015 specification.</p>
-<p>The value of the [[Prototype]] internal slot of the Function prototype object is the intrinsic object %ObjectPrototype% (19.1.3).</p>
-<p>The Function prototype object does not have a prototype property.<br>The value of the length property of the Function prototype object is 0.<br>The value of the name property of the Function prototype object is the empty String</p>
-</blockquote>
-<p>Honestly, for me, it took me a long long time to try to understand that.  I have extract some important concepts here and try to be brief:  </p>
-<ol>
-<li>Function instances that can be used as a constructor have a <code>prototype</code> property.  When we use <code>new</code> with this function to create instances, the object pointed by the <code>prototype</code> property will be assigned as the prototype of the instances.  </li>
-<li><code>__proto__</code> is the actual object that is used in the property lookup chain.  All objects have this property.  </li>
-<li><code>constructor</code> is a function object that creates and initializes objects.  It’s a property in the Prototype Object;</li>
-</ol>
-<p>Maybe the wording is still not as expressive as the graph as below.  </p>
-<p><img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/JS_prototype_chain.png"></p>
-<p>At first glance, this diagram might seems messy.  Let’s examine it piece by piece from the easiest part and pay attention to some important points.  </p>
-<ol>
-<li><code>prototype</code> property doesn’t exists in instances created by Mold.  Only function has.  </li>
-<li>Each function’s prototype has a <code>constructor</code> property points to itself.  </li>
-<li><code>__proto__</code> points to the <code>prototype</code> of its constructor.  The <code>Mold</code> instance points to <code>Mold</code> function, the <code>Mold</code> function points to <code>Function</code> function, the <code>Function</code> function points to itself and <code>Object</code> function points to <code>Function</code> function.  </li>
-<li><code>prototype</code> property in Object doesn’t have <code>__proto__</code>.  </li>
-<li><code>__proto__</code> of the Function prototype object is <code>Object.prototype</code>.</li>
-</ol>
-<p>Here is some script for you to understand it.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="keyword">typeof</span> instance instance.prototype <span class="comment">// =&gt; 'undefined'</span></div><div class="line"></div><div class="line"><span class="comment">// 2</span></div><div class="line">Mold.prototype.constructor === Mold</div><div class="line"><span class="built_in">Function</span>.prototype.constructor === <span class="built_in">Function</span></div><div class="line"><span class="built_in">Object</span>.prototype.constructor === <span class="built_in">Object</span></div><div class="line"></div><div class="line"><span class="comment">// 3</span></div><div class="line">instance.__proto__ === Mold.prototype</div><div class="line">Mold.__proto__ === <span class="built_in">Function</span>.prototype</div><div class="line"><span class="built_in">Object</span>.__proto__ === <span class="built_in">Function</span>.prototype</div><div class="line"><span class="built_in">Function</span>.__proto__ === <span class="built_in">Function</span>.prototype</div><div class="line"></div><div class="line"><span class="comment">// 4</span></div><div class="line"><span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span></div><div class="line"></div><div class="line"><span class="comment">// 5</span></div><div class="line"><span class="built_in">Function</span>.prototype.__proto__  === <span class="built_in">Object</span>.prototype</div><div class="line">Mold.prototype.__proto__  === <span class="built_in">Object</span>.prototype</div></pre></td></tr></table></figure>
-<p>How about take some exams to test see if you understand what I and ECMA spec said above?  :)  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typeof</span> <span class="built_in">Function</span>.prototype === ?</div><div class="line"><span class="keyword">typeof</span> <span class="built_in">Function</span>.prototype.prototype === ?</div><div class="line"><span class="built_in">Function</span>.prototype.length === ?</div><div class="line"></div><div class="line">instance.constructor === ?</div><div class="line">instance.__proto__.constructor === ?</div><div class="line"></div><div class="line">Mold.constructor === ?</div><div class="line">Mold.__proto__.constructor === ?</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;As we know, JavaScript differs from other class based inheritance language.  Constructor (function) uses its &lt;code&gt;prototype&lt;/code&gt; prope
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
-    
-      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
-    
-      <category term="Prototype Chain" scheme="http://www.thinkingincrowd.me/tags/Prototype-Chain/"/>
-    
-      <category term="Prototype" scheme="http://www.thinkingincrowd.me/tags/Prototype/"/>
-    
-      <category term="Inheritance" scheme="http://www.thinkingincrowd.me/tags/Inheritance/"/>
-    
-      <category term="Constructor" scheme="http://www.thinkingincrowd.me/tags/Constructor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>How to avoid Stack overflow error on recursion</title>
-    <link href="http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/"/>
-    <id>http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/</id>
-    <published>2016-06-05T16:05:00.000Z</published>
-    <updated>2016-06-05T16:08:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="The-reason-behind"><a href="#The-reason-behind" class="headerlink" title="The reason behind"></a>The reason behind</h2><p>Recursion is a powerful form of loop which repeats itself in similar form, but it should have terminal condition to prevent endless loop.  <a href="http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/">Last time</a>, we even use it with the combination of <code>setTimeout</code> to prevent “Not responsive script” warning of long running loop.  </p>
-<p>However, normal recursion can possibly generate “Stack overflow” error if it repeats itself too many times.  Let’s see a famous recursion example in math, <code>factorial</code>.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> n === <span class="number">0</span> ? <span class="number">1</span> : n * factorial(n - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// factorial(10)</span></div><div class="line"><span class="comment">//  =&gt; 3628800</span></div><div class="line"><span class="comment">// factorial(32768)</span></div><div class="line"><span class="comment">//  =&gt; Uncaught RangeError: Maximum call stack size exceeded</span></div></pre></td></tr></table></figure>
-<p>How does the stack looks like?  Why is its size exceeded?  </p>
-<p><img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/factorial_stack_change_flow.png"></p>
-<p>Here introduces a term called <a href="http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/" target="_blank" rel="external">Execution Context</a> and you can read more following the link.  Simply say, every times a function is called, an execution context is created.  Hence, they are stacked together and increase as the recursion goes deeper.  You can imagine the stack size of <code>factorial(32768)</code> given this from <code>factorial(3)</code>.</p>
-<h2 id="Tail-call-elimination-comes-to-rescue"><a href="#Tail-call-elimination-comes-to-rescue" class="headerlink" title="Tail call elimination comes to rescue"></a>Tail call elimination comes to rescue</h2><blockquote>
-<p><strong>Tail calls can be implemented without adding a new stack frame to the call stack.</strong> Most of the frame of the current procedure is not needed any more, and it can be replaced by the frame of the tail call, modified as appropriate (similar to overlay for processes, but for function calls). The program can then jump to the called subroutine. Producing such code instead of a standard call sequence is called tail call elimination.</p>
-</blockquote>
-<p><a href="https://en.wikipedia.org/wiki/Tail_call" target="_blank" rel="external">Tail call elimination</a> can be applied if we rewritten <code>factorial</code> in <strong>tail recursion</strong> style as below.  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">cal</span>(<span class="params">n, result</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> n === <span class="number">0</span> ? result : cal(n - <span class="number">1</span>, n * result);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> cal(n, <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>However, the tail call optimization can only be supported until ECMAScript 6, which is not yet available in many JS engines.  <em>(Notes: Looks like Firefox already supports and it’s gonna be <a href="https://github.com/v8/v8/commit/6131ab1edd6e78be01ac90b8f0b0f4f27f308071" target="_blank" rel="external">ready in Node.js V8</a> soon.)</em></p>
-<h2 id="Trampoline"><a href="#Trampoline" class="headerlink" title="Trampoline"></a>Trampoline</h2><p>What is <a href="https://en.wikipedia.org/wiki/Trampoline_(computing)" target="_blank" rel="external">Trampoline</a>?</p>
-<blockquote>
-<p>a trampoline is a <strong>loop</strong> that iteratively invokes <strong>thunk</strong>-returning functions (continuation-passing style).<br>  …<br>  Programmers can use trampolined functions to implement tail-recursive function calls in stack-oriented programming languages.</p>
-</blockquote>
-<p>The simpliest form of trampoline is like below.  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">trampoline</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> op = fn;</div><div class="line">  <span class="keyword">while</span> (op != <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> op === <span class="string">'function'</span>) &#123;</div><div class="line">    op = op();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>The <code>op</code> is a thunk-returning function.  If the execution result it returns is NOT a function anymore, then the loop stops.  It’s not so easy to understand the meaning of thunk from the definition in <a href="https://en.wikipedia.org/wiki/Thunk" target="_blank" rel="external">Wiki</a>.  But the explanation in <em>Functional programming</em> section is more clear.</p>
-<blockquote>
-<p>Functional programming languages have also allowed programmers to <strong>explicitly generate thunks</strong>. This is done in source code <strong>by wrapping an argument expression in an anonymous function that has no parameters of its own.</strong> This prevents the expression from being evaluated until a receiving function calls the anonymous function</p>
-</blockquote>
-<p>Hence, when we rewrite our <code>factorial</code> in below style, we can use the <code>trampoline</code> to replace the recursive call to even calculate factorial for 1000000.  <em>(Notes: As the simple version of trampoline detects function return for terminal condition, we have to rewrite the factorial to accept callback instead.)</em></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">thunkedFactorial</span>(<span class="params">n, cb</span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">cal</span>(<span class="params">n, result, cb</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (n === <span class="number">0</span>) &#123;</div><div class="line">      cb(result);</div><div class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> cal.bind(<span class="keyword">this</span>, n - <span class="number">1</span>, n * result, cb);</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> cal.bind(<span class="keyword">this</span>, n, <span class="number">1</span>, cb);</div><div class="line">&#125;</div><div class="line"></div><div class="line">trampoline(thunkedFactorial.bind(<span class="keyword">this</span>, <span class="number">1000000</span>, <span class="built_in">console</span>.log.bind(<span class="built_in">console</span>)));</div><div class="line"><span class="comment">// =&gt; Infinity</span></div></pre></td></tr></table></figure>
-<h2 id="Other-thoughts"><a href="#Other-thoughts" class="headerlink" title="Other thoughts?"></a>Other thoughts?</h2><p>You may question that, since <code>trampoline</code> is actually a loop, it might cause the “Not responsive script” warning as well.  Yes, you are right.  That is why we can use the <code>setTimeout</code> trick again as well. :)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n, cb</span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">cal</span>(<span class="params">n, result</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (n === <span class="number">0</span>) &#123;</div><div class="line">      cb(result);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;cal(n - <span class="number">1</span>, n * result)&#125;);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> cal(n, <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;The-reason-behind&quot;&gt;&lt;a href=&quot;#The-reason-behind&quot; class=&quot;headerlink&quot; title=&quot;The reason behind&quot;&gt;&lt;/a&gt;The reason behind&lt;/h2&gt;&lt;p&gt;Recursion 
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
-    
-      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
-    
-      <category term="Loop" scheme="http://www.thinkingincrowd.me/tags/Loop/"/>
-    
-      <category term="Recursion" scheme="http://www.thinkingincrowd.me/tags/Recursion/"/>
-    
-      <category term="Tail Call Optimization" scheme="http://www.thinkingincrowd.me/tags/Tail-Call-Optimization/"/>
-    
-      <category term="Trampoline" scheme="http://www.thinkingincrowd.me/tags/Trampoline/"/>
-    
-      <category term="Thunk" scheme="http://www.thinkingincrowd.me/tags/Thunk/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>How to make long running loop breakable?</title>
-    <link href="http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/"/>
-    <id>http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/</id>
-    <published>2016-06-05T02:40:07.000Z</published>
-    <updated>2016-06-05T07:16:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="The-reason-behind"><a href="#The-reason-behind" class="headerlink" title="The reason behind"></a>The reason behind</h2><p>Loop is a very common concept in programming.  Normally we will not do below silly thing to loop a long long time like:  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">100000000</span>; i++) &#123;</div><div class="line">  j++;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(j);</div></pre></td></tr></table></figure>
-<p>If it is run in browser, such as Firefox, it may prompt a warning box like below:  </p>
-<p><img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/firefox_script_not_responsive_warning.png"></p>
-<p>However, <strong>sometimes we might not know how many times the operation will be executed and how long each operation takes</strong>.  The loop count might depend on how many records retrieved by RESTful web serivce from our own or other external applications.  The operation speed might be affected by what browser user’s is using, IE or Chrome, current workload of user’s machine.  Hence, <strong>if your logic potentially deal with large volume of data or need to be compatible with old-fashion browser, it maybe worthy to think ahead to prevent</strong>.</p>
-<p>A real case happened in our company’s internal system is that tons of unread notification received when an supervisor logined after he has a long vacation. The browser crashed every time the supervisor logined.  The developer haven’t considered this extreme case and so he pull everything out at one shot and looping to show them on screen.</p>
-<h2 id="How-to-prevent"><a href="#How-to-prevent" class="headerlink" title="How to prevent?"></a>How to prevent?</h2><p>Not to mention that we should do some lazy-loading or data paging in above case first, how can we make the potentially long running loop breakable if something unusual happened?</p>
-<p>In Firefox, the unresponsive script warning is shown normally when the executing scripts takes longer than <code>10 second</code>.  It can be configured if you typed <code>about:config</code> in address bar and update <code>dom.max_script_run_time</code> parameter.  However, this should not be the way because you cannot ask user to change the config themselves.</p>
-<p>Hence, if we want to prevent the warning, we should try to break the long running script from executing once to executing each portion consecutively.  <code>setTimeout</code> is a handy tool to step in.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">operation</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  j++;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">repeat</span>(<span class="params">operation, num</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (num &lt;= <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'end: '</span> + j);</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="built_in">console</span>.log(j);</div><div class="line">  operation();</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">async</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    repeat(operation, --num);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// The batch size and timeout interval can be adjusted for your case.</span></div><div class="line">  <span class="keyword">if</span> (num % <span class="number">10</span> === <span class="number">0</span>) &#123;</div><div class="line">    setTimeout(<span class="keyword">async</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">async</span>();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">repeat(operation, <span class="number">100000000</span>);</div></pre></td></tr></table></figure>
-<p>Here, we combine the usage of recursion and <code>setTimeout</code>, the value of <code>j</code> can be printed out consecutively and without causing Firefox to complaint again.  Actually, now you can take a step further and inject some logic to check other condition, like total executing time, to decide whether to break out this loop or not.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;The-reason-behind&quot;&gt;&lt;a href=&quot;#The-reason-behind&quot; class=&quot;headerlink&quot; title=&quot;The reason behind&quot;&gt;&lt;/a&gt;The reason behind&lt;/h2&gt;&lt;p&gt;Loop is a 
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Javascript" scheme="http://www.thinkingincrowd.me/tags/Javascript/"/>
-    
-      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
-    
-      <category term="Loop" scheme="http://www.thinkingincrowd.me/tags/Loop/"/>
-    
-      <category term="Async" scheme="http://www.thinkingincrowd.me/tags/Async/"/>
     
   </entry>
   

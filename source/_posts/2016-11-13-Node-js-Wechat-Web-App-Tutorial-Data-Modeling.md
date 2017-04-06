@@ -6,7 +6,7 @@ tags:
   - Tutorial
   - Data Modeling
 categories:
-  - Think
+  - Sword
 ---
 
 [javascript-study-group]: https://github.com/kenspirit/javascript-study-group

@@ -6,7 +6,7 @@ tags:
   - Tutorial
   - Business Logic
 categories:
-  - Think
+  - Sword
 ---
 
 [MVC]: https://en.wikipedia.org/wiki/Model–view–controller

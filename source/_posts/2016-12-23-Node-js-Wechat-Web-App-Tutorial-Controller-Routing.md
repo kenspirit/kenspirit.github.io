@@ -7,7 +7,7 @@ tags:
   - Controller
   - Routing
 categories:
-  - Think
+  - Sword
 ---
 
 [MVC]: https://en.wikipedia.org/wiki/Model–view–controller
