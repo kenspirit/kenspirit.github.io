@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-04-09T02:12:09.000Z</updated>
+  <updated>2017-04-16T07:36:39.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,134 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Node.js 微信后台搭建系列 - 服务器代码部署</title>
+    <link href="http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/"/>
+    <id>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/</id>
+    <published>2017-04-16T07:31:17.000Z</published>
+    <updated>2017-04-16T07:36:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>机器都好了，是时候让我们的代码上场了。完成了这一步，即便你不做微信后台，你也拥有一个能提供完整后端服务的服务器了。  </p>
+<h2 id="SSH-Agent-Forwarding"><a href="#SSH-Agent-Forwarding" class="headerlink" title="SSH Agent Forwarding"></a>SSH Agent Forwarding</h2><p>要把代码部署到服务器的话，首先服务器能拥有和我们同等的权限去 Github 拉取代码。配置了 SSH 代理后，我们就不必把我们的 key 放到服务器，直接使用本地的就可以了。  </p>
+<h3 id="修改-ssh-目录权限"><a href="#修改-ssh-目录权限" class="headerlink" title="修改 .ssh 目录权限"></a>修改 <code>.ssh</code> 目录权限</h3><p>当我们在前面绑定了我们的密钥到机器时，<code>.ssh</code> 目录就已经创建了。但是它的拥有者是 <code>root</code>，之后当我们想把 Github 的地址加入里面的 <code>known_hosts</code> 就会出问题。所以，我们要先 SSH 到机器上面，通过下面的命令，把这个目录的拥有者改过来。</p>
+<p><code>sudo chown ubuntu:ubuntu .ssh/</code></p>
+<h3 id="允许本地-Forward"><a href="#允许本地-Forward" class="headerlink" title="允许本地 Forward"></a>允许本地 Forward</h3><ul>
+<li>使用你的文本编辑器，打开 <code>~/.ssh/config</code> 这个文件。如果不存在这个文件，通过命令 <code>touch ~/.ssh/config</code> 来创建  </li>
+<li><p>在文件里面添加下面两行配置，把 <code>my-server.com</code> 换成你服务器的公网地址：  </p>
+<p>Host my-server.com<br>  ForwardAgent yes</p>
+</li>
+</ul>
+<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><p>首先通过命令 <code>ssh-add</code> 把你的命令加到 ssh-agent。<em>这句命令不是每次都需要的，在 Mac 里，偶尔 agent 会不记得这个 key，所以如果你发现突然不好使了，先运行一下这命令就好了。</em></p>
+<p>登录服务器后，通过命令 <code>ssh -T git@github.com</code> 看到 Github 的欢迎语就表示配置成功了：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-ssh-agent.png" alt="SSH Agent"></p>
+<p>如果还有什么问题，可以参考 Github 提供的更详细的文档 <a href="https://developer.github.com/guides/using-ssh-agent-forwarding/" target="_blank" rel="external">Using SSH Agent Forwarding</a>。  </p>
+<h2 id="PM2-设置"><a href="#PM2-设置" class="headerlink" title="PM2 设置"></a>PM2 设置</h2><p>虽然我们的服务器已经可以像我们一样去拉代码了，但是我们总不能每次部署，就 SSH 登录服务器，git pull 一下代码，npm 安装必要的包，然后手动重启程序吧？  </p>
+<p>前面安装的 PM2 在这个时候就能发挥作用了。只要我们轻巧一段代码，它就能帮我们做到上面说的所有的步骤，把代码部署好。  </p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>SSH 登录服务器，通过 <code>mkdir</code> 命令建立代码目录，比如：<code>mkdir app</code>。</p>
+<p>然后修改 <code>ecosystem.json</code> 文件如下：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"apps"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"project"</span>,</div><div class="line">      <span class="string">"script"</span>: <span class="string">"index.js"</span>,</div><div class="line">      <span class="string">"env_production"</span>: &#123;</div><div class="line">        <span class="string">"NODE_ENV"</span>: <span class="string">"production"</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  ],</div><div class="line">  <span class="string">"deploy"</span>: &#123;</div><div class="line">    <span class="string">"production"</span>: &#123;</div><div class="line">      <span class="string">"user"</span>: <span class="string">"ubuntu"</span>, <span class="comment">// Linux 用户名</span></div><div class="line">      <span class="string">"host"</span>: <span class="string">"123.207.13.232"</span>, <span class="comment">// 填写你的服务器公网地址</span></div><div class="line">      <span class="string">"ref"</span>: <span class="string">"origin/master"</span>,</div><div class="line">      <span class="string">"repo"</span>: <span class="string">"git@bitbucket.org:chengusky/thinkincrowd-server.git"</span>, <span class="comment">// 填写你的代码地址</span></div><div class="line">      <span class="string">"path"</span>: <span class="string">"~/app"</span>, <span class="comment">// 新建的代码目录</span></div><div class="line">      <span class="string">"post-deploy"</span>: <span class="string">"npm install &amp;&amp; pm2 startOrRestart ecosystem.json --env production"</span>,</div><div class="line">      <span class="string">"env"</span>: &#123;</div><div class="line">        <span class="string">"NODE_ENV"</span>: <span class="string">"production"</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在本地命令行执行以下命令：  </p>
+<p><code>pm2 deploy ecosystem.json production setup</code></p>
+<p>成功后应该见到类似提示信息：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-setup.png" alt="PM2 Setup"></p>
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>一般来说，不同的情景用不同的 <code>NODE_ENV</code> 环境变量，并引用不同的配置文件。开发的环境是 <code>development</code>，还有测试环境 <code>test</code> 和线上环境 <code>production</code>。所以，部署前，你还要准备一个新的配置文件 <code>production.js</code> 放在 <code>config/base/</code> 目录下。  </p>
+<p>今后，每次修改了代码并 push 到 Github，你都只需要执行以下命令就可以完成部署了：  </p>
+<p><code>pm2 deploy ecosystem.json production</code></p>
+<p>成功后应该看到类似的提示信息：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-deploy.png" alt="PM2 Deploy"></p>
+<p>然后我们再 SSH 登录服务器，输入命令 <code>pm2 status</code> 就能够看到服务器运行状况。 <code>pm2 log thinkincrowd</code> 就能够看到你的服务器日志（把 <code>thinkincrowd</code> 替换为你的 app 的名字）。</p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-status.png" alt="PM2 Status"></p>
+<h2 id="开放服务器端口"><a href="#开放服务器端口" class="headerlink" title="开放服务器端口"></a>开放服务器端口</h2><p>到这里，离服务器能访问就只剩下最后一步了。  </p>
+<p>在我们购买云主机的时候，我选择的安全组是「Linux安全组放通22端口」，它默认只让外界通过 22 端口，也就是 SSH 来访问机器。  </p>
+<p>那么，现在我们来放开必要的端口，让我们能在浏览器访问我们的系统。  </p>
+<h3 id="新增安全组"><a href="#新增安全组" class="headerlink" title="新增安全组"></a>新增安全组</h3><p>点击「安全组」选项：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group.png" alt="Security Group"></p>
+<p>克隆原来的「Linux安全组放通22端口」，并自己命名：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-clone.png" alt="Security Group Clone"></p>
+<p>点击「加入实例」操作，并选择你的主机，确定就可以了：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-instance.png" alt="Security Group Instance"></p>
+<h3 id="新增端口"><a href="#新增端口" class="headerlink" title="新增端口"></a>新增端口</h3><p>选择我们刚新建的安全组，点击「编辑规则」操作，新增两行，并分别输入 <code>3000</code> 和 <code>80</code> 端口：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-port.png" alt="Security Group Port"></p>
+<p>大功告成。现在在浏览器输入你主机的公网 IP 和端口（3000 或者 80），看看你的服务器是不是就能访问了？为什么 80 端口也可以，我们的 Node.js 服务明明是 3000 的啊？前面安装的 Nginx 帮你搞定了一切。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-done.png" alt="Security Group Done"></p>
+<p><em>注意：很多云服务商会要求机器绑定的域名要备案了才能开放 80 端口，要不然会被封。所以，在我们拥有一个备案了的域名前，还是先别开放 80 端口吧。</em></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;机器都好了，是时候让我们的代码上场了。完成了这一步，即便你不做微信后台，你也拥有一个能提供完整后端服务的服务器了。  &lt;/p&gt;
+&lt;h2 id=&quot;SSH-Agent-Forwarding&quot;&gt;&lt;a href=&quot;#SSH-Agent-Forwarding&quot; class=&quot;head
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
+    
+      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
+    
+      <category term="Server" scheme="http://www.thinkingincrowd.me/tags/Server/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Node.js 微信后台搭建系列 - 服务器环境配置</title>
+    <link href="http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/"/>
+    <id>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/</id>
+    <published>2017-04-16T03:30:57.000Z</published>
+    <updated>2017-04-16T07:36:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们的后端代码已经基本成型了。为了让它成为真正的微信后台，我们必须将代码部署到服务器，以便微信能够和我们的后台通信，把我们公众号收到的消息转发给我们，以便我们进行后续的处理。  </p>
+<h2 id="申请云主机"><a href="#申请云主机" class="headerlink" title="申请云主机"></a>申请云主机</h2><p>目前国内比较知名的云计算服务商有阿里云，腾讯云，UCloud，美团云，青云等。国外的有 AWS，Google Cloud，Microsoft Azure 等。  </p>
+<p>鉴于我们的服务器是为了承担微信公众号后台，本身腾讯云对微信的服务器网络解析和连接都有优化，所以我就选了腾讯云来作为我的云主机提供商。  </p>
+<p>目前在 <a href="https://www.qcloud.com/" target="_blank" rel="external">https://www.qcloud.com/</a> 还有 30 天的云服务器免费使用。大家可以选择离自己近的区域购买服务器，我买的是广州 3 区的，配置大概如下：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-config.png" alt="Server Config"></p>
+<p>付款后，就能看到你的云服务器在「云主机」页面列出来了。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-console.png" alt="Server Console"></p>
+<h3 id="验证远程登录"><a href="#验证远程登录" class="headerlink" title="验证远程登录"></a>验证远程登录</h3><p>机器准备好了后，我们可以测试能否登录上机器了。我们通过 ssh 命令和分配的公网 IP 来登录：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/09-password-login.png" alt="Password Login"></p>
+<p>这时，你输入你购买机器时配置的密码，就可以登录了。但是，这种方式其实不太安全，密码设简单容易让别人破解，复杂了还不好记。所以，我们可以利用密钥要登录。我们点击操作台菜单的「SSH 密钥」选项，然后点击按钮「创建密钥」，就可以根据需要生成新的密钥对，或者利用你系统已经有的公钥来直接绑定。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/09-create-ssh-key.png" alt="Create SSH Key"></p>
+<p>在 Mac 下通过下面的命令就可以复制已有的公钥到剪贴板（假定你使用 Github 后应该已经有密钥了）:  </p>
+<p><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code></p>
+<p>然后粘贴到弹窗中「输入公钥」的文本框，命名保存。  </p>
+<p>最后，把刚才新建的密钥，绑定到你的主机就可以 SSH 无密码登录了。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-bind-key.png" alt="Server Bind Key"></p>
+<p>下图是登录后，和退出的样子。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-logined.png" alt="Server Logined"></p>
+<h2 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h2><h3 id="准备安装脚本"><a href="#准备安装脚本" class="headerlink" title="准备安装脚本"></a>准备安装脚本</h3><p>确保能远程到机器，我们就可以准备安装所需要的工具软件了，因为一开始它基本是裸机，只有你指定的操作系统。  </p>
+<p>因为只是个人使用，所以我没有买云的数据库和缓存，也没有分开两台机器来各自安装数据库和我们的后台，虽然理论上来说，数据库应该要和 Application 分开。  </p>
+<p>在 <a href="https://github.com/kenspirit/javascript-study-group/tree/master/scripts" target="_blank" rel="external">kenspirit/javascript-study-group/scripts</a> 文件夹下面，我准备了所有需要用到的安装和配置脚本。首先，我们通过 scp 的命令把他们复制到服务器上面。（你们只要把 <code>wechat</code> 替换为你们机器的公网 IP 就行了）  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/09-scp-scripts.png" alt="SCP scripts"></p>
+<p>复制完文件，我们就登录进去检查一下。通过 <code>cd scripts</code> 进入文件夹，<code>ll</code> 查看文件详情，<code>chmod +x *.sh</code> 为所有可执行的文件（.sh 后缀）添加运行的权限。  </p>
+<h3 id="安装-Redis-和-MongoDB"><a href="#安装-Redis-和-MongoDB" class="headerlink" title="安装 Redis 和 MongoDB"></a>安装 Redis 和 MongoDB</h3><p>我们只需要执行命令 <code>sudo ./install_db_ubuntu_16.sh</code>，脚本就会下载所有相关的文件，安装，配置，和设定 Redis 和 MongoDB 为自启动服务。  </p>
+<p>所有的命令完成，返回命令行后，我们可以 <code>sudo reboot</code> 来重启机器，然后再通过 <code>redis-cli</code> 和 <code>mongo</code> 来确定 Redis 和 MongoDB 是不是都安装启动正常了。  </p>
+<h3 id="安装-Nginx，Node-js，NPM-和-PM2"><a href="#安装-Nginx，Node-js，NPM-和-PM2" class="headerlink" title="安装 Nginx，Node.js，NPM 和 PM2"></a>安装 Nginx，Node.js，NPM 和 PM2</h3><p>同理，我们只需要执行命令 <code>sudo ./install_app_ubuntu_16.sh</code>，脚本就会下载所有相关的文件，安装和配置。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们的后端代码已经基本成型了。为了让它成为真正的微信后台，我们必须将代码部署到服务器，以便微信能够和我们的后台通信，把我们公众号收到的消息转发给我们，以便我们进行后续的处理。  &lt;/p&gt;
+&lt;h2 id=&quot;申请云主机&quot;&gt;&lt;a href=&quot;#申请云主机&quot; class=&quot;head
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
+    
+      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
+    
+      <category term="Server" scheme="http://www.thinkingincrowd.me/tags/Server/"/>
+    
+  </entry>
   
   <entry>
     <title>提问，而不是斥责</title>
@@ -1326,148 +1454,6 @@
       <category term="Calisthenics" scheme="http://www.thinkingincrowd.me/tags/Calisthenics/"/>
     
       <category term="Workout" scheme="http://www.thinkingincrowd.me/tags/Workout/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一个野生程序员的成长之路</title>
-    <link href="http://www.thinkingincrowd.me/2016/08/31/my-programming-path/"/>
-    <id>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</id>
-    <published>2016-08-31T15:08:35.000Z</published>
-    <updated>2016-09-21T15:25:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>我大学读的并不是计算机专业。只是很粗浅的学习过一点 C 语言，知道简单的 for loop，if 语句等，以及一个叫 Foxpro 的数据库。我当时出去面试，说只用过这个数据库的时候，你都无法想象当时那些面试官脸上的鄙视的表情。后来，幸运的在做对一道智力题的情况下，被一家小公司看上，踏上了程序员的道路。然后就一直在珠海待了几乎 12 年了。</p>
-<h2 id="成长足迹"><a href="#成长足迹" class="headerlink" title="成长足迹"></a>成长足迹</h2><p>我还依稀记得，在第一家公司，CORESOLUTIONS，最开始承担的两个工作任务。</p>
-<p>刚进公司，负责带我的人帮我拉了源代码，配置好环境后，然后和我大概讲了一下他打算让我做的页面的样子，然后让我在系统里先自己看看。当时那个系统，页面是由一套 JAVA 实现的内部 UI 渲染组件，在 JSP 里面生成出来的。所以，网络外面是完全查不到参考资料的。我对照着系统现有的其它参考页面和代码，大概花了半天还是一天，把我要做的页面，模仿着做了出来。当我问他那是不是想要的效果时，我还很清楚记得他当时那么一丝惊讶的表情，内心还是有些窃喜。紧接着的另一个任务，是要用 JavaScript 写一个函数，做出能点击 HTML 的 table 任意表头对记录排序的功能。这个任务足足花了我 3 天。</p>
-<p>因为我是非科班出身，底子差，怕被他们发现我太搓，只能自己不断尝试和憋着自学 Java，JSP，JavaScript 和 DOM 元素的各种操作方法。况且当时我要面对的 Leader 是会因为下属（或自己）某些事情做的不好，猛敲键盘发脾气的。一开始压力真的很大，而且不敢轻易问问题。</p>
-<p>在这个公司待了差不多 8 年。那段时间接触的东西很杂，学很多不同的技术和做了很多项目。要做什么，马上学什么，用什么。</p>
-<ol>
-<li>测试：带小团队参与渣打银行一个项目的 UAT 测试  </li>
-<li>支持：公司资深顾问集体跳槽后，承担 Schick 公司 Manugistiscs 系统的技术支持</li>
-<li>数据仓库：香港 Lane Crawford 的 BI 和 Crystal Report 项目</li>
-<li>外包：在香港 Laws Group 用 Powerbuilder 做产品，在 UBS 用 JAVA 做内部投资产品系统</li>
-<li>J2EE：用公司 J2EE 的框架，做广州 DailyFarm 和上海 Apparel Group 的项目</li>
-</ol>
-<p>后来，因为公司放弃用 JavaScript，用 ZK 那个框架写 UI，我就离职了。</p>
-<p>之后，去了东方海外货柜航运公司，做它们内部的航运系统。本来是奔着它们的前端项目去，更深入学习 JavaScript，却没想到被派去美国学习几个月，接手后端，就变成后端代码写的多一些了。而且毕竟我的经验也相对丰富，所以后来带团队和沟通时间花费，比自己写代码的时间还要多一些。</p>
-<h2 id="做的好的地方"><a href="#做的好的地方" class="headerlink" title="做的好的地方"></a>做的好的地方</h2><p>回顾这些的经历，它们对我的学习，沟通和应变能力的提升有客观影响。下面是我个人做的比较好的几点。也正是因为这样，前面的发展还是比较顺的。</p>
-<h3 id="迅速学习和应变"><a href="#迅速学习和应变" class="headerlink" title="迅速学习和应变"></a>迅速学习和应变</h3><ul>
-<li>整体思维</li>
-</ul>
-<p>比较常见的技术学习模式有两种。一是从整体到细节，另一种是从细节到整体。一般来说，采用第一种学习模式的人，学习速度更快一些。这种模式下学习的人在面对新技术的时候，一般只需要知道整体概念，大概包含哪些组件，每个组件分别起什么作用，怎么相互关联，然后就可以开始使用这个技术实践了。而习惯第二种方式的人，他们需要细嚼慢咽的看文档，把一个概念的大部分细节都理清，才能继续下一个。</p>
-<p>对于我来说，在面对一个新的方法、类、代码库或者技术的时候，我首先要做的事情，就是尝试从整体上理解这个新的方法或者类用来干什么，新的代码库的整体结构是怎么样的，入口在什么地方，新技术的整体理念是什么。整体思路有了后，按需再逐步填充细节。前面说到的半天就把页面做出来的例子，就是因为我只需要结合现有页面，再猜一猜框架 API 的大概用法，就可以做出来了，即便我不完全理解整个框架。所以，<strong>整体思维是帮助我迅速解决问题，学习新技术的重要手段</strong>。</p>
-<ul>
-<li>实践</li>
-</ul>
-<p><strong>学了就用，立即实践</strong>。其实我以前经常面临的情况更夸张，是<strong>现用现学</strong>。但不论如何，重点是通过实践来学习和掌握理论知识。有不少人看了一整本书下来，都还没有动过手。但是，只有真正实践起来，你才会发现那些你原来以为已经懂了的概念，可能完全不知道怎么和实际联系起来。</p>
-<ul>
-<li>独立思考，不轻易提问</li>
-</ul>
-<p>正如前面所说，我一开始是不敢问，因为怕别人觉得我太搓。如果遇到需求的问题，我就把自己当用户，从常识出发。这样才能让自己更具备产品思维能力，而不至于沦落为一个仅仅是盲从需求的码农，我还能根据自己的技术优势，反过来给业务分析人员意见。如果是技术问题，自己尽量找文档、示例，能从 Google 找到答案的，就不应该问他人。所以，在你打算张口提问之前，<strong>再想想，别急着问</strong>。</p>
-<p>不过后来我带刚毕业的新人时，我是鼓励他们问问题的。只是要<strong>学会什么应该问，和怎么问</strong>。有兴趣可以看看之前写的 <a href="http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/">一点点对提问，分享和影响力的看法</a>。  </p>
-<ul>
-<li>化压力为动力</li>
-</ul>
-<p>我真的觉得压力有时是一个好东西。恰当的压力，把你推出舒适区（Comfort Zone），身处伸展区（Stretch zone）的时候，你很多的潜能都会被逼出来。之前我被频繁的派往不同项目，学习新技术，并在客户一线，真的感觉被推着走，所以成长的也很快。所以，要恰当给自己添加压力，定目标和 deadline。</p>
-<h3 id="沟通能力"><a href="#沟通能力" class="headerlink" title="沟通能力"></a>沟通能力</h3><p>我之前任职的公司都是港资公司。身为一个广东人，精通粤语和不错的英语让我在语言上有了很大的优势。很自然的，我成为了香港老板，内地员工之间沟通的桥梁。英语能力也让我能比别人有更多的项目机会，向外接触客户，甚至出国的机会。</p>
-<p>当然，语言我觉得还不是最主要的。最重要的是<strong>能迅速准确地理解他人的想法，尽可能为下一步行动提出可行意见，并达成共识</strong>。我觉得这是高效协作的最基本的要求。很多人说程序员不善于沟通，所以，我在这方面做得还可以的情况下，机会就比别人多一些。</p>
-<h3 id="不怕吃亏"><a href="#不怕吃亏" class="headerlink" title="不怕吃亏"></a>不怕吃亏</h3><p>很多毕业生眼高手低，脏活累活不干，认为没有价值，学不到东西。当年，我自认起点比较低，上级无论指派什么任务都去做。比如，我曾经被要求找出 JSP 里面不必要的 import 和项目里所有只捕获了顶级异常的 JAVA 类，再看每个的使用是否恰当。这些脏累活，有些虽然只是体力活，有些却可以思考是否可以用程序来解决的，有些还有助于增进对公司系统的理解。<strong>不挑活，把小事做好，可以极大提升信任度，才有可能接手更重要的任务</strong>。</p>
-<p>还有另一个就是，先把工作干好，才提要求（加薪，请假等）。很多同学，还没开始干活，就要这要那，好像是先要把自己的要求都满足了，东西先拿到手，才愿意付出。<strong>怕吃亏，其实最后可能更吃亏</strong>。</p>
-<h3 id="乐于分享，授权"><a href="#乐于分享，授权" class="headerlink" title="乐于分享，授权"></a>乐于分享，授权</h3><p>工作两三年后，我都基本需要带 2 ~ 6 人的团队。带人的时候，我都会注意怎么引发他们思考，分享我的知识和经验给他们，也乐于授权给他们做一些有挑战的事情。之前写了一些文章总结，有兴趣的可以看看。  </p>
-<ul>
-<li><a href="http://www.thinkingincrowd.me/2016/03/08/How-to-delegate/">如何授权和分配工作</a>  </li>
-<li><a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a></li>
-</ul>
-<h2 id="做的不好的地方"><a href="#做的不好的地方" class="headerlink" title="做的不好的地方"></a>做的不好的地方</h2><p>既然上面好像说的我很多方面都做得很不错了，但是为什么还没有出人头地，走上人生巅峰，做个 CTO 什么的? 因为上面某些做得好的地方，处理不好的话，其实会有点反作用。</p>
-<h3 id="技术太散，深入不够"><a href="#技术太散，深入不够" class="headerlink" title="技术太散，深入不够"></a>技术太散，深入不够</h3><p>因为我具备快速学习，较杂的技术面和良好的沟通能力，在 CORESOLUTIONS 时，从老板的角度出发，我就更适合做一些外包项目。虽然我混了一个看似牛B的顾问这样的头衔，但是由于我是非科班出身，基础不够扎实，有些细节是要回头补上才行的。再加上我不断的转换项目和使用不同的技术，填坑就变得更难。况且，最主要是我自己没有刻意并主动地寻找某一个技术点和领域深入下去，并向公司提要求，要往什么方向发展。所以，T 字的那一竖，不够深。</p>
-<h3 id="反思总结不够"><a href="#反思总结不够" class="headerlink" title="反思总结不够"></a>反思总结不够</h3><p>自身较杂的技术面，就像完整的拼图上面这里一块，那里一块一样。自己没很好的花时间认真反思，梳理和沉淀，把它们更好地链接起来，形成自己的完整的知识体系网络。</p>
-<h2 id="后面怎么弄"><a href="#后面怎么弄" class="headerlink" title="后面怎么弄"></a>后面怎么弄</h2><p>现在，我打算先从 JavaScript 开始，整理知识点，顺便写一本供别人入门学习 JavaScript 的书 <a href="https://leanpub.com/tasting-javascript" target="_blank" rel="external">Tasting JavaScript</a>，现在已经写到第 5 章了。然后再根据之前参与的基于 Node.js 开发的系统，按自己的想法再重新构建，把系统分层，架构，日志，测试，前后端结合等，好好地梳理一遍，补充一下那些不完善的系统和运维等方面的知识，以形成自己的体系。后面如果有机会的话，再接触一下运营和产品。最后说不定真能胜任一个小小的 CTO 哦。其实，<strong>最重要的是有把事情做成的能力</strong>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我大学读的并不是计算机专业。只是很粗浅的学习过一点 C 语言，知道简单的 for loop，if 语句等，以及一个叫 Foxpro 的数据库。我当时出去面试，说只用过这个数据库的时候，你都无法想象当时那些面试官脸上的鄙视的表情。后来，幸运的在做对一道智力题的情况下，被一家小
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>编程是什么？我要学吗？</title>
-    <link href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/"/>
-    <id>http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/</id>
-    <published>2016-08-28T03:04:46.000Z</published>
-    <updated>2016-09-21T15:48:43.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>很多人觉得编程是很高端神秘的事情，觉得自己可能学不来。但是了解到程序员的工资比较高，所以又蠢蠢欲动，想进入这个领域。那么，在回答这个问题前，我们先了解一下什么是编程吧。</p>
-<h2 id="什么是编程"><a href="#什么是编程" class="headerlink" title="什么是编程"></a>什么是编程</h2><p>编程，也叫程序设计，其实就是用编程语言处理数据，以达到你想要的效果。有一本书的名字很清楚表达了这个观点。</p>
-<p><strong>Algorithms</strong> + <strong>Data Structures</strong> = <strong>Programs</strong></p>
-<p><strong>算法</strong> + <strong>数据结构</strong> = <strong>程序</strong></p>
-<h3 id="什么是数据结构"><a href="#什么是数据结构" class="headerlink" title="什么是数据结构"></a>什么是数据结构</h3><p>数据结构其实就是数据存储的方式。我们不妨用下面几个生活中的例子来理解。</p>
-<ul>
-<li>地铁站X光机上的一件件行李</li>
-</ul>
-<p>行李是排成一排，顺序进入 X 光机处理的。排最前面的，先处理。最后进的，最后处理。如果把行李看作是数据，这种数据结构其实是队列。<strong>队列的特点是先进先出</strong>。</p>
-<ul>
-<li>超市里叠在一起的一箱箱牛奶</li>
-</ul>
-<p>叠在一起的箱子，最开始放置的肯定是最下面的那个，然后一箱一箱往上垒。要拿出来的时候，当然是先拿最上面的，最下面的最后才拿。这种结构就是栈。<strong>栈的特点是先进后出</strong>。</p>
-<ul>
-<li>电脑的文件夹</li>
-</ul>
-<p>文件夹可以包含有子文件夹和文件，子文件夹又可以再包含下一层的文件夹和文件。这个结构可以理解为树型结构。文件是树的叶子节点，子文件夹可以是树的分支，也可以是叶子。<strong>树的特点是分支和层级关系</strong></p>
-<h3 id="什么是算法"><a href="#什么是算法" class="headerlink" title="什么是算法"></a>什么是算法</h3><p><strong>算法就是对数据进行处理的方法</strong>。</p>
-<p>从数据层面看，结构不同一般需要不同的处理方式。从处理效率看，对同一种数据结构，也可以有多种不同的处理方式。有些算法，可能要处理的数据量越大，时间就会成倍增加。有些却无论数据多大，时间都基本恒定。举一个例子：</p>
-<p>假设你买了一个圆柱型的水果软糖，里面有 9 粒糖果。如果它的包装开口是在某一边，你需要拿第 5 粒，那么你就必须先把前面 4 粒拿出来，才能拿到第 5 粒。而且你想拿的糖果在越后面，花费时间就越多。但是，假设有一种包装是横着把圆柱形打开（结构不同了），你一次可以看到和拿到 9 粒糖果。那么无论你拿哪一粒，花费的时间都是一样的。</p>
-<h3 id="在电脑里是怎样的？"><a href="#在电脑里是怎样的？" class="headerlink" title="在电脑里是怎样的？"></a>在电脑里是怎样的？</h3><p>假设我把上面的糖果问题抽象到计算机里面，是什么样子的呢？下面用一段 JavaScript 代码来模拟吧。<em>懂编程的朋友，别吐槽顺序取的代码，我知道可以按位置，这里只是说明一下。</em></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showMeTheCandy</span>(<span class="params">candy</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(candy)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 排成列，顺序取</span></div><div class="line"><span class="keyword">var</span> candy = [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span>, <span class="string">'G'</span>, <span class="string">'H'</span>, <span class="string">'I'</span>] <span class="comment">// 我有9粒字母糖果</span></div><div class="line"><span class="keyword">var</span> toPickCandyLocation = <span class="number">5</span> <span class="comment">// 我要取的糖果是第5粒</span></div><div class="line"><span class="keyword">var</span> currentCandyLocation = <span class="number">1</span> <span class="comment">// 现在我要开始取的是第1粒</span></div><div class="line"><span class="keyword">var</span> candyPicked = <span class="literal">null</span> <span class="comment">// 我取的糖果要放这，但现在还不存在</span></div><div class="line"></div><div class="line"><span class="keyword">while</span> (currentCandyLocation &lt;= <span class="number">5</span>) &#123; <span class="comment">// 当我要取的糖果还不是第5粒的话，重复下面的事情</span></div><div class="line">  candyPicked = candy.shift() <span class="comment">// 从最前面取1粒</span></div><div class="line">  currentCandyLocation = currentCandyLocation + <span class="number">1</span> <span class="comment">// 挪到下一个位置</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">showMeTheCandy(candyPicked) <span class="comment">// 看看拿到的糖果是什么字母</span></div><div class="line"><span class="comment">// -&gt; 'E'</span></div><div class="line"></div><div class="line"><span class="comment">// 做成特定的，可按位置/编号取的结构</span></div><div class="line"><span class="keyword">var</span> candy = &#123;</div><div class="line">  <span class="string">'1'</span>: <span class="string">'A'</span>,</div><div class="line">  <span class="string">'2'</span>: <span class="string">'B'</span>,</div><div class="line">  <span class="string">'3'</span>: <span class="string">'C'</span>,</div><div class="line">  <span class="string">'4'</span>: <span class="string">'D'</span>,</div><div class="line">  <span class="string">'5'</span>: <span class="string">'E'</span>,</div><div class="line">  <span class="string">'6'</span>: <span class="string">'F'</span>,</div><div class="line">  <span class="string">'7'</span>: <span class="string">'G'</span>,</div><div class="line">  <span class="string">'8'</span>: <span class="string">'H'</span>,</div><div class="line">  <span class="string">'9'</span>: <span class="string">'I'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">showMeTheCandy(candy[<span class="string">'9'</span>])</div><div class="line"><span class="comment">// -&gt; 'E'</span></div></pre></td></tr></table></figure>
-<p>从上面可以看到，同样的数据，可以按照不同的结构来存放。不同的处理逻辑/算法，效率不同。所以，从这种角度来看，<strong>学习编程和程序设计，是学会抽象</strong>，学会如何把现实问题，在计算机里面表现出来。<strong>还有数据处理</strong>。</p>
-<p>从另一种角度来看，<strong>编程和程序设计，就像写作</strong>。从上面第一段顺序取数据的代码看，我就像写作一样。我在用计算机能理解的语言，写操作指引出来。一个好的程序员，写的代码，一定像好文章那样容易理解。不同的语言，指令有点不同，但不差太远。所以学会一种语言，再学一种难度就没那么大。</p>
-<h2 id="应该不应该学习编程"><a href="#应该不应该学习编程" class="headerlink" title="应该不应该学习编程"></a>应该不应该学习编程</h2><p>其实编程和程序设计并不难，尤其是当你能把它和实际问题结合，理解。回到最开始的问题，我应该学编程吗？首先，问问你自己，你学编程的目的是什么？</p>
-<ol>
-<li><p>你觉得通过指尖敲击的指令，就能创造无限可能，这实在是太酷了。  –  你绝对应该学习。</p>
-</li>
-<li><p>你目前遇到些繁琐而重复的事情，想看一下计算机能否代劳。  –  你应该尝试。</p>
-</li>
-<li><p>你想找一份工资相对高的工作，不用搬搬抬抬，还能在办公室吹空调。  –  这也是不错的选择。</p>
-</li>
-<li><p>你想学到一种编程语言让你当金饭碗用，拿高工资。  –  早早死了心算了。</p>
-</li>
-</ol>
-<p>计算机应该是变化越来越快的领域，虽说有不少语言诞生的时间已经几十年，但是它们也是持续演化的。说不准你刚学会没多久的懂，两三年后就没什么人用了，就像现在的前端框架。所以，如果你想把程序设计作为你的职业，请做好长期持续学习的准备。</p>
-<p>但是，即便你不需要把它当作职业，我认为，多少具备一些编程的能力，让计算机辅助你解决问题，提升思考方式和效率，真的非常有好处。送上 Linus 大神的话：</p>
-<blockquote>
-<p>Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program.</p>
-</blockquote>
-<h2 id="怎么开始？"><a href="#怎么开始？" class="headerlink" title="怎么开始？"></a>怎么开始？</h2><p>如果你已经下定决心要学习程序开发。那怎么开始？</p>
-<h3 id="从问题出发"><a href="#从问题出发" class="headerlink" title="从问题出发"></a>从问题出发</h3><p>你想解决什么问题？处理什么数据？最后达到什么效果？从事哪个领域？</p>
-<p>比如说，如果你要处理 Excel，做各式各样的报表。或者要从固定格式的 Excel 里面抽取数据。那你可能只要学习 VBA 就可以了，或者用 JAVA。因为 Excel 这种企业级的东西，你用回微软自家的语言会方便些。企业级的 JAVA 语言也是不错的选择，因为已经很多写好的工具，你学会拿来用就可以了。但是如果你非要选 Node.js 和 JavaScript 来处理，就真有点作死。</p>
-<p>还有，很多人想学数据分析，一上来就学什么 Spark, Hadoop，搞大数据，但我觉得那是不对的。只学会搭建工具环境，却不会数据分析的基础，难道不是本末倒置吗？况且，工具和框架更新换代比语言变化的还快，一年后说不定又换新了。数据分析最主要的是有数据思维，基本的统计学知识和数据分析的能力。如果你用 Excel, SQL 就能挖掘出数据里面的商业价值，看到别人看不到的规律，那就牛了。当然你还可以学习 Python 或者 R 这种最基础的数据分析领域的语言，因为它们提供丰富的数据分析算法和展示工具，让数据分析工作更简单。所以，我觉得只有真的具备一定的基础，而且数据真的大到一定程度，你才需要去用那些大数据的处理工具。</p>
-<p>Web Application 开发领域，无论前端后端，我觉得肯定要学的是 JavaScript, HTML, CSS。如果你打算在前端发展，不管你是打算用 jQuery, AngularJS，React 或者 VueJS 也好，原生 JavaScript 都是基础。即便你想从事后端，拥有基本的前端知识，可以让你方便和前端沟通合作。后端的语言选择相对较多，一般是 Ruby, Node.js, Python，PHP, Java。Java 在传统企业领域用的比较多，初创公司一般选其它的来起步。Go, Rust, Clojure 比较新，用的人相对少一些。</p>
-<h3 id="如何起步"><a href="#如何起步" class="headerlink" title="如何起步"></a>如何起步</h3><p>现在互联网如此发达，书，视频，在线教育和练习编程开发的资源都相当地多，对于一个稍微有点编程经验的人来说。自学应该完全不是问题，不愁没有资源。但是，对于一个完全是自学起步，没有任何编程背景的人来说，最好<strong>找一个靠谱的师傅来指引起步</strong>。</p>
-<p>首先，从上面说的问题出发，新手是不可能有答案的。即便在论坛上提问，用什么语言，什么建议都会有。你可要知道程序员最喜欢讨论什么语言，什么框架好。所以有个笑话说，你想让程序员们吵起来，只要在里面喊一句，XXX 语言是最好的语言就可以了。</p>
-<p>其次，开始学习编程开发遇到的最大的障碍是搭建环境。很多新手都是在最开始的时候就遇到各种环境问题，导致完全无法跟教程练手，挫败感太强而放弃。所以，如果有人在身边指导，至少先把搭建环境这关过了，后面会顺畅很多。</p>
-<p>再说，一个有经验的靠谱的老师，还可以告诉你<strong>学习使用某一种语言的最少必要知识</strong>，不至于让你迷失在太多技术细节中，真的可以事半功倍。</p>
-<p>如果确实身边和网络上找不到这样的朋友，老师，又不舍得花钱去培训班，要如何降低遇到障碍的可能性和提高问题解决效率呢？<strong>最好选择 Mac 来开发，学会如何使用 Google，和正确提问</strong>。</p>
-<p>最后，无论有没有老师，<strong>学编程最重要就是：模仿，模仿，模仿。练习，练习，练习</strong>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;很多人觉得编程是很高端神秘的事情，觉得自己可能学不来。但是了解到程序员的工资比较高，所以又蠢蠢欲动，想进入这个领域。那么，在回答这个问题前，我们先了解一下什么是编程吧。&lt;/p&gt;
-&lt;h2 id=&quot;什么是编程&quot;&gt;&lt;a href=&quot;#什么是编程&quot; class=&quot;headerlin
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
     
   </entry>
   
