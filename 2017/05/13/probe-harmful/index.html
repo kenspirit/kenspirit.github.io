@@ -4,19 +4,20 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Node.js 微信后台搭建系列 - 服务器环境配置 | Thinking in Crowd / 鹄思乱想</title>
+    <title>猜来猜去，有意思吗？ | Thinking in Crowd / 鹄思乱想</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="鹄思乱想">
     
-    <meta name="description" content="我们的后端代码已经基本成型了。为了让它成为真正的微信后台，我们必须将代码部署到服务器，以便微信能够和我们的后台通信，把我们公众号收到的消息转发给我们，以便我们进行后续的处理。  
-申请云主机目前国内比较知名的云计算服务商有阿里云，腾讯云，UCloud，美团云，青云等。国外的有 AWS，Google ">
+    <meta name="description" content="周二晚和同事共同吃饭，并观看了「看不见的客人」这部悬疑片。电影剧情的反转真的相当意外，而且不同角度的推理也非常巧妙。影片中有各种试探性对话和策略，而这当然也是悬疑片必备的佐料。  
+死者的父亲到男主的 Party，试探性地问他是否抽烟，并借打火机，从而认定男主和他儿子的死亡关联。  
+男主在慢慢地叙">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="kenspirit" />
-    <meta name="twitter:title" content="Node.js 微信后台搭建系列 - 服务器环境配置 | Thinking in Crowd / 鹄思乱想" />
+    <meta name="twitter:title" content="猜来猜去，有意思吗？ | Thinking in Crowd / 鹄思乱想" />
       
     
     
@@ -79,15 +80,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/" title="Node.js 微信后台搭建系列 - 服务器环境配置" itemprop="url">Node.js 微信后台搭建系列 - 服务器环境配置</a>
+      <a href="/2017/05/13/probe-harmful/" title="猜来猜去，有意思吗？" itemprop="url">猜来猜去，有意思吗？</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
     </p>
   <p class="article-time">
-    <time datetime="2017-04-16T03:30:57.000Z" itemprop="datePublished">Apr 16 2017</time>
-    Updated:<time datetime="2017-04-16T07:36:00.000Z" itemprop="dateModified">Apr 16 2017</time>
+    <time datetime="2017-05-13T00:35:14.000Z" itemprop="datePublished">May 13 2017</time>
+    Updated:<time datetime="2017-05-13T00:36:58.000Z" itemprop="dateModified">May 13 2017</time>
     
   </p>
 </header>
@@ -96,54 +97,59 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#申请云主机"><span class="toc-number">1.</span> <span class="toc-text">申请云主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#验证远程登录"><span class="toc-number">1.1.</span> <span class="toc-text">验证远程登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装软件"><span class="toc-number">2.</span> <span class="toc-text">安装软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备安装脚本"><span class="toc-number">2.1.</span> <span class="toc-text">准备安装脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-Redis-和-MongoDB"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Redis 和 MongoDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-Nginx，Node-js，NPM-和-PM2"><span class="toc-number">2.3.</span> <span class="toc-text">安装 Nginx，Node.js，NPM 和 PM2</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#无处不在"><span class="toc-number">1.</span> <span class="toc-text">无处不在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么？"><span class="toc-number">2.</span> <span class="toc-text">为什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#试探是一种伤害"><span class="toc-number">3.</span> <span class="toc-text">试探是一种伤害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相信，或许更容易实现"><span class="toc-number">4.</span> <span class="toc-text">相信，或许更容易实现</span></a></li></ol>
 		</div>
 		
-		<p>我们的后端代码已经基本成型了。为了让它成为真正的微信后台，我们必须将代码部署到服务器，以便微信能够和我们的后台通信，把我们公众号收到的消息转发给我们，以便我们进行后续的处理。  </p>
-<h2 id="申请云主机"><a href="#申请云主机" class="headerlink" title="申请云主机"></a>申请云主机</h2><p>目前国内比较知名的云计算服务商有阿里云，腾讯云，UCloud，美团云，青云等。国外的有 AWS，Google Cloud，Microsoft Azure 等。  </p>
-<p>鉴于我们的服务器是为了承担微信公众号后台，本身腾讯云对微信的服务器网络解析和连接都有优化，所以我就选了腾讯云来作为我的云主机提供商。  </p>
-<p>目前在 <a href="https://www.qcloud.com/" target="_blank" rel="external">https://www.qcloud.com/</a> 还有 30 天的云服务器免费使用。大家可以选择离自己近的区域购买服务器，我买的是广州 3 区的，配置大概如下：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-config.png" alt="Server Config"></p>
-<p>付款后，就能看到你的云服务器在「云主机」页面列出来了。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-console.png" alt="Server Console"></p>
-<h3 id="验证远程登录"><a href="#验证远程登录" class="headerlink" title="验证远程登录"></a>验证远程登录</h3><p>机器准备好了后，我们可以测试能否登录上机器了。我们通过 ssh 命令和分配的公网 IP 来登录：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-password-login.png" alt="Password Login"></p>
-<p>这时，你输入你购买机器时配置的密码，就可以登录了。但是，这种方式其实不太安全，密码设简单容易让别人破解，复杂了还不好记。所以，我们可以利用密钥要登录。我们点击操作台菜单的「SSH 密钥」选项，然后点击按钮「创建密钥」，就可以根据需要生成新的密钥对，或者利用你系统已经有的公钥来直接绑定。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-create-ssh-key.png" alt="Create SSH Key"></p>
-<p>在 Mac 下通过下面的命令就可以复制已有的公钥到剪贴板（假定你使用 Github 后应该已经有密钥了）:  </p>
-<p><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code></p>
-<p>然后粘贴到弹窗中「输入公钥」的文本框，命名保存。  </p>
-<p>最后，把刚才新建的密钥，绑定到你的主机就可以 SSH 无密码登录了。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-bind-key.png" alt="Server Bind Key"></p>
-<p>下图是登录后，和退出的样子。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-logined.png" alt="Server Logined"></p>
-<h2 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h2><h3 id="准备安装脚本"><a href="#准备安装脚本" class="headerlink" title="准备安装脚本"></a>准备安装脚本</h3><p>确保能远程到机器，我们就可以准备安装所需要的工具软件了，因为一开始它基本是裸机，只有你指定的操作系统。  </p>
-<p>因为只是个人使用，所以我没有买云的数据库和缓存，也没有分开两台机器来各自安装数据库和我们的后台，虽然理论上来说，数据库应该要和 Application 分开。  </p>
-<p>在 <a href="https://github.com/kenspirit/javascript-study-group/tree/master/scripts" target="_blank" rel="external">kenspirit/javascript-study-group/scripts</a> 文件夹下面，我准备了所有需要用到的安装和配置脚本。首先，我们通过 scp 的命令把他们复制到服务器上面。（你们只要把 <code>wechat</code> 替换为你们机器的公网 IP 就行了）  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-scp-scripts.png" alt="SCP scripts"></p>
-<p>复制完文件，我们就登录进去检查一下。通过 <code>cd scripts</code> 进入文件夹，<code>ll</code> 查看文件详情，<code>chmod +x *.sh</code> 为所有可执行的文件（.sh 后缀）添加运行的权限。  </p>
-<h3 id="安装-Redis-和-MongoDB"><a href="#安装-Redis-和-MongoDB" class="headerlink" title="安装 Redis 和 MongoDB"></a>安装 Redis 和 MongoDB</h3><p>我们只需要执行命令 <code>sudo ./install_db_ubuntu_16.sh</code>，脚本就会下载所有相关的文件，安装，配置，和设定 Redis 和 MongoDB 为自启动服务。  </p>
-<p>所有的命令完成，返回命令行后，我们可以 <code>sudo reboot</code> 来重启机器，然后再通过 <code>redis-cli</code> 和 <code>mongo</code> 来确定 Redis 和 MongoDB 是不是都安装启动正常了。  </p>
-<h3 id="安装-Nginx，Node-js，NPM-和-PM2"><a href="#安装-Nginx，Node-js，NPM-和-PM2" class="headerlink" title="安装 Nginx，Node.js，NPM 和 PM2"></a>安装 Nginx，Node.js，NPM 和 PM2</h3><p>同理，我们只需要执行命令 <code>sudo ./install_app_ubuntu_16.sh</code>，脚本就会下载所有相关的文件，安装和配置。  </p>
+		<p>周二晚和同事共同吃饭，并观看了「看不见的客人」这部悬疑片。电影剧情的反转真的相当意外，而且不同角度的推理也非常巧妙。影片中有各种试探性对话和策略，而这当然也是悬疑片必备的佐料。  </p>
+<p>死者的父亲到男主的 Party，试探性地问他是否抽烟，并借打火机，从而认定男主和他儿子的死亡关联。  </p>
+<p>男主在慢慢地叙述自己的经历和细节中，试探来帮他的律师，看她能否推理出事情的原委，是否真的足够聪明。  </p>
+<h2 id="无处不在"><a href="#无处不在" class="headerlink" title="无处不在"></a>无处不在</h2><p>如果在悬疑片中，缺少了猜来猜去的过程，就已经不是悬疑片了。但是，其实日常生活中，也充满了各种试探性的谈话和行为。  </p>
+<ul>
+<li>买东西的时候，我们通过不断地压价，抬价，甚至假装离开，来试探对方的价格底线。  </li>
+<li>工作中，旁敲侧击地从上司那了解今年是否有加薪。  </li>
+<li>单恋中的人，或许会开玩笑地试探对方也是否喜欢自己。  </li>
+<li>恋爱中，或婚后的人，或许会试探对方是否记得自己的生日，或者特殊纪念日。  </li>
+<li>有些家长，会试探性地问小孩子要东西，看 Ta 是否“小气”；玩耍时假装被 Ta 弄伤，看 Ta 会否来安抚自己；甚至假装说“不要你了”，看 Ta 是否会感到伤心。  </li>
+<li>甚至有些父母，试探性地和子女说要去老人院（「奇葩说」近期节目讨论话题，「李松蔚」公众号也有点评）</li>
+</ul>
+<h2 id="为什么？"><a href="#为什么？" class="headerlink" title="为什么？"></a>为什么？</h2><p>是对他人的不信任吗？我们不相信店主会一开始就提供给我们最优惠的价格；也不会相信老板会给出公司能给的最合适和最高的工资。这种不信任嘛，似乎也说的过去。  </p>
+<p>但是我们为什么还会去试探自己在乎的人，甚至是最亲密的人呢？有些人可能会说：“逗着玩的啊”。真的是这样吗？  </p>
+<p><strong>每一次的试探，其实背后都隐含着自己内心的一种期待。而这种基于期待的试探，其实包含了按自己的模式向对方提出的要求。</strong>  </p>
+<h2 id="试探是一种伤害"><a href="#试探是一种伤害" class="headerlink" title="试探是一种伤害"></a>试探是一种伤害</h2><p>为什么这么说呢？</p>
+<p>首先，<strong>当你基于某种期待，试探对方的时候，其实你是按自己的标准和行事方式来要求别人</strong>。觉得对方如果是 XXX 的话，就应该会 YYY。比如，当我们在试探对方是否喜欢自己的时候，其实是觉得，既然我喜欢你，你是不是应该也喜欢我啊？当我们试探对方是否记得自己生日或者纪念日的时候，其实是觉得，既然我记得，你不会不记得吧？当我们试探小朋友是否“小气”的时候，我们是希望我们自己对他们付出那么多的情况下，他们理应也对我们好一些。  </p>
+<p>可是，你的这些期待，别人就一定得满足吗？别人就只能用你认可的方式 YYY，才说明 Ta 满足你的期待 XXX 吗？</p>
+<p>并不是的。每个人表达亲密关系的语言都不同。并且，像小朋友的例子，Ta 可能只是刚好成长到了物权的拥有阶段，这个时候会显得比较“自私”，但是这是必须经历的阶段，也不代表 Ta 未来就是“自私”的人。  </p>
+<p>可是，如果你因为看到对方做出和你期待外的行为或反应，就做出 Ta 不 YYY，所以不 XXX 的判断的话，很可能你会误解对方。这个时候，你无非有两种反应：  </p>
+<ol>
+<li>独自伤心。这对自己造成伤害，然而却因为无需有的，自身臆想的原因。  </li>
+<li>发生冲突。这对他人造成伤害，他人觉得委屈，同时也削弱对方的信心。  </li>
+</ol>
+<p>还有另一种情况是，对方如果发现你在试探 Ta，会让 Ta 觉得受辱，被耍。说不定 Ta 还会故意反过来捉弄你。  </p>
+<p>所以，无论怎样，我觉得都会削弱双方的亲密关系。  </p>
+<h2 id="相信，或许更容易实现"><a href="#相信，或许更容易实现" class="headerlink" title="相信，或许更容易实现"></a>相信，或许更容易实现</h2><p>那对于自己的期待，如何实现呢？</p>
+<p><strong>直接表达和询问</strong>。比如说，你直接向亲爱的人说，今天是我的生日或 XX 纪念日，我希望 YYY，因为这样我会觉得很高兴。又比如，你对你的孩子说，我也很喜欢 XXX，你可以分享一些给我吗？这种表达，能清晰说明自己的感觉，让他人理解你的需求。久而久之，对方就会习惯并了解你的习惯，喜好，和爱的语言。真正关心你的人，当然会非常乐意，并接受你提出的这些请求。  </p>
+<p>当然，对方可能也会不同意。如果这个期待和需求，对你来说很重要，你可以表达出自己的伤心，和失望的感觉。如果对方珍惜你们的关系，Ta 或许会向你说明自己不能接受的原因，或许在了解到事情的重要性后，会做出改变。如果你的期待和需求，并不是非常重要，那你也可以了解到对方对这件事情的态度，了解并尊重 Ta 的模式。  </p>
+<p><strong>相信，打心底地相信。</strong>一段值得维护的亲密关系，信任在里面的作用非常重要。都说爱是不索取回报的付出，那是要在对方真的不以你期望的方式回应你的时候，你依然能用你的方式去爱对方。曾经，我的儿子一直在乡下由奶奶照顾大，直到上幼儿园后回到我们身边。寒暑假，他都跟随奶奶回老家。我们打电话回去，奶奶让他和我们说说话，他有时都会拒绝。对他来说，奶奶是最亲密的人，我和他妈妈不是。但是，我们并没有因此在他面前责骂他，要求他，或者试探他。经过长时间的接触，和等待，他和她妈妈的关系变得非常好。而我现在长时间在他乡工作，每次回家，他都会强烈要求和我一起玩，晚上一起睡，为我的离开而流泪。  </p>
+<p>所有的期待，伴随着坚定的信念，一定会实现。  </p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+  <a class="article-category-link" href="/categories/Life/">Life</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Wechat/">Wechat</a><a href="/tags/Node-js/">Node.js</a><a href="/tags/Tutorial/">Tutorial</a><a href="/tags/Server/">Server</a>
+  <span></span> <a href="/tags/Relationship/">Relationship</a><a href="/tags/Asking/">Asking</a>
   </div>
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/" data-title="Node.js 微信后台搭建系列 - 服务器环境配置 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  <div data-url="http://www.thinkingincrowd.me/2017/05/13/probe-harmful/" data-title="猜来猜去，有意思吗？ | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
   </div>
 
 </div>
@@ -152,19 +158,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/" title="Node.js 微信后台搭建系列 - 服务器代码部署">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Node.js 微信后台搭建系列 - 服务器代码部署</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/04/09/ask-instead-of-scold/"  title="提问，而不是斥责">
+<a href="/2017/05/07/secure-your-website-with-free-condom/"  title="为你的网站带上免费的安全套">
  <strong>NEXT:</strong><br/> 
- <span>提问，而不是斥责
+ <span>为你的网站带上免费的安全套
 </span>
 </a>
 </div>
@@ -183,7 +181,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#申请云主机"><span class="toc-number">1.</span> <span class="toc-text">申请云主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#验证远程登录"><span class="toc-number">1.1.</span> <span class="toc-text">验证远程登录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装软件"><span class="toc-number">2.</span> <span class="toc-text">安装软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#准备安装脚本"><span class="toc-number">2.1.</span> <span class="toc-text">准备安装脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-Redis-和-MongoDB"><span class="toc-number">2.2.</span> <span class="toc-text">安装 Redis 和 MongoDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-Nginx，Node-js，NPM-和-PM2"><span class="toc-number">2.3.</span> <span class="toc-text">安装 Nginx，Node.js，NPM 和 PM2</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#无处不在"><span class="toc-number">1.</span> <span class="toc-text">无处不在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么？"><span class="toc-number">2.</span> <span class="toc-text">为什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#试探是一种伤害"><span class="toc-number">3.</span> <span class="toc-text">试探是一种伤害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相信，或许更容易实现"><span class="toc-number">4.</span> <span class="toc-text">相信，或许更容易实现</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -262,7 +260,7 @@
 <script>
   var disqus_shortname = 'thinkingincrowd';
   
-  var disqus_url = 'http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/';
+  var disqus_url = 'http://www.thinkingincrowd.me/2017/05/13/probe-harmful/';
   
   (function(){
     var dsq = document.createElement('script');
