@@ -18,12 +18,11 @@ tags:
 
 Recently, I encounter two very interesting issues when using ng-repeat in [AngularJS][].  Not completely understanding the [$watch][] and [$digest()][] is the root cause.  
 
-##Requirement
+## Requirement
 I am making some workout entries as a list and one special requirement is to group the records by the date.  
 
 In order to break the entries to different groups, I use a scope level variable _$scope.lastActionDate_ to keep track of the last actionDate of the entry to decide whether I should add the actionDateGroup DIV.  The source is as below.  The debug messages are used to explain the issues I encountered.  You can safely ignore them now.  Actually, you may already guess what one of the issues is after seeing them.  Yes, only one.  I bet you can never guess the second one and why.  
 
-{% raw %}
 ``` html
 
     <style>
@@ -72,64 +71,34 @@ In order to break the entries to different groups, I use a scope level variable 
         }
     </script>
 ```
-{% endraw %}
 
-##Expectation  
+## Expectation  
 
 1. _actionDate_ of the first entry will always be shown as it's the first group.  
 2. _actionDate_ of the remaining entries will be shown if its value is not the same as the previous one.  
 
-##Phenomenon
+## Phenomenon
+
 When the sample data is as above (case #1), the effect looks like it's behaving correctly as below:  
-<ul>
-    <li style="list-style-type: none;">
-        <div style="font-weight: bold; color: red">2012-01-31</div>
-        <span>Rope jumping count 1000</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Jogging 3000M</span>
-    </li>
-    <li style="list-style-type: none;">
-        <div style="font-weight: bold; color: red">2012-01-30</div>
-        <span>Situp 40 * 3</span>
-    </li>
-</ul>
+
+<ul> <li style="list-style-type: none;"> <div style="font-weight: bold; color: red">2012-01-31</div> <span>Rope jumping count 1000</span> </li> <li style="list-style-type: none;"> <span>Jogging 3000M</span> </li> <li style="list-style-type: none;"> <div style="font-weight: bold; color: red">2012-01-30</div> <span>Situp 40 * 3</span> </li> </ul>
 
 However, if you change the _actionDate_ of the last entry to be also **2012-01-31** (case #2), you will find the result is that no date group is shown.  Why?  Isn't it supposed to show only the first one as all entries have the same _actionDate_?  
 
-####Expected result:  
-<ul>
-    <li style="list-style-type: none;">
-        <div style="font-weight: bold; color: red">2012-01-31</div>
-        <span>Rope jumping count 1000</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Jogging 3000M</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Situp 40 * 3</span>
-    </li>
-</ul>
+#### Expected result:  
 
-####Actual result:
-<ul>
-    <li style="list-style-type: none;">
-        <span>Rope jumping count 1000</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Jogging 3000M</span>
-    </li>
-    <li style="list-style-type: none;">
-        <span>Situp 40 * 3</span>
-    </li>
-</ul>
+<ul> <li style="list-style-type: none;"> <div style="font-weight: bold; color: red">2012-01-31</div> <span>Rope jumping count 1000</span> </li> <li style="list-style-type: none;"> <span>Jogging 3000M</span> </li> <li style="list-style-type: none;"> <span>Situp 40 * 3</span> </li> </ul>
+
+#### Actual result:
+
+<ul> <li style="list-style-type: none;"> <span>Rope jumping count 1000</span> </li> <li style="list-style-type: none;"> <span>Jogging 3000M</span> </li> <li style="list-style-type: none;"> <span>Situp 40 * 3</span> </li> </ul>
 
 Now if you check the calledCount in the debug message, you will find that it's called 6 times (double the entry count) in case #1 and 9 times in case #2.  There are two issues I never thought they should happen:  
 
 1. The _isNewDateGroup_ function is called more than the entries' count.  (Guess this, right?)  
 2. The called count is different when the data is different.  (how about this?)  
 
-##Causes
+## Causes
 In AngularJS [$watch][] API:  
 
 >* Since [$digest()][] reruns when it detects changes the watchExpression can execute multiple times per [$digest()][] and should be **idempotent**.  
@@ -139,9 +108,11 @@ In AngularJS [$watch][] API:
 >(Since watchExpression can execute multiple times per $digest cycle when a change is detected, be prepared for multiple calls to your listener.)
 
 ### Issue #1
+
 The _isNewDateGroup_ being watched whose calculation relies on value of _lastActionDate_ is not idempotent and so during initial run stage, _lastActionDate_ is set to 2012-01-30 at the end of case #1 which causes the illusion of working, while it is set to 2012-01-31 at the end of case #2 which illustrates the error.
 
 ### Issue #2
+
 In below code, if I comment out **$scope.lastActionDate = actionDate;** or change the **return true;** to **return false;**, the called count will be 6, same as case #1.  This implies that the return value of the expression is the cause.
 
 ``` javascript
@@ -154,6 +125,8 @@ In below code, if I comment out **$scope.lastActionDate = actionDate;** or chang
 Remember what the API states: **rerunning the watchers until no changes are detected**?  Let's see what the return value is for watch expression _isNewDateGroup_ after each run.  
 
 If the _actionDate_ of the last entry is **2012-01-30**:  
+
+```html
 <p>
 <table style="font-size: 0.85em;">
     <tr>
@@ -178,8 +151,11 @@ If the _actionDate_ of the last entry is **2012-01-30**:
     </tr>
 </table>
 </p>
+```
 
 If the _actionDate_ of the last entry is **2012-01-31**:  
+
+```html
 <p>
 <table style="font-size: 0.85em;">
     <tr>
@@ -208,5 +184,6 @@ If the _actionDate_ of the last entry is **2012-01-31**:
     </tr>
 </table>
 </p>
+```
 
 So now you see why changing the last entry to 2012-01-31 causes the 3rd time to evaluate the expression again.

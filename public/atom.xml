@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-05-13T00:36:58.000Z</updated>
+  <updated>2017-05-14T13:16:23.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>初识 React, Flux 和 Redux</title>
+    <link href="http://www.thinkingincrowd.me/2017/05/13/get-to-know-react-flux-redux/"/>
+    <id>http://www.thinkingincrowd.me/2017/05/13/get-to-know-react-flux-redux/</id>
+    <published>2017-05-13T09:18:51.000Z</published>
+    <updated>2017-05-14T13:16:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>近期，我大概花了一周，每天晚上 2 小时左右和一个周末的时间，通过官方文档来了解 React, Redux, Flux 几个框架和概念。写下此文是希望帮自己梳理和巩固一下对它们的认识。如果哪里理解有误，希望大家不吝指出。  </p>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>围绕 JavaScript 来设计的思想，把所有的 Component，都化作 JavaScript 的一个 function 或者 object，通过丰富的工具来支持类型，错误检查等确实是很赞的想法。如果使用的是 AngularJS 这样的模板和自定义 directive，不小心打错了字，框架是选择忽略还是报错提醒呢，因为那个它不认识的标签，可能是别家的啊？所以，在这点上，React 的做法有优胜的地方。  </p>
+<p>还有，React 里面几乎所有的东西都是 Component，通过把 Component 进行高阶组合（HOC），确实可以产生威力无穷的变化。而且它的专有名词和概念，真的比 AngularJS 少太多（虽然其实东西都类似，只是 AngularJS 特意弄些名词出来）。如果能清晰理解 React 的单向数据流，和 HOC 的概念，上手应该说没 AngularJS 那么复杂。虽然老实说，HOC 可能和递归一样，对一些人来说，是非常不好理解的概念。  </p>
+<p>对于一个老程序员来说，对 React 最“看不顺眼的”，莫过于 JSX 这种把 “HTML” 标签写到 JavaScript 里的鬼玩意了。我们以前的教诲是，不能把逻辑代码和表现层混杂在一起。再加上，我个人一直觉得，一个结构清晰的表现层，可以清楚地展现页面概貌，对系统的设计和理解有很大的帮助。所以，一直以来，我是倾向于喜欢 AngularJS 式的页面模板（template）风格，然后在上面添加声明式的行为。但是，随着组件化理念的发展，页面已经无法避免被切分的命运。所以，只能思考哪种才是更合适，更清晰的模块化，低耦合，高内聚的方式。或许像 Polymer 那样的 Web Component 形式？知乎上一篇文章也讨论了 <a href="https://www.zhihu.com/question/48528161" target="_blank" rel="external">JSX有哪些缺陷？</a>，大家不妨一看。  </p>
+<p>至于单向数据流，和双向数据绑定，老实说，我以前是喜欢双向绑定多一些的。某种程度上来说，框架从工具层面降低程序员的心智门槛，它自己计算和处理数据的变化就可以了。反正程序员可以假定最终数据是同步的，不管它是 dirty checking 还是什么方式。但是，面对复杂的页面行为和状态变更，把数据变为 Immutable，把变更控制在有限范围，尽量编写纯函数，确实可能更好。非纯函数和对外部全局的依赖，一不小心就会出问题。以前在玩 AngularJS 1 的时候，[自己就遇到坑了][]。  </p>
+<h2 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a>Flux</h2><p>根据 React Component 绑定数据和接收事件的形式，Flux 是秉持单向数据流动里面的一种代码架构方式。  </p>
+<p>Flux 包含三大主要部分：Dispatcher, Store, 和 View（其实就是 React 的 Component）。它声称自己没有 MVC 里面的 Controller，但是有 Controller-View 和 Action Creator。真是受不了这些框架了，老是造一些名词，再标榜和以前不同。其实别管那么多，最重要的是<strong>搞清楚数据的流动情况，数据的流动情况，数据的流动情况</strong>。  </p>
+<p>下面我拿消息列表的例子来说明 Flux 里面的主要部分是怎么关联，数据在里面是怎么流动的。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/flux_data_flow.png" alt="Flux Data Flow"></p>
+<p>这里有两个场景：  </p>
+<h3 id="页面打开，自动加载消息"><a href="#页面打开，自动加载消息" class="headerlink" title="页面打开，自动加载消息"></a>页面打开，自动加载消息</h3><p>这个场景的数据流动路线是：1 -&gt; 2 -&gt; A -&gt; B  </p>
+<p>页面打开的时候，Action Creator 把 <code>LOAD_MSGS</code> 这个 Action 推给 Dispatcher。两个 Store 都会接收到这个 Action。Store B 把数据赋予 <code>msgs</code>，更改了内部 State，然后更新 View B。  </p>
+<p>Store A 呢？Store A 里面的 <code>unreadCount</code> 状态数据，是依赖 Store B 里面的 <code>msgs</code> 计算出来的。所以，Store A 里的处理逻辑其实会忽略接收到的 Action，通过 <code>Dispatcher.waitFor</code> 的方法，声明必须等待 Store B 的计算完成，然后 derive 自己需要的数据，再更新 View A。  </p>
+<h3 id="用户点击阅读某一条消息"><a href="#用户点击阅读某一条消息" class="headerlink" title="用户点击阅读某一条消息"></a>用户点击阅读某一条消息</h3><p>这个场景的数据流动路线是：3 -&gt; 4 -&gt; 5 -&gt; A -&gt; B  </p>
+<p>当用户点击某一条消息时，Action Creator 接收到 View B 的事件，构造了包含消息 id 的 <code>READ_MSG</code> Action，推给 Dispatcher。紧接着的操作类似上面的场景，不再累述。  </p>
+<p>结合场景来理解数据的流动，就能比较容易搞清楚 Flux 组成部分的定义了。  </p>
+<ol>
+<li>Dispatcher 是全局的，只有一个。  </li>
+<li>Action Creator 负责接收 View 的事件，产生 Action。当然也可以按需，自己产生 Action。  </li>
+<li>Action 只是简单的操作指令，包含必要的数据，但是没有处理逻辑。  </li>
+<li>Store 有多个，同时接收所有的 Action，按各自处理 Logic，改变数据内部 State。  </li>
+</ol>
+<p>View 和 Controller View 的不同在于，Controller View 负责接收 Store 广播出来的事件，然后把更新的数据扩散下去其它的 View。所以 Controller View 是接近于顶层的。  </p>
+<h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p>Redux 又是什么鬼呢？有人问 Redux 算不算是 Flux 架构的一种实现。Redux 作者说它既是，又不是。有兴趣的朋友自己看文档官网里，作者引的 Tweet 吧。神仙也会打架的，就是因为各自造不同的名词出来。  </p>
+<p>那在这个框架底下，数据的流动又是如何的呢？我们通过上面同样的场景来看一下：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/redux_data_flow.png" alt="Redux Data Flow"></p>
+<h3 id="页面打开，自动加载消息-1"><a href="#页面打开，自动加载消息-1" class="headerlink" title="页面打开，自动加载消息"></a>页面打开，自动加载消息</h3><p>这个场景的数据流动路线是：1 -&gt; 2 -&gt; A -&gt; B -&gt; C -&gt; D  </p>
+<p>页面打开的时候，Action Creator 把 <code>LOAD_MSGS</code> 这个 Action 作为参数调用 <code>Store.dispatch</code> 方法。然后和 Store 绑定的所有 Reducer 都会接收到 Action，和它们各自负责的部分 State 结构。Store 再把各个 Reducer 计算后的新 State 合并。Container Component 把 State 的数据转换成 Presentation Component 需要的 Property 和绑定事件。   </p>
+<h3 id="用户点击阅读某一条消息-1"><a href="#用户点击阅读某一条消息-1" class="headerlink" title="用户点击阅读某一条消息"></a>用户点击阅读某一条消息</h3><p>这个场景的数据流动路线是：3 -&gt; 4 -&gt; 5 -&gt; 6 -&gt; A -&gt; B -&gt; C -&gt; D  </p>
+<p>当用户点击某一条消息时，Presentation Component B 接收到用户操作，通过 Container Component B 绑定在它之上的事件，通知 Action Creator 构造了包含消息 id 的 <code>READ_MSG</code> Action，调用 <code>Store.dispatch</code> 方法通知 Reducers。后面的数据流动和上面类似。  </p>
+<p>下面解释一下 Redux 和 Flux 的不同，以及里面各个部分的关键定义。  </p>
+<ol>
+<li>全局单一的 State（作者声称的 Single source of truth）。  </li>
+<li>没有 Dispatcher（实际上统一的 Store 承担了 Dispatcher 的功能）。  </li>
+<li>Reducer 应该是 pure function 纯函数。而且它们同步更新各个部分的 state，最后汇总。  </li>
+<li>State is Readonly。任何改动都不改变原有的数据，而是生成新的数据。  </li>
+<li>Container Component 相当于 Flux 的 Controller View。Presentation Component 是普通的 View。  </li>
+<li>Action 和 Action Creator 基本是一样的。  </li>
+</ol>
+<p>Redux 的关键不同之处是，它只有统一的 State。所以，从一开始就要尽量设计好 State 的结构。官网上还特别提到，数据应该要 normalized，就像 RDBMS 里面存储数据那样，尽量用 id 来指向数据，不冗余。  </p>
+<p>所以，在 Redux 这里，我并没有添加 <code>unreadCount</code> 这个属性给 Component A。它们应该直接从 <code>msgs</code> 里面的消息里推算出来。还有，如果出现前面说的 State 里面如果有数据相互影响的情况，我觉得可能需要在某个 Action 运算后再 dispatch 新 action 出来。因为 Reducers 的调用都是同步的，而且好像无法指定执行顺序。不过这部分我还不太确定，需要实践和再查找资料。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近期，我大概花了一周，每天晚上 2 小时左右和一个周末的时间，通过官方文档来了解 React, Redux, Flux 几个框架和概念。写下此文是希望帮自己梳理和巩固一下对它们的认识。如果哪里理解有误，希望大家不吝指出。  &lt;/p&gt;
+&lt;h2 id=&quot;React&quot;&gt;&lt;a hr
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="React" scheme="http://www.thinkingincrowd.me/tags/React/"/>
+    
+      <category term="Redux" scheme="http://www.thinkingincrowd.me/tags/Redux/"/>
+    
+      <category term="Flux" scheme="http://www.thinkingincrowd.me/tags/Flux/"/>
+    
+  </entry>
   
   <entry>
     <title>猜来猜去，有意思吗？</title>
@@ -1303,52 +1371,6 @@
     
     
       <category term="Problem Solving" scheme="http://www.thinkingincrowd.me/tags/Problem-Solving/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>这些年，放下，前行的点滴和感触</title>
-    <link href="http://www.thinkingincrowd.me/2016/09/29/Leave-the-past-behind-and-move-on/"/>
-    <id>http://www.thinkingincrowd.me/2016/09/29/Leave-the-past-behind-and-move-on/</id>
-    <published>2016-09-29T05:05:46.000Z</published>
-    <updated>2016-09-29T05:08:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>现在独自一个人在北京，就剩下看电影这项娱乐了。所以，最近又翻出「阿甘正传」来重温了一次。第一次看这部电影的时候，觉得他真的是傻人有傻福，好人有好报啊。做什么事情，最后都有意想不到的好结果。最为广泛流传的一句经典台词就是：<strong>“Life was like a box of chocolates, you never know what you’re gonna get.”</strong>。我自然也继续坚持着<strong>”但行好事，莫问前程”</strong>的理念。</p>
-<p>这次重温完电影，突然对另一句感慨更深。在他将要结束长时间的跑步生涯时，他回忆到他妈妈经常和他说的一句话：<strong>“You got to put the past behind you before you can move on.”</strong>。我细细回想了一下我的过去。</p>
-<h2 id="出国？"><a href="#出国？" class="headerlink" title="出国？"></a>出国？</h2><p>大学的时候，我一开始是“盲目地”坚持着出国的想法。所以，每天早起在宿舍楼顶，或者校区的山上读英语，然后泡在图书馆或者教学楼自习。当时我就是这么一个别人眼中的“学霸”，所以收获了现任老婆。当时她一开始只是怀着跟学霸一起自习的心态而已。</p>
-<p>为什么说“盲目地”呢？因为我虽然想去国外读计算机硕士，但是除了学习英语外，从没有花更多的额外时间在计算机上。最后考完 GRE 后，想要报志愿的时候，发现一点想法也没有。自己想在计算机哪个领域发展都不知道，我怎么说服别人给我奖学金啊？再加上当时也结识了女朋友，如果出去了，分隔两地肯定没法维系了。况且她其实不怎么喜欢国外，想和父母更近些。所以我后来就还是决定留下来了。</p>
-<p>这里有一个很大的教训。我并没有及时考虑清楚并做出正确的决定。没放弃考 GRE 是因为我还在犹豫，并不甘心自己在上面花的时间和成本。但是，其实这对后面的找工作带来很大的影响。如果我能够及时放弃，转而把时间放到加强自学计算机编程上面，可能找工作会顺利很多。<strong>很多人没法放下过去，重新开始，就是因为放不下曾经花费的金钱或时间，也就是所谓的沉默成本，结果越险越深</strong>。  </p>
-<h2 id="留广州？"><a href="#留广州？" class="headerlink" title="留广州？"></a>留广州？</h2><p>因为我不是计算机专业，大学期间也只顾学英语，没怎么更深入自学计算机，所以也没有做什么成果出来。最后发现在广州找工作可谓一个难啊。努力学习的英语，基本用不上。</p>
-<p>我们的专业其实也有一些师兄师姐在广州的汇丰银行做开发。但我去做了一个笔试后就没什么下文了。后来，很幸运地被一家港资的珠海小公司看上，我想都不想就决定去那边实习了。大概过了一个月左右，广州汇丰银行打电话来让我过去。但是当时我赌气不去了：你当时没看上我，我就要在别的地方做得比你更好，证明给你看。</p>
-<p>这个决定，我觉得现在来看还是正确的。虽说工资收入肯定差了不少，但是当时我在珠海那家公司可谓成长迅速。身边牛人的工作方式，优良的系统设计，让我知道什么是好的设计，敏捷的合作方式。英语和粤语的优势让我有非常多的机会。如果我一开始就去一些大的传统公司，接触一些老旧的系统框架，经历耗时的协作模式，我估计水平眼界会差很多。  </p>
-<p><strong>有时候，你不知道你放弃了一些东西，后面是否能收获更多。但只有踏出了那一步，并坚持走下去，才可能有意外收获</strong>。</p>
-<h2 id="去上海？"><a href="#去上海？" class="headerlink" title="去上海？"></a>去上海？</h2><p>当时在那家公司，某个领导带我做了一个项目，后来他和公司老板方向不合，离开了。在我被公司派去香港出差，帮 Lane Crawford 做一个 BI 项目的时候，他打电话给我，问我要不要一起过去闯一下。但是我后来放弃了这个要约。原因有三个：</p>
-<ul>
-<li>当时内心还是很感激当前公司给的各种机会，报答心理还在。  </li>
-<li>刚结婚不久，打算要小孩，不太合适和老婆分开两地或者带她去上海奔波。  </li>
-<li>缺乏自信，感觉还要跟在牛人后面学习，怕没法独自承担 Dev Lead 的角色。  </li>
-</ul>
-<p>回想起这个机会，还是有那么一点点后悔。当时如果去了上海，可能成长和发展会更快一些。<strong>有些时候，如果等到你觉得什么都准备好了，才出发，可能机会就已经错过了。潜力有时是逼出来的，能力是在路上才习得的。</strong></p>
-<h2 id="留香港？"><a href="#留香港？" class="headerlink" title="留香港？"></a>留香港？</h2><p>我当时是按优才计划受雇于香港的分公司，按规定的话，工作满七年就可以拿香港身份证。我其实是想一直在香港，感觉机会更多一些，但是老婆并不太喜欢这个城市。待了刚好一年，老婆怀孕了。即便当时我是每周从香港来回一次珠海，但是我觉得我需要更多时间照顾她，所以也马上提出转回珠海分公司。<strong>有些时候，放弃意味着你知道对自己最重要的是什么。</strong></p>
-<h2 id="去北京"><a href="#去北京" class="headerlink" title="去北京?"></a>去北京?</h2><p>在第一家公司任职差不多 8 年后，我已经是珠海最资深的员工了。当时我看好 JS 方向，但是公司却放弃了它，我只好离职了。进了新公司，本来想好好写写 JS，但是却意外被派去美国，接手后端。由于经验相对比较多，加上沟通协作能力还不错，所以在新公司的 5 年，更多地承担谈需求，带团队的工作，写代码时间越来越少。  </p>
-<p>心里一直想更多实践的技术，公司应用的场景有限，附近也没多少志同道合的小伙伴。而且工作那么这么多年，我都是从事面向企业系统的开发，很想接触一下互联网行业和面向个人的领域，看看这些领域的思考方式有什么不同。机缘巧合的情况下，发现我比较敬佩的一个人想找全栈工程师，并在培训和教育领域做一些事情，就想都没想跑北京来了。  </p>
-<p>人的一生到底是自我选择，还是命运？阿甘在电影里说了一句：<strong>“I don’t know if we each have a destiny, or if we’re all just floating around accidental—like on a breeze.  But I think maybe it’s both.  Maybe both are happening at the same time.”</strong>。他决定了一件事情，就努力做好。他一直都没刻意地去追求什么，然而成功却在毫无功利意识的努力中悄然而至了。  </p>
-<h2 id="前行的勇气"><a href="#前行的勇气" class="headerlink" title="前行的勇气"></a>前行的勇气</h2><p>电影里的阿甘，并没有多少牵挂，似乎很容易就能做出每一个决定。他突然想到什么事情，然后就出发了。  </p>
-<p>在现实生活里，放下并前行，有时候并不是一件容易的事情。你需要得到父母和伴侣的体谅和支持。这么多年，无论奔赴珠海这个偏远渔村，宁愿留在工资少的小公司而不去大公司，还是突然就跑来北京，都离不开心爱的老婆的支持。其实<strong>前行的勇气有时并不仅仅在自己，而更多的是背后的支持</strong>。在这里，我谨以这微不足道的文字，来表示对老婆的由衷感谢。亲爱的，我爱你。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;现在独自一个人在北京，就剩下看电影这项娱乐了。所以，最近又翻出「阿甘正传」来重温了一次。第一次看这部电影的时候，觉得他真的是傻人有傻福，好人有好报啊。做什么事情，最后都有意想不到的好结果。最为广泛流传的一句经典台词就是：&lt;strong&gt;“Life was like a bo
-    
-    </summary>
-    
-      <category term="Life" scheme="http://www.thinkingincrowd.me/categories/Life/"/>
-    
-    
-      <category term="Destiny" scheme="http://www.thinkingincrowd.me/tags/Destiny/"/>
-    
-      <category term="Choice" scheme="http://www.thinkingincrowd.me/tags/Choice/"/>
     
   </entry>
   
