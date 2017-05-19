@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-05-14T13:16:23.000Z</updated>
+  <updated>2017-05-19T13:16:22.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>怎么可能，在我的机器都是好好的</title>
+    <link href="http://www.thinkingincrowd.me/2017/05/19/problem-solving-from-another-angle/"/>
+    <id>http://www.thinkingincrowd.me/2017/05/19/problem-solving-from-another-angle/</id>
+    <published>2017-05-19T13:23:37.000Z</published>
+    <updated>2017-05-19T13:16:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近看的几部悬疑片，主角都淡淡地说过：“要转换角度来思考问题”。  </p>
+<p>在「嫌疑犯X的献身」里面，为什么女主可以很淡定的说她没有杀死前夫，为什么她可以有“确凿的”不在场证据？后来发现是因为警察发现的尸体，和作案时间，并不是她的前夫和杀死他的那一天。  </p>
+<p>在「看不见的客人」里面，协助男主分析案件的“律师”，告诉他一个小故事：“在一个空荡的谷仓里面，正中间的房梁下有一个人悬梁自尽。可是那个人脚下却没有任何可以让他垫脚站上去的东西。后来发现这个”看似“不存在”的东西，其实是一个大冰块，它是曾经存在的，只是“消失”了。  </p>
+<p>悬疑片里面，有大量的这种类型的桥段。  </p>
+<p>其实，当一个程序员，我们也经常需要用这种“转换角度来思考问题”的思路，来发现导致看似不可能出现的问题的原因。  </p>
+<p>拿我最近两次排查系统问题来举例吧。  </p>
+<p>第一个问题是，在我们平台的直播里，偶然一些原因会导致主讲人的语音缺少了长度信息。我反复看获取语音长度，和控制消息推送到直播间的相关代码。可是在语音缺失的情况下，怎么都不应该导致消息推送出去。那为什么直播间会出现那样的消息呢？后来发现，原因是在另一个统计消息点赞数，刷新缓存的任务。它会把语音长度缺失的数据也刷到缓存，所以直播间就能看到那个数据了。  </p>
+<p>另一个问题是，最近我的手机会收到服务号推送直播开始的通知。可是那些直播命名都是已经结束了的。我怎么看代码都百思不得其解。我观察到两个奇怪的现象：1）误推送的消息，显示的直播时间都是差了 8 个小时，显示的是 ISO 时间。2）线上服务器的日志，根本没有这些异常通知的发送日志记录。原来，压测团队在模拟的线上环境里跑系统和后台任务的时候，用了线上环境的一些参数，导致通过线上的微信服务号，根据压测环境数据库的直播，推送了消息。  </p>
+<p>我们程序员，经常被调侃说，当测试或产品告诉我们发现 Bug 的时候，我们经常会回复：“没可能，在我的机器都是好好的。” 其实，有些问题是以我们从来没有想到的角度，而被触发的。下次说没可能前，先停一停，想一想。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近看的几部悬疑片，主角都淡淡地说过：“要转换角度来思考问题”。  &lt;/p&gt;
+&lt;p&gt;在「嫌疑犯X的献身」里面，为什么女主可以很淡定的说她没有杀死前夫，为什么她可以有“确凿的”不在场证据？后来发现是因为警察发现的尸体，和作案时间，并不是她的前夫和杀死他的那一天。  &lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Problem Solving" scheme="http://www.thinkingincrowd.me/tags/Problem-Solving/"/>
+    
+  </entry>
   
   <entry>
     <title>初识 React, Flux 和 Redux</title>
@@ -1328,49 +1361,6 @@
       <category term="Problem Solving" scheme="http://www.thinkingincrowd.me/tags/Problem-Solving/"/>
     
       <category term="First principle" scheme="http://www.thinkingincrowd.me/tags/First-principle/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>问题分解和逐字阅读的重要性 - 青云部署小记</title>
-    <link href="http://www.thinkingincrowd.me/2016/10/12/Importance-of-Breakdown-and-read-thoroughly/"/>
-    <id>http://www.thinkingincrowd.me/2016/10/12/Importance-of-Breakdown-and-read-thoroughly/</id>
-    <published>2016-10-12T15:35:58.000Z</published>
-    <updated>2016-10-12T16:00:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在做一个新的系统，所以刚刚在<a href="https://www.qingcloud.com/" target="_blank" rel="external">青云</a>上面部署和搭环境。期间遇到一个小问题，也花了我们二三十分钟的时间。虽然这是一个挺小的问题，但是能很好的说明我之前在<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>里面提到的<strong>认识和定位问题</strong>，以及<a href="http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/">学习编程需要具备的基本能力 - 问题分解</a>里面提到的<strong>问题分解</strong>，所以还是决定稍微写一下，顺便也可以让想学习计算机领域的朋友了解一下这种典型的思考和解决问题的方式。</p>
-<p>在青云上，我们部署了两台云主机，一个负载均衡，一个路由器。它们的关系如下图。作为用户，要能够访问一个网站，其实还经过了一个叫 DNS 的东西，所以我也把它放进去大概意思一下。</p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/request_flow.png" alt="Request Flow"></p>
-<p><em>注：abc.com 和 10.123.32.1 都是假的，举例说明用。</em></p>
-<p>当我把两台主机部署好了以后，从青云的控制台看到负载均衡是这样显示的。</p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/qingcloud_lb.png" alt="Qingcloud LB"></p>
-<p>两台主机已经标识为活跃状态了，我也轻快地在浏览器敲入域名，期待页面出来就去吃晚饭了。然而浏览器竟然加载很久还是没有反应，最后超时了。这是什么鬼啊？虽然肚子饿得不行，但是还是得忍一忍，先把它搞定。  </p>
-<h2 id="分析和初步估计"><a href="#分析和初步估计" class="headerlink" title="分析和初步估计"></a>分析和初步估计</h2><p>因为主机刚配置好，所以我其实是已经通过 VPN 和主机连在一起的。如下图。</p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/request_flow_vpn.png" alt="Request Flow"></p>
-<p>所以，我通过 VPN 的内部 IP，直接访问 主机A 和 主机B，发现可以访问。那么，根据架构分拆的几大部分，和具体的现象，初步估计情况可能是这样的：</p>
-<ol>
-<li>内部 IP 可以访问，<strong>D 通路正常</strong>  </li>
-<li>负载均衡显示活跃，<strong>C 通路正常</strong>  </li>
-<li>直接通过外网 IP（10.123.32.1）访问，浏览器显示错误，<strong>B 通路有问题</strong>  </li>
-</ol>
-<h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><p>因为负载均衡是买的，所以没法通过<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>提到的分析日志的方式来进一步分析。由于我对运维和青云的东西还是没什么经验，这时候有点抓瞎。  </p>
-<p>CTO 问我什么错误代码，我说 504。他然后上 DNSPOD 看了一下配置。不看不知道，一看吓一跳。不知道为什么竟然同一域名下配了两条不同 IP 的记录。改完后，用命令跟踪域名，这时 IP 才解析对了，补充确认<strong>DNS 通路正常</strong>了。可是，再测试发现通过域名还是无法访问。  </p>
-<p>CTO 问了一下，是不是路由器的防火墙没设置。他去改了一下，发现还是不行。</p>
-<p>我突然就想，是不是负载均衡也有防火墙啊？再看了一下负载均衡的设置页面，还真的有。（事实是它的文档有蓝色字说明，我竟然没有看到。唉，这是有多粗心）。然后 CTO 在负载均衡开放了 80 端口，就可以通过域名访问了。</p>
-<h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>从上面看，我们的排查还是有那么一点混乱。  </p>
-<p>不过，<strong>整体的步骤还是基本按照各个组件的切分来逐一检查，其实就是问题分解和分析的能力</strong>。中间的混乱主要是 CTO 忘记了青云的负载均衡也有防火墙。我也因为不熟悉，和没细看清楚文档，稍微花多了一点时间。所以说，笑来老师在「得到」专栏说的<strong>逐字阅读的能力是多么的重要</strong>。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近在做一个新的系统，所以刚刚在&lt;a href=&quot;https://www.qingcloud.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;青云&lt;/a&gt;上面部署和搭环境。期间遇到一个小问题，也花了我们二三十分钟的时间。虽然这是一个挺小的问题，但是
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Problem Solving" scheme="http://www.thinkingincrowd.me/tags/Problem-Solving/"/>
     
   </entry>
   
