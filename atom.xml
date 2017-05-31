@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-05-31T10:53:27.000Z</updated>
+  <updated>2017-05-31T10:57:53.000Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.thinkingincrowd.me/2017/05/31/labelling-is-easy/"/>
     <id>http://www.thinkingincrowd.me/2017/05/31/labelling-is-easy/</id>
     <published>2017-05-31T10:52:25.000Z</published>
-    <updated>2017-05-31T10:53:27.000Z</updated>
+    <updated>2017-05-31T10:57:53.000Z</updated>
     
     <content type="html"><![CDATA[<p>“中国人就是没礼貌”，“河南人就是XXX”，“处女座就是YYY” 这些言论，很多人现在都能理解它们其实是一种“贴标签”的行为。  </p>
 <p>虽然不能说“贴标签”完全是坏事，因为它其实是人在认识事物的过程中发展出来的一种手段，可以让我们快速面对陌生的事物，知道如何更好地和它们相处。但是，如果我们习惯了“贴标签”这种行为，甚至推广到一些需要建立亲密关系的人或者事物的时候，问题可能就很大。标签一旦贴上，片面的观点就容易产生，我们就不容易看到背后的互动关系和问题的根本原因。  </p>
@@ -47,6 +47,10 @@
       <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
     
     
+      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
+    
+      <category term="Psychology" scheme="http://www.thinkingincrowd.me/tags/Psychology/"/>
+    
       <category term="Labelling" scheme="http://www.thinkingincrowd.me/tags/Labelling/"/>
     
   </entry>
@@ -56,7 +60,7 @@
     <link href="http://www.thinkingincrowd.me/2017/05/21/my-son-cries-more-recently-but-I-think-he-grows-up/"/>
     <id>http://www.thinkingincrowd.me/2017/05/21/my-son-cries-more-recently-but-I-think-he-grows-up/</id>
     <published>2017-05-21T02:01:19.000Z</published>
-    <updated>2017-05-21T07:12:51.000Z</updated>
+    <updated>2017-05-31T10:58:01.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近和老婆聊天的时候，听到她说儿子哭的次数多了。  </p>
 <p>有一次，儿子因为洗澡的时间和预定的时间刚好，他没提前完成，所以没能够获取积分来增加玩手机的时间。在睡觉前，他哭了。老婆没想到他这么在意这一些积分，在安慰他的时候说：“少积一个晚上，也没什么嘛，别哭了。”没想到他哭的更伤心了。  </p>
@@ -79,6 +83,10 @@
     
       <category term="Life" scheme="http://www.thinkingincrowd.me/categories/Life/"/>
     
+    
+      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
+    
+      <category term="Psychology" scheme="http://www.thinkingincrowd.me/tags/Psychology/"/>
     
       <category term="Empathy" scheme="http://www.thinkingincrowd.me/tags/Empathy/"/>
     
@@ -192,7 +200,7 @@
     <link href="http://www.thinkingincrowd.me/2017/05/13/probe-harmful/"/>
     <id>http://www.thinkingincrowd.me/2017/05/13/probe-harmful/</id>
     <published>2017-05-13T00:35:14.000Z</published>
-    <updated>2017-05-13T00:36:58.000Z</updated>
+    <updated>2017-05-31T10:58:20.000Z</updated>
     
     <content type="html"><![CDATA[<p>周二晚和同事共同吃饭，并观看了「看不见的客人」这部悬疑片。电影剧情的反转真的相当意外，而且不同角度的推理也非常巧妙。影片中有各种试探性对话和策略，而这当然也是悬疑片必备的佐料。  </p>
 <p>死者的父亲到男主的 Party，试探性地问他是否抽烟，并借打火机，从而认定男主和他儿子的死亡关联。  </p>
@@ -240,6 +248,8 @@
       <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
     
       <category term="Asking" scheme="http://www.thinkingincrowd.me/tags/Asking/"/>
+    
+      <category term="Psychology" scheme="http://www.thinkingincrowd.me/tags/Psychology/"/>
     
   </entry>
   
