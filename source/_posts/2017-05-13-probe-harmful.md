@@ -1,11 +1,10 @@
 title: 猜来猜去，有意思吗？
 date: 2017-05-13 08:35:14
 tags:
-  - Relationship
   - Asking
   - Psychology
 categories:
-  - Life
+  - Relationship
 ---
 
 周二晚和同事共同吃饭，并观看了「看不见的客人」这部悬疑片。电影剧情的反转真的相当意外，而且不同角度的推理也非常巧妙。影片中有各种试探性对话和策略，而这当然也是悬疑片必备的佐料。  

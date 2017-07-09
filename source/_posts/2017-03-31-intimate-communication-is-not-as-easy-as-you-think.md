@@ -1,10 +1,9 @@
 title: 亲密关系的沟通没你想的那么简单
 date: 2017-03-31 21:13:17
 tags:
-  - Relationship
   - Communication
 categories:
-  - Think
+  - Relationship
 ---
 
 [最值得投资的东西，你却可能把它忘了]: http://www.thinkingincrowd.me/2017/03/25/The-most-important-thing-to-invest-in-and-you-may-forget/

@@ -3,7 +3,7 @@ date: 2017-06-11 19:05:48
 tags:
   - Responsibility
 categories:
-  - Think
+  - Relationship
 ---
 
 [新闻]: http://epaper.bjnews.com.cn/html/2017-06/06/content_684198.htm?div=-1

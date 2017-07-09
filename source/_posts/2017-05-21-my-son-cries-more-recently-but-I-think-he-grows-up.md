@@ -4,9 +4,8 @@ tags:
   - Empathy
   - Mature
   - Psychology
-  - Relationship
 categories:
-  - Life
+  - Relationship
 ---
 
 最近和老婆聊天的时候，听到她说儿子哭的次数多了。  
