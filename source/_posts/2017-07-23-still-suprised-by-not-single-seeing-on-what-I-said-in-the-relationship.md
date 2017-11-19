@@ -4,8 +4,9 @@ tags:
   - Communication
   - Emotion
   - Empathy
-categories:
   - Relationship
+categories:
+  - Psychology
 ---
 
 书读了，懂了，但和会运用，真的是两码事。最近我不是在读心理学，亲密关系相关的课程嘛。有些道理好像都懂，但是昨晚又栽倒在最简单的事情上。能讨到老婆，可能还真是因为帅。  

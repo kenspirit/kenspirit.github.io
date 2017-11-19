@@ -1,10 +1,9 @@
 title: 最值得投资的东西，你却可能把它忘了
 date: 2017-03-25 10:08:47
 tags:
-  - 成长
-  - 关系
+  - Relationship
 categories:
-  - Think
+  - Psychology
 ---
 
 ## 值得投资的东西太多

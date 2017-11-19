@@ -3,8 +3,9 @@ date: 2017-07-08 22:06:31
 tags:
   - Conflict
   - Criticism
-categories:
   - Relationship
+categories:
+  - Psychology
 ---
 
 估计每个人都听过这样一句话：“责之心，爱之切”。这是很多父母在训斥子女时，经常引用的话。当然，更现代的表述是：“我还不是为了你好？” 这句话一说出来，是站在了多高的道德高地啊，听的人很多时候真的无力反驳。  

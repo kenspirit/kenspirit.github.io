@@ -2,9 +2,9 @@ title: 你可能不经意地就“贴标签”了
 date: 2017-05-31 18:52:25
 tags:
   - Labelling
-  - Psychology
-categories:
   - Relationship
+categories:
+  - Psychology
 ---
 
 “中国人就是没礼貌”，“河南人就是XXX”，“处女座就是YYY” 这些言论，很多人现在都能理解它们其实是一种“贴标签”的行为。  

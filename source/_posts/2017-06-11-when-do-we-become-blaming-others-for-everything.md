@@ -2,8 +2,9 @@ title: 什么时候，我们变成只会向外推卸责任了？
 date: 2017-06-11 19:05:48
 tags:
   - Responsibility
-categories:
   - Relationship
+categories:
+  - Psychology
 ---
 
 [新闻]: http://epaper.bjnews.com.cn/html/2017-06/06/content_684198.htm?div=-1

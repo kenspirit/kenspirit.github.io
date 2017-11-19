@@ -2,8 +2,9 @@ title: 理所当然，在亲密关系里最要不得
 date: 2017-07-01 21:34:12
 tags:
   - Love Language
-categories:
   - Relationship
+categories:
+  - Psychology
 ---
 
 一眨眼，来北京差不多一年了。自己也不知不觉到了一个整数的节点了。  

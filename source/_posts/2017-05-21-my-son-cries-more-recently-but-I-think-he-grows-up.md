@@ -3,9 +3,9 @@ date: 2017-05-21 10:01:19
 tags:
   - Empathy
   - Mature
-  - Psychology
-categories:
   - Relationship
+categories:
+  - Psychology
 ---
 
 最近和老婆聊天的时候，听到她说儿子哭的次数多了。  

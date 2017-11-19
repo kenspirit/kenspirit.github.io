@@ -2,8 +2,9 @@ title: 提问，而不是斥责
 date: 2017-04-09 09:41:47
 tags:
   - Conflict
-categories:
   - Relationship
+categories:
+  - Psychology
 ---
 
 
