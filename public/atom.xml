@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-11-19T04:47:06.644Z</updated>
+  <updated>2017-11-19T08:23:37.241Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>硬分叉，可能真的比 ICO 更好</title>
+    <link href="http://www.thinkingincrowd.me/2017/11/19/hard-fork-might-really-be-better-than-ico/"/>
+    <id>http://www.thinkingincrowd.me/2017/11/19/hard-fork-might-really-be-better-than-ico/</id>
+    <published>2017-11-19T06:05:41.000Z</published>
+    <updated>2017-11-19T08:23:37.241Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章写作的出发点，其实是因为看了曹政老师的「<a href="https://mp.weixin.qq.com/s/qgRPIGvMK44CvyTxvELDig" target="_blank" rel="external">谈谈比特币分叉</a>」有感而发。或许应该说，因为疑惑为什么一贯克制，客观的他，写出比较主观和动机论的文章。前面一大段是尽可能写的详尽的利益声明。不熟悉我的人，应该看仔细。熟悉的，闲烦可以直接跳后面「为什么」那部分。  </p>
+<h2 id="利益声明"><a href="#利益声明" class="headerlink" title="利益声明"></a>利益声明</h2><h3 id="我和比特币的关系"><a href="#我和比特币的关系" class="headerlink" title="我和比特币的关系"></a>我和比特币的关系</h3><p>我几乎从来没有对比特币发过任何评论，甚至我最开始买比特币的时候，我老婆都不知道，而且她还一直让我卖出去，当时我买的时候才 3000 元左右。我和我死党说的时候，他们也不怎么在意。特别是银行的朋友，更是对这种新生的东西心存疑虑。  </p>
+<p>当然，坦白说，我没有很深入的去研究它，所以也不是狂热和坚定的粉丝，没有倾家荡产的买它。不像李笑来老师说的，拿法币来换它为主。所以，即便当时我买的时候它那么“便宜”（仅针对当前价格来说，以后不担保），我也还没有实现我的小目标，拥有 10 个比特币。  </p>
+<p>我只是一个潜意识觉得它是好东西，但也被现实束缚着的，胆小的人。我从来没有把慢慢积攒回来的 BTC 去交易所炒，只是安安静静的放在自己的钱包，等着给自己以后养老，或者给儿子一点点小遗产吧。  </p>
+<h3 id="我和李笑来的关系"><a href="#我和李笑来的关系" class="headerlink" title="我和李笑来的关系"></a>我和李笑来的关系</h3><p>我承认之前一直很欣赏（甚至崇拜，当然现在看东西比较理性了）李笑来，也正因为这样，我公众号开张的<a href="https://mp.weixin.qq.com/s/sJfPB5ShzV8eHQLTpFwduQ" target="_blank" rel="external">第一篇文章</a>（2015 年 11 月），就说是由他的文章促成了我的一些思考，并链接和引用他的文章和话，以及为他的七年就是一辈子社群打广告。  </p>
+<p>并且在 2016 年 7 月，我自告奋勇，到了李笑来下面的新生大学工作，当一个「全栈工程师」。这也是他当时被很多业内人嘲笑的时候（虽然我也不太认同当时他那个说法，一年成为全栈）。我也写过一些相关的文章：  </p>
+<p>「<a href="http://mp.weixin.qq.com/s/P0uO2gRGroeA3_XN8XEVbg" target="_blank" rel="external">这些年，放下，前行的点滴和感触</a>」<br>「<a href="https://mp.weixin.qq.com/s/AZ0KYUhQ9BzWQDQOPS3QEw" target="_blank" rel="external">怎么样才算得上是全栈</a>」  </p>
+<p>目前我是「一块听听」公众号的后端开发者之一。这个项目当时是李笑来和 CTO 提出，并执行。  </p>
+<p>我和李笑来有点关系，但也基本只是点头之交多一些，甚至只是老板和员工的关系。我在新生大学的第二年会费，都是自己交的真金白银，而不是以工作人员，需要测试或其它理由，获得会员资格。  </p>
+<h3 id="我和曹政的关系"><a href="#我和曹政的关系" class="headerlink" title="我和曹政的关系"></a>我和曹政的关系</h3><p>同样，在我公众号开张的<a href="https://mp.weixin.qq.com/s/sJfPB5ShzV8eHQLTpFwduQ" target="_blank" rel="external">第一篇文章</a>，我就向我的读者，推荐了曹政的公众号。当时我对曹政了解不多，但是订阅没多久，就和大家推荐，并一直把他的置顶。  </p>
+<p>虽然订阅了公众号，但自知是赞赏很少的那类人，隐约好像有那么一两次，也是一两元的样子。回头看自己，赞赏比较多的应该是 Fenng 的公众号。  </p>
+<p>我的留言也不多，好像有两三次吧。第一次被曹政把留言选为精选，还特高兴。最近也在他的「<a href="https://mp.weixin.qq.com/s/jJ9jOyk--n6EfARLydHGlg" target="_blank" rel="external">关于知识付费，是的，我就是来砸场子的。</a>」留言并表明身份和表示敬佩。  </p>
+<h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><h3 id="曹政老师的文章主观，动机论"><a href="#曹政老师的文章主观，动机论" class="headerlink" title="曹政老师的文章主观，动机论"></a>曹政老师的文章主观，动机论</h3><p>曹政老师那篇文章前面一部分都没有问题，也很简明扼要的说明比特币的背景，现状和分叉。问题在「但这肯定不是一篇值得十万+的文章，好玩的事情在后面。」后面。  </p>
+<p>不容否认，确实有好一些组织，都想参与到 BTC 上面来。既 BCC 后，比特黄金也尝试来分，李笑来也说要主导一个。  </p>
+<p>但是，文章里这些阐述个人觉得比较主观，和带有揣测性质。而且还有一些带有偏向性的比喻。  </p>
+<blockquote>
+<p>这次主导方是由李某来担任主席的super bitcoin团队，听上去很唬人有没有，很像是比特币的核心管理团队有没有。那么，你听说过<strong>全国牙防组</strong>这个名字么？</p>
+<p>这个super bitcoin基金会组织，据我所知，（当然，也许我无知，如果有，请打脸）没有参与，也没有资格参与几乎所有关于分叉方案的技术讨论和闭门会议，没有参与任何相关的核心决策和签字。但是现在，他们突然跳出来说，我们要硬分叉。</p>
+<p>利益！赤果果的利益！因为他们的硬分叉方案里，除了承诺所有比特币用户会获得1：1的新货币，也就是2100万个新货币外，还会预挖21万个新货币，听上去只有1%哦，好像蛮合理的。你手里凭空多了21万个比特币（BTC）是啥概念？或者，咱们现实点，你手里多了21万个比特现金（BCC）是啥概念，比特现金的最新价格虽然比不了比特币，但也有1000美元哦？</p>
+</blockquote>
+<p>为什么我觉得上面的质疑是主观的？  </p>
+<ol>
+<li><p>首先，任何人都可以分叉的。只要你愿意，并且有资金和行动力。但是上面的言论，听起来比较倾向于认可了 BCC，后面的比特黄金，和李笑来的分叉就偏贬低的态度了。  </p>
+</li>
+<li><p>你如果分叉了，当然要有个名字，BCC，比特黄金，Super Bitcoin，什么都好，分叉的人喜欢就可以了啊？为什么拿全国牙防组来比喻呢？官网也没说是自己是核心团队。起名字真的不能太高调，不能用最字了？而且，他们官网明确写了团队里面有谁，如果他们当骗子，自己的压力还是实名承载了的。BCC 的团队还说是 Decentralized，都不知道是谁，有谁呢。我觉得实名这事，已经很不容易了。  </p>
+</li>
+<li><p>利益。没有利益谁去分叉。但是为了利益不等于讹诈骗钱。正当商家也是为了追求利益最大化的啊。学过经济学的，应该不会不同意这点。  </p>
+</li>
+<li><p>预挖新货币。这个目前确实是李笑来这个分叉不同的地方。但是别人的分叉，别人说了算啊。BCC 的紧急难度调整机制也同样被人诟病，这个机制是为了谁的利益可能也不好说。Super Bitcoin 在官网说明了预挖的用途：21万SBTC归基金会管理,主要用于激励早期开发者、投资生态建设、基金会运营。这个我也不觉得有问题，别人如果真的相信这个币以后的价值，自己持有和创业团队拿股份有什么区别？中本聪一开始也自己持有不少比特币啊。  </p>
+</li>
+<li><p>价格推定。上面一段话的最后，推定 Super Bitcoin 背后可能有的价值。Super Bitcoin 最后能发展成什么样子，真的不好说。BCC 价值 1000 美元，但是比特黄金呢，你们听说过哪个交易所支持了吗？价值多少？这里的推测似乎已经假定 Super Bitcoin 已经可以捞到很多钱了。  </p>
+</li>
+</ol>
+<p>我觉得这篇文章真的不符合曹政以前文章的风格。具体原因是为什么当然我不知道。我也不做任何主观猜测。这里提供两篇曹政老师之前的文章让大家看看：  </p>
+<p><a href="http://mp.weixin.qq.com/s/AqfF4Qsoemh8eFUa237Rwg" target="_blank" rel="external">宣泄，还是逻辑</a><br><a href="http://mp.weixin.qq.com/s/ksyyxPg2RyFgs56XrtyKMw" target="_blank" rel="external">再谈大V的套路</a>  </p>
+<h3 id="硬分叉，可能真的比-ICO-更好"><a href="#硬分叉，可能真的比-ICO-更好" class="headerlink" title="硬分叉，可能真的比 ICO 更好"></a>硬分叉，可能真的比 ICO 更好</h3><p>为什么我觉得这个更好？  </p>
+<p>基于我前面对自己的评价：「我没有很深入的去研究它，所以也不是狂热和坚定的粉丝，没有倾家荡产的买它」。分叉，对于我来说，是平白无故，利益可能最大化的事情。因为我可以突然多了一些其它电子货币。ICO 的话，我还要掏钱去买。  </p>
+<p>如果分叉以后任何一个，甚至几个币成功了，我就赚了。  </p>
+<p>但是，这里有个前提，就是我们作为普通人，不要太贪心，去炒，去轻易的拿比特币钱包的地址，和私钥去兑换其它分裂出来的币。这样很容易就会遭遇重放攻击。要兑换，也要把币转移到新的钱包后，再用旧的钱包地址去兑换。  </p>
+<p>按照 Super Bitcoin 分叉的出发点：Make Bitcoin Great Again。他们是希望在上面加上各种好东西（各位可以上他们简陋的<a href="http://www.supersmartbitcoin.com/index_cn.html" target="_blank" rel="external">官网</a>看看）。纯按逻辑推理说，如果这个币真的那么好，而且很多人相信，那不是很好吗？所以，我不去质疑他是不是真的那么做，我也不去炒，就静静的等着分就可以了。  </p>
+<p>而且，说实话，任何电子货币和股票其实也一样。你真正有价值的东西，你任何时候进场，都不会错过的。看你怎么看待它而已。你大可以等待币战尘埃落定，在买或者投资你觉得有价值的币。  </p>
+<p><strong>严正声明，本文从来没有什么洗白李笑来，质疑曹政的意图，也不是鼓励大家买 Super Bitcoin 或者任何币。曹政老师的文章还是很有价值，我还是会一直置顶他的公众号。</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章写作的出发点，其实是因为看了曹政老师的「&lt;a href=&quot;https://mp.weixin.qq.com/s/qgRPIGvMK44CvyTxvELDig&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;谈谈比特币分叉&lt;/a&gt;」有感而发。或许应该说
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="BTC" scheme="http://www.thinkingincrowd.me/tags/BTC/"/>
+    
+  </entry>
   
   <entry>
     <title>一直改不了，是因为你不了解自己</title>
@@ -137,6 +201,39 @@
   </entry>
   
   <entry>
+    <title>怎样可以不用再写接口文档</title>
+    <link href="http://www.thinkingincrowd.me/2017/10/28/no-need-to-write-api-doc-anymore/"/>
+    <id>http://www.thinkingincrowd.me/2017/10/28/no-need-to-write-api-doc-anymore/</id>
+    <published>2017-10-28T15:03:24.000Z</published>
+    <updated>2017-11-22T15:11:36.955Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="代码如文档"><a href="#代码如文档" class="headerlink" title="代码如文档"></a>代码如文档</h2><p>绝大多数的程序员，其实都不喜欢写文档。即便是一开始写了文档，随着时间的推移，需求的变更，文档很多情况下都慢慢跟不上变化，最后腐烂变质。看文档还不如看代码。</p>
+<p>所以，如何维护文档在软件工程一直都是大问题。  后来，有人提出了一种观点：“让你的代码成为文档”。什么意思？如果你竟然还没听说过这个概念，可以看看 <a href="https://en.wikipedia.org/wiki/Self-documenting_code" target="_blank" rel="external">Wiki</a> 或者 Martin Fowler 的<a href="https://www.martinfowler.com/bliki/CodeAsDocumentation.html" target="_blank" rel="external">文章</a>看看：</p>
+<h2 id="接口-vs-契约"><a href="#接口-vs-契约" class="headerlink" title="接口 vs 契约"></a>接口 vs 契约</h2><p>从毕业以来，我做的项目都是前后端一条龙通杀的，从最开始的 vanilla-js，公司内部框架，jQuery, 到 ExtJs。不过，现在很多公司都前后端分离了，前端专职页面，后端提供接口，各司其职。</p>
+<p>这种情况下，尤其在大公司里，API 接口文档在合作和沟通层面起非常大的作用。一个好的 API 接口，除了要有良好的命名，统一的风格这样的基本要求外，它接收的参数（数量，格式，限制等），返回值，权限等是更需要关注和保持更新的讯息。一旦这些讯息发生改变，前后端不同步，某个系统功能可能就挂了。所以说，接口文档就是前后端合作契约的说法一点也不夸张。</p>
+<h2 id="代码生成文档"><a href="#代码生成文档" class="headerlink" title="代码生成文档"></a>代码生成文档</h2><p>去年 3 月份，我看到陈天在公众号「程序人生」（programmer_life）的文章「<a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=402114651&amp;idx=1&amp;sn=a7b891f532e29b73afd83f17ae071023&amp;scene=21#wechat_redirect" target="_blank" rel="external">再谈 API 的撰写 - 契约</a>」，很对胃口。我后面就按这样的思路在自己写的 Node.js boilerplate 里面设计了特定的接口定义和编写方式，也在现在的公司一直使用。所有的 HTTP API 都是通过编写描述式的 JSON 来定义的。文档也通过读取这些 JSON 定义来生成。每当接口契约改变，文档就更新了。</p>
+<p>那是怎么自动生成的呢？有兴趣的朋友，可以看看我的 Github Repo <a href="https://github.com/kenspirit/joi-route-to-swagger" target="_blank" rel="external">joi-route-to-swagger</a>：</p>
+<p>Repo 里面的 README 阐述了基本的理念和用法。更详细的思路，大家还是看陈天的「<a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=402114651&amp;idx=1&amp;sn=a7b891f532e29b73afd83f17ae071023&amp;scene=21#wechat_redirect" target="_blank" rel="external">再谈 API 的撰写 - 契约</a>」吧。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;代码如文档&quot;&gt;&lt;a href=&quot;#代码如文档&quot; class=&quot;headerlink&quot; title=&quot;代码如文档&quot;&gt;&lt;/a&gt;代码如文档&lt;/h2&gt;&lt;p&gt;绝大多数的程序员，其实都不喜欢写文档。即便是一开始写了文档，随着时间的推移，需求的变更，文档很多情况下都慢慢跟不上变
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="API" scheme="http://www.thinkingincrowd.me/tags/API/"/>
+    
+      <category term="Swagger" scheme="http://www.thinkingincrowd.me/tags/Swagger/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Node.js 微信后台搭建系列 - 微信集成</title>
     <link href="http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/"/>
     <id>http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/</id>
@@ -192,9 +289,9 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
-      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
-    
       <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
     
       <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
     
@@ -302,9 +399,9 @@
       <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
     
     
-      <category term="Communication" scheme="http://www.thinkingincrowd.me/tags/Communication/"/>
-    
       <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
+    
+      <category term="Communication" scheme="http://www.thinkingincrowd.me/tags/Communication/"/>
     
       <category term="Empathy" scheme="http://www.thinkingincrowd.me/tags/Empathy/"/>
     
@@ -948,122 +1045,13 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
-      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
-    
       <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
+    
+      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
     
       <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
     
       <category term="Server" scheme="http://www.thinkingincrowd.me/tags/Server/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Node.js 微信后台搭建系列 - 服务器环境配置</title>
-    <link href="http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/"/>
-    <id>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/</id>
-    <published>2017-04-16T03:30:57.000Z</published>
-    <updated>2017-04-16T07:36:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们的后端代码已经基本成型了。为了让它成为真正的微信后台，我们必须将代码部署到服务器，以便微信能够和我们的后台通信，把我们公众号收到的消息转发给我们，以便我们进行后续的处理。  </p>
-<h2 id="申请云主机"><a href="#申请云主机" class="headerlink" title="申请云主机"></a>申请云主机</h2><p>目前国内比较知名的云计算服务商有阿里云，腾讯云，UCloud，美团云，青云等。国外的有 AWS，Google Cloud，Microsoft Azure 等。  </p>
-<p>鉴于我们的服务器是为了承担微信公众号后台，本身腾讯云对微信的服务器网络解析和连接都有优化，所以我就选了腾讯云来作为我的云主机提供商。  </p>
-<p>目前在 <a href="https://www.qcloud.com/" target="_blank" rel="external">https://www.qcloud.com/</a> 还有 30 天的云服务器免费使用。大家可以选择离自己近的区域购买服务器，我买的是广州 3 区的，配置大概如下：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-config.png" alt="Server Config"></p>
-<p>付款后，就能看到你的云服务器在「云主机」页面列出来了。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-console.png" alt="Server Console"></p>
-<h3 id="验证远程登录"><a href="#验证远程登录" class="headerlink" title="验证远程登录"></a>验证远程登录</h3><p>机器准备好了后，我们可以测试能否登录上机器了。我们通过 ssh 命令和分配的公网 IP 来登录：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-password-login.png" alt="Password Login"></p>
-<p>这时，你输入你购买机器时配置的密码，就可以登录了。但是，这种方式其实不太安全，密码设简单容易让别人破解，复杂了还不好记。所以，我们可以利用密钥要登录。我们点击操作台菜单的「SSH 密钥」选项，然后点击按钮「创建密钥」，就可以根据需要生成新的密钥对，或者利用你系统已经有的公钥来直接绑定。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-create-ssh-key.png" alt="Create SSH Key"></p>
-<p>在 Mac 下通过下面的命令就可以复制已有的公钥到剪贴板（假定你使用 Github 后应该已经有密钥了）:  </p>
-<p><code>pbcopy &lt; ~/.ssh/id_rsa.pub</code></p>
-<p>然后粘贴到弹窗中「输入公钥」的文本框，命名保存。  </p>
-<p>最后，把刚才新建的密钥，绑定到你的主机就可以 SSH 无密码登录了。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-bind-key.png" alt="Server Bind Key"></p>
-<p>下图是登录后，和退出的样子。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-server-logined.png" alt="Server Logined"></p>
-<h2 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h2><h3 id="准备安装脚本"><a href="#准备安装脚本" class="headerlink" title="准备安装脚本"></a>准备安装脚本</h3><p>确保能远程到机器，我们就可以准备安装所需要的工具软件了，因为一开始它基本是裸机，只有你指定的操作系统。  </p>
-<p>因为只是个人使用，所以我没有买云的数据库和缓存，也没有分开两台机器来各自安装数据库和我们的后台，虽然理论上来说，数据库应该要和 Application 分开。  </p>
-<p>在 <a href="https://github.com/kenspirit/javascript-study-group/tree/master/scripts" target="_blank" rel="external">kenspirit/javascript-study-group/scripts</a> 文件夹下面，我准备了所有需要用到的安装和配置脚本。首先，我们通过 scp 的命令把他们复制到服务器上面。（你们只要把 <code>wechat</code> 替换为你们机器的公网 IP 就行了）  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/09-scp-scripts.png" alt="SCP scripts"></p>
-<p>复制完文件，我们就登录进去检查一下。通过 <code>cd scripts</code> 进入文件夹，<code>ll</code> 查看文件详情，<code>chmod +x *.sh</code> 为所有可执行的文件（.sh 后缀）添加运行的权限。  </p>
-<h3 id="安装-Redis-和-MongoDB"><a href="#安装-Redis-和-MongoDB" class="headerlink" title="安装 Redis 和 MongoDB"></a>安装 Redis 和 MongoDB</h3><p>我们只需要执行命令 <code>sudo ./install_db_ubuntu_16.sh</code>，脚本就会下载所有相关的文件，安装，配置，和设定 Redis 和 MongoDB 为自启动服务。  </p>
-<p>所有的命令完成，返回命令行后，我们可以 <code>sudo reboot</code> 来重启机器，然后再通过 <code>redis-cli</code> 和 <code>mongo</code> 来确定 Redis 和 MongoDB 是不是都安装启动正常了。  </p>
-<h3 id="安装-Nginx，Node-js，NPM-和-PM2"><a href="#安装-Nginx，Node-js，NPM-和-PM2" class="headerlink" title="安装 Nginx，Node.js，NPM 和 PM2"></a>安装 Nginx，Node.js，NPM 和 PM2</h3><p>同理，我们只需要执行命令 <code>sudo ./install_app_ubuntu_16.sh</code>，脚本就会下载所有相关的文件，安装和配置。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我们的后端代码已经基本成型了。为了让它成为真正的微信后台，我们必须将代码部署到服务器，以便微信能够和我们的后台通信，把我们公众号收到的消息转发给我们，以便我们进行后续的处理。  &lt;/p&gt;
-&lt;h2 id=&quot;申请云主机&quot;&gt;&lt;a href=&quot;#申请云主机&quot; class=&quot;head
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
-    
-      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
-    
-      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
-    
-      <category term="Server" scheme="http://www.thinkingincrowd.me/tags/Server/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>提问，而不是斥责</title>
-    <link href="http://www.thinkingincrowd.me/2017/04/09/ask-instead-of-scold/"/>
-    <id>http://www.thinkingincrowd.me/2017/04/09/ask-instead-of-scold/</id>
-    <published>2017-04-09T01:41:47.000Z</published>
-    <updated>2017-11-19T05:48:18.492Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近的一个团建活动是大家一起看一部电影，然后分享。这次大家选择的电影是从看过 <a href="http://www.imdb.com/title/tt1187043" target="_blank" rel="external">三傻大闹宝莱坞 3 Idiots</a> 后一直很喜欢的 Aamir Khan 拍的 <a href="http://www.imdb.com/title/tt5074352/" target="_blank" rel="external">摔跤吧！爸爸 Dangal</a>。这电影说的是一个拥有为国获取摔跤金牌梦的父亲，如何培养两个女儿成为摔跤能手并寻求金牌梦的故事。  </p>
-<p>在电影里面，这个父亲真的是几乎完美：  </p>
-<ul>
-<li><p>不把牢骚发泄到妻女身上  </p>
-<p>他老婆连续生了 4 个女孩。我想中国内如果有怀着同样理想的父亲，也难免会抱怨妻子几句，甚至家暴，虐婴，什么都出来了。  </p>
-</li>
-<li><p>注重教育，因材施教</p>
-<p>即便某程度上来说，他也是为了满足个人的目标，才让女儿学摔跤。但是通过前面的铺垫（他强调摔跤是流淌在血液里的能力，天生的），他也是看到两个大女儿的潜力，才教她们摔跤。而且，他也认真督促小的学习英语。</p>
-</li>
-<li><p>不畏惧世俗和闲人闲语</p>
-<p>在连续生育几个女儿，坚持让她们摔跤，穿男生的服装，剪短头发，被全村的人笑话，也不动摇。要和整个世俗对抗，真的不容易的。  </p>
-</li>
-<li><p>想尽一切办法帮助女儿</p>
-<p>放弃工作而耕地，以便获取更多时间指导教育女儿。包下整个剧场看往期摔跤比赛片，给女儿建议。</p>
-</li>
-<li><p>没利用父亲的角色威胁子女听话</p>
-<p>虽然在他女儿小时候，他确实是利用权威来让女儿进行艰辛的训练。但当女儿从国家体育学院回来，质疑他的教学方法过时的时候，他并没有利用权威来压制，也没有任何恶毒的言语，他只想用行动来证明。女儿受挫败哭诉的时候，他也没有回过头来落井下石。  </p>
-</li>
-</ul>
-<p>整个电影，我印象最深刻的是，他和他大女儿在泥地赛场较量的情景。当他女儿说他以前教的方法已经过时的时候，他很生气，还重重地摔了他女儿一下。这里让我想起自己在放假期间，和儿子打羽毛球的经历：  </p>
-<p>儿子和他的几个同学在双打，我自己在旁边玩起手机。后来不知道什么原因，他们中的一个小朋友 A 君，用羽毛球拍打了 B 君。我发现的时候，B 君已经捂着背部，痛苦地坐在地上。我当然马上斥责 A：“你不能用球拍打人”。后来 A 君和 B 君在争吵，我隐约听到 A 君说“你为什么要笑我”之类的话。最后 B 君离开前，对 A 君说了句狠话，我儿子就重复了一遍给 A 君听。我这时又大声呵斥了一句：“不需要你重复。你看到 A 做了什么不对的没？”</p>
-<p>我回过头在想，是否能有更好的沟通方式，来把我们的观点，传递给子女，并让他们接受？我们同样想传递我们的价值观给我们的子女或他人，但是我们都犯了一个错误：<strong>直接的否定和斥责，断了后续对话的可能，甚至让彼此的对话变为争执，而不是冷静地讨论</strong>。  </p>
-<p>当时，我想向我儿子和小朋友们传达两个“价值观”：  </p>
-<ul>
-<li>采用武力是不对的  </li>
-<li>不要因为那个人是你的好朋友，就忽视他做的不对的地方，甚至支持他  </li>
-</ul>
-<p>我犯的第一个，也是最重要的错误是，我其实并没有搞清楚 A 君攻击 B 君的真正原因。我只看到了结果，也就是打人这个武力行为。但是我没有看到整个关系里面，B 君承担了什么角色，他到底做了什么导致 A 君那么愤怒，至少语言上没体现。即便我们都知道 B 君肯定在某些事情上冒犯了 A 君，A 君才会动怒，但是大人的习惯通常都是先制止武力行为，管制住主动方，以免事态更严重。这样，受委屈的 A 君更不容易接受我讲的道理。因为我一开口就说了：“你不能用球拍打人”，这里似乎就已经把所有的错误都定性在 A 君了。反而，如果我对 A 君说的是：“是什么导致你那么愤怒，要打 B？”，首先让 A 君感到被理解，然后再根据原因，恰当地指责 B 君，让 A 再冷静一下，最后回过头让 A 君知道武力并不是最好的解决办法，这样的劝导可能更容易接受。  </p>
-<p>第二个错误是，我当时没意识到儿子说那句话背后的意义。那是为他和 A 君友谊的行为体现。回想自己小的时候，其实也有过拉帮结派，互撑各自好友的情况。在 A 君为了捍卫自己正当利益没有被我看到和承认的前提下，我否定了儿子的行为，可能会削弱 A 君和我儿子的友谊。而儿子会觉得我没“帮”他朋友，削弱了我和他之间的关系。或许我只是问儿子：“你觉得 B 说的对吗？A 打人对吗？”，留下两个问题就可以了。  </p>
-<p><strong>习惯通过平和地提问，解释清楚原因来沟通，或许更能引发对方继续和我对话</strong>。因为，有些情况下，双方讨论的是哪种行为更合适的，而不是谁完全正确或者错误。即便真的完全错误，如果背后正当的动机没有被理解，对方也不可能去改变并寻求更合适的行为。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近的一个团建活动是大家一起看一部电影，然后分享。这次大家选择的电影是从看过 &lt;a href=&quot;http://www.imdb.com/title/tt1187043&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;三傻大闹宝莱坞 3 Idiots&lt;/a&gt; 
-    
-    </summary>
-    
-      <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
-    
-    
-      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
-    
-      <category term="Conflict" scheme="http://www.thinkingincrowd.me/tags/Conflict/"/>
     
   </entry>
   

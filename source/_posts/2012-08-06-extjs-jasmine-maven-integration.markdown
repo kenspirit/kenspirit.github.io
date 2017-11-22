@@ -11,15 +11,15 @@ tags:
 - Jasmine
 - Javascript
 - Maven
-- NodeJS
+- Node.js
 - UnitTest
 ---
 
 After briefing [Why I am working on them](http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/), let me show you how they can be integrated all together first.
 
-[Jasmine](http://pivotal.github.com/jasmine/) is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with [NodeJS](http://nodejs.org/) which I have been eager to use for a long time.  However, when using NodeJS in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed NodeJS installation path from environment variable PATH, the error is gone.
+[Jasmine](http://pivotal.github.com/jasmine/) is a BDD Test Framework which can be integrated in many environments.  At first, I want to integrate it with [Node.js](http://nodejs.org/) which I have been eager to use for a long time.  However, when using Node.js in Windows environment, I encountered some strange error "Class not found: File" if I tried to start my local Weblogic server.  After I removed Node.js installation path from environment variable PATH, the error is gone.
 
-The other reason I decided not integrating Jasmine in NodeJS in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment & process.  [Maven](maven.apache.org) is a better choice for us now because we should be using it for our project's build management.
+The other reason I decided not integrating Jasmine in Node.js in our project is because it might be difficult for some people to learn a completely new stuff and it is also not compatible to our JAVA development environment & process.  [Maven](maven.apache.org) is a better choice for us now because we should be using it for our project's build management.
 
 Let's see how it can be done.  Here, I assume you already know what Maven is and have your own project POM.xml.  Then, simply setup [jasmine-maven-plugin](https://github.com/searls/jasmine-maven-plugin) in your POM.xml like below.
 

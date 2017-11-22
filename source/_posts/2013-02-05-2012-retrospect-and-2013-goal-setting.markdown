@@ -56,7 +56,7 @@ _注：斜体的已经看了_
 
 之前看的是非技术类书多点，因为利用零散的时间来看书的话，看技术类的，不容易入脑。这个月再争取看完 The Lean Startup 和 Mythical Man-Month，然后集中精力看剩下的技术类书。日后为了巩固知识和真正理解，看完一本书必须写写心得和书评。
 
-技术方面的学习，只要还是集中在前端，Javascript 和 Functional Programming 方面。目前主要是利用 Pet Project 来摆弄一下 AngularJS，MongoDB 和 NodeJS。
+技术方面的学习，只要还是集中在前端，Javascript 和 Functional Programming 方面。目前主要是利用 Pet Project 来摆弄一下 AngularJS，MongoDB 和 Node.js。
 
 ##时间安排
 学习时间：  

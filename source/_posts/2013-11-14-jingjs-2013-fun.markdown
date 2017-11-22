@@ -9,7 +9,7 @@ tags:
 - Javascript
 - JingJS
 - JSConf
-- NodeJS
+- Node.js
 ---
 
 [@京JS]: http://weibo.com/jingjs2013

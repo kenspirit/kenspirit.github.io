@@ -10,7 +10,7 @@ tags:
 - Promise
 - Callback
 - Functional Programming
-- NodeJS
+- Node.js
 ---
 
 [Promise]: http://en.wikipedia.org/wiki/Promise_(programming)
