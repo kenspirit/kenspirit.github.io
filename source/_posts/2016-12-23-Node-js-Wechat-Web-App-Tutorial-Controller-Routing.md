@@ -6,6 +6,7 @@ tags:
   - Tutorial
   - Controller
   - Routing
+  - MVC
 categories:
   - Sword
 ---

@@ -5,6 +5,7 @@ tags:
   - Node.js
   - Tutorial
   - Integration
+  - MVC
 categories:
   - Sword
 ---

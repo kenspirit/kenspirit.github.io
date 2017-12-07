@@ -1,7 +1,6 @@
 title: 对死亡的未知，或许确实是上帝真正的礼物？
 date: 2017-04-22 13:17:44
 tags:
-  - Time
   - Death
 categories:
   - Think

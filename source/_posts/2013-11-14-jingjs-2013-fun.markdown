@@ -7,7 +7,6 @@ categories:
 - Think
 tags:
 - Javascript
-- JingJS
 - JSConf
 - Node.js
 ---
