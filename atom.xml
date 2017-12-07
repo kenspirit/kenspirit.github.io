@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-11-29T00:07:36.126Z</updated>
+  <updated>2017-12-07T10:32:19.216Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>技术人眼中的实业与纯互联网业务差异</title>
+    <link href="http://www.thinkingincrowd.me/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/"/>
+    <id>http://www.thinkingincrowd.me/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/</id>
+    <published>2017-12-07T10:22:13.000Z</published>
+    <updated>2017-12-07T10:32:19.216Z</updated>
+    
+    <content type="html"><![CDATA[<p>工作那么久以来，前面一大半辈子都是做 J2EE 项目，参与的都是实业企业的业务系统。最近这一两年，接触了互联网产品的开发，我对这两领域的业务差异，以及它们对技术开发人员的影响有更切实的体会。（这里提及的纯互联网，是指不需要和实体行业接轨的领域，比如消息通信，游戏，社交，工具等）  </p>
+<h2 id="无论哪个领域，都应了解业务"><a href="#无论哪个领域，都应了解业务" class="headerlink" title="无论哪个领域，都应了解业务"></a>无论哪个领域，都应了解业务</h2><p>我记得很早就有争论，技术人员是否有必要关心和理解业务。技术人员是否只需要深入技术细节，提高开发技能的深度和广度就可以了？  </p>
+<p>我的观点是，假如你实现的系统，是和人打交道的，而不是单纯的硬件和机器，那么，你就需要接触业务。因为你做的系统，是人的操作工具，解决他可感知的问题。<strong>理解业务，和其它增值的软技能，如写作、演讲和沟通是一样的。而且，从技术的角度来说，只有你理解了业务，才能很好评估技术难度，并做出合理的系统设计和架构。</strong>  </p>
+<ul>
+<li><p>「<a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a>」这篇文章大致介绍了如何结合业务来设计和使用缓存。  </p>
+</li>
+<li><p>「<a href="http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/">听听系统的多地部署改造</a>」这篇文章也举例说明了业务对性能的影响，接口权重取舍，以及任务异步化等。  </p>
+</li>
+</ul>
+<h2 id="业务性质的差异"><a href="#业务性质的差异" class="headerlink" title="业务性质的差异"></a>业务性质的差异</h2><ul>
+<li><p>实业企业的业务需求，是为了把实业往系统迁移，以简化流程，保证数据准确性，提升协作能力等目标为主。因为受产业现状约束，调整空间变化不大，功能实现路径相对单一。  </p>
+</li>
+<li><p>纯互联网的业务需求，即便功能或者要解决的问题类似，实现路径相对多样，发挥的空间较大。  </p>
+</li>
+</ul>
+<h3 id="需求灵活度和空间"><a href="#需求灵活度和空间" class="headerlink" title="需求灵活度和空间"></a>需求灵活度和空间</h3><p><strong>企业系统的需求</strong>来源，小的层面是一线业务执行者，对功能和效率的需求；大的层面是老板对整体业务的规划。一般情况下，企业系统的需求到达开发阶段了，应该已经在业务部门达成共识。<strong>根据业务流程的指引，功能相对明确。但是，缺陷也明显，因为在没有业务流程配合的情况下，系统是没法优化的</strong>。当初我在航运物流公司的时候，曾经参与一些探索性项目。有些想法虽然美好，但是落地很难，因为业务配合很难。  </p>
+<p><strong>纯互联网行业就不一样了。功能的探索空间大，需要更多的从人性，心理方面考虑，更容易突破常规做新尝试</strong>。  </p>
+<p>比如说，在线直播课程的售票功能，仅仅买卖票吗？要分开提问票和普通票吗？到底是分开，还是不分开好，说不准。知乎 Live 一开始是先买先得，限量。为什么一开始我们听听要设置不同价格的提问票呢？  </p>
+<ol>
+<li>增加稀缺感  </li>
+<li>让主讲人多赚一些钱  </li>
+<li>保证问题的质量  </li>
+<li>技术权衡。因为我们一开始的直播间，是在微信公众号里面。主讲人只能通过一条网址链接查看留言列表。如果用户发言的数量太多，质量不好，对主讲人是一个挺大的负担。  </li>
+</ol>
+<p>可是为什么后面又取消了呢？  </p>
+<ol>
+<li><p>一些主讲人反馈不希望做出区分。因为对于这些提问是否回答，他们是有压力的。即便卖票时已经声明不承诺回答，但是主讲人感觉还是不好。尤其是当一些人故意提问怼主讲人，或者提一些不方便回答的问题时，他们就会更尴尬。  </p>
+</li>
+<li><p>提问的质量，真的不是给了钱的人，就会好好思考，再提出高质量问题的。  </p>
+</li>
+<li><p>后来改版后，主讲人同样能在直播间操作，并且实现了协作讲师选取精选留言，和消息限流的功能，发言权限也就放开了。  </p>
+</li>
+</ol>
+<h3 id="有效性评估"><a href="#有效性评估" class="headerlink" title="有效性评估"></a>有效性评估</h3><p>当初在实业企业的时候，我也经常抱怨用户和 BA 怎么经常改需求，还提得那么晚。但是，老实说，实业企业的需求，怎么变都没有互联网那么快。因为，实业的业务流程，涉及既定利益体的协作，是没那么容易变动的。它们制约了需求的可变范围，当然这也是被互联网行业降维打击的原因。  </p>
+<p>纯互联网行业约束少，需求更新快，可能让开发更抓狂。机会和风口以来，可能就要马上跟进试探。这个时候，用临时方案，还是设计完整的功能路径，就必须小心考虑了。因为，如果临时的方案多了，就会把系统搞得千疮百孔。但是，假如每个试探的方案都像常规功能那样来设计，不仅可能拖慢进度，还可能最后发现方向不对，废弃成本高。  </p>
+<p>我们也吃了这方面的苦头。当初系统实现的工会模式，以及为了让大V节省时间而做的转让直播的功能，后来其实用途不大。但是这两个功能对系统逻辑，开发和测试时间影响还蛮大。  </p>
+<p><strong>如何评估一个需求的有效性，精简地设计易扩展的模型，让临时方案的代码侵入性小，以及平衡开发效率，是非常大的问题</strong>。  </p>
+<h3 id="责任人确定"><a href="#责任人确定" class="headerlink" title="责任人确定"></a>责任人确定</h3><p>责任人是什么意思？要为什么负责？  </p>
+<p>责任人是业务功能的用户吗？可以说是，但也不全是。  </p>
+<p>比如说，我们系统最开始有一个心愿单的功能，目的是为了收集用户心仪讲师的讲座或者课程。这功能乍一听很有用，也很快就加上了。但是，后期这些数据是谁看呢？产品？还是运营？怎么看和怎么拿出来分析？这都就是责任人要负责的事情，不是说功能加了就算了。由于责任人前期并没有明确，收集的数据并没有很好地发挥作用，功能最后也砍了。同理，像数据报表，用户反馈等类似的功能，也是需要非常明确地指定责任人的。  </p>
+<p><strong>当责任人不清晰的时候，可以说任何开发出来的功能，最后都会被慢慢遗弃。所以，一个功能要不要做，怎么做才好用，首先应该确认责任人是谁。</strong>  </p>
+<p>这个问题在实业企业也会发生，但在纯互联网行业更常见，尤其在初创期。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;工作那么久以来，前面一大半辈子都是做 J2EE 项目，参与的都是实业企业的业务系统。最近这一两年，接触了互联网产品的开发，我对这两领域的业务差异，以及它们对技术开发人员的影响有更切实的体会。（这里提及的纯互联网，是指不需要和实体行业接轨的领域，比如消息通信，游戏，社交，工具
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Business Logic" scheme="http://www.thinkingincrowd.me/tags/Business-Logic/"/>
+    
+  </entry>
   
   <entry>
     <title>听听系统的多地部署改造</title>
@@ -264,9 +328,9 @@
     
       <category term="Design" scheme="http://www.thinkingincrowd.me/tags/Design/"/>
     
-      <category term="Data Modeling" scheme="http://www.thinkingincrowd.me/tags/Data-Modeling/"/>
-    
       <category term="DDD" scheme="http://www.thinkingincrowd.me/tags/DDD/"/>
+    
+      <category term="Data Modeling" scheme="http://www.thinkingincrowd.me/tags/Data-Modeling/"/>
     
   </entry>
   
@@ -308,7 +372,7 @@
     <link href="http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/"/>
     <id>http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/</id>
     <published>2017-07-30T15:30:57.000Z</published>
-    <updated>2017-07-30T15:22:15.000Z</updated>
+    <updated>2017-12-07T10:32:07.436Z</updated>
     
     <content type="html"><![CDATA[<p>终于基本到了最后的一步了。微信集成主要包含三个部分：  </p>
 <ol>
@@ -364,6 +428,8 @@
       <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
     
       <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
+    
+      <category term="MVC" scheme="http://www.thinkingincrowd.me/tags/MVC/"/>
     
       <category term="Integration" scheme="http://www.thinkingincrowd.me/tags/Integration/"/>
     
@@ -1006,49 +1072,6 @@
     
     
       <category term="Caching" scheme="http://www.thinkingincrowd.me/tags/Caching/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>对死亡的未知，或许确实是上帝真正的礼物？</title>
-    <link href="http://www.thinkingincrowd.me/2017/04/22/unknown-when-to-die-might-possibly-the-gift-from-god/"/>
-    <id>http://www.thinkingincrowd.me/2017/04/22/unknown-when-to-die-might-possibly-the-gift-from-god/</id>
-    <published>2017-04-22T05:17:44.000Z</published>
-    <updated>2017-04-22T05:18:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这周的团建轮到我钦点一出电影让大家回去看。这对于一个和别人出去吃饭时，都通常说随便的人来说，这真是相当大的挑战。偶然间发现硬盘里有一出很久前经人介绍，但还没看的「超新约全书」，并且豆瓣又有 7.9 分，就选了它。  </p>
-<p>这出法式喜剧/奇幻片，真和平时看的美国式喜剧/奇幻片差太多。这脑洞大，但是并没有强大的荷尔蒙刺激的电影，虽然会引诱你想看下去了解情节怎么发展，但又有点坚持不下去的感觉。  </p>
-<p>事情的起因是居住在布鲁塞尔的上帝，靠一台电脑控制人类，给他们制造各种困苦，制定「人类普遍困境法则」，包括面包掉落时永远是涂有果酱的一面落地，和别人排的队总是比自己的快。他的女儿看不下去了，偷偷把全世界人类的注定死亡日期发短信告诉每一个人，然后通过洗衣机里的通道爬到人类社会寻找她的门徒，拯救人类。  </p>
-<p>女主的第一个门徒，周围有上至 80，下至 8 岁的男生对她有仰慕之情，甚至还有几百个单纯地想占有她身体的男人。但是她为什么一直独处，而且在知道自己的死期后，并没做任何改变？因为自从她失去一只左手后，她的心已经死了。即使知道死期，其实和之前并没什么区别。万念俱灰估计说的就是这种感觉吧，<strong>有多少人活着只是因为没有死？</strong>当她在梦里看着自己失去的手在跳舞时，那种喜悦之情真的带来太强烈的反差了。  </p>
-<p>第二个门徒是一个平庸工作，逐步缓慢升迁到暮色之年的老头。在知道日子所剩无几时，内心堆积已久的对工作的极度不满如火山迸发一样。他发疯了似的砸了自己的公文包，坐在公园长椅上细细品味阳光、微风、飞鸟，还追随飞鸟到了高山、北极圈。  </p>
-<p>一个叫「色情狂」的门徒，知道自己日子无多后打算花光所有积蓄，观看情色表演，最后却在声优配音所意外碰到小时候的梦中情人。还有一个中年女人，长期和丈夫同床异梦，苦不堪言，最后却从一头黑猩猩身上寻得真正的爱情，并在一起，还把丈夫赶离家庭。  </p>
-<p>电影的情节，古怪离奇，但却真实地反映了生活。引用电影里上帝知道死亡日期被泄露后暴怒的话：  </p>
-<blockquote>
-<p>从前呢，我抓着全人类的命门，没人知道自己的死期，所以才不敢胡作非为，明白吗？现在，他们知道了，就不会再被我牵着鼻子走了，他们将自主选择生活方式。如果她教会人类如何摆脱困境怎么办？  </p>
-</blockquote>
-<p><strong>不知道自己的死期，到底是好事还是坏事呢？</strong>  </p>
-<p>电影里面，所有后来追随自己内心的，都是知道时日不多了的。反观，有一个知道自己很长寿的小伙，就各种跳楼跳飞机来测试自己的寿命。剧末，上帝的老婆重启了电脑，把世界变得更美好，原来本该死去的人，还活着。但是，与此同时，每个人之前收到的死亡倒计时，被收回去了。  </p>
-<p>是所有人都不会死了吗？还是人们的生命，基于他们的改变，被重新计算了？  </p>
-<p>乔布斯 2005 年在斯坦福演讲说到：  </p>
-<blockquote>
-<p>I looked in the mirror every morning and asked myself: “If today were the last day in my life, what I want to do, what I am about to do today?”  Whenever the answer has been No too many days in a row, I know I need to change something.<br>我每天早晨都会对镜自问：“如果今天是我生命的最后一天，那些原本今天要做的事我还想去做吗？”如果答案连续多次都是“不”，我知道我得改变一下了。  </p>
-</blockquote>
-<p>如果我的生命只剩下一天，一星期，一个月，一年，五年，十年，我还会做当下的选择吗？你呢？</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这周的团建轮到我钦点一出电影让大家回去看。这对于一个和别人出去吃饭时，都通常说随便的人来说，这真是相当大的挑战。偶然间发现硬盘里有一出很久前经人介绍，但还没看的「超新约全书」，并且豆瓣又有 7.9 分，就选了它。  &lt;/p&gt;
-&lt;p&gt;这出法式喜剧/奇幻片，真和平时看的美国式喜
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Time" scheme="http://www.thinkingincrowd.me/tags/Time/"/>
-    
-      <category term="Death" scheme="http://www.thinkingincrowd.me/tags/Death/"/>
     
   </entry>
   
