@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2017-11-19T08:23:37.241Z</updated>
+  <updated>2017-11-29T00:07:36.126Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>听听系统的多地部署改造</title>
+    <link href="http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/"/>
+    <id>http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/</id>
+    <published>2017-11-29T00:29:02.000Z</published>
+    <updated>2017-11-29T00:07:36.126Z</updated>
+    
+    <content type="html"><![CDATA[<p>很早就想过写这篇文章了，一直没动手。  </p>
+<h2 id="直播系统卡壳"><a href="#直播系统卡壳" class="headerlink" title="直播系统卡壳"></a>直播系统卡壳</h2><p>在一块听听刚上线不久，我们就迎来了一个 6W 人的直播。当天，直播开始时间前后 10 分钟那个区间，系统是真的卡的不行。  用户打不开页面，进不了直播间，老师发言也发不出去。  </p>
+<p>当时真的是心急火燎，但是又没有什么能做。真的只能慢慢等时间流逝，压力下来，进直播间的人都稳定了，系统也就平稳了。是什么导致那么狼狈呢？  </p>
+<h3 id="时间和规划不足"><a href="#时间和规划不足" class="headerlink" title="时间和规划不足"></a>时间和规划不足</h3><p>整个系统国庆后开始开发，11月12日功能才基本完整上线并迎来第一个直播，这个大直播（12月13日）就来了。这期间还忙着需求开发，没足够时间做性能测试。  </p>
+<h3 id="不必要的接口开销多。"><a href="#不必要的接口开销多。" class="headerlink" title="不必要的接口开销多。"></a>不必要的接口开销多。</h3><p>用户有两个途径进入直播间，一个是直达直播间的微信通知的消息链接，另一个是「我的」菜单按钮。当时「我的」个人页面，前端一共调用 4 个接口：  </p>
+<ol>
+<li>获取用户资料</li>
+<li>获取用户发起的直播  </li>
+<li>获取用户购买的直播  </li>
+<li>获取其它更多相关的直播  </li>
+</ol>
+<h3 id="频繁查写库，没充分利用缓存"><a href="#频繁查写库，没充分利用缓存" class="headerlink" title="频繁查写库，没充分利用缓存"></a>频繁查写库，没充分利用缓存</h3><p>我们没很好利用缓存。而且，一开始是区分提问和非提问票的。在用户冲入直播间（或者刷新直播间页面）的时候，我们都必须获取用户提问发言次数，看是否已经超出限额。这些操作当时都是直接读写数据库，导致缓慢。  </p>
+<h3 id="业务导致网络开销大"><a href="#业务导致网络开销大" class="headerlink" title="业务导致网络开销大"></a>业务导致网络开销大</h3><p>我们当时的直播间做的很实诚，每进退一个人，都在上面显示实时人数。这个人数变动的消息广播，对网络影响相当大。  </p>
+<h3 id="不必要实时显示的数据"><a href="#不必要实时显示的数据" class="headerlink" title="不必要实时显示的数据"></a>不必要实时显示的数据</h3><p>我们的直播间还有一个打赏榜，当时的打赏情况实在是火热，很多人频繁刷打赏榜，实时从数据库拉取数据。另一个加重服务压力的方面，用户每进出一次打赏榜就要出直播间和再返回一次，导致更频繁的进入直播间请求。  </p>
+<h2 id="优化之路"><a href="#优化之路" class="headerlink" title="优化之路"></a>优化之路</h2><p>经此一役，并听说罗永浩又要来直播（1月16号），量可能更大，我们就迅速准备调整了。  </p>
+<h3 id="业务调整"><a href="#业务调整" class="headerlink" title="业务调整"></a>业务调整</h3><p>业务功能，是有可能对性能影响很大的。当然，不是说有了性能问题，就只能调整业务。而是，如何恰当地在业务功能上做出可接受的妥协，使得性能优化更可行。  </p>
+<p>曹政公众号的文章也举了类似的例子，搜索引擎的翻页功能。百度最多 49 页，Google 更少，6 页就没了。其实搜索根本没必要支持很多页，因为真正的用户，翻三四页没找到要的信息就会调整关键字了，怎么可能翻上百页。  </p>
+<p>我们去除了提问票，就没有必要在进入直播间的时候写数据库了。当然，调整的主要原因不是因为性能，而是产品和业务的考虑。具体原因有机会再分享。假设还是有提问需求，那么，检查提问次数的逻辑，可以调整为前端缓存检查，没太大必要那么严格的在进入直播间的时候，通过后端检查。  </p>
+<h3 id="接口控制"><a href="#接口控制" class="headerlink" title="接口控制"></a>接口控制</h3><p>如前面所说，根据页面功能的规划，我们可以确定不同区域的重要程度和降级方案。然后，通过接口动态屏蔽的功能，前端可以在特殊时候减少网络请求。  </p>
+<p>前面提到的4个接口，接口1 其实前端可以使用客户端缓存；接口2 只有少数是主讲人的用户才需要；接口4 是非常耗费资源，计算复杂的接口。但是获取其它更多相关的直播，在大直播来临的时候，其实可以完全屏蔽，因为这个时候多数用户关注点不在这里。  </p>
+<h3 id="减少网络开销"><a href="#减少网络开销" class="headerlink" title="减少网络开销"></a>减少网络开销</h3><p>面临大规模访问时候，网络数据的大小和频率会非常影响系统稳定性。  </p>
+<p>如前面所说，socket 服务器的实时人数的消息广播，真的很占网络资源。后来业务上也觉得这个信息不太需要，也就直接去掉了。去掉了后，Socket 可支撑的同时在线人数马上上去了。  </p>
+<p>另一个是进入直播间后 http 服务器返回的数据，也作出精简。只有第一眼用户需要看到的数据，才拿出来。一些其它支持用户其它操作的数据，可以等用户需要的时候，再让前端发请求获取。  </p>
+<h3 id="增加缓存，非实时数据异步处理"><a href="#增加缓存，非实时数据异步处理" class="headerlink" title="增加缓存，非实时数据异步处理"></a>增加缓存，非实时数据异步处理</h3><p>打赏榜的数据，在大直播刚开始时，其实并没有太强烈的实时聚合打赏数据排名的要求。所以，后期我们通过异步任务后台聚合，放缓存，前端直接从缓存拿数据。  </p>
+<p>除了后端优化，前端方面，我们还可以动态禁止查看打赏榜。进入打赏榜的时候，不再需要离开直播间，而是弹出一个新的层，减少直播间进出的情况，带来不必要的网络请求。  </p>
+<h3 id="多地部署，读写分离"><a href="#多地部署，读写分离" class="headerlink" title="多地部署，读写分离"></a>多地部署，读写分离</h3><p>虽然，不是说性能不行，就马上要横向扩展和实现多地架构，但当时青云的北京区服务器，华南，华东一些偏远地区平时访问也有点慢，网络有时还会抽风。多地部署可以让全国不同省市的人，访问最近的服务。而且，罗永浩直播的人数真是不好预估，所以，我们还是担心只有一个区的服务器和网络可能撑不住。  </p>
+<p>下面是一开始的服务架构：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/tingting-old-architecture.png" alt="Old Architecture"></p>
+<p>因为我们实现多地部署要达成的最基本的目标是：增加缓存，每个分区独立运作，承担各自的压力，互不影响，也就是按区域横向扩展。所以，每个只读的分区，应该要有独立的 Redis，HTTP Server 和 Socket Server。  </p>
+<p>增加缓存，多地部署后要面对的最直接的问题是：  </p>
+<ul>
+<li>什么数据适合放在缓存？  </li>
+</ul>
+<p>直播详情，用户购买记录等一些高频查询数据，我们都放在缓存里。这个问题在以前的文章「<a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a>」有更详细的介绍，这里就不重复了。  </p>
+<ul>
+<li>有数据改动的时候，如何失效各分区的缓存呢？  </li>
+</ul>
+<p>目前，我们依赖的是 Redis 的 Pub/Sub 机制。主区有新的数据改动的时候，publish 消息到特定的 channel。各个独立分区的 Subscriber 监听到消息通知，就失效掉特定的缓存。  </p>
+<p>最后，新的服务架构如下：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/tingting-new-architecture.png" alt="New Architecture"></p>
+<p>MongoDB，HTTP Server（写）这些负责写的部分，和 Redis (PubSub) 是公共的，其它部分其实是不同分区独立拥有的相同的组件。我在上面标注主讲人，下面标注普通用户，只是为了容易看一些，它们实际是完全一样的。这样的架构，有需要的时候，复制不同的读分区出来服务不同地区的用户就比较容易了。  </p>
+<h2 id="还能做什么？"><a href="#还能做什么？" class="headerlink" title="还能做什么？"></a>还能做什么？</h2><p>现在这个架构，服务器之间的通信还是挺复杂的，网络占用应该还有更多优化空间。当时罗永浩直播刚开始的时候，某些用户还出现了“已经在其它终端登录”的警告而被踢出直播间。可是这个问题一直没时间细查。  </p>
+<p>这个架构，其实还不是真正意义的异地多活，和分布式系统，因为数据库和写服务器还是单一的。目前我们做这个的话，成本还是太高。不过，或许以后真的要再一次重构，也应该是服务的细分，SOA 更靠谱一些。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;很早就想过写这篇文章了，一直没动手。  &lt;/p&gt;
+&lt;h2 id=&quot;直播系统卡壳&quot;&gt;&lt;a href=&quot;#直播系统卡壳&quot; class=&quot;headerlink&quot; title=&quot;直播系统卡壳&quot;&gt;&lt;/a&gt;直播系统卡壳&lt;/h2&gt;&lt;p&gt;在一块听听刚上线不久，我们就迎来了一个 6W 人的直
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Architecture" scheme="http://www.thinkingincrowd.me/tags/Architecture/"/>
+    
+      <category term="Cache" scheme="http://www.thinkingincrowd.me/tags/Cache/"/>
+    
+      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
+    
+  </entry>
   
   <entry>
     <title>硬分叉，可能真的比 ICO 更好</title>
@@ -979,79 +1049,6 @@
       <category term="Time" scheme="http://www.thinkingincrowd.me/tags/Time/"/>
     
       <category term="Death" scheme="http://www.thinkingincrowd.me/tags/Death/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Node.js 微信后台搭建系列 - 服务器代码部署</title>
-    <link href="http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/"/>
-    <id>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/</id>
-    <published>2017-04-16T07:31:17.000Z</published>
-    <updated>2017-04-16T07:36:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>机器都好了，是时候让我们的代码上场了。完成了这一步，即便你不做微信后台，你也拥有一个能提供完整后端服务的服务器了。  </p>
-<h2 id="SSH-Agent-Forwarding"><a href="#SSH-Agent-Forwarding" class="headerlink" title="SSH Agent Forwarding"></a>SSH Agent Forwarding</h2><p>要把代码部署到服务器的话，首先服务器能拥有和我们同等的权限去 Github 拉取代码。配置了 SSH 代理后，我们就不必把我们的 key 放到服务器，直接使用本地的就可以了。  </p>
-<h3 id="修改-ssh-目录权限"><a href="#修改-ssh-目录权限" class="headerlink" title="修改 .ssh 目录权限"></a>修改 <code>.ssh</code> 目录权限</h3><p>当我们在前面绑定了我们的密钥到机器时，<code>.ssh</code> 目录就已经创建了。但是它的拥有者是 <code>root</code>，之后当我们想把 Github 的地址加入里面的 <code>known_hosts</code> 就会出问题。所以，我们要先 SSH 到机器上面，通过下面的命令，把这个目录的拥有者改过来。</p>
-<p><code>sudo chown ubuntu:ubuntu .ssh/</code></p>
-<h3 id="允许本地-Forward"><a href="#允许本地-Forward" class="headerlink" title="允许本地 Forward"></a>允许本地 Forward</h3><ul>
-<li>使用你的文本编辑器，打开 <code>~/.ssh/config</code> 这个文件。如果不存在这个文件，通过命令 <code>touch ~/.ssh/config</code> 来创建  </li>
-<li><p>在文件里面添加下面两行配置，把 <code>my-server.com</code> 换成你服务器的公网地址：  </p>
-<p>Host my-server.com<br>  ForwardAgent yes</p>
-</li>
-</ul>
-<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><p>首先通过命令 <code>ssh-add</code> 把你的命令加到 ssh-agent。<em>这句命令不是每次都需要的，在 Mac 里，偶尔 agent 会不记得这个 key，所以如果你发现突然不好使了，先运行一下这命令就好了。</em></p>
-<p>登录服务器后，通过命令 <code>ssh -T git@github.com</code> 看到 Github 的欢迎语就表示配置成功了：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-ssh-agent.png" alt="SSH Agent"></p>
-<p>如果还有什么问题，可以参考 Github 提供的更详细的文档 <a href="https://developer.github.com/guides/using-ssh-agent-forwarding/" target="_blank" rel="external">Using SSH Agent Forwarding</a>。  </p>
-<h2 id="PM2-设置"><a href="#PM2-设置" class="headerlink" title="PM2 设置"></a>PM2 设置</h2><p>虽然我们的服务器已经可以像我们一样去拉代码了，但是我们总不能每次部署，就 SSH 登录服务器，git pull 一下代码，npm 安装必要的包，然后手动重启程序吧？  </p>
-<p>前面安装的 PM2 在这个时候就能发挥作用了。只要我们轻巧一段代码，它就能帮我们做到上面说的所有的步骤，把代码部署好。  </p>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>SSH 登录服务器，通过 <code>mkdir</code> 命令建立代码目录，比如：<code>mkdir app</code>。</p>
-<p>然后修改 <code>ecosystem.json</code> 文件如下：  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"apps"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"project"</span>,</div><div class="line">      <span class="string">"script"</span>: <span class="string">"index.js"</span>,</div><div class="line">      <span class="string">"env_production"</span>: &#123;</div><div class="line">        <span class="string">"NODE_ENV"</span>: <span class="string">"production"</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  ],</div><div class="line">  <span class="string">"deploy"</span>: &#123;</div><div class="line">    <span class="string">"production"</span>: &#123;</div><div class="line">      <span class="string">"user"</span>: <span class="string">"ubuntu"</span>, <span class="comment">// Linux 用户名</span></div><div class="line">      <span class="string">"host"</span>: <span class="string">"123.207.13.232"</span>, <span class="comment">// 填写你的服务器公网地址</span></div><div class="line">      <span class="string">"ref"</span>: <span class="string">"origin/master"</span>,</div><div class="line">      <span class="string">"repo"</span>: <span class="string">"git@bitbucket.org:chengusky/thinkincrowd-server.git"</span>, <span class="comment">// 填写你的代码地址</span></div><div class="line">      <span class="string">"path"</span>: <span class="string">"~/app"</span>, <span class="comment">// 新建的代码目录</span></div><div class="line">      <span class="string">"post-deploy"</span>: <span class="string">"npm install &amp;&amp; pm2 startOrRestart ecosystem.json --env production"</span>,</div><div class="line">      <span class="string">"env"</span>: &#123;</div><div class="line">        <span class="string">"NODE_ENV"</span>: <span class="string">"production"</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后在本地命令行执行以下命令：  </p>
-<p><code>pm2 deploy ecosystem.json production setup</code></p>
-<p>成功后应该见到类似提示信息：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-setup.png" alt="PM2 Setup"></p>
-<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>一般来说，不同的情景用不同的 <code>NODE_ENV</code> 环境变量，并引用不同的配置文件。开发的环境是 <code>development</code>，还有测试环境 <code>test</code> 和线上环境 <code>production</code>。所以，部署前，你还要准备一个新的配置文件 <code>production.js</code> 放在 <code>config/base/</code> 目录下。  </p>
-<p>今后，每次修改了代码并 push 到 Github，你都只需要执行以下命令就可以完成部署了：  </p>
-<p><code>pm2 deploy ecosystem.json production</code></p>
-<p>成功后应该看到类似的提示信息：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-deploy.png" alt="PM2 Deploy"></p>
-<p>然后我们再 SSH 登录服务器，输入命令 <code>pm2 status</code> 就能够看到服务器运行状况。 <code>pm2 log thinkincrowd</code> 就能够看到你的服务器日志（把 <code>thinkincrowd</code> 替换为你的 app 的名字）。</p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-status.png" alt="PM2 Status"></p>
-<h2 id="开放服务器端口"><a href="#开放服务器端口" class="headerlink" title="开放服务器端口"></a>开放服务器端口</h2><p>到这里，离服务器能访问就只剩下最后一步了。  </p>
-<p>在我们购买云主机的时候，我选择的安全组是「Linux安全组放通22端口」，它默认只让外界通过 22 端口，也就是 SSH 来访问机器。  </p>
-<p>那么，现在我们来放开必要的端口，让我们能在浏览器访问我们的系统。  </p>
-<h3 id="新增安全组"><a href="#新增安全组" class="headerlink" title="新增安全组"></a>新增安全组</h3><p>点击「安全组」选项：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group.png" alt="Security Group"></p>
-<p>克隆原来的「Linux安全组放通22端口」，并自己命名：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-clone.png" alt="Security Group Clone"></p>
-<p>点击「加入实例」操作，并选择你的主机，确定就可以了：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-instance.png" alt="Security Group Instance"></p>
-<h3 id="新增端口"><a href="#新增端口" class="headerlink" title="新增端口"></a>新增端口</h3><p>选择我们刚新建的安全组，点击「编辑规则」操作，新增两行，并分别输入 <code>3000</code> 和 <code>80</code> 端口：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-port.png" alt="Security Group Port"></p>
-<p>大功告成。现在在浏览器输入你主机的公网 IP 和端口（3000 或者 80），看看你的服务器是不是就能访问了？为什么 80 端口也可以，我们的 Node.js 服务明明是 3000 的啊？前面安装的 Nginx 帮你搞定了一切。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-done.png" alt="Security Group Done"></p>
-<p><em>注意：很多云服务商会要求机器绑定的域名要备案了才能开放 80 端口，要不然会被封。所以，在我们拥有一个备案了的域名前，还是先别开放 80 端口吧。</em></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;机器都好了，是时候让我们的代码上场了。完成了这一步，即便你不做微信后台，你也拥有一个能提供完整后端服务的服务器了。  &lt;/p&gt;
-&lt;h2 id=&quot;SSH-Agent-Forwarding&quot;&gt;&lt;a href=&quot;#SSH-Agent-Forwarding&quot; class=&quot;head
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
-    
-      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
-    
-      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
-    
-      <category term="Server" scheme="http://www.thinkingincrowd.me/tags/Server/"/>
     
   </entry>
   

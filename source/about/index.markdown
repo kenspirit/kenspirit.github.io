@@ -16,8 +16,10 @@ I am playing with Node.JS, MongoDB and AngularJS and hope one day I can build my
 
 I gain a lot from the community and hope some of the content here can also benefit you a little bit.  Feel free to get in touch with me using any of the method below.
 
-##Contacts##
+## Contacts
+
 * __Email__: chengusky (at) gmail.com / thinkingincrowd (at) icloud.com
+* __Github__: [kenspirit](https://github.com/kenspirit)
 * __LinkedIn__: [Ken Chen](http://cn.linkedin.com/in/thinkingincrowd)
 * __Weibo__: [鹄思乱想](http://weibo.com/kenspirit)
 * __Twitter__: [kenspirit](http://twitter.com/kenspirit)
