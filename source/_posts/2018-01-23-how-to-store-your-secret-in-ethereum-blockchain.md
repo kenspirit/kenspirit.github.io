@@ -42,7 +42,7 @@ The authenctication of using this tool is completely based on [MetaMask][] which
 
 Once you installed MetaMask in any of your favorite browser and connect your account to Ethereum network, you should see similar screen as below.  
 
-![Screen Shot](./screenshot.png)
+![Screen Shot](http://thinkingincrowd.u.qiniudn.com/secret-note.png)
 
 [0xb01b98a50781c454c9daa3d43eb5399ff5b604ee]: https://etherscan.io/address/0xb01b98a50781c454c9daa3d43eb5399ff5b604ee#code
 
