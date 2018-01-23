@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-01-20T13:27:52.351Z</updated>
+  <updated>2018-01-23T05:10:49.678Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>How to store your secret in Ethereum blockchain</title>
+    <link href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/"/>
+    <id>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</id>
+    <published>2018-01-23T02:54:10.000Z</published>
+    <updated>2018-01-23T05:10:49.678Z</updated>
+    
+    <content type="html"><![CDATA[<p>I am super excited that my first Ethereum blockchain Dapp product, <a href="http://www.secret-note.one/" target="_blank" rel="external">Decentralized Secret Note</a>, is online today.  It’s pretty straightforward if you are used to make transactions with MetaMask in Ethereum network.  My excitement mainly comes from below two reasons:  </p>
+<ol>
+<li>As a blockchain believer, I am not the one who only hold some coins, but also make something benefitial for others.  </li>
+<li>As a developer, I can learn blockchain development using Smart Contract, IPFS and Web3.  </li>
+</ol>
+<h2 id="Why-am-I-doing-this"><a href="#Why-am-I-doing-this" class="headerlink" title="Why am I doing this?"></a>Why am I doing this?</h2><p>Being involved in blockchain learning &amp; development is something mysterious to me before.  Lately I finally got a chance to look into it.  </p>
+<p>Really learning the blockchain and make something genuinely useful in decentralized scenario is quite difficult.  This idea comes to me because many so-promised life-long storage service can suddenly terminated.  Hence, a publicly accepted blockchain seems a perfect place to put something that you never want to lose.  Your information is never in control of some particular companies.  </p>
+<h2 id="Is-it-really-decentralized-and-how-safe-is-my-secret"><a href="#Is-it-really-decentralized-and-how-safe-is-my-secret" class="headerlink" title="Is it really decentralized and how safe is my secret?"></a>Is it really decentralized and how safe is my secret?</h2><p>All your secret notes have their own name/key which are stored in a Smart Contract in Ethereum.  Each of it points to an address in <a href="https://ipfs.io/" target="_blank" rel="external">IPFS</a>, which is a distributed web.  The backbone of this tool is completely decentralized and last forever unless Ethereum and IPFS themselves vanished.  This tool itself is open-source and hosted in Github.  You are freely to make a backup and host yourself if you need further assurance.  </p>
+<p>The concern you may have is that the data in public blockchain is viewable by anyone.  However, through normal access, each Ethereum address should only be able to see the note names stored by it.  Even if your notes’ names are revealed, so others can get the address in IPFS, they still cannot see your secret because they are protected by your private key (HTTPS private key, NOT WALLET private key).  And this key should be known by yourself only.  That is why I emphasize that “<strong>IF LOST, NO ONE is able to restore your notes</strong>“.</p>
+<h2 id="How-to-use-it"><a href="#How-to-use-it" class="headerlink" title="How to use it"></a>How to use it</h2><p>The authenctication of using this tool is completely based on <a href="https://metamask.io/" target="_blank" rel="external">MetaMask</a> which is another great Dapp in Ethereum.  Hence, this tool DOES NOT require you to input any password or provide your wallet private key.  And for god’s sake, you should not provide those info to anybody.  </p>
+<p>Once you installed MetaMask in any of your favorite browser and connect your account to Ethereum network, you should see similar screen as below.  </p>
+<p><img src="./screenshot.png" alt="Screen Shot"></p>
+<p>The Ethereum network connected to and what account is currently autenticated are shown at the top of the sreen.  The tool hosted can only be used in Main network as the smart contract is deployed there at <a href="https://etherscan.io/address/0xb01b98a50781c454c9daa3d43eb5399ff5b604ee#code" target="_blank" rel="external">0xb01b98a50781c454c9daa3d43eb5399ff5b604ee</a>.  </p>
+<p>Usage steps:  </p>
+<ol>
+<li>Input your own SSH-generated private key or ad-hoc generate one.  </li>
+<li>Backup this private key no matter you decided to remember locally in your browser or not.  </li>
+<li>Input note name and content, press Save.  </li>
+<li>MetaMask will popup (this might be a little slow) and ask you to confirm the transaction to save your note to Ethereum smart contract.  </li>
+<li>You only have to pay Gas for saving data in ETH blockchain.  </li>
+<li>Once your transaction is submitted and confirmed, your note will be listed at the right hand side.  </li>
+<li>Everytime you login using this ETH account and connected to Main net, you should see all your secrets.  Click on any item to view.  </li>
+</ol>
+<p><em>Notes: saving &amp; seeing data must have your private key inplace.  Viewing data doesn’t need to pay Gas.  Only changing data requires it.</em></p>
+<h2 id="Donation-amp-Encouragement"><a href="#Donation-amp-Encouragement" class="headerlink" title="Donation &amp; Encouragement"></a>Donation &amp; Encouragement</h2><p>Blockchain &amp; Dapp development is really exciting.  I hope this tool can benefit any blockchain enthusiast as you.  </p>
+<p>Donation of any ERC20 token to<br><code>0x713C8C77112858A3bd14A5FB380Fa0c4c5b1A8Bd</code> is greatly appreciated.  I wonder what kind of token I can get. ;)</p>
+<p>Or send Bitcoin to <code>196XA8S8ZwBu7UNap2A84cLzCAKoPPGck3</code> if you are such a generous rich in blockchain world. :D</p>
+<h2 id="For-developer"><a href="#For-developer" class="headerlink" title="For developer"></a>For developer</h2><p>If you are a developer, I think you can easily and freely use the source code in <a href="https://github.com/kenspirit/secret-note" target="_blank" rel="external">Github</a> to use any Test network and store your secret note there.  You have complete control and what is more important is that you do not need to pay real money for it.  Enjoy.  :D</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;I am super excited that my first Ethereum blockchain Dapp product, &lt;a href=&quot;http://www.secret-note.one/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;D
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
+    
+      <category term="Ethereum" scheme="http://www.thinkingincrowd.me/tags/Ethereum/"/>
+    
+      <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
+    
+      <category term="IPFS" scheme="http://www.thinkingincrowd.me/tags/IPFS/"/>
+    
+      <category term="Web3" scheme="http://www.thinkingincrowd.me/tags/Web3/"/>
+    
+  </entry>
   
   <entry>
     <title>照顾好你自己，和你爱的人</title>
@@ -1002,62 +1060,6 @@
       <category term="Redux" scheme="http://www.thinkingincrowd.me/tags/Redux/"/>
     
       <category term="Flux" scheme="http://www.thinkingincrowd.me/tags/Flux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>猜来猜去，有意思吗？</title>
-    <link href="http://www.thinkingincrowd.me/2017/05/13/probe-harmful/"/>
-    <id>http://www.thinkingincrowd.me/2017/05/13/probe-harmful/</id>
-    <published>2017-05-13T00:35:14.000Z</published>
-    <updated>2017-11-19T05:48:07.576Z</updated>
-    
-    <content type="html"><![CDATA[<p>周二晚和同事共同吃饭，并观看了「看不见的客人」这部悬疑片。电影剧情的反转真的相当意外，而且不同角度的推理也非常巧妙。影片中有各种试探性对话和策略，而这当然也是悬疑片必备的佐料。  </p>
-<p>死者的父亲到男主的 Party，试探性地问他是否抽烟，并借打火机，从而认定男主和他儿子的死亡关联。  </p>
-<p>男主在慢慢地叙述自己的经历和细节中，试探来帮他的律师，看她能否推理出事情的原委，是否真的足够聪明。  </p>
-<h2 id="无处不在"><a href="#无处不在" class="headerlink" title="无处不在"></a>无处不在</h2><p>如果在悬疑片中，缺少了猜来猜去的过程，就已经不是悬疑片了。但是，其实日常生活中，也充满了各种试探性的谈话和行为。  </p>
-<ul>
-<li>买东西的时候，我们通过不断地压价，抬价，甚至假装离开，来试探对方的价格底线。  </li>
-<li>工作中，旁敲侧击地从上司那了解今年是否有加薪。  </li>
-<li>单恋中的人，或许会开玩笑地试探对方也是否喜欢自己。  </li>
-<li>恋爱中，或婚后的人，或许会试探对方是否记得自己的生日，或者特殊纪念日。  </li>
-<li>有些家长，会试探性地问小孩子要东西，看 Ta 是否“小气”；玩耍时假装被 Ta 弄伤，看 Ta 会否来安抚自己；甚至假装说“不要你了”，看 Ta 是否会感到伤心。  </li>
-<li>甚至有些父母，试探性地和子女说要去老人院（「奇葩说」近期节目讨论话题，「李松蔚」公众号也有点评）</li>
-</ul>
-<h2 id="为什么？"><a href="#为什么？" class="headerlink" title="为什么？"></a>为什么？</h2><p>是对他人的不信任吗？我们不相信店主会一开始就提供给我们最优惠的价格；也不会相信老板会给出公司能给的最合适和最高的工资。这种不信任嘛，似乎也说的过去。  </p>
-<p>但是我们为什么还会去试探自己在乎的人，甚至是最亲密的人呢？有些人可能会说：“逗着玩的啊”。真的是这样吗？  </p>
-<p><strong>每一次的试探，其实背后都隐含着自己内心的一种期待。而这种基于期待的试探，其实包含了按自己的模式向对方提出的要求。</strong>  </p>
-<h2 id="试探是一种伤害"><a href="#试探是一种伤害" class="headerlink" title="试探是一种伤害"></a>试探是一种伤害</h2><p>为什么这么说呢？</p>
-<p>首先，<strong>当你基于某种期待，试探对方的时候，其实你是按自己的标准和行事方式来要求别人</strong>。觉得对方如果是 XXX 的话，就应该会 YYY。比如，当我们在试探对方是否喜欢自己的时候，其实是觉得，既然我喜欢你，你是不是应该也喜欢我啊？当我们试探对方是否记得自己生日或者纪念日的时候，其实是觉得，既然我记得，你不会不记得吧？当我们试探小朋友是否“小气”的时候，我们是希望我们自己对他们付出那么多的情况下，他们理应也对我们好一些。  </p>
-<p>可是，你的这些期待，别人就一定得满足吗？别人就只能用你认可的方式 YYY，才说明 Ta 满足你的期待 XXX 吗？</p>
-<p>并不是的。每个人表达亲密关系的语言都不同。并且，像小朋友的例子，Ta 可能只是刚好成长到了物权的拥有阶段，这个时候会显得比较“自私”，但是这是必须经历的阶段，也不代表 Ta 未来就是“自私”的人。  </p>
-<p>可是，如果你因为看到对方做出和你期待外的行为或反应，就做出 Ta 不 YYY，所以不 XXX 的判断的话，很可能你会误解对方。这个时候，你无非有两种反应：  </p>
-<ol>
-<li>独自伤心。这对自己造成伤害，然而却因为无需有的，自身臆想的原因。  </li>
-<li>发生冲突。这对他人造成伤害，他人觉得委屈，同时也削弱对方的信心。  </li>
-</ol>
-<p>还有另一种情况是，对方如果发现你在试探 Ta，会让 Ta 觉得受辱，被耍。说不定 Ta 还会故意反过来捉弄你。  </p>
-<p>所以，无论怎样，我觉得都会削弱双方的亲密关系。  </p>
-<h2 id="相信，或许更容易实现"><a href="#相信，或许更容易实现" class="headerlink" title="相信，或许更容易实现"></a>相信，或许更容易实现</h2><p>那对于自己的期待，如何实现呢？</p>
-<p><strong>直接表达和询问</strong>。比如说，你直接向亲爱的人说，今天是我的生日或 XX 纪念日，我希望 YYY，因为这样我会觉得很高兴。又比如，你对你的孩子说，我也很喜欢 XXX，你可以分享一些给我吗？这种表达，能清晰说明自己的感觉，让他人理解你的需求。久而久之，对方就会习惯并了解你的习惯，喜好，和爱的语言。真正关心你的人，当然会非常乐意，并接受你提出的这些请求。  </p>
-<p>当然，对方可能也会不同意。如果这个期待和需求，对你来说很重要，你可以表达出自己的伤心，和失望的感觉。如果对方珍惜你们的关系，Ta 或许会向你说明自己不能接受的原因，或许在了解到事情的重要性后，会做出改变。如果你的期待和需求，并不是非常重要，那你也可以了解到对方对这件事情的态度，了解并尊重 Ta 的模式。  </p>
-<p><strong>相信，打心底地相信。</strong>一段值得维护的亲密关系，信任在里面的作用非常重要。都说爱是不索取回报的付出，那是要在对方真的不以你期望的方式回应你的时候，你依然能用你的方式去爱对方。曾经，我的儿子一直在乡下由奶奶照顾大，直到上幼儿园后回到我们身边。寒暑假，他都跟随奶奶回老家。我们打电话回去，奶奶让他和我们说说话，他有时都会拒绝。对他来说，奶奶是最亲密的人，我和他妈妈不是。但是，我们并没有因此在他面前责骂他，要求他，或者试探他。经过长时间的接触，和等待，他和她妈妈的关系变得非常好。而我现在长时间在他乡工作，每次回家，他都会强烈要求和我一起玩，晚上一起睡，为我的离开而流泪。  </p>
-<p>所有的期待，伴随着坚定的信念，一定会实现。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;周二晚和同事共同吃饭，并观看了「看不见的客人」这部悬疑片。电影剧情的反转真的相当意外，而且不同角度的推理也非常巧妙。影片中有各种试探性对话和策略，而这当然也是悬疑片必备的佐料。  &lt;/p&gt;
-&lt;p&gt;死者的父亲到男主的 Party，试探性地问他是否抽烟，并借打火机，从而认定男主
-    
-    </summary>
-    
-      <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
-    
-    
-      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
-    
-      <category term="Asking" scheme="http://www.thinkingincrowd.me/tags/Asking/"/>
     
   </entry>
   
