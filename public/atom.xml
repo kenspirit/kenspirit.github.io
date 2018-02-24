@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-02-24T07:47:01.984Z</updated>
+  <updated>2018-02-24T23:57:16.529Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ethereum Dapp 开发 (1) - 什么应放在区块链上</title>
+    <link href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/"/>
+    <id>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</id>
+    <published>2018-02-24T23:55:24.000Z</published>
+    <updated>2018-02-24T23:57:16.529Z</updated>
+    
+    <content type="html"><![CDATA[<p>Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  </p>
+<p>前不久，我刚接触 Dapp 的开发，做了一个应用叫 [Secret Note][]（可查看此<a href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/">介绍</a>）。接下来，我希望通过几篇文章，来分享一下想法，和开发过程。  </p>
+<h2 id="区块链是否适合"><a href="#区块链是否适合" class="headerlink" title="区块链是否适合"></a>区块链是否适合</h2><p>不是什么东西都适合放在区块链上。它有自己的特性：  </p>
+<ol>
+<li>分布式存储，而且是不受某一主体控制  </li>
+<li>写入信息永不磨灭  </li>
+</ol>
+<p>想想我们经常使用的网盘，或者一些提供笔记存储服务的系统，说是多大存储量，永不收费。然后，突然就说停止运营了。如果我们能利用区块链这两个特性保存数据，是不是就完全不一样了？  </p>
+<p>所以，根据这两个特性，我做这个 Dapp 的意义就很明显：让大家可以保存信息在一个永不磨灭的地方，而且不受任何主体控制，也就不存在停止运营一说了。（当然，Ethereum 整个区块链技术被遗弃除外）</p>
+<h2 id="保存什么在链上"><a href="#保存什么在链上" class="headerlink" title="保存什么在链上"></a>保存什么在链上</h2><p>保存数据在公链上是有成本的。每对区块链公链作出更改，都要耗费一定的 Gas（矿工费）。而 Gas 是要用一定量的 Ether (ETH) 币来支付的。  </p>
+<p>而且，对公链做越复杂的操作，需要的 Gas 越多，成本越高，甚至矿工也会拒绝执行你的操作。所以，做复杂的运算，和存储大量的数据在区块链里面也是不合适的。我们只能把最关键的数据，存放在区块链里面。  </p>
+<p>回到我这个应用，我应该放什么数据在区块链上呢？  </p>
+<p>用户要保存的资料，数据量肯定是比较大，无法直接存在链上的。而且区块链里面的数据，都是公开的，保存关键隐私数据要很小心处理，不然很容易泄漏。这样的话，我们应该保存在链上的是用户资料的索引，然后再根据索引去获取内容。  </p>
+<p>既然我们用区块链的目的是不希望依赖某一主体，那资料的内容当然也只能选择分布式存储的手段。<a href="https://ipfs.io/" target="_blank" rel="external">IPFS</a> 正是分布式的互联网平台，并可以承担内容存储的角色。所以，用户的资料内容就选择保存在它上面。  </p>
+<h2 id="怎么保存到链上"><a href="#怎么保存到链上" class="headerlink" title="怎么保存到链上"></a>怎么保存到链上</h2><p>在 Ethereum 公链上执行逻辑和存储，是通过智能合约（Smart Contract）来处理的。Ethereum 的官方定义也是：  </p>
+<blockquote>
+<p>Ethereum is a decentralized platform that runs smart contracts</p>
+</blockquote>
+<p>所以，要开发 Dapp，我们首先要学习怎么开发定义一个 Smart Contract。开发 Smart Contract，需要我们使用一种新的语言 <a href="https://solidity.readthedocs.io/en/develop/" target="_blank" rel="external">Solidity</a>，下一章我们就使用它来定义我们的合约。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  &lt;/p&gt;
+&lt;p&gt;前不久，我刚接触 Dapp 的开发，做了一个应用叫 [Secret Note][]（可查看此&lt;a href=&quot;http:
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
+    
+      <category term="Ethereum" scheme="http://www.thinkingincrowd.me/tags/Ethereum/"/>
+    
+      <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
+    
+      <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
+    
+      <category term="IPFS" scheme="http://www.thinkingincrowd.me/tags/IPFS/"/>
+    
+  </entry>
   
   <entry>
     <title>你以为加入了创业公司，就是创业了吗？</title>
@@ -72,7 +122,7 @@
     <link href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/"/>
     <id>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</id>
     <published>2018-01-23T02:54:10.000Z</published>
-    <updated>2018-02-24T01:59:28.640Z</updated>
+    <updated>2018-02-24T23:52:53.533Z</updated>
     
     <content type="html"><![CDATA[<p>I am super excited that my first Ethereum blockchain Dapp product, <a href="http://www.secret-note.one/" target="_blank" rel="external">Decentralized Secret Note</a>, is online today.  It’s pretty straightforward if you are used to make transactions with MetaMask in Ethereum network.  My excitement mainly comes from two reasons below:  </p>
 <ol>
@@ -116,6 +166,8 @@
       <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
     
       <category term="Ethereum" scheme="http://www.thinkingincrowd.me/tags/Ethereum/"/>
+    
+      <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
     
       <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
     
@@ -1011,39 +1063,6 @@
       <category term="Empathy" scheme="http://www.thinkingincrowd.me/tags/Empathy/"/>
     
       <category term="Mature" scheme="http://www.thinkingincrowd.me/tags/Mature/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>怎么可能，在我的机器都是好好的</title>
-    <link href="http://www.thinkingincrowd.me/2017/05/19/problem-solving-from-another-angle/"/>
-    <id>http://www.thinkingincrowd.me/2017/05/19/problem-solving-from-another-angle/</id>
-    <published>2017-05-19T13:23:37.000Z</published>
-    <updated>2017-05-19T13:16:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近看的几部悬疑片，主角都淡淡地说过：“要转换角度来思考问题”。  </p>
-<p>在「嫌疑犯X的献身」里面，为什么女主可以很淡定的说她没有杀死前夫，为什么她可以有“确凿的”不在场证据？后来发现是因为警察发现的尸体，和作案时间，并不是她的前夫和杀死他的那一天。  </p>
-<p>在「看不见的客人」里面，协助男主分析案件的“律师”，告诉他一个小故事：“在一个空荡的谷仓里面，正中间的房梁下有一个人悬梁自尽。可是那个人脚下却没有任何可以让他垫脚站上去的东西。后来发现这个”看似“不存在”的东西，其实是一个大冰块，它是曾经存在的，只是“消失”了。  </p>
-<p>悬疑片里面，有大量的这种类型的桥段。  </p>
-<p>其实，当一个程序员，我们也经常需要用这种“转换角度来思考问题”的思路，来发现导致看似不可能出现的问题的原因。  </p>
-<p>拿我最近两次排查系统问题来举例吧。  </p>
-<p>第一个问题是，在我们平台的直播里，偶然一些原因会导致主讲人的语音缺少了长度信息。我反复看获取语音长度，和控制消息推送到直播间的相关代码。可是在语音缺失的情况下，怎么都不应该导致消息推送出去。那为什么直播间会出现那样的消息呢？后来发现，原因是在另一个统计消息点赞数，刷新缓存的任务。它会把语音长度缺失的数据也刷到缓存，所以直播间就能看到那个数据了。  </p>
-<p>另一个问题是，最近我的手机会收到服务号推送直播开始的通知。可是那些直播命名都是已经结束了的。我怎么看代码都百思不得其解。我观察到两个奇怪的现象：1）误推送的消息，显示的直播时间都是差了 8 个小时，显示的是 ISO 时间。2）线上服务器的日志，根本没有这些异常通知的发送日志记录。原来，压测团队在模拟的线上环境里跑系统和后台任务的时候，用了线上环境的一些参数，导致通过线上的微信服务号，根据压测环境数据库的直播，推送了消息。  </p>
-<p>我们程序员，经常被调侃说，当测试或产品告诉我们发现 Bug 的时候，我们经常会回复：“没可能，在我的机器都是好好的。” 其实，有些问题是以我们从来没有想到的角度，而被触发的。下次说没可能前，先停一停，想一想。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近看的几部悬疑片，主角都淡淡地说过：“要转换角度来思考问题”。  &lt;/p&gt;
-&lt;p&gt;在「嫌疑犯X的献身」里面，为什么女主可以很淡定的说她没有杀死前夫，为什么她可以有“确凿的”不在场证据？后来发现是因为警察发现的尸体，和作案时间，并不是她的前夫和杀死他的那一天。  &lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Problem Solving" scheme="http://www.thinkingincrowd.me/tags/Problem-Solving/"/>
     
   </entry>
   
