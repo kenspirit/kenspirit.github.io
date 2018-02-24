@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/02/24/start-up-already-after-joining-a-startup-company/</loc>
+    <loc>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</loc>
     
-    <lastmod>2018-02-24T07:47:01.984Z</lastmod>
+    <lastmod>2018-02-24T23:57:16.529Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</loc>
     
-    <lastmod>2018-02-24T01:59:28.640Z</lastmod>
+    <lastmod>2018-02-24T23:52:53.533Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/02/24/start-up-already-after-joining-a-startup-company/</loc>
+    
+    <lastmod>2018-02-24T07:47:01.984Z</lastmod>
     
   </url>
   
@@ -429,7 +436,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
     
@@ -443,14 +450,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
     
@@ -597,7 +604,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -605,13 +612,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -632,6 +632,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -640,20 +647,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2011/03/06/marching-on/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -674,7 +667,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
+    <loc>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -688,7 +688,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -709,7 +709,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -723,14 +723,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
+    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -744,7 +744,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -758,7 +765,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -779,20 +786,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2005/10/18/mom-and-dad-get-old-already/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -801,6 +794,13 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -821,6 +821,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -828,7 +835,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -843,13 +850,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -877,6 +877,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/404.html</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -891,14 +898,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
