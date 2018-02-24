@@ -14,7 +14,7 @@ categories:
 
 I am super excited that my first Ethereum blockchain Dapp product, [Decentralized Secret Note][], is online today.  It's pretty straightforward if you are used to make transactions with MetaMask in Ethereum network.  My excitement mainly comes from two reasons below:  
 
-1. As a blockchain believer, I am not the one who only hold some coins, but also make something benefitial for others.  
+1. As a blockchain believer, I am not the one who only hold some coins, but also now make something beneficial for others.  
 2. As a developer, I can learn blockchain development using Smart Contract, IPFS and Web3.  
 
 
