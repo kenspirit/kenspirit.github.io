@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-02-24T23:57:16.529Z</updated>
+  <updated>2018-02-25T09:26:21.563Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/"/>
     <id>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</id>
     <published>2018-02-24T23:55:24.000Z</published>
-    <updated>2018-02-24T23:57:16.529Z</updated>
+    <updated>2018-02-25T09:26:21.563Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  </p>
-<p>前不久，我刚接触 Dapp 的开发，做了一个应用叫 [Secret Note][]（可查看此<a href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/">介绍</a>）。接下来，我希望通过几篇文章，来分享一下想法，和开发过程。  </p>
+<p>前不久，我刚接触 Dapp 的开发，做了一个应用叫 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a>（可查看此<a href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/">介绍</a>）。接下来，我希望通过几篇文章，来分享一下想法，和开发过程。  </p>
 <h2 id="区块链是否适合"><a href="#区块链是否适合" class="headerlink" title="区块链是否适合"></a>区块链是否适合</h2><p>不是什么东西都适合放在区块链上。它有自己的特性：  </p>
 <ol>
 <li>分布式存储，而且是不受某一主体控制  </li>
@@ -46,7 +46,7 @@
     <summary type="html">
     
       &lt;p&gt;Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  &lt;/p&gt;
-&lt;p&gt;前不久，我刚接触 Dapp 的开发，做了一个应用叫 [Secret Note][]（可查看此&lt;a href=&quot;http:
+&lt;p&gt;前不久，我刚接触 Dapp 的开发，做了一个应用叫 &lt;a href=&quot;http://www.secret-note.on
     
     </summary>
     
