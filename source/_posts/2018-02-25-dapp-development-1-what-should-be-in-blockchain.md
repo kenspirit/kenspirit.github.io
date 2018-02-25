@@ -12,7 +12,7 @@ categories:
 
 Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  
 
-[Secrete Note]: http://www.secret-note.one  
+[Secret Note]: http://www.secret-note.one  
 
 [介绍]: http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/  
 
