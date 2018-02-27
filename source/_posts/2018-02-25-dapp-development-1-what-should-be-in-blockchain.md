@@ -56,3 +56,12 @@ Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的�
 
 所以，要开发 Dapp，我们首先要学习怎么开发定义一个 Smart Contract。开发 Smart Contract，需要我们使用一种新的语言 [Solidity][]，下一章我们就使用它来定义我们的合约。  
 
+
+## 相关阅读
+
+[Ethereum Dapp 开发 (1) - 什么应放在区块链上]: http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/  
+[Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约]: http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/  
+
+[Ethereum Dapp 开发 (1) - 什么应放在区块链上][]  
+[Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约][]  
+

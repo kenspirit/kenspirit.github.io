@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-02-25T09:26:21.563Z</updated>
+  <updated>2018-02-27T12:19:54.548Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,11 +16,104 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</title>
+    <link href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/"/>
+    <id>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</id>
+    <published>2018-02-27T12:20:20.000Z</published>
+    <updated>2018-02-27T12:19:54.548Z</updated>
+    
+    <content type="html"><![CDATA[<p>Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a> 的智能合约怎么实现。  </p>
+<h2 id="Solidity-简介"><a href="#Solidity-简介" class="headerlink" title="Solidity 简介"></a>Solidity 简介</h2><blockquote>
+<p>Solidity is a <strong>contract-oriented</strong>, high-level language for implementing smart contracts. It was influenced by C++, Python and JavaScript and is designed to target the Ethereum Virtual Machine (EVM).  </p>
+<p>Solidity is <strong>statically typed, supports inheritance</strong>, libraries and complex user-defined types among other features.</p>
+</blockquote>
+<p>我高亮了几点我们在这次开发上需要用到的特性。  </p>
+<p>学习过其它高级编程语言的开发可能对这些名词已经比较熟悉了。什么是 <strong>contract-oriented</strong> 啊？这好像是新玩意啊。其实你想想 JAVA 的 <strong>class-oriented</strong> 基本就能猜出七七八八了。</p>
+<h2 id="合约编写"><a href="#合约编写" class="headerlink" title="合约编写"></a>合约编写</h2><p>早在 2012 年，我在自己的一篇关于 JavaScript 测试的文章提到一个理念：需要测试的，是双方之间协定的合约。这个合约就是交互的接口和行为。  </p>
+<p>这个理念放到智能合约的编写上，我感觉更加直接了。所以，我们需要怎么编写智能合约，最重要的是想清楚，今后这个合约和外界交互的行为是什么。  </p>
+<h3 id="与普通后端开发最大区别"><a href="#与普通后端开发最大区别" class="headerlink" title="与普通后端开发最大区别"></a>与普通后端开发最大区别</h3><p>智能合约的开发，不像普通后端的开发，有 bug 或者想加功能了，重新发一版就好了。  </p>
+<p><strong>智能合约发布出去，就没法修改了。</strong>  </p>
+<p>所以，把智能合约发布上公链前，一定要想清楚需求，做好测试。如果合约的链上行为，业务上真的很可能需要升级和修改，就应该提前想好策略，比如隔离接口和业务逻辑合约，使用类似 proxy 的设计等。这属于比较高级的开发需求，我也还不是了解的很清楚，这篇教程暂时不涉及这方面的内容。  </p>
+<h3 id="Secret-Note-合约设计编写"><a href="#Secret-Note-合约设计编写" class="headerlink" title="Secret Note 合约设计编写"></a>Secret Note 合约设计编写</h3><p>对于 Secret Note 这个 Dapp 来说，它对外提供的行为，智能合约的接口应该有什么呢？  </p>
+<ol>
+<li>保存资料的索引  </li>
+<li>获取资料的索引  </li>
+</ol>
+<p>最核心的功能，好像就这两个了，是吧？按照这个简单的设计，合约的代码大致是这样的。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">pragma solidity ^0.4.18;</div><div class="line"></div><div class="line">contract SecretNote &#123;</div><div class="line">  mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) notes;</div><div class="line"></div><div class="line">  event SecretNoteUpdated(address indexed _sender, bytes32 indexed _noteKey, bool _success);</div><div class="line"></div><div class="line">  function SecretNote() public &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function () public payable &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to get their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   */</div><div class="line">  function getNote(bytes32 _noteKey) public view returns (bytes32) &#123;</div><div class="line">      return notes[msg.sender][_noteKey];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to update their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   * @param _content The note path hash</div><div class="line">   */</div><div class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</div><div class="line">      require(_noteKey != &quot;&quot;);</div><div class="line">      require(_content != &quot;&quot;);</div><div class="line"></div><div class="line">      notes[msg.sender][_noteKey] = _content;</div><div class="line"></div><div class="line">      SecretNoteUpdated(userAddr, _noteKey, true);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h4><p>代码文件最开始的一行，<code>pragma solidity ^0.4.18;</code>，标记了代码应该由什么版本的编译器编译，以避免在不同环境出现问题。  </p>
+<p>智能合约，是通过 <strong>contract</strong> 关键字，和它的名字来定义的。合约的主体内容在最外层的 <code>{</code> and <code>}</code> 之间。  </p>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><p>Solidity 作为一种高级的静态类型编程语言，当然也有自己支持的数据类型。在这个合约里面，我们用了三种：  </p>
+<ul>
+<li>address  </li>
+</ul>
+<p>这种类型可以保存一个 Ethereum 地址。比较特殊的是，它还有自己的成员属性和方法。最常见的是 <code>balance</code> 属性和 <code>transfer</code> 方法。  </p>
+<ul>
+<li>bytes32  </li>
+</ul>
+<p>Solidity 里面有分定长和变长的 byte 数组。  </p>
+<p>定长的有 <code>bytes1</code>, <code>bytes2</code>, <code>bytes3</code>, …, <code>bytes32</code>. <code>byte</code> 是 bytes1 的别名。它们都有只读属性 <code>length</code>。  </p>
+<p>变长的有 <code>bytes</code> 和 <code>string</code>。  </p>
+<p><code>string</code> 是用来保存不定长 UTF-8 字符数据的。其它的都是 byte 数组。如果可以，尽量用定长的可以节省资源，减少 Gas 的使用等。  </p>
+<ul>
+<li>mapping  </li>
+</ul>
+<p>我们可以把 <code>mapping</code> 当作一个哈希表。这个哈希表的 key 几乎可以是任何类型，除了 <code>mapping</code>，变长 byte 数组，contract，enum 和 struct 结构体。哈希表的 value 就可以是任何类型的数据。  </p>
+<p><code>mapping</code> 有个很特殊的地方就是它没有长度，你也无法检查一个 key 是否在它里面。因为它是虚拟地记录了每一个可能的 key，对应值为全 0 字节，也就是任何数据类型的默认值。  </p>
+<p><code>mapping</code> 也无法遍历。所以，我们只能通过一种绕一些的方式来遍历它。可以参看官网的 <a href="https://github.com/ethereum/dapp-bin/blob/master/library/iterable_mapping.sol" target="_blank" rel="external">iterable mapping</a> 例子，或我的 Secret Note 源码。  </p>
+<p><em>复杂的用户定义类型：在这篇文章就不介绍了，有兴趣的朋友可以直接看 Secret Note 的<a href="https://github.com/kenspirit/secret-note" target="_blank" rel="external">源码</a></em></p>
+<h4 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h4><p>Solidity 有 4 种作用域修饰符。<code>public</code> 是合约的接口，可内部或通过外部消息调用。<code>external</code> 也是合约接口，但是不能内部调用。<code>internal</code> 只能内部，或者由继承的合约调用。<code>private</code> 只能在定义的合约内可调用，但是，它不代表区块链外不可见。  </p>
+<p><code>view</code> 修饰符表示这个方法承诺不会修改合约的状态。<code>constant</code> 是它的别名。不过，虽然这么说，编译器是没有检查，或者强制限制这个方法不能改变合约状态的。  </p>
+<p><code>payable</code> 修饰符用来标记某个方法可以同时接收发过来的 Ether。  </p>
+<p><code>msg.sender</code> 特指调用此方法的 Ethereum 地址。<code>msg</code> 还有其它全局属性，详情可查看 Solidity 文档。  </p>
+<p><code>require()</code> 就像其它语言的 <code>assert</code> 那样检查前置条件。不满足的话，会抛错。它通常用于检查外部输入等有效条件。另一个类似用法的 <code>assert</code> 则用户内部错误的检查。  </p>
+<h4 id="Fallback-方法"><a href="#Fallback-方法" class="headerlink" title="Fallback 方法"></a>Fallback 方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">function () public payable &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个没有任何名字的是 <code>Fallback</code> 方法。一个合约只能存在一个。这个方法没有参数，也没有任何返回值。如果有人调用这个合约，但是指定的方法找不到，它会被触发。  </p>
+<p>还有，当这个合约地址单纯地收到 Ether 的时候（比如他人转账到这个合约地址），这个方法也会被调用。所以，它必须被标记为 <code>payable</code>。不然，这个合约地址就没法通过普通的交易接收 Ether 了。  </p>
+<p>要注意的是，如果这个方法里面有逻辑，一定要确保它的 Gas 消耗要小于 2300。  </p>
+<h4 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h4><p>事件是 EVM 日志记录的使用方式。如果你在你开发的 Dapp 里监听了某一个事件，当这个时间被触发后，你在 Dapp 设的监听器就会收到通知。  </p>
+<p>事件的数据是存储在交易日志里的。它们可以被检索，但是合约代码里面没法访问它们。  </p>
+<p>每个事件最多有 3 个索引的（<code>indexed</code>）参数，我们可以根据这些参数进行过滤检索。非索引的参数存在记录日志的数据部分里，但是索引的参数是没有存的。你只能用某个值去查索引，但是没法罗列有哪些值。  </p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>上面两个合约方法是公开的，每个人都可以调用。那如果我想添加一些只有合约创建者才能调用的方法呢？假如，真有人转 Ether 到合约地址了，我想提出到另一个地址呢？  </p>
+<p>我们可以利用继承和修饰符来实现上面的目的。  </p>
+<p>首先，我们定义一个父合约 <code>Ownable</code>，这个合约在它的构造函数（constructor）里面把合约创建者保存到一个合约变量。然后，提供一个特殊的修饰符给子合约使用。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">contract Ownable &#123;</div><div class="line">    address owner;</div><div class="line"></div><div class="line">    function Ownable() public &#123;</div><div class="line">        owner = msg.sender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    modifier onlyOwner() &#123;</div><div class="line">        require(owner == msg.sender);</div><div class="line">        _;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>原来的智能合约，作为子合约，稍微修改一下就可以了。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">contract SecretNote is Ownable &#123;</div><div class="line">  // 上面省略合约原有代码</div><div class="line"></div><div class="line">  function withdraw(address _to, uint _amount) public onlyOwner &#123;</div><div class="line">      _to.transfer(_amount);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们只需要吧 <code>onlyOwner</code> 这个修饰符添加到任何希望只有合约 owner 才能执行的 function 签名处，这个 function 就拥有检查调用者的能力了。加了 <code>onlyOwner</code> 的 function，其实就是把代码替换到 <code>_</code> 的位置。  </p>
+<h2 id="安全方面的考量"><a href="#安全方面的考量" class="headerlink" title="安全方面的考量"></a>安全方面的考量</h2><p>因为合约一旦部署，就无法修改，而且很多的智能合约都和加密货币或者 token 挂钩。所以，如果一个智能合约的实现出现了安全漏洞，就有可能引起很大的问题。  </p>
+<p>Solidity <a href="https://solidity.readthedocs.io/en/develop/security-considerations.html" target="_blank" rel="external">文档</a> 里有专门的一章写了一些推荐做法，大家应该至少看 <strong>Use the Checks-Effects-Interactions Pattern</strong> 和 <strong>Include a Fail-Safe Mode</strong> 两点。  </p>
+<p>到这里为止，我们就把简化版 Secret Note 的智能合约写好了。下一篇我们来看看如何测试它。  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a>  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 &lt;a href=&quot;http://www.secret-note.one&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Secret Note&lt;/a&gt; 的
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
+    
+      <category term="Ethereum" scheme="http://www.thinkingincrowd.me/tags/Ethereum/"/>
+    
+      <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
+    
+      <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
+    
+      <category term="Solidity" scheme="http://www.thinkingincrowd.me/tags/Solidity/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Ethereum Dapp 开发 (1) - 什么应放在区块链上</title>
     <link href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/"/>
     <id>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</id>
     <published>2018-02-24T23:55:24.000Z</published>
-    <updated>2018-02-25T09:26:21.563Z</updated>
+    <updated>2018-02-27T10:05:37.682Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  </p>
 <p>前不久，我刚接触 Dapp 的开发，做了一个应用叫 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a>（可查看此<a href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/">介绍</a>）。接下来，我希望通过几篇文章，来分享一下想法，和开发过程。  </p>
@@ -41,6 +134,7 @@
 <p>Ethereum is a decentralized platform that runs smart contracts</p>
 </blockquote>
 <p>所以，要开发 Dapp，我们首先要学习怎么开发定义一个 Smart Contract。开发 Smart Contract，需要我们使用一种新的语言 <a href="https://solidity.readthedocs.io/en/develop/" target="_blank" rel="external">Solidity</a>，下一章我们就使用它来定义我们的合约。  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -897,9 +991,9 @@
       <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
     
     
-      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
-    
       <category term="Conflict" scheme="http://www.thinkingincrowd.me/tags/Conflict/"/>
+    
+      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
     
       <category term="Criticism" scheme="http://www.thinkingincrowd.me/tags/Criticism/"/>
     
@@ -1026,43 +1120,6 @@
       <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
     
       <category term="Labelling" scheme="http://www.thinkingincrowd.me/tags/Labelling/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>儿子最近哭的多了，但我觉得他长大了</title>
-    <link href="http://www.thinkingincrowd.me/2017/05/21/my-son-cries-more-recently-but-I-think-he-grows-up/"/>
-    <id>http://www.thinkingincrowd.me/2017/05/21/my-son-cries-more-recently-but-I-think-he-grows-up/</id>
-    <published>2017-05-21T02:01:19.000Z</published>
-    <updated>2017-11-19T05:48:00.878Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近和老婆聊天的时候，听到她说儿子哭的次数多了。  </p>
-<p>有一次，儿子因为洗澡的时间和预定的时间刚好，他没提前完成，所以没能够获取积分来增加玩手机的时间。在睡觉前，他哭了。老婆没想到他这么在意这一些积分，在安慰他的时候说：“少积一个晚上，也没什么嘛，别哭了。”没想到他哭的更伤心了。  </p>
-<p>另外的一次是，上学前，他出门后发现忘记带魔方了。他想带魔方，是因为迟一些有魔方比赛，他希望能在空闲时间练习一下。所以，他面临两个选择：1）回去拿，但是应该就会迟到。2）这一天就先不带了。当时妈妈和他说：“今天就先不带了吧，不玩一个早上也没什么啦”。然后他就哭了。后来老婆问他：“你真的很想回去拿吗？那就很可能迟到，如果迟到，你就要站着早读，你自己想好怎么做吧？”然后他还是很高兴地决定回去拿魔方。  </p>
-<h2 id="为什么我还觉得他长大了？"><a href="#为什么我还觉得他长大了？" class="headerlink" title="为什么我还觉得他长大了？"></a>为什么我还觉得他长大了？</h2><p>其实，我和老婆都觉得儿子是比较有主见的人，这个性格比较不像我，像我老婆多一些。但是，他以前会因为他的意见和他人不同，和其他人大声争吵，偏暴力和自我中心多一些。  </p>
-<p>现在他用哭的方式来表达，意味着他能体会到另一种矛盾的声音，尊重这种矛盾的存在。他能把对外的宣泄，变成内在自我情绪的疏导，调节和妥协。这是非常大的一种进步。我觉得是共情能力的成长。当然，如果一直用哭的方式来表达，肯定也不是好的事情。但是，我觉得这是能够进行下一步，和他更好的商量和讲道理的关键，因为他能听的进去不同的声音。我们下一步是教会他使用更合适的方式来处理矛盾。以前那个大声争吵，自我中心的他是没法做到的。  </p>
-<h2 id="我和他妈妈也成长了"><a href="#我和他妈妈也成长了" class="headerlink" title="我和他妈妈也成长了"></a>我和他妈妈也成长了</h2><p>可能很多看到儿子在哭的父母，会说：“你还是不是男孩子啊？哭什么！” 我很庆幸，我们没有这样做。每一个父母，和自己的孩子相处的时候，肯定都有过争吵的时候。父母经常会利用自己的权威，把自己认为正确的价值观和选择，强加到孩子的身上。他们甚至还冠冕堂皇地说：“这都是为了你好。” 我和老婆，虽然尽量会和儿子商量和讨论，但是有时也会不自觉的让他做出一些对我们来说是正确的选择，但是不是他内心想遵循的。  </p>
-<p>就像那个带魔方的例子。对父母来说，当然不迟到是更加“政治正确”的事情。我们传统的观念，被罚站是不好的。而且如果我们要上班的话，也可能回去拿也意味着浪费我们的时间，我们也迟到，我们的利益也受损。可是，我们或许没有看到孩子的内心需求，他可能宁可罚站，也想回去拿。  </p>
-<p>现在，我们看到了。虽然可能还不够及时，不够迅速，但是我们至少看到了，这也是我们共情能力的成长。我也相信我们以后能更及时地体会，并和儿子更好地沟通。  </p>
-<p><strong>“看到不一样，才能做到不一样。面对关系难题，你需要多一双眼睛。”</strong>  </p>
-<p>我现在真的是越来越喜欢这一句话。这句是李松蔚在喜马拉雅「换个角度，洞悉相处之道」的宣传语。我购买了这个专辑真的觉得物超所值。听说 5 月 31 号以后就要涨价了，所以有兴趣的朋友，可以用我这个红包链接去买。<a href="http://xima.tv/qiamR4" target="_blank" rel="external">http://xima.tv/qiamR4</a>  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近和老婆聊天的时候，听到她说儿子哭的次数多了。  &lt;/p&gt;
-&lt;p&gt;有一次，儿子因为洗澡的时间和预定的时间刚好，他没提前完成，所以没能够获取积分来增加玩手机的时间。在睡觉前，他哭了。老婆没想到他这么在意这一些积分，在安慰他的时候说：“少积一个晚上，也没什么嘛，别哭了。”没想
-    
-    </summary>
-    
-      <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
-    
-    
-      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
-    
-      <category term="Empathy" scheme="http://www.thinkingincrowd.me/tags/Empathy/"/>
-    
-      <category term="Mature" scheme="http://www.thinkingincrowd.me/tags/Mature/"/>
     
   </entry>
   
