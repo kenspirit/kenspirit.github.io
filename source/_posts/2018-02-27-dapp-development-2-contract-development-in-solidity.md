@@ -82,7 +82,7 @@ contract SecretNote {
 
       notes[msg.sender][_noteKey] = _content;
 
-      SecretNoteUpdated(userAddr, _noteKey, true);
+      SecretNoteUpdated(msg.sender, _noteKey, true);
   }
 }
 ```

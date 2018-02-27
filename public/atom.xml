@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-02-27T12:19:54.548Z</updated>
+  <updated>2018-02-27T15:08:17.230Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/"/>
     <id>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</id>
     <published>2018-02-27T12:20:20.000Z</published>
-    <updated>2018-02-27T12:19:54.548Z</updated>
+    <updated>2018-02-27T15:08:17.230Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a> 的智能合约怎么实现。  </p>
 <h2 id="Solidity-简介"><a href="#Solidity-简介" class="headerlink" title="Solidity 简介"></a>Solidity 简介</h2><blockquote>
@@ -40,7 +40,7 @@
 <li>获取资料的索引  </li>
 </ol>
 <p>最核心的功能，好像就这两个了，是吧？按照这个简单的设计，合约的代码大致是这样的。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">pragma solidity ^0.4.18;</div><div class="line"></div><div class="line">contract SecretNote &#123;</div><div class="line">  mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) notes;</div><div class="line"></div><div class="line">  event SecretNoteUpdated(address indexed _sender, bytes32 indexed _noteKey, bool _success);</div><div class="line"></div><div class="line">  function SecretNote() public &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function () public payable &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to get their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   */</div><div class="line">  function getNote(bytes32 _noteKey) public view returns (bytes32) &#123;</div><div class="line">      return notes[msg.sender][_noteKey];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to update their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   * @param _content The note path hash</div><div class="line">   */</div><div class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</div><div class="line">      require(_noteKey != &quot;&quot;);</div><div class="line">      require(_content != &quot;&quot;);</div><div class="line"></div><div class="line">      notes[msg.sender][_noteKey] = _content;</div><div class="line"></div><div class="line">      SecretNoteUpdated(userAddr, _noteKey, true);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">pragma solidity ^0.4.18;</div><div class="line"></div><div class="line">contract SecretNote &#123;</div><div class="line">  mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) notes;</div><div class="line"></div><div class="line">  event SecretNoteUpdated(address indexed _sender, bytes32 indexed _noteKey, bool _success);</div><div class="line"></div><div class="line">  function SecretNote() public &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function () public payable &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to get their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   */</div><div class="line">  function getNote(bytes32 _noteKey) public view returns (bytes32) &#123;</div><div class="line">      return notes[msg.sender][_noteKey];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to update their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   * @param _content The note path hash</div><div class="line">   */</div><div class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</div><div class="line">      require(_noteKey != &quot;&quot;);</div><div class="line">      require(_content != &quot;&quot;);</div><div class="line"></div><div class="line">      notes[msg.sender][_noteKey] = _content;</div><div class="line"></div><div class="line">      SecretNoteUpdated(msg.sender, _noteKey, true);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h4><p>代码文件最开始的一行，<code>pragma solidity ^0.4.18;</code>，标记了代码应该由什么版本的编译器编译，以避免在不同环境出现问题。  </p>
 <p>智能合约，是通过 <strong>contract</strong> 关键字，和它的名字来定义的。合约的主体内容在最外层的 <code>{</code> and <code>}</code> 之间。  </p>
 <h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><p>Solidity 作为一种高级的静态类型编程语言，当然也有自己支持的数据类型。在这个合约里面，我们用了三种：  </p>
@@ -991,9 +991,9 @@
       <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
     
     
-      <category term="Conflict" scheme="http://www.thinkingincrowd.me/tags/Conflict/"/>
-    
       <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
+    
+      <category term="Conflict" scheme="http://www.thinkingincrowd.me/tags/Conflict/"/>
     
       <category term="Criticism" scheme="http://www.thinkingincrowd.me/tags/Criticism/"/>
     
