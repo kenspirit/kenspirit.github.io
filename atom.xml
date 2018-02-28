@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-02-27T15:08:17.230Z</updated>
+  <updated>2018-02-28T14:52:36.090Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/"/>
     <id>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</id>
     <published>2018-02-27T12:20:20.000Z</published>
-    <updated>2018-02-27T15:08:17.230Z</updated>
+    <updated>2018-02-28T14:52:36.090Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a> 的智能合约怎么实现。  </p>
 <h2 id="Solidity-简介"><a href="#Solidity-简介" class="headerlink" title="Solidity 简介"></a>Solidity 简介</h2><blockquote>
@@ -74,12 +74,12 @@
 <h4 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h4><p>事件是 EVM 日志记录的使用方式。如果你在你开发的 Dapp 里监听了某一个事件，当这个时间被触发后，你在 Dapp 设的监听器就会收到通知。  </p>
 <p>事件的数据是存储在交易日志里的。它们可以被检索，但是合约代码里面没法访问它们。  </p>
 <p>每个事件最多有 3 个索引的（<code>indexed</code>）参数，我们可以根据这些参数进行过滤检索。非索引的参数存在记录日志的数据部分里，但是索引的参数是没有存的。你只能用某个值去查索引，但是没法罗列有哪些值。  </p>
-<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>上面两个合约方法是公开的，每个人都可以调用。那如果我想添加一些只有合约创建者才能调用的方法呢？假如，真有人转 Ether 到合约地址了，我想提出到另一个地址呢？  </p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>上面两个合约方法是公开的，每个人都可以调用。那如果我想添加一些只有合约创建者才能调用的方法呢？假如，我想让只有创建者能查这个合约里面存了多少资料呢？  </p>
 <p>我们可以利用继承和修饰符来实现上面的目的。  </p>
 <p>首先，我们定义一个父合约 <code>Ownable</code>，这个合约在它的构造函数（constructor）里面把合约创建者保存到一个合约变量。然后，提供一个特殊的修饰符给子合约使用。  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">contract Ownable &#123;</div><div class="line">    address owner;</div><div class="line"></div><div class="line">    function Ownable() public &#123;</div><div class="line">        owner = msg.sender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    modifier onlyOwner() &#123;</div><div class="line">        require(owner == msg.sender);</div><div class="line">        _;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>原来的智能合约，作为子合约，稍微修改一下就可以了。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">contract SecretNote is Ownable &#123;</div><div class="line">  // 上面省略合约原有代码</div><div class="line"></div><div class="line">  function withdraw(address _to, uint _amount) public onlyOwner &#123;</div><div class="line">      _to.transfer(_amount);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">contract SecretNote is Ownable &#123;</div><div class="line">  uint256 noteCount;</div><div class="line"></div><div class="line">  // 省略部分合约代码</div><div class="line"></div><div class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</div><div class="line">      require(_noteKey != &quot;&quot;);</div><div class="line">      require(_content != &quot;&quot;);</div><div class="line"></div><div class="line">      notes[msg.sender][_noteKey] = _content;</div><div class="line">      noteCount++;</div><div class="line"></div><div class="line">      SecretNoteUpdated(msg.sender, _noteKey, true);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function getTotalNoteCount() public view onlyOwner returns(uint256) &#123;</div><div class="line">      return noteCount;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我们只需要吧 <code>onlyOwner</code> 这个修饰符添加到任何希望只有合约 owner 才能执行的 function 签名处，这个 function 就拥有检查调用者的能力了。加了 <code>onlyOwner</code> 的 function，其实就是把代码替换到 <code>_</code> 的位置。  </p>
 <h2 id="安全方面的考量"><a href="#安全方面的考量" class="headerlink" title="安全方面的考量"></a>安全方面的考量</h2><p>因为合约一旦部署，就无法修改，而且很多的智能合约都和加密货币或者 token 挂钩。所以，如果一个智能合约的实现出现了安全漏洞，就有可能引起很大的问题。  </p>
 <p>Solidity <a href="https://solidity.readthedocs.io/en/develop/security-considerations.html" target="_blank" rel="external">文档</a> 里有专门的一章写了一些推荐做法，大家应该至少看 <strong>Use the Checks-Effects-Interactions Pattern</strong> 和 <strong>Include a Fail-Safe Mode</strong> 两点。  </p>
