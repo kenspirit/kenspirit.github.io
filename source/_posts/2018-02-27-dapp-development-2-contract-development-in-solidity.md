@@ -160,7 +160,7 @@ Solidity 有 4 种作用域修饰符。`public` 是合约的接口，可内部�
 
 #### 继承
 
-上面两个合约方法是公开的，每个人都可以调用。那如果我想添加一些只有合约创建者才能调用的方法呢？假如，真有人转 Ether 到合约地址了，我想提出到另一个地址呢？  
+上面两个合约方法是公开的，每个人都可以调用。那如果我想添加一些只有合约创建者才能调用的方法呢？假如，我想让只有创建者能查这个合约里面存了多少资料呢？  
 
 我们可以利用继承和修饰符来实现上面的目的。  
 
@@ -185,10 +185,22 @@ contract Ownable {
 
 ```
 contract SecretNote is Ownable {
-  // 上面省略合约原有代码
+  uint256 noteCount;
 
-  function withdraw(address _to, uint _amount) public onlyOwner {
-      _to.transfer(_amount);
+  // 省略部分合约代码
+
+  function setNote(bytes32 _noteKey, bytes32 _content) public payable {
+      require(_noteKey != "");
+      require(_content != "");
+
+      notes[msg.sender][_noteKey] = _content;
+      noteCount++;
+
+      SecretNoteUpdated(msg.sender, _noteKey, true);
+  }
+
+  function getTotalNoteCount() public view onlyOwner returns(uint256) {
+      return noteCount;
   }
 }
 ```
