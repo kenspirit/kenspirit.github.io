@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-03-05T02:33:13.095Z</updated>
+  <updated>2018-03-05T04:23:59.035Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</title>
     <link href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/"/>
     <id>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</id>
-    <published>2018-03-05T12:20:20.000Z</published>
-    <updated>2018-03-05T02:33:13.095Z</updated>
+    <published>2018-03-05T04:20:20.000Z</published>
+    <updated>2018-03-05T04:23:59.035Z</updated>
     
     <content type="html"><![CDATA[<p>我们在前面一篇说到，智能合约发布后就没法修改了。所以，在真正发布前，我们必须进行详细的测试。那智能合约怎么测试呢？难不成我们自己要部署一个自己的 Ethereum 网络节点？  </p>
 <p>这篇文章，我先介绍一种最简单直接的测试方式。  </p>
@@ -989,9 +989,9 @@
       <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
     
     
-      <category term="Communication" scheme="http://www.thinkingincrowd.me/tags/Communication/"/>
-    
       <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
+    
+      <category term="Communication" scheme="http://www.thinkingincrowd.me/tags/Communication/"/>
     
       <category term="Empathy" scheme="http://www.thinkingincrowd.me/tags/Empathy/"/>
     
