@@ -210,3 +210,15 @@ Ganache 启动后是这个样子的，默认已经准备好了一些测试帐号
 
 到这里，你的智能合约已经在本地的 Ethereum blockchain 节点部署完成了。部署到测试环境或者正式 Ethereum 公链的方法，我们后面再介绍。  
 
+
+## 相关阅读
+
+[Ethereum Dapp 开发 (1) - 什么应放在区块链上]: http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/  
+[Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约]: http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/  
+[Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）]: http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/  
+[Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）]: http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/  
+
+[Ethereum Dapp 开发 (1) - 什么应放在区块链上][]  
+[Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约][]  
+[Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）][]  
+[Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）][]  
