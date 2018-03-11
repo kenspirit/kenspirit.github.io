@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</loc>
-    
-    <lastmod>2018-03-11T08:41:10.426Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</loc>
-    
-    <lastmod>2018-03-05T04:23:59.035Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</loc>
     
-    <lastmod>2018-03-05T02:31:05.831Z</lastmod>
+    <lastmod>2018-03-11T08:57:30.591Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</loc>
     
-    <lastmod>2018-03-05T02:31:00.661Z</lastmod>
+    <lastmod>2018-03-11T08:57:25.902Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</loc>
+    
+    <lastmod>2018-03-11T08:57:21.501Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</loc>
+    
+    <lastmod>2018-03-11T08:57:14.858Z</lastmod>
     
   </url>
   
@@ -450,13 +450,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
-    
-    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
@@ -471,14 +464,21 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
+    
+    <lastmod>2016-09-21T15:25:55.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/</loc>
     
     <lastmod>2016-09-21T15:25:55.000Z</lastmod>
     
@@ -625,13 +625,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -640,6 +633,13 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -709,6 +709,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -730,14 +737,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -752,13 +759,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2005/07/28/manugistics-consultant-the-beginning/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -793,6 +793,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
+    
+    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
@@ -800,7 +807,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/11/14/many-things-happened-all-unhappy/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -821,7 +828,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/11/14/many-things-happened-all-unhappy/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -829,13 +836,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
-    
-    <lastmod>2015-05-20T15:09:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -856,7 +856,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
@@ -870,7 +870,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
     
     <lastmod>2015-05-20T15:09:56.000Z</lastmod>
     
