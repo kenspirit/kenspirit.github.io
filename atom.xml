@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-03-17T05:38:37.774Z</updated>
+  <updated>2018-03-17T05:41:26.898Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/"/>
     <id>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</id>
     <published>2018-03-17T05:40:40.000Z</published>
-    <updated>2018-03-17T05:38:37.774Z</updated>
+    <updated>2018-03-17T05:41:26.898Z</updated>
     
     <content type="html"><![CDATA[<p>本篇文章主要讲述 Dapp 前端页面，怎么和 Ethereum 帐号网络集成。不过，涉及的前端开发和代码，不会包括在覆盖范围内。因为前端开发框架太多（Vuejs, React, AngularJS，JQuery 等），使用什么都可以，所以本文仅解释合约相关的代码。本文代码以 Vuejs 代码为样例，也在 Github 上。  </p>
 <p>本教程，也就是简化版的 Secret Note 页面如下图。页面的最上方，显示的是当前连接的 Ethereum 网络，Gas 价格，和登录的 Ethereum 帐号地址。  </p>
@@ -79,7 +79,7 @@
 <p>有一点要注意的是，这个方法定义的返回值类型是 <code>bytes32</code>，所以要使用 <code>toAscii</code> 方法把内容转换后才使用。  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">loadNote() &#123;</div><div class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  SecretNote.at(CONTRACT_ADDRESS)</div><div class="line">    .then((instance) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> instance.getNote(that.noteForm.noteName);</div><div class="line">    &#125;)</div><div class="line">    .then((noteContent) =&gt; &#123;</div><div class="line">      <span class="keyword">if</span> (!noteContent) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line">      that.noteForm.noteContent = web3js.toAscii(noteContent);</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
 <p>由于我们现在是在本地 Ganache 测试网络上集成和调试的，而 Ganache 每次重启后，数据都被重置，在 Solidity 合约代码还不稳定，需要经常改的时候，这是一个好事。但是，如果合约代码已经稳定，我们要调试前端代码，就不需要合约经常变了。下一章我们再看看如何把合约部署到 Ethereum 的一些公共的测试网络吧。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -108,7 +108,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/"/>
     <id>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</id>
     <published>2018-03-11T08:44:16.000Z</published>
-    <updated>2018-03-17T05:38:45.085Z</updated>
+    <updated>2018-03-17T05:41:23.214Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Truffle-是什么？"><a href="#Truffle-是什么？" class="headerlink" title="Truffle 是什么？"></a>Truffle 是什么？</h2><p>上一篇文章我们已经介绍了如何使用 Remix 来初步测试智能合约。虽然它使用起来很方便，但是还是有一些不适合拿来当测试工具的地方。我们来尝试用另一个叫 <a href="http://truffleframework.com/" target="_blank" rel="external">Truffle</a> 的工具来测试。  </p>
 <p>Truffle 是什么呢？它的官方介绍是这样的：  </p>
@@ -191,7 +191,7 @@
 <p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account.png" alt="Ganache Account">  </p>
 <p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-trx.png" alt="Ganache Transactions">  </p>
 <p>到这里，你的智能合约已经在本地的 Ethereum blockchain 节点部署完成了。部署到测试环境或者正式 Ethereum 公链的方法，我们后面再介绍。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -222,7 +222,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/"/>
     <id>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</id>
     <published>2018-03-05T04:20:20.000Z</published>
-    <updated>2018-03-17T05:38:49.744Z</updated>
+    <updated>2018-03-17T05:41:19.847Z</updated>
     
     <content type="html"><![CDATA[<p>我们在前面一篇说到，智能合约发布后就没法修改了。所以，在真正发布前，我们必须进行详细的测试。那智能合约怎么测试呢？难不成我们自己要部署一个自己的 Ethereum 网络节点？  </p>
 <p>这篇文章，我先介绍一种最简单直接的测试方式。  </p>
@@ -277,7 +277,7 @@
 </blockquote>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Remix IDE 的基本使用和智能合约的测试就介绍到这里。使用它来测试是比较方便的，你也不用设置什么环境。但是它上面的操作并不是那么灵活，而且是在线工具。  </p>
 <p>我们能不能像写 JAVA, JavaScript Unit Test 那样来测试智能合约呢？下一篇文章我将介绍 Truffle 这个框架的使用。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -308,7 +308,7 @@
     <link href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/"/>
     <id>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</id>
     <published>2018-02-27T12:20:20.000Z</published>
-    <updated>2018-03-17T05:38:54.605Z</updated>
+    <updated>2018-03-17T05:41:16.303Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a> 的智能合约怎么实现。  </p>
 <h2 id="Solidity-简介"><a href="#Solidity-简介" class="headerlink" title="Solidity 简介"></a>Solidity 简介</h2><blockquote>
@@ -372,7 +372,7 @@
 <h2 id="安全方面的考量"><a href="#安全方面的考量" class="headerlink" title="安全方面的考量"></a>安全方面的考量</h2><p>因为合约一旦部署，就无法修改，而且很多的智能合约都和加密货币或者 token 挂钩。所以，如果一个智能合约的实现出现了安全漏洞，就有可能引起很大的问题。  </p>
 <p>Solidity <a href="https://solidity.readthedocs.io/en/develop/security-considerations.html" target="_blank" rel="external">文档</a> 里有专门的一章写了一些推荐做法，大家应该至少看 <strong>Use the Checks-Effects-Interactions Pattern</strong> 和 <strong>Include a Fail-Safe Mode</strong> 两点。  </p>
 <p>到这里为止，我们就把简化版 Secret Note 的智能合约写好了。下一篇我们来看看如何测试它。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -401,7 +401,7 @@
     <link href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/"/>
     <id>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</id>
     <published>2018-02-24T23:55:24.000Z</published>
-    <updated>2018-03-17T05:38:59.653Z</updated>
+    <updated>2018-03-17T05:41:11.166Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  </p>
 <p>前不久，我刚接触 Dapp 的开发，做了一个应用叫 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a>（可查看此<a href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/">介绍</a>）。接下来，我希望通过几篇文章，来分享一下想法，和开发过程。  </p>
@@ -422,7 +422,7 @@
 <p>Ethereum is a decentralized platform that runs smart contracts</p>
 </blockquote>
 <p>所以，要开发 Dapp，我们首先要学习怎么开发定义一个 Smart Contract。开发 Smart Contract，需要我们使用一种新的语言 <a href="https://solidity.readthedocs.io/en/develop/" target="_blank" rel="external">Solidity</a>，下一章我们就使用它来定义我们的合约。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
