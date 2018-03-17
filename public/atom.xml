@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-03-11T08:57:21.501Z</updated>
+  <updated>2018-03-17T05:38:37.774Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,11 +16,99 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Ethereum Dapp 开发 (5) - 页面开发集成</title>
+    <link href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/"/>
+    <id>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</id>
+    <published>2018-03-17T05:40:40.000Z</published>
+    <updated>2018-03-17T05:38:37.774Z</updated>
+    
+    <content type="html"><![CDATA[<p>本篇文章主要讲述 Dapp 前端页面，怎么和 Ethereum 帐号网络集成。不过，涉及的前端开发和代码，不会包括在覆盖范围内。因为前端开发框架太多（Vuejs, React, AngularJS，JQuery 等），使用什么都可以，所以本文仅解释合约相关的代码。本文代码以 Vuejs 代码为样例，也在 Github 上。  </p>
+<p>本教程，也就是简化版的 Secret Note 页面如下图。页面的最上方，显示的是当前连接的 Ethereum 网络，Gas 价格，和登录的 Ethereum 帐号地址。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/simple-secret-note-ui.png" alt="Simple Secret Note UI">  </p>
+<h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>想要在页面集成 Ethereum 帐号网络，并且对智能合约进行操作，我们需要借助前一章提及的 <a href="https://github.com/ethereum/web3.js" target="_blank" rel="external">web3.js</a>，它是 Ethereum 兼容的 JavaScript API 库。  </p>
+<p>在页面打开初始化的时候，我们需要初始化一个 Web3 的实例。这段代码放在 Vuejs 的 <code>created</code> 事件里。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">created() &#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> web3 !== <span class="string">'undefined'</span>) &#123;</div><div class="line">    <span class="comment">// Use MetaMask's provider</span></div><div class="line">    web3js = <span class="keyword">new</span> Web3(web3.currentProvider);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.showAlertMsg(<span class="string">'Please install &lt;a href="https://metamask.io/" target="__blank"&gt;MetaMask&lt;/a&gt; extension for your browser before using.'</span>, <span class="string">'warning'</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// Async</span></div><div class="line">  <span class="keyword">this</span>.detectNetwork();</div><div class="line">  <span class="keyword">this</span>.getGasPrice();</div><div class="line">  <span class="keyword">this</span>.initAccount();</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>当它检测到 <code>web3</code> 这个对象已经存在的时候，就根据当前 web3 的提供者（currentProvider），新建一个 Web3 的实例。只有当 Web3 实例初始化成功的情况下，我们才会继续检测当前的 Ethereum 网络，获取 Gas 价格，以及当前登录的帐号信息。  </p>
+<p>那谁会提供 web3 对象呢？就是代码里提醒安装的 MetaMask。<a href="https://metamask.io/" target="_blank" rel="external">MetaMask</a> 是一个浏览器插件，你可以使用它来生成新的 Ethereum 地址帐号，或者登录你现有的帐号。  </p>
+<h2 id="网络和帐号的初始化"><a href="#网络和帐号的初始化" class="headerlink" title="网络和帐号的初始化"></a>网络和帐号的初始化</h2><p>在 Ethereum 世界，Eth 地址，就是身份帐号。所以，Dapp 和 Ethereum 的集成，我们应该只需要用户使用它们特定的帐号登陆就可以了，完全没有必要再额外弄用户名密码什么的。集成和使用一个广泛接受的帐号管理工具，能让你的 Dapp 用户更放心。  </p>
+<h3 id="代码集成"><a href="#代码集成" class="headerlink" title="代码集成"></a>代码集成</h3><p>帐号初始化的代码，就在 <code>initAccount</code> 这个方法里面：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">initAccount() &#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">_getAccount</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">    web3js.eth.getAccounts(<span class="function"><span class="keyword">function</span>(<span class="params">err, result</span>) </span>&#123;</div><div class="line">      <span class="keyword">if</span> (err) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="keyword">if</span> (result.length === <span class="number">0</span> || result[<span class="number">0</span>] === that.account) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      that.account = result[<span class="number">0</span>];</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  setInterval(_getAccount.bind(<span class="keyword">this</span>), <span class="number">100</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里比较特别的是，设置了一个定时器，每隔 100ms 就会检测当前的帐号是什么，然后更新页面的帐号信息。</p>
+<p>如果你看了 <code>detectNetwork</code> 和 <code>getGasPrice</code> 里面的代码，可能会疑惑，为什么它们不需要设定定时器呢？因为，MetaMask 插件检测到你切换网络，并且当前页面曾经访问和使用过 web3 对象的话，它会自动刷新页面。  </p>
+<h3 id="MetaMask-配置"><a href="#MetaMask-配置" class="headerlink" title="MetaMask 配置"></a>MetaMask 配置</h3><h4 id="本地网络设置"><a href="#本地网络设置" class="headerlink" title="本地网络设置"></a>本地网络设置</h4><p>因为我们当前是使用本地的 Ganache 网络来测试，所以我们先要在 MetaMask 上面配置好网络和相应的测试帐号。  </p>
+<p>首先我们点击左上角的网络下拉选择器，然后点击 <code>Custom RPC</code>：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-menu.png" alt="MetaMask Custom RPC Menu">  </p>
+<p>然后我们在 Current RPC 下面输入 <code>http://localhost:7545</code>，点击 <code>Save</code>。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-setup.png" alt="MetaMask Custom RPC Setup">  </p>
+<h4 id="帐号设置"><a href="#帐号设置" class="headerlink" title="帐号设置"></a>帐号设置</h4><p>安装完 MetaMask 插件时，它默认会帮你创建了一个新帐号。但是，我们需要把 Ganache 自动生成的帐号导入 MetaMask，才能使用它们和我们部署的合约交互。  </p>
+<p>在 Ganache 首页的帐号列表下，我们选择第一个（合约创建帐号），点击最右边的钥匙图标，查看它的私钥，并且复制下来。（这里是测试帐号，所以暴露私钥没关系。但是如果是你的真实 Ethereum 帐号，就一定不能暴露了）  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account-show-key.png" alt="Ganache Account Show Key">  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account-private-key.png" alt="Ganache Account Private Key">  </p>
+<p>然后，我们点击 MetaMask 页面右上角的小人图标，会出来以下菜单：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-account.png" alt="Metamask Account">  </p>
+<p>最后，点击 <code>Import Account</code> 菜单，就进入以下输入私钥的页面。然后粘贴刚才复制的私钥，点击 <code>Import</code> 即可。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-account-import.png" alt="Metamask Account Import">  </p>
+<h2 id="智能合约的引入和交互"><a href="#智能合约的引入和交互" class="headerlink" title="智能合约的引入和交互"></a>智能合约的引入和交互</h2><p>既然 Ethereum 测试帐号和网络的集成已经准备好，我们就可以在代码引入智能合约，并与之交互了。  </p>
+<h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p>首先，我们要先在当前项目下安装和使用 <code>truffle-contract</code> 这个包。  </p>
+<blockquote>
+<p>npm install truffle-contract</p>
+</blockquote>
+<p>然后，在页面里 JavaScript 脚本的顶部，加入以下几行代码，引入上一章我们运行 <code>truffle compile</code> 后生成的合约 json。并且，配置好我们运行 <code>truffle migrate</code> 后部署在 Ganache 里面的合约地址。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Contract <span class="keyword">from</span> <span class="string">'truffle-contract'</span>;</div><div class="line"><span class="keyword">import</span> SecretNoteDef <span class="keyword">from</span> <span class="string">'../build/contracts/SecretNote.json'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> SecretNote = Contract(SecretNoteDef);</div><div class="line"><span class="keyword">const</span> CONTRACT_ADDRESS = <span class="string">'0x345ca3e014aaf5dca488057592ee47305d9b3e10'</span>;</div></pre></td></tr></table></figure>
+<p>最后，在 Vue 组件的 <code>created</code> 事件里，等 web3js 初始化成功后，设置合约的 Ethereum 网络地址。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SecretNote.setProvider(web3.currentProvider);</div></pre></td></tr></table></figure>
+<h3 id="交互"><a href="#交互" class="headerlink" title="交互"></a>交互</h3><p>和智能合约的交互分两种：  </p>
+<ol>
+<li><p>Transaction  </p>
+<p>Transaction 类型的交互是会永久改变 Ethereum 网络的状态，也就是涉及账户之间的转账，或者智能合约的数据的改变。这种交互是需要花费 Gas 的，而且交易需要确认，并不能马上返回。所以，这些交互需要绑定在某一个账户下来执行。SecretNote <code>setNote</code> 方法的调用就属于这种类型。  </p>
+</li>
+<li><p>Call  </p>
+<p>Call 类型的交互只是从区块链中读取数据。所以，它是不需要消耗任何 Gas 的，而且也能马上获取返回值。SecretNote <code>getNote</code> 方法的调用则属于此类型。  </p>
+</li>
+</ol>
+<h4 id="Transaction-调用"><a href="#Transaction-调用" class="headerlink" title="Transaction 调用"></a>Transaction 调用</h4><ol>
+<li>调用 <code>SecretNote.at()</code> 方法从特定地址获取合约实例。  </li>
+<li>在获取的实例对象上，像调用普通 JavaScript 方法一样使用。特别之处是要指定调用的帐号地址。  </li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">saveNote() &#123;</div><div class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  SecretNote.at(CONTRACT_ADDRESS)</div><div class="line">    .then((instance) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> instance.setNote(that.noteForm.noteName,</div><div class="line">        that.noteForm.noteContent, &#123; <span class="keyword">from</span>: that.account &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>执行成功后，会弹出如下页面：  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-trx-request.png" alt="Metamask Trx Request">  </p>
+<p>点击 <code>Submit</code> 后，交易记录会出现在账户下并等待区块链的确认。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-trx-confirm.png" alt="Metamask Trx Confirm">  </p>
+<h4 id="Call-调用"><a href="#Call-调用" class="headerlink" title="Call 调用"></a>Call 调用</h4><p>SecretNote <code>getNote</code> 方法调用其实和 <code>setNote</code> 差不多，只是不需要指定帐号而已。  </p>
+<p>有一点要注意的是，这个方法定义的返回值类型是 <code>bytes32</code>，所以要使用 <code>toAscii</code> 方法把内容转换后才使用。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">loadNote() &#123;</div><div class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  SecretNote.at(CONTRACT_ADDRESS)</div><div class="line">    .then((instance) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> instance.getNote(that.noteForm.noteName);</div><div class="line">    &#125;)</div><div class="line">    .then((noteContent) =&gt; &#123;</div><div class="line">      <span class="keyword">if</span> (!noteContent) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line">      that.noteForm.noteContent = web3js.toAscii(noteContent);</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>由于我们现在是在本地 Ganache 测试网络上集成和调试的，而 Ganache 每次重启后，数据都被重置，在 Solidity 合约代码还不稳定，需要经常改的时候，这是一个好事。但是，如果合约代码已经稳定，我们要调试前端代码，就不需要合约经常变了。下一章我们再看看如何把合约部署到 Ethereum 的一些公共的测试网络吧。  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本篇文章主要讲述 Dapp 前端页面，怎么和 Ethereum 帐号网络集成。不过，涉及的前端开发和代码，不会包括在覆盖范围内。因为前端开发框架太多（Vuejs, React, AngularJS，JQuery 等），使用什么都可以，所以本文仅解释合约相关的代码。本文代码以
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
+    
+      <category term="Ethereum" scheme="http://www.thinkingincrowd.me/tags/Ethereum/"/>
+    
+      <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
+    
+      <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
+    
+      <category term="MetaMask" scheme="http://www.thinkingincrowd.me/tags/MetaMask/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</title>
     <link href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/"/>
     <id>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</id>
     <published>2018-03-11T08:44:16.000Z</published>
-    <updated>2018-03-11T08:57:21.501Z</updated>
+    <updated>2018-03-17T05:38:45.085Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Truffle-是什么？"><a href="#Truffle-是什么？" class="headerlink" title="Truffle 是什么？"></a>Truffle 是什么？</h2><p>上一篇文章我们已经介绍了如何使用 Remix 来初步测试智能合约。虽然它使用起来很方便，但是还是有一些不适合拿来当测试工具的地方。我们来尝试用另一个叫 <a href="http://truffleframework.com/" target="_blank" rel="external">Truffle</a> 的工具来测试。  </p>
 <p>Truffle 是什么呢？它的官方介绍是这样的：  </p>
@@ -103,7 +191,7 @@
 <p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account.png" alt="Ganache Account">  </p>
 <p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-trx.png" alt="Ganache Transactions">  </p>
 <p>到这里，你的智能合约已经在本地的 Ethereum blockchain 节点部署完成了。部署到测试环境或者正式 Ethereum 公链的方法，我们后面再介绍。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -134,7 +222,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/"/>
     <id>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</id>
     <published>2018-03-05T04:20:20.000Z</published>
-    <updated>2018-03-11T08:57:14.858Z</updated>
+    <updated>2018-03-17T05:38:49.744Z</updated>
     
     <content type="html"><![CDATA[<p>我们在前面一篇说到，智能合约发布后就没法修改了。所以，在真正发布前，我们必须进行详细的测试。那智能合约怎么测试呢？难不成我们自己要部署一个自己的 Ethereum 网络节点？  </p>
 <p>这篇文章，我先介绍一种最简单直接的测试方式。  </p>
@@ -189,7 +277,7 @@
 </blockquote>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Remix IDE 的基本使用和智能合约的测试就介绍到这里。使用它来测试是比较方便的，你也不用设置什么环境。但是它上面的操作并不是那么灵活，而且是在线工具。  </p>
 <p>我们能不能像写 JAVA, JavaScript Unit Test 那样来测试智能合约呢？下一篇文章我将介绍 Truffle 这个框架的使用。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -220,7 +308,7 @@
     <link href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/"/>
     <id>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</id>
     <published>2018-02-27T12:20:20.000Z</published>
-    <updated>2018-03-11T08:57:25.902Z</updated>
+    <updated>2018-03-17T05:38:54.605Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a> 的智能合约怎么实现。  </p>
 <h2 id="Solidity-简介"><a href="#Solidity-简介" class="headerlink" title="Solidity 简介"></a>Solidity 简介</h2><blockquote>
@@ -284,7 +372,7 @@
 <h2 id="安全方面的考量"><a href="#安全方面的考量" class="headerlink" title="安全方面的考量"></a>安全方面的考量</h2><p>因为合约一旦部署，就无法修改，而且很多的智能合约都和加密货币或者 token 挂钩。所以，如果一个智能合约的实现出现了安全漏洞，就有可能引起很大的问题。  </p>
 <p>Solidity <a href="https://solidity.readthedocs.io/en/develop/security-considerations.html" target="_blank" rel="external">文档</a> 里有专门的一章写了一些推荐做法，大家应该至少看 <strong>Use the Checks-Effects-Interactions Pattern</strong> 和 <strong>Include a Fail-Safe Mode</strong> 两点。  </p>
 <p>到这里为止，我们就把简化版 Secret Note 的智能合约写好了。下一篇我们来看看如何测试它。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -313,7 +401,7 @@
     <link href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/"/>
     <id>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</id>
     <published>2018-02-24T23:55:24.000Z</published>
-    <updated>2018-03-11T08:57:30.591Z</updated>
+    <updated>2018-03-17T05:38:59.653Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum Dapp (decentralized application) 是在区块链 Ethereum 公链上的分布式应用。  </p>
 <p>前不久，我刚接触 Dapp 的开发，做了一个应用叫 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a>（可查看此<a href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/">介绍</a>）。接下来，我希望通过几篇文章，来分享一下想法，和开发过程。  </p>
@@ -334,7 +422,7 @@
 <p>Ethereum is a decentralized platform that runs smart contracts</p>
 </blockquote>
 <p>所以，要开发 Dapp，我们首先要学习怎么开发定义一个 Smart Contract。开发 Smart Contract，需要我们使用一种新的语言 <a href="https://solidity.readthedocs.io/en/develop/" target="_blank" rel="external">Solidity</a>，下一章我们就使用它来定义我们的合约。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a>  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
     
     <summary type="html">
@@ -1196,49 +1284,6 @@
       <category term="Conflict" scheme="http://www.thinkingincrowd.me/tags/Conflict/"/>
     
       <category term="Criticism" scheme="http://www.thinkingincrowd.me/tags/Criticism/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>理所当然，在亲密关系里最要不得</title>
-    <link href="http://www.thinkingincrowd.me/2017/07/01/taking-it-for-granted-is-the-last-thing-you-want-in-relationship/"/>
-    <id>http://www.thinkingincrowd.me/2017/07/01/taking-it-for-granted-is-the-last-thing-you-want-in-relationship/</id>
-    <published>2017-07-01T13:34:12.000Z</published>
-    <updated>2017-11-19T04:47:46.579Z</updated>
-    
-    <content type="html"><![CDATA[<p>一眨眼，来北京差不多一年了。自己也不知不觉到了一个整数的节点了。  </p>
-<p>到了这个节点，才开始对亲密关系有比较正确的认识，和主动去学习，说实在挺替自己和家人伤心的。不是说我和家人关系不好，而是，我只是简单的认为，只要距离足够近，时间足够多，没什么争吵，就可以了。不是总说，生活是平淡的嘛。  </p>
-<p>最近断断续续在加班后，用 Audible 听完「The 5 love languages」这本书。书里面说到一个观点：<strong>每个人都有不同的表达和感受爱的方式。如果我们表达的不当，可能并没有认识到对方的需求和表达的爱意，并产生误解。</strong>  </p>
-<p>书里列举了这几种爱的语言：  </p>
-<ol>
-<li>肯定的言语  </li>
-<li>有质量的陪伴  </li>
-<li>收获礼物  </li>
-<li>服务行为  </li>
-<li>肢体的接触  </li>
-</ol>
-<p>我觉得书里用语言来比喻挺合适的，尤其是当两个人的爱的表达方式是同一类型的时候，各自的要求也尽相同，就像不同的方言一样。每个人可能都熟悉自己的方言，而忽视了对方的表达方式。这个时候，<strong>我们会认为对方做的一些事情是那么的理所当然，也并不认为那是对方像你表达爱意的方式。我们把自己的要求当作是理所当然的，用自己的方言来观察对方，认为对方没有做到自己熟悉的爱的表达方式，而误解对方不爱自己了。</strong>  </p>
-<p>回头看自己，我对爱的主要表达方式，应该是第 4 种。在我关爱的人需要帮助的时候，我会尽最大的努力来做任何事情。老婆生病了，在一旁照顾，买水，买吃的，各种跑腿。她怀孕了，我马上从香港回珠海，每天 6 点起来买菜做饭等。这些事情，一般都会有一个触发点，可以让我观察到她有需要帮助的时候，我可以不顾一切付出。但是，这种表达方式，意味着在没有实体的事情发生，我观察不到对方有什么实际需要帮助的地方时，我就基本不会做什么。就像最开始我说的，反正生活在一起，就可以了。  </p>
-<p>但是，我老婆最主要的感受爱的方式，是第 2 种。我以前不懂得，「有质量的」陪伴中「有质量的」意思不是我一直认为的只要距离足够近，时间足够多就可以了。以前和她一起坐公司班车上班的时候，她会偶尔对我说，外面的海很蓝，花很漂亮。但是面对这些要约，我只是「嗯」一句，眼睛还是盯着自己的电脑在写代码。所以，你可以想想她心中是慢慢积累了多少不满。她的抱怨，其实从大学谈恋爱时我总是在图书馆就存在了。可是，我却会认为这是她不够独立。  </p>
-<p>我在意的对方的爱的表达，可能是第 1 种吧。一点点对我的肯定，我就能安心下来。一些猜疑，就会有很大的打击。所以，我之前并没有认识到她的需要，自己的表达方式又不同，当她表达失望的情绪时，我其实会感觉非常委屈和失落。觉得自己没做错什么，却没有被理解。  </p>
-<p>当各自用自己理所当然的方式来要求对方，没有接纳对方的真实想法和需求时，是很痛苦的。而这又往往会造成恶性循环。如果没有人打破这个循环，最后的结果可能就很糟糕了。我来了北京后，一次的吵架让机缘巧合的接触到一些关于亲密关系的知乎 Live 和课程，也多了些时间思考，感觉自己才有了真正的改变。</p>
-<p><strong>当我真正接纳了自己的想法和行为，也认识到对方的需要和自己的是不一致的时候，就没有那么委屈和痛苦。认识到了对方的不同，没有了任何的理所当然，自己的语言，行为和心态就有很大的不同。</strong>  </p>
-<p>今年的生日，迈出了我最大的一步。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一眨眼，来北京差不多一年了。自己也不知不觉到了一个整数的节点了。  &lt;/p&gt;
-&lt;p&gt;到了这个节点，才开始对亲密关系有比较正确的认识，和主动去学习，说实在挺替自己和家人伤心的。不是说我和家人关系不好，而是，我只是简单的认为，只要距离足够近，时间足够多，没什么争吵，就可以了。不
-    
-    </summary>
-    
-      <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
-    
-    
-      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
-    
-      <category term="Love Language" scheme="http://www.thinkingincrowd.me/tags/Love-Language/"/>
     
   </entry>
   

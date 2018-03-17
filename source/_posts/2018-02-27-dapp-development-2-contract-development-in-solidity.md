@@ -225,8 +225,10 @@ Solidity [文档][] 里有专门的一章写了一些推荐做法，大家应该
 [Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约]: http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/  
 [Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）]: http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/  
 [Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）]: http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/  
+[Ethereum Dapp 开发 (5) - 页面开发集成]: http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration.md/  
 
 [Ethereum Dapp 开发 (1) - 什么应放在区块链上][]  
 [Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约][]  
 [Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）][]  
 [Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）][]  
+[Ethereum Dapp 开发 (5) - 页面开发集成][]  
