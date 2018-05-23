@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-05-09T12:49:40.614Z</updated>
+  <updated>2018-05-23T13:17:13.492Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -16,15 +16,87 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>「PRESS.one 的投资逻辑」合理吗？</title>
+    <link href="http://www.thinkingincrowd.me/2018/05/23/is-press-one-investment-logic-reasonable/"/>
+    <id>http://www.thinkingincrowd.me/2018/05/23/is-press-one-investment-logic-reasonable/</id>
+    <published>2018-05-23T13:16:25.000Z</published>
+    <updated>2018-05-23T13:17:13.492Z</updated>
+    
+    <content type="html"><![CDATA[<p>昨天，岳琦和 PRESS.one 拓荒者社群在我的老东家「一块听听」做了一个直播：<a href="https://live.tinfinite.com/live-detail.html?liveshowId=5aff18c75eca460001caf10f" target="_blank" rel="external">「PRESS.one的投资逻辑」</a>。整个直播听下来，比起很多盲目“信仰投资”的人来说，他对 PRESS.one 的分析和投资看法，还是相当全面的。</p>
+<p>总的来说，岳琦的看法是，投资一个区块链项目，靠单纯的信仰是不够的，也是不负责任的。因为很多项目的 ICO，白皮书来来去去都是那些套路：先说现在的行业，或者当前某区块链项目有什么问题，然后说我们可以解决这个问题（有些项目甚至都没说怎么解决），或者一些项目就对标当前某某巨头，说做区块链的xx（且不说这个领域有没有必要用区块链），最后就说要发币募集资金，巴拉巴拉一大堆。所以，在鱼龙混杂的情况下，如何分析项目，合理投资很重要，尤其是现在已经不是随便发币就鸡犬升天的时候了。  </p>
+<p>不过，就他里面说到的一些观点，我想补充一些看法。  </p>
+<h2 id="利益声明"><a href="#利益声明" class="headerlink" title="利益声明"></a>利益声明</h2><ol>
+<li>从珠海到北京跟李笑来老师做教育领域产品一年半。由于家庭原因，最后还是回珠海。  </li>
+<li>前 一块听听 核心后端开发人员  </li>
+<li>前 Candy.one 核心后端开发人员  </li>
+<li>自己花钱购买了 500 个 PRS  </li>
+</ol>
+<h2 id="价值的分析比较"><a href="#价值的分析比较" class="headerlink" title="价值的分析比较"></a>价值的分析比较</h2><p>在一个成熟的投资市场，比如股票市场，通过比较同一个行业不同公司的市值，营收等数据，就可以相对合理地知道投资哪个公司比较好。但是，当前投资区块链项目，很难按这种方式运作。它更像是对创业公司的天使轮投资。所以，我们更多的是分析它要解决的问题，发展前景，团队成员的能力和人品。  </p>
+<p>对当前很多区块链项目来说，影响它币价的，有两个重大的因素：  </p>
+<ol>
+<li><p>先发优势  </p>
+<p> 一个区块链项目，只要它宣称是第一个为了解决某某问题的，支持人数会相对更多。  </p>
+</li>
+<li><p>参与人数  </p>
+<p> 由于现在很多参与区块链投资的人，都是为信仰充值，所以，参与人数多的项目，信徒心理明显，价格更有支撑。现在很多新项目都用各种营销拉新手段来送币，希望用户基数更大。  </p>
+</li>
+</ol>
+<p>关于 PRESS.one，岳琦觉得它在 .one 生态里面，作为笑来系的一部分，未来的用户量，和引流增长方面会有很大优势，价值也会更高。用户流量和产品价值的关系，并不能说不合理，因为它们在当前互联网行业也是存在的。在生态内互相引流，也是常事。但是，当前区块链的拉新，估计比互联网拉新的用户质量更差，很多用户都仅仅是羊毛党而已，根本没有什么价值。  </p>
+<p>最重要的是，且不说当前 .one 生态有多少用户量，日后 PRESS.one 能收获多少导流，倒过来的用户是你的产品目标用户吗？比如，Big.one 的用户，无论是投资还是投机也好，主要是为了交易，它能为 PRESS.one 带来多少有价值的用户呢？不同的产品，用户属性和所属的圈层是不同的。正如热衷购买和刷知识付费类商品的用户，刷快手的应该较少。  </p>
+<p>那对 PRESS.one 来说，真正有价值的用户是哪些，有多少呢？我们再来分析它的产品定位。  </p>
+<h2 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h2><p>岳琦在直播里把数字内容行业的一些区块链项目做了比较。总的来说，当前很多的项目都是做内容生产和奖励，或者社群，比如知名的 Steemit，币乎等。我和岳琦观点比较一致，在之前的<a href="http://www.thinkingincrowd.me/2018/05/08/is-blockchain-valuable/">「区块链到底有没有价值」</a>里我也写到：  </p>
+<blockquote>
+<p>虚拟货品（币，数字商品，游戏道具等）我觉得是可以通过区块链的物权和钱的同时转移（比如通过智能合约）来实现的，也是合理的。</p>
+</blockquote>
+<p>PRESS.one 的官网显示，它将来真正要做的是：  </p>
+<blockquote>
+<p>基于区块链的<strong>数字内容交易及分发网络</strong>  </p>
+<p>利用交易历史的链上存证、可灵活自定义的轻合约、分布式网络、数字货币等技术推动交易模式的变革，<strong>重建数字内容的生产/授权/分销/消费方式</strong>。  </p>
+<p>发掘并借助新型的信任关系/组织形式/驱动模式，重塑内容生产者/消费者的角色及关系。  </p>
+<p>去中心化的开放协议，允许任何人基于我们的数据和基础架构来创建应用及内容。透明，高效，平等。  </p>
+</blockquote>
+<p>PRESS.one 有意识的区别定位，要做更底层的协议，专注交易分发和改变生态关系。理论上来说，无论是哪个区块链的内容生产平台，甚至是当前中心化的平台（如公众号）上的写作者，都可以通过 PRESS.one 把数字内容签名确权。  </p>
+<p>岳琦认为这是 PRESS.one 有优势和价值的地方。但是，是不是和其它产品不同，做更底层的东西就肯定更有价值呢？如果 PRESS.one 自己不生产内容，只是<strong>重建交易/分发/授权/分销/消费内容的方式</strong>，它的角色和竞争力在什么地方，产品护城河又在哪里呢？  </p>
+<h3 id="数字内容电商渠道"><a href="#数字内容电商渠道" class="headerlink" title="数字内容电商渠道"></a>数字内容电商渠道</h3><p>假如我们把数字内容对标为商品，内容生产方就是商家。那 PRESS.one 是不是就类似是淘宝的电商平台呢？根据 PRESS.one 官网最新的更新日志，他们正在和 MIXIN 集成经济系统。把 MIXIN 比作支付宝也是李笑来老师在他朋友圈说过的事情，所以我觉得把 PRESS.one 比作淘宝也是合理的。  </p>
+<p>回看电商的发展，从杂乱的淘宝大集市，然后细分为各种垂直领域，或主打不同的消费体验（如更好的服务，更高质量的商品，更便宜且社交化的消费场景等）。PRESS.one 所在的领域可以说很有想象力，但是也同样面临被抄袭，切分细领域的困境。  </p>
+<p>实体经济的商家，依赖电商是依赖它们的 IT 实力，流量分发，系统服务，物流管控等能力。但是，来到数字内容世界，情况又如何呢？  </p>
+<p>对于个人内容生产者来说，它们无法直接在 PRESS.one 上生产内容，并且它们需要流量。所以，多数人来说，肯定需要借助内容生产平台，而并不是 PRESS.one 的直接用户。  </p>
+<p>PRESS.one 的直接用户，应该是内容平台。但是，大的内容平台本身 IT 能力不一定比 PRESS.one 差，自己又掌握内容本身和流量。如果说是 PRESS.one 设计的经济模型和运作模式好，它们做内容的很可能就会直接抄袭。而 MIXIN 作为公链，也不是说只有 PRESS.one 能接入。再说，互联网的孤岛效应越发严重，大内容平台有更大动力自己做。岳琦认为 PRESS.one 有可能打破信息孤岛的局面。我觉得这个就有点太乐观了，不太实际。PRESS.one 的定位，如果不是内容生产平台，而只是交易分发网络的话，我觉得是没法改变这个格局的。  </p>
+<p>内容平台兴盛与否，和有多少内容生产者在上面有关系。我在一块听听做的那段时间里，深刻体会到多数主讲人都没什么忠诚度可言。哪个平台和渠道有流量，有推广，有补贴，他们就去哪家。只要哪个平台开更优惠的条件，给更好的服务，它们可能一转身就走了。小的内容生产应用/平台要和大平台竞争会很困难。  </p>
+<p>所以，对于一个不生产内容，纯平台或者渠道来说，我觉得最重要的能力是运营合作和服务能力。PRESS.one 确实要想好如何和大内容平台合作，避免竞争。长期来看，我觉得 PRESS.one 自己可能也需要搭建内容平台。  </p>
+<h3 id="辅助生态"><a href="#辅助生态" class="headerlink" title="辅助生态"></a>辅助生态</h3><p>MIXIN 平台，承担着 PRESS.one 的支付系统，帮助用户能方便消费和兑现 PRS 币，对 PRESS.one 的发展很重要。正如移动支付，小额支付的流行，也为知识内容付费起了推波助澜的作用。所以，岳琦也认为 MIXIN 是 PRESS.one 价值推进的重要因素。  </p>
+<p>我虽然赞同，但觉得风险也很大。Token 和电子货币在国内的使用，与法币的兑换，目前并不被允许。政策的影响相当大。即便政策开放支持，当前的移动支付巨头，按他们现在的技术积累，要上区块链和支持电子货币的支付也是很容易的。当前中心化的内容生产平台，发币和区块链+ 更容易些，还是让现在的内容生产和消费者迁移去新生态容易些呢？这个问题实在不好说，机会与风险同在。头条，抖音现在也把其它巨头打的很痛。  </p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>PRESS.one 是否值得投资，只有自己经过思考才能决定。整篇文章下来，似乎我都在列出它可能会遇到的困难和问题。但是，老实说，我对这个项目还是持正面乐观的态度的。看到困难是比较容易的，要提出有效的建议，执行并解决问题才困难。欢迎大家也给我的文章提出更多的想法和建议，一起见证和协助 PRESS.one 的成长。  </p>
+<p><em>本文作为第一篇自己写 PRESS.one 的文章，也是我用来放在各种平台认证接入的文章，下面就是我的认证接入凭证。有兴趣的，你也可以去 PRESS.one 了解一下。</em>  </p>
+<p><a href="https://press.one/p/address/v?s=38c0f8314a5e5c519eda7c73167e3a99eee7eaf5550a86becd81ddc3517438962764b64a60f2f9dd5373244b3ebb2f6c9f6ab6b09059ce7b6f3b3a2091536b480&amp;h=8fab93570c1f39bd49c91e451e56f4c7fe6689c3fb9db062d72ee51cfbd320b1&amp;a=b294d95ad0b3d76c0fdd60dcc576a8448b0e3f06&amp;f=P1&amp;v=2" target="_blank" rel="external">https://press.one/p/address/v?s=38c0f8314a5e5c519eda7c73167e3a99eee7eaf5550a86becd81ddc3517438962764b64a60f2f9dd5373244b3ebb2f6c9f6ab6b09059ce7b6f3b3a2091536b480&amp;h=8fab93570c1f39bd49c91e451e56f4c7fe6689c3fb9db062d72ee51cfbd320b1&amp;a=b294d95ad0b3d76c0fdd60dcc576a8448b0e3f06&amp;f=P1&amp;v=2</a></p>
+<p>我的 BIG.one PRS 代币地址是 0x394c74071368bd692c495c292b216e65b383480f，欢迎大户打赏。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;昨天，岳琦和 PRESS.one 拓荒者社群在我的老东家「一块听听」做了一个直播：&lt;a href=&quot;https://live.tinfinite.com/live-detail.html?liveshowId=5aff18c75eca460001caf10f&quot; target
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
+    
+      <category term="PRESS.one" scheme="http://www.thinkingincrowd.me/tags/PRESS-one/"/>
+    
+  </entry>
+  
+  <entry>
     <title>习惯了别人的好是很危险的</title>
     <link href="http://www.thinkingincrowd.me/2018/05/09/addictive-to-others-goodness-is-dangerous/"/>
     <id>http://www.thinkingincrowd.me/2018/05/09/addictive-to-others-goodness-is-dangerous/</id>
     <published>2018-05-09T12:25:12.000Z</published>
-    <updated>2018-05-09T12:49:40.614Z</updated>
+    <updated>2018-05-09T12:53:07.273Z</updated>
     
     <content type="html"><![CDATA[<p>不知道大家有没有听过这么一个小故事，或者是谚语：  </p>
 <p>一个乞丐，每天都会有固定的一位善心人士给予 Ta 一元钱的施舍。但是，某一天，或许是因为那位善心人士没有了散钱，或者有急事在身，匆匆路过而没有给予这个乞丐施舍。结果，那个乞丐起来破口大骂，说：“你怎么今天不给钱了？” 结果就是，这位善心人士再也不给予 Ta 更多的施舍。  </p>
-<p>在看社会心理学的书时，还有另一个小故事。  </p>
+<p>我在看社会心理学的书时，还发现另一个小故事。  </p>
 <p>一群小朋友，喜欢在一个老人家外的空地玩耍。但是这个老人家喜欢安静，怕吵，他就出去和小朋友说：“你们的快乐和笑声真的给我带来很美好的时光。我人老了，没收入，所以只能打赏你们 1 元。不过现在我想休息一下，你们去别的地方玩好吗？” 小朋友们本来就很开心，没想到还能收到钱，说了声谢谢就离开了。往后，老人家都会打赏。但是，渐渐的减少了金额。后来某一天，老人家只给了 1 毛钱，那些小朋友生气地说：“我们给你带来那么多欢乐，你才给 1 毛钱那么少。我们以后再也不来这里玩了！” 所以，最后，老人家收获到了他想要的安静。  </p>
 <p>通过这两个故事，我想说什么呢？依赖会：  </p>
 <h2 id="丧失独立能力和感恩"><a href="#丧失独立能力和感恩" class="headerlink" title="丧失独立能力和感恩"></a>丧失独立能力和感恩</h2><p>独立，是成年人很重要的能力。依赖，就像是还在襁褓中的婴儿对母亲的“剥削”。婴儿子所以如此，是因为 Ta 能力不足。可是如果成年后还不能独立，成为了巨婴，问题是很严重的。没有一个人有义务一辈子对你好，即便 Ta 是你的父母，子女，或者伴侣，更别说素不相识的善心人士了。当然，有一些人无法长大，并不是他们自己的问题，反而是父母或者是伴侣，使各种手段不让他们离开。  </p>
@@ -1252,74 +1324,6 @@
       <category term="API" scheme="http://www.thinkingincrowd.me/tags/API/"/>
     
       <category term="Swagger" scheme="http://www.thinkingincrowd.me/tags/Swagger/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Node.js 微信后台搭建系列 - 微信集成</title>
-    <link href="http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/"/>
-    <id>http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/</id>
-    <published>2017-07-30T15:30:57.000Z</published>
-    <updated>2018-04-10T08:46:23.583Z</updated>
-    
-    <content type="html"><![CDATA[<p>终于基本到了最后的一步了。微信集成主要包含三个部分：  </p>
-<ol>
-<li>接入验证，让微信确认你的服务器，就是你公众号的拥有人。  </li>
-<li>接收微信给你服务器的消息。  </li>
-<li>发送消息给微信服务器，让它转发给你公众号的关注者。  </li>
-</ol>
-<p>公众号的基本开发，微信的官方文档「<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1472017492_58YV5" target="_blank" rel="external">入门指南</a>」其实已经基本包含所有必须要知道的知识。但是，它的文档是以 Python 为例子，还有一些比较看起来吓死人的流程图，技术细节，和一些个人号没法开通的功能介绍。所以，这篇教程是侧重于个人公众号如何用 JavaScript 来开发实现。  </p>
-<h2 id="接入验证"><a href="#接入验证" class="headerlink" title="接入验证"></a>接入验证</h2><p>怎么<a href="https://mp.weixin.qq.com/cgi-bin/loginpage?t=wxm2-login&amp;lang=zh_CN" target="_blank" rel="external">申请微信个人公众号</a>，我就不说了。个人只能申请订阅号。  </p>
-<p>申请成功后，登录，点击左边菜单栏下面的「开发」-&gt;「基本配置」，可以看到如下页面：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/11-wechat-setup.png" alt="Wechat Setup"></p>
-<p>先把 <code>开发者ID(AppID)</code> 和 <code>开发者密码(AppSecret)</code> 分别复制出来，保存在一边。<code>令牌(Token)</code> 是自己定的不让别人知道的字符串。下面我们来看看系统里如何配置，接入微信。  </p>
-<p>打开命令行，进入你的项目目录，然后输入以下命令：  </p>
-<p><code>yo evergrow:wechat</code>  </p>
-<p>它会提醒你是否要覆盖 <code>package.json</code> 文件，你可以输入 <code>d</code>，按 <code>Enter</code> 看有什么变动。其实只是新加一些必要的包，所以你输入 <code>Y</code>，然后覆盖就可以了。正常的话，操作后会如下图那样，新生成几个微信相关的文件。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/11-wechat-module-generation.png" alt="Wechat Module Generation"></p>
-<p>打开 <code>config/wechat/sample.js</code> 文件，内容如下：  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  appToken: <span class="string">'evergrow'</span>,</div><div class="line">  appId: <span class="string">''</span>,</div><div class="line">  appSecret: <span class="string">''</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>你要做的是，复制 <code>sample.js</code> 文件，重命名为 <code>production.js</code>，然后把前面保存的 <code>开发者ID(AppID)</code> 和 <code>开发者密码(AppSecret)</code> 分别赋值给 <code>appId</code> 和 <code>appSecret</code>。<code>appToken</code> 不用理会。<strong>appToken 和 appSecret 可不要让别人知道！</strong>以我的为例：  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  appToken: <span class="string">'mytoken'</span>, <span class="comment">// 自己定义，</span></div><div class="line">  appId: <span class="string">'wxe5284a1d0aa6b9fb'</span>,</div><div class="line">  appSecret: <span class="string">'asldgjoieadgkladlj'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>设置完了以后，你就可以部署到服务器上面了。  </p>
-<p>确定你的服务器已经启动后，你就可以在微信「启用」你的服务器了。服务器的 URL 就填你的服务器地址(或 IP)，加上我们微信集成模块的路由 <code>/wechat</code>，比如： <code>http://www.mydomain.com/wechat/</code>。  </p>
-<h2 id="接收消息"><a href="#接收消息" class="headerlink" title="接收消息"></a>接收消息</h2><p>启用后大概要过三五分钟可能才会生效。然后，如果你发一段文字给你的公众号，你的服务器会打印出接受到的消息内容。  </p>
-<h3 id="文字消息"><a href="#文字消息" class="headerlink" title="文字消息"></a>文字消息</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  ToUserName: <span class="string">'gh_1bfda0ee00eb'</span>,</div><div class="line">  FromUserName: <span class="string">'oZQ1dwRfxWyDpRjBNBS5DcltOAU4'</span>, <span class="comment">// 发消息给你的用户的 openid</span></div><div class="line">  CreateTime: <span class="string">'1501422823'</span>,</div><div class="line">  MsgType: <span class="string">'text'</span>,</div><div class="line">  Content: <span class="string">'Hello'</span>,</div><div class="line">  MsgId: <span class="string">'6448561922693293780'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="关注公众号的消息"><a href="#关注公众号的消息" class="headerlink" title="关注公众号的消息"></a>关注公众号的消息</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  ToUserName: <span class="string">'gh_1bfda0ee00eb'</span>,</div><div class="line">  FromUserName: <span class="string">'oZQ1dwRfxWyDpRjBNBS5DcltOAU4'</span>, <span class="comment">// 关注者的 openid</span></div><div class="line">  CreateTime: <span class="string">'1501423109'</span>,</div><div class="line">  MsgType: <span class="string">'event'</span>,</div><div class="line">  Event: <span class="string">'subscribe'</span>,</div><div class="line">  EventKey: <span class="string">''</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="图片消息"><a href="#图片消息" class="headerlink" title="图片消息"></a>图片消息</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  ToUserName: <span class="string">'gh_1bfda0ee00eb'</span>,</div><div class="line">  FromUserName: <span class="string">'oZQ1dwRfxWyDpRjBNBS5DcltOAU4'</span>,</div><div class="line">  CreateTime: <span class="string">'1501423196'</span>,</div><div class="line">  MsgType: <span class="string">'image'</span>,</div><div class="line">  PicUrl: <span class="string">'http://mmbiz.qpic.cn/mmbiz_jpg/zQibzicfvUiciaoqcE4kibLSnIvGs2SI0g5zHSnUQFeXvom1SHLEAHK8csInU7jXodQaG1ScxibfwkSG7MEK09xyukTQ/0'</span>,</div><div class="line">  MsgId: <span class="string">'6448563524716095218'</span>,</div><div class="line">  MediaId: <span class="string">'t-4AThjfL-GK2vbKh3XRX9go-DE-Z3hvHNFwA9Bb2Ep_xUK5r13eYlJqsD8FLqqw'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h2><p>知道了上面几大类型的消息格式，我们就可以做一些东西了。  </p>
-<p>微信消息的接收和处理，都在 <code>wechat/wechat-controller.js</code> 里面的 <code>wechatMsg</code> 方法里处理就可以了。它默认生成的代码是这样的：  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports.wechatMsg = WechatManager.getWechatRouter(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="comment">// 微信输入信息都在req.weixin上</span></div><div class="line">  <span class="keyword">var</span> message = req.weixin</div><div class="line">  <span class="built_in">console</span>.log(message);</div><div class="line"></div><div class="line">  res.reply(<span class="string">''</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h3 id="关注自动回复"><a href="#关注自动回复" class="headerlink" title="关注自动回复"></a>关注自动回复</h3><p>如果要在用户关注后自动回复，我们可以在上面的方法里加如下的代码：  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">  <span class="built_in">module</span>.exports.wechatMsg = WechatManager.getWechatRouter(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">    <span class="comment">// 微信输入信息都在req.weixin上</span></div><div class="line">    <span class="keyword">var</span> message = req.weixin</div><div class="line">    <span class="built_in">console</span>.log(message);</div><div class="line"></div><div class="line">    <span class="comment">// 自动回复处理</span></div><div class="line">    <span class="keyword">if</span> (message.MsgType === <span class="string">'event'</span> &amp;&amp; message.Event === <span class="string">'subscribe'</span>) &#123;</div><div class="line">      <span class="keyword">return</span> res.reply(<span class="string">`非常感谢你的关注。点击菜单栏的 “历史文章” 可查看我精心分类的文章列表。</span></div><div class="line"></div><div class="line">儿子，丈夫，父亲，程序员。每一个标签，都是对我的一个要求。在这里，所有的文字都用心创作，记录了我在每一个标签下逐渐成长的经历和思考。希望某一篇文章，甚至某一句话，能与你产生共鸣。</div><div class="line"></div><div class="line">&lt;a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI0NDEwMDk2NQ==&amp;hid=1&amp;sn=b1cd332c53a573ea36c4a71e19f47539#wechat_redirect"&gt;历史文章&lt;/a&gt;`)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    res.reply(<span class="string">''</span>)</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
-<p><em>因为启用自己的服务器后，自定义菜单功能就没有了，我只能在关注自动回复加链接去我的历史文章页了（哭）。</em></p>
-<h3 id="回复用户发来的图片"><a href="#回复用户发来的图片" class="headerlink" title="回复用户发来的图片"></a>回复用户发来的图片</h3><p>如果我们想直接把用户发给我们的图片回复回去，我们可以这样做：  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports.wechatMsg = WechatManager.getWechatRouter(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  <span class="comment">// 微信输入信息都在req.weixin上</span></div><div class="line">  <span class="keyword">var</span> message = req.weixin</div><div class="line">  <span class="built_in">console</span>.log(message);</div><div class="line"></div><div class="line">  <span class="comment">// 自动回复用户发来的图片</span></div><div class="line">  <span class="keyword">if</span> (message.MsgType === <span class="string">'image'</span>) &#123;</div><div class="line">    <span class="keyword">return</span> res.reply(&#123;</div><div class="line">      type: <span class="string">'image'</span>,</div><div class="line">      content: &#123;</div><div class="line">        mediaId: message.MediaId <span class="comment">// 用回微信告诉我们的用户发来的图片 MediaId</span></div><div class="line">      &#125;</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  res.reply(<span class="string">''</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>有了这些基础，你可以按自己的需求，来实现其它自动回复的功能。下一章我们再看如何结合之前的系统，随机抽取系统接收的其它用户发来的图片，而不是返回自己当前发来图片。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;终于基本到了最后的一步了。微信集成主要包含三个部分：  &lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;接入验证，让微信确认你的服务器，就是你公众号的拥有人。  &lt;/li&gt;
-&lt;li&gt;接收微信给你服务器的消息。  &lt;/li&gt;
-&lt;li&gt;发送消息给微信服务器，让它转发给你公众号的关注者。  &lt;/li
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Node.js" scheme="http://www.thinkingincrowd.me/tags/Node-js/"/>
-    
-      <category term="Wechat" scheme="http://www.thinkingincrowd.me/tags/Wechat/"/>
-    
-      <category term="Tutorial" scheme="http://www.thinkingincrowd.me/tags/Tutorial/"/>
-    
-      <category term="MVC" scheme="http://www.thinkingincrowd.me/tags/MVC/"/>
-    
-      <category term="Integration" scheme="http://www.thinkingincrowd.me/tags/Integration/"/>
     
   </entry>
   
