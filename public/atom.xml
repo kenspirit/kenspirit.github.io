@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-07-24T22:39:48.218Z</updated>
+  <updated>2018-08-22T14:46:14.002Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>初尝 Elixir，真的挺好喝的。</title>
+    <link href="http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/"/>
+    <id>http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/</id>
+    <published>2018-08-21T12:52:46.000Z</published>
+    <updated>2018-08-22T14:46:14.002Z</updated>
+    
+    <content type="html"><![CDATA[<p>其实，之前从北京回来的时候，我就在考虑学习 Go 还是 Elixir。  </p>
+<p>因为现在很多的区块链项目和 docker 等虚拟技术都是用 Go 语言实现，同时公司用 Hyperledger Fabric 时也要写点 chaincode，所以一开始的时候看了一下 Go。不过，我好像怎么都没法被它吸引起来。可能因为自己是一个并非从写 C 语言成长起来的程序员？  </p>
+<p>自从看了「程序人生」公众号里面的两篇关于 Elixir 的文章，终于忍不住买了一本「<a href="https://pragprog.com/book/elixir16/programming-elixir-1-6" target="_blank" rel="external">Programming Elixir ≥ 1.6</a>」来看。一看真的是舍不得放下。除了 Elixir 这门函数式语言本身的特性我很喜欢外，作者的理念和写作风格也是很和我心意。  </p>
+<h2 id="编程就是数据转换"><a href="#编程就是数据转换" class="headerlink" title="编程就是数据转换"></a>编程就是数据转换</h2><blockquote>
+<p>Programming Should Be About Transforming Data</p>
+</blockquote>
+<p>看到书里面的这句话，就已经感觉 Elixir 一定挺对我胃口的，或许自己真的是函数式的忠粉吧。我一直觉得啥都封装成一个对象，真的挺累的。而且，如果你深刻地理解了这句话，数据分析的 ETL（Extract - Transform - Load）是那么地自然，Map/Reduce 分而治之也是很好理解。  </p>
+<h2 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h2><h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><p>开篇我就被作者颠覆了骨子里的一个最基本的认知：赋值（Assignment）。  </p>
+<p>凡是学过一点点编程的人应该都知道，<code>=</code> 是大多数编程语言的赋值操作符。即便不是这样，也会有类似的一个符号，在它的左边是一个变量，右边是赋值给它的常量，其它变量或一些运算，比如：<code>a = 1</code> 或者 <code>a = max(number_list)</code>。  </p>
+<p>但是，在 Elixir 里面，<code>=</code> 是匹配操作符。  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">iex&gt;a = <span class="number">1</span></div><div class="line"><span class="number">1</span></div><div class="line">iex&gt;<span class="number">1</span> = a</div><div class="line"><span class="number">1</span></div><div class="line">iex&gt;<span class="number">2</span> = a</div><div class="line">** (MatchError) no match of right hand side <span class="symbol">value:</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>第一句代码可能让我们认为它是和其它编程语言一样的赋值语句，但是看到后面两句估计就有点懵逼了。这是什么鬼？变量怎么可以在右边？  </p>
+<p>其实，<code>=</code> 在 Elixir 里被成为匹配操作符。它的作用是让 Elixir 去尝试寻找满足 <code>=</code> 号两边相等的情况。而把 <code>a</code> 赋值为 <code>1</code> 就满足这样的条件了。在匹配的时候，Elixir 只可以修改 <code>=</code> 号左边的变量值，而会把右边的变量用它的值来替换。所以，如果没有最开始的 <code>a = 1</code> 那个语句，第二句 <code>1 = a</code> 是会出错的。  </p>
+<p>要改变习惯，转成这种思维方式并不容易。而且，Elixir 的模式匹配还支持比较复杂的形式，比如：  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ken = %&#123; <span class="symbol">name:</span> <span class="string">"Ken"</span>, <span class="symbol">likes:</span> <span class="string">"programming"</span>, <span class="symbol">has:</span> <span class="string">"a wife and a son"</span> &#125;</div><div class="line"><span class="keyword">case</span> ken <span class="keyword">do</span></div><div class="line">  %&#123; <span class="symbol">likes:</span> something &#125; = person = man -&gt;</div><div class="line">    IO.puts <span class="string">"<span class="subst">#&#123;person.name&#125;</span> likes <span class="subst">#&#123;something&#125;</span> and has <span class="subst">#&#123;man.has&#125;</span>"</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>一开始看到书上有一个类似的例子（<code>= man</code> 那部分是为了在这里说明才加上的）时，我一下子没转过弯，都傻了。啥玩意啊？<code>person</code> 这个变量哪里冒出来的？后来才想到那里的匹配，应该相当于是这样的情况：  </p>
+<p><code>%{ likes: something } = person = man = ken</code></p>
+<h3 id="函数的匹配"><a href="#函数的匹配" class="headerlink" title="函数的匹配"></a>函数的匹配</h3><p>作为一门函数式编程语言，怎么能不提到递归。Elixir 的模式匹配和递归配合起来使用，实在是太爽了。完全不必用到 <code>if else</code> 之流来判断边界值，代码表达得相当优雅。  </p>
+<p>我觉得，递归可以说非常好地体现了 First Principle 原则。只有看透数据处理的本质，才能理解递归。我们来看看书中的一句霸气的话吧：  </p>
+<blockquote>
+<p>L. Peter Deutsch once penned, “To iterate is human, to recurse divine.”</p>
+</blockquote>
+<p>什么意思？“使用遍历的是普通人，能用递归的是神”。  </p>
+<p>递归思想在 Elixir 里面是如此地深入骨髓，连列表也可以表达为：<code>[ head | tail ]</code>。也就是说，一个列表，就是最开头的一个元素，拼上后面的列表。  </p>
+<p>充分了解了这些后，我的感觉和 Dave 在书里表达的一样：  </p>
+<blockquote>
+<p>that’s certainly the way I felt when I first started coding Elixir. The joy of pattern-matching lists in sets of recursive functions drove my designs. After a while, I realized that perhaps I was taking this too far.</p>
+</blockquote>
+<p>好吧，还是先擦一擦口水，来看一个简单的递归和函数的模式匹配吧：  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Recursion</span></span> <span class="keyword">do</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>(<span class="number">0</span>), <span class="symbol">do:</span> <span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>(n), <span class="symbol">do:</span> n + sum(n - <span class="number">1</span>)</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">IO.puts Recursion.sum(<span class="number">5</span>)  <span class="comment"># =&gt; 15</span></div></pre></td></tr></table></figure>
+<p>这个函数计算了某个给定数字之下的所有正整数之和。以上的例子就是计算 <code>5+4+3+2+1+0</code>。  </p>
+<p>能理解上面这个方法的，可以尝试猜一猜下面的程序是干嘛的，我就不解释了。  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Chop</span></span> <span class="keyword">do</span></div><div class="line">  <span class="function"><span class="keyword">defp</span> <span class="title">match</span></span>(actual, min, max) <span class="keyword">when</span> actual === min <span class="keyword">or</span> actual === max <span class="keyword">do</span></div><div class="line">    IO.puts actual</div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="function"><span class="keyword">defp</span> <span class="title">match</span></span>(actual, min, max) <span class="keyword">when</span> actual &gt; min <span class="keyword">and</span> actual &lt;= (div(max + min, <span class="number">2</span>)) <span class="keyword">do</span></div><div class="line">    IO.puts <span class="string">"Is it <span class="subst">#&#123;(div(max + min, <span class="number">2</span>))&#125;</span>?"</span></div><div class="line">    match(actual, min + <span class="number">1</span>, div(max + min, <span class="number">2</span>))</div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="function"><span class="keyword">defp</span> <span class="title">match</span></span>(actual, min, max) <span class="keyword">when</span> actual &gt; div(max + min, <span class="number">2</span>) <span class="keyword">and</span> actual &lt; max <span class="keyword">do</span></div><div class="line">    IO.puts <span class="string">"Is it <span class="subst">#&#123;div(max + min, <span class="number">2</span>)&#125;</span>?"</span></div><div class="line">    match(actual, div(max + min, <span class="number">2</span>) + <span class="number">1</span>, max - <span class="number">1</span>)</div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, <span class="number">_</span>) <span class="keyword">when</span> <span class="keyword">not</span> is_integer(actual) <span class="keyword">do</span></div><div class="line">    IO.puts <span class="string">"Guess value <span class="subst">#&#123;actual&#125;</span> is not integer"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, min..max) <span class="keyword">when</span> actual &lt; min <span class="keyword">or</span> actual &gt; max <span class="keyword">do</span></div><div class="line">    IO.puts <span class="string">"Guess value <span class="subst">#&#123;actual&#125;</span> is out of the range <span class="subst">#&#123;min&#125;</span>..<span class="subst">#&#123;max&#125;</span>"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, min..max) <span class="keyword">do</span></div><div class="line">    match(actual, min, max)</div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">Chop.guess(<span class="number">512</span>, <span class="number">1</span>..<span class="number">1000</span>)</div></pre></td></tr></table></figure>
+<h2 id="完善的工具，和开发规范"><a href="#完善的工具，和开发规范" class="headerlink" title="完善的工具，和开发规范"></a>完善的工具，和开发规范</h2><p>作为一个新兴的小众语言，真没想到它还有非常丰富的辅助工具，包括调试，测试，代码依赖分析，发布管理，服务器监控等。如作者所说，这都是因为 Elixir 继承了 Erlang 的财富，和开发社区对工具的重视。  </p>
+<p>当前我了解的还很少，初步印象深刻的是它的测试功能。它连文档中的代码块都能测试（据说是借鉴 Python 的）。  </p>
+<p>很多程序员都抱怨文档没人写，写了也跟不上代码的变化。Elixir 的这个功能可以比较好地减少这种情况。虽然 JAVA 和 JavaScript 好像也有类似的包，但是都不太完善，也不是官方支持。而且 JAVA 这种以类为基础，动不动还要初始化对象什么的，写起来太累赘了。Elixir 的函数式风格就能很简洁地写出测试的验证代码。  </p>
+<p>它的格式大概是这样：  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@doc</span> <span class="string">""</span><span class="string">"</span></div><div class="line">提供的 `actual` 是在区间 `min..max` 中的某一个数字，本方法一步步猜测 `actual` 的值是什么。</div><div class="line"></div><div class="line">## Example</div><div class="line"></div><div class="line">  iex&gt; Chop.guess(512, 1..1000)</div><div class="line">  "Is it <span class="number">500</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">750</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">626</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">564</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">534</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">519</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">512</span>?<span class="string">"</span></div><div class="line">  "<span class="number">512</span><span class="string">"</span></div><div class="line">"<span class="string">""</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, min..max) <span class="keyword">do</span></div><div class="line">  match(actual, min, max)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>另外，Elixir 和 Ruby 差不多，有一定的开发规范可以遵循。这有助于统一风格，提高开发效率。  </p>
+<p>Elixir 更强大的编写并发代码的能力我还没有接触到，但估计更加精彩。所以，我决定今后的 Pet Project 都会从 Node.js 改成 Elixir 来写，并期待能有拿它来写 Serious Project 的机会。  </p>
+<p>有兴趣一起学习的朋友，可以看看我看书后做的<a href="https://github.com/kenspirit/programming-elixir-exercises" target="_blank" rel="external">练习题解答</a>。  </p>
+<p>相关文章：  </p>
+<p><a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/">编程是什么？我要学吗？</a><br><a href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction.md/">学习编程需要具备的基本能力 - 抽象</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;其实，之前从北京回来的时候，我就在考虑学习 Go 还是 Elixir。  &lt;/p&gt;
+&lt;p&gt;因为现在很多的区块链项目和 docker 等虚拟技术都是用 Go 语言实现，同时公司用 Hyperledger Fabric 时也要写点 chaincode，所以一开始的时候看了一下 
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
+    
+      <category term="Elixir" scheme="http://www.thinkingincrowd.me/tags/Elixir/"/>
+    
+  </entry>
   
   <entry>
     <title>你最害怕的，是这个吗？</title>
@@ -1214,70 +1282,6 @@
       <category term="Database" scheme="http://www.thinkingincrowd.me/tags/Database/"/>
     
       <category term="Idempotency" scheme="http://www.thinkingincrowd.me/tags/Idempotency/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>技术人眼中的实业与纯互联网业务差异</title>
-    <link href="http://www.thinkingincrowd.me/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/"/>
-    <id>http://www.thinkingincrowd.me/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/</id>
-    <published>2017-12-07T10:22:13.000Z</published>
-    <updated>2018-04-10T08:46:23.591Z</updated>
-    
-    <content type="html"><![CDATA[<p>工作那么久以来，前面一大半辈子都是做 J2EE 项目，参与的都是实业企业的业务系统。最近这一两年，接触了互联网产品的开发，我对这两领域的业务差异，以及它们对技术开发人员的影响有更切实的体会。（这里提及的纯互联网，是指不需要和实体行业接轨的领域，比如消息通信，游戏，社交，工具等）  </p>
-<h2 id="无论哪个领域，都应了解业务"><a href="#无论哪个领域，都应了解业务" class="headerlink" title="无论哪个领域，都应了解业务"></a>无论哪个领域，都应了解业务</h2><p>我记得很早就有争论，技术人员是否有必要关心和理解业务。技术人员是否只需要深入技术细节，提高开发技能的深度和广度就可以了？  </p>
-<p>我的观点是，假如你实现的系统，是和人打交道的，而不是单纯的硬件和机器，那么，你就需要接触业务。因为你做的系统，是人的操作工具，解决他可感知的问题。<strong>理解业务，和其它增值的软技能，如写作、演讲和沟通是一样的。而且，从技术的角度来说，只有你理解了业务，才能很好评估技术难度，并做出合理的系统设计和架构。</strong>  </p>
-<ul>
-<li><p>「<a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a>」这篇文章大致介绍了如何结合业务来设计和使用缓存。  </p>
-</li>
-<li><p>「<a href="http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/">听听系统的多地部署改造</a>」这篇文章也举例说明了业务对性能的影响，接口权重取舍，以及任务异步化等。  </p>
-</li>
-</ul>
-<h2 id="业务性质的差异"><a href="#业务性质的差异" class="headerlink" title="业务性质的差异"></a>业务性质的差异</h2><ul>
-<li><p>实业企业的业务需求，是为了把实业往系统迁移，以简化流程，保证数据准确性，提升协作能力等目标为主。因为受产业现状约束，调整空间变化不大，功能实现路径相对单一。  </p>
-</li>
-<li><p>纯互联网的业务需求，即便功能或者要解决的问题类似，实现路径相对多样，发挥的空间较大。  </p>
-</li>
-</ul>
-<h3 id="需求灵活度和空间"><a href="#需求灵活度和空间" class="headerlink" title="需求灵活度和空间"></a>需求灵活度和空间</h3><p><strong>企业系统的需求</strong>来源，小的层面是一线业务执行者，对功能和效率的需求；大的层面是老板对整体业务的规划。一般情况下，企业系统的需求到达开发阶段了，应该已经在业务部门达成共识。<strong>根据业务流程的指引，功能相对明确。但是，缺陷也明显，因为在没有业务流程配合的情况下，系统是没法优化的</strong>。当初我在航运物流公司的时候，曾经参与一些探索性项目。有些想法虽然美好，但是落地很难，因为业务配合很难。  </p>
-<p><strong>纯互联网行业就不一样了。功能的探索空间大，需要更多的从人性，心理方面考虑，更容易突破常规做新尝试</strong>。  </p>
-<p>比如说，在线直播课程的售票功能，仅仅买卖票吗？要分开提问票和普通票吗？到底是分开，还是不分开好，说不准。知乎 Live 一开始是先买先得，限量。为什么一开始我们听听要设置不同价格的提问票呢？  </p>
-<ol>
-<li>增加稀缺感  </li>
-<li>让主讲人多赚一些钱  </li>
-<li>保证问题的质量  </li>
-<li>技术权衡。因为我们一开始的直播间，是在微信公众号里面。主讲人只能通过一条网址链接查看留言列表。如果用户发言的数量太多，质量不好，对主讲人是一个挺大的负担。  </li>
-</ol>
-<p>可是为什么后面又取消了呢？  </p>
-<ol>
-<li><p>一些主讲人反馈不希望做出区分。因为对于这些提问是否回答，他们是有压力的。即便卖票时已经声明不承诺回答，但是主讲人感觉还是不好。尤其是当一些人故意提问怼主讲人，或者提一些不方便回答的问题时，他们就会更尴尬。  </p>
-</li>
-<li><p>提问的质量，真的不是给了钱的人，就会好好思考，再提出高质量问题的。  </p>
-</li>
-<li><p>后来改版后，主讲人同样能在直播间操作，并且实现了协作讲师选取精选留言，和消息限流的功能，发言权限也就放开了。  </p>
-</li>
-</ol>
-<h3 id="有效性评估"><a href="#有效性评估" class="headerlink" title="有效性评估"></a>有效性评估</h3><p>当初在实业企业的时候，我也经常抱怨用户和 BA 怎么经常改需求，还提得那么晚。但是，老实说，实业企业的需求，怎么变都没有互联网那么快。因为，实业的业务流程，涉及既定利益体的协作，是没那么容易变动的。它们制约了需求的可变范围，当然这也是被互联网行业降维打击的原因。  </p>
-<p>纯互联网行业约束少，需求更新快，可能让开发更抓狂。机会和风口以来，可能就要马上跟进试探。这个时候，用临时方案，还是设计完整的功能路径，就必须小心考虑了。因为，如果临时的方案多了，就会把系统搞得千疮百孔。但是，假如每个试探的方案都像常规功能那样来设计，不仅可能拖慢进度，还可能最后发现方向不对，废弃成本高。  </p>
-<p>我们也吃了这方面的苦头。当初系统实现的工会模式，以及为了让大V节省时间而做的转让直播的功能，后来其实用途不大。但是这两个功能对系统逻辑，开发和测试时间影响还蛮大。  </p>
-<p><strong>如何评估一个需求的有效性，精简地设计易扩展的模型，让临时方案的代码侵入性小，以及平衡开发效率，是非常大的问题</strong>。  </p>
-<h3 id="责任人确定"><a href="#责任人确定" class="headerlink" title="责任人确定"></a>责任人确定</h3><p>责任人是什么意思？要为什么负责？  </p>
-<p>责任人是业务功能的用户吗？可以说是，但也不全是。  </p>
-<p>比如说，我们系统最开始有一个心愿单的功能，目的是为了收集用户心仪讲师的讲座或者课程。这功能乍一听很有用，也很快就加上了。但是，后期这些数据是谁看呢？产品？还是运营？怎么看和怎么拿出来分析？这都就是责任人要负责的事情，不是说功能加了就算了。由于责任人前期并没有明确，收集的数据并没有很好地发挥作用，功能最后也砍了。同理，像数据报表，用户反馈等类似的功能，也是需要非常明确地指定责任人的。  </p>
-<p><strong>当责任人不清晰的时候，可以说任何开发出来的功能，最后都会被慢慢遗弃。所以，一个功能要不要做，怎么做才好用，首先应该确认责任人是谁。</strong>  </p>
-<p>这个问题在实业企业也会发生，但在纯互联网行业更常见，尤其在初创期。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;工作那么久以来，前面一大半辈子都是做 J2EE 项目，参与的都是实业企业的业务系统。最近这一两年，接触了互联网产品的开发，我对这两领域的业务差异，以及它们对技术开发人员的影响有更切实的体会。（这里提及的纯互联网，是指不需要和实体行业接轨的领域，比如消息通信，游戏，社交，工具
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Business Logic" scheme="http://www.thinkingincrowd.me/tags/Business-Logic/"/>
     
   </entry>
   
