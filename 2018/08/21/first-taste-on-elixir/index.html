@@ -95,7 +95,7 @@
     </p>
   <p class="article-time">
     <time datetime="2018-08-21T12:52:46.000Z" itemprop="datePublished">Aug 21 2018</time>
-    Updated:<time datetime="2018-08-22T13:36:34.937Z" itemprop="dateModified">Aug 22 2018</time>
+    Updated:<time datetime="2018-08-22T14:46:14.002Z" itemprop="dateModified">Aug 22 2018</time>
     
   </p>
 </header>
@@ -145,7 +145,9 @@
 <p>很多程序员都抱怨文档没人写，写了也跟不上代码的变化。Elixir 的这个功能可以比较好地减少这种情况。虽然 JAVA 和 JavaScript 好像也有类似的包，但是都不太完善，也不是官方支持。而且 JAVA 这种以类为基础，动不动还要初始化对象什么的，写起来太累赘了。Elixir 的函数式风格就能很简洁地写出测试的验证代码。  </p>
 <p>它的格式大概是这样：  </p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="variable">@doc</span> <span class="string">""</span><span class="string">"</span></div><div class="line">提供的 `actual` 是在区间 `min..max` 中的某一个数字，本方法一步步猜测 `actual` 的值是什么。</div><div class="line"></div><div class="line">## Example</div><div class="line"></div><div class="line">  iex&gt; Chop.guess(512, 1..1000)</div><div class="line">  "Is it <span class="number">500</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">750</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">626</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">564</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">534</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">519</span>?<span class="string">"</span></div><div class="line">  "Is it <span class="number">512</span>?<span class="string">"</span></div><div class="line">  "<span class="number">512</span><span class="string">"</span></div><div class="line">"<span class="string">""</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, min..max) <span class="keyword">do</span></div><div class="line">  match(actual, min, max)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>另外，Elixir 和 Ruby 差不多，有一定的开发规范可以遵循。这有助于统一风格，提高开发效率。  </p>
 <p>Elixir 更强大的编写并发代码的能力我还没有接触到，但估计更加精彩。所以，我决定今后的 Pet Project 都会从 Node.js 改成 Elixir 来写，并期待能有拿它来写 Serious Project 的机会。  </p>
+<p>有兴趣一起学习的朋友，可以看看我看书后做的<a href="https://github.com/kenspirit/programming-elixir-exercises" target="_blank" rel="external">练习题解答</a>。  </p>
 <p>相关文章：  </p>
 <p><a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/">编程是什么？我要学吗？</a><br><a href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction.md/">学习编程需要具备的基本能力 - 抽象</a></p>
   
