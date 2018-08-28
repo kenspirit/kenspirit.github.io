@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-08-22T14:46:14.002Z</updated>
+  <updated>2018-08-22T15:05:18.727Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/"/>
     <id>http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/</id>
     <published>2018-08-21T12:52:46.000Z</published>
-    <updated>2018-08-22T14:46:14.002Z</updated>
+    <updated>2018-08-22T15:05:18.727Z</updated>
     
     <content type="html"><![CDATA[<p>其实，之前从北京回来的时候，我就在考虑学习 Go 还是 Elixir。  </p>
 <p>因为现在很多的区块链项目和 docker 等虚拟技术都是用 Go 语言实现，同时公司用 Hyperledger Fabric 时也要写点 chaincode，所以一开始的时候看了一下 Go。不过，我好像怎么都没法被它吸引起来。可能因为自己是一个并非从写 C 语言成长起来的程序员？  </p>
@@ -194,8 +194,8 @@
   
   <entry>
     <title>什么叫做尽责</title>
-    <link href="http://www.thinkingincrowd.me/2018/06/23/how-to-fullfill-your-responsibility/"/>
-    <id>http://www.thinkingincrowd.me/2018/06/23/how-to-fullfill-your-responsibility/</id>
+    <link href="http://www.thinkingincrowd.me/2018/06/23/How-to-fullfill-your-responsibility/"/>
+    <id>http://www.thinkingincrowd.me/2018/06/23/How-to-fullfill-your-responsibility/</id>
     <published>2018-06-23T09:36:04.000Z</published>
     <updated>2018-06-23T10:11:52.335Z</updated>
     
@@ -1269,10 +1269,6 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
-      <category term="Architecture" scheme="http://www.thinkingincrowd.me/tags/Architecture/"/>
-    
-      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
-    
       <category term="ACID" scheme="http://www.thinkingincrowd.me/tags/ACID/"/>
     
       <category term="Consistency" scheme="http://www.thinkingincrowd.me/tags/Consistency/"/>
@@ -1281,7 +1277,11 @@
     
       <category term="Database" scheme="http://www.thinkingincrowd.me/tags/Database/"/>
     
+      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
+    
       <category term="Idempotency" scheme="http://www.thinkingincrowd.me/tags/Idempotency/"/>
+    
+      <category term="Architecture" scheme="http://www.thinkingincrowd.me/tags/Architecture/"/>
     
   </entry>
   
