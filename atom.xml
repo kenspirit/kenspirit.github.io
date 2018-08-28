@@ -194,8 +194,8 @@
   
   <entry>
     <title>什么叫做尽责</title>
-    <link href="http://www.thinkingincrowd.me/2018/06/23/how-to-fullfill-your-responsibility/"/>
-    <id>http://www.thinkingincrowd.me/2018/06/23/how-to-fullfill-your-responsibility/</id>
+    <link href="http://www.thinkingincrowd.me/2018/06/23/How-to-fullfill-your-responsibility/"/>
+    <id>http://www.thinkingincrowd.me/2018/06/23/How-to-fullfill-your-responsibility/</id>
     <published>2018-06-23T09:36:04.000Z</published>
     <updated>2018-06-23T10:11:52.335Z</updated>
     
@@ -1269,10 +1269,6 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
-      <category term="Architecture" scheme="http://www.thinkingincrowd.me/tags/Architecture/"/>
-    
-      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
-    
       <category term="ACID" scheme="http://www.thinkingincrowd.me/tags/ACID/"/>
     
       <category term="Consistency" scheme="http://www.thinkingincrowd.me/tags/Consistency/"/>
@@ -1281,7 +1277,11 @@
     
       <category term="Database" scheme="http://www.thinkingincrowd.me/tags/Database/"/>
     
+      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
+    
       <category term="Idempotency" scheme="http://www.thinkingincrowd.me/tags/Idempotency/"/>
+    
+      <category term="Architecture" scheme="http://www.thinkingincrowd.me/tags/Architecture/"/>
     
   </entry>
   
