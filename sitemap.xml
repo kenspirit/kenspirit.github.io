@@ -4,7 +4,7 @@
   <url>
     <loc>http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/</loc>
     
-    <lastmod>2018-08-22T14:46:14.002Z</lastmod>
+    <lastmod>2018-08-22T15:05:18.727Z</lastmod>
     
   </url>
   
@@ -198,14 +198,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/</loc>
+    <loc>http://www.thinkingincrowd.me/2017/10/28/no-need-to-write-api-doc-anymore/</loc>
     
     <lastmod>2018-04-10T08:46:23.586Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/10/28/no-need-to-write-api-doc-anymore/</loc>
+    <loc>http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/</loc>
     
     <lastmod>2018-04-10T08:46:23.586Z</lastmod>
     
@@ -317,14 +317,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/</loc>
+    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/</loc>
     
     <lastmod>2018-04-10T08:46:23.564Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/</loc>
+    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/</loc>
     
     <lastmod>2018-04-10T08:46:23.564Z</lastmod>
     
@@ -450,14 +450,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
     
     <lastmod>2018-04-10T08:46:23.541Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
     
     <lastmod>2018-04-10T08:46:23.541Z</lastmod>
     
@@ -506,14 +506,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
     
     <lastmod>2018-04-10T08:46:23.529Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
     
     <lastmod>2018-04-10T08:46:23.529Z</lastmod>
     
@@ -618,14 +618,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
+    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
     
     <lastmod>2018-04-10T08:46:23.513Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
+    <loc>http://www.thinkingincrowd.me/2014/07/31/half-year-summary/</loc>
     
     <lastmod>2018-04-10T08:46:23.513Z</lastmod>
     
@@ -758,13 +758,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.494Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
     
     <lastmod>2018-04-10T08:46:23.494Z</lastmod>
@@ -772,14 +765,21 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.494Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
     
     <lastmod>2018-04-10T08:46:23.493Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
     
     <lastmod>2018-04-10T08:46:23.493Z</lastmod>
     
@@ -842,6 +842,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.484Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
     
     <lastmod>2018-04-10T08:46:23.484Z</lastmod>
@@ -856,21 +863,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.484Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
     
     <lastmod>2018-04-10T08:46:23.483Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
     
     <lastmod>2018-04-10T08:46:23.483Z</lastmod>
     
@@ -884,14 +884,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
@@ -926,20 +926,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2011/03/06/cleaner-code/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
     
     <lastmod>2018-04-10T08:46:23.479Z</lastmod>
@@ -954,14 +940,28 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/03/06/cleaner-code/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
     
     <lastmod>2018-04-10T08:46:23.478Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/19/an-article-on-wall-of-rest-house/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
     
     <lastmod>2018-04-10T08:46:23.478Z</lastmod>
     
