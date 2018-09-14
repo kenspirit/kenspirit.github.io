@@ -94,7 +94,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-03-08T14:40:45.000Z" itemprop="datePublished">Mar 8 2016</time>
-    Updated:<time datetime="2018-04-10T08:46:23.526Z" itemprop="dateModified">Apr 10 2018</time>
+    Updated:<time datetime="2018-09-14T13:18:38.601Z" itemprop="dateModified">Sep 14 2018</time>
     
   </p>
 </header>
@@ -109,7 +109,7 @@
 		<p>近来我一直都需要带些毕业生（怎么我的队伍就那么多新人呢，呵呵），发现很多人在解决问题的方法上都存在一些问题。解决问题，其实是每个程序员每天都在干的事情。但是方法好还是不好，我觉得正是有经验和没有经验的程序员之间很重要的区别。刚好最近又看到了余晟公众号（yurii-says）的《砍伐大树 v.s. 收割庄稼》里面阐述的解决问题的四个步骤。所以，我想根据身边的案例详细一点解释一下这四个步骤。</p>
 <h2 id="认识和定位问题"><a href="#认识和定位问题" class="headerlink" title="认识和定位问题"></a>认识和定位问题</h2><p>一般来说，新手进入一个公司和团队之后，team lead 会分配一两个简单的任务让新人练练手。所以，首先要做的事情就是搭环境，和认识已有的系统和代码。</p>
 <p>在搭环境和做任务的过程中，新人经常遇到问题或异常后就蒙了，不知道怎么继续下去。然后就求救说：“出错了，怎么办？”。我都会反问一句：“哪里出错了？你定位到问题在哪里了吗？”。可是一般收到的答案都是“不知道”。像我们公司的系统架构，把后端分了两层，一层专门服务于表现层，另一层专门访问数据库和提供 web service。系统的架构就简单如下图所示。如果在浏览器发起的一个 Ajax 请求有异常返回，那异常到底是在哪一层，或者是哪一个传输环节？如果在传输环节可能是因为对象类型，属性不一致导致。如果在 Domain 层可能是业务逻辑，数据库操作出现问题等。</p>
-<p><img alt="Company System Architecture" src="http://77g8zm.com1.z0.glb.clouddn.com/company_system_architecture.png"></p>
+<p><img alt="Company System Architecture" src="http://thinkingincrowd.u.qiniudn.com/company_system_architecture.png"></p>
 <p>​认识和定位问题的能力应该是程序员技能宝典里面的 101，并且是要持续修炼的能力。<strong>看日志</strong>和<strong>看代码</strong>是获取这种能力的两种最基础的手段。</p>
 <h3 id="看日志"><a href="#看日志" class="headerlink" title="看日志"></a>看日志</h3><p>在没有源码的情况下，看日志可以说是唯一定位问题的方法了。再说，即便有源码，也不可能全都看一通，或者顺着源头一直 debug 下去，直到遇到问题为止。所以，定位问题的起点一般都是先看日志。</p>
 <p>日志来源基本可以分为几大类：</p>
