@@ -21,9 +21,9 @@ date: 2016-03-13 14:10:16
 
 书中有一个很好的表格详细阐述了从个人贡献者到一个一线管理者在各个方面所需要的转变。可以看到，两种不同的角色在各个方面的差异还是蛮大的，所以转变过程其实会碰到不少问题。
 
-<img alt="Contributor vs First Line Manager - Skills" src="http://77g8zm.com1.z0.glb.clouddn.com/contributor_vs_first_line_manager_skill.png"/>
+<img alt="Contributor vs First Line Manager - Skills" src="http://thinkingincrowd.u.qiniudn.com/contributor_vs_first_line_manager_skill.png"/>
 
-<img alt="Contributor vs First Line Manager - Time and Value" src="http://77g8zm.com1.z0.glb.clouddn.com/contributor_vs_first_line_manager_time_value.png"/>
+<img alt="Contributor vs First Line Manager - Time and Value" src="http://thinkingincrowd.u.qiniudn.com/contributor_vs_first_line_manager_time_value.png"/>
 
 
 ## 容易出现的问题

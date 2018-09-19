@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-08-29T10:15:06.301Z</updated>
+  <updated>2018-09-19T23:43:56.263Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,93 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>那些让你更爱 Elixir 的理由</title>
+    <link href="http://www.thinkingincrowd.me/2018/09/20/what-make-you-love-elixir-more/"/>
+    <id>http://www.thinkingincrowd.me/2018/09/20/what-make-you-love-elixir-more/</id>
+    <published>2018-09-20T00:10:45.000Z</published>
+    <updated>2018-09-19T23:43:56.263Z</updated>
+    
+    <content type="html"><![CDATA[<p>如果前面的 <a href="http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/">初尝 Elixir，真的挺好喝的</a> 和 <a href="http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/">深入到骨子里的分布式和微服务化编程语言</a> 都还没能让你爱上 Elixir，那我就再补充两个它可以赋予你改造语言能力的特性吧。  </p>
+<h2 id="Meta-Programming"><a href="#Meta-Programming" class="headerlink" title="Meta Programming"></a>Meta Programming</h2><p>Elixir 的元编程能力，拥有和 Lisp 一样的代码即数据的特点。它的方法名，参数和方法体等，能用 List 的数据格式包装起来，传给宏（Macro），再做分析或者扩展。且看 <a href="https://pragprog.com/book/elixir16/programming-elixir-1-6" target="_blank" rel="external">Programming Elixir ≥ 1.6</a> 书中很简单的展示代码。  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">My</span></span> <span class="keyword">do</span></div><div class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">macro</span></span>(param) <span class="keyword">do</span></div><div class="line">    IO.inspect param</div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span>  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Test</span></span> <span class="keyword">do</span></div><div class="line">  require My</div><div class="line"></div><div class="line">  My.macro <span class="keyword">do</span></div><div class="line">    <span class="number">1</span> + <span class="number">2</span></div><div class="line">  else</div><div class="line">    <span class="number">3</span> + <span class="number">4</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span>  </div><div class="line">  </div><div class="line"><span class="comment"># =&gt; [</span></div><div class="line">      <span class="symbol">do:</span> &#123;<span class="symbol">:+</span>, [<span class="symbol">line:</span> <span class="number">7</span>], [<span class="number">1</span>, <span class="number">2</span>]&#125;,</div><div class="line">      <span class="symbol">else:</span> &#123;<span class="symbol">:+</span>, [<span class="symbol">line:</span> <span class="number">9</span>], [<span class="number">3</span>, <span class="number">4</span>]&#125;</div><div class="line">     ]</div></pre></td></tr></table></figure>
+<p><code>IO.inspect</code> (类似于 <code>System.out</code> 或者 <code>console.log</code>) 打印出来的就是宏接收到的以 List 格式包装的代码。  </p>
+<p>所以，通过宏（Macro），我们可以动态生成代码，实现 AOP 在方法前后包装自己的逻辑等。比如下面的代码，<code>times_3</code> 和 <code>times_4</code> 就是动态生成的方法。  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Times</span></span> <span class="keyword">do</span></div><div class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">times_n</span></span>(n) <span class="keyword">do</span></div><div class="line">    <span class="keyword">quote</span> <span class="keyword">do</span></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">unquote</span></span>(<span class="symbol">:<span class="string">"times_<span class="subst">#&#123;n&#125;</span>"</span></span>)(v) <span class="keyword">do</span></div><div class="line">        unquote(n) * v</div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span>  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Test</span></span> <span class="keyword">do</span></div><div class="line">  require Times</div><div class="line"></div><div class="line">  Times.times_n(<span class="number">3</span>)</div><div class="line">  Times.times_n(<span class="number">4</span>)</div><div class="line"><span class="keyword">end</span>  </div><div class="line">  </div><div class="line">IO.puts Test.times_3(<span class="number">4</span>)   <span class="comment">#=&gt; 12</span></div><div class="line">IO.puts Test.times_4(<span class="number">5</span>)   <span class="comment">#=&gt; 20</span></div></pre></td></tr></table></figure>
+<h2 id="Protocol"><a href="#Protocol" class="headerlink" title="Protocol"></a>Protocol</h2><p>“多态”，对于学过面向对象的开发人员来说，应该是一个很熟悉的概念了。单一的接口，不同的类型或实现。  </p>
+<p>在 JAVA 里，如果你想实现“多态”，你必须修改那些类的源代码，让它们都继承某个公共类，或者实现某个统一的接口。假如，你想为第三方的一些“多态”类添加一些行为，但你没办法修改它的源代码，这就比较尴尬了。然后各种幺蛾子的方法都会弄出来。  </p>
+<p>但是，Elixir Protocol 的实现方式，可以让你不必修改对方的源代码的情况下，实现扩展。借 <a href="https://pragprog.com/book/elixir16/programming-elixir-1-6" target="_blank" rel="external">Programming Elixir ≥ 1.6</a> 书中的例子来说明一下。  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">defprotocol</span> <span class="title">Collection</span></span> <span class="keyword">do</span></div><div class="line">  <span class="variable">@fallback_to_any</span> <span class="keyword">true</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">is_collection?</span></span>(value)</div><div class="line"><span class="keyword">end</span>  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">defimpl</span> <span class="title">Collection</span></span>, <span class="symbol">for:</span> [List, Tuple, BitString, Map] <span class="keyword">do</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">is_collection?</span></span>(<span class="number">_</span>), <span class="symbol">do:</span> <span class="keyword">true</span></div><div class="line"><span class="keyword">end</span>  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">defimpl</span> <span class="title">Collection</span></span>, <span class="symbol">for:</span> Any <span class="keyword">do</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">is_collection?</span></span>(<span class="number">_</span>), <span class="symbol">do:</span> <span class="keyword">false</span></div><div class="line"><span class="keyword">end</span>  </div><div class="line">  </div><div class="line">Enum.each [<span class="number">1</span>, <span class="number">1.0</span>, [<span class="number">1</span>, <span class="number">2</span>], &#123;<span class="number">1</span>, <span class="number">2</span>&#125;, %&#123;&#125;, <span class="string">"cat"</span>], <span class="keyword">fn</span> value -&gt;</div><div class="line">  IO.puts <span class="string">"<span class="subst">#&#123;inspect value&#125;</span>: <span class="subst">#&#123;Collection.is_collection?(value)&#125;</span>"</span></div><div class="line"><span class="keyword">end</span></div><div class="line">  </div><div class="line"><span class="comment"># 打印出来的结果就是：  </span></div><div class="line">  </div><div class="line"><span class="number">1</span>: <span class="keyword">false</span></div><div class="line"><span class="number">1.0</span>: <span class="keyword">false</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>]: <span class="keyword">true</span></div><div class="line">&#123;<span class="number">1</span>, <span class="number">2</span>&#125;: <span class="keyword">true</span></div><div class="line">%&#123;&#125;: <span class="keyword">true</span></div><div class="line"><span class="string">"cat"</span>: <span class="keyword">true</span></div></pre></td></tr></table></figure>
+<p>上面就为系统内置的数据类型，定义了一个很简单的 “多态” 函数，检测哪些是属于集合类。嗯，就是这么简洁。  </p>
+<p>Elixir 除了功能强大，学习它还可以给自己一种非常不同的思维方式。如果说 Elixir 有什么不好，那就是周边的人少了点吧，Slack Channel 才 2W 多人，遇到问题找答案可就不是那么容易的事情了。不过，我觉得还是值得的。  </p>
+<p>最后附上 Joe Armstrong 老爷子，Erlang 作者对 Elixir 的第一印象文章 <a href="https://joearms.github.io/published/2013-05-31-a-week-with-elixir.html" target="_blank" rel="external">A week with Elixir</a>。  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;如果前面的 &lt;a href=&quot;http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/&quot;&gt;初尝 Elixir，真的挺好喝的&lt;/a&gt; 和 &lt;a href=&quot;http://www.thinkingincrow
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Elixir" scheme="http://www.thinkingincrowd.me/tags/Elixir/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入到骨子里的分布式和微服务化编程语言</title>
+    <link href="http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/"/>
+    <id>http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/</id>
+    <published>2018-09-19T00:30:38.000Z</published>
+    <updated>2018-09-19T00:23:01.595Z</updated>
+    
+    <content type="html"><![CDATA[<p>分布式和微服务化，已经大行其道很久了。现在很多项目动不动就说做成微服务，不管不顾自己的项目性质，和相应的工具链支持。关于微服务，我还是很喜欢 Martin Fowler 大叔在 <a href="https://martinfowler.com/bliki/MicroservicePremium.html" target="_blank" rel="external">MicroservicePremium</a> 里说的：  </p>
+<blockquote>
+<p>my primary guideline would be <strong>don’t even consider microservices unless you have a system that’s too complex to manage as a monolith.</strong>  </p>
+</blockquote>
+<p>微服务最基本，最核心的点是什么？服务切分。一个能很好切分服务的架构师，即便是让他用 Monolith 的方式搭建系统，模块的划分也应该是很清晰的。  </p>
+<p>那么，假如你手上拥有的已经是 JAVA 界当前开发效率最高，开发约定最统一的 Springboot 实现的一个 Monolith 系统，如果要把它分隔为几个独立的服务，你觉得会有多简单？除了复制一些配置，切分新建几个 Application 这些体力活外，模块间的通信方式则可能需要有很大的改变。原来的 Java 代码调用，现在可能要改成 http 接口，grpc 等，即便不需要对外提供服务。  </p>
+<p>在 Elixir 里，如果规划的好，模块的切分一开始就通过 GenServer 等使用消息传递的方式来调用，后期的微服务化简直就是拆一下文件目录就差不多了，并不需要再大费周章改接口，统一数据传输格式等。Elixir 的 Node 节点注册，Process 注册、管理和通信，为打造微服务化和分布式的系统提供非常好的支持。  </p>
+<p>更难得的是，Elixir 坐拥了 Erlang 传承的宝藏，一篮子的工具库，让代码，服务间的调用和监控变得非常容易。这一套工具可以说是历经几十年产品线上磨练的官方套件，不必像其它语言那样到处搜罗组装开源工具，或者自研。  </p>
+<p>比如，我现在只是实现一个计数器，你每次可以向它获取下一个可用的数字，它会一直自增下去。如果你不想每次自增的间隔是 1，那可以设置其它间隔。  </p>
+<p>这么简单的一个应用，可以算是一个微服务了吧？我们还可以怎么把它切分为更细的服务吗？我们还可以把它分成三部分：  </p>
+<ol>
+<li>实现自增，和间隔设置逻辑的业务服务  </li>
+<li>保存数据状态的服务  </li>
+<li>监控这两个服务的 Supervisor 服务，假如业务逻辑出错，负责重启  </li>
+</ol>
+<p>下面这幅图应该基本可以说明整个应用是如何运作的了。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Demo.png" alt="Elixir Sequence Server Demo">  </p>
+<p>你可以看到，如果我把自增的间隔故意设置为非数字，导致服务意外退出，背后的 Supervisor 服务会将它悄悄的重启，并按照编写好的逻辑，把 Server 的内部状态数据保存到数据服务，以便重启时读取。等我重新设置一个正确的数字自增间隔后，就可以接着获取新的号码了。  </p>
+<p>在 Elixir 的交互控制台 iex 下，敲入 <code>:observer.start()</code> 这个命令，就可以监控整个系统的运行状态，包括有哪些 Application，哪些 Process，Application 内存使用情况，内部数据状态（State）等。  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Hierarchy.png" alt="Elixir Sequence Server Hierchary">  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Info.png" alt="Elixir Sequence Server Info">  </p>
+<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_State.png" alt="Elixir Sequence Server State">  </p>
+<p>总的来说，Elixir 的消息调用机制，Application 的组织方式，Process Supervision 和节点的架构方式，丰富的系统工具，真的是从骨子里散发出微服务的光芒。数据的 immutability 更是让分布式数据处理更安心，不用担心一些不必要的多线程问题。  </p>
+<p>Elixir 的作者 José Valim，在 <a href="http://blog.plataformatec.com.br/2015/06/elixir-in-times-of-microservices/" target="_blank" rel="external">Elixir in times of microservices</a> 这篇文章中介绍更清楚详细，推荐一读。  </p>
+<p>相关文章：  </p>
+<p><a href="http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/">初尝 Elixir，真的挺好喝的</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;分布式和微服务化，已经大行其道很久了。现在很多项目动不动就说做成微服务，不管不顾自己的项目性质，和相应的工具链支持。关于微服务，我还是很喜欢 Martin Fowler 大叔在 &lt;a href=&quot;https://martinfowler.com/bliki/Microser
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
+    
+      <category term="Elixir" scheme="http://www.thinkingincrowd.me/tags/Elixir/"/>
+    
+      <category term="MicroServices" scheme="http://www.thinkingincrowd.me/tags/MicroServices/"/>
+    
+  </entry>
   
   <entry>
     <title>真正的责任体现于为何种失败和错误考虑</title>
@@ -1149,101 +1236,6 @@
       <category term="Startup" scheme="http://www.thinkingincrowd.me/tags/Startup/"/>
     
       <category term="Belief" scheme="http://www.thinkingincrowd.me/tags/Belief/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>How to store your secret in Ethereum blockchain</title>
-    <link href="http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/"/>
-    <id>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</id>
-    <published>2018-01-23T02:54:10.000Z</published>
-    <updated>2018-04-10T08:46:23.595Z</updated>
-    
-    <content type="html"><![CDATA[<p>I am super excited that my first Ethereum blockchain Dapp product, <a href="http://www.secret-note.one/" target="_blank" rel="external">Decentralized Secret Note</a>, is online today.  It’s pretty straightforward if you are used to make transactions with MetaMask in Ethereum network.  My excitement mainly comes from two reasons below:  </p>
-<ol>
-<li>As a blockchain believer, I am not the one who only hold some coins, but also now make something beneficial for others.  </li>
-<li>As a developer, I can learn blockchain development using Smart Contract, IPFS and Web3.  </li>
-</ol>
-<h2 id="Why-am-I-doing-this"><a href="#Why-am-I-doing-this" class="headerlink" title="Why am I doing this?"></a>Why am I doing this?</h2><p>Blockchain development has always been mysterious to me before.  Lately I finally got a chance to look into it.  </p>
-<p>Really learning the blockchain and make something genuinely useful in decentralized scenario is quite difficult.  This idea comes to me because many so-promised life-long storage service can suddenly terminated.  Hence, a publicly accepted blockchain seems a perfect place to put something that you never want to lose.  Your information is never in control of some particular companies.  </p>
-<h2 id="Is-it-really-decentralized-and-how-safe-is-my-secret"><a href="#Is-it-really-decentralized-and-how-safe-is-my-secret" class="headerlink" title="Is it really decentralized and how safe is my secret?"></a>Is it really decentralized and how safe is my secret?</h2><p>All your secret notes have their own name/key which are stored in a Smart Contract in Ethereum.  Each of it points to an address in <a href="https://ipfs.io/" target="_blank" rel="external">IPFS</a>, which is a distributed web.  The backbone of this tool is completely decentralized and last forever unless Ethereum and IPFS themselves vanished.  This tool itself is open-source and hosted in Github.  You are freely to make a backup and host yourself if you need further assurance.  </p>
-<p>The concern you may have is that the data in public blockchain is viewable by anyone.  However, through normal access, each Ethereum address should only be able to see the note names stored by this address only.  Even if your notes’ names are revealed, so others can get the address in IPFS, they still cannot see your secret because they are protected by your private key (HTTPS private key, NOT WALLET private key).  And this key should be known by yourself only.  That is why I emphasize that “<strong>IF LOST, NO ONE is able to restore your notes</strong>“.</p>
-<h2 id="How-to-use-it"><a href="#How-to-use-it" class="headerlink" title="How to use it"></a>How to use it</h2><p>The authentication of using this tool is completely based on <a href="https://metamask.io/" target="_blank" rel="external">MetaMask</a> which is another great Dapp in Ethereum.  Hence, this tool DOES NOT require you to input any password or provide your wallet private key.  And for god’s sake, you should not provide those info to anybody.  </p>
-<p>Once you installed MetaMask in any of your favorite browser and connect your account to Ethereum network, you should see similar screen as below.  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/secret-note.png" alt="Screen Shot"></p>
-<p>The Ethereum network connected to and what account is currently authenticated are shown at the top of the screen.  The tool hosted can only be used in Main network as the smart contract is deployed there at <a href="https://etherscan.io/address/0xb01b98a50781c454c9daa3d43eb5399ff5b604ee#code" target="_blank" rel="external">0xb01b98a50781c454c9daa3d43eb5399ff5b604ee</a>.  </p>
-<p>Usage steps:  </p>
-<ol>
-<li>Input your own SSH-generated private key or ad-hoc generate one.  </li>
-<li>Backup this private key no matter you decided to remember locally in your browser or not.  </li>
-<li>Input note name and content, press Save.  </li>
-<li>MetaMask will popup (this might be a little slow) and ask you to confirm the transaction to save your note to Ethereum smart contract.  </li>
-<li>You only have to pay Gas for saving data in ETH blockchain.  </li>
-<li>Once your transaction is submitted and confirmed, your note will be listed at the right hand side.  </li>
-<li>Everytime you login using this ETH account and connected to Main net, you should see all your secrets.  Click on any item to view.  </li>
-</ol>
-<p><em>Notes: saving &amp; seeing data must have your private key inplace.  Viewing data doesn’t need to pay Gas.  Only changing data requires it.</em></p>
-<h2 id="Donation-amp-Encouragement"><a href="#Donation-amp-Encouragement" class="headerlink" title="Donation &amp; Encouragement"></a>Donation &amp; Encouragement</h2><p>Blockchain &amp; Dapp development is really exciting.  I hope this tool can benefit any blockchain enthusiast as you.  </p>
-<p>Donation of any ERC20 token to<br><code>0x713C8C77112858A3bd14A5FB380Fa0c4c5b1A8Bd</code> is greatly appreciated.  I wonder what kind of token I can get. ;)</p>
-<p>Or send Bitcoin to <code>196XA8S8ZwBu7UNap2A84cLzCAKoPPGck3</code> if you are such a generous rich in blockchain world. :D</p>
-<h2 id="For-developer"><a href="#For-developer" class="headerlink" title="For developer"></a>For developer</h2><p>If you are a developer, I think you can easily and freely use the source code in <a href="https://github.com/kenspirit/secret-note" target="_blank" rel="external">Github</a> to use any Test network and store your secret note there.  You have complete control and what is more important is that you do not need to pay real money for it.  Enjoy.  :D</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;I am super excited that my first Ethereum blockchain Dapp product, &lt;a href=&quot;http://www.secret-note.one/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;D
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
-    
-      <category term="Ethereum" scheme="http://www.thinkingincrowd.me/tags/Ethereum/"/>
-    
-      <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
-    
-      <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
-    
-      <category term="IPFS" scheme="http://www.thinkingincrowd.me/tags/IPFS/"/>
-    
-      <category term="Web3" scheme="http://www.thinkingincrowd.me/tags/Web3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>照顾好你自己，和你爱的人</title>
-    <link href="http://www.thinkingincrowd.me/2018/01/20/take-good-care-of-yourself-and-the-ones-you-love/"/>
-    <id>http://www.thinkingincrowd.me/2018/01/20/take-good-care-of-yourself-and-the-ones-you-love/</id>
-    <published>2018-01-20T08:34:02.000Z</published>
-    <updated>2018-04-10T08:46:23.594Z</updated>
-    
-    <content type="html"><![CDATA[<p>上周无聊的时候，又在翻着自己的硬盘看有什么美剧没看过的。在众多没看过的存货里面，也没什么头绪要看什么好，就按字母顺序，看了目录下第一个：「13 Reasons Why」。当然，它的名字也是有那么一点神秘和吸引。  </p>
-<p>这个美剧有 13 集，说的是美国一所高中内的一些学生之间的“校园霸凌（bullying）”事件。里面的一些霸凌事件并不是很严重的事情，甚至有些根本算不上事，但是随着一系列事情的发生，女主最后还是选择割腕自杀。  </p>
-<p>我们没法说清，到底是哪件霸凌事情导致了这个结果。即便你认为，最后的强暴是压死骆驼的最后一根稻草，但是，如果她有很好的朋友和值得信赖的关系在支持她，可能即便承受如此恶劣的事情，她也能撑过去。  </p>
-<p>我以前一直不懂，为什么有些人会自杀，或者有深度抑郁。但是，慢慢地，我觉得那并不是不能理解的事情。并不是说我像武志红那样，曾经体验过和走出来。只是，在更多学习和了解心理学的知识，和一个人在异地的状况，让我更能感受到自己的感觉。以前的我肯定无法想象，我能那样感受到自己的那份孤独感，和允许它在身体流动，然后放纵地哭出来。悲伤并不是一件坏事，哭当然也不是。或许你们还记得迪士尼的那个动画片「头脑特工队」，头脑里的情绪小人忧忧，一开始最不受待见，但是后来却是它治愈了女主。所以，<strong>如果一些情绪没有被发现，接纳和释放，可能真的就会造成严重的后果</strong>。  </p>
-<p>当然，仅仅接纳自己的情绪和找方法来释放，可能也不足以解决所有问题。或者说，有时独自一人是很难做到完全释放自己的负面情绪和死亡能量的。「头脑特工队」里的女主，失声痛哭的时候，是得到她父母在身旁的支持。「13 Reasons Why」的女主，最后是一直没有找到任何依靠，才选择自己独自承受和结束。所以说，<strong>稳健的，有支撑性的关系，对个人的心理健康，和面对逆境也非常必要</strong>。  </p>
-<p>看这美剧的时候，蝴蝶效应这个词一直出现在我的脑里。人的一生，都是一系列的决定和选择造成的。你无法知道自己的哪一个小错误，最后可能被放大到多少倍而产生严重的后果。你无法知道哪句话，哪个行为，甚至眼神，把你关系中的另一方给推开。一点点地，最后无法挽回。  </p>
-<p>当然，你也不可能每做一件事情，就担心这，担心那。只是，如果你一旦发现自己曾经做了错事，<strong>给别人造成伤害，就应该毫不犹豫地诚心道歉和补偿，而不是想当然地让它慢慢淡化</strong>。虽然伤害无法逆转，就像拔掉木板上的钉子也还有留下的伤痕，再也无法回到完好的状态。但是，诚心的回馈和补偿，能为伤痕涂上一层保护层，减轻和防止后续伤害。  </p>
-<p>同时，你也可以<strong>更主动去留意你爱的人</strong>，爱人，孩子和父母。他们可能心里默默承受着一些苦楚。如果你能察觉，陪伴在他们身旁，主动问一句“你还好吗？”，“有什么需要帮忙的？”，那些苦楚也许就不会成为无法承受之重。  </p>
-<p>2017 已经过去，如果说要做一个年终总结，我可以说，我很庆幸当时决定来北京，并孤独地过了那么长时间。这份孤独，让我成为一个更健全的人。  </p>
-<p>踏入 2018 年，按照李笑来的 7 年是一辈子的说法，我已经活了 5 辈子了。当初在「<a href="http://www.thinkingincrowd.me/2015/12/31/2015-retrospect-and-2016-goal-setting/">2015 年总结与展望</a>」的时候说：“希望 2018 年，也就是我的下一个七年，能有一些较明显的转变。” 看来，愿望是在意料之外，也是好的方面达成了。希望这个更健全的人，未来能更好地照顾自己，和他爱的人。  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上周无聊的时候，又在翻着自己的硬盘看有什么美剧没看过的。在众多没看过的存货里面，也没什么头绪要看什么好，就按字母顺序，看了目录下第一个：「13 Reasons Why」。当然，它的名字也是有那么一点神秘和吸引。  &lt;/p&gt;
-&lt;p&gt;这个美剧有 13 集，说的是美国一所高中内的
-    
-    </summary>
-    
-      <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
-    
-    
-      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
-    
-      <category term="Love" scheme="http://www.thinkingincrowd.me/tags/Love/"/>
     
   </entry>
   

@@ -15,7 +15,7 @@ categories:
 
 在搭环境和做任务的过程中，新人经常遇到问题或异常后就蒙了，不知道怎么继续下去。然后就求救说：“出错了，怎么办？”。我都会反问一句：“哪里出错了？你定位到问题在哪里了吗？”。可是一般收到的答案都是“不知道”。像我们公司的系统架构，把后端分了两层，一层专门服务于表现层，另一层专门访问数据库和提供 web service。系统的架构就简单如下图所示。如果在浏览器发起的一个 Ajax 请求有异常返回，那异常到底是在哪一层，或者是哪一个传输环节？如果在传输环节可能是因为对象类型，属性不一致导致。如果在 Domain 层可能是业务逻辑，数据库操作出现问题等。
 
-<img alt="Company System Architecture" src="http://77g8zm.com1.z0.glb.clouddn.com/company_system_architecture.png"/>
+<img alt="Company System Architecture" src="http://thinkingincrowd.u.qiniudn.com/company_system_architecture.png"/>
 
 ​认识和定位问题的能力应该是程序员技能宝典里面的 101，并且是要持续修炼的能力。**看日志**和**看代码**是获取这种能力的两种最基础的手段。
 

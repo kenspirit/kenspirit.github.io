@@ -151,7 +151,7 @@ Sample `tsconfig.json` setting is as below which compiles all TypeScript source 
 
 The compiled source is output to `build` directory and retains the original folder structure.
 
-<img alt="Source Folder Structure" src="http://77g8zm.com1.z0.glb.clouddn.com/js_typescript_folder_structure.png" style="position: relative; float: right; margin-left: 5px; border: 0px; padding: 0px;"/>
+<img alt="Source Folder Structure" src="http://thinkingincrowd.u.qiniudn.com/js_typescript_folder_structure.png" style="position: relative; float: right; margin-left: 5px; border: 0px; padding: 0px;"/>
 
 ```json
 {
@@ -202,7 +202,7 @@ There are two issues discovered after the testing:
 
 * Any compile warning can possibly block the webpack build process.  To fix this, we can add a `ts` config in webpack and ignore some particular errors.  
 
-![TypeScript Warning](http://77g8zm.com1.z0.glb.clouddn.com/js_typescript_error.png)
+![TypeScript Warning](http://thinkingincrowd.u.qiniudn.com/js_typescript_error.png)
 
 ```javascript
 module.exports = {
@@ -285,7 +285,7 @@ gulp.task('webpack', ['typescript'], function(callback) {
 
 The execution is as below.
 
-![Gulp and Webpack](http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp.png)
+![Gulp and Webpack](http://thinkingincrowd.u.qiniudn.com/js_webpack_gulp.png)
 
 Till now, you should have basic idea on how to work with TypeScript and Webpack for JavaScript full stack project.  But there is one more thing, how about CSS?  Can it be the same?
 
@@ -360,6 +360,6 @@ There are couples of setting took me a while to figure out.
 
 4. `HtmlWebpackPlugin` is used to automatically inject the generated CSS and JS files into the appropriate location in the entry HTML file as below.
 
-![Final HTML result](http://77g8zm.com1.z0.glb.clouddn.com/js_webpack_gulp_final_result.png)
+![Final HTML result](http://thinkingincrowd.u.qiniudn.com/js_webpack_gulp_final_result.png)
 
 I haven't talked about how to include internal CSS or HTML yet.  However, I think you can figure out yourself based on the sample and strategy described here.  

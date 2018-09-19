@@ -184,31 +184,31 @@ import 'angular-route';
 
 **Code Tips and auto-complete**
 
-<img alt="Code Tips" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Code-Tips.png"/>
+<img alt="Code Tips" src="http://thinkingincrowd.u.qiniudn.com/TypeScript-Code-Tips.png"/>
 
 **Jump to definition and many support shortcuts**
 
-<img alt="Plugin-Features" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Plugin-Features.png"/>
+<img alt="Plugin-Features" src="http://thinkingincrowd.u.qiniudn.com/TypeScript-Plugin-Features.png"/>
 
 **Warning about missing properties**
 
 `Show Error List` shows all error in your project.  
 
-<img alt="Miss-Properties-1" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Miss-Properties1.png"/>
+<img alt="Miss-Properties-1" src="http://thinkingincrowd.u.qiniudn.com/TypeScript-Warn-Miss-Properties1.png"/>
 
-<img alt="Miss-Properties-2" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Miss-Properties2.png"/>
+<img alt="Miss-Properties-2" src="http://thinkingincrowd.u.qiniudn.com/TypeScript-Warn-Miss-Properties2.png"/>
 
 **Warning about incorrect function signature**
 
 Status bar shows the error focusing on.
 
-<img alt="Unmatch-Interface" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Interface.png"/>
+<img alt="Unmatch-Interface" src="http://thinkingincrowd.u.qiniudn.com/TypeScript-Warn-Interface.png"/>
 
 **Warn but not block**
 
 When you compiles the TypeScript to normal JavaScript, it warns but not blocks on code generation by default.  This is great because it allows for gradual evolvement after you mass renaming `.js` file to `.ts` format for the transition.
 
-<img alt="Warn-Not-Block" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript-Warn-Not-Block.png"/>
+<img alt="Warn-Not-Block" src="http://thinkingincrowd.u.qiniudn.com/TypeScript-Warn-Not-Block.png"/>
 
 So far, you have a glimpse on how fascinating the IDE support is for TypeScript.  I haven't tried the famous Webstorm and Visual Studio, but they should have great support as well.
 
@@ -224,7 +224,7 @@ For IDE, Sublime's Flow plugin doesn't seem to have much feature.  Facebook has 
 
 ## Conclusion
 
-<img alt="TypeScript_Babel_Decision" src="http://77g8zm.com1.z0.glb.clouddn.com/TypeScript_Babel_Decision.png"/>
+<img alt="TypeScript_Babel_Decision" src="http://thinkingincrowd.u.qiniudn.com/TypeScript_Babel_Decision.png"/>
 
 Above sudo code is just for funny purpose.  It's really a choice of taste and there is no aboslute right or wrong for the selection.  Actually, there are other things to consider as well.  Which works better with Webpack and Node.js?  How to fit into the build process?  I will illustrate these areas' consideration in another article later.  
 
