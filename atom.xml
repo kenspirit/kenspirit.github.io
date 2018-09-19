@@ -59,9 +59,9 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
-      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
-    
       <category term="Elixir" scheme="http://www.thinkingincrowd.me/tags/Elixir/"/>
+    
+      <category term="Distributed" scheme="http://www.thinkingincrowd.me/tags/Distributed/"/>
     
       <category term="MicroServices" scheme="http://www.thinkingincrowd.me/tags/MicroServices/"/>
     
@@ -168,9 +168,9 @@
       <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
     
     
-      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
-    
       <category term="Elixir" scheme="http://www.thinkingincrowd.me/tags/Elixir/"/>
+    
+      <category term="Functional Programming" scheme="http://www.thinkingincrowd.me/tags/Functional-Programming/"/>
     
   </entry>
   
