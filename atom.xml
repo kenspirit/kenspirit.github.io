@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2018-09-19T00:18:23.706Z</updated>
+  <updated>2018-09-19T00:23:01.595Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>深入到骨子里的分布式和微服务化编程语言</title>
     <link href="http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/"/>
     <id>http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/</id>
-    <published>2018-09-19T07:47:38.000Z</published>
-    <updated>2018-09-19T00:18:23.706Z</updated>
+    <published>2018-09-19T00:30:38.000Z</published>
+    <updated>2018-09-19T00:23:01.595Z</updated>
     
     <content type="html"><![CDATA[<p>分布式和微服务化，已经大行其道很久了。现在很多项目动不动就说做成微服务，不管不顾自己的项目性质，和相应的工具链支持。关于微服务，我还是很喜欢 Martin Fowler 大叔在 <a href="https://martinfowler.com/bliki/MicroservicePremium.html" target="_blank" rel="external">MicroservicePremium</a> 里说的：  </p>
 <blockquote>
