@@ -26,5 +26,5 @@ I gain a lot from the community and hope some of the content here can also benef
 * __Slideshare__: [chengusky](http://www.slideshare.net/chengusky)
 * __微信公众号 (Wechat)__: thinkincrowd
 
-![thinkincrowd](http://77g8zm.com1.z0.glb.clouddn.com/wechat.jpeg "鹄思乱想")
+![thinkincrowd](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/wechat.jpeg "鹄思乱想")
 
