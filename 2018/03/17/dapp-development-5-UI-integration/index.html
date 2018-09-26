@@ -94,7 +94,7 @@
     </p>
   <p class="article-time">
     <time datetime="2018-03-17T05:40:40.000Z" itemprop="datePublished">Mar 17 2018</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.603Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:32.097Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -108,7 +108,7 @@
 		
 		<p>本篇文章主要讲述 Dapp 前端页面，怎么和 Ethereum 帐号网络集成。不过，涉及的前端开发和代码，不会包括在覆盖范围内。因为前端开发框架太多（Vuejs, React, AngularJS，JQuery 等），使用什么都可以，所以本文仅解释合约相关的代码。本文代码以 Vuejs 代码为样例，也在 Github 上。  </p>
 <p>本教程，也就是简化版的 Secret Note 页面如下图。页面的最上方，显示的是当前连接的 Ethereum 网络，Gas 价格，和登录的 Ethereum 帐号地址。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/simple-secret-note-ui.png" alt="Simple Secret Note UI">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/simple-secret-note-ui.png" alt="Simple Secret Note UI">  </p>
 <h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>想要在页面集成 Ethereum 帐号网络，并且对智能合约进行操作，我们需要借助前一章提及的 <a href="https://github.com/ethereum/web3.js" target="_blank" rel="external">web3.js</a>，它是 Ethereum 兼容的 JavaScript API 库。  </p>
 <p>在页面打开初始化的时候，我们需要初始化一个 Web3 的实例。这段代码放在 Vuejs 的 <code>created</code> 事件里。  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">created() &#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> web3 !== <span class="string">'undefined'</span>) &#123;</div><div class="line">    <span class="comment">// Use MetaMask's provider</span></div><div class="line">    web3js = <span class="keyword">new</span> Web3(web3.currentProvider);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.showAlertMsg(<span class="string">'Please install &lt;a href="https://metamask.io/" target="__blank"&gt;MetaMask&lt;/a&gt; extension for your browser before using.'</span>, <span class="string">'warning'</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// Async</span></div><div class="line">  <span class="keyword">this</span>.detectNetwork();</div><div class="line">  <span class="keyword">this</span>.getGasPrice();</div><div class="line">  <span class="keyword">this</span>.initAccount();</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
@@ -121,17 +121,17 @@
 <p>如果你看了 <code>detectNetwork</code> 和 <code>getGasPrice</code> 里面的代码，可能会疑惑，为什么它们不需要设定定时器呢？因为，MetaMask 插件检测到你切换网络，并且当前页面曾经访问和使用过 web3 对象的话，它会自动刷新页面。  </p>
 <h3 id="MetaMask-配置"><a href="#MetaMask-配置" class="headerlink" title="MetaMask 配置"></a>MetaMask 配置</h3><h4 id="本地网络设置"><a href="#本地网络设置" class="headerlink" title="本地网络设置"></a>本地网络设置</h4><p>因为我们当前是使用本地的 Ganache 网络来测试，所以我们先要在 MetaMask 上面配置好网络和相应的测试帐号。  </p>
 <p>首先我们点击左上角的网络下拉选择器，然后点击 <code>Custom RPC</code>：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-menu.png" alt="MetaMask Custom RPC Menu">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-custom-rpc-menu.png" alt="MetaMask Custom RPC Menu">  </p>
 <p>然后我们在 Current RPC 下面输入 <code>http://localhost:7545</code>，点击 <code>Save</code>。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-setup.png" alt="MetaMask Custom RPC Setup">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-custom-rpc-setup.png" alt="MetaMask Custom RPC Setup">  </p>
 <h4 id="帐号设置"><a href="#帐号设置" class="headerlink" title="帐号设置"></a>帐号设置</h4><p>安装完 MetaMask 插件时，它默认会帮你创建了一个新帐号。但是，我们需要把 Ganache 自动生成的帐号导入 MetaMask，才能使用它们和我们部署的合约交互。  </p>
 <p>在 Ganache 首页的帐号列表下，我们选择第一个（合约创建帐号），点击最右边的钥匙图标，查看它的私钥，并且复制下来。（这里是测试帐号，所以暴露私钥没关系。但是如果是你的真实 Ethereum 帐号，就一定不能暴露了）  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account-show-key.png" alt="Ganache Account Show Key">  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account-private-key.png" alt="Ganache Account Private Key">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account-show-key.png" alt="Ganache Account Show Key">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account-private-key.png" alt="Ganache Account Private Key">  </p>
 <p>然后，我们点击 MetaMask 页面右上角的小人图标，会出来以下菜单：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-account.png" alt="Metamask Account">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-account.png" alt="Metamask Account">  </p>
 <p>最后，点击 <code>Import Account</code> 菜单，就进入以下输入私钥的页面。然后粘贴刚才复制的私钥，点击 <code>Import</code> 即可。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-account-import.png" alt="Metamask Account Import">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-account-import.png" alt="Metamask Account Import">  </p>
 <h2 id="智能合约的引入和交互"><a href="#智能合约的引入和交互" class="headerlink" title="智能合约的引入和交互"></a>智能合约的引入和交互</h2><p>既然 Ethereum 测试帐号和网络的集成已经准备好，我们就可以在代码引入智能合约，并与之交互了。  </p>
 <h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p>首先，我们要先在当前项目下安装和使用 <code>truffle-contract</code> 这个包。  </p>
 <blockquote>
@@ -156,9 +156,9 @@
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">saveNote() &#123;</div><div class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  SecretNote.at(CONTRACT_ADDRESS)</div><div class="line">    .then((instance) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> instance.setNote(that.noteForm.noteName,</div><div class="line">        that.noteForm.noteContent, &#123; <span class="keyword">from</span>: that.account &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
 <p>执行成功后，会弹出如下页面：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-trx-request.png" alt="Metamask Trx Request">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-trx-request.png" alt="Metamask Trx Request">  </p>
 <p>点击 <code>Submit</code> 后，交易记录会出现在账户下并等待区块链的确认。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-trx-confirm.png" alt="Metamask Trx Confirm">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-trx-confirm.png" alt="Metamask Trx Confirm">  </p>
 <h4 id="Call-调用"><a href="#Call-调用" class="headerlink" title="Call 调用"></a>Call 调用</h4><p>SecretNote <code>getNote</code> 方法调用其实和 <code>setNote</code> 差不多，只是不需要指定帐号而已。  </p>
 <p>有一点要注意的是，这个方法定义的返回值类型是 <code>bytes32</code>，所以要使用 <code>toAscii</code> 方法把内容转换后才使用。  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">loadNote() &#123;</div><div class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  SecretNote.at(CONTRACT_ADDRESS)</div><div class="line">    .then((instance) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> instance.getNote(that.noteForm.noteName);</div><div class="line">    &#125;)</div><div class="line">    .then((noteContent) =&gt; &#123;</div><div class="line">      <span class="keyword">if</span> (!noteContent) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line">      that.noteForm.noteContent = web3js.toAscii(noteContent);</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>

@@ -97,7 +97,7 @@
     </p>
   <p class="article-time">
     <time datetime="2018-03-05T04:20:20.000Z" itemprop="datePublished">Mar 5 2018</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.600Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:33.459Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -115,7 +115,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">pragma solidity ^0.4.18;</div><div class="line"></div><div class="line">contract Ownable &#123;</div><div class="line">    address owner;</div><div class="line"></div><div class="line">    function Ownable() public &#123;</div><div class="line">        owner = msg.sender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    modifier onlyOwner() &#123;</div><div class="line">        require(owner == msg.sender);</div><div class="line">        _;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">contract SecretNote is Ownable &#123;</div><div class="line">  mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) notes;</div><div class="line">  uint256 noteCount;</div><div class="line"></div><div class="line">  event SecretNoteUpdated(address indexed _sender, bytes32 indexed _noteKey, bool _success);</div><div class="line"></div><div class="line">  function SecretNote() public &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function () public payable &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to get their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   */</div><div class="line">  function getNote(bytes32 _noteKey) public view returns (bytes32) &#123;</div><div class="line">      return notes[msg.sender][_noteKey];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to update their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   * @param _content The note path hash</div><div class="line">   */</div><div class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</div><div class="line">      require(_noteKey != &quot;&quot;);</div><div class="line">      require(_content != &quot;&quot;);</div><div class="line"></div><div class="line">      notes[msg.sender][_noteKey] = _content;</div><div class="line">      noteCount++;</div><div class="line"></div><div class="line">      SecretNoteUpdated(msg.sender, _noteKey, true);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function getTotalNoteCount() public view onlyOwner returns(uint256) &#123;</div><div class="line">      return noteCount;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="Remix-IDE"><a href="#Remix-IDE" class="headerlink" title="Remix IDE"></a>Remix IDE</h2><p><a href="https://remix.ethereum.org" target="_blank" rel="external">Remix IDE</a> 是一个在线的智能合约编译，测试和部署工具。使用它可以很方便的和智能合约交互，虽然有些地方不是那么便利。  </p>
 <h3 id="合约编译检查"><a href="#合约编译检查" class="headerlink" title="合约编译检查"></a>合约编译检查</h3><p>当我们打开 Remix 的页面，把我们的智能合约代码贴进去的时候，它已经会自动帮你编译代码。右侧是主要的操作区。它有好几个功能标签。<code>Compile</code> 标签会显示出编译后有哪些合约，已经它发现的一些 Warning。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Remix_compile_contract.png" alt="Remix IDE - Compile">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_compile_contract.png" alt="Remix IDE - Compile">  </p>
 <h3 id="合约创建"><a href="#合约创建" class="headerlink" title="合约创建"></a>合约创建</h3><p>既然编译没有问题，我们点击旁边的 <code>Run</code> 标签看看怎么部署运行这个合约。  </p>
 <ol>
 <li>选择 <code>JavaScript VM</code> 这个 Environment。你会发现它马上帮你创建了好几个拥有了 100 eth 的帐号。  </li>
@@ -124,7 +124,7 @@
 <li>合约就生成了。它的接口 <code>fallback</code>，<code>getTotalNoteCount</code>，<code>getNote</code>，<code>setNote</code> 都分别显示出来。  </li>
 <li>因为我们用了默认提供的第一个帐号来创建合约，它的帐号余额已经不是 100 eth 了。  </li>
 </ol>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Remix_create_contract.png" alt="Remix IDE - Create">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_create_contract.png" alt="Remix IDE - Create">  </p>
 <h3 id="合约调用"><a href="#合约调用" class="headerlink" title="合约调用"></a>合约调用</h3><p>合约创建完，我们就可以调用合约提供的对外的接口了，有几点值得留意的是：  </p>
 <ol>
 <li>只读 <code>view</code> 的方法，它的名字是蓝色的；其它的方法名字是粉红色的。  </li>
@@ -150,7 +150,7 @@
 <blockquote>
 <p>0: uint256: 1</p>
 </blockquote>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Remix_call_contract.png" alt="Remix IDE - Call">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_call_contract.png" alt="Remix IDE - Call">  </p>
 <p>现在，我们来看一看如果用另一个帐号（非合约创建帐号），来调用 <code>getTotalNoteCount</code> 会出现什么效果。  </p>
 <ol>
 <li>在 <code>Account</code> 下拉框选择另外的一个帐号。这个帐号应该有 100 eth，因为从来没操作过。  </li>

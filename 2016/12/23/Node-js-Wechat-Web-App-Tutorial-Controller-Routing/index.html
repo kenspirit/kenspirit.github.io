@@ -96,7 +96,7 @@ MVC 处理流程和路由http://w">
     </p>
   <p class="article-time">
     <time datetime="2016-12-23T15:00:39.000Z" itemprop="datePublished">Dec 23 2016</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.552Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:39.012Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -109,12 +109,12 @@ MVC 处理流程和路由http://w">
 		</div>
 		
 		<p>这一章我们要讲的是 <a href="https://en.wikipedia.org/wiki/Model–view–controller" target="_blank" rel="external">MVC</a> 的 C，也就是 Controller。在 Web Application 里谈到 Controller，我们就不可避免地要了解 <strong>MVC 对数据处理的流程</strong>和涉及<strong>路由</strong>这个概念。大家可以通过这个简略的流程图来辅助理解下面的一些概念。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-mvc-flow.png" alt="MVC Flow"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-mvc-flow.png" alt="MVC Flow"></p>
 <h2 id="MVC-处理流程和路由"><a href="#MVC-处理流程和路由" class="headerlink" title="MVC 处理流程和路由"></a>MVC 处理流程和路由</h2><p><a href="http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/">http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic/</a></p>
 <p>通过在浏览器输入上面的网址（URL），我们就能看到相应的网页内容。这背后其实是有相应的服务器，根据网址把与其相对应的内容返回给你。服务器由域名，也就是 <strong>www.thinkingincrowd.me</strong> 部分决定。而具体内容就是根据路径 <strong>2016/11/27/Node-js-Wechat-Web-App-Tutorial-Business-Logic</strong> 来定位的。  </p>
 <p><strong>MVC 中的路由，就是路径和 Controller 的对应关系</strong>。</p>
 <p>路由大致可分为两种：静态文件，和动态内容。但是它们的原理是一样的。静态文件的路由，就是那个路径直接对应了服务器背后的图片，HTML，JS 或者 CSS 等静态文件，服务器不需要额外处理，找到了就直接返回文件的内容。<strong>Web Application 中处理动态内容的路由，需要通过调用绑定的 Controller，再经过 Model 或业务逻辑层处理，最后把结果返回</strong>。服务器如果根据路径找不到对应的 Controller，一般会返回 404 状态，而你们就有可能见到这种类似的页面。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-404.png" alt="404 Page"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-404.png" alt="404 Page"></p>
 <h2 id="Controller-控制器"><a href="#Controller-控制器" class="headerlink" title="Controller 控制器"></a>Controller 控制器</h2><p>Controller 的功能是什么呢？  </p>
 <h3 id="收集用户提交的数据"><a href="#收集用户提交的数据" class="headerlink" title="收集用户提交的数据"></a>收集用户提交的数据</h3><p>浏览网页的时候，用户可能不需要提供额外的数据给服务器，只需要网址 URL 就可以了。但是，比如当我们要查询酒店信息，下订单的时候，我们还是要提交相应的数据让服务器处理。  </p>
 <p>用户和服务器打交道，其实是通过 HTTP 协议提供的 GET, POST, PUT, PATCH, DELETE 等操作来实现的。  </p>
@@ -142,7 +142,7 @@ MVC 处理流程和路由http://w">
 <p>首先，我们来看读取单一图片数据的方法：  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImage</span>(<span class="params">req, res, next</span>) </span>&#123;</div><div class="line">  ImageManager.load(req.params.id)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">entity</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> res.json(buildApiResponse(entity))</div><div class="line">    &#125;)</div><div class="line">    .catch(next)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个方法是我们 MVC 的一个 Controller，但其实也是一个 <a href="http://expressjs.com/en/guide/writing-middleware.html" target="_blank" rel="external">Express 框架的中间件</a>。中间件是什么呢？我们来看下图：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-express-middleware.png" alt="Express Middleware"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-express-middleware.png" alt="Express Middleware"></p>
 <ul>
 <li>Req 是请求。它承载着请求的HTTP 操作（GET/POST），路径（URL），和参数等。  </li>
 <li>Res 是回复。我们通过它决定什么时候返回，以及返回什么数据给发出请求的人或系统。  </li>
@@ -182,11 +182,11 @@ MVC 处理流程和路由http://w">
 </ol>
 <h3 id="REST-API-服务的测试"><a href="#REST-API-服务的测试" class="headerlink" title="REST API 服务的测试"></a>REST API 服务的测试</h3><p>到这里，其实我们可以测试一下那些能操作图片数据的服务了。没有页面测不了？作为后端开发者，肯定不能说要依赖页面才能测试自己写好的 REST API。下面我们来看看怎么使用 <a href="https://www.getpostman.com/" target="_blank" rel="external">Postman</a> 来做测试。  </p>
 <p>我们先启动我们的项目。在命令行，进入项目目录，输入 <code>node index.js</code>。项目启动成功应该会输出类似的日志。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-server-started.png" alt="Server Started"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-server-started.png" alt="Server Started"></p>
 <p>然后我们启动 Postman：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-postman-started.png" alt="Postman Started"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-postman-started.png" alt="Postman Started"></p>
 <h4 id="C-Create"><a href="#C-Create" class="headerlink" title="C - Create"></a>C - Create</h4><p>我们先通过它来创建一条图片记录：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-create.png" alt="Create Image"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-restful-create.png" alt="Create Image"></p>
 <p>大家在红色框的地方输入相应的参数，然后点击 Send 按钮，就可以看到服务器给予正确的返回了。这样就表示数据库已经成功地创建了一条记录。  </p>
 <p>Controller 里面使用的 <code>req.body</code> 所获取的数据，就是我们在 <code>Body</code> 这里输入的 JSON 数据。大家可以尝试一下，在 JSON 数据里面加多一些属性，比如 width, height 之类的，看能否保存到数据库。  </p>
 <p>另外，我们其实还可以对传过去的参数做一定的限制和检查。如果我们把路由的定义稍微改一下，你们看如果一些数据不传有什么结果。  </p>
@@ -194,10 +194,10 @@ MVC 处理流程和路由http://w">
 <p><a href="https://github.com/hapijs/joi" target="_blank" rel="external">joi</a> 还有更多有趣的用法，有兴趣的可以自己去了解一下。</p>
 <h4 id="R-Read"><a href="#R-Read" class="headerlink" title="R - Read"></a>R - Read</h4><p>通过上面的练习和尝试，我们应该已经创建出来一些测试数据了。现在我们来测试读取记录。  </p>
 <p>首先是读取某一条记录：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-load.png" alt="Load Image"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-restful-load.png" alt="Load Image"></p>
 <p>服务器怎么知道我要读哪一条记录？Controller 里使用的 <code>req.params.id</code> 其实对应的是路由里配置的 <code>&#39;/:id&#39;</code>，它通过和真正的URL <code>http://localhost:3000/image/585699146c7b082fba163580</code> 进行匹配。截取出来的最后一段，就是记录的 <code>id</code>。  </p>
 <p>批量读取多条记录的方式就如下图：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-list.png" alt="List Image"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-restful-list.png" alt="List Image"></p>
 <p>大家可以看到，GET 请求的另一种传递参数方式是如何拼接到 URL 上面的。在 Controller 里面通过 <code>req.query</code> 就能获取到这些参数。大家可以通过在 Controller 里加上 <code>console.log(req.query)</code> 的方法来调试并打印数据出来看看。你们看到那些特殊的参数，是 evergrow 框架在批量读取数据时，支持的一些特定的系统参数。它们的作用是指示后台如何在数据量比较多的时候，分页返回记录。  </p>
 <h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ul>
 <li>你能够为 <code>Updates Image profile</code> 这个路由，完善好 <code>body</code> 的验证部分吗？可以给前面一章新加的 <code>approve</code> 方法，加对应的 Controller 和路由吗？  </li>
@@ -220,7 +220,7 @@ MVC 处理流程和路由http://w">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Node-js/">Node.js</a><a href="/tags/Wechat/">Wechat</a><a href="/tags/Tutorial/">Tutorial</a><a href="/tags/MVC/">MVC</a><a href="/tags/Controller/">Controller</a><a href="/tags/Routing/">Routing</a>
+  <span></span> <a href="/tags/Node-js/">Node.js</a><a href="/tags/Wechat/">Wechat</a><a href="/tags/Tutorial/">Tutorial</a><a href="/tags/Controller/">Controller</a><a href="/tags/Routing/">Routing</a><a href="/tags/MVC/">MVC</a>
   </div>
 
 

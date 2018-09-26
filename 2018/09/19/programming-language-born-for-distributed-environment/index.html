@@ -96,7 +96,7 @@ my primary guideline would be don">
     </p>
   <p class="article-time">
     <time datetime="2018-09-19T00:30:38.000Z" itemprop="datePublished">Sep 19 2018</time>
-    更新日期:<time datetime="2018-09-19T00:23:01.595Z" itemprop="dateModified">Sep 19 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:30.665Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -124,12 +124,12 @@ my primary guideline would be don">
 <li>监控这两个服务的 Supervisor 服务，假如业务逻辑出错，负责重启  </li>
 </ol>
 <p>下面这幅图应该基本可以说明整个应用是如何运作的了。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Demo.png" alt="Elixir Sequence Server Demo">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Demo.png" alt="Elixir Sequence Server Demo">  </p>
 <p>你可以看到，如果我把自增的间隔故意设置为非数字，导致服务意外退出，背后的 Supervisor 服务会将它悄悄的重启，并按照编写好的逻辑，把 Server 的内部状态数据保存到数据服务，以便重启时读取。等我重新设置一个正确的数字自增间隔后，就可以接着获取新的号码了。  </p>
 <p>在 Elixir 的交互控制台 iex 下，敲入 <code>:observer.start()</code> 这个命令，就可以监控整个系统的运行状态，包括有哪些 Application，哪些 Process，Application 内存使用情况，内部数据状态（State）等。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Hierarchy.png" alt="Elixir Sequence Server Hierchary">  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Info.png" alt="Elixir Sequence Server Info">  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_State.png" alt="Elixir Sequence Server State">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Hierarchy.png" alt="Elixir Sequence Server Hierchary">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Info.png" alt="Elixir Sequence Server Info">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_State.png" alt="Elixir Sequence Server State">  </p>
 <p>总的来说，Elixir 的消息调用机制，Application 的组织方式，Process Supervision 和节点的架构方式，丰富的系统工具，真的是从骨子里散发出微服务的光芒。数据的 immutability 更是让分布式数据处理更安心，不用担心一些不必要的多线程问题。  </p>
 <p>Elixir 的作者 José Valim，在 <a href="http://blog.plataformatec.com.br/2015/06/elixir-in-times-of-microservices/" target="_blank" rel="external">Elixir in times of microservices</a> 这篇文章中介绍更清楚详细，推荐一读。  </p>
 <p>相关文章：  </p>

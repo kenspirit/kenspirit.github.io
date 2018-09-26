@@ -95,7 +95,7 @@ React围绕 JavaScript 来设计的思想，把所有的 Compon">
     </p>
   <p class="article-time">
     <time datetime="2017-05-13T09:18:51.000Z" itemprop="datePublished">May 13 2017</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.570Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:36.414Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -115,7 +115,7 @@ React围绕 JavaScript 来设计的思想，把所有的 Compon">
 <h2 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a>Flux</h2><p>根据 React Component 绑定数据和接收事件的形式，Flux 是秉持单向数据流动里面的一种代码架构方式。  </p>
 <p>Flux 包含三大主要部分：Dispatcher, Store, 和 View（其实就是 React 的 Component）。它声称自己没有 MVC 里面的 Controller，但是有 Controller-View 和 Action Creator。真是受不了这些框架了，老是造一些名词，再标榜和以前不同。其实别管那么多，最重要的是<strong>搞清楚数据的流动情况，数据的流动情况，数据的流动情况</strong>。  </p>
 <p>下面我拿消息列表的例子来说明 Flux 里面的主要部分是怎么关联，数据在里面是怎么流动的。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/flux_data_flow.png" alt="Flux Data Flow"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/flux_data_flow.png" alt="Flux Data Flow"></p>
 <p>这里有两个场景：  </p>
 <h3 id="页面打开，自动加载消息"><a href="#页面打开，自动加载消息" class="headerlink" title="页面打开，自动加载消息"></a>页面打开，自动加载消息</h3><p>这个场景的数据流动路线是：1 -&gt; 2 -&gt; A -&gt; B  </p>
 <p>页面打开的时候，Action Creator 把 <code>LOAD_MSGS</code> 这个 Action 推给 Dispatcher。两个 Store 都会接收到这个 Action。Store B 把数据赋予 <code>msgs</code>，更改了内部 State，然后更新 View B。  </p>
@@ -132,7 +132,7 @@ React围绕 JavaScript 来设计的思想，把所有的 Compon">
 <p>View 和 Controller View 的不同在于，Controller View 负责接收 Store 广播出来的事件，然后把更新的数据扩散下去其它的 View。所以 Controller View 是接近于顶层的。  </p>
 <h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p>Redux 又是什么鬼呢？有人问 Redux 算不算是 Flux 架构的一种实现。Redux 作者说它既是，又不是。有兴趣的朋友自己看文档官网里，作者引的 Tweet 吧。神仙也会打架的，就是因为各自造不同的名词出来。  </p>
 <p>那在这个框架底下，数据的流动又是如何的呢？我们通过上面同样的场景来看一下：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/redux_data_flow.png" alt="Redux Data Flow"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/redux_data_flow.png" alt="Redux Data Flow"></p>
 <h3 id="页面打开，自动加载消息-1"><a href="#页面打开，自动加载消息-1" class="headerlink" title="页面打开，自动加载消息"></a>页面打开，自动加载消息</h3><p>这个场景的数据流动路线是：1 -&gt; 2 -&gt; A -&gt; B -&gt; C -&gt; D  </p>
 <p>页面打开的时候，Action Creator 把 <code>LOAD_MSGS</code> 这个 Action 作为参数调用 <code>Store.dispatch</code> 方法。然后和 Store 绑定的所有 Reducer 都会接收到 Action，和它们各自负责的部分 State 结构。Store 再把各个 Reducer 计算后的新 State 合并。Container Component 把 State 的数据转换成 Presentation Component 需要的 Property 和绑定事件。   </p>
 <h3 id="用户点击阅读某一条消息-1"><a href="#用户点击阅读某一条消息-1" class="headerlink" title="用户点击阅读某一条消息"></a>用户点击阅读某一条消息</h3><p>这个场景的数据流动路线是：3 -&gt; 4 -&gt; 5 -&gt; 6 -&gt; A -&gt; B -&gt; C -&gt; D  </p>

@@ -94,7 +94,7 @@
     </p>
   <p class="article-time">
     <time datetime="2017-11-11T13:42:28.000Z" itemprop="datePublished">Nov 11 2017</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.586Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:35.529Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -122,7 +122,7 @@
 <p>第一，我们并没有普通电商平台那样的购物车，和订单流程。用户如果遇到心仪的课程，他只需要点击购买，支付，然后就可以在他的已购列表看到刚购买的课程了。  </p>
 <p>第二，我们用的是 MongoDB。MongoDB 没有 transaction 和 join 的概念。如果把订单和支付信息切分到不同的 collection，操作会变复杂，并还有可能由于操作或数据库错误导致数据不完整。  </p>
 <p>所以，最开始的支付模块模型大致如下图。后台有定时 Job 用来计算主讲人收入，和他的各个直播收益的。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-1.png" alt="Payment Modeling Phase 1"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-1.png" alt="Payment Modeling Phase 1"></p>
 <h2 id="冻结部分收益"><a href="#冻结部分收益" class="headerlink" title="冻结部分收益"></a>冻结部分收益</h2><p>到了第二个阶段，出现了一些问题需要我们面对：  </p>
 <ol>
 <li><p>因为我们售卖的是虚拟商品，微信把我们系统的到帐改为 T+15 了。  </p>
@@ -144,15 +144,15 @@
 <li><p><code>users</code> 和 <code>products</code> 加上 <code>frozenProfit</code> 和 <code>totalProfit</code>。这两个字段都是从 <code>transactions</code> 里面的数据演算得出的。  </p>
 </li>
 </ol>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-2.png" alt="Payment Modeling Phase 2"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-2.png" alt="Payment Modeling Phase 2"></p>
 <h2 id="分销"><a href="#分销" class="headerlink" title="分销"></a>分销</h2><p>某一天，CTO 和我说，我们需要实现分销的功能。就这么一句话，你们觉得怎么做？要几天？模型需要改吗？  </p>
 <p>模型肯定要变了。为什么？因为不仅仅是直播商品的拥有人，其它的用户都有可能拥有收入。那么，收益相关的数据 <code>frozenProfit</code>, <code>totalProfit</code> 也就不能简单地附着在商品数据，也就是 <code>products</code> collection 里面了。  </p>
 <p>所以，我抽出新的 <code>revenue_summary</code> collection 来存放每个用户在某个商品上能获取的收益，和收入来源。当然，<code>products</code> 里的相应字段也就不需要了。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-3.png" alt="Payment Modeling Phase 3"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-3.png" alt="Payment Modeling Phase 3"></p>
 <h2 id="多商户商品打包"><a href="#多商户商品打包" class="headerlink" title="多商户商品打包"></a>多商户商品打包</h2><p>随后，我们又支持了多商户商品打包售卖的需求。  </p>
 <p>身为一个平台，在搞活动的时候，我们需要打包优惠出售多个商户的商品。虽然说上面的模型也能基本满足要求，不需要太大的变动也能支持，但是，这种商品的收入计算逻辑，因为涉及多方收入分配，更为复杂，我们觉得还是要做出一些调整。  </p>
 <p>我们新增加了一个 <code>payment_instructions</code> collection。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-4.png" alt="Payment Modeling Phase 4"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-4.png" alt="Payment Modeling Phase 4"></p>
 <p>这个模型有什么用呢？  </p>
 <p>其实，以前每一笔用户支付给我们的买课程的费用，都被分成好几部分：  </p>
 <ol>

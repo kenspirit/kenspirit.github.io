@@ -94,7 +94,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-06-05T16:05:00.000Z" itemprop="datePublished">Jun 6 2016</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.531Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:41.865Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -110,7 +110,7 @@
 <p>However, normal recursion can possibly generate “Stack overflow” error if it repeats itself too many times.  Let’s see a famous recursion example in math, <code>factorial</code>.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factorial</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> n === <span class="number">0</span> ? <span class="number">1</span> : n * factorial(n - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// factorial(10)</span></div><div class="line"><span class="comment">//  =&gt; 3628800</span></div><div class="line"><span class="comment">// factorial(32768)</span></div><div class="line"><span class="comment">//  =&gt; Uncaught RangeError: Maximum call stack size exceeded</span></div></pre></td></tr></table></figure>
 <p>How does the stack looks like?  Why is its size exceeded?  </p>
-<p><img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/factorial_stack_change_flow.png"></p>
+<p><img alt="Firefox script not responsive warning" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/factorial_stack_change_flow.png"></p>
 <p>Here introduces a term called <a href="http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/" target="_blank" rel="external">Execution Context</a> and you can read more following the link.  Simply say, every times a function is called, an execution context is created.  Hence, they are stacked together and increase as the recursion goes deeper.  You can imagine the stack size of <code>factorial(32768)</code> given this from <code>factorial(3)</code>.</p>
 <h2 id="Tail-call-elimination-comes-to-rescue"><a href="#Tail-call-elimination-comes-to-rescue" class="headerlink" title="Tail call elimination comes to rescue"></a>Tail call elimination comes to rescue</h2><blockquote>
 <p><strong>Tail calls can be implemented without adding a new stack frame to the call stack.</strong> Most of the frame of the current procedure is not needed any more, and it can be replaced by the frame of the tail call, modified as appropriate (similar to overlay for processes, but for function calls). The program can then jump to the called subroutine. Producing such code instead of a standard call sequence is called tail call elimination.</p>

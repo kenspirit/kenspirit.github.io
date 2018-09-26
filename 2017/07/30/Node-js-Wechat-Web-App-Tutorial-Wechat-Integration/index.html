@@ -100,7 +100,7 @@
     </p>
   <p class="article-time">
     <time datetime="2017-07-30T15:30:57.000Z" itemprop="datePublished">Jul 30 2017</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.583Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:35.894Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -121,12 +121,12 @@
 <p>公众号的基本开发，微信的官方文档「<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&amp;id=mp1472017492_58YV5" target="_blank" rel="external">入门指南</a>」其实已经基本包含所有必须要知道的知识。但是，它的文档是以 Python 为例子，还有一些比较看起来吓死人的流程图，技术细节，和一些个人号没法开通的功能介绍。所以，这篇教程是侧重于个人公众号如何用 JavaScript 来开发实现。  </p>
 <h2 id="接入验证"><a href="#接入验证" class="headerlink" title="接入验证"></a>接入验证</h2><p>怎么<a href="https://mp.weixin.qq.com/cgi-bin/loginpage?t=wxm2-login&amp;lang=zh_CN" target="_blank" rel="external">申请微信个人公众号</a>，我就不说了。个人只能申请订阅号。  </p>
 <p>申请成功后，登录，点击左边菜单栏下面的「开发」-&gt;「基本配置」，可以看到如下页面：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/11-wechat-setup.png" alt="Wechat Setup"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/11-wechat-setup.png" alt="Wechat Setup"></p>
 <p>先把 <code>开发者ID(AppID)</code> 和 <code>开发者密码(AppSecret)</code> 分别复制出来，保存在一边。<code>令牌(Token)</code> 是自己定的不让别人知道的字符串。下面我们来看看系统里如何配置，接入微信。  </p>
 <p>打开命令行，进入你的项目目录，然后输入以下命令：  </p>
 <p><code>yo evergrow:wechat</code>  </p>
 <p>它会提醒你是否要覆盖 <code>package.json</code> 文件，你可以输入 <code>d</code>，按 <code>Enter</code> 看有什么变动。其实只是新加一些必要的包，所以你输入 <code>Y</code>，然后覆盖就可以了。正常的话，操作后会如下图那样，新生成几个微信相关的文件。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/11-wechat-module-generation.png" alt="Wechat Module Generation"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/11-wechat-module-generation.png" alt="Wechat Module Generation"></p>
 <p>打开 <code>config/wechat/sample.js</code> 文件，内容如下：  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  appToken: <span class="string">'evergrow'</span>,</div><div class="line">  appId: <span class="string">''</span>,</div><div class="line">  appSecret: <span class="string">''</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>你要做的是，复制 <code>sample.js</code> 文件，重命名为 <code>production.js</code>，然后把前面保存的 <code>开发者ID(AppID)</code> 和 <code>开发者密码(AppSecret)</code> 分别赋值给 <code>appId</code> 和 <code>appSecret</code>。<code>appToken</code> 不用理会。<strong>appToken 和 appSecret 可不要让别人知道！</strong>以我的为例：  </p>

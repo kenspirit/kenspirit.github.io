@@ -94,7 +94,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-10-12T15:35:58.000Z" itemprop="datePublished">Oct 12 2016</time>
-    更新日期:<time datetime="2018-04-10T08:46:23.548Z" itemprop="dateModified">Apr 10 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:39.397Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -108,13 +108,13 @@
 		
 		<p>最近在做一个新的系统，所以刚刚在<a href="https://www.qingcloud.com/" target="_blank" rel="external">青云</a>上面部署和搭环境。期间遇到一个小问题，也花了我们二三十分钟的时间。虽然这是一个挺小的问题，但是能很好的说明我之前在<a href="http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/">有经验和没有经验的程序员的区别</a>里面提到的<strong>认识和定位问题</strong>，以及<a href="http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/">学习编程需要具备的基本能力 - 问题分解</a>里面提到的<strong>问题分解</strong>，所以还是决定稍微写一下，顺便也可以让想学习计算机领域的朋友了解一下这种典型的思考和解决问题的方式。</p>
 <p>在青云上，我们部署了两台云主机，一个负载均衡，一个路由器。它们的关系如下图。作为用户，要能够访问一个网站，其实还经过了一个叫 DNS 的东西，所以我也把它放进去大概意思一下。</p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/request_flow.png" alt="Request Flow"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/request_flow.png" alt="Request Flow"></p>
 <p><em>注：abc.com 和 10.123.32.1 都是假的，举例说明用。</em></p>
 <p>当我把两台主机部署好了以后，从青云的控制台看到负载均衡是这样显示的。</p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/qingcloud_lb.png" alt="Qingcloud LB"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/qingcloud_lb.png" alt="Qingcloud LB"></p>
 <p>两台主机已经标识为活跃状态了，我也轻快地在浏览器敲入域名，期待页面出来就去吃晚饭了。然而浏览器竟然加载很久还是没有反应，最后超时了。这是什么鬼啊？虽然肚子饿得不行，但是还是得忍一忍，先把它搞定。  </p>
 <h2 id="分析和初步估计"><a href="#分析和初步估计" class="headerlink" title="分析和初步估计"></a>分析和初步估计</h2><p>因为主机刚配置好，所以我其实是已经通过 VPN 和主机连在一起的。如下图。</p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/request_flow_vpn.png" alt="Request Flow"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/request_flow_vpn.png" alt="Request Flow"></p>
 <p>所以，我通过 VPN 的内部 IP，直接访问 主机A 和 主机B，发现可以访问。那么，根据架构分拆的几大部分，和具体的现象，初步估计情况可能是这样的：</p>
 <ol>
 <li>内部 IP 可以访问，<strong>D 通路正常</strong>  </li>

@@ -95,7 +95,7 @@
     </p>
   <p class="article-time">
     <time datetime="2018-08-29T10:15:13.000Z" itemprop="datePublished">Aug 29 2018</time>
-    更新日期:<time datetime="2018-08-29T10:15:06.301Z" itemprop="dateModified">Aug 29 2018</time>
+    更新日期:<time datetime="2018-09-26T13:52:31.411Z" itemprop="dateModified">Sep 26 2018</time>
     
   </p>
 </header>
@@ -109,7 +109,7 @@
 		
 		<p>最近滴滴的事情闹的很大，也被骂地很凶。我当然也认为滴滴有错，没有尽到应有的责任。但是，我并不认为关停是好的做法。试想一下，如果是普通的出租车或者黑车出事，有可能那么快抓到人吗？科技和数据是先进的表现，滴滴拥有比出租车把事情做好的更优越的条件，只是它们的关注点没有放在安全上面，甚至是忽略了。  </p>
 <p>本文并不主要讨论滴滴，而是有感于 TK教主（网络信息安全领域大牛）发的微博：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/tombkeeper_weibo_safety_system.png" alt="tombkeeper weibo"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/tombkeeper_weibo_safety_system.png" alt="tombkeeper weibo"></p>
 <h2 id="Design-for-Failure"><a href="#Design-for-Failure" class="headerlink" title="Design for Failure"></a>Design for Failure</h2><p>我不记得自己最早什么时候看到关于这个观点的文章或者书了，或许是 Martin Fowler 大叔的这篇关于<a href="https://martinfowler.com/articles/microservices.html#DesignForFailure" target="_blank" rel="external">微服务</a>的文章吧。“为了失败而设计”？其实它要表达的意思是<strong>“为应对失败而设计（因为失败无可避免）”</strong>。失败指的是出错，并没有按照预期的方式运转。  </p>
 <p>如果页面打开时 JavaScript 或 CSS 文件加载不成功，或者服务端接口数据出错怎么办？后台定时运行的一个 Job，会不会因出错导致中止运行？假设一条数据处理出错，那会不会影响其它数据的处理？如果因为 Job 有 Bug 要停止运行，数据堆积了一个小时，一天，甚至一个星期，修复后如何重新运行这个 Job，要花多长时间？如果一个服务器 down 了，能马上启用一个新的吗？如果不行，按平时的流量，另一个服务器能撑多久，要不要降级，哪些次要的服务可以暂时关停？  </p>
 <p>无论是前端，还是后端开发，或者是运维等，都可能面对各种失败。<strong>不同的失败场景，有不同的处理方法。而不同的失败场景，也体现了设计者本身的关注点，和职责所在。</strong>  </p>
