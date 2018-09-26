@@ -36,7 +36,7 @@ categories:
 
 登录服务器后，通过命令 `ssh -T git@github.com` 看到 Github 的欢迎语就表示配置成功了：  
 
-![SSH Agent](http://thinkingincrowd.u.qiniudn.com/10-deploy-ssh-agent.png)
+![SSH Agent](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-ssh-agent.png)
 
 [Using SSH Agent Forwarding]: https://developer.github.com/guides/using-ssh-agent-forwarding/  
 
@@ -88,7 +88,7 @@ SSH 登录服务器，通过 `mkdir` 命令建立代码目录，比如：`mkdir 
 
 成功后应该见到类似提示信息：  
 
-![PM2 Setup](http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-setup.png)
+![PM2 Setup](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-pm2-setup.png)
 
 ### 部署
 
@@ -100,11 +100,11 @@ SSH 登录服务器，通过 `mkdir` 命令建立代码目录，比如：`mkdir 
 
 成功后应该看到类似的提示信息：  
 
-![PM2 Deploy](http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-deploy.png)
+![PM2 Deploy](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-pm2-deploy.png)
 
 然后我们再 SSH 登录服务器，输入命令 `pm2 status` 就能够看到服务器运行状况。 `pm2 log thinkincrowd` 就能够看到你的服务器日志（把 `thinkincrowd` 替换为你的 app 的名字）。
 
-![PM2 Status](http://thinkingincrowd.u.qiniudn.com/10-deploy-pm2-status.png)
+![PM2 Status](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-pm2-status.png)
 
 
 ## 开放服务器端口
@@ -119,24 +119,24 @@ SSH 登录服务器，通过 `mkdir` 命令建立代码目录，比如：`mkdir 
 
 点击「安全组」选项：  
 
-![Security Group](http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group.png)
+![Security Group](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-security-group.png)
 
 克隆原来的「Linux安全组放通22端口」，并自己命名：  
 
-![Security Group Clone](http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-clone.png)
+![Security Group Clone](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-security-group-clone.png)
 
 点击「加入实例」操作，并选择你的主机，确定就可以了：  
 
-![Security Group Instance](http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-instance.png)
+![Security Group Instance](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-security-group-instance.png)
 
 ### 新增端口
 
 选择我们刚新建的安全组，点击「编辑规则」操作，新增两行，并分别输入 `3000` 和 `80` 端口：  
 
-![Security Group Port](http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-port.png)
+![Security Group Port](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-security-group-port.png)
 
 大功告成。现在在浏览器输入你主机的公网 IP 和端口（3000 或者 80），看看你的服务器是不是就能访问了？为什么 80 端口也可以，我们的 Node.js 服务明明是 3000 的啊？前面安装的 Nginx 帮你搞定了一切。  
 
-![Security Group Done](http://thinkingincrowd.u.qiniudn.com/10-deploy-security-group-done.png)
+![Security Group Done](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/10-deploy-security-group-done.png)
 
 _注意：很多云服务商会要求机器绑定的域名要备案了才能开放 80 端口，要不然会被封。所以，在我们拥有一个备案了的域名前，还是先别开放 80 端口吧。_

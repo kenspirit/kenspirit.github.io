@@ -55,7 +55,7 @@ npm 是 [Node.js][] 的包管理系统，这里我就不介绍了。大家自行
 
 整个目录里面，我使用红色框标出和 Truffle 以及测试相关的部分。  
 
-![Project Structure](http://thinkingincrowd.u.qiniudn.com/eth-dapp-base-project-structure.png)  
+![Project Structure](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/eth-dapp-base-project-structure.png)  
 
 1. `contracts` 目录下放的是智能合约文件。  
   那个特殊的 `Migrations.sql` 是 Truffle 拿来运行智能合约升级脚本，记录版本的合约。你无须理会。  
@@ -196,17 +196,17 @@ contract('SecretNote async/await style full test', async (accounts) => {
 
 Ganache 启动后是这个样子的，默认已经准备好了一些测试帐号。  
 
-![Ganache Startup](http://thinkingincrowd.u.qiniudn.com/ganache-startup.png)  
+![Ganache Startup](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-startup.png)  
 
 然后，我们在命令行依次运行 `truffle compile` 和 `truffle migrate` 命令。运行 `truffle migrate` 前，要确保你在 `truffle.js` 配置的 Ethereum 节点已经起来了。当前的配置，就是你的 Ganache。  
 
-![Truffle Compile Migrate](http://thinkingincrowd.u.qiniudn.com/truffle-compile-migrate.png)  
+![Truffle Compile Migrate](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/truffle-compile-migrate.png)  
 
 运行完后，你可以再去看 Ganache 里面的第一个账户余额已经不是 100 ETH 了，因为扣除了一部分 Gas 来建立智能合约。点击 Transactions 那个按钮，也可以看到刚才部署智能合约产生的交易记录。  
 
-![Ganache Account](http://thinkingincrowd.u.qiniudn.com/ganache-account.png)  
+![Ganache Account](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account.png)  
 
-![Ganache Transactions](http://thinkingincrowd.u.qiniudn.com/ganache-trx.png)  
+![Ganache Transactions](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-trx.png)  
 
 到这里，你的智能合约已经在本地的 Ethereum blockchain 节点部署完成了。部署到测试环境或者正式 Ethereum 公链的方法，我们后面再介绍。  
 

@@ -23,7 +23,7 @@ console.log(j);
 
 If it is run in browser, such as Firefox, it may prompt a warning box like below:  
 
-<img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/firefox_script_not_responsive_warning.png"/>
+<img alt="Firefox script not responsive warning" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/firefox_script_not_responsive_warning.png"/>
 
 However, **sometimes we might not know how many times the operation will be executed and how long each operation takes**.  The loop count might depend on how many records retrieved by RESTful web serivce from our own or other external applications.  The operation speed might be affected by what browser user's is using, IE or Chrome, current workload of user's machine.  Hence, **if your logic potentially deal with large volume of data or need to be compatible with old-fashion browser, it maybe worthy to think ahead to prevent**.
 

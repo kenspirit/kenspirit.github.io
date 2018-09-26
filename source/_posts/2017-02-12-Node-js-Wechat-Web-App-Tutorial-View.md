@@ -15,13 +15,13 @@ categories:
 
 用 `evergrow` 脚手架生成视图相关的文件是非常方便的。要接着构建 `Image` 模块的视图，只需要用命令 `yo evergrow:view Image` 就能够生成表格和详情视图所需的 4 个基本文件。  
 
-![View Boilerplate](http://thinkingincrowd.u.qiniudn.com/07-view-boilerplate.png)
+![View Boilerplate](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-boilerplate.png)
 
 ### 模板引擎（Template Engine）
 
 生成上面的几个基本文件后，其实你在浏览器输入 `http://localhost:3000/image/page/list` 就能够看到如下的默认表格视图。  
 
-![Default List](http://thinkingincrowd.u.qiniudn.com/07-view-default-list.png)
+![Default List](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-default-list.png)
 
 根据上一章节的教程，应该不难从代码里找到路由对应的 Controller 为：  
 
@@ -61,7 +61,7 @@ categories:
 4. 编辑数据的弹窗（`modal`，默认隐藏，绿色框部分）  
 5. 外部 JavaScript 文件引用（最下面）  
 
-![Default List Code](http://thinkingincrowd.u.qiniudn.com/07-view-default-list-code.png)
+![Default List Code](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-default-list-code.png)
 
 HTML 语言强调的是页面布局。默认情况下，块状元素 `h2`, `table`, `div` 它们就像叠积木一样从上往下堆叠在一起。所以，写前端最基本就是要想好整个页面，是怎么切割成一个个盒子模型（box model），然后组装在一起。  
 
@@ -250,7 +250,7 @@ Vue.js 的这些绑定方式，在编程里属于**声明式编程**。HTML 和 
   }
 ```
 
-![Customized List](http://thinkingincrowd.u.qiniudn.com/07-view-customized-list.png)
+![Customized List](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-customized-list.png)
 
 #### 弹窗
 
@@ -284,7 +284,7 @@ Event Handler 里面的两行代码其实就是命令式编程的形式（一步
 2. 准备参数并提交服务器  
 3. 成功后刷新表格，隐藏弹窗  
 
-![Detaul Modal](http://thinkingincrowd.u.qiniudn.com/07-view-default-modal.png)
+![Detaul Modal](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-default-modal.png)
 
 默认的弹窗只有些象征性的文字，我们可通过下面的代码，实现修改 Model 里的 `gender` 和 `deleted` 数据的功能。（虽然图片链接不能直接改，但是因为接口限制了数据 `url` 不能为空，所以还是加上隐藏元素，保存时也一起发给服务器）  
 
@@ -338,7 +338,7 @@ Event Handler 里面的两行代码其实就是命令式编程的形式（一步
   }
 ```
 
-![Customized Modal](http://thinkingincrowd.u.qiniudn.com/07-view-customized-modal.png)
+![Customized Modal](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-customized-modal.png)
 
 
 ## 练习

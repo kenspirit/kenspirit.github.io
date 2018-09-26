@@ -17,13 +17,13 @@ date: 2016-10-12 23:35:58
 
 在青云上，我们部署了两台云主机，一个负载均衡，一个路由器。它们的关系如下图。作为用户，要能够访问一个网站，其实还经过了一个叫 DNS 的东西，所以我也把它放进去大概意思一下。
 
-![Request Flow](http://thinkingincrowd.u.qiniudn.com/request_flow.png)
+![Request Flow](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/request_flow.png)
 
 _注：abc.com 和 10.123.32.1 都是假的，举例说明用。_
 
 当我把两台主机部署好了以后，从青云的控制台看到负载均衡是这样显示的。
 
-![Qingcloud LB](http://thinkingincrowd.u.qiniudn.com/qingcloud_lb.png)
+![Qingcloud LB](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/qingcloud_lb.png)
 
 两台主机已经标识为活跃状态了，我也轻快地在浏览器敲入域名，期待页面出来就去吃晚饭了。然而浏览器竟然加载很久还是没有反应，最后超时了。这是什么鬼啊？虽然肚子饿得不行，但是还是得忍一忍，先把它搞定。  
 
@@ -31,7 +31,7 @@ _注：abc.com 和 10.123.32.1 都是假的，举例说明用。_
 
 因为主机刚配置好，所以我其实是已经通过 VPN 和主机连在一起的。如下图。
 
-![Request Flow](http://thinkingincrowd.u.qiniudn.com/request_flow_vpn.png)
+![Request Flow](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/request_flow_vpn.png)
 
 所以，我通过 VPN 的内部 IP，直接访问 主机A 和 主机B，发现可以访问。那么，根据架构分拆的几大部分，和具体的现象，初步估计情况可能是这样的：
 

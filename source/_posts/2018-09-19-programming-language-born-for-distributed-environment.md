@@ -32,17 +32,17 @@ categories:
 
 下面这幅图应该基本可以说明整个应用是如何运作的了。  
 
-![Elixir Sequence Server Demo](http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Demo.png)  
+![Elixir Sequence Server Demo](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Demo.png)  
 
 你可以看到，如果我把自增的间隔故意设置为非数字，导致服务意外退出，背后的 Supervisor 服务会将它悄悄的重启，并按照编写好的逻辑，把 Server 的内部状态数据保存到数据服务，以便重启时读取。等我重新设置一个正确的数字自增间隔后，就可以接着获取新的号码了。  
 
 在 Elixir 的交互控制台 iex 下，敲入 `:observer.start()` 这个命令，就可以监控整个系统的运行状态，包括有哪些 Application，哪些 Process，Application 内存使用情况，内部数据状态（State）等。  
 
-![Elixir Sequence Server Hierchary](http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Hierarchy.png)  
+![Elixir Sequence Server Hierchary](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Hierarchy.png)  
 
-![Elixir Sequence Server Info](http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Info.png)  
+![Elixir Sequence Server Info](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Info.png)  
 
-![Elixir Sequence Server State](http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_State.png)  
+![Elixir Sequence Server State](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_State.png)  
 
 总的来说，Elixir 的消息调用机制，Application 的组织方式，Process Supervision 和节点的架构方式，丰富的系统工具，真的是从骨子里散发出微服务的光芒。数据的 immutability 更是让分布式数据处理更安心，不用担心一些不必要的多线程问题。  
 

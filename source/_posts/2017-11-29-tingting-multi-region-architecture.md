@@ -80,7 +80,7 @@ categories:
 
 下面是一开始的服务架构：  
 
-![Old Architecture](http://thinkingincrowd.u.qiniudn.com/tingting-old-architecture.png)
+![Old Architecture](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/tingting-old-architecture.png)
 
 因为我们实现多地部署要达成的最基本的目标是：增加缓存，每个分区独立运作，承担各自的压力，互不影响，也就是按区域横向扩展。所以，每个只读的分区，应该要有独立的 Redis，HTTP Server 和 Socket Server。  
 
@@ -98,7 +98,7 @@ categories:
 
 最后，新的服务架构如下：  
 
-![New Architecture](http://thinkingincrowd.u.qiniudn.com/tingting-new-architecture.png)
+![New Architecture](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/tingting-new-architecture.png)
 
 MongoDB，HTTP Server（写）这些负责写的部分，和 Redis (PubSub) 是公共的，其它部分其实是不同分区独立拥有的相同的组件。我在上面标注主讲人，下面标注普通用户，只是为了容易看一些，它们实际是完全一样的。这样的架构，有需要的时候，复制不同的读分区出来服务不同地区的用户就比较容易了。  
 

@@ -18,7 +18,7 @@ categories:
 
 It's still abstract, right?  Please check below sample Kanban board and I will explain each of the highlighted points below.  
 
-<img alt="Kanban Board" src="http://thinkingincrowd.u.qiniudn.com/Kanban_Simple_Flow.png"/>
+<img alt="Kanban Board" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Kanban_Simple_Flow.png"/>
 
 ## Work-flow & Stage Transition
 

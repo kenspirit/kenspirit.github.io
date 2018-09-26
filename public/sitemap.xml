@@ -2,65 +2,254 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/09/20/what-make-you-love-elixir-more/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
     
-    <lastmod>2018-09-19T23:43:56.263Z</lastmod>
+    <lastmod>2018-09-26T13:52:53.215Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
     
-    <lastmod>2018-09-19T00:23:01.595Z</lastmod>
+    <lastmod>2018-09-26T13:52:51.066Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
+    
+    <lastmod>2018-09-26T13:52:50.606Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/</loc>
+    
+    <lastmod>2018-09-26T13:52:50.031Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</loc>
+    
+    <lastmod>2018-09-26T13:52:49.632Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
+    
+    <lastmod>2018-09-26T13:52:49.249Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</loc>
+    
+    <lastmod>2018-09-26T13:52:48.816Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/</loc>
+    
+    <lastmod>2018-09-26T13:52:48.347Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/</loc>
     
-    <lastmod>2018-09-14T13:18:46.886Z</lastmod>
+    <lastmod>2018-09-26T13:52:47.725Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2015/12/26/TypeScript-vs-Babel/</loc>
     
-    <lastmod>2018-09-14T13:18:44.327Z</lastmod>
+    <lastmod>2018-09-26T13:52:45.724Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2015/12/31/2015-retrospect-and-2016-goal-setting/</loc>
     
-    <lastmod>2018-09-14T13:18:42.557Z</lastmod>
+    <lastmod>2018-09-26T13:52:43.931Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2016/01/02/Modulization-and-Bundling-with-TypeScript-and-Webpack-for-JS-Full-Stack-Project/</loc>
     
-    <lastmod>2018-09-14T13:18:40.510Z</lastmod>
+    <lastmod>2018-09-26T13:52:43.467Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2016/03/08/Novice-vs-Experienced/</loc>
     
-    <lastmod>2018-09-14T13:18:38.601Z</lastmod>
+    <lastmod>2018-09-26T13:52:43.031Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2016/03/13/transition-to-managing-others/</loc>
     
-    <lastmod>2018-09-14T13:18:36.007Z</lastmod>
+    <lastmod>2018-09-26T13:52:42.662Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/</loc>
+    
+    <lastmod>2018-09-26T13:52:42.265Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/</loc>
+    
+    <lastmod>2018-09-26T13:52:41.865Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/</loc>
+    
+    <lastmod>2018-09-26T13:52:41.409Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/10/12/Importance-of-Breakdown-and-read-thoroughly/</loc>
+    
+    <lastmod>2018-09-26T13:52:39.397Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/12/23/Node-js-Wechat-Web-App-Tutorial-Controller-Routing/</loc>
+    
+    <lastmod>2018-09-26T13:52:39.012Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/</loc>
+    
+    <lastmod>2018-09-26T13:52:38.632Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/02/25/Node-js-Wechat-Web-App-Tutorial-Access-Control/</loc>
+    
+    <lastmod>2018-09-26T13:52:38.095Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/04/01/what-is-full-stack/</loc>
+    
+    <lastmod>2018-09-26T13:52:37.568Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/</loc>
+    
+    <lastmod>2018-09-26T13:52:37.180Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/</loc>
+    
+    <lastmod>2018-09-26T13:52:36.795Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/05/13/get-to-know-react-flux-redux/</loc>
+    
+    <lastmod>2018-09-26T13:52:36.414Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/</loc>
+    
+    <lastmod>2018-09-26T13:52:35.894Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/</loc>
+    
+    <lastmod>2018-09-26T13:52:35.529Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/</loc>
+    
+    <lastmod>2018-09-26T13:52:35.103Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</loc>
+    
+    <lastmod>2018-09-26T13:52:34.356Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</loc>
+    
+    <lastmod>2018-09-26T13:52:33.459Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</loc>
+    
+    <lastmod>2018-09-26T13:52:32.761Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</loc>
+    
+    <lastmod>2018-09-26T13:52:32.097Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2018/08/29/design-for-failure-reflects-the-greatest-responsibility/</loc>
     
-    <lastmod>2018-08-29T10:15:06.301Z</lastmod>
+    <lastmod>2018-09-26T13:52:31.411Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/</loc>
+    
+    <lastmod>2018-09-26T13:52:30.665Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/about/index.html</loc>
+    
+    <lastmod>2018-09-26T13:52:29.812Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/09/20/what-make-you-love-elixir-more/</loc>
+    
+    <lastmod>2018-09-19T23:43:56.263Z</lastmod>
     
   </url>
   
@@ -156,37 +345,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/about/index.html</loc>
-    
-    <lastmod>2018-04-10T08:46:23.607Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2018/03/21/anger-begets-greater-anger/</loc>
     
     <lastmod>2018-04-10T08:46:23.605Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.603Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.601Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.600Z</lastmod>
     
   </url>
   
@@ -212,13 +373,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.595Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2018/01/20/take-good-care-of-yourself-and-the-ones-you-love/</loc>
     
     <lastmod>2018-04-10T08:46:23.594Z</lastmod>
@@ -236,13 +390,6 @@
     <loc>http://www.thinkingincrowd.me/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/</loc>
     
     <lastmod>2018-04-10T08:46:23.591Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.590Z</lastmod>
     
   </url>
   
@@ -268,23 +415,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.586Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2017/07/30/online-shift-of-education/</loc>
     
     <lastmod>2018-04-10T08:46:23.585Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.583Z</lastmod>
     
   </url>
   
@@ -345,13 +478,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/05/13/get-to-know-react-flux-redux/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.570Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2017/05/13/probe-harmful/</loc>
     
     <lastmod>2018-04-10T08:46:23.570Z</lastmod>
@@ -380,30 +506,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Server-Setup/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.564Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/04/16/Node-js-Wechat-Web-App-Tutorial-Deployment/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.564Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2017/04/09/ask-instead-of-scold/</loc>
     
     <lastmod>2018-04-10T08:46:23.563Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/04/01/what-is-full-stack/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.562Z</lastmod>
     
   </url>
   
@@ -429,30 +534,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2017/02/25/Node-js-Wechat-Web-App-Tutorial-Access-Control/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.558Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.556Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2016/12/31/2016-retrospect-and-2017-goal-setting/</loc>
     
     <lastmod>2018-04-10T08:46:23.554Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/12/23/Node-js-Wechat-Web-App-Tutorial-Controller-Routing/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.552Z</lastmod>
     
   </url>
   
@@ -474,13 +558,6 @@
     <loc>http://www.thinkingincrowd.me/2016/10/22/Back-to-basics-Wechat-Development/</loc>
     
     <lastmod>2018-04-10T08:46:23.550Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/10/12/Importance-of-Breakdown-and-read-thoroughly/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.548Z</lastmod>
     
   </url>
   
@@ -513,14 +590,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
     
     <lastmod>2018-04-10T08:46:23.541Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
     
     <lastmod>2018-04-10T08:46:23.541Z</lastmod>
     
@@ -548,35 +625,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.532Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.531Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/06/05/How-to-make-long-running-loop-breakable/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.530Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
     
     <lastmod>2018-04-10T08:46:23.529Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
     
     <lastmod>2018-04-10T08:46:23.529Z</lastmod>
     
@@ -618,20 +674,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.516Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.515Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2015/01/04/2014-retrospect-and-2015-goal-setting/</loc>
     
     <lastmod>2018-04-10T08:46:23.514Z</lastmod>
@@ -646,20 +688,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2014/09/25/statistical-inference-summary/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.513Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2014/06/25/hangjs-2014/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.512Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2014/01/04/2013-retrospect-and-2014-goal-setting/</loc>
     
     <lastmod>2018-04-10T08:46:23.511Z</lastmod>
@@ -668,13 +696,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2013/11/25/how-to-use-ext-ajax-in-promise-style-and-test-it/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.509Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/11/14/jingjs-2013-fun/</loc>
     
     <lastmod>2018-04-10T08:46:23.509Z</lastmod>
     
@@ -709,6 +730,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.504Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2013/06/26/startup-review-permanent-beta/</loc>
     
     <lastmod>2018-04-10T08:46:23.504Z</lastmod>
@@ -716,9 +744,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</loc>
     
-    <lastmod>2018-04-10T08:46:23.504Z</lastmod>
+    <lastmod>2018-04-10T08:46:23.503Z</lastmod>
     
   </url>
   
@@ -731,13 +759,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.503Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/25/review-on-book-inside-the-facebook/</loc>
     
     <lastmod>2018-04-10T08:46:23.503Z</lastmod>
     
@@ -779,14 +800,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
     
     <lastmod>2018-04-10T08:46:23.494Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
     
     <lastmod>2018-04-10T08:46:23.494Z</lastmod>
     
@@ -807,20 +828,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/25/ued-in-my-pet-project-take-time-part-1/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.493Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.492Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
     
     <lastmod>2018-04-10T08:46:23.492Z</lastmod>
@@ -828,9 +835,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/08/30/extjs-jasmine-unit-test-part-2-ajax-behavior-2/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/</loc>
     
-    <lastmod>2018-04-10T08:46:23.491Z</lastmod>
+    <lastmod>2018-04-10T08:46:23.492Z</lastmod>
     
   </url>
   
@@ -863,13 +870,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.484Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
     
     <lastmod>2018-04-10T08:46:23.484Z</lastmod>
@@ -884,9 +884,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
     
-    <lastmod>2018-04-10T08:46:23.483Z</lastmod>
+    <lastmod>2018-04-10T08:46:23.484Z</lastmod>
     
   </url>
   
@@ -898,7 +898,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/resolve-error-of-weblogic-management-deploymentexception-error-unresolved-webapp-library-references/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/10/14/six-steps-to-be-good-programmer/</loc>
     
     <lastmod>2018-04-10T08:46:23.483Z</lastmod>
     
@@ -912,14 +912,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
@@ -947,13 +947,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
     
     <lastmod>2018-04-10T08:46:23.479Z</lastmod>
@@ -968,6 +961,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
     
     <lastmod>2018-04-10T08:46:23.479Z</lastmod>
@@ -975,14 +975,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/11/14/many-things-happened-all-unhappy/</loc>
     
     <lastmod>2018-04-10T08:46:23.478Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/11/14/many-things-happened-all-unhappy/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
     
     <lastmod>2018-04-10T08:46:23.478Z</lastmod>
     
@@ -1017,7 +1017,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
     
     <lastmod>2018-04-10T08:46:23.476Z</lastmod>
     
@@ -1031,7 +1031,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/06/08/life-in-core-part-1/</loc>
+    <loc>http://www.thinkingincrowd.me/2005/06/23/life-in-core-part-2/</loc>
     
     <lastmod>2018-04-10T08:46:23.476Z</lastmod>
     

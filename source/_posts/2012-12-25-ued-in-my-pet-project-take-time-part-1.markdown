@@ -15,7 +15,7 @@ tags:
 ---
 
 [practices]: http://www.thinkingincrowd.me/blog/2012/12/24/my-practices-on-time-management/
-[capture]: http://thinkingincrowd.u.qiniudn.com/task_capture.png
+[capture]: https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/task_capture.png
 
 ##What is it and why I want to work on that
 I hope the name is brief and clear on what it should be although I was worrying whether it brings an illusion that it's telling you to _"Take your time.  Slow down."_.  Actually, it's where to take the time seriously and you can keep track of your time.

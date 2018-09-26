@@ -109,7 +109,7 @@ library(ggplot2)
 qplot(x = mean, data = data.df, facets = . ~ cnt, fill = cnt)
 ```
 
-<img alt="Sample Mean" src="http://thinkingincrowd.u.qiniudn.com/sample_mean.png"/>
+<img alt="Sample Mean" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/sample_mean.png"/>
 
 
 ### 方差 (Variance)

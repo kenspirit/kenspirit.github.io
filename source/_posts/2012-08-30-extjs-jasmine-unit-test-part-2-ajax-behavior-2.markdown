@@ -125,7 +125,7 @@ Here are some examples:
 
 I googled around and found one useful helper API - [Jasmine-Ajax](http://github.com/pivotal/jasmine-ajax) : a set of helpers for testing AJAX requests under the Jasmine BDD framework for JavaScript.  However, now it only supports Prototype.js and jQuery.
 
-I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   [mock-ajax](http://thinkingincrowd.u.qiniudn.com/mock-ajax.js)
+I read the source and found it is not difficult to add support for ExtJS.  Hence, I modified it a bit.  Later I may submit a patch to github for this project and see whether it can be accepted.  Here I just attached the modified source first.   [mock-ajax](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/mock-ajax.js)
 
 How should I include this helper class to use Jasmine to test the Ajax in ExtJS?
 

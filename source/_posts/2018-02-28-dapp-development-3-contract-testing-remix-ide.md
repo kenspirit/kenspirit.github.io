@@ -85,7 +85,7 @@ contract SecretNote is Ownable {
 
 当我们打开 Remix 的页面，把我们的智能合约代码贴进去的时候，它已经会自动帮你编译代码。右侧是主要的操作区。它有好几个功能标签。`Compile` 标签会显示出编译后有哪些合约，已经它发现的一些 Warning。  
 
-![Remix IDE - Compile](http://thinkingincrowd.u.qiniudn.com/Remix_compile_contract.png)  
+![Remix IDE - Compile](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_compile_contract.png)  
 
 ### 合约创建  
 
@@ -97,7 +97,7 @@ contract SecretNote is Ownable {
 4. 合约就生成了。它的接口 `fallback`，`getTotalNoteCount`，`getNote`，`setNote` 都分别显示出来。  
 5. 因为我们用了默认提供的第一个帐号来创建合约，它的帐号余额已经不是 100 eth 了。  
 
-![Remix IDE - Create](http://thinkingincrowd.u.qiniudn.com/Remix_create_contract.png)  
+![Remix IDE - Create](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_create_contract.png)  
 
 ### 合约调用  
 
@@ -123,7 +123,7 @@ contract SecretNote is Ownable {
 
 >0: uint256: 1
 
-![Remix IDE - Call](http://thinkingincrowd.u.qiniudn.com/Remix_call_contract.png)  
+![Remix IDE - Call](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_call_contract.png)  
 
 现在，我们来看一看如果用另一个帐号（非合约创建帐号），来调用 `getTotalNoteCount` 会出现什么效果。  
 

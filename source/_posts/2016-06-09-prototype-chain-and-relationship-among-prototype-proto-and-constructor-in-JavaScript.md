@@ -86,7 +86,7 @@ Honestly, for me, it took me a long long time to try to understand that.  I have
 
 Maybe the wording is still not as expressive as the graph as below.  
 
-<img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/JS_prototype_chain.png"/>
+<img alt="Firefox script not responsive warning" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/JS_prototype_chain.png"/>
 
 At first glance, this diagram might seems messy.  Let's examine it piece by piece from the easiest part and pay attention to some important points.  
 

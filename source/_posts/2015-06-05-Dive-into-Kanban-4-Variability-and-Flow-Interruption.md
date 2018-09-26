@@ -31,7 +31,7 @@ In Kanban, changing requirement is acceptable but we must agree that it affects 
 
   For example, below diagram shows the blocked statistics.  Y-Axis shows different stages in one Kanban board and X-Axis show the total time items are blocked under particular stage.  And the time is also grouped by different blocking reason.  Say, in "In Dev" stage, all time is blocked due to "Priority" reason which means priority kept changing after developer starts development and that is unhealthy signal.  
 
-<img alt="Blocked_Statistics" src="http://thinkingincrowd.u.qiniudn.com/Blocked_Statistics.png"/>
+<img alt="Blocked_Statistics" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Blocked_Statistics.png"/>
 
 
 2. If the item is discarded once it's picked from Backlog, we can also show in Kanban's Discard area and also we can check how much effort has been wasted on it in the report.  
@@ -79,7 +79,7 @@ Take below graph as example, we have separated our items into several classes of
 
 How to assign WIP depends on the nature of the frequency and volume of different levels of items.  If in initial production launch stage, there might be many production support issues so that you have to put fixed resources in `L1 TT` and `L2 TT` in order to react quickly and avoid interrupting normal items' development.  Then the lead time of normal item can still be predictable and the people responsible for normal item development seldom need multi-tasking, ensuring quality.  However, if the system is already kind of stable, instead of assigning fixed resources to the first two classes, you can arrange some resources in Intagible class who can jump into production issue support when needed.  
 
-<img alt="Class_of_Services" src="http://thinkingincrowd.u.qiniudn.com/Class_of_Services.png"/>
+<img alt="Class_of_Services" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Class_of_Services.png"/>
 
 ### Slack Capacity
 

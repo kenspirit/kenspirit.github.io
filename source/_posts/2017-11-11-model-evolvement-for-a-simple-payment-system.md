@@ -37,7 +37,7 @@ categories:
 
 所以，最开始的支付模块模型大致如下图。后台有定时 Job 用来计算主讲人收入，和他的各个直播收益的。  
 
-![Payment Modeling Phase 1](http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-1.png)
+![Payment Modeling Phase 1](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-1.png)
 
 
 ## 冻结部分收益
@@ -60,7 +60,7 @@ categories:
 
 2. `users` 和 `products` 加上 `frozenProfit` 和 `totalProfit`。这两个字段都是从 `transactions` 里面的数据演算得出的。  
 
-![Payment Modeling Phase 2](http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-2.png)
+![Payment Modeling Phase 2](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-2.png)
 
 
 ## 分销
@@ -71,7 +71,7 @@ categories:
 
 所以，我抽出新的 `revenue_summary` collection 来存放每个用户在某个商品上能获取的收益，和收入来源。当然，`products` 里的相应字段也就不需要了。  
 
-![Payment Modeling Phase 3](http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-3.png)
+![Payment Modeling Phase 3](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-3.png)
 
 
 ## 多商户商品打包
@@ -82,7 +82,7 @@ categories:
 
 我们新增加了一个 `payment_instructions` collection。  
 
-![Payment Modeling Phase 4](http://thinkingincrowd.u.qiniudn.com/payment-module-design-phase-4.png)
+![Payment Modeling Phase 4](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/payment-module-design-phase-4.png)
 
 这个模型有什么用呢？  
 

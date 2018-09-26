@@ -29,7 +29,7 @@ It's also said that the directory having the Shared Library should be included w
 
 I immediately realized that those two shared library might not been included in the server I newly created.  Hence, I set them up in the shared library.  And the problems solved.
 
-[![Image](http://thinkingincrowd.u.qiniudn.com/weblogic1.jpg?w=574)](http://thinkingincrowd.u.qiniudn.com/weblogic1.jpg)[![Image](http://thinkingincrowd.u.qiniudn.com/weblogic2.jpg?w=614)](http://thinkingincrowd.u.qiniudn.com/weblogic2.jpg)
+[![Image](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/weblogic1.jpg?w=574)](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/weblogic1.jpg)[![Image](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/weblogic2.jpg?w=614)](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/weblogic2.jpg)
 
  
 

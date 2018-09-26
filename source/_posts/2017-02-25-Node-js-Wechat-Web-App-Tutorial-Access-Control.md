@@ -218,7 +218,7 @@ categories:
 
 所以，这段代码的意思就是，只有当浏览页面的用户是管理员的话，才能把 User Manangement 的链接代码包含到页面里。用 Chrome 打开页面，按 F12（Windows 里）或者 Option+Command+I（Mac 里）调出开发者工具，使用元素选择工具点击 Home 链接，就能看到效果如下图。这就是后端渲染和权限控制的好处之一。  
 
-![Server Rendering](http://thinkingincrowd.u.qiniudn.com/08-access-control-server-rendering.png)
+![Server Rendering](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/08-access-control-server-rendering.png)
 
 所以，如果你要加谁都可以访问的图片列表页，只要把下面一段代码加到它们中间好了。  
 
@@ -228,7 +228,7 @@ categories:
   </ul>
 ```
 
-![Image List - Stage 1](http://thinkingincrowd.u.qiniudn.com/08-access-control-image-list-stage-1.png)
+![Image List - Stage 1](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/08-access-control-image-list-stage-1.png)
 
 不过由于我们的页面没有任何控制，所以 `Create` 按钮和列表里面的 `Action` 操作栏都存在，所以我们要改进一下。同上面的原理一样，我们可以在 `/view/image/imageList.html` 做一点小改动：  
 
@@ -362,7 +362,7 @@ categories:
 
 最后的页面效果如下图：  
 
-![Image List - Stage 2](http://thinkingincrowd.u.qiniudn.com/08-access-control-image-list-stage-2.png)
+![Image List - Stage 2](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/08-access-control-image-list-stage-2.png)
 
 ## 练习
 

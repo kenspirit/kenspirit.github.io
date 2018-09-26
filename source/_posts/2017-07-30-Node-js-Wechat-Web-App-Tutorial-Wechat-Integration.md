@@ -29,7 +29,7 @@ categories:
 
 申请成功后，登录，点击左边菜单栏下面的「开发」->「基本配置」，可以看到如下页面：  
 
-![Wechat Setup](http://thinkingincrowd.u.qiniudn.com/11-wechat-setup.png)
+![Wechat Setup](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/11-wechat-setup.png)
 
 先把 `开发者ID(AppID)` 和 `开发者密码(AppSecret)` 分别复制出来，保存在一边。`令牌(Token)` 是自己定的不让别人知道的字符串。下面我们来看看系统里如何配置，接入微信。  
 
@@ -39,7 +39,7 @@ categories:
 
 它会提醒你是否要覆盖 `package.json` 文件，你可以输入 `d`，按 `Enter` 看有什么变动。其实只是新加一些必要的包，所以你输入 `Y`，然后覆盖就可以了。正常的话，操作后会如下图那样，新生成几个微信相关的文件。  
 
-![Wechat Module Generation](http://thinkingincrowd.u.qiniudn.com/11-wechat-module-generation.png)
+![Wechat Module Generation](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/11-wechat-module-generation.png)
 
 打开 `config/wechat/sample.js` 文件，内容如下：  
 

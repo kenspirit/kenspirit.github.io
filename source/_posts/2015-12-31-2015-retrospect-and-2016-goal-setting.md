@@ -37,7 +37,7 @@ date: 2015-12-31 23:50:00
 今年的最后一天，我还没有做年终总结，联合国儿童基金会就帮我做了一点，寄了几张月捐证书什么的。没想到已经 3 年了。
 
 
-<img alt="UNICEF" src="http://thinkingincrowd.u.qiniudn.com/unicef_certificate.jpg?imageView/2/w/400"/>
+<img alt="UNICEF" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/unicef_certificate.jpg?imageView/2/w/400"/>
 
 ##展望
 

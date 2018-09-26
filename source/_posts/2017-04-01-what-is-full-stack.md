@@ -29,7 +29,7 @@ _Notes: 个人觉得最后的 declarative from 应该是 declarative form。_
 
 JavaScript 确实并不是一种最强大的语言。它其实是 Brendan Eich 在 Netscape 时，为 Web 和 HTML 创造的一种*胶水*语言，来让 Web 变得更动态。这门语言是他花了 10 天的时间写出来的。JavaScript 其实一直被很多人鄙视，觉得它根本不是一门正式的语言。还有很多人用下面的一幅图来说明它的优劣之差。  
 
-![The Good Parts vs Definitive Guide](http://thinkingincrowd.u.qiniudn.com/chapter1-good-parts.jpg)
+![The Good Parts vs Definitive Guide](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/chapter1-good-parts.jpg)
 
 现在的 JavaScript 相比当初，已经变得很强大。同时，围绕着它，伟大的工程师们创造了很多的工具和框架。所以，很多人把它比喻成 Web 的汇编语言，最基础的语言。我们甚至可以把很多用其它一些高级的语言写的程序，转译为 JavaScript 的代码，然后在 Web 运行。听起来很神奇吧？  
 

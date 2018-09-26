@@ -33,7 +33,7 @@ function factorial(n) {
 
 How does the stack looks like?  Why is its size exceeded?  
 
-<img alt="Firefox script not responsive warning" src="http://thinkingincrowd.u.qiniudn.com/factorial_stack_change_flow.png"/>
+<img alt="Firefox script not responsive warning" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/factorial_stack_change_flow.png"/>
 
 [Execution Context]: http://dmitrysoshnikov.com/ecmascript/chapter-1-execution-contexts/
 

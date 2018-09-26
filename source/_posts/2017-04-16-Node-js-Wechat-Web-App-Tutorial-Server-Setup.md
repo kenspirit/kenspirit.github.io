@@ -19,21 +19,21 @@ categories:
 
 目前在 https://www.qcloud.com/ 还有 30 天的云服务器免费使用。大家可以选择离自己近的区域购买服务器，我买的是广州 3 区的，配置大概如下：  
 
-![Server Config](http://thinkingincrowd.u.qiniudn.com/09-server-config.png)
+![Server Config](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/09-server-config.png)
 
 付款后，就能看到你的云服务器在「云主机」页面列出来了。  
 
-![Server Console](http://thinkingincrowd.u.qiniudn.com/09-server-console.png)
+![Server Console](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/09-server-console.png)
 
 ### 验证远程登录
 
 机器准备好了后，我们可以测试能否登录上机器了。我们通过 ssh 命令和分配的公网 IP 来登录：  
 
-![Password Login](http://thinkingincrowd.u.qiniudn.com/09-password-login.png)
+![Password Login](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/09-password-login.png)
 
 这时，你输入你购买机器时配置的密码，就可以登录了。但是，这种方式其实不太安全，密码设简单容易让别人破解，复杂了还不好记。所以，我们可以利用密钥要登录。我们点击操作台菜单的「SSH 密钥」选项，然后点击按钮「创建密钥」，就可以根据需要生成新的密钥对，或者利用你系统已经有的公钥来直接绑定。  
 
-![Create SSH Key](http://thinkingincrowd.u.qiniudn.com/09-create-ssh-key.png)
+![Create SSH Key](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/09-create-ssh-key.png)
 
 在 Mac 下通过下面的命令就可以复制已有的公钥到剪贴板（假定你使用 Github 后应该已经有密钥了）:  
 
@@ -43,11 +43,11 @@ categories:
 
 最后，把刚才新建的密钥，绑定到你的主机就可以 SSH 无密码登录了。  
 
-![Server Bind Key](http://thinkingincrowd.u.qiniudn.com/09-server-bind-key.png)
+![Server Bind Key](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/09-server-bind-key.png)
 
 下图是登录后，和退出的样子。  
 
-![Server Logined](http://thinkingincrowd.u.qiniudn.com/09-server-logined.png)
+![Server Logined](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/09-server-logined.png)
 
 ## 安装软件
 
@@ -59,7 +59,7 @@ categories:
 
 在 [kenspirit/javascript-study-group/scripts](https://github.com/kenspirit/javascript-study-group/tree/master/scripts) 文件夹下面，我准备了所有需要用到的安装和配置脚本。首先，我们通过 scp 的命令把他们复制到服务器上面。（你们只要把 `wechat` 替换为你们机器的公网 IP 就行了）  
 
-![SCP scripts](http://thinkingincrowd.u.qiniudn.com/09-scp-scripts.png)
+![SCP scripts](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/09-scp-scripts.png)
 
 复制完文件，我们就登录进去检查一下。通过 `cd scripts` 进入文件夹，`ll` 查看文件详情，`chmod +x *.sh` 为所有可执行的文件（.sh 后缀）添加运行的权限。  
 

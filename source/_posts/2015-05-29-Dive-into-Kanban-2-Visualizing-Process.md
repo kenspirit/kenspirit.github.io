@@ -49,7 +49,7 @@ If we visualize the process using the Kanban below and all different teams based
 
 ## Visualization  
 
-<img alt="Kanban Board" src="http://thinkingincrowd.u.qiniudn.com/Kanban_Visualize_Process.png"/>
+<img alt="Kanban Board" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Kanban_Visualize_Process.png"/>
 
 Here is how the process integrates within the Kanban board.  
 

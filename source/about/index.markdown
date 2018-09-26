@@ -6,7 +6,7 @@ sharing: true
 footer: true
 ---
 
-![](http://thinkingincrowd.u.qiniudn.com/logo_medium.png)
+![](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/logo_medium.png)
 
 My Name is Ken Chen.
 

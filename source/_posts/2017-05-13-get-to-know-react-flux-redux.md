@@ -34,7 +34,7 @@ Flux 包含三大主要部分：Dispatcher, Store, 和 View（其实就是 React
 
 下面我拿消息列表的例子来说明 Flux 里面的主要部分是怎么关联，数据在里面是怎么流动的。  
 
-![Flux Data Flow](http://thinkingincrowd.u.qiniudn.com/flux_data_flow.png)
+![Flux Data Flow](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/flux_data_flow.png)
 
 这里有两个场景：  
 
@@ -68,7 +68,7 @@ Redux 又是什么鬼呢？有人问 Redux 算不算是 Flux 架构的一种实�
 
 那在这个框架底下，数据的流动又是如何的呢？我们通过上面同样的场景来看一下：  
 
-![Redux Data Flow](http://thinkingincrowd.u.qiniudn.com/redux_data_flow.png)
+![Redux Data Flow](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/redux_data_flow.png)
 
 ### 页面打开，自动加载消息  
 

@@ -55,7 +55,7 @@
     <link href="http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/"/>
     <id>http://www.thinkingincrowd.me/2018/09/19/programming-language-born-for-distributed-environment/</id>
     <published>2018-09-19T00:30:38.000Z</published>
-    <updated>2018-09-19T00:23:01.595Z</updated>
+    <updated>2018-09-26T13:52:30.665Z</updated>
     
     <content type="html"><![CDATA[<p>分布式和微服务化，已经大行其道很久了。现在很多项目动不动就说做成微服务，不管不顾自己的项目性质，和相应的工具链支持。关于微服务，我还是很喜欢 Martin Fowler 大叔在 <a href="https://martinfowler.com/bliki/MicroservicePremium.html" target="_blank" rel="external">MicroservicePremium</a> 里说的：  </p>
 <blockquote>
@@ -73,12 +73,12 @@
 <li>监控这两个服务的 Supervisor 服务，假如业务逻辑出错，负责重启  </li>
 </ol>
 <p>下面这幅图应该基本可以说明整个应用是如何运作的了。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Demo.png" alt="Elixir Sequence Server Demo">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Demo.png" alt="Elixir Sequence Server Demo">  </p>
 <p>你可以看到，如果我把自增的间隔故意设置为非数字，导致服务意外退出，背后的 Supervisor 服务会将它悄悄的重启，并按照编写好的逻辑，把 Server 的内部状态数据保存到数据服务，以便重启时读取。等我重新设置一个正确的数字自增间隔后，就可以接着获取新的号码了。  </p>
 <p>在 Elixir 的交互控制台 iex 下，敲入 <code>:observer.start()</code> 这个命令，就可以监控整个系统的运行状态，包括有哪些 Application，哪些 Process，Application 内存使用情况，内部数据状态（State）等。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Hierarchy.png" alt="Elixir Sequence Server Hierchary">  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_Info.png" alt="Elixir Sequence Server Info">  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Elixir_Sequence_Server_State.png" alt="Elixir Sequence Server State">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Hierarchy.png" alt="Elixir Sequence Server Hierchary">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_Info.png" alt="Elixir Sequence Server Info">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Elixir_Sequence_Server_State.png" alt="Elixir Sequence Server State">  </p>
 <p>总的来说，Elixir 的消息调用机制，Application 的组织方式，Process Supervision 和节点的架构方式，丰富的系统工具，真的是从骨子里散发出微服务的光芒。数据的 immutability 更是让分布式数据处理更安心，不用担心一些不必要的多线程问题。  </p>
 <p>Elixir 的作者 José Valim，在 <a href="http://blog.plataformatec.com.br/2015/06/elixir-in-times-of-microservices/" target="_blank" rel="external">Elixir in times of microservices</a> 这篇文章中介绍更清楚详细，推荐一读。  </p>
 <p>相关文章：  </p>
@@ -107,11 +107,11 @@
     <link href="http://www.thinkingincrowd.me/2018/08/29/design-for-failure-reflects-the-greatest-responsibility/"/>
     <id>http://www.thinkingincrowd.me/2018/08/29/design-for-failure-reflects-the-greatest-responsibility/</id>
     <published>2018-08-29T10:15:13.000Z</published>
-    <updated>2018-08-29T10:15:06.301Z</updated>
+    <updated>2018-09-26T13:52:31.411Z</updated>
     
     <content type="html"><![CDATA[<p>最近滴滴的事情闹的很大，也被骂地很凶。我当然也认为滴滴有错，没有尽到应有的责任。但是，我并不认为关停是好的做法。试想一下，如果是普通的出租车或者黑车出事，有可能那么快抓到人吗？科技和数据是先进的表现，滴滴拥有比出租车把事情做好的更优越的条件，只是它们的关注点没有放在安全上面，甚至是忽略了。  </p>
 <p>本文并不主要讨论滴滴，而是有感于 TK教主（网络信息安全领域大牛）发的微博：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/tombkeeper_weibo_safety_system.png" alt="tombkeeper weibo"></p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/tombkeeper_weibo_safety_system.png" alt="tombkeeper weibo"></p>
 <h2 id="Design-for-Failure"><a href="#Design-for-Failure" class="headerlink" title="Design for Failure"></a>Design for Failure</h2><p>我不记得自己最早什么时候看到关于这个观点的文章或者书了，或许是 Martin Fowler 大叔的这篇关于<a href="https://martinfowler.com/articles/microservices.html#DesignForFailure" target="_blank" rel="external">微服务</a>的文章吧。“为了失败而设计”？其实它要表达的意思是<strong>“为应对失败而设计（因为失败无可避免）”</strong>。失败指的是出错，并没有按照预期的方式运转。  </p>
 <p>如果页面打开时 JavaScript 或 CSS 文件加载不成功，或者服务端接口数据出错怎么办？后台定时运行的一个 Job，会不会因出错导致中止运行？假设一条数据处理出错，那会不会影响其它数据的处理？如果因为 Job 有 Bug 要停止运行，数据堆积了一个小时，一天，甚至一个星期，修复后如何重新运行这个 Job，要花多长时间？如果一个服务器 down 了，能马上启用一个新的吗？如果不行，按平时的流量，另一个服务器能撑多久，要不要降级，哪些次要的服务可以暂时关停？  </p>
 <p>无论是前端，还是后端开发，或者是运维等，都可能面对各种失败。<strong>不同的失败场景，有不同的处理方法。而不同的失败场景，也体现了设计者本身的关注点，和职责所在。</strong>  </p>
@@ -760,11 +760,11 @@
     <link href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/"/>
     <id>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</id>
     <published>2018-03-17T05:40:40.000Z</published>
-    <updated>2018-04-10T08:46:23.603Z</updated>
+    <updated>2018-09-26T13:52:32.097Z</updated>
     
     <content type="html"><![CDATA[<p>本篇文章主要讲述 Dapp 前端页面，怎么和 Ethereum 帐号网络集成。不过，涉及的前端开发和代码，不会包括在覆盖范围内。因为前端开发框架太多（Vuejs, React, AngularJS，JQuery 等），使用什么都可以，所以本文仅解释合约相关的代码。本文代码以 Vuejs 代码为样例，也在 Github 上。  </p>
 <p>本教程，也就是简化版的 Secret Note 页面如下图。页面的最上方，显示的是当前连接的 Ethereum 网络，Gas 价格，和登录的 Ethereum 帐号地址。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/simple-secret-note-ui.png" alt="Simple Secret Note UI">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/simple-secret-note-ui.png" alt="Simple Secret Note UI">  </p>
 <h2 id="Web3"><a href="#Web3" class="headerlink" title="Web3"></a>Web3</h2><p>想要在页面集成 Ethereum 帐号网络，并且对智能合约进行操作，我们需要借助前一章提及的 <a href="https://github.com/ethereum/web3.js" target="_blank" rel="external">web3.js</a>，它是 Ethereum 兼容的 JavaScript API 库。  </p>
 <p>在页面打开初始化的时候，我们需要初始化一个 Web3 的实例。这段代码放在 Vuejs 的 <code>created</code> 事件里。  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">created() &#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> web3 !== <span class="string">'undefined'</span>) &#123;</div><div class="line">    <span class="comment">// Use MetaMask's provider</span></div><div class="line">    web3js = <span class="keyword">new</span> Web3(web3.currentProvider);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.showAlertMsg(<span class="string">'Please install &lt;a href="https://metamask.io/" target="__blank"&gt;MetaMask&lt;/a&gt; extension for your browser before using.'</span>, <span class="string">'warning'</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// Async</span></div><div class="line">  <span class="keyword">this</span>.detectNetwork();</div><div class="line">  <span class="keyword">this</span>.getGasPrice();</div><div class="line">  <span class="keyword">this</span>.initAccount();</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
@@ -777,17 +777,17 @@
 <p>如果你看了 <code>detectNetwork</code> 和 <code>getGasPrice</code> 里面的代码，可能会疑惑，为什么它们不需要设定定时器呢？因为，MetaMask 插件检测到你切换网络，并且当前页面曾经访问和使用过 web3 对象的话，它会自动刷新页面。  </p>
 <h3 id="MetaMask-配置"><a href="#MetaMask-配置" class="headerlink" title="MetaMask 配置"></a>MetaMask 配置</h3><h4 id="本地网络设置"><a href="#本地网络设置" class="headerlink" title="本地网络设置"></a>本地网络设置</h4><p>因为我们当前是使用本地的 Ganache 网络来测试，所以我们先要在 MetaMask 上面配置好网络和相应的测试帐号。  </p>
 <p>首先我们点击左上角的网络下拉选择器，然后点击 <code>Custom RPC</code>：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-menu.png" alt="MetaMask Custom RPC Menu">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-custom-rpc-menu.png" alt="MetaMask Custom RPC Menu">  </p>
 <p>然后我们在 Current RPC 下面输入 <code>http://localhost:7545</code>，点击 <code>Save</code>。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-setup.png" alt="MetaMask Custom RPC Setup">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-custom-rpc-setup.png" alt="MetaMask Custom RPC Setup">  </p>
 <h4 id="帐号设置"><a href="#帐号设置" class="headerlink" title="帐号设置"></a>帐号设置</h4><p>安装完 MetaMask 插件时，它默认会帮你创建了一个新帐号。但是，我们需要把 Ganache 自动生成的帐号导入 MetaMask，才能使用它们和我们部署的合约交互。  </p>
 <p>在 Ganache 首页的帐号列表下，我们选择第一个（合约创建帐号），点击最右边的钥匙图标，查看它的私钥，并且复制下来。（这里是测试帐号，所以暴露私钥没关系。但是如果是你的真实 Ethereum 帐号，就一定不能暴露了）  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account-show-key.png" alt="Ganache Account Show Key">  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account-private-key.png" alt="Ganache Account Private Key">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account-show-key.png" alt="Ganache Account Show Key">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account-private-key.png" alt="Ganache Account Private Key">  </p>
 <p>然后，我们点击 MetaMask 页面右上角的小人图标，会出来以下菜单：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-account.png" alt="Metamask Account">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-account.png" alt="Metamask Account">  </p>
 <p>最后，点击 <code>Import Account</code> 菜单，就进入以下输入私钥的页面。然后粘贴刚才复制的私钥，点击 <code>Import</code> 即可。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-account-import.png" alt="Metamask Account Import">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-account-import.png" alt="Metamask Account Import">  </p>
 <h2 id="智能合约的引入和交互"><a href="#智能合约的引入和交互" class="headerlink" title="智能合约的引入和交互"></a>智能合约的引入和交互</h2><p>既然 Ethereum 测试帐号和网络的集成已经准备好，我们就可以在代码引入智能合约，并与之交互了。  </p>
 <h3 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h3><p>首先，我们要先在当前项目下安装和使用 <code>truffle-contract</code> 这个包。  </p>
 <blockquote>
@@ -812,9 +812,9 @@
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">saveNote() &#123;</div><div class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  SecretNote.at(CONTRACT_ADDRESS)</div><div class="line">    .then((instance) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> instance.setNote(that.noteForm.noteName,</div><div class="line">        that.noteForm.noteContent, &#123; <span class="keyword">from</span>: that.account &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
 <p>执行成功后，会弹出如下页面：  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-trx-request.png" alt="Metamask Trx Request">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-trx-request.png" alt="Metamask Trx Request">  </p>
 <p>点击 <code>Submit</code> 后，交易记录会出现在账户下并等待区块链的确认。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/metamask-trx-confirm.png" alt="Metamask Trx Confirm">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-trx-confirm.png" alt="Metamask Trx Confirm">  </p>
 <h4 id="Call-调用"><a href="#Call-调用" class="headerlink" title="Call 调用"></a>Call 调用</h4><p>SecretNote <code>getNote</code> 方法调用其实和 <code>setNote</code> 差不多，只是不需要指定帐号而已。  </p>
 <p>有一点要注意的是，这个方法定义的返回值类型是 <code>bytes32</code>，所以要使用 <code>toAscii</code> 方法把内容转换后才使用。  </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">loadNote() &#123;</div><div class="line">  <span class="keyword">const</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">  SecretNote.at(CONTRACT_ADDRESS)</div><div class="line">    .then((instance) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> instance.getNote(that.noteForm.noteName);</div><div class="line">    &#125;)</div><div class="line">    .then((noteContent) =&gt; &#123;</div><div class="line">      <span class="keyword">if</span> (!noteContent) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line">      that.noteForm.noteContent = web3js.toAscii(noteContent);</div><div class="line">    &#125;);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
@@ -848,7 +848,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/"/>
     <id>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</id>
     <published>2018-03-11T08:44:16.000Z</published>
-    <updated>2018-04-10T08:46:23.601Z</updated>
+    <updated>2018-09-26T13:52:32.761Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Truffle-是什么？"><a href="#Truffle-是什么？" class="headerlink" title="Truffle 是什么？"></a>Truffle 是什么？</h2><p>上一篇文章我们已经介绍了如何使用 Remix 来初步测试智能合约。虽然它使用起来很方便，但是还是有一些不适合拿来当测试工具的地方。我们来尝试用另一个叫 <a href="http://truffleframework.com/" target="_blank" rel="external">Truffle</a> 的工具来测试。  </p>
 <p>Truffle 是什么呢？它的官方介绍是这样的：  </p>
@@ -870,7 +870,7 @@
 <p>npm install</p>
 </blockquote>
 <p>整个目录里面，我使用红色框标出和 Truffle 以及测试相关的部分。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/eth-dapp-base-project-structure.png" alt="Project Structure">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/eth-dapp-base-project-structure.png" alt="Project Structure">  </p>
 <ol>
 <li><p><code>contracts</code> 目录下放的是智能合约文件。<br>那个特殊的 <code>Migrations.sql</code> 是 Truffle 拿来运行智能合约升级脚本，记录版本的合约。你无须理会。  </p>
 </li>
@@ -924,12 +924,12 @@
 <p>‘0x123456…’ 只是示例，它实际上应该放你的智能合约地址。  </p>
 <p>那我们怎么在本地编译部署智能合约，和获取它的地址呢？  </p>
 <h2 id="编译部署合约"><a href="#编译部署合约" class="headerlink" title="编译部署合约"></a>编译部署合约</h2><p>Ganache 启动后是这个样子的，默认已经准备好了一些测试帐号。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-startup.png" alt="Ganache Startup">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-startup.png" alt="Ganache Startup">  </p>
 <p>然后，我们在命令行依次运行 <code>truffle compile</code> 和 <code>truffle migrate</code> 命令。运行 <code>truffle migrate</code> 前，要确保你在 <code>truffle.js</code> 配置的 Ethereum 节点已经起来了。当前的配置，就是你的 Ganache。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/truffle-compile-migrate.png" alt="Truffle Compile Migrate">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/truffle-compile-migrate.png" alt="Truffle Compile Migrate">  </p>
 <p>运行完后，你可以再去看 Ganache 里面的第一个账户余额已经不是 100 ETH 了，因为扣除了一部分 Gas 来建立智能合约。点击 Transactions 那个按钮，也可以看到刚才部署智能合约产生的交易记录。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-account.png" alt="Ganache Account">  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/ganache-trx.png" alt="Ganache Transactions">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account.png" alt="Ganache Account">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-trx.png" alt="Ganache Transactions">  </p>
 <p>到这里，你的智能合约已经在本地的 Ethereum blockchain 节点部署完成了。部署到测试环境或者正式 Ethereum 公链的方法，我们后面再介绍。  </p>
 <h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
 ]]></content>
@@ -962,7 +962,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/"/>
     <id>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</id>
     <published>2018-03-05T04:20:20.000Z</published>
-    <updated>2018-04-10T08:46:23.600Z</updated>
+    <updated>2018-09-26T13:52:33.459Z</updated>
     
     <content type="html"><![CDATA[<p>我们在前面一篇说到，智能合约发布后就没法修改了。所以，在真正发布前，我们必须进行详细的测试。那智能合约怎么测试呢？难不成我们自己要部署一个自己的 Ethereum 网络节点？  </p>
 <p>这篇文章，我先介绍一种最简单直接的测试方式。  </p>
@@ -970,7 +970,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">pragma solidity ^0.4.18;</div><div class="line"></div><div class="line">contract Ownable &#123;</div><div class="line">    address owner;</div><div class="line"></div><div class="line">    function Ownable() public &#123;</div><div class="line">        owner = msg.sender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    modifier onlyOwner() &#123;</div><div class="line">        require(owner == msg.sender);</div><div class="line">        _;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">contract SecretNote is Ownable &#123;</div><div class="line">  mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) notes;</div><div class="line">  uint256 noteCount;</div><div class="line"></div><div class="line">  event SecretNoteUpdated(address indexed _sender, bytes32 indexed _noteKey, bool _success);</div><div class="line"></div><div class="line">  function SecretNote() public &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function () public payable &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to get their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   */</div><div class="line">  function getNote(bytes32 _noteKey) public view returns (bytes32) &#123;</div><div class="line">      return notes[msg.sender][_noteKey];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to update their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   * @param _content The note path hash</div><div class="line">   */</div><div class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</div><div class="line">      require(_noteKey != &quot;&quot;);</div><div class="line">      require(_content != &quot;&quot;);</div><div class="line"></div><div class="line">      notes[msg.sender][_noteKey] = _content;</div><div class="line">      noteCount++;</div><div class="line"></div><div class="line">      SecretNoteUpdated(msg.sender, _noteKey, true);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function getTotalNoteCount() public view onlyOwner returns(uint256) &#123;</div><div class="line">      return noteCount;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="Remix-IDE"><a href="#Remix-IDE" class="headerlink" title="Remix IDE"></a>Remix IDE</h2><p><a href="https://remix.ethereum.org" target="_blank" rel="external">Remix IDE</a> 是一个在线的智能合约编译，测试和部署工具。使用它可以很方便的和智能合约交互，虽然有些地方不是那么便利。  </p>
 <h3 id="合约编译检查"><a href="#合约编译检查" class="headerlink" title="合约编译检查"></a>合约编译检查</h3><p>当我们打开 Remix 的页面，把我们的智能合约代码贴进去的时候，它已经会自动帮你编译代码。右侧是主要的操作区。它有好几个功能标签。<code>Compile</code> 标签会显示出编译后有哪些合约，已经它发现的一些 Warning。  </p>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Remix_compile_contract.png" alt="Remix IDE - Compile">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_compile_contract.png" alt="Remix IDE - Compile">  </p>
 <h3 id="合约创建"><a href="#合约创建" class="headerlink" title="合约创建"></a>合约创建</h3><p>既然编译没有问题，我们点击旁边的 <code>Run</code> 标签看看怎么部署运行这个合约。  </p>
 <ol>
 <li>选择 <code>JavaScript VM</code> 这个 Environment。你会发现它马上帮你创建了好几个拥有了 100 eth 的帐号。  </li>
@@ -979,7 +979,7 @@
 <li>合约就生成了。它的接口 <code>fallback</code>，<code>getTotalNoteCount</code>，<code>getNote</code>，<code>setNote</code> 都分别显示出来。  </li>
 <li>因为我们用了默认提供的第一个帐号来创建合约，它的帐号余额已经不是 100 eth 了。  </li>
 </ol>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Remix_create_contract.png" alt="Remix IDE - Create">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_create_contract.png" alt="Remix IDE - Create">  </p>
 <h3 id="合约调用"><a href="#合约调用" class="headerlink" title="合约调用"></a>合约调用</h3><p>合约创建完，我们就可以调用合约提供的对外的接口了，有几点值得留意的是：  </p>
 <ol>
 <li>只读 <code>view</code> 的方法，它的名字是蓝色的；其它的方法名字是粉红色的。  </li>
@@ -1005,7 +1005,7 @@
 <blockquote>
 <p>0: uint256: 1</p>
 </blockquote>
-<p><img src="http://thinkingincrowd.u.qiniudn.com/Remix_call_contract.png" alt="Remix IDE - Call">  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_call_contract.png" alt="Remix IDE - Call">  </p>
 <p>现在，我们来看一看如果用另一个帐号（非合约创建帐号），来调用 <code>getTotalNoteCount</code> 会出现什么效果。  </p>
 <ol>
 <li>在 <code>Account</code> 下拉框选择另外的一个帐号。这个帐号应该有 100 eth，因为从来没操作过。  </li>

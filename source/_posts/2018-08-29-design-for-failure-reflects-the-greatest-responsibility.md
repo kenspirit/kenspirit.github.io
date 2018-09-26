@@ -11,7 +11,7 @@ categories:
 
 本文并不主要讨论滴滴，而是有感于 TK教主（网络信息安全领域大牛）发的微博：  
 
-![tombkeeper weibo](http://thinkingincrowd.u.qiniudn.com/tombkeeper_weibo_safety_system.png)
+![tombkeeper weibo](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/tombkeeper_weibo_safety_system.png)
 
 
 ## Design for Failure

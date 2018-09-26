@@ -15,7 +15,7 @@ categories:
 
 这一章我们要讲的是 [MVC][] 的 C，也就是 Controller。在 Web Application 里谈到 Controller，我们就不可避免地要了解 **MVC 对数据处理的流程**和涉及**路由**这个概念。大家可以通过这个简略的流程图来辅助理解下面的一些概念。  
 
-![MVC Flow](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-mvc-flow.png)
+![MVC Flow](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-mvc-flow.png)
 
 ## MVC 处理流程和路由
 
@@ -27,7 +27,7 @@ http://www.thinkingincrowd.me/2016/11/27/Node-js-Wechat-Web-App-Tutorial-Busines
 
 路由大致可分为两种：静态文件，和动态内容。但是它们的原理是一样的。静态文件的路由，就是那个路径直接对应了服务器背后的图片，HTML，JS 或者 CSS 等静态文件，服务器不需要额外处理，找到了就直接返回文件的内容。**Web Application 中处理动态内容的路由，需要通过调用绑定的 Controller，再经过 Model 或业务逻辑层处理，最后把结果返回**。服务器如果根据路径找不到对应的 Controller，一般会返回 404 状态，而你们就有可能见到这种类似的页面。  
 
-![404 Page](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-404.png)
+![404 Page](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-404.png)
 
 ## Controller 控制器
 
@@ -103,7 +103,7 @@ _`listImagePage` 和 `loadImagePage` 是打开图片列表页和详情页的，�
 
 这个方法是我们 MVC 的一个 Controller，但其实也是一个 [Express 框架的中间件][]。中间件是什么呢？我们来看下图：  
 
-![Express Middleware](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-express-middleware.png)
+![Express Middleware](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-express-middleware.png)
 
 * Req 是请求。它承载着请求的HTTP 操作（GET/POST），路径（URL），和参数等。  
 * Res 是回复。我们通过它决定什么时候返回，以及返回什么数据给发出请求的人或系统。  
@@ -189,17 +189,17 @@ Controller 里面有两个比较特别的东西。这里只做基本的解释，
 
 我们先启动我们的项目。在命令行，进入项目目录，输入 `node index.js`。项目启动成功应该会输出类似的日志。  
 
-![Server Started](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-server-started.png)
+![Server Started](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-server-started.png)
 
 然后我们启动 Postman：  
 
-![Postman Started](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-postman-started.png)
+![Postman Started](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-postman-started.png)
 
 #### C - Create
 
 我们先通过它来创建一条图片记录：  
 
-![Create Image](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-create.png)
+![Create Image](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-restful-create.png)
 
 大家在红色框的地方输入相应的参数，然后点击 Send 按钮，就可以看到服务器给予正确的返回了。这样就表示数据库已经成功地创建了一条记录。  
 
@@ -234,13 +234,13 @@ Controller 里面使用的 `req.body` 所获取的数据，就是我们在 `Body
 
 首先是读取某一条记录：  
 
-![Load Image](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-load.png)
+![Load Image](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-restful-load.png)
 
 服务器怎么知道我要读哪一条记录？Controller 里使用的 `req.params.id` 其实对应的是路由里配置的 `'/:id'`，它通过和真正的URL `http://localhost:3000/image/585699146c7b082fba163580` 进行匹配。截取出来的最后一段，就是记录的 `id`。  
 
 批量读取多条记录的方式就如下图：  
 
-![List Image](http://thinkingincrowd.u.qiniudn.com/06-controller-routing-restful-list.png)
+![List Image](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/06-controller-routing-restful-list.png)
 
 大家可以看到，GET 请求的另一种传递参数方式是如何拼接到 URL 上面的。在 Controller 里面通过 `req.query` 就能获取到这些参数。大家可以通过在 Controller 里加上 `console.log(req.query)` 的方法来调试并打印数据出来看看。你们看到那些特殊的参数，是 evergrow 框架在批量读取数据时，支持的一些特定的系统参数。它们的作用是指示后台如何在数据量比较多的时候，分页返回记录。  
 

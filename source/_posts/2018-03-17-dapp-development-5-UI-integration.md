@@ -15,7 +15,7 @@ categories:
 
 本教程，也就是简化版的 Secret Note 页面如下图。页面的最上方，显示的是当前连接的 Ethereum 网络，Gas 价格，和登录的 Ethereum 帐号地址。  
 
-![Simple Secret Note UI](http://thinkingincrowd.u.qiniudn.com/simple-secret-note-ui.png)  
+![Simple Secret Note UI](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/simple-secret-note-ui.png)  
 
 
 ## Web3
@@ -93,11 +93,11 @@ categories:
 
 首先我们点击左上角的网络下拉选择器，然后点击 `Custom RPC`：  
 
-![MetaMask Custom RPC Menu](http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-menu.png)  
+![MetaMask Custom RPC Menu](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-custom-rpc-menu.png)  
 
 然后我们在 Current RPC 下面输入 `http://localhost:7545`，点击 `Save`。  
 
-![MetaMask Custom RPC Setup](http://thinkingincrowd.u.qiniudn.com/metamask-custom-rpc-setup.png)  
+![MetaMask Custom RPC Setup](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-custom-rpc-setup.png)  
 
 #### 帐号设置
 
@@ -106,17 +106,17 @@ categories:
 在 Ganache 首页的帐号列表下，我们选择第一个（合约创建帐号），点击最右边的钥匙图标，查看它的私钥，并且复制下来。（这里是测试帐号，所以暴露私钥没关系。但是如果是你的真实 Ethereum 帐号，就一定不能暴露了）  
 
 
-![Ganache Account Show Key](http://thinkingincrowd.u.qiniudn.com/ganache-account-show-key.png)  
+![Ganache Account Show Key](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account-show-key.png)  
 
-![Ganache Account Private Key](http://thinkingincrowd.u.qiniudn.com/ganache-account-private-key.png)  
+![Ganache Account Private Key](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/ganache-account-private-key.png)  
 
 然后，我们点击 MetaMask 页面右上角的小人图标，会出来以下菜单：  
 
-![Metamask Account](http://thinkingincrowd.u.qiniudn.com/metamask-account.png)  
+![Metamask Account](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-account.png)  
 
 最后，点击 `Import Account` 菜单，就进入以下输入私钥的页面。然后粘贴刚才复制的私钥，点击 `Import` 即可。  
 
-![Metamask Account Import](http://thinkingincrowd.u.qiniudn.com/metamask-account-import.png)  
+![Metamask Account Import](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-account-import.png)  
 
 
 ## 智能合约的引入和交互
@@ -176,11 +176,11 @@ SecretNote.setProvider(web3.currentProvider);
 
 执行成功后，会弹出如下页面：  
 
-![Metamask Trx Request](http://thinkingincrowd.u.qiniudn.com/metamask-trx-request.png)  
+![Metamask Trx Request](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-trx-request.png)  
 
 点击 `Submit` 后，交易记录会出现在账户下并等待区块链的确认。  
 
-![Metamask Trx Confirm](http://thinkingincrowd.u.qiniudn.com/metamask-trx-confirm.png)  
+![Metamask Trx Confirm](https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/metamask-trx-confirm.png)  
 
 #### Call 调用
 
