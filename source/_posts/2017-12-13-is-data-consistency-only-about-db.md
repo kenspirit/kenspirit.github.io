@@ -128,3 +128,7 @@ categories:
 [业务与缓存]: http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/  
 [一个简单的支付业务与模型演变]: http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/  
 [听听系统的多地部署改造]: http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/  
+
+[业务与缓存][]  
+[一个简单的支付业务与模型演变][]  
+[听听系统的多地部署改造][]  

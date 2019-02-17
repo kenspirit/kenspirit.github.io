@@ -115,3 +115,7 @@ MongoDB，HTTP Server（写）这些负责写的部分，和 Redis (PubSub) 是�
 [业务与缓存]: http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/  
 [数据的一致性只和数据库有关系吗？]: http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/  
 [一个简单的支付业务与模型演变]: http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/  
+
+[业务与缓存][]  
+[数据的一致性只和数据库有关系吗？][]  
+[一个简单的支付业务与模型演变][]  

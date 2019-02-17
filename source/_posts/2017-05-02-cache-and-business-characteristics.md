@@ -81,3 +81,7 @@ Redis 是一个常用的服务端缓存系统。它其实是内存型 key-value 
 [数据的一致性只和数据库有关系吗？]: http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/  
 [一个简单的支付业务与模型演变]: http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/  
 [听听系统的多地部署改造]: http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/  
+
+[数据的一致性只和数据库有关系吗？][]  
+[一个简单的支付业务与模型演变][]  
+[听听系统的多地部署改造][]  

@@ -106,3 +106,7 @@ categories:
 [业务与缓存]: http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/  
 [数据的一致性只和数据库有关系吗？]: http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/  
 [听听系统的多地部署改造]: http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/  
+
+[业务与缓存][]  
+[数据的一致性只和数据库有关系吗？][]  
+[听听系统的多地部署改造][]  

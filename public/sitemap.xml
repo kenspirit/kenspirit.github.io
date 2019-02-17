@@ -4,28 +4,28 @@
   <url>
     <loc>http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/</loc>
     
-    <lastmod>2019-02-17T05:58:36.854Z</lastmod>
+    <lastmod>2019-02-17T06:05:14.966Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/</loc>
     
-    <lastmod>2019-02-17T05:58:22.318Z</lastmod>
+    <lastmod>2019-02-17T06:05:05.631Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/</loc>
     
-    <lastmod>2019-02-17T05:58:02.605Z</lastmod>
+    <lastmod>2019-02-17T06:04:51.358Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/</loc>
     
-    <lastmod>2019-02-17T05:57:47.148Z</lastmod>
+    <lastmod>2019-02-17T06:04:22.750Z</lastmod>
     
   </url>
   
@@ -604,14 +604,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
     
     <lastmod>2018-04-10T08:46:23.541Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
     
     <lastmod>2018-04-10T08:46:23.541Z</lastmod>
     
@@ -639,14 +639,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
     
     <lastmod>2018-04-10T08:46:23.529Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/05/16/How-to-use-Sinon-js-to-test-Ajax-in-ExtJS/</loc>
+    <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
     
     <lastmod>2018-04-10T08:46:23.529Z</lastmod>
     
@@ -730,14 +730,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
     
     <lastmod>2018-04-10T08:46:23.505Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/29/startup-review-network/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</loc>
     
     <lastmod>2018-04-10T08:46:23.505Z</lastmod>
     
@@ -765,13 +765,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.503Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2013/05/28/how-to-ask-share-and-influence/</loc>
     
     <lastmod>2018-04-10T08:46:23.503Z</lastmod>
@@ -779,14 +772,21 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.503Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
     
     <lastmod>2018-04-10T08:46:23.502Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/04/13/share-code-between-nodejs-and-browser/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/04/16/can-i-make-13-billion-in-20-months/</loc>
     
     <lastmod>2018-04-10T08:46:23.502Z</lastmod>
     
@@ -814,14 +814,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
     
     <lastmod>2018-04-10T08:46:23.494Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
+    <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
     
     <lastmod>2018-04-10T08:46:23.494Z</lastmod>
     
@@ -884,13 +884,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.484Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
     
     <lastmod>2018-04-10T08:46:23.484Z</lastmod>
@@ -905,9 +898,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/12/16/9-things-that-motivate-employee-more-than-money/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/07/15/stay-in-good-or-change-to-be-good/</loc>
     
-    <lastmod>2018-04-10T08:46:23.483Z</lastmod>
+    <lastmod>2018-04-10T08:46:23.484Z</lastmod>
     
   </url>
   
@@ -919,7 +912,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/12/16/9-things-that-motivate-employee-more-than-money/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.483Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
@@ -933,7 +933,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/08/04/10-mistakes-software-team-lead/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
@@ -968,14 +968,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
     
     <lastmod>2018-04-10T08:46:23.479Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2006/05/18/short-trip-with-mom-and-dad-for-mothers-day/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
     
     <lastmod>2018-04-10T08:46:23.479Z</lastmod>
     
@@ -985,13 +985,6 @@
     <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
     
     <lastmod>2018-04-10T08:46:23.479Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.478Z</lastmod>
     
   </url>
   
@@ -1010,9 +1003,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2005/10/18/mom-and-dad-get-old-already/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/my-t43/</loc>
     
-    <lastmod>2018-04-10T08:46:23.477Z</lastmod>
+    <lastmod>2018-04-10T08:46:23.478Z</lastmod>
     
   </url>
   
@@ -1025,6 +1018,13 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2005/10/12/travel-to-da-jiao-wan-in-yang-jiang/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.477Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2005/10/18/mom-and-dad-get-old-already/</loc>
     
     <lastmod>2018-04-10T08:46:23.477Z</lastmod>
     
