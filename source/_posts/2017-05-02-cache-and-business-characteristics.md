@@ -73,7 +73,11 @@ Redis 是一个常用的服务端缓存系统。它其实是内存型 key-value 
 
 所以，我这篇入门和半总结文就不细说了，有兴趣的同学可以参考「左耳朵耗子」陈皓的文章[缓存更新的套路][]。在我们的直播系统，我们采用的算是第一种方式，只是实现的手段，由于我们是多地部署的系统，在失效和更新的操作上，做法有点特殊而已。  
 
-
-相关文章：
-
 在我动手写本文的时候，恰好曹政 4 月 28 日也在他的公众号「caoz的梦呓」也推了一篇「谈谈编程 之 滥用内存的现象」。文章里讲述了他给小蜜圈做技术顾问时发现的一些缓存处理问题，里面的一些例子和原则其实和我这里说的有些重合，大家不妨一并查看。  
+
+
+## 相关阅读
+
+[数据的一致性只和数据库有关系吗？]: http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/  
+[一个简单的支付业务与模型演变]: http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/  
+[听听系统的多地部署改造]: http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/  

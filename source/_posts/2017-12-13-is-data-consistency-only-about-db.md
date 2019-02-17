@@ -121,3 +121,10 @@ categories:
 ### 异常数据主动监控，补偿
 
 一般来说，如果所有的操作，都是系统内部触发，那么出错的时候，都应该有记录，并且可以重试。但是，像前面提到的摩拜单车的例子，解锁部分的硬件操作，锁有没有打开这个状态并没有反馈回内部系统，导致不一致的状态已经脱离了内部系统范畴。这就不是重试能解决的了。异常数据的主动监控和补偿就派上用场了。  
+
+
+## 相关阅读
+
+[业务与缓存]: http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/  
+[一个简单的支付业务与模型演变]: http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/  
+[听听系统的多地部署改造]: http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/  

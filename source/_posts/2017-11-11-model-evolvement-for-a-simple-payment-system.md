@@ -100,3 +100,9 @@ categories:
 [文章]: https://medium.com/airbnb-engineering/scaling-airbnbs-payment-platform-43ebfc99b324
 
 目前这个支付模块还是有点简陋的，再学习怎么优化吧。AirBnB 的支付系统也是面对各种现实问题后不断演进，有兴趣朋友可以看看它们的 Medium [文章][]。
+
+## 相关阅读
+
+[业务与缓存]: http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/  
+[数据的一致性只和数据库有关系吗？]: http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/  
+[听听系统的多地部署改造]: http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/  

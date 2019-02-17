@@ -108,3 +108,10 @@ MongoDB，HTTP Server（写）这些负责写的部分，和 Redis (PubSub) 是�
 现在这个架构，服务器之间的通信还是挺复杂的，网络占用应该还有更多优化空间。当时罗永浩直播刚开始的时候，某些用户还出现了“已经在其它终端登录”的警告而被踢出直播间。可是这个问题一直没时间细查。  
 
 这个架构，其实还不是真正意义的异地多活，和分布式系统，因为数据库和写服务器还是单一的。目前我们做这个的话，成本还是太高。不过，或许以后真的要再一次重构，也应该是服务的细分，SOA 更靠谱一些。  
+
+
+## 相关阅读
+
+[业务与缓存]: http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/  
+[数据的一致性只和数据库有关系吗？]: http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/  
+[一个简单的支付业务与模型演变]: http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/  
