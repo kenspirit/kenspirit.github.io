@@ -2,8 +2,7 @@ title: 初识 React, Flux 和 Redux
 date: 2017-05-13 17:18:51
 tags:
   - React
-  - Redux
-  - Flux
+  - Javascript
 categories:
   - Sword
 ---

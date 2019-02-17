@@ -9,7 +9,6 @@ tags:
 - Design
 - UI
 - UED
-- GTD
 - Time Management
 - Productivity
 ---

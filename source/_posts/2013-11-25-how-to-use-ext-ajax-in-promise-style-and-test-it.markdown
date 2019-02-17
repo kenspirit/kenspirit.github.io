@@ -13,7 +13,6 @@ tags:
 - Ajax
 - Jasmine
 - Mocha
-- Sinon.js
 ---
 
 

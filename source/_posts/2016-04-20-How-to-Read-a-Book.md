@@ -5,8 +5,6 @@ categories:
 - Think
 tags:
 - Book
-- Analytical Reading
-- Critical Thinking
 ---
 
 读了那么多年书了，还不会读吗？别说，可能你还真的不会。这里的“读”要看你怎么定义。

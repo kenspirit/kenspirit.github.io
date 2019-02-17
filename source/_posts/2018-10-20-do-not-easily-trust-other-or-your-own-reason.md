@@ -1,7 +1,7 @@
 title: 别轻易相信他人，或自己给出的理由
 date: 2018-10-20 15:30:26
 tags:
-  - Reason
+  - Empathy
 categories:
   - Think
 ---

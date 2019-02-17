@@ -13,7 +13,6 @@ tags:
 - Ajax
 - Mock
 - AngularJS
-- HttpBackend
 - JSON
 ---
 

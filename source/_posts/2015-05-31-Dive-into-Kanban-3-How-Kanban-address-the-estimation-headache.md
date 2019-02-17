@@ -2,7 +2,6 @@ title: Dive into Kanban (3) - How Kanban address the scheduling & estimation hea
 tags:
   - Retrospect
   - Kanban
-  - Lead Time
 comments: true
 categories:
   - Think

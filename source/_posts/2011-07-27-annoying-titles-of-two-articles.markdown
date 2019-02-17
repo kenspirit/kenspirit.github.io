@@ -8,7 +8,6 @@ wordpress_id: 65
 categories:
 - Think
 tags:
-- Stuff
 ---
 
 这两篇文章都是[李楠](http://www.ifanr.com/author/kkk/)写的：

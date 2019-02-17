@@ -1,7 +1,6 @@
 title: 时常感到焦虑可能因为你是防御型人格
 date: 2017-03-04 21:20:17
 tags:
-  - Anxiety
 categories:
   - Psychology
 ---

@@ -4,7 +4,6 @@ tags:
   - Wechat
   - Node.js
   - Tutorial
-  - Access Control
   - MVC
 categories:
   - Sword

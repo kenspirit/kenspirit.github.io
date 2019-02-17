@@ -8,7 +8,7 @@ wordpress_id: 26
 categories:
 - Sword
 tags:
-- Coding
+- Programming
 - Retrospect
 ---
 

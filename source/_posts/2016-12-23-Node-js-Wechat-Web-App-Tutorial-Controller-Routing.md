@@ -4,8 +4,6 @@ tags:
   - Wechat
   - Node.js
   - Tutorial
-  - Controller
-  - Routing
   - MVC
 categories:
   - Sword

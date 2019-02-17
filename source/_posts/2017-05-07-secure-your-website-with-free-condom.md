@@ -3,7 +3,7 @@ date: 2017-05-07 11:47:41
 tags:
   - Security
   - HTTPS
-  - Nginx
+  - Server
 categories:
   - Sword
 ---

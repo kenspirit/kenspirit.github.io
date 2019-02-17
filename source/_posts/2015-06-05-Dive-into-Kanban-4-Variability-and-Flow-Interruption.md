@@ -2,7 +2,6 @@ title: "Dive into Kanban (4) - Variability and Flow Interruption"
 tags:
   - Retrospect
   - Kanban
-  - Flow
 comments: true
 categories:
   - Think

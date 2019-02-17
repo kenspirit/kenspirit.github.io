@@ -9,7 +9,6 @@ tags:
 - Javascript
 - UnitTest
 - AngularJS
-- HttpBackend
 - Jasmine
 - JSON
 ---

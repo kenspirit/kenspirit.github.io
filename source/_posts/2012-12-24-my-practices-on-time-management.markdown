@@ -8,7 +8,6 @@ categories:
 tags:
 - Time Management
 - Productivity
-- GTD
 ---
 
 [Wiki]: http://en.wikipedia.org/wiki/Time_management

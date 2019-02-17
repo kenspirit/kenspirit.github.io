@@ -6,7 +6,6 @@ comments: true
 categories: 
 - Think
 tags:
-- Adapt
 - Change
 - Destiny
 ---

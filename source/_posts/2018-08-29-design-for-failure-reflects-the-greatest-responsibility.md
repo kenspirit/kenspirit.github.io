@@ -1,7 +1,6 @@
 title: 真正的责任体现于为何种失败和错误考虑
 date: 2018-08-29 18:15:13
 tags:
-  - Failure
   - Responsibility
 categories:
   - Think

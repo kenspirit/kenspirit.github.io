@@ -6,7 +6,7 @@ comments: true
 categories: 
 - Think
 tags:
-- Coding
+- Programming
 ---
 
 [匈牙利命名法]: http://en.wikipedia.org/wiki/Hungarian_notation

@@ -1,8 +1,7 @@
 title: 指责，只会让你爱的人越来越远
 date: 2017-07-08 22:06:31
 tags:
-  - Conflict
-  - Criticism
+  - Communication
   - Relationship
 categories:
   - Psychology

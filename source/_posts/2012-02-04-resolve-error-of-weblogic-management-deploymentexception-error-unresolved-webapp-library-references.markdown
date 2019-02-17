@@ -8,7 +8,7 @@ wordpress_id: 198
 categories:
 - Sword
 tags:
-- Weblogic
+- Server
 ---
 
 When I tried to deploy an EAR to weblogic these days, I encountered one problem if deploying it to a newly created server, but not the default ADMIN one.

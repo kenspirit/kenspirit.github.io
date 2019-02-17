@@ -1,6 +1,7 @@
 title: 被愤怒之火烧毁的，不仅有敌人，还可能有自己
 tags:
-  - Anger
+  - Communication
+  - Emotion
 categories:
   - Psychology
 date: 2018-03-21 08:06:13
