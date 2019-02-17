@@ -539,7 +539,7 @@
     <link href="http://www.thinkingincrowd.me/2018/05/23/is-press-one-investment-logic-reasonable/"/>
     <id>http://www.thinkingincrowd.me/2018/05/23/is-press-one-investment-logic-reasonable/</id>
     <published>2018-05-23T13:16:25.000Z</published>
-    <updated>2018-05-23T13:17:13.492Z</updated>
+    <updated>2019-02-17T07:01:52.738Z</updated>
     
     <content type="html"><![CDATA[<p>昨天，岳琦和 PRESS.one 拓荒者社群在我的老东家「一块听听」做了一个直播：<a href="https://live.tinfinite.com/live-detail.html?liveshowId=5aff18c75eca460001caf10f" target="_blank" rel="external">「PRESS.one的投资逻辑」</a>。整个直播听下来，比起很多盲目“信仰投资”的人来说，他对 PRESS.one 的分析和投资看法，还是相当全面的。</p>
 <p>总的来说，岳琦的看法是，投资一个区块链项目，靠单纯的信仰是不够的，也是不负责任的。因为很多项目的 ICO，白皮书来来去去都是那些套路：先说现在的行业，或者当前某区块链项目有什么问题，然后说我们可以解决这个问题（有些项目甚至都没说怎么解决），或者一些项目就对标当前某某巨头，说做区块链的xx（且不说这个领域有没有必要用区块链），最后就说要发币募集资金，巴拉巴拉一大堆。所以，在鱼龙混杂的情况下，如何分析项目，合理投资很重要，尤其是现在已经不是随便发币就鸡犬升天的时候了。  </p>
@@ -602,8 +602,6 @@
     
       <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
     
-      <category term="PRESS.one" scheme="http://www.thinkingincrowd.me/tags/PRESS-one/"/>
-    
   </entry>
   
   <entry>
@@ -611,7 +609,7 @@
     <link href="http://www.thinkingincrowd.me/2018/05/09/addictive-to-others-goodness-is-dangerous/"/>
     <id>http://www.thinkingincrowd.me/2018/05/09/addictive-to-others-goodness-is-dangerous/</id>
     <published>2018-05-09T12:25:12.000Z</published>
-    <updated>2018-05-09T12:53:07.273Z</updated>
+    <updated>2019-02-17T07:02:45.496Z</updated>
     
     <content type="html"><![CDATA[<p>不知道大家有没有听过这么一个小故事，或者是谚语：  </p>
 <p>一个乞丐，每天都会有固定的一位善心人士给予 Ta 一元钱的施舍。但是，某一天，或许是因为那位善心人士没有了散钱，或者有急事在身，匆匆路过而没有给予这个乞丐施舍。结果，那个乞丐起来破口大骂，说：“你怎么今天不给钱了？” 结果就是，这位善心人士再也不给予 Ta 更多的施舍。  </p>
@@ -641,7 +639,7 @@
       <category term="Psychology" scheme="http://www.thinkingincrowd.me/categories/Psychology/"/>
     
     
-      <category term="Dependency" scheme="http://www.thinkingincrowd.me/tags/Dependency/"/>
+      <category term="Relationship" scheme="http://www.thinkingincrowd.me/tags/Relationship/"/>
     
   </entry>
   
@@ -843,7 +841,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/"/>
     <id>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</id>
     <published>2018-03-17T05:40:40.000Z</published>
-    <updated>2018-09-26T13:52:32.097Z</updated>
+    <updated>2019-02-17T07:09:31.675Z</updated>
     
     <content type="html"><![CDATA[<p>本篇文章主要讲述 Dapp 前端页面，怎么和 Ethereum 帐号网络集成。不过，涉及的前端开发和代码，不会包括在覆盖范围内。因为前端开发框架太多（Vuejs, React, AngularJS，JQuery 等），使用什么都可以，所以本文仅解释合约相关的代码。本文代码以 Vuejs 代码为样例，也在 Github 上。  </p>
 <p>本教程，也就是简化版的 Secret Note 页面如下图。页面的最上方，显示的是当前连接的 Ethereum 网络，Gas 价格，和登录的 Ethereum 帐号地址。  </p>
@@ -921,8 +919,6 @@
       <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
     
       <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
-    
-      <category term="MetaMask" scheme="http://www.thinkingincrowd.me/tags/MetaMask/"/>
     
   </entry>
   
@@ -1041,7 +1037,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/"/>
     <id>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</id>
     <published>2018-03-05T04:20:20.000Z</published>
-    <updated>2018-09-26T13:52:33.459Z</updated>
+    <updated>2019-02-17T07:01:19.359Z</updated>
     
     <content type="html"><![CDATA[<p>我们在前面一篇说到，智能合约发布后就没法修改了。所以，在真正发布前，我们必须进行详细的测试。那智能合约怎么测试呢？难不成我们自己要部署一个自己的 Ethereum 网络节点？  </p>
 <p>这篇文章，我先介绍一种最简单直接的测试方式。  </p>
@@ -1118,8 +1114,6 @@
     
       <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
     
-      <category term="Remix" scheme="http://www.thinkingincrowd.me/tags/Remix/"/>
-    
   </entry>
   
   <entry>
@@ -1127,7 +1121,7 @@
     <link href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/"/>
     <id>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</id>
     <published>2018-02-27T12:20:20.000Z</published>
-    <updated>2018-04-10T08:46:23.599Z</updated>
+    <updated>2019-02-17T07:01:36.214Z</updated>
     
     <content type="html"><![CDATA[<p>Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 <a href="http://www.secret-note.one" target="_blank" rel="external">Secret Note</a> 的智能合约怎么实现。  </p>
 <h2 id="Solidity-简介"><a href="#Solidity-简介" class="headerlink" title="Solidity 简介"></a>Solidity 简介</h2><blockquote>
@@ -1210,8 +1204,6 @@
       <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
     
       <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
-    
-      <category term="Solidity" scheme="http://www.thinkingincrowd.me/tags/Solidity/"/>
     
   </entry>
   
