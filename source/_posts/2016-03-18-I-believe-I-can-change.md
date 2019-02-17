@@ -1,6 +1,6 @@
 title: 我相信我可以改变
 tags:
-  - Believe
+  - Belief
   - Change
 categories:
   - Think

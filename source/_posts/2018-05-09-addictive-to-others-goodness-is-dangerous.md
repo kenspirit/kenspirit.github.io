@@ -1,7 +1,7 @@
 title: 习惯了别人的好是很危险的
 date: 2018-05-09 20:25:12
 tags:
-  - Dependency
+  - Relationship
 categories:
   - Psychology
 ---

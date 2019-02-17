@@ -2,7 +2,6 @@ title: 怎样可以不用再写接口文档
 date: 2017-10-28 23:03:24
 tags:
   - API
-  - Swagger
   - Node.js
 categories:
   - Sword

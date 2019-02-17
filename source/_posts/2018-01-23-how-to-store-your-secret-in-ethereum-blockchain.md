@@ -5,8 +5,6 @@ tags:
   - Ethereum
   - Dapp
   - Smart Contract
-  - IPFS
-  - Web3
 categories:
   - Sword
 ---

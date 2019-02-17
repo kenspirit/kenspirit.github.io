@@ -8,8 +8,7 @@ categories:
 tags:
 - AngularJS
 - Javascript
-- ngRepeat
-- Directive
+- Idempotency
 ---
 
 [AngularJS]: http://angularjs.org

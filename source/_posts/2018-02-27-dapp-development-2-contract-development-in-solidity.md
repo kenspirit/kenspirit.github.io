@@ -5,7 +5,6 @@ tags:
   - Ethereum
   - Dapp
   - Smart Contract
-  - Solidity
 categories:
   - Sword
 ---

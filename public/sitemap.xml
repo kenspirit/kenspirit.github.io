@@ -2,6 +2,118 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</loc>
+    
+    <lastmod>2019-02-17T07:10:52.239Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</loc>
+    
+    <lastmod>2019-02-17T07:10:34.383Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</loc>
+    
+    <lastmod>2019-02-17T07:09:31.675Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
+    
+    <lastmod>2019-02-17T07:09:00.812Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
+    
+    <lastmod>2019-02-17T07:08:15.815Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/</loc>
+    
+    <lastmod>2019-02-17T07:07:37.662Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
+    
+    <lastmod>2019-02-17T07:07:30.675Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2016/03/18/I-believe-I-can-change/</loc>
+    
+    <lastmod>2019-02-17T07:06:57.016Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/</loc>
+    
+    <lastmod>2019-02-17T07:04:14.286Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/05/09/addictive-to-others-goodness-is-dangerous/</loc>
+    
+    <lastmod>2019-02-17T07:02:45.496Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</loc>
+    
+    <lastmod>2019-02-17T07:02:20.724Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</loc>
+    
+    <lastmod>2019-02-17T07:02:14.797Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/05/23/is-press-one-investment-logic-reasonable/</loc>
+    
+    <lastmod>2019-02-17T07:01:52.738Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</loc>
+    
+    <lastmod>2019-02-17T07:01:36.214Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</loc>
+    
+    <lastmod>2019-02-17T07:01:19.359Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.thinkingincrowd.me/2017/10/28/no-need-to-write-api-doc-anymore/</loc>
+    
+    <lastmod>2019-02-17T07:01:02.866Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2013/01/30/string-interpolation-should-not-be-used-with-class-directive-in-angularjs/</loc>
     
     <lastmod>2019-02-17T06:58:28.217Z</lastmod>
@@ -163,20 +275,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/06/14/function-definition-this-and-bind-in-javascript/</loc>
-    
-    <lastmod>2019-02-17T06:37:17.589Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/</loc>
-    
-    <lastmod>2019-02-17T06:05:14.966Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/</loc>
     
     <lastmod>2019-02-17T06:05:05.631Z</lastmod>
@@ -187,13 +285,6 @@
     <loc>http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/</loc>
     
     <lastmod>2019-02-17T06:04:51.358Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/</loc>
-    
-    <lastmod>2019-02-17T06:04:22.750Z</lastmod>
     
   </url>
   
@@ -359,27 +450,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/01/23/how-to-store-your-secret-in-ethereum-blockchain/</loc>
-    
-    <lastmod>2018-09-26T13:52:34.356Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</loc>
-    
-    <lastmod>2018-09-26T13:52:33.459Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/</loc>
-    
-    <lastmod>2018-09-26T13:52:32.097Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2018/08/29/design-for-failure-reflects-the-greatest-responsibility/</loc>
     
     <lastmod>2018-09-26T13:52:31.411Z</lastmod>
@@ -443,20 +513,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/05/23/is-press-one-investment-logic-reasonable/</loc>
-    
-    <lastmod>2018-05-23T13:17:13.492Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/05/09/addictive-to-others-goodness-is-dangerous/</loc>
-    
-    <lastmod>2018-05-09T12:53:07.273Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2018/05/08/is-blockchain-valuable/</loc>
     
     <lastmod>2018-05-09T12:21:39.742Z</lastmod>
@@ -499,20 +555,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.599Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.598Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2018/02/24/start-up-already-after-joining-a-startup-company/</loc>
     
     <lastmod>2018-04-10T08:46:23.596Z</lastmod>
@@ -544,13 +586,6 @@
     <loc>http://www.thinkingincrowd.me/2017/11/19/cannot-change-because-you-donot-really-know-yourself/</loc>
     
     <lastmod>2018-04-10T08:46:23.587Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2017/10/28/no-need-to-write-api-doc-anymore/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.586Z</lastmod>
     
   </url>
   
@@ -688,13 +723,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2016/09/04/Why-I-choose-convict-conditioning/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.541Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2016/08/31/my-programming-path/</loc>
     
     <lastmod>2018-04-10T08:46:23.541Z</lastmod>
@@ -719,13 +747,6 @@
     <loc>http://www.thinkingincrowd.me/2016/04/21/How-to-Read-a-Book/</loc>
     
     <lastmod>2018-04-10T08:46:23.529Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2016/03/18/I-believe-I-can-change/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.528Z</lastmod>
     
   </url>
   
@@ -793,13 +814,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/08/29/how-to-support-page-content-i18n-in-angularjs/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.505Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2013/06/08/how-to-verify-json-data-with-angularjs-httpbackend/</loc>
     
     <lastmod>2018-04-10T08:46:23.503Z</lastmod>
@@ -835,13 +849,6 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.497Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.thinkingincrowd.me/2013/01/03/widely-misunderstood-naming-convention-the-hungarian/</loc>
     
     <lastmod>2018-04-10T08:46:23.494Z</lastmod>
@@ -852,13 +859,6 @@
     <loc>http://www.thinkingincrowd.me/2013/01/01/why-i-start-blogging-and-in-english/</loc>
     
     <lastmod>2018-04-10T08:46:23.493Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2012/10/27/db-design-for-multi-dimension-data/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.492Z</lastmod>
     
   </url>
   
@@ -884,7 +884,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
     
     <lastmod>2018-04-10T08:46:23.484Z</lastmod>
     
@@ -898,7 +898,7 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2012/02/04/forward-or-backward/</loc>
+    <loc>http://www.thinkingincrowd.me/2012/02/14/ever-never/</loc>
     
     <lastmod>2018-04-10T08:46:23.484Z</lastmod>
     
@@ -926,14 +926,14 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/07/27/annoying-titles-of-two-articles/</loc>
+    <loc>http://www.thinkingincrowd.me/2011/07/20/valueofstone/</loc>
     
     <lastmod>2018-04-10T08:46:23.482Z</lastmod>
     
@@ -947,6 +947,13 @@
   </url>
   
   <url>
+    <loc>http://www.thinkingincrowd.me/2011/03/06/marching-on/</loc>
+    
+    <lastmod>2018-04-10T08:46:23.480Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.thinkingincrowd.me/2011/06/15/excelavoidvaliationlostafterpoi/</loc>
     
     <lastmod>2018-04-10T08:46:23.480Z</lastmod>
@@ -954,9 +961,9 @@
   </url>
   
   <url>
-    <loc>http://www.thinkingincrowd.me/2011/03/06/marching-on/</loc>
+    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
     
-    <lastmod>2018-04-10T08:46:23.480Z</lastmod>
+    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
     
   </url>
   
@@ -969,13 +976,6 @@
   
   <url>
     <loc>http://www.thinkingincrowd.me/2006/05/18/classic-statement-from-winnie-keep-updating/</loc>
-    
-    <lastmod>2018-04-10T08:46:23.479Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.thinkingincrowd.me/2006/03/28/bangkok-trip/</loc>
     
     <lastmod>2018-04-10T08:46:23.479Z</lastmod>
     

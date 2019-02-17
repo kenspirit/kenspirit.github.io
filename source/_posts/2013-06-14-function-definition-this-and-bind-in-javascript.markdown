@@ -7,7 +7,7 @@ categories:
 - Sword
 tags:
 - Javascript
-- Function
+- Functional Programming
 ---
 
 [ECMA-262]: http://www.ecma-international.org/publications/standards/Ecma-262.htm

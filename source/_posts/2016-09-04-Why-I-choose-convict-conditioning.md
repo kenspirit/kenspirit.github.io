@@ -1,7 +1,6 @@
 title: 我为什么选择囚徒健身？
 tags:
-  - Calisthenics
-  - Workout
+  - Health
 categories:
   - Think
 date: 2016-09-04 21:29:36

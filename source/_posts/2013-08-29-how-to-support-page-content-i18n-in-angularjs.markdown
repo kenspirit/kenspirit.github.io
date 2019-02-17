@@ -8,7 +8,6 @@ categories:
 tags:
 - Javascript
 - AngularJS
-- i18n
 - SPA
 ---
 

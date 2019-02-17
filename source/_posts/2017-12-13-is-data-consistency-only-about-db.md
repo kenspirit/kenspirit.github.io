@@ -1,9 +1,6 @@
 title: 数据的一致性只和数据库有关系吗？
 date: 2017-12-13 22:13:52
 tags:
-  - ACID
-  - Consistency
-  - Atomicity
   - Database
   - Distributed
   - Idempotency

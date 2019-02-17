@@ -1,7 +1,8 @@
 title: 业务与缓存
 date: 2017-05-02 18:51:29
 tags:
-  - Caching
+  - Cache
+  - Business Logic
 categories:
   - Sword
 ---

@@ -9,7 +9,7 @@ categories:
 - Sword
 tags:
 - Design
-- DB
+- Database
 ---
 
 首先, 我先要说明一下, 这里的“多维度”可能并不太准确.  这里说的并不是数据仓库里的维度, 而只是数据的属性.

@@ -2,7 +2,6 @@ title: 「PRESS.one 的投资逻辑」合理吗？
 date: 2018-05-23 21:16:25
 tags:
   - Blockchain
-  - PRESS.one
 categories:
   - Think
 ---
