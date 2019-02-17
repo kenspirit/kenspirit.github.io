@@ -10,7 +10,6 @@ tags:
 - Startup
 - Retrospect
 - Goal
-- Permanent
 ---
 
 [至关重要的关系]: http://www.amazon.cn/dp/B00COJ3CVY

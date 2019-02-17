@@ -3,10 +3,6 @@ date: 2016-06-09 10:16:25
 tags:
   - Javascript
   - Functional Programming
-  - Prototype Chain
-  - Prototype
-  - Inheritance
-  - Constructor
 categories:
   - Sword
 ---

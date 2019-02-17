@@ -8,7 +8,7 @@ categories:
 tags:
 - Javascript
 - Promise
-- Callback
+- Asynchronous
 - Functional Programming
 - Node.js
 ---

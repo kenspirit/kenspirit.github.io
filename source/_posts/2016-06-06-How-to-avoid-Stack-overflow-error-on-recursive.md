@@ -3,11 +3,6 @@ date: 2016-06-06 0:05:00
 tags:
   - Javascript
   - Functional Programming
-  - Loop
-  - Recursion
-  - Tail Call Optimization
-  - Trampoline
-  - Thunk
 categories:
   - Sword
 ---

@@ -1,9 +1,7 @@
 title: 教育的在线化转变
 date: 2017-07-30 10:04:08
 tags:
-  - Online
   - Learning
-  - Education
 categories:
   - Think
 ---

@@ -2,7 +2,6 @@ title: Dive into Kanban (5) - Difficulties and Resisted Opinions on Adoption
 tags:
   - Retrospect
   - Kanban
-  - Adoption
 comments: true
 categories:
   - Think

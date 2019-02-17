@@ -8,9 +8,6 @@ categories:
 tags:
 - AngularJS
 - Javascript
-- ngClass
-- Directive
-- String interpolation
 ---
 
 [AngularJS]: http://angularjs.org

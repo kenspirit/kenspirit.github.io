@@ -9,7 +9,6 @@ tags:
 - Time Management
 - Productivity
 - GTD
-- Pomodoro
 ---
 
 [Wiki]: http://en.wikipedia.org/wiki/Time_management

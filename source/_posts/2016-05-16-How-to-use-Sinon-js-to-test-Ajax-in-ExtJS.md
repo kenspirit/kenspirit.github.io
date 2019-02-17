@@ -3,8 +3,7 @@ date: 2016-05-16 22:09:01
 tags:
   - Javascript
   - ExtJS
-  - Unit Test
-  - Sinon.js
+  - UnitTest
   - Promise
 categories:
   - Sword

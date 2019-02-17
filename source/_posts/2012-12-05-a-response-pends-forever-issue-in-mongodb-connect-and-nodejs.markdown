@@ -9,7 +9,6 @@ tags:
 - Javascript
 - Node.js
 - MongoDB
-- Connect
 ---
 
 [connect-mongodb]: https://github.com/masylum/connect-mongodb

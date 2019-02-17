@@ -7,10 +7,7 @@ categories:
 - Sword
 tags:
 - Javascript
-- Function definition
-- this
-- bind
-- Execution context
+- Function
 ---
 
 [ECMA-262]: http://www.ecma-international.org/publications/standards/Ecma-262.htm

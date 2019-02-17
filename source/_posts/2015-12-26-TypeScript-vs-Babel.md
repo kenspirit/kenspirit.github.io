@@ -3,7 +3,6 @@ tags:
   - Javascript
   - TypeScript
   - Babel
-  - ES6
 categories:
   - Sword
 date: 2015-12-26 18:38:00

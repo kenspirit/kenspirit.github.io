@@ -931,7 +931,7 @@
     <link href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/"/>
     <id>http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/</id>
     <published>2018-03-11T08:44:16.000Z</published>
-    <updated>2018-09-26T13:52:32.761Z</updated>
+    <updated>2019-02-17T06:41:48.168Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Truffle-是什么？"><a href="#Truffle-是什么？" class="headerlink" title="Truffle 是什么？"></a>Truffle 是什么？</h2><p>上一篇文章我们已经介绍了如何使用 Remix 来初步测试智能合约。虽然它使用起来很方便，但是还是有一些不适合拿来当测试工具的地方。我们来尝试用另一个叫 <a href="http://truffleframework.com/" target="_blank" rel="external">Truffle</a> 的工具来测试。  </p>
 <p>Truffle 是什么呢？它的官方介绍是这样的：  </p>
@@ -1033,10 +1033,6 @@
       <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
     
       <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
-    
-      <category term="Truffle" scheme="http://www.thinkingincrowd.me/tags/Truffle/"/>
-    
-      <category term="Ganache" scheme="http://www.thinkingincrowd.me/tags/Ganache/"/>
     
   </entry>
   

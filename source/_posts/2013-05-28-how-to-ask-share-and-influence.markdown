@@ -6,7 +6,7 @@ comments: true
 categories: 
 - Think
 tags:
-- Share
+- Sharing
 - Influence
 - Management 
 ---

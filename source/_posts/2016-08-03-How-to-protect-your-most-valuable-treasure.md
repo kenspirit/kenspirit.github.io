@@ -3,7 +3,6 @@ date: 2016-08-03 23:20:29
 tags:
   - Attention
   - Habit
-  - Value
 categories:
   - Think
 ---

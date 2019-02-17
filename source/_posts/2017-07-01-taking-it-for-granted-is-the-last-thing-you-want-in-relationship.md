@@ -1,7 +1,7 @@
 title: 理所当然，在亲密关系里最要不得
 date: 2017-07-01 21:34:12
 tags:
-  - Love Language
+  - Love
   - Relationship
 categories:
   - Psychology

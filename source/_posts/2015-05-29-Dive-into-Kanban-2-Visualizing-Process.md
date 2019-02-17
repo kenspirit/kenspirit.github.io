@@ -2,8 +2,6 @@ title: Dive into Kanban (2) - Visualizing Process
 tags:
   - Retrospect
   - Kanban
-  - Process
-  - Flow
   - Visualization
 comments: true
 categories:

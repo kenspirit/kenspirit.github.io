@@ -3,8 +3,7 @@ date: 2016-06-05 10:40:07
 tags:
   - Javascript
   - Functional Programming
-  - Loop
-  - Async
+  - Asynchronous
 categories:
   - Sword
 ---

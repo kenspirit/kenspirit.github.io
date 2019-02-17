@@ -1,7 +1,6 @@
 title: 你可能不经意地就“贴标签”了
 date: 2017-05-31 18:52:25
 tags:
-  - Labelling
   - Relationship
 categories:
   - Psychology

@@ -1,7 +1,6 @@
 title: 猜来猜去，有意思吗？
 date: 2017-05-13 08:35:14
 tags:
-  - Asking
   - Relationship
 categories:
   - Psychology

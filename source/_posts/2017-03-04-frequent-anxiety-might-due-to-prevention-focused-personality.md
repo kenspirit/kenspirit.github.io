@@ -1,10 +1,9 @@
 title: 时常感到焦虑可能因为你是防御型人格
 date: 2017-03-04 21:20:17
 tags:
-  - Prevention
   - Anxiety
 categories:
-  - Think
+  - Psychology
 ---
 
 最近在听 Audible Book「Succeed: How We Can Reach Our Goals」。作者在某一章的开头举了一个例子，我觉得真的和我一模一样。

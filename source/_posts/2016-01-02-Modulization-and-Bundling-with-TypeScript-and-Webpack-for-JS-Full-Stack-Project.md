@@ -3,11 +3,8 @@ date: 2016-01-02 16:09:39
 tags:
   - Javascript
   - TypeScript
-  - AngularJS
-  - Webpack
-  - browserify
-  - bundling
-  - CSS
+  - Bundling
+  - Modularization
 categories:
   - Sword
 ---

@@ -8,9 +8,7 @@ categories:
 tags:
 - Javascript
 - Node.js
-- Webassemble
 - Modularization
-- AMD
 ---
 
 ## Background

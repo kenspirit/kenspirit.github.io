@@ -4,8 +4,6 @@ tags:
   - Ethereum
   - Dapp
   - Smart Contract
-  - Truffle
-  - Ganache
 categories:
   - Sword
 date: 2018-03-11 16:44:16

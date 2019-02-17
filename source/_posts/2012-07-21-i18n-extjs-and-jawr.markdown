@@ -9,9 +9,8 @@ categories:
 - Sword
 tags:
 - ExtJS
-- i18n
 - Javascript
-- JAWR
+- Bundling
 ---
 
 **What is i18n and How to do it in Javascript?**
