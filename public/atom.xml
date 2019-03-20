@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2019-03-03T14:51:36.500Z</updated>
+  <updated>2019-03-20T14:10:27.361Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>自学编程的思维模式</title>
+    <link href="http://www.thinkingincrowd.me/2019/03/20/mindset-for-self-teaching-programming/"/>
+    <id>http://www.thinkingincrowd.me/2019/03/20/mindset-for-self-teaching-programming/</id>
+    <published>2019-03-20T14:11:38.000Z</published>
+    <updated>2019-03-20T14:10:27.361Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近，李笑来写了一本书「<a href="https://github.com/selfteaching/the-craft-of-selfteaching" target="_blank" rel="external">自学是门手艺</a>」，还开源了。这本书是以学习 Python 的切入点来教如何自学编程。</p>
+<p>回顾了一下自己自学编程的经历，我也想补充一下自己的观点。</p>
+<h2 id="成长足迹"><a href="#成长足迹" class="headerlink" title="成长足迹"></a>成长足迹</h2><p>我还很清楚记得，在第一家公司，CORESOLUTIONS，最开始承担的工作任务。因为，当我问 Leader 我做出来的页面是不是他想要的效果时，他脸上的那一丝惊讶的表情，和我内心的那份窃喜，深深烙入我的内心。</p>
+<p>这个工作任务是在公司内部打造的 ERP Web Application 的中实现某个页面。那个系统的页面，是由公司通过 JAVA 自研的 UI 渲染组件，在 JSP 里生成 HTML 来实现的。所以，网络外面完全查不到参考资料，我只能参考系统已有的页面和代码。不过，大概只花了半天，我就把页面模仿着做出来了。</p>
+<p>之前我可没怎么写过 JAVA，我真正的编程生涯可以说是从进入这家公司后才开始的。因为我是非科班出身，底子差，怕被他们发现我太搓，所以不敢轻易问问题。全靠自己不断尝试，憋着劲自学 Java，JSP，JavaScript 和 DOM 等语言和技术。</p>
+<p>虽然不是计算机科班出身，但是相比很多同事朋友，我学习新东西的速度算是比较快的。所以，我在这个公司待了差不多 8 年，期间公司经常让我参与不同的项目，接触的东西很杂，学了很多技术，也做了很多项目。而且很多情况下都要现学现用。</p>
+<p>我带过测试小团队；在公司资深顾问集体跳槽后，当过技术支持；用 BI 和 Crystal Report 做过数据仓库的项目；用 Powerbuilder 做过 CS 架构的系统；当然也用 J2EE 做 BS 架构的 ERP 系统，等等。</p>
+<p>最近的 2016 年中去了北京帮笑来做一块听听，用 Node.js。目前回到珠海，在企业内参与联盟链相关的项目开发，用 Hyperledger Fabric, SpringBoot 等技术。</p>
+<p>虽然和外面很多大神相比，我还是差很远，但是通过对自己，同事，和带过的新人的观察，我发现影响学习速度的其中一个因素是思维模式。</p>
+<h2 id="思维模式"><a href="#思维模式" class="headerlink" title="思维模式"></a>思维模式</h2><p>我说的模式其实就是：</p>
+<ul>
+<li>整体到局部</li>
+<li>局部到整体</li>
+</ul>
+<p>除了编程，很多其它技能的学习，也都可以运用这两种不同的模式的。比如说，画画。</p>
+<p>儿童最开始画画的时候，都是粗线条，大轮廓。随着年龄的增长，线条，轮廓慢慢变得精细，也有更多细节的填充。这个过程，是由人的感官，和肢体控制能力的发展水平决定的。所以，不少学习画画的教程，也是从构建物体的轮廓开始。这就是从整体到局部的过程。</p>
+<p>但是，一本很出名的书，「<a href="https://www.amazon.com/Drawing-Right-Side-Brain-Definitive/dp/1585429201" target="_blank" rel="external">Drawing on the right side of the brain</a>」，里面教授画画的技巧，则是把要临摹的图像上下倒置，强迫自己不看整体，只是从一点点的局部画起，最后才构成一个整体。是不是有点难以想象，或者不可思议？但是，如果尝试过，你会发现此方法的效果竟然会出奇地好。因为，每次只专注于一个小局部，把握好相对比例，偏差就不会太大，最后出来的整体效果也肯定八九不离十。这比一下子要掌握大轮廓更容易。</p>
+<p>所以说，同样的技能，是可以运用不同的模式来学习的。只是，不同的技能，某种模式可能会稍微占有优势，至少在刚起步的阶段。而且，每个人习惯使用的思维模式是不一样的。那么，如果能够顺应技能的特点和自己的习惯，自学就很可能事半功倍了。</p>
+<p>前面提到的我自己的第一个工作任务，之所以能那么快完成，是因为我懂得从整体理解代码结构，猜测局部的功能，然后套入自己的需求，只更改相关的部分，来做出自己的页面。相反，如果我深入查看每一个类和方法调用的细节，就会迷失在庞大的代码库，和错综复杂的相互引用之中。</p>
+<p><strong>自学编程，我认为应该从整体到局部，再从局部回到整体</strong>。这两个模式看起来是反着来，但对于编程来说，却又相辅相成。</p>
+<p><strong>只盯着任务细节，没有整体的概念，很容易形成只是按指示工作，不考虑对错，或忽略了其它方面的思考。而只看整体，不深入细节，又会导致知其然，而不知其所以然</strong>。</p>
+<p>那如何才能把握好整体呢？这和我之前写的关于编程学习能力的文章也有关，有兴趣的朋友可以看看：</p>
+<p><a href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/">学习编程需要具备的基本能力 - 抽象</a><br><a href="http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/">学习编程需要具备的基本能力 - 问题分解</a><br><a href="http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/">学习编程需要具备的基本能力 - 正确提问</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近，李笑来写了一本书「&lt;a href=&quot;https://github.com/selfteaching/the-craft-of-selfteaching&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;自学是门手艺&lt;/a&gt;」，还开源了。这本书是以学习 P
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
+    
+  </entry>
   
   <entry>
     <title>想过哪个习惯对你的伤害最大吗？</title>
@@ -1057,90 +1102,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;Truffle-是什么？&quot;&gt;&lt;a href=&quot;#Truffle-是什么？&quot; class=&quot;headerlink&quot; title=&quot;Truffle 是什么？&quot;&gt;&lt;/a&gt;Truffle 是什么？&lt;/h2&gt;&lt;p&gt;上一篇文章我们已经介绍了如何使用 Remix 来初步测试智能
-    
-    </summary>
-    
-      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
-    
-    
-      <category term="Blockchain" scheme="http://www.thinkingincrowd.me/tags/Blockchain/"/>
-    
-      <category term="Ethereum" scheme="http://www.thinkingincrowd.me/tags/Ethereum/"/>
-    
-      <category term="Dapp" scheme="http://www.thinkingincrowd.me/tags/Dapp/"/>
-    
-      <category term="Smart Contract" scheme="http://www.thinkingincrowd.me/tags/Smart-Contract/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</title>
-    <link href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/"/>
-    <id>http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/</id>
-    <published>2018-03-05T04:20:20.000Z</published>
-    <updated>2019-02-17T07:36:12.266Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们在前面一篇说到，智能合约发布后就没法修改了。所以，在真正发布前，我们必须进行详细的测试。那智能合约怎么测试呢？难不成我们自己要部署一个自己的 Ethereum 网络节点？  </p>
-<p>这篇文章，我先介绍一种最简单直接的测试方式。  </p>
-<h2 id="完整合约代码"><a href="#完整合约代码" class="headerlink" title="完整合约代码"></a>完整合约代码</h2><p>上一篇教程完成后，智能合约的完整代码应该是这样的。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">pragma solidity ^0.4.18;</div><div class="line"></div><div class="line">contract Ownable &#123;</div><div class="line">    address owner;</div><div class="line"></div><div class="line">    function Ownable() public &#123;</div><div class="line">        owner = msg.sender;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    modifier onlyOwner() &#123;</div><div class="line">        require(owner == msg.sender);</div><div class="line">        _;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">contract SecretNote is Ownable &#123;</div><div class="line">  mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) notes;</div><div class="line">  uint256 noteCount;</div><div class="line"></div><div class="line">  event SecretNoteUpdated(address indexed _sender, bytes32 indexed _noteKey, bool _success);</div><div class="line"></div><div class="line">  function SecretNote() public &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function () public payable &#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to get their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   */</div><div class="line">  function getNote(bytes32 _noteKey) public view returns (bytes32) &#123;</div><div class="line">      return notes[msg.sender][_noteKey];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /**</div><div class="line">   * @dev For user to update their own secret note</div><div class="line">   * @param _noteKey The key identifier for particular note</div><div class="line">   * @param _content The note path hash</div><div class="line">   */</div><div class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</div><div class="line">      require(_noteKey != &quot;&quot;);</div><div class="line">      require(_content != &quot;&quot;);</div><div class="line"></div><div class="line">      notes[msg.sender][_noteKey] = _content;</div><div class="line">      noteCount++;</div><div class="line"></div><div class="line">      SecretNoteUpdated(msg.sender, _noteKey, true);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function getTotalNoteCount() public view onlyOwner returns(uint256) &#123;</div><div class="line">      return noteCount;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="Remix-IDE"><a href="#Remix-IDE" class="headerlink" title="Remix IDE"></a>Remix IDE</h2><p><a href="https://remix.ethereum.org" target="_blank" rel="external">Remix IDE</a> 是一个在线的智能合约编译，测试和部署工具。使用它可以很方便的和智能合约交互，虽然有些地方不是那么便利。  </p>
-<h3 id="合约编译检查"><a href="#合约编译检查" class="headerlink" title="合约编译检查"></a>合约编译检查</h3><p>当我们打开 Remix 的页面，把我们的智能合约代码贴进去的时候，它已经会自动帮你编译代码。右侧是主要的操作区。它有好几个功能标签。<code>Compile</code> 标签会显示出编译后有哪些合约，已经它发现的一些 Warning。  </p>
-<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_compile_contract.png" alt="Remix IDE - Compile">  </p>
-<h3 id="合约创建"><a href="#合约创建" class="headerlink" title="合约创建"></a>合约创建</h3><p>既然编译没有问题，我们点击旁边的 <code>Run</code> 标签看看怎么部署运行这个合约。  </p>
-<ol>
-<li>选择 <code>JavaScript VM</code> 这个 Environment。你会发现它马上帮你创建了好几个拥有了 100 eth 的帐号。  </li>
-<li>在合约名字下拉框选择我们将要部署的合约 <code>SecretNote</code>。  </li>
-<li>点击 Create</li>
-<li>合约就生成了。它的接口 <code>fallback</code>，<code>getTotalNoteCount</code>，<code>getNote</code>，<code>setNote</code> 都分别显示出来。  </li>
-<li>因为我们用了默认提供的第一个帐号来创建合约，它的帐号余额已经不是 100 eth 了。  </li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_create_contract.png" alt="Remix IDE - Create">  </p>
-<h3 id="合约调用"><a href="#合约调用" class="headerlink" title="合约调用"></a>合约调用</h3><p>合约创建完，我们就可以调用合约提供的对外的接口了，有几点值得留意的是：  </p>
-<ol>
-<li>只读 <code>view</code> 的方法，它的名字是蓝色的；其它的方法名字是粉红色的。  </li>
-<li>方法调用时，我们需要用双引号，和逗号把参数分开。  </li>
-</ol>
-<p>现在我们按 <code>setNote</code>, <code>getNote</code>, <code>getTotalNoteCount</code> 的执行顺序来操作一下。  </p>
-<ol>
-<li>在 <code>setNote</code> 旁边的输入框填入：<code>&quot;0x1&quot;, &quot;Ken&quot;</code>，点击方法名。点完后好像什么都没有发生，但是你在中间的执行日志区可以看到类似的日志：  </li>
-</ol>
-<blockquote>
-<p>transact to SecretNote.setNote pending …<br>[vm] from:0xca3…a733c, to:SecretNote.setNote(bytes32,bytes32) 0xbbf…732db, value:0 wei, data:0x7b7…00000, 1 logs, hash:0xbbe…7df4d</p>
-</blockquote>
-<ol>
-<li>在 <code>getNote</code> 旁的输入框填入：<code>&quot;0x1&quot;</code>，点击方法名。它的右边就会给出这样的显示：  </li>
-</ol>
-<blockquote>
-<p>0: bytes32: 0x4b656e0000000000000000000000000000000000000000000000000000000000</p>
-</blockquote>
-<p>因为 Solidity 的 function 是可以有多个返回值的，所以这里显示的是第一个返回值的类型和数值。  </p>
-<ol>
-<li>同样，点击 <code>getTotalNoteCount</code> 会返回当前的笔记数量。  </li>
-</ol>
-<blockquote>
-<p>0: uint256: 1</p>
-</blockquote>
-<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Remix_call_contract.png" alt="Remix IDE - Call">  </p>
-<p>现在，我们来看一看如果用另一个帐号（非合约创建帐号），来调用 <code>getTotalNoteCount</code> 会出现什么效果。  </p>
-<ol>
-<li>在 <code>Account</code> 下拉框选择另外的一个帐号。这个帐号应该有 100 eth，因为从来没操作过。  </li>
-<li>点击 <code>getTotalNoteCount</code> 调用方法。  </li>
-</ol>
-<p>这时候，你会发现中间的执行日志区出现类似下面的日志。其实，你的操作是失败了的。但是它的报错信息实在是太让人困惑了。  </p>
-<blockquote>
-<p>call to SecretNote.getTotalNoteCount errored: VM error: revert.<br>revert  The transaction has been reverted to the initial state.<br>Note: The constructor should be payable if you send value.  Debug the transaction to get more information. </p>
-</blockquote>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Remix IDE 的基本使用和智能合约的测试就介绍到这里。使用它来测试是比较方便的，你也不用设置什么环境。但是它上面的操作并不是那么灵活，而且是在线工具。  </p>
-<p>我们能不能像写 JAVA, JavaScript Unit Test 那样来测试智能合约呢？下一篇文章我将介绍 Truffle 这个框架的使用。  </p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我们在前面一篇说到，智能合约发布后就没法修改了。所以，在真正发布前，我们必须进行详细的测试。那智能合约怎么测试呢？难不成我们自己要部署一个自己的 Ethereum 网络节点？  &lt;/p&gt;
-&lt;p&gt;这篇文章，我先介绍一种最简单直接的测试方式。  &lt;/p&gt;
-&lt;h2 id=&quot;完整合
     
     </summary>
     
