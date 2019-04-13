@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
-<html >
-<head>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
@@ -23,9 +23,9 @@
     
     
     
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="kenspirit" />
-    <meta name="twitter:title" content="为你的网站带上免费的安全套 | Thinking in Crowd / 鹄思乱想" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="kenspirit">
+    <meta name="twitter:title" content="为你的网站带上免费的安全套 | Thinking in Crowd / 鹄思乱想">
       
     
     
@@ -40,13 +40,13 @@
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+</html>
   <body>
     <header>
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"></a>
 			</div>
 			
 			<div id="textlogo">
@@ -72,7 +72,7 @@
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
 						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
 					</form>
 					
@@ -115,48 +115,49 @@
 <p>那怎么选？  </p>
 <p>首先，StartSSL、Wosign沃通作大死，很多浏览器厂商已经取消对它们新颁发的证书的信任。  </p>
 <p>腾讯云的免费证书，一年后怎么办？听起来还是不够稳妥。  </p>
-<p><a href="https://letsencrypt.org/" target="_blank" rel="external">Let’s Encrypt</a> 作为 Linux 基金会下的合作项目，它得到许多著名大厂，如 Mozilla, Chrome, Facebook, Cisco 等支持。虽然证书只有 90 天有效期，但是它的安装和设置做的相当容易，还能自动化续期，相当于就永久免费了。  </p>
-<p>聪明如你，当然知道怎么选择啦。我肯定选择免费又好用的 <a href="https://letsencrypt.org/" target="_blank" rel="external">Let’s Encrypt</a>了。  </p>
+<p><a href="https://letsencrypt.org/" target="_blank" rel="noopener">Let’s Encrypt</a> 作为 Linux 基金会下的合作项目，它得到许多著名大厂，如 Mozilla, Chrome, Facebook, Cisco 等支持。虽然证书只有 90 天有效期，但是它的安装和设置做的相当容易，还能自动化续期，相当于就永久免费了。  </p>
+<p>聪明如你，当然知道怎么选择啦。我肯定选择免费又好用的 <a href="https://letsencrypt.org/" target="_blank" rel="noopener">Let’s Encrypt</a>了。  </p>
 <h2 id="带套套的步骤"><a href="#带套套的步骤" class="headerlink" title="带套套的步骤"></a>带套套的步骤</h2><p>接下来我就大致介绍一下怎么方便舒适地带上这个套套。  </p>
-<p>下面假定你有自己的服务器，和 Shell 访问的权限。Let’s Encrypt 其实提供了一个非常方便的自动化工具，由 EFF 提供的 <a href="https://certbot.eff.org/#ubuntutyakkety-nginx" target="_blank" rel="external">Certbot</a>。  </p>
+<p>下面假定你有自己的服务器，和 Shell 访问的权限。Let’s Encrypt 其实提供了一个非常方便的自动化工具，由 EFF 提供的 <a href="https://certbot.eff.org/#ubuntutyakkety-nginx" target="_blank" rel="noopener">Certbot</a>。  </p>
 <p>大家通过上面的网站就能看到它为不同的系统，不同的网络服务器提供的安装指南。下面以在腾讯云下，Nginx 和 Ubuntu 16.10 的环境，使用 Webroot 认证方式，并且要认证的域名是 <code>funnyken.com</code> 来举例。同时假定你有一定的 Linux 和 Nginx 基础。  </p>
-<h3 id="安装-certbot"><a href="#安装-certbot" class="headerlink" title="安装 certbot"></a>安装 certbot</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:certbot/certbot</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install certbot</div></pre></td></tr></table></figure>
+<h3 id="安装-certbot"><a href="#安装-certbot" class="headerlink" title="安装 certbot"></a>安装 certbot</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:certbot/certbot</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install certbot</span><br></pre></td></tr></table></figure>
 <h3 id="配置目录和权限"><a href="#配置目录和权限" class="headerlink" title="配置目录和权限"></a>配置目录和权限</h3><p>在使用工具自动化获取证书，配置之前，先为你要认证的网站新建一些目录，和做权限设置。如果你是以 <code>root</code> 的身份来运行你的服务的话，<code>sudo chown</code> 那些命令不是必须的。但是腾讯云下面的服务器默认登录和使用都是用 ubuntu 的帐号，所以还是要修改一下。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo chown ubuntu:ubuntu -R /etc/letsencrypt/</div><div class="line">sudo chown ubuntu:ubuntu -R /var/lib/letsencrypt/</div><div class="line">sudo chown ubuntu:ubuntu -R /var/log/letsencrypt/</div><div class="line"></div><div class="line">sudo mkdir -p /var/www/funnyken/</div><div class="line">sudo chown ubuntu:ubuntu -R /var/www/funnyken/</div><div class="line">mkdir -p /var/www/funnyken/.well-known/acme-challenge/</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo chown ubuntu:ubuntu -R /etc/letsencrypt/</span><br><span class="line">sudo chown ubuntu:ubuntu -R /var/lib/letsencrypt/</span><br><span class="line">sudo chown ubuntu:ubuntu -R /var/log/letsencrypt/</span><br><span class="line"></span><br><span class="line">sudo mkdir -p /var/www/funnyken/</span><br><span class="line">sudo chown ubuntu:ubuntu -R /var/www/funnyken/</span><br><span class="line">mkdir -p /var/www/funnyken/.well-known/acme-challenge/</span><br></pre></td></tr></table></figure>
 <h3 id="获取证书"><a href="#获取证书" class="headerlink" title="获取证书"></a>获取证书</h3><p>在下面的命令后面，你可以添加更多的 <code>-d xxx.funnyken.com</code> 来为你的其它子域名认证。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">certbot certonly --webroot -w /var/www/funnyken -d funnyken.com -d www.funnyken.com</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certbot certonly --webroot -w /var/www/funnyken -d funnyken.com -d www.funnyken.com</span><br></pre></td></tr></table></figure>
 <p>命令运行完后，会有如下类似的提示：  </p>
 <blockquote>
 <p>IMPORTANT NOTES:</p>
 <ul>
 <li>Congratulations! Your certificate and chain have been saved at<br>/etc/letsencrypt/live/funnyken.com/fullchain.pem. Your cert<br>will expire on 2017-08-01. To obtain a new or tweaked version of<br>this certificate in the future, simply run certbot again. To<br>non-interactively renew <em>all</em> of your certificates, run “certbot<br>renew”</li>
-<li>If you lose your account credentials, you can recover through<br>e-mails sent to sammy@example.com.</li>
+<li>If you lose your account credentials, you can recover through<br>e-mails sent to <a href="mailto:sammy@example.com" target="_blank" rel="noopener">sammy@example.com</a>.</li>
 <li>Your account credentials have been saved in your Certbot<br>configuration directory at /etc/letsencrypt. You should make a<br>secure backup of this folder now. This configuration directory will<br>also contain certificates and private keys obtained by Certbot so<br>making regular backups of this folder is ideal.</li>
-<li><p>If you like Certbot, please consider supporting our work by:</p>
-<p>Donating to ISRG / Let’s Encrypt:   <a href="https://letsencrypt.org/donate" target="_blank" rel="external">https://letsencrypt.org/donate</a><br>Donating to EFF:                    <a href="https://eff.org/donate-le" target="_blank" rel="external">https://eff.org/donate-le</a></p>
-</li>
+<li>If you like Certbot, please consider supporting our work by:</li>
 </ul>
 </blockquote>
+<blockquote>
+<p>  Donating to ISRG / Let’s Encrypt:   <a href="https://letsencrypt.org/donate" target="_blank" rel="noopener">https://letsencrypt.org/donate</a><br>  Donating to EFF:                    <a href="https://eff.org/donate-le" target="_blank" rel="noopener">https://eff.org/donate-le</a></p>
+</blockquote>
 <h3 id="配置-Nginx"><a href="#配置-Nginx" class="headerlink" title="配置 Nginx"></a>配置 Nginx</h3><p>在你的 Nginx 安装目录下，新建一个文件夹 <code>snippets</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /etc/nginx/snippets</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /etc/nginx/snippets</span><br></pre></td></tr></table></figure>
 <p>分别创建下面两个文件：</p>
 <p><code>letsencrypt.conf</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location ^~ /.well-known/acme-challenge/ &#123;</div><div class="line">    default_type &quot;text/plain&quot;;</div><div class="line">    root /var/www/funnyken;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location ^~ /.well-known/acme-challenge/ &#123;</span><br><span class="line">    default_type &quot;text/plain&quot;;</span><br><span class="line">    root /var/www/funnyken;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>ssl.conf</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">ssl_session_timeout 1d;</div><div class="line">ssl_session_cache shared:SSL:50m;</div><div class="line">ssl_session_tickets off;</div><div class="line"></div><div class="line">ssl_protocols TLSv1.2;</div><div class="line">ssl_ciphers EECDH+AESGCM:EECDH+AES;</div><div class="line">ssl_ecdh_curve secp384r1;</div><div class="line">ssl_prefer_server_ciphers on;</div><div class="line"></div><div class="line">ssl_stapling on;</div><div class="line">ssl_stapling_verify on;</div><div class="line"></div><div class="line">add_header Strict-Transport-Security &quot;max-age=15768000; includeSubdomains; preload&quot;;</div><div class="line">add_header X-Frame-Options DENY;</div><div class="line">add_header X-Content-Type-Options nosniff;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">ssl_session_timeout 1d;</span><br><span class="line">ssl_session_cache shared:SSL:50m;</span><br><span class="line">ssl_session_tickets off;</span><br><span class="line"></span><br><span class="line">ssl_protocols TLSv1.2;</span><br><span class="line">ssl_ciphers EECDH+AESGCM:EECDH+AES;</span><br><span class="line">ssl_ecdh_curve secp384r1;</span><br><span class="line">ssl_prefer_server_ciphers on;</span><br><span class="line"></span><br><span class="line">ssl_stapling on;</span><br><span class="line">ssl_stapling_verify on;</span><br><span class="line"></span><br><span class="line">add_header Strict-Transport-Security &quot;max-age=15768000; includeSubdomains; preload&quot;;</span><br><span class="line">add_header X-Frame-Options DENY;</span><br><span class="line">add_header X-Content-Type-Options nosniff;</span><br></pre></td></tr></table></figure>
 <p>在你的 Nginx 服务器配置里面，在 <code>server</code> 内添加类似的设置：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">  listen 80;</div><div class="line">  listen [::]:80;</div><div class="line">  listen 443 ssl http2 default_server;</div><div class="line">  listen [::]:443 ssl http2 default_server;</div><div class="line"></div><div class="line">  server_name www.funnyken.com funnyken.com;</div><div class="line"></div><div class="line">  include /etc/nginx/snippets/letsencrypt.conf;</div><div class="line"></div><div class="line">  ssl_certificate /etc/letsencrypt/live/funnyken.com/fullchain.pem;</div><div class="line">  ssl_certificate_key /etc/letsencrypt/live/funnyken.com/privkey.pem;</div><div class="line">  ssl_trusted_certificate /etc/letsencrypt/live/funnyken.com/fullchain.pem;</div><div class="line"></div><div class="line">  include /etc/nginx/snippets/ssl.conf;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  listen [::]:80;</span><br><span class="line">  listen 443 ssl http2 default_server;</span><br><span class="line">  listen [::]:443 ssl http2 default_server;</span><br><span class="line"></span><br><span class="line">  server_name www.funnyken.com funnyken.com;</span><br><span class="line"></span><br><span class="line">  include /etc/nginx/snippets/letsencrypt.conf;</span><br><span class="line"></span><br><span class="line">  ssl_certificate /etc/letsencrypt/live/funnyken.com/fullchain.pem;</span><br><span class="line">  ssl_certificate_key /etc/letsencrypt/live/funnyken.com/privkey.pem;</span><br><span class="line">  ssl_trusted_certificate /etc/letsencrypt/live/funnyken.com/fullchain.pem;</span><br><span class="line"></span><br><span class="line">  include /etc/nginx/snippets/ssl.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后重启你的 Nginx 或者重新加载配置文件就大功告成了。  </p>
 <h3 id="测试套套是否稳妥"><a href="#测试套套是否稳妥" class="headerlink" title="测试套套是否稳妥"></a>测试套套是否稳妥</h3><p>经过以上步骤，套套应该佩戴上了。不过还是要简单测试一下的。在浏览器里输入以下的地址，替换你的域名就可以了。  </p>
 <blockquote>
-<p><a href="https://www.ssllabs.com/ssltest/analyze.html?d=funnyken.com" target="_blank" rel="external">https://www.ssllabs.com/ssltest/analyze.html?d=funnyken.com</a></p>
+<p><a href="https://www.ssllabs.com/ssltest/analyze.html?d=funnyken.com" target="_blank" rel="noopener">https://www.ssllabs.com/ssltest/analyze.html?d=funnyken.com</a></p>
 </blockquote>
 <h3 id="配置自动更新"><a href="#配置自动更新" class="headerlink" title="配置自动更新"></a>配置自动更新</h3><p>虽然可能经测试，目前带上的套套应该是安全可靠的。但是，正如前面所说，它只有 90 天有效期。所以还是要定期更换。我们在 Ubuntu 下面简单配置一个 Cron Job 就好了。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo crontab -e</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo crontab -e</span><br></pre></td></tr></table></figure>
 <p>添加如下一行，让服务器每天凌晨 2 点检查一下证书，并在需要的情况下重启 Nginx 就可以了。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0 2 * * * /usr/bin/certbot renew --quiet --renew-hook &quot;/bin/systemctl reload nginx&quot;</div></pre></td></tr></table></figure>
-<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8" target="_blank" rel="external">How to setup Let’s Encrypt for Nginx on Ubuntu 16.04 (including IPv6, HTTP/2 and A+ SLL rating)</a></p>
-<p><a href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04" target="_blank" rel="external">How To Secure Nginx with Let’s Encrypt on Ubuntu 16.04</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 2 * * * /usr/bin/certbot renew --quiet --renew-hook &quot;/bin/systemctl reload nginx&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8" target="_blank" rel="noopener">How to setup Let’s Encrypt for Nginx on Ubuntu 16.04 (including IPv6, HTTP/2 and A+ SLL rating)</a></p>
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04" target="_blank" rel="noopener">How To Secure Nginx with Let’s Encrypt on Ubuntu 16.04</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -184,9 +185,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
+ <div class="prev">
  <a href="/2017/05/13/probe-harmful/" title="猜来猜去，有意思吗？">
-  <strong>PREVIOUS:</strong><br/>
+  <strong>PREVIOUS:</strong><br>
   <span>
   猜来猜去，有意思吗？</span>
 </a>
@@ -194,8 +195,8 @@
 
 
 <div class="next">
-<a href="/2017/05/02/cache-and-business-characteristics/"  title="业务与缓存">
- <strong>NEXT:</strong><br/> 
+<a href="/2017/05/02/cache-and-business-characteristics/" title="业务与缓存">
+ <strong>NEXT:</strong><br> 
  <span>业务与缓存
 </span>
 </a>
@@ -237,7 +238,7 @@
 		
 			<li><a href="/categories/Sword/" title="Sword">Sword<sup>52</sup></a></li>
 		
-			<li><a href="/categories/Think/" title="Think">Think<sup>70</sup></a></li>
+			<li><a href="/categories/Think/" title="Think">Think<sup>71</sup></a></li>
 		
 		</ul>
 </div>
@@ -247,7 +248,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Ajax/" style="font-size: 10.77px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 13.08px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.77px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.77px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.77px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.77px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.92px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 13.08px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.77px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.54px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.77px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.08px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.77px;">Choice</a> <a href="/tags/Communication/" style="font-size: 13.08px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.85px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.77px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.77px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.77px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.54px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.54px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 11.54px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Elixir/" style="font-size: 11.54px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.77px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.54px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.85px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.77px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15.38px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-principle/" style="font-size: 10px;">First principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.62px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.85px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.77px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.77px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.77px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.77px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.77px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.62px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 13.85px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 10.77px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.77px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.77px;">Love</a> <a href="/tags/MVC/" style="font-size: 15.38px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.62px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.77px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.54px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.77px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.31px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.69px;">Node.js</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Problem-Solving/" style="font-size: 11.54px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 10.77px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 16.15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.54px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.46px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.54px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.23px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.77px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.85px;">Smart Contract</a> <a href="/tags/Startup/" style="font-size: 12.31px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Time-Management/" style="font-size: 10.77px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.54px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15.38px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.77px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/UnitTest/" style="font-size: 14.62px;">UnitTest</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15.38px;">Wechat</a>
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Ajax/" style="font-size: 10.83px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 13.33px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.83px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.83px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.83px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.83px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.67px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 13.33px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.83px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.67px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.83px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.33px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.83px;">Choice</a> <a href="/tags/Communication/" style="font-size: 13.33px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 14.17px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.83px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.83px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.83px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.67px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.67px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 11.67px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Elixir/" style="font-size: 11.67px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.83px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.67px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 14.17px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.83px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15.83px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-principle/" style="font-size: 10px;">First principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 14.17px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.83px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.83px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.83px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.83px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.83px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 15px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.17px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 10.83px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.83px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.83px;">Love</a> <a href="/tags/MVC/" style="font-size: 15.83px;">MVC</a> <a href="/tags/Management/" style="font-size: 15px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.83px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.67px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.83px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.5px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.5px;">Node.js</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Problem-Solving/" style="font-size: 11.67px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 10.83px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 16.67px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.67px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.33px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.67px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.17px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.83px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 14.17px;">Smart Contract</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Time-Management/" style="font-size: 10.83px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.67px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15.83px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.83px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/UnitTest/" style="font-size: 15px;">UnitTest</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15.83px;">Wechat</a>
     </div>
   </div>
 
@@ -255,7 +256,7 @@
 </aside>
 </div>
     </div>
-    <footer><div id="footer" >
+    <footer><div id="footer">
 	
 	<div class="line">
 		<span></span>
@@ -264,7 +265,7 @@
 	
 	
 	<section class="info">
-		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br>
 			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
 	</section>
 	 

@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
-<html >
-<head>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
@@ -22,9 +22,9 @@
     
     
     
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="kenspirit" />
-    <meta name="twitter:title" content="怎样可以不用再写接口文档 | Thinking in Crowd / 鹄思乱想" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="kenspirit">
+    <meta name="twitter:title" content="怎样可以不用再写接口文档 | Thinking in Crowd / 鹄思乱想">
       
     
     
@@ -39,13 +39,13 @@
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+</html>
   <body>
     <header>
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"></a>
 			</div>
 			
 			<div id="textlogo">
@@ -71,7 +71,7 @@
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
 						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
 					</form>
 					
@@ -108,12 +108,12 @@
 		</div>
 		
 		<h2 id="代码如文档"><a href="#代码如文档" class="headerlink" title="代码如文档"></a>代码如文档</h2><p>绝大多数的程序员，其实都不喜欢写文档。即便是一开始写了文档，随着时间的推移，需求的变更，文档很多情况下都慢慢跟不上变化，最后腐烂变质。看文档还不如看代码。</p>
-<p>所以，如何维护文档在软件工程一直都是大问题。  后来，有人提出了一种观点：“让你的代码成为文档”。什么意思？如果你竟然还没听说过这个概念，可以看看 <a href="https://en.wikipedia.org/wiki/Self-documenting_code" target="_blank" rel="external">Wiki</a> 或者 Martin Fowler 的<a href="https://www.martinfowler.com/bliki/CodeAsDocumentation.html" target="_blank" rel="external">文章</a>看看：</p>
+<p>所以，如何维护文档在软件工程一直都是大问题。  后来，有人提出了一种观点：“让你的代码成为文档”。什么意思？如果你竟然还没听说过这个概念，可以看看 <a href="https://en.wikipedia.org/wiki/Self-documenting_code" target="_blank" rel="noopener">Wiki</a> 或者 Martin Fowler 的<a href="https://www.martinfowler.com/bliki/CodeAsDocumentation.html" target="_blank" rel="noopener">文章</a>看看：</p>
 <h2 id="接口-vs-契约"><a href="#接口-vs-契约" class="headerlink" title="接口 vs 契约"></a>接口 vs 契约</h2><p>从毕业以来，我做的项目都是前后端一条龙通杀的，从最开始的 vanilla-js，公司内部框架，jQuery, 到 ExtJs。不过，现在很多公司都前后端分离了，前端专职页面，后端提供接口，各司其职。</p>
 <p>这种情况下，尤其在大公司里，API 接口文档在合作和沟通层面起非常大的作用。一个好的 API 接口，除了要有良好的命名，统一的风格这样的基本要求外，它接收的参数（数量，格式，限制等），返回值，权限等是更需要关注和保持更新的讯息。一旦这些讯息发生改变，前后端不同步，某个系统功能可能就挂了。所以说，接口文档就是前后端合作契约的说法一点也不夸张。</p>
-<h2 id="代码生成文档"><a href="#代码生成文档" class="headerlink" title="代码生成文档"></a>代码生成文档</h2><p>去年 3 月份，我看到陈天在公众号「程序人生」（programmer_life）的文章「<a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=402114651&amp;idx=1&amp;sn=a7b891f532e29b73afd83f17ae071023&amp;scene=21#wechat_redirect" target="_blank" rel="external">再谈 API 的撰写 - 契约</a>」，很对胃口。我后面就按这样的思路在自己写的 Node.js boilerplate 里面设计了特定的接口定义和编写方式，也在现在的公司一直使用。所有的 HTTP API 都是通过编写描述式的 JSON 来定义的。文档也通过读取这些 JSON 定义来生成。每当接口契约改变，文档就更新了。</p>
-<p>那是怎么自动生成的呢？有兴趣的朋友，可以看看我的 Github Repo <a href="https://github.com/kenspirit/joi-route-to-swagger" target="_blank" rel="external">joi-route-to-swagger</a>：</p>
-<p>Repo 里面的 README 阐述了基本的理念和用法。更详细的思路，大家还是看陈天的「<a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=402114651&amp;idx=1&amp;sn=a7b891f532e29b73afd83f17ae071023&amp;scene=21#wechat_redirect" target="_blank" rel="external">再谈 API 的撰写 - 契约</a>」吧。</p>
+<h2 id="代码生成文档"><a href="#代码生成文档" class="headerlink" title="代码生成文档"></a>代码生成文档</h2><p>去年 3 月份，我看到陈天在公众号「程序人生」（programmer_life）的文章「<a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=402114651&amp;idx=1&amp;sn=a7b891f532e29b73afd83f17ae071023&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">再谈 API 的撰写 - 契约</a>」，很对胃口。我后面就按这样的思路在自己写的 Node.js boilerplate 里面设计了特定的接口定义和编写方式，也在现在的公司一直使用。所有的 HTTP API 都是通过编写描述式的 JSON 来定义的。文档也通过读取这些 JSON 定义来生成。每当接口契约改变，文档就更新了。</p>
+<p>那是怎么自动生成的呢？有兴趣的朋友，可以看看我的 Github Repo <a href="https://github.com/kenspirit/joi-route-to-swagger" target="_blank" rel="noopener">joi-route-to-swagger</a>：</p>
+<p>Repo 里面的 README 阐述了基本的理念和用法。更详细的思路，大家还是看陈天的「<a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=402114651&amp;idx=1&amp;sn=a7b891f532e29b73afd83f17ae071023&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">再谈 API 的撰写 - 契约</a>」吧。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -141,9 +141,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
+ <div class="prev">
  <a href="/2017/11/11/model-evolvement-for-a-simple-payment-system/" title="一个简单的支付业务与模型演变">
-  <strong>PREVIOUS:</strong><br/>
+  <strong>PREVIOUS:</strong><br>
   <span>
   一个简单的支付业务与模型演变</span>
 </a>
@@ -151,8 +151,8 @@
 
 
 <div class="next">
-<a href="/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/"  title="Node.js 微信后台搭建系列 - 微信集成">
- <strong>NEXT:</strong><br/> 
+<a href="/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/" title="Node.js 微信后台搭建系列 - 微信集成">
+ <strong>NEXT:</strong><br> 
  <span>Node.js 微信后台搭建系列 - 微信集成
 </span>
 </a>
@@ -194,7 +194,7 @@
 		
 			<li><a href="/categories/Sword/" title="Sword">Sword<sup>52</sup></a></li>
 		
-			<li><a href="/categories/Think/" title="Think">Think<sup>70</sup></a></li>
+			<li><a href="/categories/Think/" title="Think">Think<sup>71</sup></a></li>
 		
 		</ul>
 </div>
@@ -204,7 +204,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Ajax/" style="font-size: 10.77px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 13.08px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.77px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.77px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.77px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.77px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.92px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 13.08px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.77px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.54px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.77px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.08px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.77px;">Choice</a> <a href="/tags/Communication/" style="font-size: 13.08px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.85px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.77px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.77px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.77px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.54px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.54px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 11.54px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Elixir/" style="font-size: 11.54px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.77px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.54px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.85px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.77px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15.38px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-principle/" style="font-size: 10px;">First principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.62px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.85px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.77px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.77px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.77px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.77px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.77px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.62px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 13.85px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 10.77px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.77px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.77px;">Love</a> <a href="/tags/MVC/" style="font-size: 15.38px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.62px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.77px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.54px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.77px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.31px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.69px;">Node.js</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Problem-Solving/" style="font-size: 11.54px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 10.77px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 16.15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.54px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.46px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.54px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.23px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.77px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.85px;">Smart Contract</a> <a href="/tags/Startup/" style="font-size: 12.31px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Time-Management/" style="font-size: 10.77px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.54px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15.38px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.77px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/UnitTest/" style="font-size: 14.62px;">UnitTest</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15.38px;">Wechat</a>
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Ajax/" style="font-size: 10.83px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 13.33px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.83px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.83px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.83px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.83px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.67px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 13.33px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.83px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.67px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.83px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.33px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.83px;">Choice</a> <a href="/tags/Communication/" style="font-size: 13.33px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 14.17px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.83px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.83px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.83px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.67px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.67px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 11.67px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Elixir/" style="font-size: 11.67px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.83px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.67px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 14.17px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.83px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15.83px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-principle/" style="font-size: 10px;">First principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 14.17px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.83px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.83px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.83px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.83px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.83px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 15px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.17px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 10.83px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.83px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.83px;">Love</a> <a href="/tags/MVC/" style="font-size: 15.83px;">MVC</a> <a href="/tags/Management/" style="font-size: 15px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.83px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.67px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.83px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.5px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.5px;">Node.js</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Problem-Solving/" style="font-size: 11.67px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 10.83px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 16.67px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.67px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.33px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.67px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.17px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.83px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 14.17px;">Smart Contract</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Time-Management/" style="font-size: 10.83px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.67px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15.83px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.83px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/UnitTest/" style="font-size: 15px;">UnitTest</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15.83px;">Wechat</a>
     </div>
   </div>
 
@@ -212,7 +212,7 @@
 </aside>
 </div>
     </div>
-    <footer><div id="footer" >
+    <footer><div id="footer">
 	
 	<div class="line">
 		<span></span>
@@ -221,7 +221,7 @@
 	
 	
 	<section class="info">
-		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br>
 			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
 	</section>
 	 

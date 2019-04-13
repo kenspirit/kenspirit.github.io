@@ -1,7 +1,7 @@
 
  <!DOCTYPE HTML>
-<html >
-<head>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({
@@ -21,9 +21,9 @@
     
     
     
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="kenspirit" />
-    <meta name="twitter:title" content="Share code between Node.js and browser | Thinking in Crowd / 鹄思乱想" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="kenspirit">
+    <meta name="twitter:title" content="Share code between Node.js and browser | Thinking in Crowd / 鹄思乱想">
       
     
     
@@ -38,13 +38,13 @@
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
+</html>
   <body>
     <header>
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"></a>
 			</div>
 			
 			<div id="textlogo">
@@ -70,7 +70,7 @@
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search">
 						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
 					</form>
 					
@@ -94,7 +94,7 @@
     </p>
   <p class="article-time">
     <time datetime="2013-04-13T04:59:00.000Z" itemprop="datePublished">Apr 13 2013</time>
-    Updated:<time datetime="2019-02-17T07:36:12.191Z" itemprop="dateModified">Feb 17 2019</time>
+    Updated:<time datetime="2019-02-17T07:36:12.192Z" itemprop="dateModified">Feb 17 2019</time>
     
   </p>
 </header>
@@ -110,26 +110,26 @@
 <p>The philosophy of organizing code in Node.js, current trend also, is modularization.  Each module file has its own execution context, requires its dependent APIs from other modules and publishes its own APIs out for other modules.  </p>
 <p>Hence, the code sharing between Node.js and browser requires the code to be used as the same way in browser.</p>
 <h2 id="Situations-and-Solutions"><a href="#Situations-and-Solutions" class="headerlink" title="Situations and Solutions"></a>Situations and Solutions</h2><p>Things work differently regarding the JS and modules loading mechanism.  Because in browser, it works asynchronously while in Node.js it is synchronous.  In browser, we cannot directly do inline require like Node.js:  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = xxx;</div><div class="line">a.foo();</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'b'</span>);</div><div class="line">b.bar();</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = xxx;</span><br><span class="line">a.foo();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'b'</span>);</span><br><span class="line">b.bar();</span><br></pre></td></tr></table></figure>
 <p>There are two kinds of situations:  </p>
-<h3 id="Modularization-already-realized-for-browser-code"><a href="#Modularization-already-realized-for-browser-code" class="headerlink" title="Modularization already realized for browser code"></a>Modularization already realized for browser code</h3><p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/" target="_blank" rel="external">RequireJS</a>, or <a href="http://seajs.org/" target="_blank" rel="external">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.  </p>
+<h3 id="Modularization-already-realized-for-browser-code"><a href="#Modularization-already-realized-for-browser-code" class="headerlink" title="Modularization already realized for browser code"></a>Modularization already realized for browser code</h3><p>If you have already modularized your JS code for browser and used some AMD / CMD script loader, such as <a href="http://requirejs.org/" target="_blank" rel="noopener">RequireJS</a>, or <a href="http://seajs.org/" target="_blank" rel="noopener">SeaJS</a>, you might expect your life would be easier.  However, this is not the case.  </p>
 <p>The require must be like below in order to make sure all dependent modules to be loaded successfully and then execute the code which uses them.  </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">define([<span class="string">'./b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> a = xxx;</div><div class="line">    a.foo();</div><div class="line">    b.bar();</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        bla: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'bla'</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">define([<span class="string">'./b'</span>], <span class="function"><span class="keyword">function</span> (<span class="params">b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = xxx;</span><br><span class="line">    a.foo();</span><br><span class="line">    b.bar();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        bla: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'bla'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>We can see that there is quite some syntax different between Node.js style and the AMD / CMD one in browser.  </p>
 <p>To overcome this incompatibility, there are two main approaches.  </p>
 <ul>
 <li><p>Directly add boilerplate code in one side to fit the other  </p>
 <ol>
-<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html" target="_blank" rel="external">here</a>.  </li>
-<li><a href="https://github.com/ajaxorg/node-amd-loader" target="_blank" rel="external">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.  </li>
-<li>The <a href="https://github.com/jrburke/amdefine" target="_blank" rel="external">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer" target="_blank" rel="external">RequireJS Optimizer</a>.  </li>
+<li>Some sample manual boilerplate code and also more explanation can be found <a href="http://www.2ality.com/2011/11/module-gap.html" target="_blank" rel="noopener">here</a>.  </li>
+<li><a href="https://github.com/ajaxorg/node-amd-loader" target="_blank" rel="noopener">node-amd-loader</a>: Add one extra line in Node.js module to load AMD style module.  </li>
+<li>The <a href="https://github.com/jrburke/amdefine" target="_blank" rel="noopener">amdefine</a> for RequireJS: Special boilerplate code in Node.js module and then can be stripped out by <a href="https://github.com/jrburke/amdefine#optimizer" target="_blank" rel="noopener">RequireJS Optimizer</a>.  </li>
 </ol>
 </li>
 <li><p>Build process to handle the boilerplate  </p>
 <ol>
-<li><a href="https://github.com/substack/node-browserify" target="_blank" rel="external">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.  </li>
-<li><a href="https://github.com/medikoo/modules-webmake" target="_blank" rel="external">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.  </li>
-<li><a href="https://github.com/kenspirit/webassemble" target="_blank" rel="external">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.  </li>
+<li><a href="https://github.com/substack/node-browserify" target="_blank" rel="noopener">browserify</a>: Recursively analyze all the <code>require()</code> calls in your app in order to build a bundle you can serve up to the browser in a single <code>&lt;script&gt;</code> tag.  </li>
+<li><a href="https://github.com/medikoo/modules-webmake" target="_blank" rel="noopener">modules-webmake</a>: Bundle CommonJS/Node.js modules for web browsers.  </li>
+<li><a href="https://github.com/kenspirit/webassemble" target="_blank" rel="noopener">webassemble</a>: Based on modules-webmake.  Auto bundle CommonJS/Node.js packages for web browsers.  </li>
 </ol>
 </li>
 </ul>
@@ -140,7 +140,7 @@
 <li>Modularization is good but for production environment in browser, it is always better to minimize network request to load JS file.  Most of the time, module files are bundled into single package for one call.  If build process need to be introduced to handle it, it would be great to integrate sharing logic into it also.  </li>
 <li>If the boilerplate is introduced in build process, it is better to discover potential error during development cycle instead of last minute preproduction testing.  </li>
 </ol>
-<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/" target="_blank" rel="external">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/" target="_blank" rel="external">Grunt</a>, it’s just a couple of seconds’ waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.  </p>
+<p>You may have concern on effectiveness during development cycle.  However, if you can make good use of a good IDE, say <a href="http://www.sublimetext.com/" target="_blank" rel="noopener">Sublime Text</a> and some task runner, say <a href="http://gruntjs.com/" target="_blank" rel="noopener">Grunt</a>, it’s just a couple of seconds’ waiting after a hotkey command after saving your JS file in IDE.  It might just be the time you switch from IDE to browser and press F5.  </p>
 <h3 id="Legacy-or-namespace-browser-code-style"><a href="#Legacy-or-namespace-browser-code-style" class="headerlink" title="Legacy or namespace browser code style"></a>Legacy or namespace browser code style</h3><p>Although it’s seldom the case that when you are using such hot tech of Node.js but still need to stick to the old style in browser, it’s actually easier to share your Node.js code under this circumstance.  </p>
 <p>The webmake and webassemble mentioned above is easy to bundle your modules under global or a particular namespace.  </p>
 <p>So, what is my favorite choice?  Write the Node.js style code and share them to browser by webassemble.  Why not webmake?  Because the webassemble is made by me. :P  </p>
@@ -172,9 +172,9 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
+ <div class="prev">
  <a href="/2013/04/16/can-i-make-13-billion-in-20-months/" title="我能否20个月赚130亿?">
-  <strong>PREVIOUS:</strong><br/>
+  <strong>PREVIOUS:</strong><br>
   <span>
   我能否20个月赚130亿?</span>
 </a>
@@ -182,8 +182,8 @@
 
 
 <div class="next">
-<a href="/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/"  title="读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感">
- <strong>NEXT:</strong><br/> 
+<a href="/2013/02/13/review-on-book-lean-startup-and-movie-lincoln-and-the-vow/" title="读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感">
+ <strong>NEXT:</strong><br> 
  <span>读 Lean Startup 和观电影 Lincoln，电影 The VOW 后感
 </span>
 </a>
@@ -225,7 +225,7 @@
 		
 			<li><a href="/categories/Sword/" title="Sword">Sword<sup>52</sup></a></li>
 		
-			<li><a href="/categories/Think/" title="Think">Think<sup>70</sup></a></li>
+			<li><a href="/categories/Think/" title="Think">Think<sup>71</sup></a></li>
 		
 		</ul>
 </div>
@@ -235,7 +235,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Ajax/" style="font-size: 10.77px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 13.08px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.77px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.77px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.77px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.77px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.92px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 13.08px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.77px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.54px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.77px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.08px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.77px;">Choice</a> <a href="/tags/Communication/" style="font-size: 13.08px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.85px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.77px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.77px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.77px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.54px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.54px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 11.54px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Elixir/" style="font-size: 11.54px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.77px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.54px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.85px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.77px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15.38px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-principle/" style="font-size: 10px;">First principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.62px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.85px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.77px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.77px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.77px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.77px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.77px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.62px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 13.85px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 10.77px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.77px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.77px;">Love</a> <a href="/tags/MVC/" style="font-size: 15.38px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.62px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.77px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.54px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.77px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.31px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.69px;">Node.js</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Problem-Solving/" style="font-size: 11.54px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 10.77px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 16.15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.54px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.46px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.54px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.23px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.77px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.85px;">Smart Contract</a> <a href="/tags/Startup/" style="font-size: 12.31px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Time-Management/" style="font-size: 10.77px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.54px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15.38px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.77px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/UnitTest/" style="font-size: 14.62px;">UnitTest</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15.38px;">Wechat</a>
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/Ajax/" style="font-size: 10.83px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 13.33px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.83px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.83px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.83px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.83px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.67px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 13.33px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.83px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.67px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.83px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.33px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.83px;">Choice</a> <a href="/tags/Communication/" style="font-size: 13.33px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 14.17px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.83px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.83px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.83px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.67px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.67px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 11.67px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Elixir/" style="font-size: 11.67px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.83px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.67px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 14.17px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.83px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15.83px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-principle/" style="font-size: 10px;">First principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 15px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 14.17px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.83px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.83px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.83px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.83px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.83px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 15px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.17px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 10.83px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.83px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.83px;">Love</a> <a href="/tags/MVC/" style="font-size: 15.83px;">MVC</a> <a href="/tags/Management/" style="font-size: 15px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.83px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.67px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.83px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.5px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.5px;">Node.js</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Problem-Solving/" style="font-size: 11.67px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 10.83px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 16.67px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.67px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.33px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.67px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.17px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.83px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 14.17px;">Smart Contract</a> <a href="/tags/Startup/" style="font-size: 12.5px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Time-Management/" style="font-size: 10.83px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.67px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15.83px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.83px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/UnitTest/" style="font-size: 15px;">UnitTest</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15.83px;">Wechat</a>
     </div>
   </div>
 
@@ -243,7 +243,7 @@
 </aside>
 </div>
     </div>
-    <footer><div id="footer" >
+    <footer><div id="footer">
 	
 	<div class="line">
 		<span></span>
@@ -252,7 +252,7 @@
 	
 	
 	<section class="info">
-		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br>
 			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
 	</section>
 	 
