@@ -12,7 +12,7 @@ tags:
 - Javascript
 - Maven
 - Node.js
-- UnitTest
+- Unit Test
 ---
 
 After briefing [Why I am working on them](http://www.thinkingincrowd.me/blog/2012/08/05/extjs-jasmine-maven-why-i-am-working-on-them/), let me show you how they can be integrated all together first.

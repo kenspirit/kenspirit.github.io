@@ -2,7 +2,7 @@ title: 第一原理 - 微信开发小记
 date: 2016-10-22 18:20:51
 tags:
   - Problem Solving
-  - First principle
+  - First Principle
 categories:
   - Think
 ---

@@ -12,7 +12,7 @@ tags:
 - Jasmine
 - Javascript
 - Maven
-- UnitTest
+- Unit Test
 ---
 
 Before going into how to setup [Jasmine](http://pivotal.github.com/jasmine/) to do Unit Test for [ExtJS](www.sencha.com/products/extjs), I think I should describe why I am doing this.

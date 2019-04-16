@@ -7,7 +7,7 @@ categories:
 - Sword
 tags:
 - Javascript
-- UnitTest
+- Unit Test
 - AngularJS
 - Jasmine
 - JSON
