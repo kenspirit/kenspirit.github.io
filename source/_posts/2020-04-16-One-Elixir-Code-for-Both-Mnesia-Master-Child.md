@@ -67,9 +67,8 @@ import Config
 config :mnesia, dir: System.get_env("MNESIA_DIR") || 'mnesia_#{System.get_env("RELEASE_NODE")}'
 ```
 
-Then in `rel` folder created by `mix release.init`, we can update `env.sh.eex` or `env.bat.eex` to set above variables.  Normally, we just need to uncomment the last two lines in the file.  But I have one extra line ahead to use a `HOST` variable so that I can easily provide the desired host name or IP for the node.
+Then in `rel` folder created by `mix release.init`, we can update `env.sh.eex` or `env.bat.eex` to set above variables.  Normally, we just need to uncomment the last two lines in the file.  But I have two extra lines ahead to use the `HOST` and `NODE_NAME` variables so that I can easily change them for the node.
 
-_Tips:_ Tricks with /etc/hosts don't work as Erlang bypasses libresolv.  Hence, you have to use FQDN.  
 
 ```elixir
 #!/bin/sh
@@ -90,9 +89,10 @@ _Tips:_ Tricks with /etc/hosts don't work as Erlang bypasses libresolv.  Hence, 
 # RELEASE_DISTRIBUTION variable below.
 
 HOST=${HOST:-127.0.0.1}
+NODE_NAME=${NODE_NAME:-<%= @release.name %>}
 
 export RELEASE_DISTRIBUTION=name
-export RELEASE_NODE=<%= @release.name %>@$HOST
+export RELEASE_NODE=$NODE_NAME@$HOST
 ```
 
 Once you have completed the setup above, you can update the `mix.exs` as below to build different releases and startup the apps with different node names as needed.
