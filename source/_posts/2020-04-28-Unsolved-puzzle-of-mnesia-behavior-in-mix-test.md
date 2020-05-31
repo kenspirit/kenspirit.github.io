@@ -20,9 +20,9 @@ In Elixir, these callbacks can be used:
 
 * `setup_all`: Invoked once per module before any test is run.  
 * `setup`: Invoked once before each test.  
-* `on_exit`: Registered on demand during setup.  Always run.  
+* `on_exit`: Registered on demand during setup.  
 
-_Tips_: Failures in `setup_all` or `setup` will stop all remaining setup callbacks from executing while `on_exit` will always run.  
+_Tips_: Multiple `setup` and `setup_all` are allowed.  They are invoked in sequence.  Failures in `setup_all` or `setup` will stop all remaining setup callbacks from executing while `on_exit` will always run.  
 
 The test script looks like this:  
 
