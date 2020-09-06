@@ -1884,6 +1884,9 @@ footer {
 .copyright a:hover {
   color: #2ca6cb;
 }
+.mermaid {
+  background: transparent !important;
+}
 .article-content pre,
 .article-content .highlight {
   background: #1d1f21;

@@ -165,7 +165,15 @@
 		
 		
         <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
-        
+    
+    
+		  <script src="https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js"></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(theme.mermaid.options) }});
+		    }
+		  </script>
+		
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2020 
 		

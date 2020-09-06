@@ -84,6 +84,16 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/2020/09/06/multi-level-supervision-in-elixir/" title="Multi-level dynamic supervision in Elixir" itemprop="url">
+  
+    <h1 itemprop="name">Multi-level dynamic supervision in Elixir</h1>
+    
+    <time datetime="2020-09-06T14:10:10.000Z" itemprop="datePublished">Sep 6 2020</time>
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/2020/05/31/not-that-easy-to-configure-mnesia-dir-as-i-thought/" title="It&#39;s not that easy to configure mnesia dir as I thought" itemprop="url">
   
     <h1 itemprop="name">It&#39;s not that easy to configure mnesia dir as I thought</h1>
@@ -172,16 +182,6 @@
   </a>
 </section>
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2018/03/17/dapp-development-5-UI-integration/" title="Ethereum Dapp 开发 (5) - 页面开发集成" itemprop="url">
-  
-    <h1 itemprop="name">Ethereum Dapp 开发 (5) - 页面开发集成</h1>
-    
-    <time datetime="2018-03-17T05:40:40.000Z" itemprop="datePublished">Mar 17 2018</time>
-  </a>
-</section>
-
 
   <nav id="page-nav" class="clearfix archive-nav">
     <span class="page-number current">1</span><a class="page-number" href="/categories/Sword/page/2/">2</a><a class="page-number" href="/categories/Sword/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/categories/Sword/page/6/">6</a><a class="extend next" rel="next" href="/categories/Sword/page/2/">Next &raquo;</a>
@@ -219,7 +219,15 @@
 		
 		
         <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
-        
+    
+    
+		  <script src="https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js"></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(theme.mermaid.options) }});
+		    }
+		  </script>
+		
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2020 
 		
