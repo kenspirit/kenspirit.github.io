@@ -27,7 +27,7 @@ But every senior developer knows something very well:  **There is a large gap be
 
 When reading the「[Programming Elixir ≥ 1.6][]」, everything makes sense to me on the chapters about OTP Servers and Supervisors.  But when I tried to implement my own version for a more sophisticated scenario, I realized how big that gap is for me.  
 
-In this arctile, I would like to help you bridge the gap using my experience and the sophisticated enough scenario which seldom found in other tutorials.
+In this article, I would like to help you bridge the gap using my experience and the sophisticated enough scenario which seldom found in other tutorials.
 
 
 ## 1-Level
@@ -135,7 +135,7 @@ sequenceDiagram
   Spider.Manager->>SpiderStorage: The base domain and urls to fetched?
   Spider.Supervisor-->>Spider.Fetcher: Dynamically starts fetcher
   Spider.Fetcher->>Spider.Manager: Asks for next url and/or sends back more urls
-  SpiderEngine.Manager->>Spider.Manager: Reset fecher count, speed, urls, etc.
+  SpiderEngine.Manager->>Spider.Manager: Reset fecher count, speed, etc.
 ```
 
 * `SpiderEngine` is the root of the whole web crawler.
@@ -184,7 +184,7 @@ DynamicSupervisor.start_link(__MODULE__, :no_args, name: :"Spider.Supervisor.#{s
 
 How about `Spider.Fetcher`?  There are also multiple processes for it, but do we have to start them with different names?  
 
-I think it's a judgement call.  The communication between `Spider.Fetcher` and `Spider.Manager` are through PID.    Hence, if you have saved those children PID somewhere when `Spider.Manager` starts them, or the message is sent from `Spider.Fetcher` to `Spider.Manager` to get information, it's not quite necessary to name this type of children workers, especially when their amount is large.
+I think it's a judgement call.  The communication between `Spider.Fetcher` and `Spider.Manager` are through PID.    Hence, if you have saved those children PID somewhere when `Spider.Manager` starts them, or the message is sent from `Spider.Fetcher` to `Spider.Manager`, it's not quite necessary to name this type of children workers, especially when their amount is large.
 
 ```elixir
 # for Fetcher, you can omit the name option or simply use a combined index as name
@@ -237,6 +237,6 @@ DynamicSupervisor.start_child(:"Spider.Supervisor.#{spider_name}", spec)
 
 I hope this more sophisticated and real world example can help you understand the OTP Supervision more clearly.
 
-Be used to model the system by process and modelling them correctly are just the first step on learning OTP.  Next, it would be the message passing between the them for coordination.  I will share more when this web crawling project goes.
+Be used to model the system by process and modeling them correctly are just the first step on learning OTP.  Next, it would be the message passing between them for coordination.  I will share more when this web crawling project goes.
 
 Please don't hesitate to leave a comment if you have anything supplement or good advice.
