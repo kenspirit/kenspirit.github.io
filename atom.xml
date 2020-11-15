@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2020-10-27T14:38:42.449Z</updated>
+  <updated>2020-11-15T03:58:20.690Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>你觉得自己是旁观者还是受害者？</title>
+    <link href="http://www.thinkingincrowd.me/2020/11/15/are-you-a-bystander-or-victim/"/>
+    <id>http://www.thinkingincrowd.me/2020/11/15/are-you-a-bystander-or-victim/</id>
+    <published>2020-11-15T04:00:21.000Z</published>
+    <updated>2020-11-15T03:58:20.690Z</updated>
+    
+    <content type="html"><![CDATA[<p>公司最近安排了一个关于敏捷领导力的培训。培训前，我对它其实没抱太高的期望。不是说我不喜欢这个话题，而是已经兴奋不起来。关于敏捷，以前我很热衷于看板理念的时候，可是能花好几千块钱，飞去北京，深圳上课的人。当年我还写了好几篇关于看板的文章，有兴趣的可以去看看：</p><ul><li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/">Dive into Kanban (1) - What is it</a>  </li><li><a href="http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/">Dive into Kanban (2) - Visualizing Process</a>  </li><li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li><li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li><li><a href="http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/">Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption</a>  </li><li><a href="http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/">Dive into Kanban (6) - Scrum vs Kanban</a></li></ul><p>培训过后，我却出乎意外的满意。不是因为增加了的那些关于敏捷的知识，而是老师的观念，让我看到了当初自己对敏捷的一些看法，也与我的内心产生共鸣。</p><p>培训前，老师让我们自己填了一份自测表单，同时让我们找 15 个同事朋友填他们对我们的评价。大家给我的评价大概是这样的：</p><ul><li>有亲和力，善于沟通，乐于听取意见。</li><li>踏实可靠，自律，有学习能力，且乐于分享</li><li>有时太过顺从或照顾他人，应该更强势或严厉，坚持立场</li></ul><p>从评价结果来看，自评和他评很接近。可以看出，我还是基本活出自己的本我（起码是善的那方面），表里基本一致。评测中很多人无脑给了 10 分，虽然让我知道那些曾经的战友，还是一如既往的好友。</p><p>在培训中，老师带我们玩了一个拍排球的游戏：整个团队，每个人拍球不超过 3 次，保证 200 次拍球不落地。在整个游戏当中，我经历以下几个阶段，可以说非常准确地把上述评价的点给体现了出来：</p><ul><li>一开始的时候，我没怎么参与，先观察着有没有人挺身而出。  </li><li>看了一段时间后，我发现大家拍球的效果不好，我觉得凭我的运动能力，和对游戏的观察，我应该出手。  </li><li>我参与了一段时间，提出一些应该如何调整的建议。  </li><li>团队中其他人并没采纳我的意见，我觉得他们的也未尝不可，然后就退居二线守护意外流出的球。</li></ul><p>你们觉得这是不是和评测结果挺匹配的？</p><p><strong>所谓领导力，其实就是让事情改变和发生的能力。</strong></p><p>每个人都有领导力，差别在于大小范围，产生影响的效果，和手段优劣而已。审视自己，在推进事情方面，有时候确实不够主动和强势。除了我的性格本来就不够强势外，另一个原因，则是和培训中老师分享的让我产生共鸣的观点有关：<strong>问题与我同在</strong>。</p><p>很多情况下，我们都在指出身边的人和事，存在什么问题，好像这些问题都是其他人导致的，与我无关。问题与我是分开的。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+-----+</span><br><span class="line">| 问题 |   我</span><br><span class="line">+-----+</span><br></pre></td></tr></table></figure><p>其实，真正的情况是我是问题的一部分：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+-----------+</span><br><span class="line">| 问题    我 |</span><br><span class="line">+-----------+</span><br></pre></td></tr></table></figure><p>把自己和问题分开看待，要么成为<strong>旁观者</strong>，要么成为<strong>受害者</strong>。拥有这两种心态，都不利于问题的解决，都没法很好发挥自己的领导力，影响力。<strong>要改变自己能改变的事情</strong>。</p><p>拿公司推行敏捷来说，很多人抱怨公司或者团队的行为只是”声称敏捷“，我怎么样才能够让团队变成”真正的敏捷“？先放下”如何才是真正的敏捷“这个问题，然后问问自己：”我做了什么让这个团队更敏捷的事了吗？”</p><p>拿亲密关系的相处来说，很多人抱怨：“<strong>明明是 Ta 的错，为什么要我改？</strong>” 正如那个经典的笑话：老婆经常唠叨老公不待家里，而老公却说，我不想待家是因为老婆太唠叨。所以说，你做了什么改善这段关系的事情了吗？</p><p>虽然我没信上帝，但是这段话还是挺有哲理的：</p><p><strong>Serenity Prayer (宁静祷文)</strong></p><blockquote><p>God, grant me the serenity to accept the things I cannot change,<br>courage to change the things I can,<br>and wisdom to know the difference.</p></blockquote><blockquote><p>亲爱的上帝，请赐给我雅量从容的接受不可改变的事，<br>赐给我勇气去改变应该改变的事，<br>并赐给我智慧去分辨什么是可以改变的，什么是不可以改变的。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;公司最近安排了一个关于敏捷领导力的培训。培训前，我对它其实没抱太高的期望。不是说我不喜欢这个话题，而是已经兴奋不起来。关于敏捷，以前我很热衷于看板理念的时候，可是能花好几千块钱，飞去北京，深圳上课的人。当年我还写了好几篇关于看板的文章，有兴趣的可以去看看：&lt;/p&gt;
+&lt;ul&gt;
+      
+    
+    </summary>
+    
+      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
+    
+    
+      <category term="Change" scheme="http://www.thinkingincrowd.me/tags/Change/"/>
+    
+      <category term="Kanban" scheme="http://www.thinkingincrowd.me/tags/Kanban/"/>
+    
+      <category term="Leadership" scheme="http://www.thinkingincrowd.me/tags/Leadership/"/>
+    
+  </entry>
   
   <entry>
     <title>Message communication between supervisor and child processes in Elixir</title>
@@ -521,31 +551,6 @@
         &lt;p&gt;最近 &lt;a href=&quot;https://github.com/996icu/996.ICU&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;996.icu&lt;/a&gt; 事件在程序员界闹得沸沸扬扬。  &lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;什么是 996.IC
-      
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自学编程的思维模式</title>
-    <link href="http://www.thinkingincrowd.me/2019/03/20/mindset-for-self-teaching-programming/"/>
-    <id>http://www.thinkingincrowd.me/2019/03/20/mindset-for-self-teaching-programming/</id>
-    <published>2019-03-20T14:11:38.000Z</published>
-    <updated>2019-03-20T14:10:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近，李笑来写了一本书「<a href="https://github.com/selfteaching/the-craft-of-selfteaching" target="_blank" rel="noopener">自学是门手艺</a>」，还开源了。这本书是以学习 Python 的切入点来教如何自学编程。</p><p>回顾了一下自己自学编程的经历，我也想补充一下自己的观点。</p><h2 id="成长足迹"><a href="#成长足迹" class="headerlink" title="成长足迹"></a>成长足迹</h2><p>我还很清楚记得，在第一家公司，CORESOLUTIONS，最开始承担的工作任务。因为，当我问 Leader 我做出来的页面是不是他想要的效果时，他脸上的那一丝惊讶的表情，和我内心的那份窃喜，深深烙入我的内心。</p><p>这个工作任务是在公司内部打造的 ERP Web Application 的中实现某个页面。那个系统的页面，是由公司通过 JAVA 自研的 UI 渲染组件，在 JSP 里生成 HTML 来实现的。所以，网络外面完全查不到参考资料，我只能参考系统已有的页面和代码。不过，大概只花了半天，我就把页面模仿着做出来了。</p><p>之前我可没怎么写过 JAVA，我真正的编程生涯可以说是从进入这家公司后才开始的。因为我是非科班出身，底子差，怕被他们发现我太搓，所以不敢轻易问问题。全靠自己不断尝试，憋着劲自学 Java，JSP，JavaScript 和 DOM 等语言和技术。</p><p>虽然不是计算机科班出身，但是相比很多同事朋友，我学习新东西的速度算是比较快的。所以，我在这个公司待了差不多 8 年，期间公司经常让我参与不同的项目，接触的东西很杂，学了很多技术，也做了很多项目。而且很多情况下都要现学现用。</p><p>我带过测试小团队；在公司资深顾问集体跳槽后，当过技术支持；用 BI 和 Crystal Report 做过数据仓库的项目；用 Powerbuilder 做过 CS 架构的系统；当然也用 J2EE 做 BS 架构的 ERP 系统，等等。</p><p>最近的 2016 年中去了北京帮笑来做一块听听，用 Node.js。目前回到珠海，在企业内参与联盟链相关的项目开发，用 Hyperledger Fabric, SpringBoot 等技术。</p><p>虽然和外面很多大神相比，我还是差很远，但是通过对自己，同事，和带过的新人的观察，我发现影响学习速度的其中一个因素是思维模式。</p><h2 id="思维模式"><a href="#思维模式" class="headerlink" title="思维模式"></a>思维模式</h2><p>我说的模式其实就是：</p><ul><li>整体到局部</li><li>局部到整体</li></ul><p>除了编程，很多其它技能的学习，也都可以运用这两种不同的模式的。比如说，画画。</p><p>儿童最开始画画的时候，都是粗线条，大轮廓。随着年龄的增长，线条，轮廓慢慢变得精细，也有更多细节的填充。这个过程，是由人的感官，和肢体控制能力的发展水平决定的。所以，不少学习画画的教程，也是从构建物体的轮廓开始。这就是从整体到局部的过程。</p><p>但是，一本很出名的书，「<a href="https://www.amazon.com/Drawing-Right-Side-Brain-Definitive/dp/1585429201" target="_blank" rel="noopener">Drawing on the right side of the brain</a>」，里面教授画画的技巧，则是把要临摹的图像上下倒置，强迫自己不看整体，只是从一点点的局部画起，最后才构成一个整体。是不是有点难以想象，或者不可思议？但是，如果尝试过，你会发现此方法的效果竟然会出奇地好。因为，每次只专注于一个小局部，把握好相对比例，偏差就不会太大，最后出来的整体效果也肯定八九不离十。这比一下子要掌握大轮廓更容易。</p><p>所以说，同样的技能，是可以运用不同的模式来学习的。只是，不同的技能，某种模式可能会稍微占有优势，至少在刚起步的阶段。而且，每个人习惯使用的思维模式是不一样的。那么，如果能够顺应技能的特点和自己的习惯，自学就很可能事半功倍了。</p><p>前面提到的我自己的第一个工作任务，之所以能那么快完成，是因为我懂得从整体理解代码结构，猜测局部的功能，然后套入自己的需求，只更改相关的部分，来做出自己的页面。相反，如果我深入查看每一个类和方法调用的细节，就会迷失在庞大的代码库，和错综复杂的相互引用之中。</p><p><strong>自学编程，我认为应该从整体到局部，再从局部回到整体</strong>。这两个模式看起来是反着来，但对于编程来说，却又相辅相成。</p><p><strong>只盯着任务细节，没有整体的概念，很容易形成只是按指示工作，不考虑对错，或忽略了其它方面的思考。而只看整体，不深入细节，又会导致知其然，而不知其所以然</strong>。</p><p>那如何才能把握好整体呢？这和我之前写的关于编程学习能力的文章也有关，有兴趣的朋友可以看看：</p><p><a href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction/">学习编程需要具备的基本能力 - 抽象</a><br><a href="http://www.thinkingincrowd.me/2016/09/16/Capability-for-Learning-Programming-Breakdown/">学习编程需要具备的基本能力 - 问题分解</a><br><a href="http://www.thinkingincrowd.me/2016/09/17/Capability-for-Learning-Programming-Ask-Wisely/">学习编程需要具备的基本能力 - 正确提问</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近，李笑来写了一本书「&lt;a href=&quot;https://github.com/selfteaching/the-craft-of-selfteaching&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;自学是门手艺&lt;/a&gt;」，还开源了。这本书是以学习 P
       
     
     </summary>
