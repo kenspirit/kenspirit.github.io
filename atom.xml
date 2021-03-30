@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2020-11-15T03:58:20.690Z</updated>
+  <updated>2021-03-30T13:58:48.054Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>broadway-source-reading-entry-and-architecture</title>
+    <link href="http://www.thinkingincrowd.me/2021/03/30/broadway-source-reading-entry-and-architecture/"/>
+    <id>http://www.thinkingincrowd.me/2021/03/30/broadway-source-reading-entry-and-architecture/</id>
+    <published>2021-03-30T13:26:58.000Z</published>
+    <updated>2021-03-30T13:58:48.054Z</updated>
+    
+    <content type="html"><![CDATA[<p>I have learned Elixir for a while and always want to see if I can start reading any opensource project to learn from.  </p><p>Two reasons to pick <a href="https://hexdocs.pm/broadway/Broadway.html" target="_blank" rel="noopener">Broadway</a> as a start:  </p><ul><li>Its code base is quite small and has 18 modules in total.  </li><li>The project in my company uses messaging components a lot.  </li></ul><p>Hence, reading it has much benefit on how to design a message processing tool with well-reasoned architecture.  Maybe, after this, I can try writing the right producer for the messaging component we use and rewrite the project in Elixir as well. :D</p><h2 id="Entry-Point"><a href="#Entry-Point" class="headerlink" title="Entry Point"></a>Entry Point</h2><p>According to the Documentation:</p><blockquote><p>In order to use Broadway, you need to:</p><ol><li>Define your pipeline configuration</li><li>Define a module implementing the Broadway behaviour</li></ol></blockquote><p>Obviously, the first source file I checked out is <code>broadway.ex</code>.  It does not have much logic there except the necessary behaviors and functions to get/update rate limiting.</p><p>The entry point is the <code>start_link</code> function which in turn calls <code>Topology.start_link(module, opts)</code> after option validation.</p><h2 id="Architecture-Diagram"><a href="#Architecture-Diagram" class="headerlink" title="Architecture Diagram"></a>Architecture Diagram</h2><p>Following <code>Topology.ex</code> and having an overview on what its <code>start_link</code> does, I first drafted the overall processes diagram of Broadway.  In order to know a codebase well, I tend to learn its architecture before diving into detail.  </p><p>Say, if we name our broadway name as <code>MyBW</code>, then the started processes would be:</p><pre class="mermaid">graph TD  A(Broadway.Topology) -.-> B(PrepareForProducer)  A ---> C(MyBW.Supervisor:rest_for_one)  C -.-> D(RateLimiter)  C --> E(MyBW.ProducerSupervisor:one_for_one) & F(MyBW.ProcessorSupervisor:one_for_all)  E -- ProducerStage --> G1(MyBW.Producer_1) & G2(MyBW.Producer_2)  F -- ProcessorStage --> H1(MyBW.Processor_key_1) & H2(MyBW.Processor_key_2)  C -. With Batcher .-> J(MyBW.BatchersSupervisor:one_for_one)  J --> K(MyBW.BatcherSupervisor_key1:rest_for_one) & P(Terminator)  K -- BatcherStage --> L(MyBW.Batcher_key1)  K --> M(MyBW.BatchProcessorSupervisor_key1:one_for_all)  M -- BatchProcessorStage --> M1(MyBW.BatchProcessor_key1_1) & M2(MyBW.BatchProcessor_key1_2)  C -. Without Batcher .-> P(Terminator)</pre><p>This diagram shows more components than the pipeline diagram in Broadway Documentation.  However, they are mainly the <code>Supervisor</code>s for different components.</p><p>The dashed line means optional components.  The text on the line mainly shows what module is used for the process, except the “With Batcher” and “Without Batcher” ones.</p><p>I also put the supervision strategy besides the Supervisor.</p><p>Most of the things make sense for me now but I still have one question:</p><p>Why <code>ProcessorSupervisor</code> and <code>BatchProcessorSupervisor</code> use <code>:one_for_all</code> instead of <code>:one_for_one</code>?  The Processors need to all live or crash?  I think I will get the answer after reading the processors part.</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;I have learned Elixir for a while and always want to see if I can start reading any opensource project to learn from.  &lt;/p&gt;
+&lt;p&gt;Two reason
+      
+    
+    </summary>
+    
+      <category term="Sword" scheme="http://www.thinkingincrowd.me/categories/Sword/"/>
+    
+    
+      <category term="Elixir" scheme="http://www.thinkingincrowd.me/tags/Elixir/"/>
+    
+  </entry>
   
   <entry>
     <title>你觉得自己是旁观者还是受害者？</title>
@@ -532,33 +558,6 @@
       <category term="Unit Test" scheme="http://www.thinkingincrowd.me/tags/Unit-Test/"/>
     
       <category term="First Principle" scheme="http://www.thinkingincrowd.me/tags/First-Principle/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从未快乐地加班意味着从未投入，但这不是强制加班的借口</title>
-    <link href="http://www.thinkingincrowd.me/2019/04/13/never-ot-means-never-all-in-but-not-reason-of-compulsory-ot/"/>
-    <id>http://www.thinkingincrowd.me/2019/04/13/never-ot-means-never-all-in-but-not-reason-of-compulsory-ot/</id>
-    <published>2019-04-13T07:07:56.000Z</published>
-    <updated>2019-04-13T07:21:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近 <a href="https://github.com/996icu/996.ICU" target="_blank" rel="noopener">996.icu</a> 事件在程序员界闹得沸沸扬扬。  </p><blockquote><p>什么是 996.ICU？工作 996，生病 ICU。  </p></blockquote><p>996 其实是一种程序员界的一种工作状态：早上 9 点上班到晚上 9 点，一周工作六天。  </p><p>996 某种程度上来说只是加班的一种形式。这么多年来，去面试毕业生的时候，都会有人问：“你们公司要加班吗？” 然后我基本会反问：“你认为怎么样才算加班？什么样的加班你是不能接受的？”  </p><p>我说说自己的加班经历，和对加班的理解吧。</p><p>我试过加班到凌晨 4 点，然后 8 点继续上班；我经历过 995，和 996。有因为自己能力不足而独自加班，有为了项目进度和兄弟们一起拼搏，也有仅为遵守公司的制度。  </p><p><strong>我不喜欢加班，无法接受长期加班，憎恨无理的制度性常规性加班，但是愿意为自己喜欢的事情加班。</strong>  </p><p>对于程序员来说，业余时间持续学习，增进技能是很平常的事。即使不需要加班做公司的任务，很多人在下班后也会读书，写业余项目，针对工作面对的问题找学习资料和解决方案等。这些学习形式和内容，并不都和工作直接相关，但是对能力的提升是相当有帮助的。间接来说，个人能力提高了，对公司和工作也是有好处的。花在这些方面的时间，即便是为了解决工作上碰到的问题，程序员一般来说也不会被认为是在加班。  </p><p>有时候的加班其实是幸福的。你和好几个同事，以及领导，为了某个项目或者功能需要赶一个进度。大伙每天晚上一起吃饭，吹吹水，然后拼搏到深夜。老板让大家打车回家，第二天稍微晚点来。这样的日子即使持续两三个月，甚至半年，大伙可能都不会觉得太辛苦。而且重要的是看着整个团队为着同一个目标而奋斗，最后有了成果，是很开心的。完了后，领导也会让每个人轮流补休几天，修整一下。大家其实也会很快满血复活回到岗位的。</p><p>这种加班意味着你的全情投入，没有体验过的话，真的可以说是白年轻了。</p><p>但是，很多老板却偷换概念（比如我们的马老板），把不加班就渲染为不奋斗，不热爱工作。</p><p><a href="https://weibo.com/1642088277/HpifMlEkq?from=page_1002061642088277_profile&amp;wvr=6&amp;mod=weibotime" target="_blank" rel="noopener">996 是修来的福报</a></p><p><a href="https://weibo.com/1977581633/HpjLIvCyR?from=page_1005051977581633_profile&amp;wvr=6&amp;mod=weibotime" target="_blank" rel="noopener">后悔忙工作，没时间陪家人</a></p><p>我们厌恶的加班其实是什么呢？<strong>制度性，常规性的加班</strong>。这也就意味着，并不是因为一个特殊的紧急的情况而需要临时性的加班，而是长年累月那种。甚至明明没什么东西要做，也还要被留在公司，到点才能离开。这是最让人讨厌的。</p><p>当然，有人会说，老板还 7x24 呢。对的，没错，那是他自己的公司，只要需要他负责，当然什么时间都要处理。其实很多程序员或客户支持，接到线上问题，需要支援的时候，也是义无反顾地加班紧急处理，并不是说放假就放手不管了。</p><p>那种制度性，常规性的加班，其实大部分时候只是上层管理，方向上的无能。当你招聘的人，并不够认真负责，上班经常划水，效率不高，导致任务滞后。可是你又不懂如何更好管理，激励员工，单纯粗暴无脑实施 996，祈望通过延长时间来补偿，结果恶性循环，员工更容易划水。又或者是公司产品方向不清晰，看着竞争对手有的功能就想赶超，没有重点，啥都想做，啥都说急着要上，像撞大运那样做一堆产品或功能上线，看哪个能火。一些领导还假惺惺的说，不赞成员工加班，但是却深夜发邮件，两小时内回复；或者快到下班时间开长时间的低效率的会议等。</p><p>程序员加班很频繁，但确实不是最累的行业。很多工厂，送外卖，餐馆等各色服务行业，每天可能工作多于 12 小时，一个月才一两天假期。所以，也有好一些从经济学角度来思考的文章。这些文章从某种角度来说，是对的。这些是竞争的结果，竞争最后会产生更优的企业，更好的福利。只是很多企业以竞争为借口，强迫超时劳动。你可以说，你可以选择离开啊。但是如果大范围都是这样的，你能去哪里？</p><p><a href="https://mp.weixin.qq.com/s/UBhJfM1Wz1gb1dNqznKlBg" target="_blank" rel="noopener">抗议996？GitHub上的那帮程序员纯属不要脸</a></p><p><a href="https://mp.weixin.qq.com/s/6ptYtp19MIIMLmrbt88kQw" target="_blank" rel="noopener">如何减少996</a></p><p>我一直不赞成那些高福利养懒人的政策，甚至怀疑最低工资是否合理。但是政府确实需要一些基本制度保障基本人权。如果你作为企业主，希望员工多干活，那可以用更好的激励手段，给加班补贴（政府没必要规定加班费是多少，而是由员工和企业约定），提供晚餐，调休等福利。只要双方愿意（甚至签合同），怎么加班都没问题。但是，冠冕堂皇地认为不加班就是不进取奋斗，低绩效评分就相当无耻了。</p><p>管理学大师彼得·德鲁克在 1966 年的「卓有成效的管理者」中就阐明知识工作者应该如何管理。人月神话说过：“往进度落后的项目新加人手只会更慢”。同理，用增加时间的方式来掩盖项目落后的真正问题同样无法改善。</p><p><strong>我们程序员只是讨厌无价值，和强制的加班。你有本事让我快乐地加班，是你的能力。</strong></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近 &lt;a href=&quot;https://github.com/996icu/996.ICU&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;996.icu&lt;/a&gt; 事件在程序员界闹得沸沸扬扬。  &lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;什么是 996.IC
-      
-    
-    </summary>
-    
-      <category term="Think" scheme="http://www.thinkingincrowd.me/categories/Think/"/>
-    
-    
-      <category term="Programming" scheme="http://www.thinkingincrowd.me/tags/Programming/"/>
     
   </entry>
   
