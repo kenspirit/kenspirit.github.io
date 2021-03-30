@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.thinkingincrowd.me/"/>
-  <updated>2021-03-30T13:58:48.054Z</updated>
+  <updated>2021-03-30T14:03:29.941Z</updated>
   <id>http://www.thinkingincrowd.me/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>broadway-source-reading-entry-and-architecture</title>
+    <title>Broadway Source Reading (Part 1 - Entry Point and Architecture)</title>
     <link href="http://www.thinkingincrowd.me/2021/03/30/broadway-source-reading-entry-and-architecture/"/>
     <id>http://www.thinkingincrowd.me/2021/03/30/broadway-source-reading-entry-and-architecture/</id>
     <published>2021-03-30T13:26:58.000Z</published>
-    <updated>2021-03-30T13:58:48.054Z</updated>
+    <updated>2021-03-30T14:03:29.941Z</updated>
     
     <content type="html"><![CDATA[<p>I have learned Elixir for a while and always want to see if I can start reading any opensource project to learn from.  </p><p>Two reasons to pick <a href="https://hexdocs.pm/broadway/Broadway.html" target="_blank" rel="noopener">Broadway</a> as a start:  </p><ul><li>Its code base is quite small and has 18 modules in total.  </li><li>The project in my company uses messaging components a lot.  </li></ul><p>Hence, reading it has much benefit on how to design a message processing tool with well-reasoned architecture.  Maybe, after this, I can try writing the right producer for the messaging component we use and rewrite the project in Elixir as well. :D</p><h2 id="Entry-Point"><a href="#Entry-Point" class="headerlink" title="Entry Point"></a>Entry Point</h2><p>According to the Documentation:</p><blockquote><p>In order to use Broadway, you need to:</p><ol><li>Define your pipeline configuration</li><li>Define a module implementing the Broadway behaviour</li></ol></blockquote><p>Obviously, the first source file I checked out is <code>broadway.ex</code>.  It does not have much logic there except the necessary behaviors and functions to get/update rate limiting.</p><p>The entry point is the <code>start_link</code> function which in turn calls <code>Topology.start_link(module, opts)</code> after option validation.</p><h2 id="Architecture-Diagram"><a href="#Architecture-Diagram" class="headerlink" title="Architecture Diagram"></a>Architecture Diagram</h2><p>Following <code>Topology.ex</code> and having an overview on what its <code>start_link</code> does, I first drafted the overall processes diagram of Broadway.  In order to know a codebase well, I tend to learn its architecture before diving into detail.  </p><p>Say, if we name our broadway name as <code>MyBW</code>, then the started processes would be:</p><pre class="mermaid">graph TD  A(Broadway.Topology) -.-> B(PrepareForProducer)  A ---> C(MyBW.Supervisor:rest_for_one)  C -.-> D(RateLimiter)  C --> E(MyBW.ProducerSupervisor:one_for_one) & F(MyBW.ProcessorSupervisor:one_for_all)  E -- ProducerStage --> G1(MyBW.Producer_1) & G2(MyBW.Producer_2)  F -- ProcessorStage --> H1(MyBW.Processor_key_1) & H2(MyBW.Processor_key_2)  C -. With Batcher .-> J(MyBW.BatchersSupervisor:one_for_one)  J --> K(MyBW.BatcherSupervisor_key1:rest_for_one) & P(Terminator)  K -- BatcherStage --> L(MyBW.Batcher_key1)  K --> M(MyBW.BatchProcessorSupervisor_key1:one_for_all)  M -- BatchProcessorStage --> M1(MyBW.BatchProcessor_key1_1) & M2(MyBW.BatchProcessor_key1_2)  C -. Without Batcher .-> P(Terminator)</pre><p>This diagram shows more components than the pipeline diagram in Broadway Documentation.  However, they are mainly the <code>Supervisor</code>s for different components.</p><p>The dashed line means optional components.  The text on the line mainly shows what module is used for the process, except the “With Batcher” and “Without Batcher” ones.</p><p>I also put the supervision strategy besides the Supervisor.</p><p>Most of the things make sense for me now but I still have one question:</p><p>Why <code>ProcessorSupervisor</code> and <code>BatchProcessorSupervisor</code> use <code>:one_for_all</code> instead of <code>:one_for_one</code>?  The Processors need to all live or crash?  I think I will get the answer after reading the processors part.</p>]]></content>
     

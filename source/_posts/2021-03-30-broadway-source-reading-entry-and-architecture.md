@@ -1,4 +1,4 @@
-title: broadway-source-reading-entry-and-architecture
+title: Broadway Source Reading (Part 1 - Entry Point and Architecture)
 date: 2021-03-30 21:26:58
 tags:
   - Elixir
