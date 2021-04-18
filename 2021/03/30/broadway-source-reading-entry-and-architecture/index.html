@@ -89,7 +89,7 @@ Two reasons to pick Broadway a">
     </p>
   <p class="article-time">
     <time datetime="2021-03-30T13:26:58.000Z" itemprop="datePublished">Mar 30 2021</time>
-    Updated:<time datetime="2021-03-30T14:03:29.941Z" itemprop="dateModified">Mar 30 2021</time>
+    Updated:<time datetime="2021-04-12T03:20:32.770Z" itemprop="dateModified">Apr 12 2021</time>
     
   </p>
 </header>
@@ -119,7 +119,7 @@ Two reasons to pick Broadway a">
 <p>Obviously, the first source file I checked out is <code>broadway.ex</code>.  It does not have much logic there except the necessary behaviors and functions to get/update rate limiting.</p>
 <p>The entry point is the <code>start_link</code> function which in turn calls <code>Topology.start_link(module, opts)</code> after option validation.</p>
 <h2 id="Architecture-Diagram"><a href="#Architecture-Diagram" class="headerlink" title="Architecture Diagram"></a>Architecture Diagram</h2><p>Following <code>Topology.ex</code> and having an overview on what its <code>start_link</code> does, I first drafted the overall processes diagram of Broadway.  In order to know a codebase well, I tend to learn its architecture before diving into detail.  </p>
-<p>Say, if we name our broadway name as <code>MyBW</code>, then the started processes would be:</p>
+<p>Say, if we name our broadway as <code>MyBW</code>, then the started processes would be:</p>
 <pre class="mermaid">graph TD
   A(Broadway.Topology) -.-> B(PrepareForProducer)
   A ---> C(MyBW.Supervisor:rest_for_one)
