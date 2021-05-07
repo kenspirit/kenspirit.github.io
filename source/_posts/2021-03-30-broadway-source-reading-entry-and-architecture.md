@@ -2,6 +2,7 @@ title: Broadway Source Reading (Part 1 - Entry Point and Architecture)
 date: 2021-03-30 21:26:58
 tags:
   - Elixir
+  - Source Reading
 categories:
   - Sword
 ---
@@ -34,9 +35,39 @@ The entry point is the `start_link` function which in turn calls `Topology.start
 
 ## Architecture Diagram
 
-Following `Topology.ex` and having an overview on what its `start_link` does, I first drafted the overall processes diagram of Broadway.  In order to know a codebase well, I tend to learn its architecture before diving into detail.  
+In order to know a codebase well, I tend to learn its architecture before diving into detail.  
 
-Say, if we name our broadway name as `MyBW`, then the started processes would be:
+### Sequence Diagram
+
+Assuming our broadway module named `MyBW`:  
+
+```mermaid
+sequenceDiagram
+  participant M as MyBW
+  participant B as Broadway
+  participant T as Topology
+  participant S as Supervisor
+
+  M->>B: start_link(MyBW, pipeline_opts)
+  B->>T: start_link(MyBW, pipeline_opts)
+  rect rgba(0, 0, 255, .1)
+  Note over T: init({MyBW, pipeline_opts})
+  T->>T: {child_specs, opts} = prepare_for_start(MyBW, pipeline_opts)
+  rect rgba(0, 0, 255, .2)
+  Note over T: start_supervisor(child_specs, %{module: MyBW} = config, pipeline_opts)
+  T->>T: {producers_names, producers_specs} = build_producers_specs(config, opts)
+  T->>T: {processors_names, processors_specs} = build_processors_specs(config, producers_names)
+  T->>T: build_rate_limiter_spec(config, producers_names)
+  T->>T: build_processor_supervisor_spec(config, processors_specs)
+  T->>T: build_batchers_supervisor_and_terminator_specs(config, producers_names, processors_names)
+  T->>S: start_link(all_child_specs)
+  end
+  S-->>B: %{supervisor_pid, terminator, name}
+  B-->>M: 
+  end
+```
+
+### Process Supervision Hierarchy
 
 ```mermaid
 graph TD
@@ -54,11 +85,11 @@ graph TD
   C -. Without Batcher .-> P(Terminator)
 ```
 
-This diagram shows more components than the pipeline diagram in Broadway Documentation.  However, they are mainly the `Supervisor`s for different components.
+* The dashed line means that the component is optional.  
 
-The dashed line means optional components.  The text on the line mainly shows what module is used for the process, except the "With Batcher" and "Without Batcher" ones.
+* The text on the line mainly shows what module is started for the process, except the "With Batcher" and "Without Batcher".  
 
-I also put the supervision strategy besides the Supervisor.
+* The supervision strategy is next to the name of Supervisor.  
 
 Most of the things make sense for me now but I still have one question:
 
