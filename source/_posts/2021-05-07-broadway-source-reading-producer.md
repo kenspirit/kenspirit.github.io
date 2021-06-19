@@ -79,7 +79,7 @@ graph BT
   E(Processors in Broadway) -- pull --> D
 ```
 
-In the source code of [`broadway_sqs/producer.ex`](https://github.com/dashbitco/broadway_sqs/blob/78d32ba2d05ff6e9da3dc89948f91fd9d33299aa/lib/broadway_sqs/producer.ex#L214), the messages are to receive in the `handle_demand` callback because it's the timing when customsers pulls for messages.  
+In the source code of [`broadway_sqs/producer.ex`](https://github.com/dashbitco/broadway_sqs/blob/78d32ba2d05ff6e9da3dc89948f91fd9d33299aa/lib/broadway_sqs/producer.ex#L214), the messages are to receive in the `handle_demand` callback because it's the timing when consumers pulls for messages.  
 
 ```elixir
   @impl true
