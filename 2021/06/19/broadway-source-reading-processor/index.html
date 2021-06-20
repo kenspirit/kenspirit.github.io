@@ -88,7 +88,7 @@
     </p>
   <p class="article-time">
     <time datetime="2021-06-19T06:26:44.000Z" itemprop="datePublished">Jun 19 2021</time>
-    Updated:<time datetime="2021-06-19T06:16:59.247Z" itemprop="dateModified">Jun 19 2021</time>
+    Updated:<time datetime="2021-06-20T14:42:43.159Z" itemprop="dateModified">Jun 20 2021</time>
     
   </p>
 </header>
@@ -168,6 +168,7 @@
 </blockquote>
 <p>What I do not quite understand is that the messages are not passed through the Map (replacing the <code>true</code> value) but use the Process dict.  I checked the git history and found that it’s the <a href="https://github.com/dashbitco/broadway/pull/32/files" target="_blank" rel="noopener">change</a> made by Jose from a branch named <strong>jv-speed-up-ack</strong>.  Is it faster?  Why?</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">defp</span> <span class="title">group_by_acknowledger</span></span>(ackers, messages, key) <span class="keyword">do</span></span><br><span class="line">  Enum.reduce(messages, ackers, <span class="keyword">fn</span> %&#123;<span class="symbol">acknowledger:</span> &#123;acknowledger, ack_ref, <span class="number">_</span>&#125;&#125; = msg, acc -&gt;</span><br><span class="line">    ack_info = &#123;acknowledger, ack_ref&#125;</span><br><span class="line">    pdict_key = &#123;ack_info, key&#125;</span><br><span class="line">    Process.put(pdict_key, [msg | Process.get(pdict_key, [])])</span><br><span class="line">    Map.put(acc, ack_info, <span class="keyword">true</span>)</span><br><span class="line">  <span class="keyword">end</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">defp</span> <span class="title">call_ack</span></span>(&#123;&#123;acknowledger, ack_ref&#125; = ack_info, <span class="keyword">true</span>&#125;) <span class="keyword">do</span></span><br><span class="line">  successful = Process.delete(&#123;ack_info, <span class="symbol">:successful</span>&#125;) || []</span><br><span class="line">  failed = Process.delete(&#123;ack_info, <span class="symbol">:failed</span>&#125;) || []</span><br><span class="line">  acknowledger.ack(ack_ref, Enum.reverse(successful), Enum.reverse(failed))</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p><em>Update:</em> I posted the <a href="https://elixirforum.com/t/may-anyone-help-to-explain-this-code-by-jose-in-broadway-to-me/40533/6" target="_blank" rel="noopener">question</a> in ElixirForum and got Jose’s reply.  Take a look there.  :D</p>
   
 	</div>
 		<footer class="article-footer clearfix">
