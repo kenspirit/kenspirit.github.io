@@ -117,5 +117,6 @@ What I do not quite understand is that the messages are not passed through the M
   end
 ```
 
+_Update:_ I posted the [question](https://elixirforum.com/t/may-anyone-help-to-explain-this-code-by-jose-in-broadway-to-me/40533/6) in ElixirForum and got Jose's reply.  Take a look there.  :D
 
 
