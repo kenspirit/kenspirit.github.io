@@ -11,7 +11,7 @@ categories:
 
 Normally, we only need to define the pipeline options for the Messaging Middleware Producer, Processor, and implement the `handle_message/3` callback to use Broadway.  
 
-The complexity of how the `handle_message/3` is called, how the messages got acknowledged and how the failed messages handled all hide behind.  That is the part I would like to know by reading the source code.  As we have gone through [the Producer part][], I bet $10 dollars the questions above should be able to answer after reading the Processor part.  
+The complexity of how the `handle_message/3` called, how the messages got acknowledged and how the failed messages handled is all hidden behind.  But that is the part I would like to know by reading the source code.  As we have gone through [the Producer part][], I bet $10 dollars the questions above should be able to answer after reading the Processor part.  
 
 
 ## Startup Call Sequence
@@ -45,22 +45,34 @@ sequenceDiagram
   G->>G: ask/3
 ```
 
-At the end of the call, the processor `ask/3` for messages immediately after subscribing to the producers.  The process of ProcessorStage sends a `:"$gen_producer"` message to the producer process it subscribes to.  In the producer's `handle_info/2`, it calls `dispatcher_callback/3` and redirect the call to dispatcher module's `ask/3` method that passes the result to `handle_dispatcher_result/2`.
+## GenStage pipelines
+
+Using the simplest Broadway pipeline options without Batcher, the GenStage pipeline should be constructed with only two stages: Producer and Processors.  
+
+
+```mermaid
+graph TD
+  A(Producer) --> B(Processor_1)
+  A -.-> D(DemandDispatcher)
+  A --> C(Processor_2)
+  B -.-> E(Acknowledger)
+  C -.-> E
+```
+
+_Notes: The communications between the stages are through process message passing, while other interactions between the `DemandDispatcher`, the `Acknowledger` and them are through direct method calls.  The Dispatcher and Acknowledger are not part of the GenStage pipelines and so here uses dotted line to indicate their interactions to have clearer separation._
 
 
 ## Message Consuming as a Consumer (w/o Batcher)
 
-There are two branches in the `case` statement in `handle_dispatcher_result/2`.  As in the simplest configuration, the current process receivng the message is the `:producer` process, so the second path should be taken as a Producer.  
+At the end of the startup call sequence, the processor `ask/3` for messages immediately after subscribing to the producers.  The process of ProcessorStage sends a `:"$gen_producer"` message to the producer process it subscribes to.  In the producer's `handle_info/2`, it calls `dispatcher_callback/3` and redirect the call to dispatcher module's `ask/3` method that passes the result to `handle_dispatcher_result/2`.
 
-The start of this flow in the Producer matches what we have explored in [the Producer part][].
+There are two branches in the `case` statement in `handle_dispatcher_result/2`.  As in this simplest GenStage pipeline, the process receivng the message is `:producer`, so the path for producer should be taken.  
 
 ```mermaid
 sequenceDiagram
   participant P as ProducerStage
   participant D as DemandDispatcher
   participant PS as ProcessorStage
-  participant A as Acknowledger
-  participant B as MyBroadway
 
   alt as Producer
       P->>P: noreply_callback(:handle_demand, [counter, state], stage)
@@ -68,33 +80,44 @@ sequenceDiagram
       P->>P: handle_noreply_callback/2
       P->>P: dispatch_events/3
       P->>D: dispatch/3
-      D->>PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :consumer} = stage)
+      P--)PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :consumer} = stage)
       PS->>PS: consumer_dispatch/6
-      PS->>PS: handle_events/3
-      PS->>PS: maybe_prepare_messages/2
-      PS->>B: prepare_messages/2
-      PS->>PS: handle_messages/4
-      PS->>B: handle_message/3
-      PS->>A: maybe_handle_failed_messages/3
-      A->>B: handle_failed/2
-      PS->>A: ack_messages(successful_messages_to_ack, failed_messages)
   else as ProducerConsumer
-      P->>P: take_pc_events(queue, counter, stage)
+      P->>P: take_pc_events/3
   end
 ```
 
-Here is the tricky thing when the `DemandDispatcher.dispatch` is called.  It sends a `:"$gen_consumer"` message from the Producer process to its subscriber, the consumer, the process of the `ProcessorStage`.  The process of the `ProcessorStage` is a `GenStage`.  In its `consumer_dispatch/6` method, it delegates the call to `mod.handle_events/3` which is the `ProcessorStage` module.  
+Below is the call sequence flow of `consumer_dispatch/6` after `:"$gen_consumer"` message received in the `ProcessorStage` as a consumer.  The events are acknowledged immediately because no batchers are specified in this simplest setup.  The `successful_messages_to_forward` is actually `[]` because no forwarding is required.  
 
-I always get confused as a novice Elixir programmer on what methods are called as the process of the module, what are called as simple module function.  
+
+```mermaid
+sequenceDiagram
+  participant PS as ProcessorStage
+  participant A as Acknowledger
+  participant B as MyBW
+
+  loop consumer_dispatch/6 until event batches empty
+    PS->>PS: handle_events/3
+    PS->>PS: maybe_prepare_messages/2
+    PS->>B: prepare_messages/2
+    PS->>PS: handle_messages/4
+    PS->>B: handle_message/3
+    PS->>A: maybe_handle_failed_messages/3
+    A->>B: handle_failed/2
+    PS->>A: ack_messages(successful_messages_to_ack, failed_messages)
+    PS->>PS: dispatch_events(successful_messages_to_forward, _length, stage)
+    PS->>PS: ask/3
+  end
+```
 
 
 ## Failed Messages Handling and Acknowledging
 
-If we look into the `ProcessorStage.handle_events/3`, it's clear that each message will be handled by our implemented callback `prepare_messages/2` and `handle_message/3` of our `MyBroadway` module.  Each message will be separated into the `successful_messages` and `failed_messages` categories.
+If we look into the `ProcessorStage.handle_events/3`, it's clear that each message will be handled by our implemented callback `prepare_messages/2` and `handle_message/3` of our `MyBW` module.  Each message will be separated into the `successful_messages` and `failed_messages` categories.
 
-The `failed_messages` will first be passed to `handle_failed/2` of our `MyBroadway` module so that we can do whatever necessary, such as saving them in DB or forwarding to another exception queue before the `Acknowledger` acknowledge them.
+The `failed_messages` will first be passed to `handle_failed/2` of our `MyBW` module so that we can do whatever necessary, such as saving them in DB or forwarding to another exception queue before the `Acknowledger` acknowledge them.
 
-The messages are grouped by each message's acknowledger to actually `ack` them.  The message acknowledger is actually from the producer that fulfills the scenario mentioned in documentation:
+The messages are grouped by each message's acknowledger to actually `ack` them.  The message acknowledger is set in the producer that fulfills the scenario mentioned in documentation:
 
 >where messages are coming from different producers. Broadway will use this information to correctly identify the acknowledger and pass it among with the messages so you can properly communicate with the source of the data for acknowledgement.
 
