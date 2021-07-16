@@ -88,7 +88,7 @@
     </p>
   <p class="article-time">
     <time datetime="2021-06-19T06:26:44.000Z" itemprop="datePublished">Jun 19 2021</time>
-    Updated:<time datetime="2021-06-20T14:42:43.159Z" itemprop="dateModified">Jun 20 2021</time>
+    Updated:<time datetime="2021-07-12T22:45:29.854Z" itemprop="dateModified">Jul 13 2021</time>
     
   </p>
 </header>
@@ -97,11 +97,11 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Startup-Call-Sequence"><span class="toc-number">1.</span> <span class="toc-text">Startup Call Sequence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Message-Consuming-as-a-Consumer-w-o-Batcher"><span class="toc-number">2.</span> <span class="toc-text">Message Consuming as a Consumer (w/o Batcher)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Failed-Messages-Handling-and-Acknowledging"><span class="toc-number">3.</span> <span class="toc-text">Failed Messages Handling and Acknowledging</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Startup-Call-Sequence"><span class="toc-number">1.</span> <span class="toc-text">Startup Call Sequence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GenStage-pipelines"><span class="toc-number">2.</span> <span class="toc-text">GenStage pipelines</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Message-Consuming-as-a-Consumer-w-o-Batcher"><span class="toc-number">3.</span> <span class="toc-text">Message Consuming as a Consumer (w/o Batcher)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Failed-Messages-Handling-and-Acknowledging"><span class="toc-number">4.</span> <span class="toc-text">Failed Messages Handling and Acknowledging</span></a></li></ol>
 		</div>
 		
 		<p>Normally, we only need to define the pipeline options for the Messaging Middleware Producer, Processor, and implement the <code>handle_message/3</code> callback to use Broadway.  </p>
-<p>The complexity of how the <code>handle_message/3</code> is called, how the messages got acknowledged and how the failed messages handled all hide behind.  That is the part I would like to know by reading the source code.  As we have gone through <a href="http://www.thinkingincrowd.me/2021/05/07/broadway-source-reading-producer/">the Producer part</a>, I bet $10 dollars the questions above should be able to answer after reading the Processor part.  </p>
+<p>The complexity of how the <code>handle_message/3</code> called, how the messages got acknowledged and how the failed messages handled is all hidden behind.  But that is the part I would like to know by reading the source code.  As we have gone through <a href="http://www.thinkingincrowd.me/2021/05/07/broadway-source-reading-producer/">the Producer part</a>, I bet $10 dollars the questions above should be able to answer after reading the Processor part.  </p>
 <h2 id="Startup-Call-Sequence"><a href="#Startup-Call-Sequence" class="headerlink" title="Startup Call Sequence"></a>Startup Call Sequence</h2><p>With the experience on the startup call sequence of Producer, we can find that the one for Processor is quite similar:  </p>
 <pre class="mermaid">sequenceDiagram
   participant S as Supervisor
@@ -128,15 +128,21 @@
   G->>G: consumer_subscribe/7
   G->>G: ask/3</pre>
 
-<p>At the end of the call, the processor <code>ask/3</code> for messages immediately after subscribing to the producers.  The process of ProcessorStage sends a <code>:&quot;$gen_producer&quot;</code> message to the producer process it subscribes to.  In the producer’s <code>handle_info/2</code>, it calls <code>dispatcher_callback/3</code> and redirect the call to dispatcher module’s <code>ask/3</code> method that passes the result to <code>handle_dispatcher_result/2</code>.</p>
-<h2 id="Message-Consuming-as-a-Consumer-w-o-Batcher"><a href="#Message-Consuming-as-a-Consumer-w-o-Batcher" class="headerlink" title="Message Consuming as a Consumer (w/o Batcher)"></a>Message Consuming as a Consumer (w/o Batcher)</h2><p>There are two branches in the <code>case</code> statement in <code>handle_dispatcher_result/2</code>.  As in the simplest configuration, the current process receivng the message is the <code>:producer</code> process, so the second path should be taken as a Producer.  </p>
-<p>The start of this flow in the Producer matches what we have explored in <a href="http://www.thinkingincrowd.me/2021/05/07/broadway-source-reading-producer/">the Producer part</a>.</p>
+<h2 id="GenStage-pipelines"><a href="#GenStage-pipelines" class="headerlink" title="GenStage pipelines"></a>GenStage pipelines</h2><p>Using the simplest Broadway pipeline options without Batcher, the GenStage pipeline should be constructed with only two stages: Producer and Processors.  </p>
+<pre class="mermaid">graph TD
+  A(Producer) --> B(Processor_1)
+  A -.-> D(DemandDispatcher)
+  A --> C(Processor_2)
+  B -.-> E(Acknowledger)
+  C -.-> E</pre>
+
+<p><em>Notes: The communications between the stages are through process message passing, while other interactions between the <code>DemandDispatcher</code>, the <code>Acknowledger</code> and them are through direct method calls.  The Dispatcher and Acknowledger are not part of the GenStage pipelines and so here uses dotted line to indicate their interactions to have clearer separation.</em></p>
+<h2 id="Message-Consuming-as-a-Consumer-w-o-Batcher"><a href="#Message-Consuming-as-a-Consumer-w-o-Batcher" class="headerlink" title="Message Consuming as a Consumer (w/o Batcher)"></a>Message Consuming as a Consumer (w/o Batcher)</h2><p>At the end of the startup call sequence, the processor <code>ask/3</code> for messages immediately after subscribing to the producers.  The process of ProcessorStage sends a <code>:&quot;$gen_producer&quot;</code> message to the producer process it subscribes to.  In the producer’s <code>handle_info/2</code>, it calls <code>dispatcher_callback/3</code> and redirect the call to dispatcher module’s <code>ask/3</code> method that passes the result to <code>handle_dispatcher_result/2</code>.</p>
+<p>There are two branches in the <code>case</code> statement in <code>handle_dispatcher_result/2</code>.  As in this simplest GenStage pipeline, the process receivng the message is <code>:producer</code>, so the path for producer should be taken.  </p>
 <pre class="mermaid">sequenceDiagram
   participant P as ProducerStage
   participant D as DemandDispatcher
   participant PS as ProcessorStage
-  participant A as Acknowledger
-  participant B as MyBroadway
 
   alt as Producer
       P->>P: noreply_callback(:handle_demand, [counter, state], stage)
@@ -144,25 +150,35 @@
       P->>P: handle_noreply_callback/2
       P->>P: dispatch_events/3
       P->>D: dispatch/3
-      D->>PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :consumer} = stage)
+      P--)PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :consumer} = stage)
       PS->>PS: consumer_dispatch/6
-      PS->>PS: handle_events/3
-      PS->>PS: maybe_prepare_messages/2
-      PS->>B: prepare_messages/2
-      PS->>PS: handle_messages/4
-      PS->>B: handle_message/3
-      PS->>A: maybe_handle_failed_messages/3
-      A->>B: handle_failed/2
-      PS->>A: ack_messages(successful_messages_to_ack, failed_messages)
   else as ProducerConsumer
-      P->>P: take_pc_events(queue, counter, stage)
+      P->>P: take_pc_events/3
   end</pre>
 
-<p>Here is the tricky thing when the <code>DemandDispatcher.dispatch</code> is called.  It sends a <code>:&quot;$gen_consumer&quot;</code> message from the Producer process to its subscriber, the consumer, the process of the <code>ProcessorStage</code>.  The process of the <code>ProcessorStage</code> is a <code>GenStage</code>.  In its <code>consumer_dispatch/6</code> method, it delegates the call to <code>mod.handle_events/3</code> which is the <code>ProcessorStage</code> module.  </p>
-<p>I always get confused as a novice Elixir programmer on what methods are called as the process of the module, what are called as simple module function.  </p>
-<h2 id="Failed-Messages-Handling-and-Acknowledging"><a href="#Failed-Messages-Handling-and-Acknowledging" class="headerlink" title="Failed Messages Handling and Acknowledging"></a>Failed Messages Handling and Acknowledging</h2><p>If we look into the <code>ProcessorStage.handle_events/3</code>, it’s clear that each message will be handled by our implemented callback <code>prepare_messages/2</code> and <code>handle_message/3</code> of our <code>MyBroadway</code> module.  Each message will be separated into the <code>successful_messages</code> and <code>failed_messages</code> categories.</p>
-<p>The <code>failed_messages</code> will first be passed to <code>handle_failed/2</code> of our <code>MyBroadway</code> module so that we can do whatever necessary, such as saving them in DB or forwarding to another exception queue before the <code>Acknowledger</code> acknowledge them.</p>
-<p>The messages are grouped by each message’s acknowledger to actually <code>ack</code> them.  The message acknowledger is actually from the producer that fulfills the scenario mentioned in documentation:</p>
+<p>Below is the call sequence flow of <code>consumer_dispatch/6</code> after <code>:&quot;$gen_consumer&quot;</code> message received in the <code>ProcessorStage</code> as a consumer.  The events are acknowledged immediately because no batchers are specified in this simplest setup.  The <code>successful_messages_to_forward</code> is actually <code>[]</code> because no forwarding is required.  </p>
+<pre class="mermaid">sequenceDiagram
+  participant PS as ProcessorStage
+  participant A as Acknowledger
+  participant B as MyBW
+
+  loop consumer_dispatch/6 until event batches empty
+    PS->>PS: handle_events/3
+    PS->>PS: maybe_prepare_messages/2
+    PS->>B: prepare_messages/2
+    PS->>PS: handle_messages/4
+    PS->>B: handle_message/3
+    PS->>A: maybe_handle_failed_messages/3
+    A->>B: handle_failed/2
+    PS->>A: ack_messages(successful_messages_to_ack, failed_messages)
+    PS->>PS: dispatch_events(successful_messages_to_forward, _length, stage)
+    PS->>PS: ask/3
+  end</pre>
+
+
+<h2 id="Failed-Messages-Handling-and-Acknowledging"><a href="#Failed-Messages-Handling-and-Acknowledging" class="headerlink" title="Failed Messages Handling and Acknowledging"></a>Failed Messages Handling and Acknowledging</h2><p>If we look into the <code>ProcessorStage.handle_events/3</code>, it’s clear that each message will be handled by our implemented callback <code>prepare_messages/2</code> and <code>handle_message/3</code> of our <code>MyBW</code> module.  Each message will be separated into the <code>successful_messages</code> and <code>failed_messages</code> categories.</p>
+<p>The <code>failed_messages</code> will first be passed to <code>handle_failed/2</code> of our <code>MyBW</code> module so that we can do whatever necessary, such as saving them in DB or forwarding to another exception queue before the <code>Acknowledger</code> acknowledge them.</p>
+<p>The messages are grouped by each message’s acknowledger to actually <code>ack</code> them.  The message acknowledger is set in the producer that fulfills the scenario mentioned in documentation:</p>
 <blockquote>
 <p>where messages are coming from different producers. Broadway will use this information to correctly identify the acknowledger and pass it among with the messages so you can properly communicate with the source of the data for acknowledgement.</p>
 </blockquote>
@@ -196,6 +212,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev">
+ <a href="/2021/07/16/broadway-source-reading-batching/" title="Broadway Source Reading (Part 4 - Batching)">
+  <strong>PREVIOUS:</strong><br>
+  <span>
+  Broadway Source Reading (Part 4 - Batching)</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2021/05/07/broadway-source-reading-producer/" title="Broadway Source Reading (Part 2 - Producer)">
@@ -219,7 +243,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Startup-Call-Sequence"><span class="toc-number">1.</span> <span class="toc-text">Startup Call Sequence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Message-Consuming-as-a-Consumer-w-o-Batcher"><span class="toc-number">2.</span> <span class="toc-text">Message Consuming as a Consumer (w/o Batcher)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Failed-Messages-Handling-and-Acknowledging"><span class="toc-number">3.</span> <span class="toc-text">Failed Messages Handling and Acknowledging</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Startup-Call-Sequence"><span class="toc-number">1.</span> <span class="toc-text">Startup Call Sequence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GenStage-pipelines"><span class="toc-number">2.</span> <span class="toc-text">GenStage pipelines</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Message-Consuming-as-a-Consumer-w-o-Batcher"><span class="toc-number">3.</span> <span class="toc-text">Message Consuming as a Consumer (w/o Batcher)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Failed-Messages-Handling-and-Acknowledging"><span class="toc-number">4.</span> <span class="toc-text">Failed Messages Handling and Acknowledging</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -239,7 +263,7 @@
 		
 			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
 		
-			<li><a href="/categories/Sword/" title="Sword">Sword<sup>63</sup></a></li>
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>64</sup></a></li>
 		
 			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
 		
@@ -251,7 +275,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">Tag Cloud</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.77px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.77px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 13.08px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.77px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.77px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.77px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.77px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.92px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 13.08px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.77px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.54px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.77px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.85px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.77px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 13.08px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.85px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.77px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.77px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.77px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.54px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.54px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.31px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.77px;">Education</a> <a href="/tags/Elixir/" style="font-size: 16.92px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.77px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.54px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.85px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.77px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15.38px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.77px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.62px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.85px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.77px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.77px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.77px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.77px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.77px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.62px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.62px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.54px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.77px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.77px;">Love</a> <a href="/tags/MVC/" style="font-size: 15.38px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.62px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.77px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.54px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.54px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.77px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.31px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.69px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.77px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.77px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.54px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.54px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 16.15px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.54px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.46px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.54px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.23px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.77px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.85px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 11.54px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.31px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.77px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.77px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.54px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15.38px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.77px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15.38px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15.38px;">Wechat</a>
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.14px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
     </div>
   </div>
 
