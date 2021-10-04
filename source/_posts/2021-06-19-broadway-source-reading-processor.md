@@ -9,14 +9,14 @@ categories:
 
 [the Producer part]: http://www.thinkingincrowd.me/2021/05/07/broadway-source-reading-producer/
 
-Normally, we only need to define the pipeline options for the Messaging Middleware Producer, Processor, and implement the `handle_message/3` callback to use Broadway.  
+Normally, we only need to define the pipeline options for the Producer of any Messaging Middleware, Processor, and implement the `handle_message/3` callback to use Broadway.  
 
-The complexity of how the `handle_message/3` called, how the messages got acknowledged and how the failed messages handled is all hidden behind.  But that is the part I would like to know by reading the source code.  As we have gone through [the Producer part][], I bet $10 dollars the questions above should be able to answer after reading the Processor part.  
+The complexity of how the `handle_message/3` is called, how the messages got acknowledged and how the failed messages handled is all hidden behind.  But that is the part I would like to know by reading the source code.  As we have gone through [the Producer part][], I bet $10 dollars the questions above should be able to answer after reading the Processor part.  
 
 
 ## Startup Call Sequence
 
-With the experience on the startup call sequence of Producer, we can find that the one for Processor is quite similar:  
+With the experience on the startup call sequence of Producer, we can find that the one for Processor is quite similar as below.  One thing to be noted is that, the `init` function in `Subscriber` make the consumers to subscribe to all upper stages randomly.
 
 ```mermaid
 sequenceDiagram
@@ -74,20 +74,23 @@ sequenceDiagram
   participant D as DemandDispatcher
   participant PS as ProcessorStage
 
+  Note over P: when no events in buffer
+  P->>P: take_from_buffer(counter, %{stage | dispatcher_state: dispatcher_state})
+  P->>P: noreply_callback(:handle_demand, [counter, state], stage)
+  P->>P: handle_demand/2
+  P->>P: handle_noreply_callback/2
+  P->>P: dispatch_events/3
+  P->>D: dispatch/3
   alt as Producer
-      P->>P: noreply_callback(:handle_demand, [counter, state], stage)
-      P->>P: handle_demand/2
-      P->>P: handle_noreply_callback/2
-      P->>P: dispatch_events/3
-      P->>D: dispatch/3
       P--)PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :consumer} = stage)
       PS->>PS: consumer_dispatch/6
   else as ProducerConsumer
+      P--)PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :producer_consumer} = stage)
       P->>P: take_pc_events/3
   end
 ```
 
-Below is the call sequence flow of `consumer_dispatch/6` after `:"$gen_consumer"` message received in the `ProcessorStage` as a consumer.  The events are acknowledged immediately because no batchers are specified in this simplest setup.  The `successful_messages_to_forward` is actually `[]` because no forwarding is required.  
+Below is the call sequence flow of `consumer_dispatch/6` after `:"$gen_consumer"` message received in the `ProcessorStage` as a consumer.  The events are acknowledged immediately because no batchers are specified in this simplest setup.  The `successful_messages_to_forward` is actually `[]` because no forwarding is required.  Finally, the consumer `ask` from the producer again for more events and this kind of asking/pulling events happens **recursively** after subscription.
 
 
 ```mermaid

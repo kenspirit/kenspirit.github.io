@@ -36,12 +36,12 @@ _Notes: The communications between the stages are through process message passin
 
 In the scenario of multiple batchers, `PartitionDispatcher` is used instead of `DemandDispatcher` for the processors in `build_processors_specs/2` and the `:partitions` are set by the keys of the batchers' config.  
 
-The interactions with dispatcher is to register the processes of the `BatcherStage` and `BatchProcessorStage` into the `dispatcher_state` of the processes of `ProcessorStage` and `BatcherStage` respectively for event dispatching.  The source code is the `handle_info/2` in the processes of `ProcessorStage` and `BatcherStage` matching the `{:"$gen_producer", {consumer_pid, ref} = from, {:subscribe, cancel, opts}}` message.  It invokes the `producer_subscribe/3` function, subsequently invokes the function `subscribe(opts, from, dispatcher_state)` of the `DemandDispatcher` or `PartitionDispatcher`.  
+The interactions with dispatcher is to register the processes of the `BatcherStage / BatchProcessorStage` into the `dispatcher_state` of the processes of `ProcessorStage / BatcherStage` respectively for event dispatching.  Related source code is the `handle_info/2` in the processes of `ProcessorStage` and `BatcherStage` matching the `{:"$gen_producer", {consumer_pid, ref} = from, {:subscribe, cancel, opts}}` message.  It invokes the `producer_subscribe/3` function, subsequently invokes the function `subscribe(opts, from, dispatcher_state)` of the `DemandDispatcher / PartitionDispatcher`.  
 
 
 ## Message Consuming as a Producer Consumer (w Batcher)
 
-The sequence flow which starts with `ProducerStage` changes a little bit as the `ProcessorStage` is changed to be `:producer_consumer` with batchers.  And the `take_pc_events/3` function actually calls `consumer_dispatch/6` that we covered in [the post about processor][].  
+The sequence flow which starts with `ProducerStage` takes another path as the `ProcessorStage` is changed to be `:producer_consumer` with batchers.  And the `take_pc_events/3` function actually calls `consumer_dispatch/6` that we covered in [the post about processor][].  
 
 
 ```mermaid
@@ -50,19 +50,21 @@ sequenceDiagram
   participant D as DemandDispatcher
   participant PS as ProcessorStage
 
+  P->>P: take_from_buffer(counter, %{stage | dispatcher_state: dispatcher_state})
+  P->>P: noreply_callback(:handle_demand, [counter, state], stage)
+  P->>P: handle_demand/2
+  P->>P: handle_noreply_callback/2
+  P->>P: dispatch_events/3
+  P->>D: dispatch/3
   alt as Producer
-      P->>P: noreply_callback(:handle_demand, [counter, state], stage)
-      P->>P: handle_demand/2
-      P->>P: handle_noreply_callback/2
-      P->>P: dispatch_events/3
-      P->>D: dispatch/3
-      D--)PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :producer_consumer} = stage)
+      P--)PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :consumer} = stage)
+      PS->>PS: consumer_dispatch/6
+  else as ProducerConsumer
+      P--)PS: handle_info({:"$gen_consumer", {producer_pid, ref}, events}, %{type: :producer_consumer} = stage)
       loop take_pc_events/3 until event in queue is empty
         PS->>PS: send_pc_events/3
         PS->>PS: consumer_dispatch/6
       end
-  else as ProducerConsumer
-      P->>P: take_pc_events/3
   end
 ```
 
@@ -114,4 +116,4 @@ sequenceDiagram
   BP->>A: ack_messages(successful_messages_to_ack, failed_messages)
 ```
 
-Now, we basically know how Broadway works with different pipeline options underneath.  However, it's still far from really understanding it from bottom-up.  When I was working on this post, I came across one interesting [article](https://dockyard.com/blog/2021/06/24/tuning-broadway-rabbitmq-pipelines-for-latency?utm_medium=email&utm_source=elixir-radar) about Broadway's concurrency and how misconfiguration might have great impact on it.  The author did a lot of debugging to figure it out.  I will see if I can see it from the source code level with the help from this article.  
+Now, we basically know how Broadway works with different pipeline options underneath.  However, it's still far from really understanding it from bottom-up.  When I was working on this post, I came across one interesting [article](https://dockyard.com/blog/2021/06/24/tuning-broadway-rabbitmq-pipelines-for-latency?utm_medium=email&utm_source=elixir-radar) about Broadway's concurrency and how misconfiguration might have great impact on it.  The author did a lot of debugging to figure it out.  I will see if I can see it from the source code level with the observation from this article.  

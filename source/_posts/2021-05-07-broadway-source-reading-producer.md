@@ -39,7 +39,7 @@ Broadway has provided officially-supported producers for Messaging Middleware li
 
 ### Initialization
 
-As shown in [Part 1 - Entry Point and Architecture](http://www.thinkingincrowd.me/2021/03/30/broadway-source-reading-entry-and-architecture/), `Topology.build_producers_specs/2` generates child specs of `ProducerStage` in the process supervision hierarchy.  The `ProducerStage` module `use GenStage` and acts as a wrapper of the producer module you specify in pipeline and delegates function calls to it, such as `handle_demand`, `handle_call`, `handle_cast`, `handle_info`, `prepare_for_draining` and `terminate`.  Its startup call sequence is:  
+As shown in [Part 1 - Entry Point and Architecture](http://www.thinkingincrowd.me/2021/03/30/broadway-source-reading-entry-and-architecture/), `Topology.build_producers_specs/2` generates child specs of `ProducerStage` in the process supervision hierarchy.  The `ProducerStage` module which `use GenStage` acts as a wrapper of the producer module you specify in pipeline and delegates function calls to it, such as `handle_demand`, `handle_call`, `handle_cast`, `handle_info`, `prepare_for_draining` and `terminate`.  Its startup call sequence is:  
 
 ```mermaid
 sequenceDiagram
@@ -201,7 +201,7 @@ graph TD
   C(Processors in Broadway) -- pull --> B
 ```
 
-According to this simple flow diagram, messages are pushed to the queue consumers if the queue has messages.  However, it's possible that no broadway consumers ask for any message at that time.  Or there are times that the broadway consumers ask for messages but none pushed from queues.  How does this work?  
+According to this simple flow diagram, messages are pushed to the queue consumers if the queue has messages.  However, it's possible that no broadway consumers ask for any message at that moment.  There are also times that the broadway consumers ask for messages but none have been pushed from queues.  How does the design fullfill these different scenarios?  
 
 According to the source code of [RabbitMQ Broadway Producer](https://github.com/dashbitco/broadway_rabbitmq/blob/ddd58d468d8d47b0487aea6a0f170cd3f82f03b8/lib/broadway_rabbitmq/producer.ex#L466), `handle_demand` does nothing.  
 
@@ -212,7 +212,7 @@ According to the source code of [RabbitMQ Broadway Producer](https://github.com/
   end
 ```
 
-As a result, demand request from consumers is ingored by the producer.  To control Back-pressure, option `:prefetch_count` is used.  And the flow diagram should be this instead:  
+As a result, demand request from consumers is ingored by the producer and the messages are always pushed from the producers.  In order to control Back-pressure for the consumers, option `:prefetch_count` is used in the producer to control the message volume.  The flow diagram should be this instead:  
 
 ```mermaid
 graph TD
@@ -220,11 +220,11 @@ graph TD
   B -- push --> C(Processors in Broadway)
 ```
 
-There are three steps to make this work:  
+The underline logic is:  
 
 * The Broadway RabbitMQ producer uses `:amqp` which uses `:amqp_client` to [connect](https://github.com/dashbitco/broadway_rabbitmq/blob/ddd58d468d8d47b0487aea6a0f170cd3f82f03b8/lib/broadway_rabbitmq/producer.ex#L663) to RabbitMQ, it calls the client's [consume](https://github.com/pma/amqp/blob/ddf3d1fae8a40a5e2edf4fa7afa3ef33eebe85f3/lib/amqp/basic.ex#L375) method to register its process as a queue consumer.  
 
-* Then every time a message is pushed from the queue, the producer's process will receive message with structure [`{:basic_deliver, payload, meta}`](https://github.com/pma/amqp/blob/ddf3d1fae8a40a5e2edf4fa7afa3ef33eebe85f3/lib/amqp/basic.ex#L331).  
+* Every time a message is pushed from the queue, the producer's process will receive message with structure [`{:basic_deliver, payload, meta}`](https://github.com/pma/amqp/blob/ddf3d1fae8a40a5e2edf4fa7afa3ef33eebe85f3/lib/amqp/basic.ex#L331).  
 
 * In the same way we explored above, the `handle_info` method of RabbitMQ producer returns the message for `GenStage` to dispatch.  
 
