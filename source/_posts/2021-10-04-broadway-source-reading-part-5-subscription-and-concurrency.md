@@ -297,7 +297,7 @@ iex(dev@localhost)1> Foo.send_messages(10)
 "processor #PID<0.344.0> got '9'; has 0 message(s) in its mailbox"
 ```
 
-How can this happen?  My suspicion is that the messages in the mailbox of each Producer process are filled by the sequence of Processors' startup sequence.  That mean even though every Processor tries to subscribe to the Producer randomly by suffling the producer names, but each Producer still receives the subscription signal from Processsor #1 firstly, and then #2, and then #3, and finally the #10.  
+How can this happen?  My suspicion is that the messages in the mailbox of each Producer process are filled by the sequence of Processors' startup sequence.  That mean even though every Processor tries to subscribe to the Producer randomly by shuffling the producer names, but each Producer still receives the subscription signal from Processor #1 firstly, and then #2, and then #3, and finally the #10.  
 
 This phenomenon happens obviously when the batch size of the messages is equal to or smaller than the processor count.  But even if the batch size is much larger, say 50, beside the first 10 will be sent to the #1 processor, others will be biased to the processors started earlier.  I think the load could only be balanced after the system running for a while.  Below is the output (sorted) of the first batch of `50` messages.
 
