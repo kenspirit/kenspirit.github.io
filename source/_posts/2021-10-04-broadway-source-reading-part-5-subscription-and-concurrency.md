@@ -78,7 +78,7 @@ defp pop_demand(ref, demands) do
 end
 ```
 
-Right after subscription, the `counter` passed in here is the **max_demand** of the Processor.  `pop_demand/2` finds out the current pending demand for this specific consumer, and then `add_demand/4` adds the current request count to its pending demand, loop through all other consumers and see whose demand is highest now and finally move the consumer with the highest demand to the top/left of the pending list.  
+Right after subscription, the `counter` passed in here is the **max_demand** of the Processor.  `pop_demand/2` finds out the current pending demand for this specific consumer, and then `add_demand/4`, assuming `demands` a sorted list of highest demand on the left, adds the current request count to its pending demand, loops through all other consumers and inserts it to the right position.  
 
 
 ## Unexpected Subscription and Demand Distribution
@@ -353,3 +353,5 @@ This phenomenon happens obviously when the batch size of the messages is equal t
 "processor #PID<0.351.0> got '44'; has 0 message(s) in its mailbox"
 "processor #PID<0.352.0> got '45'; has 0 message(s) in its mailbox"
 ```
+
+_Update:_ As per the discussion in [issue raised in Broadway](https://github.com/dashbitco/broadway/issues/269), my suspicion is correct.  My PRs to GenStage and Broadway have fixed this issue.  :D
