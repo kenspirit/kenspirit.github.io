@@ -61,6 +61,7 @@ skip_render:
   - kanban/*.js
   - kanban/*.css
   - kanban/*.html
+  - nodeppt/**
 
 # Server
 ## Hexo uses Connect as a server
