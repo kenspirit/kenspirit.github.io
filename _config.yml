@@ -68,7 +68,7 @@ skip_render:
 ## You can customize the logger format as defined in
 ## http://www.senchalabs.org/connect/logger.html
 server:
-  port: 4000
+  port: 6210
   log: false
   ip: 0.0.0.0
   compress: false

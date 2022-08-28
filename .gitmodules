@@ -1,0 +1,4 @@
+[submodule "themes/pacman"]
+	path = themes/pacman
+	url = https://github.com/kenspirit/pacman
+	branch = self
