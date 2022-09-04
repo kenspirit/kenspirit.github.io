@@ -1,0 +1,448 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>Node.js 微信后台搭建系列 - 微信集成 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="终于基本到了最后的一步了。微信集成主要包含三个部分：  
+
+接入验证，让微信确认你的服务器，就是你公众号的拥有人。  
+接收微信给你服务器的消息。  
+发送消息给微信服务器，让它转发给你公众号的关注者。
+
+公众号的基本开发，微信的官方文档「入门指南」其实已经基本包含所有必须要知道的知识。但是，它的文">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Node.js 微信后台搭建系列 - 微信集成 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/" title="Node.js 微信后台搭建系列 - 微信集成" itemprop="url">Node.js 微信后台搭建系列 - 微信集成</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-07-30T15:30:57.000Z" itemprop="datePublished">Jul 30 2017</time>
+    Updated:<time datetime="2022-08-28T08:07:15.439Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">接入验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF"><span class="toc-number">2.</span> <span class="toc-text">接收消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E6%B6%88%E6%81%AF"><span class="toc-number">2.1.</span> <span class="toc-text">文字消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E6%B3%A8%E5%85%AC%E4%BC%97%E5%8F%B7%E7%9A%84%E6%B6%88%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text">关注公众号的消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%B6%88%E6%81%AF"><span class="toc-number">2.3.</span> <span class="toc-text">图片消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-number">3.</span> <span class="toc-text">发送消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E6%B3%A8%E8%87%AA%E5%8A%A8%E5%9B%9E%E5%A4%8D"><span class="toc-number">3.1.</span> <span class="toc-text">关注自动回复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E5%A4%8D%E7%94%A8%E6%88%B7%E5%8F%91%E6%9D%A5%E7%9A%84%E5%9B%BE%E7%89%87"><span class="toc-number">3.2.</span> <span class="toc-text">回复用户发来的图片</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>终于基本到了最后的一步了。微信集成主要包含三个部分：  </p>
+<ol>
+<li>接入验证，让微信确认你的服务器，就是你公众号的拥有人。  </li>
+<li>接收微信给你服务器的消息。  </li>
+<li>发送消息给微信服务器，让它转发给你公众号的关注者。</li>
+</ol>
+<p>公众号的基本开发，微信的官方文档「<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1472017492_58YV5">入门指南</a>」其实已经基本包含所有必须要知道的知识。但是，它的文档是以 Python 为例子，还有一些比较看起来吓死人的流程图，技术细节，和一些个人号没法开通的功能介绍。所以，这篇教程是侧重于个人公众号如何用 JavaScript 来开发实现。  </p>
+<h2 id="接入验证"><a href="#接入验证" class="headerlink" title="接入验证"></a>接入验证</h2><p>怎么<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/cgi-bin/loginpage?t=wxm2-login&lang=zh_CN">申请微信个人公众号</a>，我就不说了。个人只能申请订阅号。  </p>
+<p>申请成功后，登录，点击左边菜单栏下面的「开发」-&gt;「基本配置」，可以看到如下页面：  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/11-wechat-setup.png" alt="Wechat Setup"></p>
+<p>先把 <code>开发者ID(AppID)</code> 和 <code>开发者密码(AppSecret)</code> 分别复制出来，保存在一边。<code>令牌(Token)</code> 是自己定的不让别人知道的字符串。下面我们来看看系统里如何配置，接入微信。  </p>
+<p>打开命令行，进入你的项目目录，然后输入以下命令：  </p>
+<p><code>yo evergrow:wechat</code>  </p>
+<p>它会提醒你是否要覆盖 <code>package.json</code> 文件，你可以输入 <code>d</code>，按 <code>Enter</code> 看有什么变动。其实只是新加一些必要的包，所以你输入 <code>Y</code>，然后覆盖就可以了。正常的话，操作后会如下图那样，新生成几个微信相关的文件。  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/11-wechat-module-generation.png" alt="Wechat Module Generation"></p>
+<p>打开 <code>config/wechat/sample.js</code> 文件，内容如下：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">appToken</span>: <span class="string">&#x27;evergrow&#x27;</span>,</span><br><span class="line">  <span class="attr">appId</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">appSecret</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你要做的是，复制 <code>sample.js</code> 文件，重命名为 <code>production.js</code>，然后把前面保存的 <code>开发者ID(AppID)</code> 和 <code>开发者密码(AppSecret)</code> 分别赋值给 <code>appId</code> 和 <code>appSecret</code>。<code>appToken</code> 不用理会。<strong>appToken 和 appSecret 可不要让别人知道！</strong>以我的为例：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">appToken</span>: <span class="string">&#x27;mytoken&#x27;</span>, <span class="comment">// 自己定义，</span></span><br><span class="line">  <span class="attr">appId</span>: <span class="string">&#x27;wxe5284a1d0aa6b9fb&#x27;</span>,</span><br><span class="line">  <span class="attr">appSecret</span>: <span class="string">&#x27;asldgjoieadgkladlj&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>设置完了以后，你就可以部署到服务器上面了。  </p>
+<p>确定你的服务器已经启动后，你就可以在微信「启用」你的服务器了。服务器的 URL 就填你的服务器地址(或 IP)，加上我们微信集成模块的路由 <code>/wechat</code>，比如： <code>http://www.mydomain.com/wechat/</code>。  </p>
+<h2 id="接收消息"><a href="#接收消息" class="headerlink" title="接收消息"></a>接收消息</h2><p>启用后大概要过三五分钟可能才会生效。然后，如果你发一段文字给你的公众号，你的服务器会打印出接受到的消息内容。  </p>
+<h3 id="文字消息"><a href="#文字消息" class="headerlink" title="文字消息"></a>文字消息</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="title class_">ToUserName</span>: <span class="string">&#x27;gh_1bfda0ee00eb&#x27;</span>,</span><br><span class="line">  <span class="title class_">FromUserName</span>: <span class="string">&#x27;oZQ1dwRfxWyDpRjBNBS5DcltOAU4&#x27;</span>, <span class="comment">// 发消息给你的用户的 openid</span></span><br><span class="line">  <span class="title class_">CreateTime</span>: <span class="string">&#x27;1501422823&#x27;</span>,</span><br><span class="line">  <span class="title class_">MsgType</span>: <span class="string">&#x27;text&#x27;</span>,</span><br><span class="line">  <span class="title class_">Content</span>: <span class="string">&#x27;Hello&#x27;</span>,</span><br><span class="line">  <span class="title class_">MsgId</span>: <span class="string">&#x27;6448561922693293780&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关注公众号的消息"><a href="#关注公众号的消息" class="headerlink" title="关注公众号的消息"></a>关注公众号的消息</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="title class_">ToUserName</span>: <span class="string">&#x27;gh_1bfda0ee00eb&#x27;</span>,</span><br><span class="line">  <span class="title class_">FromUserName</span>: <span class="string">&#x27;oZQ1dwRfxWyDpRjBNBS5DcltOAU4&#x27;</span>, <span class="comment">// 关注者的 openid</span></span><br><span class="line">  <span class="title class_">CreateTime</span>: <span class="string">&#x27;1501423109&#x27;</span>,</span><br><span class="line">  <span class="title class_">MsgType</span>: <span class="string">&#x27;event&#x27;</span>,</span><br><span class="line">  <span class="title class_">Event</span>: <span class="string">&#x27;subscribe&#x27;</span>,</span><br><span class="line">  <span class="title class_">EventKey</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="图片消息"><a href="#图片消息" class="headerlink" title="图片消息"></a>图片消息</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="title class_">ToUserName</span>: <span class="string">&#x27;gh_1bfda0ee00eb&#x27;</span>,</span><br><span class="line">  <span class="title class_">FromUserName</span>: <span class="string">&#x27;oZQ1dwRfxWyDpRjBNBS5DcltOAU4&#x27;</span>,</span><br><span class="line">  <span class="title class_">CreateTime</span>: <span class="string">&#x27;1501423196&#x27;</span>,</span><br><span class="line">  <span class="title class_">MsgType</span>: <span class="string">&#x27;image&#x27;</span>,</span><br><span class="line">  <span class="title class_">PicUrl</span>: <span class="string">&#x27;http://mmbiz.qpic.cn/mmbiz_jpg/zQibzicfvUiciaoqcE4kibLSnIvGs2SI0g5zHSnUQFeXvom1SHLEAHK8csInU7jXodQaG1ScxibfwkSG7MEK09xyukTQ/0&#x27;</span>,</span><br><span class="line">  <span class="title class_">MsgId</span>: <span class="string">&#x27;6448563524716095218&#x27;</span>,</span><br><span class="line">  <span class="title class_">MediaId</span>: <span class="string">&#x27;t-4AThjfL-GK2vbKh3XRX9go-DE-Z3hvHNFwA9Bb2Ep_xUK5r13eYlJqsD8FLqqw&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h2><p>知道了上面几大类型的消息格式，我们就可以做一些东西了。  </p>
+<p>微信消息的接收和处理，都在 <code>wechat/wechat-controller.js</code> 里面的 <code>wechatMsg</code> 方法里处理就可以了。它默认生成的代码是这样的：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span>.<span class="property">wechatMsg</span> = <span class="title class_">WechatManager</span>.<span class="title function_">getWechatRouter</span>(<span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="comment">// 微信输入信息都在req.weixin上</span></span><br><span class="line">  <span class="keyword">var</span> message = req.<span class="property">weixin</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(message);</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">reply</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="关注自动回复"><a href="#关注自动回复" class="headerlink" title="关注自动回复"></a>关注自动回复</h3><p>如果要在用户关注后自动回复，我们可以在上面的方法里加如下的代码：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  <span class="variable language_">module</span>.<span class="property">exports</span>.<span class="property">wechatMsg</span> = <span class="title class_">WechatManager</span>.<span class="title function_">getWechatRouter</span>(<span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">    <span class="comment">// 微信输入信息都在req.weixin上</span></span><br><span class="line">    <span class="keyword">var</span> message = req.<span class="property">weixin</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(message);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自动回复处理</span></span><br><span class="line">    <span class="keyword">if</span> (message.<span class="property">MsgType</span> === <span class="string">&#x27;event&#x27;</span> &amp;&amp; message.<span class="property">Event</span> === <span class="string">&#x27;subscribe&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> res.<span class="title function_">reply</span>(<span class="string">`非常感谢你的关注。点击菜单栏的 “历史文章” 可查看我精心分类的文章列表。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">儿子，丈夫，父亲，程序员。每一个标签，都是对我的一个要求。在这里，所有的文字都用心创作，记录了我在每一个标签下逐渐成长的经历和思考。希望某一篇文章，甚至某一句话，能与你产生共鸣。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;a href=&quot;http://mp.weixin.qq.com/mp/homepage?__biz=MzI0NDEwMDk2NQ==&amp;hid=1&amp;sn=b1cd332c53a573ea36c4a71e19f47539#wechat_redirect&quot;&gt;历史文章&lt;/a&gt;`</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res.<span class="title function_">reply</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><em>因为启用自己的服务器后，自定义菜单功能就没有了，我只能在关注自动回复加链接去我的历史文章页了（哭）。</em></p>
+<h3 id="回复用户发来的图片"><a href="#回复用户发来的图片" class="headerlink" title="回复用户发来的图片"></a>回复用户发来的图片</h3><p>如果我们想直接把用户发给我们的图片回复回去，我们可以这样做：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span>.<span class="property">wechatMsg</span> = <span class="title class_">WechatManager</span>.<span class="title function_">getWechatRouter</span>(<span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  <span class="comment">// 微信输入信息都在req.weixin上</span></span><br><span class="line">  <span class="keyword">var</span> message = req.<span class="property">weixin</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(message);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 自动回复用户发来的图片</span></span><br><span class="line">  <span class="keyword">if</span> (message.<span class="property">MsgType</span> === <span class="string">&#x27;image&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">reply</span>(&#123;</span><br><span class="line">      <span class="attr">type</span>: <span class="string">&#x27;image&#x27;</span>,</span><br><span class="line">      <span class="attr">content</span>: &#123;</span><br><span class="line">        <span class="attr">mediaId</span>: message.<span class="property">MediaId</span> <span class="comment">// 用回微信告诉我们的用户发来的图片 MediaId</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">reply</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>有了这些基础，你可以按自己的需求，来实现其它自动回复的功能。下一章我们再看如何结合之前的系统，随机抽取系统接收的其它用户发来的图片，而不是返回自己当前发来图片。  </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Node-js/">Node.js</a><a href="/tags/Wechat/">Wechat</a><a href="/tags/Tutorial/">Tutorial</a><a href="/tags/MVC/">MVC</a><a href="/tags/Integration/">Integration</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/" data-title="Node.js 微信后台搭建系列 - 微信集成 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/10/28/no-need-to-write-api-doc-anymore/" title="怎样可以不用再写接口文档">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  怎样可以不用再写接口文档</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/07/30/online-shift-of-education/"  title="教育的在线化转变">
+ <strong>NEXT:</strong><br/> 
+ <span>教育的在线化转变
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">接入验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF"><span class="toc-number">2.</span> <span class="toc-text">接收消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E6%B6%88%E6%81%AF"><span class="toc-number">2.1.</span> <span class="toc-text">文字消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E6%B3%A8%E5%85%AC%E4%BC%97%E5%8F%B7%E7%9A%84%E6%B6%88%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text">关注公众号的消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%B6%88%E6%81%AF"><span class="toc-number">2.3.</span> <span class="toc-text">图片消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-number">3.</span> <span class="toc-text">发送消息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E6%B3%A8%E8%87%AA%E5%8A%A8%E5%9B%9E%E5%A4%8D"><span class="toc-number">3.1.</span> <span class="toc-text">关注自动回复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E5%A4%8D%E7%94%A8%E6%88%B7%E5%8F%91%E6%9D%A5%E7%9A%84%E5%9B%BE%E7%89%87"><span class="toc-number">3.2.</span> <span class="toc-text">回复用户发来的图片</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2017/07/30/Node-js-Wechat-Web-App-Tutorial-Wechat-Integration/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

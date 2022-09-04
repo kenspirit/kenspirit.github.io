@@ -1,0 +1,450 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="As we know, JavaScript differs from other class based inheritance language.  Constructor (function) uses its prototype property to implement prototype">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/" title="Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript" itemprop="url">Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-06-09T02:16:25.000Z" itemprop="datePublished">Jun 9 2016</time>
+    Updated:<time datetime="2022-08-28T08:07:15.429Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p>As we know, JavaScript differs from other class based inheritance language.  Constructor (function) uses its <code>prototype</code> property to implement <strong>prototype-based inheritance</strong> and <strong>shared property</strong>.  </p>
+<p>From ECMA Spec:</p>
+<blockquote>
+<p>In a class-based object-oriented language, in general, state is carried by instances, methods are carried by classes, and inheritance is only of structure and behaviour. In ECMAScript, the state and methods are carried by objects, while structure, behaviour, and state are all inherited.</p>
+</blockquote>
+<p>Let’s see below example.  Instances created by <code>new Mold()</code> inherits the property from its prototype.  You can see different behaviors if we change different property in different levels.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Mold</span>(<span class="params"></span>) &#123;</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sizes</span> = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>];</span><br><span class="line"><span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">brand</span> = <span class="string">&#x27;KC&#x27;</span>;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> <span class="title class_">Mold</span>();</span><br><span class="line"><span class="keyword">var</span> instance2 = <span class="keyword">new</span> <span class="title class_">Mold</span>();  </span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance.<span class="property">sizes</span>)   <span class="comment">// =&gt; [10, 20, 30];</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance2.<span class="property">brand</span>) <span class="comment">// =&gt; &#x27;KC&#x27;;  </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Adds property with same name shadows the one in prototype</span></span><br><span class="line">instance.<span class="property">brand</span> = <span class="string">&#x27;K &amp; W&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance.<span class="property">brand</span>); <span class="comment">// =&gt; &#x27;K &amp; W&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">brand</span>); <span class="comment">// =&gt; &#x27;KC&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Changed on prototype affects instance that doesn&#x27;t have property with same name</span></span><br><span class="line"><span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">brand</span> = <span class="string">&#x27;K &amp; W &amp; L&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance.<span class="property">brand</span>); <span class="comment">// =&gt; &#x27;K &amp; W&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance2.<span class="property">brand</span>); <span class="comment">// =&gt; &#x27;K &amp; W &amp; L&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Changed on property which is Array or Object type in prototoype affects all</span></span><br><span class="line">instance.<span class="property">sizes</span>[<span class="number">0</span>] = <span class="number">40</span>;</span><br><span class="line"><span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sizes</span>[<span class="number">2</span>] = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sizes</span>); <span class="comment">// =&gt; [40, 20, 60]</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(instance2.<span class="property">sizes</span>) <span class="comment">// =&gt; [40, 20, 60]</span></span><br></pre></td></tr></table></figure>
+
+<p>I think most of the JSer know the concept &amp; behavior above.  However, do you know the relationship between <code>__proto__</code>, <code>prototype</code> and <code>constructor</code>?  </p>
+<p>Here is what the ECMAScript Spec said.</p>
+<p><strong>What is prototype chain</strong>:</p>
+<blockquote>
+<p>Every object created by a constructor has an implicit reference (called the object’s prototype) to the value of its constructor’s “prototype” property. Furthermore, a prototype may have a non-null implicit reference to its prototype, and so on; this is called the prototype chain. When a reference is made to a property in an object, that reference is to the property of that name in the first object in the prototype chain that contains a property of that name. In other words, first the object mentioned directly is examined for such a property; if that object contains the named property, that is the property to which the reference refers; if that object does not contain the named property, the prototype for that object is examined next; and so on.</p>
+</blockquote>
+<p><strong>Explanation on Object and Function prototype object</strong>:</p>
+<blockquote>
+<p>The Object prototype object is the intrinsic object %ObjectPrototype%. The Object prototype object is an ordinary object.</p>
+<p>The value of the [[Prototype]] internal slot of the Object prototype object is null</p>
+<p>…</p>
+<p>The Function prototype object is the intrinsic object %FunctionPrototype%. The Function prototype object is itself a built-in function object. When invoked, it accepts any arguments and returns undefined. It does not have a [[Construct]] internal method so it is not a constructor.</p>
+<p>NOTE The Function prototype object is specified to be a function object to ensure compatibility with ECMAScript code that was created prior to the ECMAScript 2015 specification.</p>
+<p>The value of the [[Prototype]] internal slot of the Function prototype object is the intrinsic object %ObjectPrototype% (19.1.3).</p>
+<p>The Function prototype object does not have a prototype property.<br>The value of the length property of the Function prototype object is 0.<br>The value of the name property of the Function prototype object is the empty String</p>
+</blockquote>
+<p>Honestly, for me, it took me a long long time to try to understand that.  I have extract some important concepts here and try to be brief:  </p>
+<ol>
+<li>Function instances that can be used as a constructor have a <code>prototype</code> property.  When we use <code>new</code> with this function to create instances, the object pointed by the <code>prototype</code> property will be assigned as the prototype of the instances.  </li>
+<li><code>__proto__</code> is the actual object that is used in the property lookup chain.  All objects have this property.  </li>
+<li><code>constructor</code> is a function object that creates and initializes objects.  It’s a property in the Prototype Object;</li>
+</ol>
+<p>Maybe the wording is still not as expressive as the graph as below.  </p>
+<img alt="Firefox script not responsive warning" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/JS_prototype_chain.png"/>
+
+<p>At first glance, this diagram might seems messy.  Let’s examine it piece by piece from the easiest part and pay attention to some important points.  </p>
+<ol>
+<li><code>prototype</code> property doesn’t exists in instances created by Mold.  Only function has.  </li>
+<li>Each function’s prototype has a <code>constructor</code> property points to itself.  </li>
+<li><code>__proto__</code> points to the <code>prototype</code> of its constructor.  The <code>Mold</code> instance points to <code>Mold</code> function, the <code>Mold</code> function points to <code>Function</code> function, the <code>Function</code> function points to itself and <code>Object</code> function points to <code>Function</code> function.  </li>
+<li><code>prototype</code> property in Object doesn’t have <code>__proto__</code>.  </li>
+<li><code>__proto__</code> of the Function prototype object is <code>Object.prototype</code>.</li>
+</ol>
+<p>Here is some script for you to understand it.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="keyword">typeof</span> instance instance.<span class="property"><span class="keyword">prototype</span></span> <span class="comment">// =&gt; &#x27;undefined&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> === <span class="title class_">Mold</span></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> === <span class="title class_">Function</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> === <span class="title class_">Object</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line">instance.<span class="property">__proto__</span> === <span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"><span class="title class_">Mold</span>.<span class="property">__proto__</span> === <span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property">__proto__</span> === <span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"><span class="title class_">Function</span>.<span class="property">__proto__</span> === <span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">__proto__</span> === <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5</span></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">__proto__</span>  === <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"><span class="title class_">Mold</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">__proto__</span>  === <span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span></span><br></pre></td></tr></table></figure>
+
+<p>How about take some exams to test see if you understand what I and ECMA spec said above?  :)  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span> === ?</span><br><span class="line"><span class="keyword">typeof</span> <span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property"><span class="keyword">prototype</span></span> === ?</span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">length</span> === ?</span><br><span class="line"></span><br><span class="line">instance.<span class="property">constructor</span> === ?</span><br><span class="line">instance.<span class="property">__proto__</span>.<span class="property">constructor</span> === ?</span><br><span class="line"></span><br><span class="line"><span class="title class_">Mold</span>.<span class="property">constructor</span> === ?</span><br><span class="line"><span class="title class_">Mold</span>.<span class="property">__proto__</span>.<span class="property">constructor</span> === ?</span><br></pre></td></tr></table></figure>
+
+
+
+
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a><a href="/tags/Functional-Programming/">Functional Programming</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/" data-title="Prototype chain, and relationship among prototype, __proto__ and constructor in JavaScript | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/07/10/Milestones-in-Life/" title="人生中哪一个阶段才是最重要的？">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  人生中哪一个阶段才是最重要的？</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/"  title="How to avoid Stack overflow error on recursion">
+ <strong>NEXT:</strong><br/> 
+ <span>How to avoid Stack overflow error on recursion
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2016/06/09/prototype-chain-and-relationship-among-prototype-proto-and-constructor-in-JavaScript/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

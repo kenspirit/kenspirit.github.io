@@ -1,0 +1,512 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>Multi-level dynamic supervision in Elixir | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="The most fantastic concepts in Erlang &amp;amp; Elixir that fascinate me are:
+
+Everything can be a process.
+Let it crash.
+
+
+If you don’t need a process, t">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Multi-level dynamic supervision in Elixir | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/09/06/multi-level-supervision-in-elixir/" title="Multi-level dynamic supervision in Elixir" itemprop="url">Multi-level dynamic supervision in Elixir</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-09-06T14:10:10.000Z" itemprop="datePublished">Sep 6 2020</time>
+    Updated:<time datetime="2022-08-28T08:07:15.453Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Level"><span class="toc-number">1.</span> <span class="toc-text">1-Level</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multi-Level"><span class="toc-number">2.</span> <span class="toc-text">Multi-Level</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-the-design"><span class="toc-number">2.1.</span> <span class="toc-text">Why the design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-number">2.2.</span> <span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#End"><span class="toc-number">3.</span> <span class="toc-text">End</span></a></li></ol>
+		</div>
+		
+		<p>The most fantastic concepts in Erlang &amp; Elixir that fascinate me are:</p>
+<ol>
+<li>Everything can be a process.</li>
+<li>Let it crash.</li>
+</ol>
+<blockquote>
+<p>If you don’t need a process, then you don’t need a process. Use processes only to model runtime properties, such as mutable state, concurrency and failures, never for code organization.</p>
+<p>quoted from <a target="_blank" rel="noopener" href="https://hexdocs.pm/elixir/GenServer.html#module-when-not-to-use-a-genserver">GenServer, Elixir API Documentation</a></p>
+</blockquote>
+<p>In order to fully embrace these features in every programs I write, learning OTP, GenServer, Supervisor is a must.</p>
+<p>But every senior developer knows something very well:  <strong>There is a large gap between knowing something in the book and using it</strong>.</p>
+<p>When reading the「<a target="_blank" rel="noopener" href="https://pragprog.com/book/elixir16/programming-elixir-1-6">Programming Elixir ≥ 1.6</a>」, everything makes sense to me on the chapters about OTP Servers and Supervisors.  But when I tried to implement my own version for a more sophisticated scenario, I realized how big that gap is for me.  </p>
+<p>In this article, I would like to help you bridge the gap using my experience and the sophisticated enough scenario which seldom found in other tutorials.</p>
+<h2 id="1-Level"><a href="#1-Level" class="headerlink" title="1-Level"></a>1-Level</h2><p>In many tutorials on <code>Supervisor</code>, they first tell us to create an application that has such capability by running command <code>mix new test --sup</code>.  The <code>application.ex</code> created in the project will be similar as below.  The application itself becomes a Supervisor that contains a defined set of children.  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Test.Application</span></span> <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">use</span> <span class="title class_">Application</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">start</span></span>(_type, _args) <span class="keyword">do</span></span><br><span class="line">    children = [</span><br><span class="line">      &#123;<span class="title class_">Test</span>.<span class="title class_">Service</span>, []&#125;</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    opts = [<span class="symbol">strategy:</span> <span class="symbol">:one_for_one</span>, <span class="symbol">name:</span> <span class="title class_">Test</span>.<span class="title class_">Supervisor</span>]</span><br><span class="line">    <span class="title class_">Supervisor</span>.start_link(children, opts)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>Later when the tutorial introduces the concept of <code>DynamicSupervisor</code>, it may define a module and modify the <code>application.ex</code> like this:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Test.MyDynamicSupervisor</span></span> <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">use</span> <span class="title class_">DynamicSupervisor</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">start_link</span></span>(init_arg) <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">DynamicSupervisor</span>.start_link(__MODULE__, init_arg, <span class="symbol">name:</span> __MODULE__)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">start_child</span></span>(foo, bar) <span class="keyword">do</span></span><br><span class="line">    spec = %&#123;<span class="symbol">id:</span> <span class="title class_">Test</span>.<span class="title class_">MyWorker</span>, <span class="symbol">start:</span> &#123;<span class="title class_">Test</span>.<span class="title class_">MyWorker</span>, <span class="symbol">:start_link</span>, [foo, bar]&#125;&#125;</span><br><span class="line">    <span class="title class_">DynamicSupervisor</span>.start_child(__MODULE__, spec)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  <span class="variable">@impl</span> <span class="literal">true</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">init</span></span>(init_arg) <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">DynamicSupervisor</span>.init(<span class="symbol">strategy:</span> <span class="symbol">:one_for_one</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Modified in applicaiton.ex to include the Test.MyDynamicSupervisor</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start</span></span>(_type, _args) <span class="keyword">do</span></span><br><span class="line">  children = [</span><br><span class="line">    &#123;<span class="title class_">Test</span>.<span class="title class_">Service</span>, []&#125;,</span><br><span class="line">    <span class="title class_">Test</span>.<span class="title class_">MyDynamicSupervisor</span></span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line">  opts = [<span class="symbol">strategy:</span> <span class="symbol">:one_for_one</span>, <span class="symbol">name:</span> <span class="title class_">Test</span>.<span class="title class_">Supervisor</span>]</span><br><span class="line">  <span class="title class_">Supervisor</span>.start_link(children, opts)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>The process hierarchy for the above example is:</p>
+<pre class="mermaid">graph TD
+  A(Application) --> B(Test.Service) & C(Test.MyDynamicSupervisor)
+  C(Test.MyDynamicSupervisor) --> D(Test.MyWorker) & E(Test.MyWorker)</pre>
+
+<p>In a word, most of the tutorial about <code>Supervisor</code>, especially <code>DynamicSupervisor</code>, only has 1-level depth.</p>
+<p>But the real world is much more than that.</p>
+<h2 id="Multi-Level"><a href="#Multi-Level" class="headerlink" title="Multi-Level"></a>Multi-Level</h2><p>My application that involves multi-level supervision is a classic scenario for many personal or large corporate projects, Web Crawling.  This scenario is far more real and practical than most of the examples in the tutorials out there.  The process hierarchy of the application design is:</p>
+<pre class="mermaid">graph TD
+  A(Spider Application) --> B(SpiderEngine)
+  B --> C(SpiderEngine.Manager) & D(SpiderEngine.Supervisor) & E(SpiderStorage)
+  D --> F(Spider.Facebook) & G(Spider.Instagram)
+  F --> H(Spider.Manager.Facebook) & I(Spider.Supervisor.Facebook)
+  G --> J(Spider.Manager.Instagram) & K(Spider.Supervisor.Instagram)
+  I --> L(Spider.Fetcher.Facebook.1) & M(Spider.Fetcher.Facebook.2)
+  K --> N(Spider.Fetcher.Instagram.1)</pre>
+
+<p>You may have already known, most of the modules are normal <code>GenServer</code> except these:</p>
+<ul>
+<li><strong>Supervisor</strong>: <code>SpiderEngine</code>, <code>Spider.Instagram</code>, <code>Spider.Facebook</code></li>
+<li><strong>DynamicSupervisor</strong>: <code>SpiderEngine.Supervisor</code>, <code>Spider.Supervisor.Instagram</code>, <code>Spider.Supervisor.Facebook</code></li>
+</ul>
+<h3 id="Why-the-design"><a href="#Why-the-design" class="headerlink" title="Why the design"></a>Why the design</h3><pre class="mermaid">sequenceDiagram
+  participant SpiderStorage
+  participant SpiderEngine.Manager
+  participant SpiderEngine.Supervisor
+  participant Spider
+  participant Spider.Manager
+  participant Spider.Supervisor
+  participant Spider.Fetcher
+
+  SpiderEngine.Manager->>SpiderStorage: What spiders to start?
+  SpiderEngine.Supervisor-->>Spider: Dynamically starts spider engine
+  Spider.Manager->>SpiderStorage: The base domain and urls to fetched?
+  Spider.Supervisor-->>Spider.Fetcher: Dynamically starts fetcher
+  Spider.Fetcher->>Spider.Manager: Asks for next url and/or sends back more urls
+  SpiderEngine.Manager->>Spider.Manager: Reset fecher count, speed, etc.</pre>
+
+<ul>
+<li><p><code>SpiderEngine</code> is the root of the whole web crawler.<br>  The reason of not using Application directly as root because the application might contain other components, such as Phoenix API and Web UI to help managing the crawler.</p>
+<p>  The benefit of grouping all crawling behaviors under one particular module is the freedom to move them all at once easily if necessary.</p>
+</li>
+<li><p><code>SpiderEngine</code> must be able to supervise different types of crawlers depending on the nature of the websites or systems you want to crawl information from.</p>
+</li>
+<li><p>Types of the supported spiders should be configurable so that there must a <code>DynamicSupervisor</code> under <code>SpiderEngine</code>.</p>
+</li>
+<li><p>The reason of separating <code>xxx.Manager</code> from the <code>xxx.Supervisor</code> is that <code>Supervisor/DynamicSupervisor</code> is purely for process supervision.  There can be no other message passing between the <code>Supervisor/DynamicSupervisor</code> and children workers.  Hence, all children workers’ control logic have to be in the other module, <code>xxx.Manager</code>.  </p>
+</li>
+<li><p><code>Spider.Facebook</code>, <code>Spider.Instagram</code> and other possible crawlers for different websites, are supervisor of their own to manage their own crawling policy, frequency, fetcher count, etc.</p>
+</li>
+</ul>
+<h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><p>I hope the process hierarchy and sequence diagram explain clearly enough.  Let’s move on to the real code.  Actually, there are only two things that you need to clearly understand in order to keep your thought straight on building the process hierarchy.</p>
+<p><strong>start_link&#x2F;3</strong></p>
+<p>The most important thing to be awared is the <code>name</code> option in <code>start_link/3</code>.  It’s for <strong>Name Registration</strong> which causes trouble if you do not pay attention to when constructing the multi-level supervision.</p>
+<p>In my scenario, <code>SpiderStorage</code>, <code>SpiderEngine.Manager</code>, <code>SpiderEngine</code> and <code>SpiderEngine.Supervisor</code> only have one running process.  Hence, their calls to <code>start_link/3</code> can be simply:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">GenServer</span>.start_link(__MODULE__, <span class="symbol">:no_args</span>, <span class="symbol">name:</span> __MODULE__)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Supervisor</span>.start_link(__MODULE__, <span class="symbol">:no_args</span>, <span class="symbol">name:</span> __MODULE__)</span><br><span class="line"></span><br><span class="line"><span class="title class_">DynamicSupervisor</span>.start_link(__MODULE__, <span class="symbol">:no_args</span>, <span class="symbol">name:</span> __MODULE__)</span><br></pre></td></tr></table></figure>
+
+<p>However, for the <code>Spider</code>, <code>Spider.Mananger</code>, <code>Spider.Supervisor</code>, they have multiple processes for different types of spiders.  Hence, their names should be differentiated.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for Spider</span></span><br><span class="line"><span class="title class_">Supervisor</span>.start_link(__MODULE__, spider_config, <span class="symbol">name:</span> <span class="symbol">:<span class="string">&quot;Spider.<span class="subst">#&#123;spider_config.name&#125;</span>&quot;</span></span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># for Spider.Manager</span></span><br><span class="line"><span class="title class_">GenServer</span>.start_link(__MODULE__, spider_config, <span class="symbol">name:</span> <span class="symbol">:<span class="string">&quot;Spider.Manager.<span class="subst">#&#123;spider_config.name&#125;</span>&quot;</span></span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># for Spider.Supervisor</span></span><br><span class="line"><span class="title class_">DynamicSupervisor</span>.start_link(__MODULE__, <span class="symbol">:no_args</span>, <span class="symbol">name:</span> <span class="symbol">:<span class="string">&quot;Spider.Supervisor.<span class="subst">#&#123;spider_config.name&#125;</span>&quot;</span></span>)</span><br></pre></td></tr></table></figure>
+
+<p>How about <code>Spider.Fetcher</code>?  There are also multiple processes for it, but do we have to start them with different names?  </p>
+<p>I think it’s a judgement call.  The communication between <code>Spider.Fetcher</code> and <code>Spider.Manager</code> are through PID.    Hence, if you have saved those children PID somewhere when <code>Spider.Manager</code> starts them, or the message is sent from <code>Spider.Fetcher</code> to <code>Spider.Manager</code>, it’s not quite necessary to name this type of children workers, especially when their amount is large.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for Fetcher, you can omit the name option or simply use a combined index as name</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start_link</span></span>(state = &#123;spider_name, index, _manager_pid&#125;) <span class="keyword">do</span></span><br><span class="line">  <span class="title class_">GenServer</span>.start_link(__MODULE__, state, <span class="symbol">name:</span> <span class="symbol">:<span class="string">&quot;Spider.Fetcher.<span class="subst">#&#123;spider_name&#125;</span>.<span class="subst">#&#123;index&#125;</span>&quot;</span></span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Child Spec</strong></p>
+<p>There are different forms of child specification when we start them by Supervisor:</p>
+<ul>
+<li>A map</li>
+<li>A tuple with a module as first element and the start argument as second</li>
+<li>A module</li>
+</ul>
+<p>Below three samples are equal:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># I just present three forms here.</span></span><br><span class="line"><span class="comment"># They cannot all exist in one children list for Supervisor.</span></span><br><span class="line"><span class="symbol">children:</span> [</span><br><span class="line">  %&#123;</span><br><span class="line">    <span class="symbol">id:</span> <span class="title class_">Child</span>,</span><br><span class="line">    <span class="symbol">start:</span> &#123;<span class="title class_">Child</span>, <span class="symbol">:start_link</span>, [[]]&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;<span class="title class_">Child</span>, []&#125;,</span><br><span class="line">  <span class="title class_">Child</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>If you are using the map form, it’s important to know that, the <code>id</code> field is used by the supervisor internally to identify the child.  Hence, even in our scenario with multi-level supervision, we do not need to use spider name to differentiate it besides module name.</p>
+<p><strong>start_child&#x2F;2</strong></p>
+<p>This is where you should pay attention to.</p>
+<p>The first argument of the supervisor’s reference.  It can be PID or other name forms used in <strong>Name Registration</strong>.  </p>
+<p>So in this spider scenario, the only place need to take care is the <code>Spider.Supervisor</code> where it starts the <code>Spider.Fetcher</code>.  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The spec can be any one of the three forms above.</span></span><br><span class="line"><span class="comment"># The important thing is that the supervisor name matches the one used in start_link/3</span></span><br><span class="line"><span class="title class_">DynamicSupervisor</span>.start_child(<span class="symbol">:<span class="string">&quot;Spider.Supervisor.<span class="subst">#&#123;spider_name&#125;</span>&quot;</span></span>, spec)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2><p>I hope this more sophisticated and real world example can help you understand the OTP Supervision more clearly.</p>
+<p>Be used to model the system by process and modeling them correctly are just the first step on learning OTP.  Next, it would be the message passing between them for coordination.  I will share more when this web crawling project goes.</p>
+<p>Please don’t hesitate to leave a comment if you have anything supplement or good advice.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Elixir/">Elixir</a><a href="/tags/Supervisor/">Supervisor</a><a href="/tags/OTP/">OTP</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2020/09/06/multi-level-supervision-in-elixir/" data-title="Multi-level dynamic supervision in Elixir | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/10/27/message-communication-between-supervisor-and-child-processes-in-elixir/" title="Message communication between supervisor and child processes in Elixir">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Message communication between supervisor and child processes in Elixir</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/05/31/not-that-easy-to-configure-mnesia-dir-as-i-thought/"  title="It&#39;s not that easy to configure mnesia dir as I thought">
+ <strong>NEXT:</strong><br/> 
+ <span>It&#39;s not that easy to configure mnesia dir as I thought
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Level"><span class="toc-number">1.</span> <span class="toc-text">1-Level</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multi-Level"><span class="toc-number">2.</span> <span class="toc-text">Multi-Level</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-the-design"><span class="toc-number">2.1.</span> <span class="toc-text">Why the design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-number">2.2.</span> <span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#End"><span class="toc-number">3.</span> <span class="toc-text">End</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2020/09/06/multi-level-supervision-in-elixir/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

@@ -1,0 +1,428 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>A response pends forever issue in MongoDB, Connect and Node.js | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="My ignoranceWhen I first switched to use connect-mongodb to replace the MemoryStore in Connect, I found that the homepage of my pet project cannot be ">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="A response pends forever issue in MongoDB, Connect and Node.js | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/" title="A response pends forever issue in MongoDB, Connect and Node.js" itemprop="url">A response pends forever issue in MongoDB, Connect and Node.js</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2012-12-05T13:08:00.000Z" itemprop="datePublished">Dec 5 2012</time>
+    Updated:<time datetime="2022-08-28T08:07:15.422Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+		</div>
+		
+		<p><strong>My ignorance</strong><br>When I first switched to use <a target="_blank" rel="noopener" href="https://github.com/masylum/connect-mongodb">connect-mongodb</a> to replace the MemoryStore in <a target="_blank" rel="noopener" href="https://github.com/senchalabs/connect">Connect</a>, I found that the homepage of my pet project cannot be even loaded and it seems the response is kept waiting there.  If I switched back to use MemoryStore, it’s all fine.  There must be something wrong when I am using <a target="_blank" rel="noopener" href="http://www.mongodb.org/">MongoDB</a> for session management.  </p>
+<p>First, I dig into the <em>session.js</em> in Connect.  Around line 267:</p>
+<figure class="highlight javascript"><figcaption><span>connect/lib/middleware/session.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// proxy end() to commit the session</span></span><br><span class="line"><span class="keyword">var</span> end = res.<span class="property">end</span>;</span><br><span class="line">res.<span class="property">end</span> = <span class="keyword">function</span>(<span class="params">data, encoding</span>)&#123;</span><br><span class="line">  res.<span class="property">end</span> = end;</span><br><span class="line">  <span class="keyword">if</span> (!req.<span class="property">session</span>) <span class="keyword">return</span> res.<span class="title function_">end</span>(data, encoding);</span><br><span class="line">  <span class="title function_">debug</span>(<span class="string">&#x27;saving&#x27;</span>);</span><br><span class="line">  req.<span class="property">session</span>.<span class="title function_">resetMaxAge</span>();</span><br><span class="line">  req.<span class="property">session</span>.<span class="title function_">save</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">debug</span>(<span class="string">&#x27;saved&#x27;</span>);</span><br><span class="line">    res.<span class="title function_">end</span>(data, encoding);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>After opening the debug feature in <a target="_blank" rel="noopener" href="http://nodejs.org/">Node</a>, I found that it’s never going into the callback of <em>session.save()</em>.  Hence, the ‘saved’ message is never printed in the console after ‘saving’ and the response is never ending.  </p>
+<p>Why would this happened?  I kept tracing the code and found that <em>session.save()</em> in Connect is calling the <em>sessionStore.set()</em> method.  The <em>MongoStore.set()</em> method in <em>connect-mongodb.js</em> is just purely calling <em>collection.update()</em> and no much magic there.  However, it seems the <em>update()</em> method call has either no err and data coming back.  Is there something wrong with the MongoDB or the Collection?  </p>
+<p>MongoDB log doesn’t seems to have any query or update action recorded and I just found that there are 10 connections started every time I started my app, but I remembered there were 5 connections (default pool size) before (Actually, I haven’t noticed that this is the phenomenon of the problem I have at that time yet).  </p>
+<p>Without any clue, I checked the initialization of the MongoStore and find below code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (server_config.<span class="title function_">isConnected</span>()) &#123;</span><br><span class="line">  <span class="title function_">authenticateAndGetCollection</span>(callback);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  server_config.<span class="title function_">connect</span>(db, <span class="keyword">function</span> (<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="title function_">callback</span>(<span class="title class_">Error</span>(<span class="string">&quot;Error connecting (&quot;</span> + (err <span class="keyword">instanceof</span> <span class="title class_">Error</span> ? err.<span class="property">message</span> : err) + <span class="string">&quot;)&quot;</span>));</span><br><span class="line">      <span class="title function_">authenticateAndGetCollection</span>(callback);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It turns out that the flow goes into <em>server_config.connect()</em> again.  But why?  DB should be initialized in below code which is intended to encapsulate all DB operation.</p>
+<figure class="highlight javascript"><figcaption><span>DbManager.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">DbManager</span> = (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> db = <span class="keyword">new</span> <span class="title class_">Db</span>(<span class="string">&#x27;tyt&#x27;</span>, <span class="keyword">new</span> <span class="title class_">Server</span>(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">27017</span>, &#123;<span class="attr">auto_reconnect</span>: <span class="literal">true</span>&#125;, &#123;&#125;), &#123;<span class="attr">safe</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">  db.<span class="title function_">open</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;&#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="attr">getDb</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> db;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">DbManager</span> = <span class="title class_">DbManager</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><figcaption><span>In my node app.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line">  , <span class="title class_">DbManager</span> = <span class="built_in">require</span>(<span class="string">&#x27;./db.js&#x27;</span>).<span class="property">DbManager</span></span><br><span class="line">  , mongoStore = <span class="built_in">require</span>(<span class="string">&#x27;connect-mongodb&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = <span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Configuration</span></span><br><span class="line">app.<span class="title function_">configure</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">  app.<span class="title function_">use</span>(express.<span class="title function_">session</span>(&#123;</span><br><span class="line">      <span class="attr">secret</span>: <span class="string">&#x27;kenspirit&#x27;</span>,</span><br><span class="line">      <span class="attr">key</span>: <span class="string">&#x27;tt.sid&#x27;</span>,</span><br><span class="line">      <span class="attr">cookie</span>: &#123;<span class="attr">secure</span>: <span class="literal">false</span>, <span class="attr">maxAge</span>: <span class="number">300000</span>&#125;,</span><br><span class="line">      <span class="attr">store</span>: <span class="keyword">new</span> <span class="title function_">mongoStore</span>(&#123;<span class="attr">db</span>: <span class="title class_">DbManager</span>.<span class="title function_">getDb</span>()&#125;)</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>If you are familiar with Node, you may have already noticed what I haven’t done right here.  I am assuming the DB should be connected and ready for use already as I have called <em>db.open()</em> during DbManager’s construction.  However, Async is the most importance concept in Node, <em>db.open()</em> takes my callback will immediately return and it doesn’t guarantee it’s opened already.  If I change to below code, problem solved.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> db = <span class="title class_">DbManager</span>.<span class="title function_">getDb</span>();</span><br><span class="line">db.<span class="title function_">open</span>(<span class="keyword">function</span>(<span class="params">err, db</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (db) &#123;</span><br><span class="line">    app.<span class="title function_">use</span>(express.<span class="title function_">session</span>(&#123;</span><br><span class="line">      <span class="attr">secret</span>: <span class="string">&#x27;kenspirit&#x27;</span>,</span><br><span class="line">      <span class="attr">key</span>: <span class="string">&#x27;tt.sid&#x27;</span>,</span><br><span class="line">      <span class="attr">cookie</span>: &#123;<span class="attr">secure</span>: <span class="literal">false</span>, <span class="attr">maxAge</span>: <span class="number">300000</span>&#125;,</span><br><span class="line">      <span class="attr">store</span>: <span class="keyword">new</span> <span class="title function_">mongoStore</span>(&#123;<span class="attr">db</span>: db&#125;)</span><br><span class="line">    &#125;));</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>The root of not responding</strong><br>I wonder where is the actual source to make the response kept waiting?  I have configured the <em>auto_reconnect</em> already.  Later I found that in mongodb:</p>
+<figure class="highlight javascript"><figcaption><span>mongodb/lib/mongodb/db.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Db</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">open</span> = <span class="keyword">function</span>(<span class="params">callback</span>) &#123;</span><br><span class="line">  ...</span><br><span class="line">  self.<span class="property">_state</span> = <span class="string">&#x27;connecting&#x27;</span>;</span><br><span class="line">  ...</span><br><span class="line">  self.<span class="property">serverConfig</span>.<span class="title function_">connect</span>(self, &#123;<span class="attr">firstCall</span>: <span class="literal">true</span>&#125;, <span class="keyword">function</span>(<span class="params">err, result</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(err != <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="comment">// Set that db has been closed</span></span><br><span class="line">      self.<span class="property">openCalled</span> = <span class="literal">false</span>;</span><br><span class="line">      <span class="comment">// Return error from connection</span></span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">callback</span>(err, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Set the status of the server</span></span><br><span class="line">    self.<span class="property">_state</span> = <span class="string">&#x27;connected&#x27;</span>;</span><br><span class="line">    <span class="comment">// Callback</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">callback</span>(<span class="literal">null</span>, self);</span><br><span class="line">  &#125;);</span><br><span class="line">  ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Db</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_executeInsertCommand</span> = <span class="keyword">function</span>(<span class="params">db_command, options, callback</span>) &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// If the pool is not connected, attemp to reconnect to send the message</span></span><br><span class="line">  <span class="keyword">if</span>(self.<span class="property">_state</span> == <span class="string">&#x27;connecting&#x27;</span> &amp;&amp; <span class="variable language_">this</span>.<span class="property">serverConfig</span>.<span class="property">autoReconnect</span>) &#123;</span><br><span class="line">    process.<span class="title function_">nextTick</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">      self.<span class="property">commands</span>.<span class="title function_">push</span>(&#123;<span class="attr">type</span>:<span class="string">&#x27;insert&#x27;</span>, <span class="string">&#x27;db_command&#x27;</span>:db_command, <span class="string">&#x27;options&#x27;</span>:options, <span class="string">&#x27;callback&#x27;</span>:callback&#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><figcaption><span>mongodb/lib/connection/server.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Server</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">connect</span> = <span class="keyword">function</span>(<span class="params">dbInstance, options, callback</span>) &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// Force connection pool if there is one</span></span><br><span class="line">  <span class="keyword">if</span>(server.<span class="property">connectionPool</span>) server.<span class="property">connectionPool</span>.<span class="title function_">stop</span>();</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// Create connection Pool instance with the current BSON serializer</span></span><br><span class="line">  <span class="keyword">var</span> connectionPool = <span class="keyword">new</span> <span class="title class_">ConnectionPool</span>(<span class="variable language_">this</span>.<span class="property">host</span>, <span class="variable language_">this</span>.<span class="property">port</span>, <span class="variable language_">this</span>.<span class="property">poolSize</span>, dbInstance.<span class="property">bson</span>,  <span class="variable language_">this</span>.<span class="property">socketOptions</span>);</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// Set up on connect method</span></span><br><span class="line">  connectionPool.<span class="title function_">on</span>(<span class="string">&quot;poolReady&quot;</span>, <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// Create db command and Add the callback to the list of callbacks by the request id (mapping outgoing messages to correct callbacks)</span></span><br><span class="line">    <span class="keyword">var</span> db_command = <span class="title class_">DbCommand</span>.<span class="title class_">NcreateIsMasterCommand</span>(dbInstance, dbInstance.<span class="property">databaseName</span>);</span><br><span class="line">    <span class="comment">// Check out a reader from the pool</span></span><br><span class="line">    <span class="keyword">var</span> connection = connectionPool.<span class="title function_">checkoutConnection</span>();</span><br><span class="line">    <span class="comment">// Set server state to connEcted</span></span><br><span class="line">    server.<span class="property">_serverState</span> = <span class="string">&#x27;connected&#x27;</span>;</span><br><span class="line">    <span class="comment">// dbInstance._state = &#x27;connected&#x27;;  If I add this line here, even if my code doesn&#x27;t do any change, it works.</span></span><br><span class="line">    ...</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Finally, the root cause is found.  Normally, when <em>db.open()</em> is called, it sets its <em>_state &#x3D; ‘connecting’</em>, and it then will call <em>server.connect()</em> to create connection pool and in the callback, it sets its <em>_state &#x3D; ‘connected’</em> again.  However, my case is that the second call <em>server.connect()</em> in MongoStore.js first make the first connection pool stops and then creates a new connection pool again(This should be where makes the mongo db log has 10 connections opened).  Somehow, the callback in normal flow cannot be executed so that <em>db._state</em> has not been set to ‘connected’.  What is more, the callback set in <em>MongoStore.js</em> doesn’t set the <em>db._state</em> to ‘connected’.  The <em>db._state</em> is remained in ‘connecting’ forever which makes my update command keep pushing to its commands stack.</p>
+<p><strong>Most appropriate way to initialize MongoDB and its connections in Node.js</strong><br>I began to wonder what is the “most appropriate way” to initialize MongoDB and manage its connections and googled around.  </p>
+<p>At first, I found a similar question asked in <a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/10656574/how-to-manage-mongodb-connections-in-a-nodejs-webapp">StackOverFlow</a>.<br>However, the reply doesn’t seem to be reasonable.  It recommands opening a new connection (actually, a DB and Connection Pool there) per request.  And it said it’s due to MongoDB is asynchronous.  It’s pretty confusing and the asynchronous mechanism in Node should be achieved by callback instead of creating new connection per request.  If so, what is the point of using pool then?  This approach should be more slow.</p>
+<p>Later I found out a reply from the author of node-mongodb-native in <a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/10307994/where-can-i-find-complete-documentation-concerning-node-mongodb-native/10349450#10349450">StackOverFlow</a> too.  It clearly stated “DO NOT call open on each request.”.  </p>
+<p>I believe only opening MongoDB once with appropriate pool size and initialize node application in the <em>db.open()</em> callback should be the right way to go.</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a><a href="/tags/Node-js/">Node.js</a><a href="/tags/MongoDB/">MongoDB</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/" data-title="A response pends forever issue in MongoDB, Connect and Node.js | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2012/12/24/my-practices-on-time-management/" title="My practices on Time Management">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  My practices on Time Management</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/10/27/db-design-for-multi-dimension-data/"  title="一个多维度数据匹配的RDBMS数据库表设计的想法">
+ <strong>NEXT:</strong><br/> 
+ <span>一个多维度数据匹配的RDBMS数据库表设计的想法
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2012/12/05/a-response-pends-forever-issue-in-mongodb-connect-and-nodejs/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

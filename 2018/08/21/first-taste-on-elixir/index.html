@@ -1,0 +1,449 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>初尝 Elixir，真的挺好喝的。 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="其实，之前从北京回来的时候，我就在考虑学习 Go 还是 Elixir。  
+因为现在很多的区块链项目和 docker 等虚拟技术都是用 Go 语言实现，同时公司用 Hyperledger Fabric 时也要写点 chaincode，所以一开始的时候看了一下 Go。不过，我好像怎么都没法被它吸引起来">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="初尝 Elixir，真的挺好喝的。 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/21/first-taste-on-elixir/" title="初尝 Elixir，真的挺好喝的。" itemprop="url">初尝 Elixir，真的挺好喝的。</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-08-21T12:52:46.000Z" itemprop="datePublished">Aug 21 2018</time>
+    Updated:<time datetime="2022-08-28T08:07:15.446Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%B0%B1%E6%98%AF%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.</span> <span class="toc-text">编程就是数据转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="toc-number">2.</span> <span class="toc-text">模式匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-number">2.1.</span> <span class="toc-text">赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%B9%E9%85%8D"><span class="toc-number">2.2.</span> <span class="toc-text">函数的匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E5%96%84%E7%9A%84%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%92%8C%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="toc-number">3.</span> <span class="toc-text">完善的工具，和开发规范</span></a></li></ol>
+		</div>
+		
+		<p>其实，之前从北京回来的时候，我就在考虑学习 Go 还是 Elixir。  </p>
+<p>因为现在很多的区块链项目和 docker 等虚拟技术都是用 Go 语言实现，同时公司用 Hyperledger Fabric 时也要写点 chaincode，所以一开始的时候看了一下 Go。不过，我好像怎么都没法被它吸引起来。可能因为自己是一个并非从写 C 语言成长起来的程序员？  </p>
+<p>自从看了「程序人生」公众号里面的两篇关于 Elixir 的文章，终于忍不住买了一本「<a target="_blank" rel="noopener" href="https://pragprog.com/book/elixir16/programming-elixir-1-6">Programming Elixir ≥ 1.6</a>」来看。一看真的是舍不得放下。除了 Elixir 这门函数式语言本身的特性我很喜欢外，作者的理念和写作风格也是很和我心意。  </p>
+<h2 id="编程就是数据转换"><a href="#编程就是数据转换" class="headerlink" title="编程就是数据转换"></a>编程就是数据转换</h2><blockquote>
+<p>Programming Should Be About Transforming Data</p>
+</blockquote>
+<p>看到书里面的这句话，就已经感觉 Elixir 一定挺对我胃口的，或许自己真的是函数式的忠粉吧。我一直觉得啥都封装成一个对象，真的挺累的。而且，如果你深刻地理解了这句话，数据分析的 ETL（Extract - Transform - Load）是那么地自然，Map&#x2F;Reduce 分而治之也是很好理解。  </p>
+<h2 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h2><h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><p>开篇我就被作者颠覆了骨子里的一个最基本的认知：赋值（Assignment）。  </p>
+<p>凡是学过一点点编程的人应该都知道，<code>=</code> 是大多数编程语言的赋值操作符。即便不是这样，也会有类似的一个符号，在它的左边是一个变量，右边是赋值给它的常量，其它变量或一些运算，比如：<code>a = 1</code> 或者 <code>a = max(number_list)</code>。  </p>
+<p>但是，在 Elixir 里面，<code>=</code> 是匹配操作符。  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iex&gt;a = <span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line">iex&gt;<span class="number">1</span> = a</span><br><span class="line"><span class="number">1</span></span><br><span class="line">iex&gt;<span class="number">2</span> = a</span><br><span class="line">** (<span class="title class_">MatchError</span>) no match of right hand side <span class="symbol">value:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>第一句代码可能让我们认为它是和其它编程语言一样的赋值语句，但是看到后面两句估计就有点懵逼了。这是什么鬼？变量怎么可以在右边？  </p>
+<p>其实，<code>=</code> 在 Elixir 里被成为匹配操作符。它的作用是让 Elixir 去尝试寻找满足 <code>=</code> 号两边相等的情况。而把 <code>a</code> 赋值为 <code>1</code> 就满足这样的条件了。在匹配的时候，Elixir 只可以修改 <code>=</code> 号左边的变量值，而会把右边的变量用它的值来替换。所以，如果没有最开始的 <code>a = 1</code> 那个语句，第二句 <code>1 = a</code> 是会出错的。  </p>
+<p>要改变习惯，转成这种思维方式并不容易。而且，Elixir 的模式匹配还支持比较复杂的形式，比如：  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ken = %&#123; <span class="symbol">name:</span> <span class="string">&quot;Ken&quot;</span>, <span class="symbol">likes:</span> <span class="string">&quot;programming&quot;</span>, <span class="symbol">has:</span> <span class="string">&quot;a wife and a son&quot;</span> &#125;</span><br><span class="line"><span class="keyword">case</span> ken <span class="keyword">do</span></span><br><span class="line">  %&#123; <span class="symbol">likes:</span> something &#125; = person = man -&gt;</span><br><span class="line">    <span class="title class_">IO</span>.puts <span class="string">&quot;<span class="subst">#&#123;person.name&#125;</span> likes <span class="subst">#&#123;something&#125;</span> and has <span class="subst">#&#123;man.has&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>一开始看到书上有一个类似的例子（<code> = man</code> 那部分是为了在这里说明才加上的）时，我一下子没转过弯，都傻了。啥玩意啊？<code>person</code> 这个变量哪里冒出来的？后来才想到那里的匹配，应该相当于是这样的情况：  </p>
+<p><code>%&#123; likes: something &#125; = person = man = ken</code></p>
+<h3 id="函数的匹配"><a href="#函数的匹配" class="headerlink" title="函数的匹配"></a>函数的匹配</h3><p>作为一门函数式编程语言，怎么能不提到递归。Elixir 的模式匹配和递归配合起来使用，实在是太爽了。完全不必用到 <code>if else</code> 之流来判断边界值，代码表达得相当优雅。  </p>
+<p>我觉得，递归可以说非常好地体现了 First Principle 原则。只有看透数据处理的本质，才能理解递归。我们来看看书中的一句霸气的话吧：  </p>
+<blockquote>
+<p>L. Peter Deutsch once penned, “To iterate is human, to recurse divine.”</p>
+</blockquote>
+<p>什么意思？“使用遍历的是普通人，能用递归的是神”。  </p>
+<p>递归思想在 Elixir 里面是如此地深入骨髓，连列表也可以表达为：<code>[ head | tail ]</code>。也就是说，一个列表，就是最开头的一个元素，拼上后面的列表。  </p>
+<p>充分了解了这些后，我的感觉和 Dave 在书里表达的一样：  </p>
+<blockquote>
+<p>that’s certainly the way I felt when I first started coding Elixir. The joy of pattern-matching lists in sets of recursive functions drove my designs. After a while, I realized that perhaps I was taking this too far.</p>
+</blockquote>
+<p>好吧，还是先擦一擦口水，来看一个简单的递归和函数的模式匹配吧：  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Recursion</span></span> <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>(<span class="number">0</span>), <span class="symbol">do:</span> <span class="number">0</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>(n), <span class="symbol">do:</span> n + sum(n - <span class="number">1</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">IO</span>.puts <span class="title class_">Recursion</span>.sum(<span class="number">5</span>)  <span class="comment"># =&gt; 15</span></span><br></pre></td></tr></table></figure>
+
+<p>这个函数计算了某个给定数字之下的所有正整数之和。以上的例子就是计算 <code>5+4+3+2+1+0</code>。  </p>
+<p>能理解上面这个方法的，可以尝试猜一猜下面的程序是干嘛的，我就不解释了。  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Chop</span></span> <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">defp</span> <span class="title">match</span></span>(actual, min, max) <span class="keyword">when</span> actual === min <span class="keyword">or</span> actual === max <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">IO</span>.puts actual</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">defp</span> <span class="title">match</span></span>(actual, min, max) <span class="keyword">when</span> actual &gt; min <span class="keyword">and</span> actual &lt;= (div(max + min, <span class="number">2</span>)) <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">IO</span>.puts <span class="string">&quot;Is it <span class="subst">#&#123;(div(max + min, <span class="number">2</span>))&#125;</span>?&quot;</span></span><br><span class="line">    match(actual, min + <span class="number">1</span>, div(max + min, <span class="number">2</span>))</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">defp</span> <span class="title">match</span></span>(actual, min, max) <span class="keyword">when</span> actual &gt; div(max + min, <span class="number">2</span>) <span class="keyword">and</span> actual &lt; max <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">IO</span>.puts <span class="string">&quot;Is it <span class="subst">#&#123;div(max + min, <span class="number">2</span>)&#125;</span>?&quot;</span></span><br><span class="line">    match(actual, div(max + min, <span class="number">2</span>) + <span class="number">1</span>, max - <span class="number">1</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, _) <span class="keyword">when</span> <span class="keyword">not</span> is_integer(actual) <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">IO</span>.puts <span class="string">&quot;Guess value <span class="subst">#&#123;actual&#125;</span> is not integer&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, min..max) <span class="keyword">when</span> actual &lt; min <span class="keyword">or</span> actual &gt; max <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">IO</span>.puts <span class="string">&quot;Guess value <span class="subst">#&#123;actual&#125;</span> is out of the range <span class="subst">#&#123;min&#125;</span>..<span class="subst">#&#123;max&#125;</span>&quot;</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, min..max) <span class="keyword">do</span></span><br><span class="line">    match(actual, min, max)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Chop</span>.guess(<span class="number">512</span>, <span class="number">1</span>..<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="完善的工具，和开发规范"><a href="#完善的工具，和开发规范" class="headerlink" title="完善的工具，和开发规范"></a>完善的工具，和开发规范</h2><p>作为一个新兴的小众语言，真没想到它还有非常丰富的辅助工具，包括调试，测试，代码依赖分析，发布管理，服务器监控等。如作者所说，这都是因为 Elixir 继承了 Erlang 的财富，和开发社区对工具的重视。  </p>
+<p>当前我了解的还很少，初步印象深刻的是它的测试功能。它连文档中的代码块都能测试（据说是借鉴 Python 的）。  </p>
+<p>很多程序员都抱怨文档没人写，写了也跟不上代码的变化。Elixir 的这个功能可以比较好地减少这种情况。虽然 JAVA 和 JavaScript 好像也有类似的包，但是都不太完善，也不是官方支持。而且 JAVA 这种以类为基础，动不动还要初始化对象什么的，写起来太累赘了。Elixir 的函数式风格就能很简洁地写出测试的验证代码。  </p>
+<p>它的格式大概是这样：  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@doc</span> <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">提供的 `actual` 是在区间 `min..max` 中的某一个数字，本方法一步步猜测 `actual` 的值是什么。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## Example</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  iex&gt; Chop.guess(512, 1..1000)</span></span><br><span class="line"><span class="string">  &quot;Is it 500?&quot;</span></span><br><span class="line"><span class="string">  &quot;Is it 750?&quot;</span></span><br><span class="line"><span class="string">  &quot;Is it 626?&quot;</span></span><br><span class="line"><span class="string">  &quot;Is it 564?&quot;</span></span><br><span class="line"><span class="string">  &quot;Is it 534?&quot;</span></span><br><span class="line"><span class="string">  &quot;Is it 519?&quot;</span></span><br><span class="line"><span class="string">  &quot;Is it 512?&quot;</span></span><br><span class="line"><span class="string">  &quot;512&quot;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">guess</span></span>(actual, min..max) <span class="keyword">do</span></span><br><span class="line">  match(actual, min, max)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>另外，Elixir 和 Ruby 差不多，有一定的开发规范可以遵循。这有助于统一风格，提高开发效率。  </p>
+<p>Elixir 更强大的编写并发代码的能力我还没有接触到，但估计更加精彩。所以，我决定今后的 Pet Project 都会从 Node.js 改成 Elixir 来写，并期待能有拿它来写 Serious Project 的机会。  </p>
+<p>有兴趣一起学习的朋友，可以看看我看书后做的<a target="_blank" rel="noopener" href="https://github.com/kenspirit/programming-elixir-exercises">练习题解答</a>。  </p>
+<p>相关文章：  </p>
+<p><a href="http://www.thinkingincrowd.me/2016/08/28/What-is-programming-should-I-learn/">编程是什么？我要学吗？</a><br><a href="http://www.thinkingincrowd.me/2016/09/15/Capability-for-Learning-Programming-Abstraction.md/">学习编程需要具备的基本能力 - 抽象</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Functional-Programming/">Functional Programming</a><a href="/tags/Elixir/">Elixir</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/" data-title="初尝 Elixir，真的挺好喝的。 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/08/29/design-for-failure-reflects-the-greatest-responsibility/" title="真正的责任体现于为何种失败和错误考虑">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  真正的责任体现于为何种失败和错误考虑</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/07/25/is-this-the-scariest-thing-to-you/"  title="你最害怕的，是这个吗？">
+ <strong>NEXT:</strong><br/> 
+ <span>你最害怕的，是这个吗？
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%B0%B1%E6%98%AF%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.</span> <span class="toc-text">编程就是数据转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="toc-number">2.</span> <span class="toc-text">模式匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC"><span class="toc-number">2.1.</span> <span class="toc-text">赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%B9%E9%85%8D"><span class="toc-number">2.2.</span> <span class="toc-text">函数的匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E5%96%84%E7%9A%84%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%92%8C%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="toc-number">3.</span> <span class="toc-text">完善的工具，和开发规范</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2018/08/21/first-taste-on-elixir/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

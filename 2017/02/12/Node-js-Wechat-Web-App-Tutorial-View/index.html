@@ -1,0 +1,475 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>Node.js 微信后台搭建系列 - 视图 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="虽然后端开发人员并不一定要学前端，自测也可以借助别的工具完成。但是，了解前端开发的特性，困难点，你才能更好地设计 API，成为一个前端人员乐意合作的好伙伴。  
+evergrow 脚手架生成的视图用 evergrow 脚手架生成视图相关的文件是非常方便的。要接着构建 Image 模块的视图，只需要用">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Node.js 微信后台搭建系列 - 视图 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/" title="Node.js 微信后台搭建系列 - 视图" itemprop="url">Node.js 微信后台搭建系列 - 视图</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-02-12T07:25:00.000Z" itemprop="datePublished">Feb 12 2017</time>
+    Updated:<time datetime="2022-08-28T08:07:15.435Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#evergrow-%E8%84%9A%E6%89%8B%E6%9E%B6%E7%94%9F%E6%88%90%E7%9A%84%E8%A7%86%E5%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">evergrow 脚手架生成的视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%EF%BC%88Template-Engine%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">模板引擎（Template Engine）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-amp-CSS"><span class="toc-number">2.</span> <span class="toc-text">HTML &amp; CSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript"><span class="toc-number">3.</span> <span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA"><span class="toc-number">3.0.1.</span> <span class="toc-text">行为</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jQuery"><span class="toc-number">3.1.</span> <span class="toc-text">jQuery</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC"><span class="toc-number">3.1.1.</span> <span class="toc-text">表格</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%B9%E7%AA%97"><span class="toc-number">3.1.2.</span> <span class="toc-text">弹窗</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-number">4.</span> <span class="toc-text">练习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">思考</span></a></li></ol>
+		</div>
+		
+		<p>虽然后端开发人员并不一定要学前端，自测也可以借助别的工具完成。但是，了解前端开发的特性，困难点，你才能更好地设计 API，成为一个前端人员乐意合作的好伙伴。  </p>
+<h2 id="evergrow-脚手架生成的视图"><a href="#evergrow-脚手架生成的视图" class="headerlink" title="evergrow 脚手架生成的视图"></a>evergrow 脚手架生成的视图</h2><p>用 <code>evergrow</code> 脚手架生成视图相关的文件是非常方便的。要接着构建 <code>Image</code> 模块的视图，只需要用命令 <code>yo evergrow:view Image</code> 就能够生成表格和详情视图所需的 4 个基本文件。  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-boilerplate.png" alt="View Boilerplate"></p>
+<h3 id="模板引擎（Template-Engine）"><a href="#模板引擎（Template-Engine）" class="headerlink" title="模板引擎（Template Engine）"></a>模板引擎（Template Engine）</h3><p>生成上面的几个基本文件后，其实你在浏览器输入 <code>http://localhost:3000/image/page/list</code> 就能够看到如下的默认表格视图。  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-default-list.png" alt="Default List"></p>
+<p>根据上一章节的教程，应该不难从代码里找到路由对应的 Controller 为：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">listImagePage</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">  res.<span class="title function_">render</span>(<span class="string">&#x27;image/imageList&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>和之前介绍的 RESTful API 不同，<code>res</code> 在这里调用的是 <code>render</code> 方法。这个方法调用模板引擎去寻找匹配的视图模板，处理后返回给前端。<strong>模板引擎最基本的作用</strong>是什么呢？  </p>
+<ul>
+<li><strong>编译</strong>。浏览器要渲染的视图，是 HTML 格式的文本。我们可以用其它格式（如 Jade）来编写视图模板，再由模板引擎编译成 HTML。  </li>
+<li><strong>填充动态数据，控制显示样式</strong>。比如，论坛页面可以根据打开用户判断，自己发的帖子或回复能有编辑按钮，其它人就没有。</li>
+</ul>
+<p>具体 Express 框架里怎么使用模板引擎我就不详细介绍了，感兴趣的同学可以看<a target="_blank" rel="noopener" href="http://expressjs.com/en/guide/using-template-engines.html">官方文档</a>。在 evergrow 框架里面，具体的配置在 <code>server-manager.js</code>：  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// View engine</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;views&#x27;</span>, <span class="string">&#x27;./view/&#x27;</span>) <span class="comment">// 模板放置的文件夹</span></span><br><span class="line">app.<span class="title function_">set</span>(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;html&#x27;</span>)</span><br><span class="line">app.<span class="title function_">engine</span>(<span class="string">&#x27;html&#x27;</span>, <span class="built_in">require</span>(<span class="string">&#x27;ejs-mate&#x27;</span>)) <span class="comment">// 我们选择的模板引擎是 EJS</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="HTML-amp-CSS"><a href="#HTML-amp-CSS" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h2><p>上述路由对应的页面 <code>/view/image/imageList.html</code> 是一个包含了表格的视图。表格是一种相当常见的表现形式，尤其在企业级系统和后台管理页面。它多数用于展示多个同级别的数据。  </p>
+<p>实现这个页面的代码其实很简单，HTML 的视图模板和 JavaScript 加起来才 100 行左右的代码。必须注意的是<strong>一开始别深入细节，先从整体结构上面来理解</strong>。  </p>
+<p>我们来解构一下 HTML 视图模板。页面分了五大部分：  </p>
+<ol>
+<li>标题（<code>h2</code> 标签）  </li>
+<li>工具栏按钮（<code>button</code> 标签）  </li>
+<li>表格（<code>table</code> 标签，下图中的蓝色框部分）  </li>
+<li>编辑数据的弹窗（<code>modal</code>，默认隐藏，绿色框部分）  </li>
+<li>外部 JavaScript 文件引用（最下面）</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-default-list-code.png" alt="Default List Code"></p>
+<p>HTML 语言强调的是页面布局。默认情况下，块状元素 <code>h2</code>, <code>table</code>, <code>div</code> 它们就像叠积木一样从上往下堆叠在一起。所以，写前端最基本就是要想好整个页面，是怎么切割成一个个盒子模型（box model），然后组装在一起。  </p>
+<p>CSS 能更丰富和精确地定位和布局页面。非纯前端不用了解太细，碰到什么常见的，看得懂就差不多了。比如说，<code>class=&quot;col-sm-12&quot;</code> 是 Bootstrap 框架的 <a target="_blank" rel="noopener" href="http://getbootstrap.com/css/#grid">Grid System</a>。Grid System 其实就是把你的屏幕像栅栏那样平均分割成 12 列。那个 CSS 的意思就是它的大小占满整个屏幕。  </p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>用 HTML 和 CSS 完成页面布局后，我们就需要用 JavaScript 来为页面的元素赋予行为，比如为用户的鼠标点击做出反应。页面最下方 <code>&lt;% ... %&gt;</code> 中间的部分，其实是在后台被模板引擎执行的。怎么用你先不用理会，只要知道引用了 <code>common.js</code> 和 <code>imageList.js</code> 两个文件就可以了。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">  &lt;%</span><br><span class="line">    <span class="title function_">block</span>(<span class="string">&#x27;moduleScript&#x27;</span>).<span class="title function_">append</span>(</span><br><span class="line">      <span class="title class_">Loader</span>(<span class="string">&#x27;/public/build/imageList.min.js&#x27;</span>)</span><br><span class="line">        .<span class="title function_">js</span>(<span class="string">&#x27;/public/js/common/common.js&#x27;</span>)</span><br><span class="line">        .<span class="title function_">js</span>(<span class="string">&#x27;/public/js/image/imageList.js&#x27;</span>)</span><br><span class="line">        .<span class="title function_">done</span>(assets, config.<span class="property">site_static_host</span>)</span><br><span class="line">    )</span><br><span class="line">  %&gt;</span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### Vue.js</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">这个框架是一个轻量级的**双向数据绑定**的前端框架，我们只需要知道最基本的使用方法就够了。我们对着 `</span>/public/js/image/imageList.<span class="property">js</span><span class="string">` 里面的代码一点点来看吧。  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">首先 `</span><span class="attr">el</span>: <span class="string">&#x27;#imageList&#x27;</span><span class="string">` 对应了上图红色框框 `</span>id=<span class="string">&quot;imageList&quot;</span><span class="string">` 部分。它表示 Vue.js 框架监控这个 `</span>id<span class="string">` 对应的元素里面包含的所有元素。  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#### 数据</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[Data Binding]: http://v1.vuejs.org/guide/syntax.html</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span>data<span class="string">` 部分是 Vue.js 要监控的 **数据**。如果页面的元素用到了这些数据，当你代码改变这些数据的时候，页面引用的地方也会相应更改。`</span>url<span class="string">` 在黄色框框的 `</span>:data-url=<span class="string">&quot;url&quot;</span><span class="string">` 使用了。`</span>:<span class="string">` 这个小冒号就是让 Vue.js 监控它的意思，并把 `</span>url<span class="string">` 对应的数据 `</span><span class="string">&#x27;/image&#x27;</span><span class="string">` 赋值给 `</span>data-url<span class="string">` 这个给 `</span>bootstrap-table<span class="string">` 库在绘制表格时用到的参数。小冒号是 `</span>v-<span class="attr">bind</span>:<span class="string">` 的缩写。都是 Vue.js 的 [Data Binding][] 语法。仔细看看 `</span>pageList<span class="string">` 在页面的使用有什么不同？  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>javascript</span><br><span class="line">  <span class="attr">data</span>: &#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/image&#x27;</span>,</span><br><span class="line">    <span class="attr">pageList</span>: [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>],</span><br><span class="line">    <span class="attr">errorMsg</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="行为"><a href="#行为" class="headerlink" title="行为"></a>行为</h4><p><code>methods</code> 部分是 Vue.js 监控的<strong>行为</strong>。第一个行为就是点击工具栏的 <code>Create</code> 按钮的时候，页面跳转到新建图片的页面。它的绑定方式是 <code>v-on:click=&quot;createImage&quot;</code>。另一个行为是在弹窗里修改完图片资料后，点击 Save 保存的。绑定的方式是 <code>@click=&quot;saveImage()&quot;</code>。后面一种写法也是缩写。无论绑定方法名，还是像后一种那样绑定表达式都是可以的。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  <span class="attr">createImage</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">window</span>.<span class="property">location</span> = <span class="string">&#x27;/image/page/load&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">saveImage</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> id = $(<span class="string">&#x27;#imageId&#x27;</span>).<span class="title function_">val</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> params = &#123;</span><br><span class="line">      <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">      <span class="attr">url</span>: <span class="string">&#x27;/image/&#x27;</span> + id,</span><br><span class="line">      <span class="attr">data</span>: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">ajaxRequest</span>(params, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">      $(<span class="string">&#x27;#imageTable&#x27;</span>).<span class="title function_">bootstrapTable</span>(<span class="string">&#x27;refresh&#x27;</span>)</span><br><span class="line">      $(<span class="string">&#x27;#imageDialog&#x27;</span>).<span class="title function_">modal</span>(<span class="string">&#x27;toggle&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Vue.js 的这些绑定方式，在编程里属于<strong>声明式编程</strong>。HTML 和 CSS 语言其实也是声明式编程。下面我们通过对 jQuery 的学习，来对比一下<strong>命令式编程</strong>的不同之处。  </p>
+<h3 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h3><h4 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h4><p>仅仅在 HTML 里面用一个 <code>table</code> 标签其实是不足够的，里面的标题和内容还需要 <code>thead</code>，<code>tbody</code>，<code>tr</code> 和 <code>td</code> 等标签才能完成。所以，代码里其实通过调用 <code>bootstrap-table</code> 这个库，按照我们的配置，包括获取数据的路由，和要显示的列等生成你们看到的表格。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> columns = [&#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;createdAt&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Created At&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">formatter</span>: timeFormatter</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;createdUser&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Created By&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;updatedAt&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Updated At&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">formatter</span>: timeFormatter</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;updatedUser&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Updated By&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;deleted&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">formatter</span>: <span class="keyword">function</span>(<span class="params">value, row, index</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> value === <span class="literal">true</span> ? <span class="string">&#x27;Deleted&#x27;</span> : <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">events</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;click .edit&#x27;</span>: <span class="function">(<span class="params">e, value, row, index, activeBtn</span>) =&gt;</span> &#123;</span><br><span class="line">      $(<span class="string">&#x27;#imageId&#x27;</span>).<span class="title function_">val</span>(row.<span class="property">_id</span>)</span><br><span class="line">      $(<span class="string">&#x27;#imageDialog&#x27;</span>).<span class="title function_">modal</span>(<span class="string">&#x27;toggle&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">formatter</span>: <span class="keyword">function</span>(<span class="params">value, row, index</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`&lt;div class=&quot;btn-group dropdown&quot;&gt;</span></span><br><span class="line"><span class="string">      &lt;button type=&quot;button&quot; class=&quot;btn btn-default dropdown-toggle&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;</span></span><br><span class="line"><span class="string">        Action &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;</span></span><br><span class="line"><span class="string">      &lt;/button&gt;</span></span><br><span class="line"><span class="string">      &lt;ul class=&quot;dropdown-menu&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;li class=&quot;edit&quot;&gt;&lt;a href=&quot;#&quot;&gt;Edit&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">      &lt;/ul&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;`</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略中间部分</span></span><br><span class="line"></span><br><span class="line"><span class="attr">ready</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  $(<span class="string">&#x27;#imageTable&#x27;</span>).<span class="title function_">bootstrapTable</span>(&#123;</span><br><span class="line">    <span class="attr">columns</span>: columns,</span><br><span class="line">    <span class="attr">queryParams</span>: <span class="function">(<span class="params">p</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> v <span class="keyword">in</span> self.<span class="property">params</span>) &#123;</span><br><span class="line">        p[v] = self.<span class="property">params</span>[v]</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> p</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当页面的元素准备好后， <code>ready</code> 方法会被调用。jQuery 库（也就是这个美元符号 <code>$</code>）根据我们提供的 ID <code>#imageTable</code>，还有表格列的定义 <code>columns</code> 来生成。  </p>
+<p>那么，我们要在表格加上 <code>image-model.js</code> 里面用到的 <code>gender</code> 和 <code>url</code> 数据，只需要多加两列的配置就可以了。通过提供一个 <code>formatter</code> 方法，还能自定义数据的显示方式。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;url&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Image&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">formatter</span>: <span class="keyword">function</span>(<span class="params">value, row, index</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (value) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">`&lt;a href=&quot;/image/page/load/<span class="subst">$&#123;row._id&#125;</span>&quot;&gt;&lt;img src=&quot;<span class="subst">$&#123;value&#125;</span>&quot; width=&quot;50px&quot; height=&quot;50px&quot;&gt;&lt;/a&gt;`</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">  <span class="attr">field</span>: <span class="string">&#x27;gender&#x27;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;Gender&#x27;</span>,</span><br><span class="line">  <span class="attr">width</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">align</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">halign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">  <span class="attr">formatter</span>: <span class="keyword">function</span>(<span class="params">value, row, index</span>) &#123;</span><br><span class="line">    <span class="keyword">switch</span>(value) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;F&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;女&#x27;</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;M&#x27;</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;男&#x27;</span></span><br><span class="line">      <span class="attr">default</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-customized-list.png" alt="Customized List"></p>
+<h4 id="弹窗"><a href="#弹窗" class="headerlink" title="弹窗"></a>弹窗</h4><p>打开详情页是编辑数据的一种方式。不过，在单页面应用，或者想提供一种更便捷的数据更改方式的话，弹窗也是一种使用手段。  </p>
+<p>在操作列有一个下拉菜单，里面的选项通过 <code>li</code> 标签实现。把它的 <code>class</code> 属性值 <code>edit</code> 和事件定义 <code>events</code> 里面的点击事件（<code>click</code>）绑定后，点菜单项就会触发 Event Handler 里面的两行代码，弹窗就显示出来了。  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">events</span>: &#123;</span><br><span class="line">  <span class="string">&#x27;click .edit&#x27;</span>: <span class="function">(<span class="params">e, value, row, index, activeBtn</span>) =&gt;</span> &#123;</span><br><span class="line">    $(<span class="string">&#x27;#imageId&#x27;</span>).<span class="title function_">val</span>(row.<span class="property">_id</span>)</span><br><span class="line">    $(<span class="string">&#x27;#imageDialog&#x27;</span>).<span class="title function_">modal</span>(<span class="string">&#x27;toggle&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略中间部分</span></span><br><span class="line"></span><br><span class="line">&lt;li <span class="keyword">class</span>=<span class="string">&quot;edit&quot;</span>&gt;<span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>Edit<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Event Handler 里面的两行代码其实就是命令式编程的形式（一步一步教电脑怎么做）：  </p>
+<ol>
+<li>获取页面 ID 为 <code>imageId</code> 的元素：<code>$(&#39;#imageId&#39;)</code>  </li>
+<li>把数据 ID 赋值给它：<code>.val(row._id)</code>  </li>
+<li>获取弹窗元素：<code>$(&#39;#imageDialog&#39;)</code>  </li>
+<li>显示：<code>.modal(&#39;toggle&#39;)</code></li>
+</ol>
+<p>相应的，<code>saveImage</code> 方法里面也是一步步列出保存数据到服务器前要经过的步骤：  </p>
+<ol>
+<li>获取数据  </li>
+<li>准备参数并提交服务器  </li>
+<li>成功后刷新表格，隐藏弹窗</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-default-modal.png" alt="Detaul Modal"></p>
+<p>默认的弹窗只有些象征性的文字，我们可通过下面的代码，实现修改 Model 里的 <code>gender</code> 和 <code>deleted</code> 数据的功能。（虽然图片链接不能直接改，但是因为接口限制了数据 <code>url</code> 不能为空，所以还是加上隐藏元素，保存时也一起发给服务器）  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">id</span>=<span class="string">&quot;imageUrl&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;form-group&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;gender&quot;</span>&gt;</span>Gender<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">id</span>=<span class="string">&quot;gender&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;F&quot;</span>&gt;</span>Female<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;M&quot;</span>&gt;</span>Male<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;deleted&quot;</span>&gt;</span> Deleted？</span><br><span class="line">  <span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">events</span>: &#123;</span><br><span class="line">  <span class="string">&#x27;click .edit&#x27;</span>: <span class="function">(<span class="params">e, value, row, index, activeBtn</span>) =&gt;</span> &#123;</span><br><span class="line">    $(<span class="string">&#x27;#imageId&#x27;</span>).<span class="title function_">val</span>(row.<span class="property">_id</span>)</span><br><span class="line">    $(<span class="string">&#x27;#imageUrl&#x27;</span>).<span class="title function_">val</span>(row.<span class="property">url</span>)</span><br><span class="line">    $(<span class="string">&#x27;#gender&#x27;</span>).<span class="title function_">val</span>(row.<span class="property">gender</span>)</span><br><span class="line">    $(<span class="string">&#x27;#deleted&#x27;</span>).<span class="title function_">prop</span>(<span class="string">&#x27;checked&#x27;</span>, row.<span class="property">deleted</span>)</span><br><span class="line">    $(<span class="string">&#x27;#imageDialog&#x27;</span>).<span class="title function_">modal</span>(<span class="string">&#x27;toggle&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 省略中间部分</span></span><br><span class="line"></span><br><span class="line"><span class="attr">saveImage</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> id = $(<span class="string">&#x27;#imageId&#x27;</span>).<span class="title function_">val</span>()</span><br><span class="line">  <span class="keyword">var</span> gender = $(<span class="string">&#x27;#gender&#x27;</span>).<span class="title function_">val</span>()</span><br><span class="line">  <span class="keyword">var</span> url = $(<span class="string">&#x27;#imageUrl&#x27;</span>).<span class="title function_">val</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> params = &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;post&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;/image/&#x27;</span> + id,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">      <span class="attr">gender</span>: gender,</span><br><span class="line">      <span class="attr">url</span>: url</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">ajaxRequest</span>(params, <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    $(<span class="string">&#x27;#imageTable&#x27;</span>).<span class="title function_">bootstrapTable</span>(<span class="string">&#x27;refresh&#x27;</span>)</span><br><span class="line">    $(<span class="string">&#x27;#imageDialog&#x27;</span>).<span class="title function_">modal</span>(<span class="string">&#x27;toggle&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/07-view-customized-modal.png" alt="Customized Modal"></p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ul>
+<li>修改详情页 <code>/view/image/imageProfile.html</code> 和 <code>/js/image/imageProfile.js</code> 实现图片和字段 <code>gender</code>, <code>deleted</code> 的显示，并且能够修改字段 <code>gender</code>, <code>deleted</code>。</li>
+</ul>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ul>
+<li>前端页面通过 Ajax 拿数据和 JavaScript 逻辑也可以动态往页面添加数据和控制样式，那用模板引擎来处理有什么好处呢？</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Node-js/">Node.js</a><a href="/tags/Wechat/">Wechat</a><a href="/tags/Tutorial/">Tutorial</a><a href="/tags/MVC/">MVC</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/" data-title="Node.js 微信后台搭建系列 - 视图 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/02/25/Node-js-Wechat-Web-App-Tutorial-Access-Control/" title="Node.js 微信后台搭建系列 - 登录验证和授权">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Node.js 微信后台搭建系列 - 登录验证和授权</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/12/31/2016-retrospect-and-2017-goal-setting/"  title="2016 会是我的转折点吗？">
+ <strong>NEXT:</strong><br/> 
+ <span>2016 会是我的转折点吗？
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#evergrow-%E8%84%9A%E6%89%8B%E6%9E%B6%E7%94%9F%E6%88%90%E7%9A%84%E8%A7%86%E5%9B%BE"><span class="toc-number">1.</span> <span class="toc-text">evergrow 脚手架生成的视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%EF%BC%88Template-Engine%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">模板引擎（Template Engine）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML-amp-CSS"><span class="toc-number">2.</span> <span class="toc-text">HTML &amp; CSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript"><span class="toc-number">3.</span> <span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%8C%E4%B8%BA"><span class="toc-number">3.0.1.</span> <span class="toc-text">行为</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jQuery"><span class="toc-number">3.1.</span> <span class="toc-text">jQuery</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC"><span class="toc-number">3.1.1.</span> <span class="toc-text">表格</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%B9%E7%AA%97"><span class="toc-number">3.1.2.</span> <span class="toc-text">弹窗</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-number">4.</span> <span class="toc-text">练习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">思考</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2017/02/12/Node-js-Wechat-Web-App-Tutorial-View/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

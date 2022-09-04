@@ -1,0 +1,478 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>One Elixir Code for Both Mnesia Master &amp; Child | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="Mnesia is a native, persistent and distributed database in Erlang’s world.  If we want to use Erlang&amp;#x2F;Elixir to build a fault-tolerance distribute">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="One Elixir Code for Both Mnesia Master &amp; Child | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/04/16/One-Elixir-Code-for-Both-Mnesia-Master-Child/" title="One Elixir Code for Both Mnesia Master &amp; Child" itemprop="url">One Elixir Code for Both Mnesia Master &amp; Child</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-04-16T14:40:43.000Z" itemprop="datePublished">Apr 16 2020</time>
+    Updated:<time datetime="2022-08-28T08:07:15.452Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Specifying-Directory"><span class="toc-number">1.</span> <span class="toc-text">Specifying Directory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-Environment-Variable"><span class="toc-number">1.1.</span> <span class="toc-text">Use Environment Variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-Mix-Config"><span class="toc-number">1.2.</span> <span class="toc-text">Use Mix Config</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-Config-and-Release"><span class="toc-number">1.3.</span> <span class="toc-text">Use Config and Release</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#One-Elixir-Code"><span class="toc-number">2.</span> <span class="toc-text">One Elixir Code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mnesia-Startup-Customization"><span class="toc-number">2.1.</span> <span class="toc-text">Mnesia Startup Customization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master-Node-Logic"><span class="toc-number">2.2.</span> <span class="toc-text">Master Node Logic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-Node-Logic"><span class="toc-number">2.3.</span> <span class="toc-text">Client Node Logic</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wrap-Up"><span class="toc-number">3.</span> <span class="toc-text">Wrap Up</span></a></li></ol>
+		</div>
+		
+		<p>Mnesia is a native, persistent and distributed database in Erlang’s world.  If we want to use Erlang&#x2F;Elixir to build a fault-tolerance distributed application, Mnesia is quite attractive because it’s so closed to Erlang and has such great features:  </p>
+<ul>
+<li>Fast real-time key&#x2F;value lookup  </li>
+<li>Complicated non-real-time queries mainly for operation and maintenance  </li>
+<li>Distributed data because of distributed applications  </li>
+<li>High fault tolerance  </li>
+<li>Dynamic reconfiguration  </li>
+<li>Complex objects</li>
+</ul>
+<p>To start using Mnesia, a couple of steps are required:  </p>
+<ol>
+<li>Specify a directory for data persistence</li>
+<li>Create schema (Only for the first time usage)</li>
+<li>Start Mnesia</li>
+<li>Create tables when required</li>
+</ol>
+<p>It does not seems challenging at first glance.  However, it is if you think ahead on how it’s going to be used in dev, test and production environment with distributed nodes.  Let me elaborate why below.</p>
+<h2 id="Specifying-Directory"><a href="#Specifying-Directory" class="headerlink" title="Specifying Directory"></a>Specifying Directory</h2><p>This sounds easy but devil lies in detail.  </p>
+<h3 id="Use-Environment-Variable"><a href="#Use-Environment-Variable" class="headerlink" title="Use Environment Variable"></a>Use Environment Variable</h3><p>Below command can be used when starting up your elixir application and set the Mnesia directory with the environment variable.  </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iex --erl <span class="string">&#x27;-mnesia dir &quot;path/to/db&quot;&#x27;</span> -S mix</span><br></pre></td></tr></table></figure>
+
+<p>However, it’s inconvenient as you have to constantly change the value for different environments, and nodes when testing distributed scenarios.</p>
+<h3 id="Use-Mix-Config"><a href="#Use-Mix-Config" class="headerlink" title="Use Mix Config"></a>Use Mix Config</h3><p>The idea of using Mix Config may be your instant reaction after that.  We can setup in <code>config/config.exs</code> to fix above problems:  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config <span class="symbol">:mnesia</span>, <span class="symbol">dir:</span> <span class="string">&#x27;mnesia.<span class="subst">#&#123;<span class="title class_">Mix</span>.env&#125;</span>.<span class="subst">#&#123;node()&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><em>Notes:</em> <code>dir</code> path must use single quote.</p>
+<p>The settings here can separate different environments for you easily.  However, as the Mix Config is compile-time setting, the <code>node()</code> might cause undesired effect because it’s the value <code>:nonode@nohost</code> evaluated in compile time.  That should not be the desired value you want to use in production environment.</p>
+<h3 id="Use-Config-and-Release"><a href="#Use-Config-and-Release" class="headerlink" title="Use Config and Release"></a>Use Config and Release</h3><p>After Elixir 1.9, there is a new <code>Config</code> module as a replacement for <code>Mix.Config</code> and Mix Release is introduced.</p>
+<p>We can setup a file named <code>releases.exs</code> in <code>config</code> folder along with <code>config.exs</code>:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># In releases.exs file</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Config</span></span><br><span class="line"></span><br><span class="line">config <span class="symbol">:mnesia</span>, <span class="symbol">dir:</span> <span class="title class_">System</span>.get_env(<span class="string">&quot;MNESIA_DIR&quot;</span>) || <span class="string">&#x27;mnesia_<span class="subst">#&#123;<span class="title class_">System</span>.get_env(<span class="string">&quot;RELEASE_NODE&quot;</span>)&#125;</span>&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Then in <code>rel</code> folder created by <code>mix release.init</code>, we can update <code>env.sh.eex</code> or <code>env.bat.eex</code> to set above variables.  Normally, we just need to uncomment the last two lines in the file.  But I have two extra lines ahead to use the <code>HOST</code> and <code>NODE_NAME</code> variables so that I can easily change them for the node.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Sets and enables heart (recommended only in daemon mode)</span></span><br><span class="line"><span class="comment"># case $RELEASE_COMMAND in</span></span><br><span class="line"><span class="comment">#   daemon*)</span></span><br><span class="line"><span class="comment">#     HEART_COMMAND=&quot;$RELEASE_ROOT/bin/$RELEASE_NAME $RELEASE_COMMAND&quot;</span></span><br><span class="line"><span class="comment">#     export HEART_COMMAND</span></span><br><span class="line"><span class="comment">#     export ELIXIR_ERL_OPTIONS=&quot;-heart&quot;</span></span><br><span class="line"><span class="comment">#     ;;</span></span><br><span class="line"><span class="comment">#   *)</span></span><br><span class="line"><span class="comment">#     ;;</span></span><br><span class="line"><span class="comment"># esac</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set the release to work across nodes. If using the long name format like</span></span><br><span class="line"><span class="comment"># the one below (my_app@127.0.0.1), you need to also uncomment the</span></span><br><span class="line"><span class="comment"># RELEASE_DISTRIBUTION variable below.</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">HOST</span>=<span class="variable">$&#123;</span><span class="symbol">HOST:</span><span class="number">-127.0</span>.<span class="number">0.1</span>&#125;</span><br><span class="line"><span class="title class_">NODE_NAME</span>=<span class="variable">$&#123;</span><span class="symbol">NODE_NAME:</span>-&lt;%= <span class="variable">@release</span>.name %&gt;&#125;</span><br><span class="line"></span><br><span class="line">export <span class="title class_">RELEASE_DISTRIBUTION</span>=name</span><br><span class="line">export <span class="title class_">RELEASE_NODE</span>=<span class="variable">$NODE_NAME</span>@<span class="variable">$HOST</span></span><br></pre></td></tr></table></figure>
+
+<p>Once you have completed the setup above, you can update the <code>mix.exs</code> as below to build different releases and startup the apps with different node names as needed.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">project</span></span> <span class="keyword">do</span></span><br><span class="line">  [</span><br><span class="line">    <span class="symbol">apps_path:</span> <span class="string">&quot;apps&quot;</span>,</span><br><span class="line">    <span class="symbol">version:</span> <span class="string">&quot;0.1.0&quot;</span>,</span><br><span class="line">    <span class="symbol">start_permanent:</span> <span class="title class_">Mix</span>.env() == <span class="symbol">:prod</span>,</span><br><span class="line">    <span class="symbol">deps:</span> deps(),</span><br><span class="line">    <span class="symbol">releases:</span> [</span><br><span class="line">      <span class="symbol">foo:</span> [</span><br><span class="line">        <span class="symbol">version:</span> <span class="string">&quot;0.0.1&quot;</span>,</span><br><span class="line">        <span class="symbol">applications:</span> [<span class="symbol">mgr:</span> <span class="symbol">:permanent</span>],</span><br><span class="line">        <span class="symbol">cookie:</span> <span class="string">&quot;thinkingincrowd&quot;</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="symbol">bar:</span> [</span><br><span class="line">        <span class="symbol">version:</span> <span class="string">&quot;0.0.1&quot;</span>,</span><br><span class="line">        <span class="symbol">applications:</span> [<span class="symbol">worker:</span> <span class="symbol">:permanent</span>],</span><br><span class="line">        <span class="symbol">cookie:</span> <span class="string">&quot;thinkingincrowd&quot;</span></span><br><span class="line">      ]</span><br><span class="line">    ]</span><br><span class="line">  ]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="One-Elixir-Code"><a href="#One-Elixir-Code" class="headerlink" title="One Elixir Code"></a>One Elixir Code</h2><p>Now goes to the second step.</p>
+<p>The API for Mnesia to create table schemas is:  </p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">create_schema</span><span class="params">(DiscNodes)</span> -&gt;</span> ok | &#123;error,Reason&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The <code>DiscNodes</code> parameters should include all <strong>alive</strong> Erlang nodes.  So people, at least me, may wonder how can I know all the node names ahead?  Isn’t a cluster supposed to be dynamic?</p>
+<p>Why not do it in a more natural, lean and agile way instead?  We start only one node at the beginning and gradually add more nodes to form a cluster.  This approach is also applicable even if you know your nodes in advance.</p>
+<h3 id="Mnesia-Startup-Customization"><a href="#Mnesia-Startup-Customization" class="headerlink" title="Mnesia Startup Customization"></a>Mnesia Startup Customization</h3><p>If we include the Mnesia into our Elixir application by putting it into <code>extra_applications</code> like <code>logger</code>, it will startup Mnesia automatically.  But this is not what we want if we have to do some customization and logic before that.</p>
+<p>Instead, we should put it to the <code>included_applications</code> like this:</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span></span> <span class="keyword">do</span></span><br><span class="line">  [</span><br><span class="line">    <span class="symbol">extra_applications:</span> [<span class="symbol">:logger</span>],</span><br><span class="line">    <span class="symbol">mod:</span> &#123;<span class="title class_">Sample</span>.<span class="title class_">Application</span>, []&#125;,</span><br><span class="line">    <span class="symbol">included_applications:</span> [<span class="symbol">:mnesia</span>]</span><br><span class="line">  ]</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>Then what should we do in the <code>start</code> function of <code>Sample.Application</code> before starting Mnesia up?</p>
+<p>The difference between master node and later-joined child node is that the child knows which master node to refer to.  So, we can use an environment variable to distinguish the behavior during startup.  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title class_">Application</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start</span></span>(_type, _args) <span class="keyword">do</span></span><br><span class="line">  prepare_mnesia()</span><br><span class="line"></span><br><span class="line">  children = [</span><br><span class="line">    <span class="comment"># Starts a worker by calling: Sample.Worker.start_link(arg)</span></span><br><span class="line">    <span class="comment"># &#123;Sample.Worker, arg&#125;</span></span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line">  <span class="comment"># See https://hexdocs.pm/elixir/Supervisor.html</span></span><br><span class="line">  <span class="comment"># for other strategies and supported options</span></span><br><span class="line">  opts = [<span class="symbol">strategy:</span> <span class="symbol">:one_for_one</span>, <span class="symbol">name:</span> <span class="title class_">Sample</span>.<span class="title class_">Supervisor</span>]</span><br><span class="line">  <span class="title class_">Supervisor</span>.start_link(children, opts)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">defp</span> <span class="title">prepare_mnesia</span></span> <span class="keyword">do</span></span><br><span class="line">  master_node = <span class="title class_">System</span>.get_env(<span class="string">&quot;MASTER_NODE&quot;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> master_node == <span class="literal">nil</span> <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">Sample</span>.<span class="title class_">Mnesia</span>.init_master()</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="title class_">String</span>.to_atom(master_node)</span><br><span class="line">    |&gt; <span class="title class_">Sample</span>.<span class="title class_">Mnesia</span>.add_self_to_cluster</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Master-Node-Logic"><a href="#Master-Node-Logic" class="headerlink" title="Master Node Logic"></a>Master Node Logic</h3><p>In <code>Sample.Mnesia.init_master</code>, the operations should involve all the steps we listed at the very beginning.</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Sample.Mnesia</span></span> <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">alias</span> <span class="symbol">:mnesia</span>, <span class="symbol">as:</span> <span class="title class_">Mnesia</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">init_master</span></span>() <span class="keyword">do</span></span><br><span class="line">    <span class="title class_">Mnesia</span>.stop()</span><br><span class="line"></span><br><span class="line">    node_list = [node()]</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Mnesia</span>.create_schema(node_list)</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Mnesia</span>.start()</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Mnesia</span>.create_table(<span class="symbol">:sample</span>, [<span class="symbol">attributes:</span> [<span class="symbol">:id</span>, <span class="symbol">:title</span>, <span class="symbol">:content</span>, <span class="symbol">:tags</span>], <span class="symbol">index:</span> [<span class="symbol">:tags</span>], <span class="symbol">disc_copies:</span> node_list])</span><br><span class="line"></span><br><span class="line">    <span class="title class_">Mnesia</span>.wait_for_tables([<span class="symbol">:sample</span>], <span class="number">5_000</span>)</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p><em>Tips:</em> As <code>Mnesia.start()</code> is asynchronous, if we want do have operation on the tables, we should wait for them to be ready.  Function <code>wait_for_tables</code> is for such purpose.</p>
+<h3 id="Client-Node-Logic"><a href="#Client-Node-Logic" class="headerlink" title="Client Node Logic"></a>Client Node Logic</h3><p>What need to be done if we try to add a new node into the cluster?  Let’s directly see the <code>add_self_to_cluster</code> function in <code>Sample.Mnesia</code>.  </p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_self_to_cluster</span></span>(master_node) <span class="keyword">do</span></span><br><span class="line">  <span class="title class_">Node</span>.connect(master_node)</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Mnesia</span>.start()</span><br><span class="line"></span><br><span class="line">  <span class="symbol">:rpc</span>.call(master_node, <span class="title class_">Sample</span>.<span class="title class_">Mnesia</span>, <span class="symbol">:add_child_to_cluster</span>, [node()])</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Mnesia</span>.add_table_copy(<span class="symbol">:sample</span>, node(), <span class="symbol">:disc_copies</span>)</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Mnesia</span>.wait_for_tables([<span class="symbol">:sample</span>], <span class="number">5_000</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add_child_to_cluster</span></span>(child_node) <span class="keyword">do</span></span><br><span class="line">  <span class="title class_">Mnesia</span>.change_config(<span class="symbol">:extra_db_nodes</span>, [child_node])</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Mnesia</span>.change_table_copy_type(<span class="symbol">:schema</span>, child_node, <span class="symbol">:disc_copies</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>Connect the client Erlang node to master.  </li>
+<li>Startup Mnesia locally.  </li>
+<li>Remotely invoke master node’s <code>add_child_to_cluster</code> function:</li>
+</ol>
+<ul>
+<li><code>change_config</code> adds the child node into the Mnesia nodes list.  Child node will has a copy of the schema at this point.  </li>
+<li><code>change_table_copy_type</code> changes the schema table type in child node from <code>ram_copies</code> to <code>disc_copies</code>.</li>
+</ul>
+<ol start="4">
+<li>Function <code>add_table_copy</code> makes another copy of the desired table in child node to <code>disc_copies</code>.</li>
+<li>Wait for the table to be ready.</li>
+</ol>
+<p><em>Tips:</em> If the <code>add_table_copy</code> is skipped, but you read the <code>:sample</code> table in child node, it actually goes to the master node to get the data.</p>
+<h2 id="Wrap-Up"><a href="#Wrap-Up" class="headerlink" title="Wrap Up"></a>Wrap Up</h2><p>Above code is simple and some what naive, but it’s easy to have the basic understanding on what needs to be done.  </p>
+<p>After the cluster is formed, when any of the node restarts, you do not need to provide the <code>MASTER_NODE</code> environment variable.  As the schemas and tables are created already, calling the function again will return <code>aborted</code> without harm.  </p>
+<p>During the research, I have googled around and found some powerful library to help form the Elixr&#x2F;Mnesia clustering more intelligently.  You can take a look at them if you need more fancy features.  </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/bitwalker/libcluster">https://github.com/bitwalker/libcluster</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/beardedeagle/mnesiac">https://github.com/beardedeagle/mnesiac</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Distributed/">Distributed</a><a href="/tags/Elixir/">Elixir</a><a href="/tags/Mnesia/">Mnesia</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2020/04/16/One-Elixir-Code-for-Both-Mnesia-Master-Child/" data-title="One Elixir Code for Both Mnesia Master &amp; Child | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/04/28/Unsolved-puzzle-of-mnesia-behavior-in-mix-test/" title="Unsolved puzzle of mnesia behavior in mix test">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Unsolved puzzle of mnesia behavior in mix test</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/03/14/pandemic-makes-me-more-patriotic/"  title="一个疫情，让我更爱国">
+ <strong>NEXT:</strong><br/> 
+ <span>一个疫情，让我更爱国
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Specifying-Directory"><span class="toc-number">1.</span> <span class="toc-text">Specifying Directory</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-Environment-Variable"><span class="toc-number">1.1.</span> <span class="toc-text">Use Environment Variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-Mix-Config"><span class="toc-number">1.2.</span> <span class="toc-text">Use Mix Config</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-Config-and-Release"><span class="toc-number">1.3.</span> <span class="toc-text">Use Config and Release</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#One-Elixir-Code"><span class="toc-number">2.</span> <span class="toc-text">One Elixir Code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mnesia-Startup-Customization"><span class="toc-number">2.1.</span> <span class="toc-text">Mnesia Startup Customization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master-Node-Logic"><span class="toc-number">2.2.</span> <span class="toc-text">Master Node Logic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-Node-Logic"><span class="toc-number">2.3.</span> <span class="toc-text">Client Node Logic</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wrap-Up"><span class="toc-number">3.</span> <span class="toc-text">Wrap Up</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2020/04/16/One-Elixir-Code-for-Both-Mnesia-Master-Child/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

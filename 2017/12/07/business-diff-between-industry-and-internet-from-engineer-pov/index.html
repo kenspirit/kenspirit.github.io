@@ -1,0 +1,443 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>技术人眼中的实业与纯互联网业务差异 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="工作那么久以来，前面一大半辈子都是做 J2EE 项目，参与的都是实业企业的业务系统。最近这一两年，接触了互联网产品的开发，我对这两领域的业务差异，以及它们对技术开发人员的影响有更切实的体会。（这里提及的纯互联网，是指不需要和实体行业接轨的领域，比如消息通信，游戏，社交，工具等）  
+无论哪个领域，都">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="技术人眼中的实业与纯互联网业务差异 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/" title="技术人眼中的实业与纯互联网业务差异" itemprop="url">技术人眼中的实业与纯互联网业务差异</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-12-07T10:22:13.000Z" itemprop="datePublished">Dec 7 2017</time>
+    Updated:<time datetime="2022-08-28T08:07:15.443Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%AE%BA%E5%93%AA%E4%B8%AA%E9%A2%86%E5%9F%9F%EF%BC%8C%E9%83%BD%E5%BA%94%E4%BA%86%E8%A7%A3%E4%B8%9A%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">无论哪个领域，都应了解业务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E6%80%A7%E8%B4%A8%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">2.</span> <span class="toc-text">业务性质的差异</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E7%81%B5%E6%B4%BB%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4"><span class="toc-number">2.1.</span> <span class="toc-text">需求灵活度和空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%84%E4%BC%B0"><span class="toc-number">2.2.</span> <span class="toc-text">有效性评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%A3%E4%BB%BB%E4%BA%BA%E7%A1%AE%E5%AE%9A"><span class="toc-number">2.3.</span> <span class="toc-text">责任人确定</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>工作那么久以来，前面一大半辈子都是做 J2EE 项目，参与的都是实业企业的业务系统。最近这一两年，接触了互联网产品的开发，我对这两领域的业务差异，以及它们对技术开发人员的影响有更切实的体会。（这里提及的纯互联网，是指不需要和实体行业接轨的领域，比如消息通信，游戏，社交，工具等）  </p>
+<h2 id="无论哪个领域，都应了解业务"><a href="#无论哪个领域，都应了解业务" class="headerlink" title="无论哪个领域，都应了解业务"></a>无论哪个领域，都应了解业务</h2><p>我记得很早就有争论，技术人员是否有必要关心和理解业务。技术人员是否只需要深入技术细节，提高开发技能的深度和广度就可以了？  </p>
+<p>我的观点是，假如你实现的系统，是和人打交道的，而不是单纯的硬件和机器，那么，你就需要接触业务。因为你做的系统，是人的操作工具，解决他可感知的问题。<strong>理解业务，和其它增值的软技能，如写作、演讲和沟通是一样的。而且，从技术的角度来说，只有你理解了业务，才能很好评估技术难度，并做出合理的系统设计和架构。</strong>  </p>
+<ul>
+<li><p>「<a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a>」这篇文章大致介绍了如何结合业务来设计和使用缓存。  </p>
+</li>
+<li><p>「<a href="http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/">听听系统的多地部署改造</a>」这篇文章也举例说明了业务对性能的影响，接口权重取舍，以及任务异步化等。</p>
+</li>
+</ul>
+<h2 id="业务性质的差异"><a href="#业务性质的差异" class="headerlink" title="业务性质的差异"></a>业务性质的差异</h2><ul>
+<li><p>实业企业的业务需求，是为了把实业往系统迁移，以简化流程，保证数据准确性，提升协作能力等目标为主。因为受产业现状约束，调整空间变化不大，功能实现路径相对单一。  </p>
+</li>
+<li><p>纯互联网的业务需求，即便功能或者要解决的问题类似，实现路径相对多样，发挥的空间较大。</p>
+</li>
+</ul>
+<h3 id="需求灵活度和空间"><a href="#需求灵活度和空间" class="headerlink" title="需求灵活度和空间"></a>需求灵活度和空间</h3><p><strong>企业系统的需求</strong>来源，小的层面是一线业务执行者，对功能和效率的需求；大的层面是老板对整体业务的规划。一般情况下，企业系统的需求到达开发阶段了，应该已经在业务部门达成共识。<strong>根据业务流程的指引，功能相对明确。但是，缺陷也明显，因为在没有业务流程配合的情况下，系统是没法优化的</strong>。当初我在航运物流公司的时候，曾经参与一些探索性项目。有些想法虽然美好，但是落地很难，因为业务配合很难。  </p>
+<p><strong>纯互联网行业就不一样了。功能的探索空间大，需要更多的从人性，心理方面考虑，更容易突破常规做新尝试</strong>。  </p>
+<p>比如说，在线直播课程的售票功能，仅仅买卖票吗？要分开提问票和普通票吗？到底是分开，还是不分开好，说不准。知乎 Live 一开始是先买先得，限量。为什么一开始我们听听要设置不同价格的提问票呢？  </p>
+<ol>
+<li>增加稀缺感  </li>
+<li>让主讲人多赚一些钱  </li>
+<li>保证问题的质量  </li>
+<li>技术权衡。因为我们一开始的直播间，是在微信公众号里面。主讲人只能通过一条网址链接查看留言列表。如果用户发言的数量太多，质量不好，对主讲人是一个挺大的负担。</li>
+</ol>
+<p>可是为什么后面又取消了呢？  </p>
+<ol>
+<li><p>一些主讲人反馈不希望做出区分。因为对于这些提问是否回答，他们是有压力的。即便卖票时已经声明不承诺回答，但是主讲人感觉还是不好。尤其是当一些人故意提问怼主讲人，或者提一些不方便回答的问题时，他们就会更尴尬。  </p>
+</li>
+<li><p>提问的质量，真的不是给了钱的人，就会好好思考，再提出高质量问题的。  </p>
+</li>
+<li><p>后来改版后，主讲人同样能在直播间操作，并且实现了协作讲师选取精选留言，和消息限流的功能，发言权限也就放开了。</p>
+</li>
+</ol>
+<h3 id="有效性评估"><a href="#有效性评估" class="headerlink" title="有效性评估"></a>有效性评估</h3><p>当初在实业企业的时候，我也经常抱怨用户和 BA 怎么经常改需求，还提得那么晚。但是，老实说，实业企业的需求，怎么变都没有互联网那么快。因为，实业的业务流程，涉及既定利益体的协作，是没那么容易变动的。它们制约了需求的可变范围，当然这也是被互联网行业降维打击的原因。  </p>
+<p>纯互联网行业约束少，需求更新快，可能让开发更抓狂。机会和风口以来，可能就要马上跟进试探。这个时候，用临时方案，还是设计完整的功能路径，就必须小心考虑了。因为，如果临时的方案多了，就会把系统搞得千疮百孔。但是，假如每个试探的方案都像常规功能那样来设计，不仅可能拖慢进度，还可能最后发现方向不对，废弃成本高。  </p>
+<p>我们也吃了这方面的苦头。当初系统实现的工会模式，以及为了让大V节省时间而做的转让直播的功能，后来其实用途不大。但是这两个功能对系统逻辑，开发和测试时间影响还蛮大。  </p>
+<p><strong>如何评估一个需求的有效性，精简地设计易扩展的模型，让临时方案的代码侵入性小，以及平衡开发效率，是非常大的问题</strong>。  </p>
+<h3 id="责任人确定"><a href="#责任人确定" class="headerlink" title="责任人确定"></a>责任人确定</h3><p>责任人是什么意思？要为什么负责？  </p>
+<p>责任人是业务功能的用户吗？可以说是，但也不全是。  </p>
+<p>比如说，我们系统最开始有一个心愿单的功能，目的是为了收集用户心仪讲师的讲座或者课程。这功能乍一听很有用，也很快就加上了。但是，后期这些数据是谁看呢？产品？还是运营？怎么看和怎么拿出来分析？这都就是责任人要负责的事情，不是说功能加了就算了。由于责任人前期并没有明确，收集的数据并没有很好地发挥作用，功能最后也砍了。同理，像数据报表，用户反馈等类似的功能，也是需要非常明确地指定责任人的。  </p>
+<p><strong>当责任人不清晰的时候，可以说任何开发出来的功能，最后都会被慢慢遗弃。所以，一个功能要不要做，怎么做才好用，首先应该确认责任人是谁。</strong>  </p>
+<p>这个问题在实业企业也会发生，但在纯互联网行业更常见，尤其在初创期。  </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Think/">Think</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Business-Logic/">Business Logic</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/" data-title="技术人眼中的实业与纯互联网业务差异 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/12/13/is-data-consistency-only-about-db/" title="数据的一致性只和数据库有关系吗？">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  数据的一致性只和数据库有关系吗？</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/11/29/tingting-multi-region-architecture/"  title="听听系统的多地部署改造">
+ <strong>NEXT:</strong><br/> 
+ <span>听听系统的多地部署改造
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%AE%BA%E5%93%AA%E4%B8%AA%E9%A2%86%E5%9F%9F%EF%BC%8C%E9%83%BD%E5%BA%94%E4%BA%86%E8%A7%A3%E4%B8%9A%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">无论哪个领域，都应了解业务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E6%80%A7%E8%B4%A8%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">2.</span> <span class="toc-text">业务性质的差异</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E7%81%B5%E6%B4%BB%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4"><span class="toc-number">2.1.</span> <span class="toc-text">需求灵活度和空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%84%E4%BC%B0"><span class="toc-number">2.2.</span> <span class="toc-text">有效性评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%A3%E4%BB%BB%E4%BA%BA%E7%A1%AE%E5%AE%9A"><span class="toc-number">2.3.</span> <span class="toc-text">责任人确定</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

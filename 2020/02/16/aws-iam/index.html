@@ -1,0 +1,478 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>一文读懂 AWS IAM | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="ConceptIAM 是 AWS 云平台中负责身份认证，和权限控制的服务。AWS 云虽然分了很多个区（Region），但 IAM 是 Global，全局的。所以，它的数据和配置的更改，也是 Eventually Consistent 的。
+Best Practices在讲 IAM 的权限控制是怎么工">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="一文读懂 AWS IAM | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/02/16/aws-iam/" title="一文读懂 AWS IAM" itemprop="url">一文读懂 AWS IAM</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-02-16T14:46:27.000Z" itemprop="datePublished">Feb 16 2020</time>
+    Updated:<time datetime="2022-08-28T08:07:15.451Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Concept"><span class="toc-number">1.</span> <span class="toc-text">Concept</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-Practices"><span class="toc-number">2.</span> <span class="toc-text">Best Practices</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-It-Works"><span class="toc-number">3.</span> <span class="toc-text">How It Works?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Identity-x2F-Principal"><span class="toc-number">3.1.</span> <span class="toc-text">Identity&#x2F;Principal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Authentication"><span class="toc-number">3.2.</span> <span class="toc-text">Authentication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Authorization"><span class="toc-number">3.3.</span> <span class="toc-text">Authorization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy-Evaluation-Logic"><span class="toc-number">3.4.</span> <span class="toc-text">Policy Evaluation Logic</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p>IAM 是 AWS 云平台中负责身份认证，和权限控制的服务。AWS 云虽然分了很多个区（Region），但 IAM 是 Global，全局的。<br>所以，它的数据和配置的更改，也是 Eventually Consistent 的。</p>
+<h2 id="Best-Practices"><a href="#Best-Practices" class="headerlink" title="Best Practices"></a>Best Practices</h2><p>在讲 IAM 的权限控制是怎么工作之前，先强调两个最重要的安全理念。</p>
+<p><strong>Grant Least Privilege</strong></p>
+<p>在 AWS 里面，每一个用户默认都是没有任何权限的。他甚至不能查看自己的密码或 access key，丢失了也只能重新生成。</p>
+<p><strong>Lock Away Your AWS Account Root User</strong></p>
+<p>AWS 账户开通的时候，你的登录邮箱和密码，就成为了这个账户下的超级管理员，它默认是什么都可以干的。<br>所以，和在 Linux 下不要滥用 root 一样，不要用这个超级帐号做日常操作，而是创建一个有 Full Administrator 权限的用户。</p>
+<h2 id="How-It-Works"><a href="#How-It-Works" class="headerlink" title="How It Works?"></a>How It Works?</h2><p>权限控制有两个基本概念：</p>
+<ol>
+<li><strong>Authentication</strong> - 确认是否为有效用户，是否允许登录&#x2F;接入</li>
+<li><strong>Authorization</strong> - 确认用户当前请求的操作（读写资源），是否合法</li>
+</ol>
+<p>所以，IAM 最重要就是管理 Identity，和控制 Resource 的操作。</p>
+<h3 id="Identity-x2F-Principal"><a href="#Identity-x2F-Principal" class="headerlink" title="Identity&#x2F;Principal"></a>Identity&#x2F;Principal</h3><p>从资源访问的角度来看，使用 AWS 资源的其实不单单是具体的人，还可能是 Application。所以，AWS 里面的身份，分几种：</p>
+<ul>
+<li>User</li>
+<li>Application</li>
+<li>Federated User</li>
+<li>Role</li>
+</ul>
+<p>能在 AWS IAM 控制台里创建的，只有 User 和 Role。而 User 在创建的时候，可以指定它的访问类型。是凭借用户名密码在 Console 登录，还是使用 Access Key ID 及 Secret 通过 API 来访问，还是两者皆可。</p>
+<p>要特别注意的是，User 是直接操作 AWS 资源的用户，而不是你自己开发并部署在 AWS 的系统里面的用户。IAM 的 User 是有数量限制的，最多 5000 个。</p>
+<p>如果你开发的系统需要操作 AWS 资源，比如说上传文件到 S3，那你需要用的是 Federated User。通过 OpenID Connect（如 Google&#x2F;Facebook）或者 SAML 2.0（如 Microsoft AD），你的系统用户可以在登录后换取代表某个 AWS Role 的临时 token 来访问 AWS 资源。</p>
+<h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><p>访问和使用 AWS 资源有两种方式，一种是通过页面登录，也就是 Console。一种是通过 AWS API，也就是接口，包括 CLI, SDK 或 HTTPS 请求。</p>
+<p>IAM User 在 Console 页面登录需要提供 AWS 帐号名，IAM User 名和密码。AWS 帐号名是 AWS 云服务开通时，系统生成的一串数字，或者是你赋予的别名。它其实就是一个多租户系统里面的租户帐号。<br> AWS 还会为每个帐号提供一个独特的登录链接，比如我的测试帐号： <a target="_blank" rel="noopener" href="https://kcawsfree.signin.aws.amazon.com/console">https://kcawsfree.signin.aws.amazon.com/console</a> 。<code>kcawsfree</code> 就是我帐号的别名。</p>
+<p>而如果是使用 API 访问 AWS，我们是需要用 IAM User 的 Access Key ID 及 Secret 来为这个 HTTP 请求生成签名的。为请求签名，是大多数的 API 集成的一种安全性考量。微信，支付宝等平台都这么做。为什么呢？  </p>
+<ol>
+<li>确认请求发起方是合法的，就是确保你就是你。</li>
+<li>保护数据传输过程的安全，就是确保数据没被篡改。</li>
+<li>防止重放攻击，就是确保一个请求不被多次使用，滥用或者冒用。</li>
+</ol>
+<p>签名需要根据什么信息生成呢？可以说是包含了请求唯一性的所有信息：  </p>
+<p>请求的接口版本号<br>请求的操作是什么（Action）<br>请求的日期<br>所有请求的参数等</p>
+<p>AWS 的请求样例：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https://iam.amazonaws.com/?Action=AddUserToGroup</span><br><span class="line">&amp;GroupName=Managers</span><br><span class="line">&amp;UserName=Bob</span><br><span class="line">&amp;Version=2010-05-08</span><br><span class="line">&amp;AUTHPARAMS</span><br></pre></td></tr></table></figure>
+
+<p>其实，如果你是使用 AWS SDK 或者 CLI，它会根据你配置的 Access Key 自动签名。只有当你自己发起一个 HTTP 请求的时候，才需要自己实现签名的逻辑。</p>
+<h3 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h3><p>所谓是否有足够的权限，就是验证以下三者在一个请求的场景下，是否被允许：</p>
+<ol>
+<li>主体（Identity）</li>
+<li>操作（Action）</li>
+<li>资源（Resource）</li>
+</ol>
+<p>AWS 是通过策略（Policy）来定义权限（Permissions）的。最基本的策略有两大类。一种是 Identity-based policy，另一种是 Resource-based policy。前一种挂在 User&#x2F;Role&#x2F;Group 上面，用以定义这些被挂载的主体，能对什么资源进行怎样的操作。而后一种直接挂载在 AWS 资源上面，用以定义哪些主体可以对这个资源做什么样的操作。</p>
+<p>AWS Policy 的 Permissions 定义，在内部是通过一个 JSON 格式来表示的。我们来看一个样例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2012-10-17&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Statement&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;Sid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ListAndDescribe&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Effect&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Allow&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Action&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;dynamodb:List*&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:Describe*&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Resource&quot;</span><span class="punctuation">:</span> <span class="string">&quot;*&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;Sid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;SpecificTable&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Effect&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Allow&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Action&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;dynamodb:BatchGet*&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:Get*&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:Query&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:Scan&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:BatchWrite*&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:Delete*&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:Update*&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;dynamodb:PutItem&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Resource&quot;</span><span class="punctuation">:</span> <span class="string">&quot;arn:aws:dynamodb:*:*:table/MyTable&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;Sid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AllowAllActionsForEC2&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Effect&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Allow&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Action&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ec2:*&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Resource&quot;</span><span class="punctuation">:</span> <span class="string">&quot;*&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;Sid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;DenyStopAndTerminateWhenMFAIsNotPresent&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Effect&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Deny&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Action&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;ec2:StopInstances&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;ec2:TerminateInstances&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Resource&quot;</span><span class="punctuation">:</span> <span class="string">&quot;*&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;Condition&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;BoolIfExists&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;aws:MultiFactorAuthPresent&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个策略控制了 DynamoDB 和 EC2 的访问权限。它看起来很复杂，但其实结构很清晰。这里面最主要的元素就是 <code>Effect</code>, <code>Action</code>, 和 <code>Resource</code>。它们确定了什么资源上的哪些操作，是被允许，还是禁止的。它们是 AND 的逻辑组合。</p>
+<p>Statement 里前两个 Permission，允许用户获取 DynamoDB 里面的资源信息，但是只有 MyTable 这个表能做写操作。而后两部分允许用户对 EC2 做任何操作，但是停止和结束 Instance 则必须通过了 MFA 登录认证后才可以。</p>
+<h3 id="Policy-Evaluation-Logic"><a href="#Policy-Evaluation-Logic" class="headerlink" title="Policy Evaluation Logic"></a>Policy Evaluation Logic</h3><p>一个用户或者角色主体上，可以拥有多个不同的 Policy。所以，Policy 的权限验证逻辑，可谓相当复杂。<br>在讲验证流程前，我再重复一次 AWS 权限的设计原则，这对流程的理解很重要。</p>
+<ul>
+<li>如果<strong>有显式的 Deny，就禁止</strong>。  </li>
+<li><strong>Grant Least Privilege</strong> 原则。如果没有显式赋予权限，也就是没有任何 Policy 为请求的资源和操作定义了 <code>Allow</code> 权限，那这个主体就没有权限（Implicit Deny）。</li>
+</ul>
+<p>AWS 对收到的操作请求，会根据以下的流程来判断这个请求的主体是否有操作权限：</p>
+<ol>
+<li>Deny evaluation</li>
+<li>AWS Organizations service control policies (SCP)</li>
+<li>Resource-based policies</li>
+<li>IAM permissions boundaries</li>
+<li>Session policies</li>
+<li>Identity-based policies</li>
+</ol>
+<p>第一步，首先把 2 至 6 里面的所有 policy 的显式 Deny 拿出来。如果当前的请求属于 Deny 的范围，直接禁止操作。这个就是第一个原则。</p>
+<p>第二步到第六步，是具体的 policy。如果该主体有这个类型的 policy 存在，就按照第二个原则处理。如果没有，跳到下一个 policy 类别的检查。</p>
+<p>那么多种的 Policy 类别，为什么是这个排列顺序呢？我是这么理解的：</p>
+<ol>
+<li>Organization SCP 作为组织级别策略，优先级最高。</li>
+<li>Resource-based policy 可以跨帐号赋予权限，级别比后面的高一些。</li>
+<li>Permission Boundary 的作用是提前为用户定义一个最大的权限范围，避免意外打开了权限的情况，所以比后面的级别要高。</li>
+<li>Session policies 是会话级别，允许临时赋予权限，所以比 Identity-based policies 高。</li>
+<li>Identity-based policies 是最稳定的，所以检查放在最后。</li>
+</ol>
+<p>不过，这里有一个特例，就是 Resource-based policy。如果它是 Implicit Deny 的情况，还是会继续后面的检查，不会阻止。<br>还有一个复杂的情况是关于 Session policy 的，这个就不在本文解释了，具体可看<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html#policies_session" title="Session Policy">文档</a>。</p>
+<p>其实，即便逻辑复杂，判断是否有权限还是可以简单地总结为一句话：  </p>
+<p><strong>只有具备显式的 Allow，并且没有显式的 Deny，才有权限。</strong></p>
+<p>或者</p>
+<p><strong>如果没有显式的 Allow，或者有显式的 Deny，就没有权限。</strong></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/AWS/">AWS</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2020/02/16/aws-iam/" data-title="一文读懂 AWS IAM | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/03/10/aws-s3/" title="一文读懂 AWS S3">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  一文读懂 AWS S3</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/02/09/Can-remote-working-be-smooth-after-moving-all-to-cloud/"  title="上了云，远程工作就没问题了吗？">
+ <strong>NEXT:</strong><br/> 
+ <span>上了云，远程工作就没问题了吗？
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Concept"><span class="toc-number">1.</span> <span class="toc-text">Concept</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-Practices"><span class="toc-number">2.</span> <span class="toc-text">Best Practices</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-It-Works"><span class="toc-number">3.</span> <span class="toc-text">How It Works?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Identity-x2F-Principal"><span class="toc-number">3.1.</span> <span class="toc-text">Identity&#x2F;Principal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Authentication"><span class="toc-number">3.2.</span> <span class="toc-text">Authentication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Authorization"><span class="toc-number">3.3.</span> <span class="toc-text">Authorization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy-Evaluation-Logic"><span class="toc-number">3.4.</span> <span class="toc-text">Policy Evaluation Logic</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2020/02/16/aws-iam/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

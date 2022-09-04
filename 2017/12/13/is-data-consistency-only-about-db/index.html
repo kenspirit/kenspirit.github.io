@@ -1,0 +1,446 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>数据的一致性只和数据库有关系吗？ | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="数据库的 ACID，应该所有后端程序员都听说过，也是我们必须了解的知识。ACID 里面的 C 就是 Consistency（一致性）。  
+但是，一致性仅仅是 C 吗？从一个普通用户角度来考虑，当然不是。用户角度的一致性，应该是数据库实现了 ACID 后的效果。用现实的例子来说明就是：  
+我发起银">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="数据的一致性只和数据库有关系吗？ | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/13/is-data-consistency-only-about-db/" title="数据的一致性只和数据库有关系吗？" itemprop="url">数据的一致性只和数据库有关系吗？</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-12-13T14:13:52.000Z" itemprop="datePublished">Dec 13 2017</time>
+    Updated:<time datetime="2022-08-28T08:07:15.443Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%EF%BC%8C%E5%8D%95%E6%9C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">关系型，单机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%EF%BC%8C%E5%8D%95%E6%9C%BA"><span class="toc-number">1.2.</span> <span class="toc-text">非关系型，单机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="toc-number">1.3.</span> <span class="toc-text">主从复制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E7%BB%84%E4%BB%B6%E6%88%96%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">外部组件或系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98"><span class="toc-number">2.1.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.2.</span> <span class="toc-text">外部系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%B0%E5%BD%93%E7%9A%84%E5%BB%BA%E6%A8%A1"><span class="toc-number">3.1.</span> <span class="toc-text">恰当的建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%EF%BC%882PC%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">两阶段提交（2PC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E9%87%8D%E8%AF%95"><span class="toc-number">3.3.</span> <span class="toc-text">任务重试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E9%A1%BA%E5%BA%8F"><span class="toc-number">3.4.</span> <span class="toc-text">操作顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%95%B0%E6%8D%AE%E4%B8%BB%E5%8A%A8%E7%9B%91%E6%8E%A7%EF%BC%8C%E8%A1%A5%E5%81%BF"><span class="toc-number">3.5.</span> <span class="toc-text">异常数据主动监控，补偿</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">4.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+		</div>
+		
+		<p>数据库的 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ACID">ACID</a>，应该所有后端程序员都听说过，也是我们必须了解的知识。ACID 里面的 C 就是 Consistency（一致性）。  </p>
+<p>但是，一致性仅仅是 C 吗？从一个普通用户角度来考虑，当然不是。用户角度的一致性，应该是数据库实现了 ACID 后的效果。用现实的例子来说明就是：  </p>
+<p>我发起银行转账，不能是我帐号的钱减少了，但是接收方却没收到；不能说银行职员能看到双方的钱是对的，但是用户自己看到的不对；不能说我刚刚看到的帐是对的，另一个时候，或者去另一台机器，或者换另一个方式查就不对了。  </p>
+<p>那我们开发人员，是不是只要利用数据库提供的 ACID 特性，就能达到用户想要的效果呢？要注意什么呢？  </p>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="关系型，单机"><a href="#关系型，单机" class="headerlink" title="关系型，单机"></a>关系型，单机</h3><p>在单机使用 RDBMS 数据库如 Oracle、MySQL、PostgreSQL 的情况下，数据库本身提供的 ACID 机制，已经能基本保证数据操作后的完整和一致性了。开发人员要做的，只是确保要维持数据一致性的变更操作代码，同在一个 transaction 里面。我刚工作的时候，当时还是用原始的 JDBC 连接 Oracle，还要手动打开关闭数据库 connection 的连接，统一 commit，或者出错后 rollback。现在，Spring 等框架已经能够用 AOP 和 Annotation 的方式来标注 transaction 的范围。  </p>
+<h3 id="非关系型，单机"><a href="#非关系型，单机" class="headerlink" title="非关系型，单机"></a>非关系型，单机</h3><p>最近几年流行的 NoSQL，像 MongoDB, Redis，它们的 ACID 就不一样了。它们并不是 ACID compliant 的。MongoDB 的 ACID 是 Document 级别的。也就是说，一个数据操作，只能保证一个 Collection 里面的一个 Document 上的所有数据改动是同时成功和失败。假设一个数据操作涉及多 Document 的变动，比如用了 <code>multi: true</code> 参数，或者更改不同 Collection 的 Document，这些改动都不能保证所有 Document 的更改同时成功，或者同时失败。而 Redis 的 Transaction 就更不一样了。  </p>
+<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3><p>在 Monolithic system 里面，数据库多数是单机。即便为了灾备需求，或者支持读写分离，甚至声称异地多活的系统，也只是启用了数据库的主从复制功能（ Master-Slave 模式的 replication ）。一般的主从复制，主库的数据和从库的数据肯定会有延时。即便是使用 Master-Master 和实时同步机制，也有可能有延时，或者数据冲突。如果强制使用更严格的一致性写入确认，如 MongoDB 的 Write Concern 设置为 majority 或者 jornal 的话，数据库的性能又会有很大的影响。  </p>
+<p>我这方面的经验不多，而且现在还有像新出的 Google Spanner 这样的全球分布式，同步复制的 NewSQL 数据库，需要更多了解一下。欢迎大家给意见和指正。  </p>
+<h2 id="外部组件或系统"><a href="#外部组件或系统" class="headerlink" title="外部组件或系统"></a>外部组件或系统</h2><p>可以看到，仅仅利用数据库提供的 ACID 支持，也不是一定能达到用户想要的一致性效果的。而且，很多时候，一些用户感知的一致性，背后还涉及到数据库以外的系统。  </p>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>缓存，可能会是为了解决性能问题，最早引入的组件了。但是，一旦引入缓存，数据的一致性就有可能更容易有偏差，即便是在使用单机服务器的情况下。在文章「<a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a>」里面，提到的缓存失效和更新的策略，是影响数据一致性的重要因素。  </p>
+<h3 id="外部系统"><a href="#外部系统" class="headerlink" title="外部系统"></a>外部系统</h3><p>有些时候，当数据发生改动时，我们还需要通知外部系统，比如，用户注册成功后发送邮件，或短信通知；给用户打款后，发送微信，或短信通知；SOA 架构下，上游系统的数据改变后，需要通知下游系统等。这时候，用户角度的数据一致性，其实还包含了这些外部系统的相应操作，也应该被触发，被体现。内部系统的数据变动，和外部系统的反应，如何能保持一致？能保持一致吗？  </p>
+<p>在上一家公司的时候，我们利用 Oracle 的 XA Transaction 支持，来尽量确保数据库的改动，能和 JMS 的消息发送 保持同时成功或者失败。但是，如果数据改动后要发邮件，短信，或微信通知，这些现在没类似的支持，是极有可能无法保持一致的。  </p>
+<p>很巧的是，公众号「程序人生」最新的文章「<a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s/zvviHdTpXaeHKLhtGVx26w">不要等客户来通知问题</a>」里面的摩拜单车解锁问题，刚好为我提供了一个很好的例子。作者扫码后，单车锁一直没开，但是又认为作者已经成功开锁使用了。所以，它一直不让作者自己操作结束，又不让他重新扫新的单车。最后，要等问题被反应到摩拜开发人员内部，才得以解决。这个状况发生的原因可能是，手机端上传单车开锁指令后，后台的数据状态已经标记为使用状态了，甚至开锁指令都已经下达到自行车上了，但是自行车锁就是没有成功打开。你说，这里数据一致了吗？对系统来说可能勉强算是，但对用户来说就不是了。  </p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>既然那么多情况可能导致数据的不一致，怎么解决呢？  </p>
+<h3 id="恰当的建模"><a href="#恰当的建模" class="headerlink" title="恰当的建模"></a>恰当的建模</h3><p>使用 NoSQL 和 RDBMS 建模的时候，要考虑的因素很不一样。MongoDB 更多是考虑嵌套，冗余，而不是追求更高的范式要求。这在「<a href="http://www.thinkingincrowd.me/2016/11/13/Node-js-Wechat-Web-App-Tutorial-Data-Modeling/">Node.js 微信后台搭建系列 - 数据建模</a>」，「<a href="http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/">一个简单的支付业务与模型演变</a>」一文里面也稍微提过。  </p>
+<h3 id="两阶段提交（2PC）"><a href="#两阶段提交（2PC）" class="headerlink" title="两阶段提交（2PC）"></a>两阶段提交（2PC）</h3><p>两阶段提交（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Two-phase_commit_protocol">Two-Phase Commit</a>）是一种协议和分布式算法，来协调多操作的原子性。前面说的 Oracle XA Transaction 就是利用 2PC 实现的。MongoDB 里面没有提供多 Document 更改的原子性支持，所以一些场景可以通过在 <a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/tutorial/perform-two-phase-commits/">MongoDB 里面用 2PC</a> 来实现多 Document 的 Transaction 确保数据的一致性。但是，在业务复杂的情况下，自己模拟 2PC 还是很麻烦的。  </p>
+<h3 id="任务重试"><a href="#任务重试" class="headerlink" title="任务重试"></a>任务重试</h3><p>出错重试，应该是很常见的操作了。但是，重试的处理，有几个地方是要注意的：  </p>
+<ul>
+<li>幂等原则  </li>
+<li>同步还是异步？  </li>
+<li>重试次数</li>
+</ul>
+<p>出错能否重试，要看这个重试的逻辑是否幂等（Idempotency），或者多次执行都生效的影响到底严不严重。  </p>
+<p>先说影响。比如说你的系统支持用户提现，成功后需要发通知。用户设置的通知有微信，短信，和邮件通知（这是有多担心钱被偷）。假设你实现的重试任务代码，负责所有通知（包括微信，短信，邮件等），而不是微信，短信，邮件等有各自的独立任务。那么在发通知的时候，假如第一次发微信的时候失败了，但是短信邮件成功了，这个重试任务如果还是被标记为失败。下次重试的时候，它就会重复发送了一些通知。这个任务多次执行的影响，对用户来说可能很烦，但是不大。  </p>
+<p>另一个是幂等。幂等的意思是一个操作如果被多次执行，其结果和第一次执行后是相同的。上面的发通知的例子，如果我们定义结果是能发通知的话，它是幂等的。但是，如果结果是发且仅发一次的话，它就不是幂等了。关于幂等，我以前学 AngularJS 的时候就被自己坑了一次，详情可看「<a href="http://www.thinkingincrowd.me/2013/02/02/expression-in-angularjs-must-be-idempotent-and-for-multiple-calls/">Expression in AngularJS must be idempotent and for multiple calls</a>」。公众号「嘀嗒嘀嗒」的安姐近期一篇「<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/EDkuMW5-hdIxs2GXMFnj_Q">每个工程师都应该了解的：聊聊幂等</a>」更详细说明幂等和解决方法，我就不重复了。  </p>
+<p>还有一个要考虑的是，选择同步还是异步重试。这取决于业务场景，和出错部分的严重程度。必须一致的关键数据部分出错，要么中止回滚，同时警告用户，要么只能同步重试处理。但是，如果是在 Node.js 这样的单线程服务，可能就不应该重试，或者要严格控制重试次数。要不然，除了当前用户受影响，说不定共用服务的其它用户也遭殃。  </p>
+<h3 id="操作顺序"><a href="#操作顺序" class="headerlink" title="操作顺序"></a>操作顺序</h3><p>如果说数据不一致无法完全避免，那如何最大化避免数据不一致，并在出错后有迹可循呢？  </p>
+<ul>
+<li>先处理出错可能性低的部分  </li>
+<li>先内部系统，再外部系统  </li>
+<li>先记录操作唯一性，再标记不同状态</li>
+</ul>
+<p>假如一个系统允许用户提现到微信零钱，这个系统是 MongoDB 作为后台，并且模型里面有 transaction 这样的流水纪录表，也需要更新用户表 user 里面的余额。应该怎么操作呢？  </p>
+<ol>
+<li>从用户表 user 中减少提取的额度  </li>
+<li>把这个额度记录到 transaction 中的一条包含唯一性的流水记录里，标记处理中  </li>
+<li>通过微信 API 通知把提取额度转到用户零钱 </li>
+<li>成功后把 transaction 中的流水记录标记成功，否则标记失败</li>
+</ol>
+<p>这里涉及 4 步操作。假如每一步都有可能出错，安排 1 和 2 两步在前面是因为同是内部系统，出错可能性低一些。即便第 1 步成功，但是第二步失败，用户的余额还是可以通过 replay transaction 里面所有的收支记录来刷新，或者这里做特定异常处理。  </p>
+<p>这里面的第 3 步，是外部系统，涉及网络操作，所以是最有可能出错的。所以第 3 步前必须先有操作记录，而且有唯一性（比如订单号）标识。出错后可以通过此标识，像微信查询该转账操作是否成功。  </p>
+<p>最后才更新流水记录的状态，也是为了能保证最终的完整性，和提供异常数据监控的可能。  </p>
+<h3 id="异常数据主动监控，补偿"><a href="#异常数据主动监控，补偿" class="headerlink" title="异常数据主动监控，补偿"></a>异常数据主动监控，补偿</h3><p>一般来说，如果所有的操作，都是系统内部触发，那么出错的时候，都应该有记录，并且可以重试。但是，像前面提到的摩拜单车的例子，解锁部分的硬件操作，锁有没有打开这个状态并没有反馈回内部系统，导致不一致的状态已经脱离了内部系统范畴。这就不是重试能解决的了。异常数据的主动监控和补偿就派上用场了。  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a><br><a href="http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/">一个简单的支付业务与模型演变</a><br><a href="http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/">听听系统的多地部署改造</a>  </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Database/">Database</a><a href="/tags/Idempotency/">Idempotency</a><a href="/tags/Architecture/">Architecture</a><a href="/tags/Distributed/">Distributed</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/" data-title="数据的一致性只和数据库有关系吗？ | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/01/20/take-good-care-of-yourself-and-the-ones-you-love/" title="照顾好你自己，和你爱的人">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  照顾好你自己，和你爱的人</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/"  title="技术人眼中的实业与纯互联网业务差异">
+ <strong>NEXT:</strong><br/> 
+ <span>技术人眼中的实业与纯互联网业务差异
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%EF%BC%8C%E5%8D%95%E6%9C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">关系型，单机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E5%85%B3%E7%B3%BB%E5%9E%8B%EF%BC%8C%E5%8D%95%E6%9C%BA"><span class="toc-number">1.2.</span> <span class="toc-text">非关系型，单机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="toc-number">1.3.</span> <span class="toc-text">主从复制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E7%BB%84%E4%BB%B6%E6%88%96%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">外部组件或系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98"><span class="toc-number">2.1.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.2.</span> <span class="toc-text">外部系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%B0%E5%BD%93%E7%9A%84%E5%BB%BA%E6%A8%A1"><span class="toc-number">3.1.</span> <span class="toc-text">恰当的建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4%EF%BC%882PC%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">两阶段提交（2PC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E9%87%8D%E8%AF%95"><span class="toc-number">3.3.</span> <span class="toc-text">任务重试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E9%A1%BA%E5%BA%8F"><span class="toc-number">3.4.</span> <span class="toc-text">操作顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E6%95%B0%E6%8D%AE%E4%B8%BB%E5%8A%A8%E7%9B%91%E6%8E%A7%EF%BC%8C%E8%A1%A5%E5%81%BF"><span class="toc-number">3.5.</span> <span class="toc-text">异常数据主动监控，补偿</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">4.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

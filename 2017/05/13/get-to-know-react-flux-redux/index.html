@@ -1,0 +1,442 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>初识 React, Flux 和 Redux | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="近期，我大概花了一周，每天晚上 2 小时左右和一个周末的时间，通过官方文档来了解 React, Redux, Flux 几个框架和概念。写下此文是希望帮自己梳理和巩固一下对它们的认识。如果哪里理解有误，希望大家不吝指出。  
+React围绕 JavaScript 来设计的思想，把所有的 Compon">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="初识 React, Flux 和 Redux | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/05/13/get-to-know-react-flux-redux/" title="初识 React, Flux 和 Redux" itemprop="url">初识 React, Flux 和 Redux</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-05-13T09:18:51.000Z" itemprop="datePublished">May 13 2017</time>
+    Updated:<time datetime="2022-08-28T08:07:15.437Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#React"><span class="toc-number">1.</span> <span class="toc-text">React</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flux"><span class="toc-number">2.</span> <span class="toc-text">Flux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%EF%BC%8C%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%B6%88%E6%81%AF"><span class="toc-number">2.1.</span> <span class="toc-text">页面打开，自动加载消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%82%B9%E5%87%BB%E9%98%85%E8%AF%BB%E6%9F%90%E4%B8%80%E6%9D%A1%E6%B6%88%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text">用户点击阅读某一条消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redux"><span class="toc-number">3.</span> <span class="toc-text">Redux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%EF%BC%8C%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%B6%88%E6%81%AF-1"><span class="toc-number">3.1.</span> <span class="toc-text">页面打开，自动加载消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%82%B9%E5%87%BB%E9%98%85%E8%AF%BB%E6%9F%90%E4%B8%80%E6%9D%A1%E6%B6%88%E6%81%AF-1"><span class="toc-number">3.2.</span> <span class="toc-text">用户点击阅读某一条消息</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>近期，我大概花了一周，每天晚上 2 小时左右和一个周末的时间，通过官方文档来了解 React, Redux, Flux 几个框架和概念。写下此文是希望帮自己梳理和巩固一下对它们的认识。如果哪里理解有误，希望大家不吝指出。  </p>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>围绕 JavaScript 来设计的思想，把所有的 Component，都化作 JavaScript 的一个 function 或者 object，通过丰富的工具来支持类型，错误检查等确实是很赞的想法。如果使用的是 AngularJS 这样的模板和自定义 directive，不小心打错了字，框架是选择忽略还是报错提醒呢，因为那个它不认识的标签，可能是别家的啊？所以，在这点上，React 的做法有优胜的地方。  </p>
+<p>还有，React 里面几乎所有的东西都是 Component，通过把 Component 进行高阶组合（HOC），确实可以产生威力无穷的变化。而且它的专有名词和概念，真的比 AngularJS 少太多（虽然其实东西都类似，只是 AngularJS 特意弄些名词出来）。如果能清晰理解 React 的单向数据流，和 HOC 的概念，上手应该说没 AngularJS 那么复杂。虽然老实说，HOC 可能和递归一样，对一些人来说，是非常不好理解的概念。  </p>
+<p>对于一个老程序员来说，对 React 最“看不顺眼的”，莫过于 JSX 这种把 “HTML” 标签写到 JavaScript 里的鬼玩意了。我们以前的教诲是，不能把逻辑代码和表现层混杂在一起。再加上，我个人一直觉得，一个结构清晰的表现层，可以清楚地展现页面概貌，对系统的设计和理解有很大的帮助。所以，一直以来，我是倾向于喜欢 AngularJS 式的页面模板（template）风格，然后在上面添加声明式的行为。但是，随着组件化理念的发展，页面已经无法避免被切分的命运。所以，只能思考哪种才是更合适，更清晰的模块化，低耦合，高内聚的方式。或许像 Polymer 那样的 Web Component 形式？知乎上一篇文章也讨论了 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/48528161">JSX有哪些缺陷？</a>，大家不妨一看。  </p>
+<p>至于单向数据流，和双向数据绑定，老实说，我以前是喜欢双向绑定多一些的。某种程度上来说，框架从工具层面降低程序员的心智门槛，它自己计算和处理数据的变化就可以了。反正程序员可以假定最终数据是同步的，不管它是 dirty checking 还是什么方式。但是，面对复杂的页面行为和状态变更，把数据变为 Immutable，把变更控制在有限范围，尽量编写纯函数，确实可能更好。非纯函数和对外部全局的依赖，一不小心就会出问题。以前在玩 AngularJS 1 的时候，[自己就遇到坑了][]。  </p>
+<h2 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a>Flux</h2><p>根据 React Component 绑定数据和接收事件的形式，Flux 是秉持单向数据流动里面的一种代码架构方式。  </p>
+<p>Flux 包含三大主要部分：Dispatcher, Store, 和 View（其实就是 React 的 Component）。它声称自己没有 MVC 里面的 Controller，但是有 Controller-View 和 Action Creator。真是受不了这些框架了，老是造一些名词，再标榜和以前不同。其实别管那么多，最重要的是<strong>搞清楚数据的流动情况，数据的流动情况，数据的流动情况</strong>。  </p>
+<p>下面我拿消息列表的例子来说明 Flux 里面的主要部分是怎么关联，数据在里面是怎么流动的。  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/flux_data_flow.png" alt="Flux Data Flow"></p>
+<p>这里有两个场景：  </p>
+<h3 id="页面打开，自动加载消息"><a href="#页面打开，自动加载消息" class="headerlink" title="页面打开，自动加载消息"></a>页面打开，自动加载消息</h3><p>这个场景的数据流动路线是：1 -&gt; 2 -&gt; A -&gt; B  </p>
+<p>页面打开的时候，Action Creator 把 <code>LOAD_MSGS</code> 这个 Action 推给 Dispatcher。两个 Store 都会接收到这个 Action。Store B 把数据赋予 <code>msgs</code>，更改了内部 State，然后更新 View B。  </p>
+<p>Store A 呢？Store A 里面的 <code>unreadCount</code> 状态数据，是依赖 Store B 里面的 <code>msgs</code> 计算出来的。所以，Store A 里的处理逻辑其实会忽略接收到的 Action，通过 <code>Dispatcher.waitFor</code> 的方法，声明必须等待 Store B 的计算完成，然后 derive 自己需要的数据，再更新 View A。  </p>
+<h3 id="用户点击阅读某一条消息"><a href="#用户点击阅读某一条消息" class="headerlink" title="用户点击阅读某一条消息"></a>用户点击阅读某一条消息</h3><p>这个场景的数据流动路线是：3 -&gt; 4 -&gt; 5 -&gt; A -&gt; B  </p>
+<p>当用户点击某一条消息时，Action Creator 接收到 View B 的事件，构造了包含消息 id 的 <code>READ_MSG</code> Action，推给 Dispatcher。紧接着的操作类似上面的场景，不再累述。  </p>
+<p>结合场景来理解数据的流动，就能比较容易搞清楚 Flux 组成部分的定义了。  </p>
+<ol>
+<li>Dispatcher 是全局的，只有一个。  </li>
+<li>Action Creator 负责接收 View 的事件，产生 Action。当然也可以按需，自己产生 Action。  </li>
+<li>Action 只是简单的操作指令，包含必要的数据，但是没有处理逻辑。  </li>
+<li>Store 有多个，同时接收所有的 Action，按各自处理 Logic，改变数据内部 State。</li>
+</ol>
+<p>View 和 Controller View 的不同在于，Controller View 负责接收 Store 广播出来的事件，然后把更新的数据扩散下去其它的 View。所以 Controller View 是接近于顶层的。  </p>
+<h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p>Redux 又是什么鬼呢？有人问 Redux 算不算是 Flux 架构的一种实现。Redux 作者说它既是，又不是。有兴趣的朋友自己看文档官网里，作者引的 Tweet 吧。神仙也会打架的，就是因为各自造不同的名词出来。  </p>
+<p>那在这个框架底下，数据的流动又是如何的呢？我们通过上面同样的场景来看一下：  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/redux_data_flow.png" alt="Redux Data Flow"></p>
+<h3 id="页面打开，自动加载消息-1"><a href="#页面打开，自动加载消息-1" class="headerlink" title="页面打开，自动加载消息"></a>页面打开，自动加载消息</h3><p>这个场景的数据流动路线是：1 -&gt; 2 -&gt; A -&gt; B -&gt; C -&gt; D  </p>
+<p>页面打开的时候，Action Creator 把 <code>LOAD_MSGS</code> 这个 Action 作为参数调用 <code>Store.dispatch</code> 方法。然后和 Store 绑定的所有 Reducer 都会接收到 Action，和它们各自负责的部分 State 结构。Store 再把各个 Reducer 计算后的新 State 合并。Container Component 把 State 的数据转换成 Presentation Component 需要的 Property 和绑定事件。   </p>
+<h3 id="用户点击阅读某一条消息-1"><a href="#用户点击阅读某一条消息-1" class="headerlink" title="用户点击阅读某一条消息"></a>用户点击阅读某一条消息</h3><p>这个场景的数据流动路线是：3 -&gt; 4 -&gt; 5 -&gt; 6 -&gt; A -&gt; B -&gt; C -&gt; D  </p>
+<p>当用户点击某一条消息时，Presentation Component B 接收到用户操作，通过 Container Component B 绑定在它之上的事件，通知 Action Creator 构造了包含消息 id 的 <code>READ_MSG</code> Action，调用 <code>Store.dispatch</code> 方法通知 Reducers。后面的数据流动和上面类似。  </p>
+<p>下面解释一下 Redux 和 Flux 的不同，以及里面各个部分的关键定义。  </p>
+<ol>
+<li>全局单一的 State（作者声称的 Single source of truth）。  </li>
+<li>没有 Dispatcher（实际上统一的 Store 承担了 Dispatcher 的功能）。  </li>
+<li>Reducer 应该是 pure function 纯函数。而且它们同步更新各个部分的 state，最后汇总。  </li>
+<li>State is Readonly。任何改动都不改变原有的数据，而是生成新的数据。  </li>
+<li>Container Component 相当于 Flux 的 Controller View。Presentation Component 是普通的 View。  </li>
+<li>Action 和 Action Creator 基本是一样的。</li>
+</ol>
+<p>Redux 的关键不同之处是，它只有统一的 State。所以，从一开始就要尽量设计好 State 的结构。官网上还特别提到，数据应该要 normalized，就像 RDBMS 里面存储数据那样，尽量用 id 来指向数据，不冗余。  </p>
+<p>所以，在 Redux 这里，我并没有添加 <code>unreadCount</code> 这个属性给 Component A。它们应该直接从 <code>msgs</code> 里面的消息里推算出来。还有，如果出现前面说的 State 里面如果有数据相互影响的情况，我觉得可能需要在某个 Action 运算后再 dispatch 新 action 出来。因为 Reducers 的调用都是同步的，而且好像无法指定执行顺序。不过这部分我还不太确定，需要实践和再查找资料。  </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Javascript/">Javascript</a><a href="/tags/React/">React</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2017/05/13/get-to-know-react-flux-redux/" data-title="初识 React, Flux 和 Redux | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/05/19/problem-solving-from-another-angle/" title="怎么可能，在我的机器都是好好的">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  怎么可能，在我的机器都是好好的</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/05/13/probe-harmful/"  title="猜来猜去，有意思吗？">
+ <strong>NEXT:</strong><br/> 
+ <span>猜来猜去，有意思吗？
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#React"><span class="toc-number">1.</span> <span class="toc-text">React</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flux"><span class="toc-number">2.</span> <span class="toc-text">Flux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%EF%BC%8C%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%B6%88%E6%81%AF"><span class="toc-number">2.1.</span> <span class="toc-text">页面打开，自动加载消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%82%B9%E5%87%BB%E9%98%85%E8%AF%BB%E6%9F%90%E4%B8%80%E6%9D%A1%E6%B6%88%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text">用户点击阅读某一条消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redux"><span class="toc-number">3.</span> <span class="toc-text">Redux</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E6%89%93%E5%BC%80%EF%BC%8C%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD%E6%B6%88%E6%81%AF-1"><span class="toc-number">3.1.</span> <span class="toc-text">页面打开，自动加载消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%82%B9%E5%87%BB%E9%98%85%E8%AF%BB%E6%9F%90%E4%B8%80%E6%9D%A1%E6%B6%88%E6%81%AF-1"><span class="toc-number">3.2.</span> <span class="toc-text">用户点击阅读某一条消息</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2017/05/13/get-to-know-react-flux-redux/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

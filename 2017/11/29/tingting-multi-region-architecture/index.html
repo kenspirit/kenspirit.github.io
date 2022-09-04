@@ -1,0 +1,446 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>听听系统的多地部署改造 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="很早就想过写这篇文章了，一直没动手。  
+直播系统卡壳在一块听听刚上线不久，我们就迎来了一个 6W 人的直播。当天，直播开始时间前后 10 分钟那个区间，系统是真的卡的不行。  用户打不开页面，进不了直播间，老师发言也发不出去。  
+当时真的是心急火燎，但是又没有什么能做。真的只能慢慢等时间流逝，压">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="听听系统的多地部署改造 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/29/tingting-multi-region-architecture/" title="听听系统的多地部署改造" itemprop="url">听听系统的多地部署改造</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-11-29T00:29:02.000Z" itemprop="datePublished">Nov 29 2017</time>
+    Updated:<time datetime="2022-08-28T08:07:15.442Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%92%AD%E7%B3%BB%E7%BB%9F%E5%8D%A1%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">直播系统卡壳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%92%8C%E8%A7%84%E5%88%92%E4%B8%8D%E8%B6%B3"><span class="toc-number">1.1.</span> <span class="toc-text">时间和规划不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E6%8E%A5%E5%8F%A3%E5%BC%80%E9%94%80%E5%A4%9A%E3%80%82"><span class="toc-number">1.2.</span> <span class="toc-text">不必要的接口开销多。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E7%B9%81%E6%9F%A5%E5%86%99%E5%BA%93%EF%BC%8C%E6%B2%A1%E5%85%85%E5%88%86%E5%88%A9%E7%94%A8%E7%BC%93%E5%AD%98"><span class="toc-number">1.3.</span> <span class="toc-text">频繁查写库，没充分利用缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E5%AF%BC%E8%87%B4%E7%BD%91%E7%BB%9C%E5%BC%80%E9%94%80%E5%A4%A7"><span class="toc-number">1.4.</span> <span class="toc-text">业务导致网络开销大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%BF%85%E8%A6%81%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BA%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">1.5.</span> <span class="toc-text">不必要实时显示的数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">优化之路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E8%B0%83%E6%95%B4"><span class="toc-number">2.1.</span> <span class="toc-text">业务调整</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E6%8E%A7%E5%88%B6"><span class="toc-number">2.2.</span> <span class="toc-text">接口控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E7%BD%91%E7%BB%9C%E5%BC%80%E9%94%80"><span class="toc-number">2.3.</span> <span class="toc-text">减少网络开销</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E7%BC%93%E5%AD%98%EF%BC%8C%E9%9D%9E%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86"><span class="toc-number">2.4.</span> <span class="toc-text">增加缓存，非实时数据异步处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%9C%B0%E9%83%A8%E7%BD%B2%EF%BC%8C%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB"><span class="toc-number">2.5.</span> <span class="toc-text">多地部署，读写分离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">还能做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">4.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+		</div>
+		
+		<p>很早就想过写这篇文章了，一直没动手。  </p>
+<h2 id="直播系统卡壳"><a href="#直播系统卡壳" class="headerlink" title="直播系统卡壳"></a>直播系统卡壳</h2><p>在一块听听刚上线不久，我们就迎来了一个 6W 人的直播。当天，直播开始时间前后 10 分钟那个区间，系统是真的卡的不行。  用户打不开页面，进不了直播间，老师发言也发不出去。  </p>
+<p>当时真的是心急火燎，但是又没有什么能做。真的只能慢慢等时间流逝，压力下来，进直播间的人都稳定了，系统也就平稳了。是什么导致那么狼狈呢？  </p>
+<h3 id="时间和规划不足"><a href="#时间和规划不足" class="headerlink" title="时间和规划不足"></a>时间和规划不足</h3><p>整个系统国庆后开始开发，11月12日功能才基本完整上线并迎来第一个直播，这个大直播（12月13日）就来了。这期间还忙着需求开发，没足够时间做性能测试。  </p>
+<h3 id="不必要的接口开销多。"><a href="#不必要的接口开销多。" class="headerlink" title="不必要的接口开销多。"></a>不必要的接口开销多。</h3><p>用户有两个途径进入直播间，一个是直达直播间的微信通知的消息链接，另一个是「我的」菜单按钮。当时「我的」个人页面，前端一共调用 4 个接口：  </p>
+<ol>
+<li>获取用户资料</li>
+<li>获取用户发起的直播  </li>
+<li>获取用户购买的直播  </li>
+<li>获取其它更多相关的直播</li>
+</ol>
+<h3 id="频繁查写库，没充分利用缓存"><a href="#频繁查写库，没充分利用缓存" class="headerlink" title="频繁查写库，没充分利用缓存"></a>频繁查写库，没充分利用缓存</h3><p>我们没很好利用缓存。而且，一开始是区分提问和非提问票的。在用户冲入直播间（或者刷新直播间页面）的时候，我们都必须获取用户提问发言次数，看是否已经超出限额。这些操作当时都是直接读写数据库，导致缓慢。  </p>
+<h3 id="业务导致网络开销大"><a href="#业务导致网络开销大" class="headerlink" title="业务导致网络开销大"></a>业务导致网络开销大</h3><p>我们当时的直播间做的很实诚，每进退一个人，都在上面显示实时人数。这个人数变动的消息广播，对网络影响相当大。  </p>
+<h3 id="不必要实时显示的数据"><a href="#不必要实时显示的数据" class="headerlink" title="不必要实时显示的数据"></a>不必要实时显示的数据</h3><p>我们的直播间还有一个打赏榜，当时的打赏情况实在是火热，很多人频繁刷打赏榜，实时从数据库拉取数据。另一个加重服务压力的方面，用户每进出一次打赏榜就要出直播间和再返回一次，导致更频繁的进入直播间请求。  </p>
+<h2 id="优化之路"><a href="#优化之路" class="headerlink" title="优化之路"></a>优化之路</h2><p>经此一役，并听说罗永浩又要来直播（1月16号），量可能更大，我们就迅速准备调整了。  </p>
+<h3 id="业务调整"><a href="#业务调整" class="headerlink" title="业务调整"></a>业务调整</h3><p>业务功能，是有可能对性能影响很大的。当然，不是说有了性能问题，就只能调整业务。而是，如何恰当地在业务功能上做出可接受的妥协，使得性能优化更可行。  </p>
+<p>曹政公众号的文章也举了类似的例子，搜索引擎的翻页功能。百度最多 49 页，Google 更少，6 页就没了。其实搜索根本没必要支持很多页，因为真正的用户，翻三四页没找到要的信息就会调整关键字了，怎么可能翻上百页。  </p>
+<p>我们去除了提问票，就没有必要在进入直播间的时候写数据库了。当然，调整的主要原因不是因为性能，而是产品和业务的考虑。具体原因有机会再分享。假设还是有提问需求，那么，检查提问次数的逻辑，可以调整为前端缓存检查，没太大必要那么严格的在进入直播间的时候，通过后端检查。  </p>
+<h3 id="接口控制"><a href="#接口控制" class="headerlink" title="接口控制"></a>接口控制</h3><p>如前面所说，根据页面功能的规划，我们可以确定不同区域的重要程度和降级方案。然后，通过接口动态屏蔽的功能，前端可以在特殊时候减少网络请求。  </p>
+<p>前面提到的4个接口，接口1 其实前端可以使用客户端缓存；接口2 只有少数是主讲人的用户才需要；接口4 是非常耗费资源，计算复杂的接口。但是获取其它更多相关的直播，在大直播来临的时候，其实可以完全屏蔽，因为这个时候多数用户关注点不在这里。  </p>
+<h3 id="减少网络开销"><a href="#减少网络开销" class="headerlink" title="减少网络开销"></a>减少网络开销</h3><p>面临大规模访问时候，网络数据的大小和频率会非常影响系统稳定性。  </p>
+<p>如前面所说，socket 服务器的实时人数的消息广播，真的很占网络资源。后来业务上也觉得这个信息不太需要，也就直接去掉了。去掉了后，Socket 可支撑的同时在线人数马上上去了。  </p>
+<p>另一个是进入直播间后 http 服务器返回的数据，也作出精简。只有第一眼用户需要看到的数据，才拿出来。一些其它支持用户其它操作的数据，可以等用户需要的时候，再让前端发请求获取。  </p>
+<h3 id="增加缓存，非实时数据异步处理"><a href="#增加缓存，非实时数据异步处理" class="headerlink" title="增加缓存，非实时数据异步处理"></a>增加缓存，非实时数据异步处理</h3><p>打赏榜的数据，在大直播刚开始时，其实并没有太强烈的实时聚合打赏数据排名的要求。所以，后期我们通过异步任务后台聚合，放缓存，前端直接从缓存拿数据。  </p>
+<p>除了后端优化，前端方面，我们还可以动态禁止查看打赏榜。进入打赏榜的时候，不再需要离开直播间，而是弹出一个新的层，减少直播间进出的情况，带来不必要的网络请求。  </p>
+<h3 id="多地部署，读写分离"><a href="#多地部署，读写分离" class="headerlink" title="多地部署，读写分离"></a>多地部署，读写分离</h3><p>虽然，不是说性能不行，就马上要横向扩展和实现多地架构，但当时青云的北京区服务器，华南，华东一些偏远地区平时访问也有点慢，网络有时还会抽风。多地部署可以让全国不同省市的人，访问最近的服务。而且，罗永浩直播的人数真是不好预估，所以，我们还是担心只有一个区的服务器和网络可能撑不住。  </p>
+<p>下面是一开始的服务架构：  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/tingting-old-architecture.png" alt="Old Architecture"></p>
+<p>因为我们实现多地部署要达成的最基本的目标是：增加缓存，每个分区独立运作，承担各自的压力，互不影响，也就是按区域横向扩展。所以，每个只读的分区，应该要有独立的 Redis，HTTP Server 和 Socket Server。  </p>
+<p>增加缓存，多地部署后要面对的最直接的问题是：  </p>
+<ul>
+<li>什么数据适合放在缓存？</li>
+</ul>
+<p>直播详情，用户购买记录等一些高频查询数据，我们都放在缓存里。这个问题在以前的文章「<a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a>」有更详细的介绍，这里就不重复了。  </p>
+<ul>
+<li>有数据改动的时候，如何失效各分区的缓存呢？</li>
+</ul>
+<p>目前，我们依赖的是 Redis 的 Pub&#x2F;Sub 机制。主区有新的数据改动的时候，publish 消息到特定的 channel。各个独立分区的 Subscriber 监听到消息通知，就失效掉特定的缓存。  </p>
+<p>最后，新的服务架构如下：  </p>
+<p><img src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/tingting-new-architecture.png" alt="New Architecture"></p>
+<p>MongoDB，HTTP Server（写）这些负责写的部分，和 Redis (PubSub) 是公共的，其它部分其实是不同分区独立拥有的相同的组件。我在上面标注主讲人，下面标注普通用户，只是为了容易看一些，它们实际是完全一样的。这样的架构，有需要的时候，复制不同的读分区出来服务不同地区的用户就比较容易了。  </p>
+<h2 id="还能做什么？"><a href="#还能做什么？" class="headerlink" title="还能做什么？"></a>还能做什么？</h2><p>现在这个架构，服务器之间的通信还是挺复杂的，网络占用应该还有更多优化空间。当时罗永浩直播刚开始的时候，某些用户还出现了“已经在其它终端登录”的警告而被踢出直播间。可是这个问题一直没时间细查。  </p>
+<p>这个架构，其实还不是真正意义的异地多活，和分布式系统，因为数据库和写服务器还是单一的。目前我们做这个的话，成本还是太高。不过，或许以后真的要再一次重构，也应该是服务的细分，SOA 更靠谱一些。  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2017/05/02/cache-and-business-characteristics/">业务与缓存</a><br><a href="http://www.thinkingincrowd.me/2017/12/13/is-data-consistency-only-about-db/">数据的一致性只和数据库有关系吗？</a><br><a href="http://www.thinkingincrowd.me/2017/11/11/model-evolvement-for-a-simple-payment-system/">一个简单的支付业务与模型演变</a>  </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Cache/">Cache</a><a href="/tags/Architecture/">Architecture</a><a href="/tags/Distributed/">Distributed</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/" data-title="听听系统的多地部署改造 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/12/07/business-diff-between-industry-and-internet-from-engineer-pov/" title="技术人眼中的实业与纯互联网业务差异">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  技术人眼中的实业与纯互联网业务差异</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/11/19/hard-fork-might-really-be-better-than-ico/"  title="硬分叉，可能真的比 ICO 更好">
+ <strong>NEXT:</strong><br/> 
+ <span>硬分叉，可能真的比 ICO 更好
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%92%AD%E7%B3%BB%E7%BB%9F%E5%8D%A1%E5%A3%B3"><span class="toc-number">1.</span> <span class="toc-text">直播系统卡壳</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%92%8C%E8%A7%84%E5%88%92%E4%B8%8D%E8%B6%B3"><span class="toc-number">1.1.</span> <span class="toc-text">时间和规划不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E6%8E%A5%E5%8F%A3%E5%BC%80%E9%94%80%E5%A4%9A%E3%80%82"><span class="toc-number">1.2.</span> <span class="toc-text">不必要的接口开销多。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E7%B9%81%E6%9F%A5%E5%86%99%E5%BA%93%EF%BC%8C%E6%B2%A1%E5%85%85%E5%88%86%E5%88%A9%E7%94%A8%E7%BC%93%E5%AD%98"><span class="toc-number">1.3.</span> <span class="toc-text">频繁查写库，没充分利用缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E5%AF%BC%E8%87%B4%E7%BD%91%E7%BB%9C%E5%BC%80%E9%94%80%E5%A4%A7"><span class="toc-number">1.4.</span> <span class="toc-text">业务导致网络开销大</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%BF%85%E8%A6%81%E5%AE%9E%E6%97%B6%E6%98%BE%E7%A4%BA%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="toc-number">1.5.</span> <span class="toc-text">不必要实时显示的数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E4%B9%8B%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">优化之路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E8%B0%83%E6%95%B4"><span class="toc-number">2.1.</span> <span class="toc-text">业务调整</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E6%8E%A7%E5%88%B6"><span class="toc-number">2.2.</span> <span class="toc-text">接口控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%8F%E5%B0%91%E7%BD%91%E7%BB%9C%E5%BC%80%E9%94%80"><span class="toc-number">2.3.</span> <span class="toc-text">减少网络开销</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%8A%A0%E7%BC%93%E5%AD%98%EF%BC%8C%E9%9D%9E%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E6%AD%A5%E5%A4%84%E7%90%86"><span class="toc-number">2.4.</span> <span class="toc-text">增加缓存，非实时数据异步处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E5%9C%B0%E9%83%A8%E7%BD%B2%EF%BC%8C%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB"><span class="toc-number">2.5.</span> <span class="toc-text">多地部署，读写分离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">还能做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">4.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2017/11/29/tingting-multi-region-architecture/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

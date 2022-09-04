@@ -1,0 +1,630 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>一文读懂 AWS S3 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="AWS S3 全名是 Simple Storage Service，简便的存储服务。为什么这么起名啊？它：
+
+提供了统一的接口 REST&amp;#x2F;SOAP 来统一访问任何数据
+对 S3 来说，存在里面的数据就是对象名（键），和数据（值）
+不限量，单个文件最高可达 5TB
+高速。每个 bucket ">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="一文读懂 AWS S3 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/03/10/aws-s3/" title="一文读懂 AWS S3" itemprop="url">一文读懂 AWS S3</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-03-10T02:16:06.000Z" itemprop="datePublished">Mar 10 2020</time>
+    Updated:<time datetime="2022-08-28T08:07:15.451Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bucket"><span class="toc-number">1.1.</span> <span class="toc-text">Bucket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object"><span class="toc-number">1.2.</span> <span class="toc-text">Object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E7%89%B9%E6%80%A7"><span class="toc-number">1.3.</span> <span class="toc-text">一致性特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">存储级别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">生命周期的管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8"><span class="toc-number">3.</span> <span class="toc-text">数据安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%89%88%E6%9C%AC"><span class="toc-number">3.1.</span> <span class="toc-text">多版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%AE%9A"><span class="toc-number">3.2.</span> <span class="toc-text">锁定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8A%A0%E5%AF%86"><span class="toc-number">3.3.</span> <span class="toc-text">服务端加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IAM-%E9%9B%86%E6%88%90"><span class="toc-number">3.4.</span> <span class="toc-text">IAM 集成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S3-%E5%A6%82%E4%BD%95%E9%AA%8C%E8%AF%81%E8%AF%B7%E6%B1%82"><span class="toc-number">3.5.</span> <span class="toc-text">S3 如何验证请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%AD%96%E7%95%A5%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">3.6.</span> <span class="toc-text">不同策略的场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%AF%E6%9C%AC%E5%A4%87%E4%BB%BD"><span class="toc-number">4.</span> <span class="toc-text">副本备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">为什么要使用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%B7%A8%E5%8C%BA%E5%A4%87%E4%BB%BD%EF%BC%88CRR%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">什么时候跨区备份（CRR）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%90%8C%E5%8C%BA%E5%A4%87%E4%BB%BD%EF%BC%88SRR%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">什么时候同区备份（SRR）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E4%BC%9A%E5%90%8C%E6%AD%A5%EF%BC%9F"><span class="toc-number">4.4.</span> <span class="toc-text">什么会同步？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%E6%AD%A5%EF%BC%9F"><span class="toc-number">4.5.</span> <span class="toc-text">什么不同步？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%82%B9%E4%B8%8E%E5%91%A8%E8%BE%B9"><span class="toc-number">5.</span> <span class="toc-text">知识小点与周边</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%AF%B7%E6%B1%82"><span class="toc-number">5.1.</span> <span class="toc-text">路由请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%BD%91%E7%AB%99"><span class="toc-number">5.2.</span> <span class="toc-text">静态资源网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Storage-Gateway"><span class="toc-number">5.3.</span> <span class="toc-text">Storage Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Athena-%E5%92%8C-Macie"><span class="toc-number">5.4.</span> <span class="toc-text">Athena 和 Macie</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>AWS S3 全名是 Simple Storage Service，简便的存储服务。为什么这么起名啊？它：</p>
+<ol>
+<li>提供了统一的接口 REST&#x2F;SOAP 来统一访问任何数据</li>
+<li>对 S3 来说，存在里面的数据就是对象名（键），和数据（值）</li>
+<li>不限量，单个文件最高可达 5TB</li>
+<li>高速。每个 bucket 下每秒可达 3500 PUT&#x2F;COPY&#x2F;POST&#x2F;DELETE 或 5500 GET&#x2F;HEAD 请求</li>
+<li>具备版本，权限控制能力</li>
+<li>具备数据生命周期管理能力</li>
+</ol>
+<p>作为一个对象存储服务，S3 功能真的很完备。如果不用搭梯子，访问快，我还真想过拿它来做自己的网盘。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="Bucket"><a href="#Bucket" class="headerlink" title="Bucket"></a>Bucket</h3><p>要存储数据在 S3 里，首先我们要建立一个 Bucket。Bucket 默认是不公开的。</p>
+<p>Bucket 有几个特点：  </p>
+<ul>
+<li>命名需全球唯一。每个帐号默认可建 100 个，可申请至最多 1000 个</li>
+<li>创建者的拥有权不可转让，也不可以从一个 Region 转去别的 Region</li>
+<li>没有对象存储数量限制</li>
+</ul>
+<p>Bucket 就像是电脑里面的某一个顶层分区。所有的对象都必须保存在某一个 bucket 下面。</p>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><p>Bucket 里面每一个存储的数据就是对象，由对象名（键），和数据（值）组成。</p>
+<p>对象的键（Key）可以很长，甚至按照一定前缀格式来指定，从而模拟文件夹的层级结构，比如 <code>Photo/Family/2020-01-25-new-year/altogether.jpg</code>。</p>
+<p>每一个对象其实还包含一些元信息（Meta-data），包括系统指定的文件类型，创建时间，加密算法等，和用户上传时指定的元信息。元信息在对象创建后都无法更改。</p>
+<p>我们也可以为对象指定最多 10个标签（Tag），标签的键和值的最大长度是 128 和 256 个字符。这个标签和元信息有什么不同呢？标签是可以修改和新增的。它最大的好处，是可以结合权限控制，生命周期管理，和数据分析等使用。</p>
+<p>单个文件上传最大是 5GB。超过的话，需要使用 multipart upload API。最大支持 5TB。</p>
+<h3 id="一致性特性"><a href="#一致性特性" class="headerlink" title="一致性特性"></a>一致性特性</h3><p>对程序员来说，这么一个类似数据库的东西，肯定需要关心它的读写特性和一致性模型。</p>
+<ul>
+<li><p>没有锁的功能。如果同时（几乎）发起两个更新对象的 PUT 请求，键相同，那么，以到达 S3 时间先后处理更新。</p>
+</li>
+<li><p>不同对象的更新，没法做到原子操作。</p>
+</li>
+<li><p>对全新的对象来说，它是 Read-after-Write Consistency 的。也就是写了之后马上读，肯定就是你刚才上传的数据。</p>
+</li>
+<li><p>如果你要更新数据，那就变成 Eventual Consistency 了。也就是说，更新后马上读，可能是旧的数据，也可能是新的。</p>
+</li>
+</ul>
+<p>这里有一个比较坑的地方是，如果你先调用 GET 请求访问一个不存在的资源，S3 告诉你它不存在。然后你马上上传数据，再调用一个 GET，这时候是有可能拿不回来的。</p>
+<h2 id="存储级别"><a href="#存储级别" class="headerlink" title="存储级别"></a>存储级别</h2><p>作为一个“云盘”，S3 的好处是可以把你存储的数据，按不同的存储级别来计费。这个存储级别是每个对象不同，上传时指定的。</p>
+<p>我们看看不同的场景，应该选择哪种级别的存储：</p>
+<ol>
+<li>经常访问的数据对象</li>
+</ol>
+<ul>
+<li>STANDARD - 这是最普通，最常用的类型</li>
+<li>REDUCED_REDUNDANCY (RRS) - 不建议使用。仅为不重要，可再建数据设计，还有每年平均 0.01% 数据丢失的可能性。</li>
+</ul>
+<ol start="2">
+<li>按访问频率自动优化的数据</li>
+</ol>
+<ul>
+<li>INTELLIGENT_TIERING - 可以智能地把不热门的数据自动转级别。但是，每个文件最低收费标准是 128KB，存 30天。</li>
+</ul>
+<ol start="3">
+<li>不经常访问的数据</li>
+</ol>
+<ul>
+<li>STANDARD_IA</li>
+<li>ONEZONE_IA</li>
+</ul>
+<p>  AWS 一个 Region，有两到三个 Zone。这两种级别的区别就是，One Zone 的数据就单点保存，丢了就丢了。</p>
+<ol start="4">
+<li>归档的数据</li>
+</ol>
+<ul>
+<li>S3 Glacier - 最低保存 90天。取出时间 1分钟至 12小时。</li>
+<li>S3 Glacier Deep Archive - 最低保存 180天。默认 12小时内取出。</li>
+</ul>
+<p>S3 计费的大头主要是存储容量。但是，S3 还会按照数据获取的次数，和传输容量来计费。越不常访问的级别，虽然存储便宜，但是访问贵。INTELLIGENT_TIERING 还会收监测和管理费用。</p>
+<h3 id="生命周期的管理"><a href="#生命周期的管理" class="headerlink" title="生命周期的管理"></a>生命周期的管理</h3><p>除了手动指定，或者使用 INTELLIGENT_TIERING 外，S3 其实还可以让我们在 bucket 上定义生命周期管理的策略（Policy），来自动转换对象的存储级别。</p>
+<p>生命周期的管理可以做到：</p>
+<ol>
+<li>转换存储级别</li>
+<li>过期删除</li>
+</ol>
+<h2 id="数据安全"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全</h2><p>数据安全，是数据存储服务非常重要的一部分。S3 提供了很多方面的功能来保障这一点。</p>
+<h3 id="多版本"><a href="#多版本" class="headerlink" title="多版本"></a>多版本</h3><p>不小心把数据删除了的痛，程序员应该都懂。但是，后悔药是没有的。所以，我们很多时候并不会做永久删除，而是实现软删除的功能。S3 就提供了多版本的功能。只要 bucket 打开了多版本的选项，每次对象的更新都会新加一个版本，而不是覆盖。删除对象，也只是新增一个删除标识。</p>
+<p>当然，你要强行删除特定版本的数据也是可以的，它只是让这件事变得难一些而已。它甚至可以把 bucket 设置成只有通过 MFA 认证的请求才能实现永久删除。</p>
+<p>要注意的是：</p>
+<ol>
+<li>打开版本控制的 bucket，是没法关闭的，顶多可以暂停。也就是说，暂停后的 bucket，新加对象的时候，版本 id 会设为 null。</li>
+<li>无论打开，或者暂停版本控制，对 bucket 内已经存在的对象是没有影响的。</li>
+</ol>
+<h3 id="锁定"><a href="#锁定" class="headerlink" title="锁定"></a>锁定</h3><p>除了使用多版本控制让覆盖或者删除变得更难，S3 还可以锁定特定版本的对象。这种模型被称为 write-once-read-many (WORM)。</p>
+<p>有两种锁定的方式：</p>
+<ul>
+<li>设定保留期限 - 在某固定期限内，对象 WORM。</li>
+<li>法定留存 - 仅当这个留存标识被删除后，对象才能被覆盖或删除。</li>
+</ul>
+<p>一个特定版本的对象，可以同时设置这两种保护，或任意一种。</p>
+<p>因为锁定是针对特定版本的对象，如果你的更改或删除操作请求只根据对象的键，那它还是允许你新增一个版本，或加上删除标识。只是这个锁定，还能防止对象因为生命周期的设置而被删除掉。</p>
+<h3 id="服务端加密"><a href="#服务端加密" class="headerlink" title="服务端加密"></a>服务端加密</h3><p>数据传输过程（in-transit）中的保护，现在基本都由 SSL&#x2F;TLS 来实现的。AWS 也提供 VPN 或者网络直连服务。</p>
+<p>S3 提供了服务端数据加密的功能，可实现数据的存储（at rest）方面的安全。不过它只支持对称加密，不支持非对称加密。虽然你可以本地把数据加密了再上传到 S3，但是，这需要自己保护好密钥，其实更不容易。</p>
+<p>服务端加密开启后，bucket 内已经存在的对象不会被自动加密。而且，只有数据被加密，元信息（meta data），标签（Tag）不会被加密。</p>
+<p>S3 的服务端加密有三种方式：  </p>
+<ol>
+<li>SSE-S3 - S3 自管理的密钥，使用 AES-256 加密算法。每个对象的密钥不同，并且它还被定期更换的主密钥同时加密。</li>
+<li>SSE-KMS - 密钥存放在 KMS（软硬件结合的密钥管理系统）。</li>
+<li>SSE-C - 在请求时自己提供密钥，S3 只管加解密逻辑和存储。S3 不保存密钥，只保存随机加盐的 HMAC 值来验证今后请求的合法性。</li>
+</ol>
+<p>这里主要说一下 S3 使用 SSE-KMS 特点：</p>
+<ul>
+<li>启用前，如果没有指定客户管理的 CMK（customer master key），S3 会自动创建一个由 AWS 管理的 CMK</li>
+<li>加密数据的密钥，同时也被加密，并和数据保存在一起</li>
+<li>有请求频率限制</li>
+<li>只支持对称密钥</li>
+<li>CMK 必须和 bucket 在同一个区（Region）</li>
+</ul>
+<h3 id="IAM-集成"><a href="#IAM-集成" class="headerlink" title="IAM 集成"></a>IAM 集成</h3><p><a href="http://www.thinkingincrowd.me/2020/02/16/aws-iam/">前一篇文章</a> 详细介绍了 AWS IAM 的功能，S3 当然能根据 IAM 的设置来控制权限。S3 的资源，除了 bucket 和 object 外，还包含了一些子资源。</p>
+<p>Bucket 子资源:</p>
+<ul>
+<li>lifecycle</li>
+<li>website</li>
+<li>versioning</li>
+<li>policy</li>
+<li>cors</li>
+<li>logging</li>
+</ul>
+<p>Object 子资源:</p>
+<ul>
+<li>acl</li>
+<li>restore</li>
+</ul>
+<p>在了解 S3 如何控制权限以前，我们要理解资源的拥有者这个概念。在 S3 里面，资源是谁创建的，它所属的 AWS 帐号，就是这个资源的拥有者。有一种情况是，Bucket 是帐号 A 创建的。但是 A 允许 B 在里面创建对象 X。这个 X 的拥有者是 B 而不是 A。如果资源拥有者授权 A，A 可以把自己的权限委托给自己帐号内的其它人，但不可以再一次跨帐号授权。</p>
+<h3 id="S3-如何验证请求"><a href="#S3-如何验证请求" class="headerlink" title="S3 如何验证请求"></a>S3 如何验证请求</h3><p>当 S3 收到请求时，会经过下面几个步骤验证请求：</p>
+<ol>
+<li>把所有相关的策略（user policy, bucket policy, ACL）集合起来。</li>
+<li>根据下面 3 小步，拿出全集中的合适子集来分别验证：</li>
+</ol>
+<ul>
+<li><p>用户范畴<br>如果请求发起者是 IAM User 或 Role，它所属的 aws 帐号就会先检查它是否有权限做这种类型的操作（user policy）。假如刚好要操作的资源（bucket 或 object）属于当前帐号，那么就同时检查相应的 bucket policy, bucket ACL 和 object ACL。</p>
+<p>如果请求发起者不属于 IAM，则跳至下一步。</p>
+</li>
+<li><p>Bucket 范畴<br>S3 会检查拥有 bucket 的 aws 帐号的策略。</p>
+<p>如果操作的是 bucket，那请求的用户需要有 bucket owner 赋予的权限。<br>如果操作的是对象，需要检查 bucket owner 是否有显式 deny 对象的设置。</p>
+</li>
+<li><p>Object 范畴<br>当请求是关于对象的时，最后检查对象 owner 的策略子集。</p>
+</li>
+</ul>
+<p>天啊，这看上去好复杂。其实，<strong>和一个小孩想玩玩具一样</strong>：</p>
+<p>首先，小孩必须获得父母的请求，可以玩玩具。然后，看这个玩具拥有者是谁，如果是自己父母，就看这个玩具是否能给孩子玩（比如可能年龄还不合适，超时等）。如果这个玩具是其它人的，那就要还获得其它人的允许。</p>
+<h3 id="不同策略的场景"><a href="#不同策略的场景" class="headerlink" title="不同策略的场景"></a>不同策略的场景</h3><p>对于 S3 验证请求的时候，需要验证的那几种不同的策略，究竟各自的使用场景是什么呢？</p>
+<ul>
+<li><p>Object ACL</p>
+<ul>
+<li>唯一一种管理保存在他人 bucket 里的对象权限的方式</li>
+<li>定义在单个对象级别</li>
+<li>最多包含 100 个授权信息</li>
+</ul>
+</li>
+<li><p>Bucket ACL</p>
+<ul>
+<li>唯一推荐使用的场景是为 S3 Log Delivery 赋予写访问日志的权限</li>
+<li>虽然可以配置跨帐号权限，但仅仅支持有限的设置</li>
+</ul>
+</li>
+<li><p>Bucket Policy</p>
+<ul>
+<li>能给自己帐号内的用户赋权</li>
+<li>支持所有 S3 操作的跨帐号权限设置</li>
+<li>Policy 自身大小不超过 20KB</li>
+</ul>
+</li>
+<li><p>User Policy</p>
+<ul>
+<li>能给自己帐号内的用户赋权</li>
+</ul>
+</li>
+</ul>
+<h2 id="副本备份"><a href="#副本备份" class="headerlink" title="副本备份"></a>副本备份</h2><p>S3 不仅通过多点存储提高健壮性，还提供了自动的异步数据备份的功能。不仅支持同 Region，不同 bucket 的备份，还支持跨 Region，不同帐号的备份。要开启副本备份，首先必须在源和目标 bucket 同时打开多版本的设置。</p>
+<h3 id="为什么要使用？"><a href="#为什么要使用？" class="headerlink" title="为什么要使用？"></a>为什么要使用？</h3><ul>
+<li>备份同时保留元数据</li>
+<li>备份至不同存储级别</li>
+<li>更改备份数据的拥有权</li>
+<li>15 分钟内自动备份</li>
+</ul>
+<h3 id="什么时候跨区备份（CRR）"><a href="#什么时候跨区备份（CRR）" class="headerlink" title="什么时候跨区备份（CRR）"></a>什么时候跨区备份（CRR）</h3><ul>
+<li>满足监管需求</li>
+<li>减少数据传输延时（地域原因）</li>
+<li>提高数据操作的效率</li>
+</ul>
+<h3 id="什么时候同区备份（SRR）"><a href="#什么时候同区备份（SRR）" class="headerlink" title="什么时候同区备份（SRR）"></a>什么时候同区备份（SRR）</h3><ul>
+<li>合并日志</li>
+<li>生产和测试用户间数据同步</li>
+<li>满足数据主权法规</li>
+</ul>
+<h3 id="什么会同步？"><a href="#什么会同步？" class="headerlink" title="什么会同步？"></a>什么会同步？</h3><ul>
+<li>备份配置生效后新建的对象</li>
+<li>没加密的对象</li>
+<li>通过 SSE-S3 或者 SSE-KMS CMK（必须显式启用）加密的对象</li>
+<li>对象元数据</li>
+<li>bucket 拥有者有权读取的对象</li>
+<li>对象 ACL 除非备份同属一个 aws 帐号</li>
+<li>对象标签</li>
+<li>对象的锁信息</li>
+</ul>
+<h3 id="什么不同步？"><a href="#什么不同步？" class="headerlink" title="什么不同步？"></a>什么不同步？</h3><ul>
+<li>备份配置生效前新建的对象</li>
+<li>使用 SSE-C 加密的对象</li>
+<li>保存在 Glacier 或 Glacier Deep Archive 的对象</li>
+<li>bucket 级别子资源的更新</li>
+<li>由于生命周期配置导致的操作</li>
+<li>源 bucket 中本来就是副本的对象</li>
+<li>删除标识</li>
+<li>源 bucket 中被删除的特定版本的对象</li>
+</ul>
+<h2 id="知识小点与周边"><a href="#知识小点与周边" class="headerlink" title="知识小点与周边"></a>知识小点与周边</h2><h3 id="路由请求"><a href="#路由请求" class="headerlink" title="路由请求"></a>路由请求</h3><ul>
+<li>S3 使用的是 DNS 来接收转发请求。如果请求对象的 S3 地址不对，会返回一个临时的重定向。但是对那些 2019 年 3 月 20 日后启用的 Region，地址错误返回的则是 HTTP 400 状态。</li>
+<li>S3 DNS 会按需更新 IP 地址。所以，对那些长期运行的客户端，可能需要采取特殊手段来更新 IP 信息。</li>
+</ul>
+<h3 id="静态资源网站"><a href="#静态资源网站" class="headerlink" title="静态资源网站"></a>静态资源网站</h3><p>S3 的 bucket 可以直接配置为静态资源网站。但是需要结合 CloudFront 才能支持 HTTPS 访问。<br>请求者付费的 bucket，不允许设置为静态网站。</p>
+<p>CloudFront 数据的分发支持两种类型：</p>
+<ul>
+<li>Web Distribution</li>
+<li>RTMP</li>
+</ul>
+<h3 id="Storage-Gateway"><a href="#Storage-Gateway" class="headerlink" title="Storage Gateway"></a>Storage Gateway</h3><p>当你本地服务器想要访问 AWS S3 的时候，除了 API，AWS 还提供了几种网关可供使用：</p>
+<ul>
+<li>File Gateway - 像访问文件或者共享文件那样访问 S3 资源</li>
+<li>Volume Gateway - 通过 iSCSI 设备的方式连接。细分为两种：<ol>
+<li>Stored Volumes - 所有数据都保存在本地，但是能异步备份到 S3</li>
+<li>Cached Volumes - 所有的数据都保存到 S3，本地只存放经常访问的数据</li>
+</ol>
+</li>
+<li>Tape Gateway - 模拟磁带访问的网关，数据异步备份到 S3 Glacier 或 Glacier Deep Archive</li>
+</ul>
+<h3 id="Athena-和-Macie"><a href="#Athena-和-Macie" class="headerlink" title="Athena 和 Macie"></a>Athena 和 Macie</h3><p>Athena 是交互式的查询服务，无须部署。可使用 SQL 来查询 S3 数据。支持的数据格式包括：CSV，JSON，Apache Parquet。</p>
+<p>Macie 是一种可通过 NLP 和 ML 来协助你发现，分类和保护敏感数据的服务。它可以扫描 S3 中的数据，看是否包含 PII（Personally Identifiable Information）或者涉及版权的数据。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/AWS/">AWS</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2020/03/10/aws-s3/" data-title="一文读懂 AWS S3 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/03/14/pandemic-makes-me-more-patriotic/" title="一个疫情，让我更爱国">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  一个疫情，让我更爱国</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/02/16/aws-iam/"  title="一文读懂 AWS IAM">
+ <strong>NEXT:</strong><br/> 
+ <span>一文读懂 AWS IAM
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bucket"><span class="toc-number">1.1.</span> <span class="toc-text">Bucket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object"><span class="toc-number">1.2.</span> <span class="toc-text">Object</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E7%89%B9%E6%80%A7"><span class="toc-number">1.3.</span> <span class="toc-text">一致性特性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BA%A7%E5%88%AB"><span class="toc-number">2.</span> <span class="toc-text">存储级别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%9A%84%E7%AE%A1%E7%90%86"><span class="toc-number">2.1.</span> <span class="toc-text">生命周期的管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8"><span class="toc-number">3.</span> <span class="toc-text">数据安全</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%89%88%E6%9C%AC"><span class="toc-number">3.1.</span> <span class="toc-text">多版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%AE%9A"><span class="toc-number">3.2.</span> <span class="toc-text">锁定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8A%A0%E5%AF%86"><span class="toc-number">3.3.</span> <span class="toc-text">服务端加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IAM-%E9%9B%86%E6%88%90"><span class="toc-number">3.4.</span> <span class="toc-text">IAM 集成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S3-%E5%A6%82%E4%BD%95%E9%AA%8C%E8%AF%81%E8%AF%B7%E6%B1%82"><span class="toc-number">3.5.</span> <span class="toc-text">S3 如何验证请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%AD%96%E7%95%A5%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="toc-number">3.6.</span> <span class="toc-text">不同策略的场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%AF%E6%9C%AC%E5%A4%87%E4%BB%BD"><span class="toc-number">4.</span> <span class="toc-text">副本备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">为什么要使用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%B7%A8%E5%8C%BA%E5%A4%87%E4%BB%BD%EF%BC%88CRR%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">什么时候跨区备份（CRR）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%90%8C%E5%8C%BA%E5%A4%87%E4%BB%BD%EF%BC%88SRR%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">什么时候同区备份（SRR）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E4%BC%9A%E5%90%8C%E6%AD%A5%EF%BC%9F"><span class="toc-number">4.4.</span> <span class="toc-text">什么会同步？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%E6%AD%A5%EF%BC%9F"><span class="toc-number">4.5.</span> <span class="toc-text">什么不同步？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%82%B9%E4%B8%8E%E5%91%A8%E8%BE%B9"><span class="toc-number">5.</span> <span class="toc-text">知识小点与周边</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E8%AF%B7%E6%B1%82"><span class="toc-number">5.1.</span> <span class="toc-text">路由请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%BD%91%E7%AB%99"><span class="toc-number">5.2.</span> <span class="toc-text">静态资源网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Storage-Gateway"><span class="toc-number">5.3.</span> <span class="toc-text">Storage Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Athena-%E5%92%8C-Macie"><span class="toc-number">5.4.</span> <span class="toc-text">Athena 和 Macie</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2020/03/10/aws-s3/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

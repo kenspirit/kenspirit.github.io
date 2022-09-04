@@ -1,0 +1,469 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约 | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 Secret Note 的智能合约怎么实现。  
+Solidity 简介
+Solidity is a contract-oriented, high-level language for impl">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约 | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/02/27/dapp-development-2-contract-development-in-solidity/" title="Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约" itemprop="url">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-02-27T12:20:20.000Z" itemprop="datePublished">Feb 27 2018</time>
+    Updated:<time datetime="2022-08-28T08:07:15.443Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Solidity-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Solidity 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E7%BA%A6%E7%BC%96%E5%86%99"><span class="toc-number">2.</span> <span class="toc-text">合约编写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E6%99%AE%E9%80%9A%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%9C%80%E5%A4%A7%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text">与普通后端开发最大区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secret-Note-%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1%E7%BC%96%E5%86%99"><span class="toc-number">2.2.</span> <span class="toc-text">Secret Note 合约设计编写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.2.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">2.2.3.</span> <span class="toc-text">关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fallback-%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.4.</span> <span class="toc-text">Fallback 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Event"><span class="toc-number">2.2.5.</span> <span class="toc-text">Event</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">2.2.6.</span> <span class="toc-text">继承</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%96%B9%E9%9D%A2%E7%9A%84%E8%80%83%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">安全方面的考量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">4.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+		</div>
+		
+		<p>Ethereum 的 Dapp 开发，保存数据在公链上，最基本的就是要实现一个智能合约。我们先来看一下 <a target="_blank" rel="noopener" href="http://www.secret-note.one/">Secret Note</a> 的智能合约怎么实现。  </p>
+<h2 id="Solidity-简介"><a href="#Solidity-简介" class="headerlink" title="Solidity 简介"></a>Solidity 简介</h2><blockquote>
+<p>Solidity is a <strong>contract-oriented</strong>, high-level language for implementing smart contracts. It was influenced by C++, Python and JavaScript and is designed to target the Ethereum Virtual Machine (EVM).  </p>
+<p>Solidity is <strong>statically typed, supports inheritance</strong>, libraries and complex user-defined types among other features.</p>
+</blockquote>
+<p>我高亮了几点我们在这次开发上需要用到的特性。  </p>
+<p>学习过其它高级编程语言的开发可能对这些名词已经比较熟悉了。什么是 <strong>contract-oriented</strong> 啊？这好像是新玩意啊。其实你想想 JAVA 的 <strong>class-oriented</strong> 基本就能猜出七七八八了。</p>
+<h2 id="合约编写"><a href="#合约编写" class="headerlink" title="合约编写"></a>合约编写</h2><p>早在 2012 年，我在自己的一篇关于 JavaScript 测试的文章提到一个理念：需要测试的，是双方之间协定的合约。这个合约就是交互的接口和行为。  </p>
+<p>这个理念放到智能合约的编写上，我感觉更加直接了。所以，我们需要怎么编写智能合约，最重要的是想清楚，今后这个合约和外界交互的行为是什么。  </p>
+<h3 id="与普通后端开发最大区别"><a href="#与普通后端开发最大区别" class="headerlink" title="与普通后端开发最大区别"></a>与普通后端开发最大区别</h3><p>智能合约的开发，不像普通后端的开发，有 bug 或者想加功能了，重新发一版就好了。  </p>
+<p><strong>智能合约发布出去，就没法修改了。</strong>  </p>
+<p>所以，把智能合约发布上公链前，一定要想清楚需求，做好测试。如果合约的链上行为，业务上真的很可能需要升级和修改，就应该提前想好策略，比如隔离接口和业务逻辑合约，使用类似 proxy 的设计等。这属于比较高级的开发需求，我也还不是了解的很清楚，这篇教程暂时不涉及这方面的内容。  </p>
+<h3 id="Secret-Note-合约设计编写"><a href="#Secret-Note-合约设计编写" class="headerlink" title="Secret Note 合约设计编写"></a>Secret Note 合约设计编写</h3><p>对于 Secret Note 这个 Dapp 来说，它对外提供的行为，智能合约的接口应该有什么呢？  </p>
+<ol>
+<li>保存资料的索引  </li>
+<li>获取资料的索引</li>
+</ol>
+<p>最核心的功能，好像就这两个了，是吧？按照这个简单的设计，合约的代码大致是这样的。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.18;</span><br><span class="line"></span><br><span class="line">contract SecretNote &#123;</span><br><span class="line">  mapping(address =&gt; mapping(bytes32 =&gt; bytes32)) notes;</span><br><span class="line"></span><br><span class="line">  event SecretNoteUpdated(address indexed _sender, bytes32 indexed _noteKey, bool _success);</span><br><span class="line"></span><br><span class="line">  function SecretNote() public &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function () public payable &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * @dev For user to get their own secret note</span><br><span class="line">   * @param _noteKey The key identifier for particular note</span><br><span class="line">   */</span><br><span class="line">  function getNote(bytes32 _noteKey) public view returns (bytes32) &#123;</span><br><span class="line">      return notes[msg.sender][_noteKey];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * @dev For user to update their own secret note</span><br><span class="line">   * @param _noteKey The key identifier for particular note</span><br><span class="line">   * @param _content The note path hash</span><br><span class="line">   */</span><br><span class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</span><br><span class="line">      require(_noteKey != &quot;&quot;);</span><br><span class="line">      require(_content != &quot;&quot;);</span><br><span class="line"></span><br><span class="line">      notes[msg.sender][_noteKey] = _content;</span><br><span class="line"></span><br><span class="line">      SecretNoteUpdated(msg.sender, _noteKey, true);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h4><p>代码文件最开始的一行，<code>pragma solidity ^0.4.18;</code>，标记了代码应该由什么版本的编译器编译，以避免在不同环境出现问题。  </p>
+<p>智能合约，是通过 <strong>contract</strong> 关键字，和它的名字来定义的。合约的主体内容在最外层的 <code>&#123;</code> and <code>&#125;</code> 之间。  </p>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><p>Solidity 作为一种高级的静态类型编程语言，当然也有自己支持的数据类型。在这个合约里面，我们用了三种：  </p>
+<ul>
+<li>address</li>
+</ul>
+<p>这种类型可以保存一个 Ethereum 地址。比较特殊的是，它还有自己的成员属性和方法。最常见的是 <code>balance</code> 属性和 <code>transfer</code> 方法。  </p>
+<ul>
+<li>bytes32</li>
+</ul>
+<p>Solidity 里面有分定长和变长的 byte 数组。  </p>
+<p>定长的有 <code>bytes1</code>, <code>bytes2</code>, <code>bytes3</code>, …, <code>bytes32</code>. <code>byte</code> 是 bytes1 的别名。它们都有只读属性 <code>length</code>。  </p>
+<p>变长的有 <code>bytes</code> 和 <code>string</code>。  </p>
+<p><code>string</code> 是用来保存不定长 UTF-8 字符数据的。其它的都是 byte 数组。如果可以，尽量用定长的可以节省资源，减少 Gas 的使用等。  </p>
+<ul>
+<li>mapping</li>
+</ul>
+<p>我们可以把 <code>mapping</code> 当作一个哈希表。这个哈希表的 key 几乎可以是任何类型，除了 <code>mapping</code>，变长 byte 数组，contract，enum 和 struct 结构体。哈希表的 value 就可以是任何类型的数据。  </p>
+<p><code>mapping</code> 有个很特殊的地方就是它没有长度，你也无法检查一个 key 是否在它里面。因为它是虚拟地记录了每一个可能的 key，对应值为全 0 字节，也就是任何数据类型的默认值。  </p>
+<p><code>mapping</code> 也无法遍历。所以，我们只能通过一种绕一些的方式来遍历它。可以参看官网的 <a target="_blank" rel="noopener" href="https://github.com/ethereum/dapp-bin/blob/master/library/iterable_mapping.sol">iterable mapping</a> 例子，或我的 Secret Note 源码。  </p>
+<p><em>复杂的用户定义类型：在这篇文章就不介绍了，有兴趣的朋友可以直接看 Secret Note 的<a target="_blank" rel="noopener" href="https://github.com/kenspirit/secret-note">源码</a></em></p>
+<h4 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h4><p>Solidity 有 4 种作用域修饰符。<code>public</code> 是合约的接口，可内部或通过外部消息调用。<code>external</code> 也是合约接口，但是不能内部调用。<code>internal</code> 只能内部，或者由继承的合约调用。<code>private</code> 只能在定义的合约内可调用，但是，它不代表区块链外不可见。  </p>
+<p><code>view</code> 修饰符表示这个方法承诺不会修改合约的状态。<code>constant</code> 是它的别名。不过，虽然这么说，编译器是没有检查，或者强制限制这个方法不能改变合约状态的。  </p>
+<p><code>payable</code> 修饰符用来标记某个方法可以同时接收发过来的 Ether。  </p>
+<p><code>msg.sender</code> 特指调用此方法的 Ethereum 地址。<code>msg</code> 还有其它全局属性，详情可查看 Solidity 文档。  </p>
+<p><code>require()</code> 就像其它语言的 <code>assert</code> 那样检查前置条件。不满足的话，会抛错。它通常用于检查外部输入等有效条件。另一个类似用法的 <code>assert</code> 则用户内部错误的检查。  </p>
+<h4 id="Fallback-方法"><a href="#Fallback-方法" class="headerlink" title="Fallback 方法"></a>Fallback 方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">function () public payable &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个没有任何名字的是 <code>Fallback</code> 方法。一个合约只能存在一个。这个方法没有参数，也没有任何返回值。如果有人调用这个合约，但是指定的方法找不到，它会被触发。  </p>
+<p>还有，当这个合约地址单纯地收到 Ether 的时候（比如他人转账到这个合约地址），这个方法也会被调用。所以，它必须被标记为 <code>payable</code>。不然，这个合约地址就没法通过普通的交易接收 Ether 了。  </p>
+<p>要注意的是，如果这个方法里面有逻辑，一定要确保它的 Gas 消耗要小于 2300。  </p>
+<h4 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h4><p>事件是 EVM 日志记录的使用方式。如果你在你开发的 Dapp 里监听了某一个事件，当这个时间被触发后，你在 Dapp 设的监听器就会收到通知。  </p>
+<p>事件的数据是存储在交易日志里的。它们可以被检索，但是合约代码里面没法访问它们。  </p>
+<p>每个事件最多有 3 个索引的（<code>indexed</code>）参数，我们可以根据这些参数进行过滤检索。非索引的参数存在记录日志的数据部分里，但是索引的参数是没有存的。你只能用某个值去查索引，但是没法罗列有哪些值。  </p>
+<h4 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h4><p>上面两个合约方法是公开的，每个人都可以调用。那如果我想添加一些只有合约创建者才能调用的方法呢？假如，我想让只有创建者能查这个合约里面存了多少资料呢？  </p>
+<p>我们可以利用继承和修饰符来实现上面的目的。  </p>
+<p>首先，我们定义一个父合约 <code>Ownable</code>，这个合约在它的构造函数（constructor）里面把合约创建者保存到一个合约变量。然后，提供一个特殊的修饰符给子合约使用。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">contract Ownable &#123;</span><br><span class="line">    address owner;</span><br><span class="line"></span><br><span class="line">    function Ownable() public &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(owner == msg.sender);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原来的智能合约，作为子合约，稍微修改一下就可以了。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">contract SecretNote is Ownable &#123;</span><br><span class="line">  uint256 noteCount;</span><br><span class="line"></span><br><span class="line">  // 省略部分合约代码</span><br><span class="line"></span><br><span class="line">  function setNote(bytes32 _noteKey, bytes32 _content) public payable &#123;</span><br><span class="line">      require(_noteKey != &quot;&quot;);</span><br><span class="line">      require(_content != &quot;&quot;);</span><br><span class="line"></span><br><span class="line">      notes[msg.sender][_noteKey] = _content;</span><br><span class="line">      noteCount++;</span><br><span class="line"></span><br><span class="line">      SecretNoteUpdated(msg.sender, _noteKey, true);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  function getTotalNoteCount() public view onlyOwner returns(uint256) &#123;</span><br><span class="line">      return noteCount;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们只需要吧 <code>onlyOwner</code> 这个修饰符添加到任何希望只有合约 owner 才能执行的 function 签名处，这个 function 就拥有检查调用者的能力了。加了 <code>onlyOwner</code> 的 function，其实就是把代码替换到 <code>_</code> 的位置。  </p>
+<h2 id="安全方面的考量"><a href="#安全方面的考量" class="headerlink" title="安全方面的考量"></a>安全方面的考量</h2><p>因为合约一旦部署，就无法修改，而且很多的智能合约都和加密货币或者 token 挂钩。所以，如果一个智能合约的实现出现了安全漏洞，就有可能引起很大的问题。  </p>
+<p>Solidity <a target="_blank" rel="noopener" href="https://solidity.readthedocs.io/en/develop/security-considerations.html">文档</a> 里有专门的一章写了一些推荐做法，大家应该至少看 <strong>Use the Checks-Effects-Interactions Pattern</strong> 和 <strong>Include a Fail-Safe Mode</strong> 两点。  </p>
+<p>到这里为止，我们就把简化版 Secret Note 的智能合约写好了。下一篇我们来看看如何测试它。  </p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><p><a href="http://www.thinkingincrowd.me/2018/02/25/dapp-development-1-what-should-be-in-blockchain/">Ethereum Dapp 开发 (1) - 什么应放在区块链上</a><br><a href="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/">Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约</a><br><a href="http://www.thinkingincrowd.me/2018/03/05/dapp-development-3-contract-testing-remix-ide/">Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</a><br><a href="http://www.thinkingincrowd.me/2018/03/11/dapp-development-4-contract-testing-truffle/">Ethereum Dapp 开发 (4) - 智能合约测试（Truffle）</a><br><a href="http://www.thinkingincrowd.me/2018/03/17/dapp-development-5-UI-integration/">Ethereum Dapp 开发 (5) - 页面开发集成</a>  </p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Sword/">Sword</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Blockchain/">Blockchain</a><a href="/tags/Ethereum/">Ethereum</a><a href="/tags/Dapp/">Dapp</a><a href="/tags/Smart-Contract/">Smart Contract</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/" data-title="Ethereum Dapp 开发 (2) - 用 Solidity 开发智能合约 | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/03/05/dapp-development-3-contract-testing-remix-ide/" title="Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Ethereum Dapp 开发 (3) - 智能合约测试（Remix IDE）</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/02/25/dapp-development-1-what-should-be-in-blockchain/"  title="Ethereum Dapp 开发 (1) - 什么应放在区块链上">
+ <strong>NEXT:</strong><br/> 
+ <span>Ethereum Dapp 开发 (1) - 什么应放在区块链上
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Solidity-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Solidity 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%88%E7%BA%A6%E7%BC%96%E5%86%99"><span class="toc-number">2.</span> <span class="toc-text">合约编写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E6%99%AE%E9%80%9A%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%9C%80%E5%A4%A7%E5%8C%BA%E5%88%AB"><span class="toc-number">2.1.</span> <span class="toc-text">与普通后端开发最大区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Secret-Note-%E5%90%88%E7%BA%A6%E8%AE%BE%E8%AE%A1%E7%BC%96%E5%86%99"><span class="toc-number">2.2.</span> <span class="toc-text">Secret Note 合约设计编写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.2.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">2.2.3.</span> <span class="toc-text">关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fallback-%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.4.</span> <span class="toc-text">Fallback 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Event"><span class="toc-number">2.2.5.</span> <span class="toc-text">Event</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-number">2.2.6.</span> <span class="toc-text">继承</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%96%B9%E9%9D%A2%E7%9A%84%E8%80%83%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">安全方面的考量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">4.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2018/02/27/dapp-development-2-contract-development-in-solidity/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+

@@ -1,0 +1,450 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <script data-ad-client="ca-pub-3734008573442765" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <meta charset="UTF-8">
+  
+    <title>Dive into Kanban (4) - Variability and Flow Interruption | Thinking in Crowd / 鹄思乱想</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="鹄思乱想">
+    
+    <meta name="description" content="External Sources of VariabilityWithin the software development cycle, we often face various kinds of flow blocker issues that slows our progress.  Let">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="kenspirit" />
+    <meta name="twitter:title" content="Dive into Kanban (4) - Variability and Flow Interruption | Thinking in Crowd / 鹄思乱想" />
+      
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Thinking in Crowd / 鹄思乱想" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/qmark.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/qmark.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Thinking in Crowd / 鹄思乱想" title="Thinking in Crowd / 鹄思乱想"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Thinking in Crowd / 鹄思乱想">Thinking in Crowd / 鹄思乱想</a></h1>
+				<h2 class="blog-motto">Swan flying in the immense sky</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/algorithm">Algorithm</a></li>
+					
+						<li><a href="/kanban">Kanban</a></li>
+					
+						<li><a href="/nodeppt">Slideshare</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:www.thinkingincrowd.me">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" title="Dive into Kanban (4) - Variability and Flow Interruption" itemprop="url">Dive into Kanban (4) - Variability and Flow Interruption</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/108764880042816550000?rel=author" title="鹄思乱想" target="_blank" itemprop="author">鹄思乱想</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-06-05T14:49:04.000Z" itemprop="datePublished">Jun 5 2015</time>
+    Updated:<time datetime="2022-08-28T08:07:15.426Z" itemprop="dateModified">Aug 28 2022</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#External-Sources-of-Variability"><span class="toc-number">1.</span> <span class="toc-text">External Sources of Variability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Requirement"><span class="toc-number">1.1.</span> <span class="toc-text">Requirement</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Kanban-solutions"><span class="toc-number">1.1.1.</span> <span class="toc-text">The Kanban solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment-Availability"><span class="toc-number">1.2.</span> <span class="toc-text">Environment Availability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Expediting-items"><span class="toc-number">1.3.</span> <span class="toc-text">Expediting items</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#General-Solutions-in-Kanban"><span class="toc-number">2.</span> <span class="toc-text">General Solutions in Kanban</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Larger-WIP"><span class="toc-number">2.1.</span> <span class="toc-text">Larger WIP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pursuing-resolution"><span class="toc-number">2.2.</span> <span class="toc-text">Pursuing resolution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class-of-Services"><span class="toc-number">2.3.</span> <span class="toc-text">Class of Services</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Slack-Capacity"><span class="toc-number">2.4.</span> <span class="toc-text">Slack Capacity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Afterword"><span class="toc-number">3.</span> <span class="toc-text">Afterword</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Series"><span class="toc-number">3.1.</span> <span class="toc-text">Series</span></a></li></ol></li></ol>
+		</div>
+		
+		<h2 id="External-Sources-of-Variability"><a href="#External-Sources-of-Variability" class="headerlink" title="External Sources of Variability"></a>External Sources of Variability</h2><p>Within the software development cycle, we often face various kinds of flow blocker issues that slows our progress.  Let’s look into some common areas.  </p>
+<h3 id="Requirement"><a href="#Requirement" class="headerlink" title="Requirement"></a>Requirement</h3><p>Responding to change, one key point in Agile manifesto, is embraced in Agile development.  However, normally there also exists enforcement or agreement that after user story is defined or at least after development is started, requirement should not be changed.  For example, in Scrum, change should be scheduled as new item in next iteration and no new item should be added after sprint backlog is confirmed.  </p>
+<p>The reality is that many teams cannot follow the principle well.  From another point of view, do you think it’s better to waste time on doing something we don’t really want and then do it again?  Or it’s better just stop and change it based on new requirement?  </p>
+<p>Clearly, there is no absolute right or wrong answer here.  We should understand our business nature and decide ourselves.  Going to either extreme that no any change can be accepted or any change is welcome anytime without constraints can be terrible.  There must be some disciplines to follow no matter which way you choose.  </p>
+<h4 id="The-Kanban-solutions"><a href="#The-Kanban-solutions" class="headerlink" title="The Kanban solutions"></a>The Kanban solutions</h4><p>In Kanban, changing requirement is acceptable but we must agree that it affects lead time.  And we should also have metrics to measure the quality of requirement and prioritization later on.  </p>
+<ol>
+<li>We can either move back the card to “Requirement” stage or mark it as Blocked by REQ under its current stage regarding the change is big enough to impact development or testing.</li>
+</ol>
+<p>  We should have statistics on how many cards ever move back to “Requirement” once started development or how many days are blocked by requirement.  </p>
+<p>  For example, below diagram shows the blocked statistics.  Y-Axis shows different stages in one Kanban board and X-Axis show the total time items are blocked under particular stage.  And the time is also grouped by different blocking reason.  Say, in “In Dev” stage, all time is blocked due to “Priority” reason which means priority kept changing after developer starts development and that is unhealthy signal.  </p>
+<img alt="Blocked_Statistics" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Blocked_Statistics.png"/>
+
+
+<ol start="2">
+<li><p>If the item is discarded once it’s picked from Backlog, we can also show in Kanban’s Discard area and also we can check how much effort has been wasted on it in the report.  </p>
+</li>
+<li><p>Start as late as possible if we have statistical Lead Time on hand.  Once we have some historical data so that we know on average, 85%, or 98% case that how long it takes to finish one item, then we can start that item as late as possible to avoid requirement change.</p>
+</li>
+</ol>
+<h3 id="Environment-Availability"><a href="#Environment-Availability" class="headerlink" title="Environment Availability"></a>Environment Availability</h3><p>This is a very typical flow blocker.  The impact of this factor is normally tremendous especially when this issue is dragged without a permanent solution because environment availability often happens in large scale projects involving many teams.  </p>
+<p>Say if environment outage takes at least half day to recover, it’s a signal that our recovery and operation capability is weak or the system design need to be reviewed.  And if we don’t solve the issue at the beginning stage of the project, time and cost wasted will increase exponentially every time we do environment preparation, load testing, production release and disaster recovery.  The later stage same thing happens, the more expensive the cost is.  </p>
+<p>We can either have larger WIP or actively pursue issue resolution as described below.  </p>
+<h3 id="Expediting-items"><a href="#Expediting-items" class="headerlink" title="Expediting items"></a>Expediting items</h3><p>Developers often suffers from expediting items as well, for example, overlooked high priority items in backlog, urgent Report requested from manager, production issue support, etc.  </p>
+<p>Defining different classes of services and assigning fixed WIP on each class, or enabling slack in the team has the agility to react.  </p>
+<h2 id="General-Solutions-in-Kanban"><a href="#General-Solutions-in-Kanban" class="headerlink" title="General Solutions in Kanban"></a>General Solutions in Kanban</h2><p>Below are some general approaches used in Kanban to workaround the blocked items, ease the flow to ensure predictable lead time.  Different approachs have its own benefits or drawbacks.  It should be chosen accordingly.  </p>
+<h3 id="Larger-WIP"><a href="#Larger-WIP" class="headerlink" title="Larger WIP"></a>Larger WIP</h3><p>The larger WIP, the less tension the team may feel.  Because idle resource can still pull other items in case there are blocked ones.  However, that cause larger and more unprecitable lead time.  Larger WIP also means the people need to multi-tasking and keep switching context.  Empirically, multi-tasking often cause bad quality.  </p>
+<p>What is more, less pressure might consequently has less chance of encouraging continuous improvement.  So, this is recommended for immature organization as starting point only.  </p>
+<h3 id="Pursuing-resolution"><a href="#Pursuing-resolution" class="headerlink" title="Pursuing resolution"></a>Pursuing resolution</h3><p>Strict WIP control requires the team to relentlessly pursue issue fixing.  It greatly encourages continuous improvement culture but it also requires a more mature &amp; fully cooperated team.  </p>
+<h3 id="Class-of-Services"><a href="#Class-of-Services" class="headerlink" title="Class of Services"></a>Class of Services</h3><p>Separating the work items into different classes of services and also assigning suitable WIP on each class is one useful approach to solve the expediting items or flow interruption issue.  </p>
+<p>Take below graph as example, we have separated our items into several classes of services:</p>
+<ol>
+<li><code>L1 TT</code>: Means level 1 Production issue which is intended to be fixed in 4 hours  </li>
+<li><code>L2 TT</code>: Means level 2 Production issue which is intended to be fixed in 1 day  </li>
+<li><code>Normal</code>: Normal development item or defect  </li>
+<li><code>Intangible</code>: Items has no cost of delay</li>
+</ol>
+<p>How to assign WIP depends on the nature of the frequency and volume of different levels of items.  If in initial production launch stage, there might be many production support issues so that you have to put fixed resources in <code>L1 TT</code> and <code>L2 TT</code> in order to react quickly and avoid interrupting normal items’ development.  Then the lead time of normal item can still be predictable and the people responsible for normal item development seldom need multi-tasking, ensuring quality.  However, if the system is already kind of stable, instead of assigning fixed resources to the first two classes, you can arrange some resources in Intagible class who can jump into production issue support when needed.  </p>
+<img alt="Class_of_Services" src="https://raw.githubusercontent.com/kenspirit/blog-cdn-data/master/Class_of_Services.png"/>
+
+<h3 id="Slack-Capacity"><a href="#Slack-Capacity" class="headerlink" title="Slack Capacity"></a>Slack Capacity</h3><p>Enabling slack in the team helps to face any unexpected situation, remove regular though not urgent blocker, apply automation to shorten lead time or reduce WIP.  Unless the team has slack, continuous improvement can be luxury because they are all busy chasing after business items.  </p>
+<h2 id="Afterword"><a href="#Afterword" class="headerlink" title="Afterword"></a>Afterword</h2><p>Variability is the major impact on the flow and so we should examine carefully and address on every source in our own process flow.  To analyze existing flow blocker and work out the strategies in Kanban is not easy.  It should be done as part of <a href="http://www.thinkingincrowd.me/2015/05/29/Dive-into-Kanban-2-Visualizing-Process/">visualizing process</a>.  </p>
+<p>Later on, we will explore how to define WIP and classes of services in-depth.  And if you would like to have more idea on sources of variability, chapter 19 in <a target="_blank" rel="noopener" href="http://www.amazon.com/Kanban-Successful-Evolutionary-Technology-Business/dp/0984521402">Kanban: Successful Evolutionary Change for Your Technology Business</a> is a good reference.  </p>
+<h3 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h3><ul>
+<li><a href="http://www.thinkingincrowd.me/2015/05/20/Dive-into-Kanban-1-What-is-it/">Dive into Kanban (1) - What is it</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/05/30/Dive-into-Kanban-2-Visualizing-Process/">Dive into Kanban (2) - Visualizing Process</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/">Dive into Kanban (3) - How Kanban address the estimation headache</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/">Dive into Kanban (4) - Variability and Flow Interruption</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/">Dive into Kanban (5) - Difficulty and Resisted Opinions on Adoption</a>  </li>
+<li><a href="http://www.thinkingincrowd.me/2015/10/08/Dive-into-Kanban-6-Scrum-vs-Kanban/">Dive into Kanban (6) - Scrum vs Kanban</a></li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Think/">Think</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Retrospect/">Retrospect</a><a href="/tags/Kanban/">Kanban</a>
+  </div>
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/" data-title="Dive into Kanban (4) - Variability and Flow Interruption | Thinking in Crowd / 鹄思乱想" data-tsina="kenspirit" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/07/23/Dive-into-Kanban-5-Difficulty-and-Resisted-Opinions-on-Adoption/" title="Dive into Kanban (5) - Difficulties and Resisted Opinions on Adoption">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Dive into Kanban (5) - Difficulties and Resisted Opinions on Adoption</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/05/31/Dive-into-Kanban-3-How-Kanban-address-the-estimation-headache/"  title="Dive into Kanban (3) - How Kanban address the scheduling &amp; estimation headache">
+ <strong>NEXT:</strong><br/> 
+ <span>Dive into Kanban (3) - How Kanban address the scheduling &amp; estimation headache
+</span>
+</a>
+</div>
+
+</nav>
+
+	<section class="comment">
+	
+  
+    <div id="disqus_thread"></div>
+  
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#External-Sources-of-Variability"><span class="toc-number">1.</span> <span class="toc-text">External Sources of Variability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Requirement"><span class="toc-number">1.1.</span> <span class="toc-text">Requirement</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Kanban-solutions"><span class="toc-number">1.1.1.</span> <span class="toc-text">The Kanban solutions</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Environment-Availability"><span class="toc-number">1.2.</span> <span class="toc-text">Environment Availability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Expediting-items"><span class="toc-number">1.3.</span> <span class="toc-text">Expediting items</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#General-Solutions-in-Kanban"><span class="toc-number">2.</span> <span class="toc-text">General Solutions in Kanban</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Larger-WIP"><span class="toc-number">2.1.</span> <span class="toc-text">Larger WIP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pursuing-resolution"><span class="toc-number">2.2.</span> <span class="toc-text">Pursuing resolution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class-of-Services"><span class="toc-number">2.3.</span> <span class="toc-text">Class of Services</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Slack-Capacity"><span class="toc-number">2.4.</span> <span class="toc-text">Slack Capacity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Afterword"><span class="toc-number">3.</span> <span class="toc-text">Afterword</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Series"><span class="toc-number">3.1.</span> <span class="toc-text">Series</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+			<li><a href="/categories/Life/" title="Life">Life<sup>7</sup></a></li>
+		
+			<li><a href="/categories/Psychology/" title="Psychology">Psychology<sup>21</sup></a></li>
+		
+			<li><a href="/categories/Sword/" title="Sword">Sword<sup>66</sup></a></li>
+		
+			<li><a href="/categories/Think/" title="Think">Think<sup>80</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/AWS/" style="font-size: 10.71px;">AWS</a> <a href="/tags/Ajax/" style="font-size: 10.71px;">Ajax</a> <a href="/tags/AngularJS/" style="font-size: 12.86px;">AngularJS</a> <a href="/tags/Architecture/" style="font-size: 10.71px;">Architecture</a> <a href="/tags/Asynchronous/" style="font-size: 10.71px;">Asynchronous</a> <a href="/tags/Attention/" style="font-size: 10px;">Attention</a> <a href="/tags/BTC/" style="font-size: 10px;">BTC</a> <a href="/tags/Babel/" style="font-size: 10px;">Babel</a> <a href="/tags/Belief/" style="font-size: 10.71px;">Belief</a> <a href="/tags/Bitcoin/" style="font-size: 10.71px;">Bitcoin</a> <a href="/tags/Blockchain/" style="font-size: 16.43px;">Blockchain</a> <a href="/tags/Blogging/" style="font-size: 10px;">Blogging</a> <a href="/tags/Book/" style="font-size: 12.86px;">Book</a> <a href="/tags/Bundling/" style="font-size: 10.71px;">Bundling</a> <a href="/tags/Business-Logic/" style="font-size: 11.43px;">Business Logic</a> <a href="/tags/Cache/" style="font-size: 10.71px;">Cache</a> <a href="/tags/Change/" style="font-size: 13.57px;">Change</a> <a href="/tags/Choice/" style="font-size: 10.71px;">Choice</a> <a href="/tags/Coach/" style="font-size: 10px;">Coach</a> <a href="/tags/Communication/" style="font-size: 12.86px;">Communication</a> <a href="/tags/Conflict/" style="font-size: 10px;">Conflict</a> <a href="/tags/Courage/" style="font-size: 10px;">Courage</a> <a href="/tags/DDD/" style="font-size: 10px;">DDD</a> <a href="/tags/Dapp/" style="font-size: 13.57px;">Dapp</a> <a href="/tags/Data-Modeling/" style="font-size: 10.71px;">Data Modeling</a> <a href="/tags/Database/" style="font-size: 10.71px;">Database</a> <a href="/tags/Death/" style="font-size: 10px;">Death</a> <a href="/tags/Delegation/" style="font-size: 10.71px;">Delegation</a> <a href="/tags/Design/" style="font-size: 11.43px;">Design</a> <a href="/tags/Destiny/" style="font-size: 11.43px;">Destiny</a> <a href="/tags/Distributed/" style="font-size: 12.14px;">Distributed</a> <a href="/tags/EOS/" style="font-size: 10px;">EOS</a> <a href="/tags/Education/" style="font-size: 10.71px;">Education</a> <a href="/tags/Elixir/" style="font-size: 17.14px;">Elixir</a> <a href="/tags/Emotion/" style="font-size: 10.71px;">Emotion</a> <a href="/tags/Empathy/" style="font-size: 11.43px;">Empathy</a> <a href="/tags/Ethereum/" style="font-size: 13.57px;">Ethereum</a> <a href="/tags/Excel/" style="font-size: 10px;">Excel</a> <a href="/tags/Experience/" style="font-size: 10.71px;">Experience</a> <a href="/tags/ExtJS/" style="font-size: 15px;">ExtJS</a> <a href="/tags/Father/" style="font-size: 10px;">Father</a> <a href="/tags/First-Principle/" style="font-size: 10.71px;">First Principle</a> <a href="/tags/Full-Stack/" style="font-size: 10px;">Full-Stack</a> <a href="/tags/Functional-Programming/" style="font-size: 14.29px;">Functional Programming</a> <a href="/tags/Goal/" style="font-size: 13.57px;">Goal</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/Habit/" style="font-size: 10.71px;">Habit</a> <a href="/tags/Health/" style="font-size: 10.71px;">Health</a> <a href="/tags/Idempotency/" style="font-size: 10.71px;">Idempotency</a> <a href="/tags/Influence/" style="font-size: 10px;">Influence</a> <a href="/tags/Integration/" style="font-size: 10px;">Integration</a> <a href="/tags/JSConf/" style="font-size: 10.71px;">JSConf</a> <a href="/tags/JSON/" style="font-size: 10.71px;">JSON</a> <a href="/tags/Jasmine/" style="font-size: 14.29px;">Jasmine</a> <a href="/tags/Javascript/" style="font-size: 20px;">Javascript</a> <a href="/tags/Kanban/" style="font-size: 14.29px;">Kanban</a> <a href="/tags/Leadership/" style="font-size: 11.43px;">Leadership</a> <a href="/tags/Learning/" style="font-size: 10.71px;">Learning</a> <a href="/tags/Love/" style="font-size: 10.71px;">Love</a> <a href="/tags/MVC/" style="font-size: 15px;">MVC</a> <a href="/tags/Management/" style="font-size: 14.29px;">Management</a> <a href="/tags/Mature/" style="font-size: 10px;">Mature</a> <a href="/tags/Maven/" style="font-size: 10.71px;">Maven</a> <a href="/tags/MicroServices/" style="font-size: 10px;">MicroServices</a> <a href="/tags/Milestone/" style="font-size: 10px;">Milestone</a> <a href="/tags/Mnesia/" style="font-size: 11.43px;">Mnesia</a> <a href="/tags/Mocha/" style="font-size: 10px;">Mocha</a> <a href="/tags/Mock/" style="font-size: 11.43px;">Mock</a> <a href="/tags/Modularization/" style="font-size: 10.71px;">Modularization</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Mood/" style="font-size: 12.14px;">Mood</a> <a href="/tags/Network/" style="font-size: 10px;">Network</a> <a href="/tags/Node-js/" style="font-size: 17.86px;">Node.js</a> <a href="/tags/OTP/" style="font-size: 10.71px;">OTP</a> <a href="/tags/Opportunity/" style="font-size: 10px;">Opportunity</a> <a href="/tags/POI/" style="font-size: 10px;">POI</a> <a href="/tags/Performance/" style="font-size: 10px;">Performance</a> <a href="/tags/Politics/" style="font-size: 10.71px;">Politics</a> <a href="/tags/Problem-Solving/" style="font-size: 11.43px;">Problem Solving</a> <a href="/tags/Productivity/" style="font-size: 11.43px;">Productivity</a> <a href="/tags/Programming/" style="font-size: 15.71px;">Programming</a> <a href="/tags/Promise/" style="font-size: 11.43px;">Promise</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/Relationship/" style="font-size: 18.57px;">Relationship</a> <a href="/tags/Responsibility/" style="font-size: 11.43px;">Responsibility</a> <a href="/tags/Retrospect/" style="font-size: 19.29px;">Retrospect</a> <a href="/tags/Risk/" style="font-size: 10px;">Risk</a> <a href="/tags/Rule/" style="font-size: 10px;">Rule</a> <a href="/tags/SPA/" style="font-size: 10px;">SPA</a> <a href="/tags/Scrum/" style="font-size: 10px;">Scrum</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Server/" style="font-size: 10.71px;">Server</a> <a href="/tags/Sharing/" style="font-size: 10px;">Sharing</a> <a href="/tags/Smart-Contract/" style="font-size: 13.57px;">Smart Contract</a> <a href="/tags/Source-Reading/" style="font-size: 12.86px;">Source Reading</a> <a href="/tags/Startup/" style="font-size: 12.14px;">Startup</a> <a href="/tags/Statistics/" style="font-size: 10px;">Statistics</a> <a href="/tags/Supervisor/" style="font-size: 10.71px;">Supervisor</a> <a href="/tags/Support/" style="font-size: 10px;">Support</a> <a href="/tags/Time-Management/" style="font-size: 10.71px;">Time Management</a> <a href="/tags/Trip/" style="font-size: 11.43px;">Trip</a> <a href="/tags/Tutorial/" style="font-size: 15px;">Tutorial</a> <a href="/tags/TypeScript/" style="font-size: 10.71px;">TypeScript</a> <a href="/tags/UED/" style="font-size: 10px;">UED</a> <a href="/tags/UI/" style="font-size: 10px;">UI</a> <a href="/tags/Unit-Test/" style="font-size: 15px;">Unit Test</a> <a href="/tags/Visualization/" style="font-size: 10px;">Visualization</a> <a href="/tags/Wechat/" style="font-size: 15px;">Wechat</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> On the road to be a good father, husband, son and web developer, specialized in JS <br/>
+			Playing around with Node.js, AngularJS.  Powering thinking through visualization.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/kenspirit" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/kenspirit" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://github.com/kenspirit" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/kenspirit" target="_blank" title="facebook"></a>
+		
+		
+        <a href="https://www.linkedin.com/thinkingincrowd" target="_blank" title="linkedin"></a>
+    
+    
+		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
+		  <script>
+		    if (window.mermaid) {
+		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		    }
+		  </script>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="http://www.thinkingincrowd.me" target="_blank" title="鹄思乱想">鹄思乱想</a>
+		
+		</p>
+</div>
+</footer>
+    
+<script>
+  var disqus_shortname = 'thinkingincrowd';
+  
+  var disqus_url = 'http://www.thinkingincrowd.me/2015/06/05/Dive-into-Kanban-4-Variability-and-Flow-Interruption/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
+ga('send', 'pageview');
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?796436d5d2646bb3157d9ac5bd7e7025";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  </body>
+</html>
+
