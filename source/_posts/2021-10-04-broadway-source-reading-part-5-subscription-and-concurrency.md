@@ -1,6 +1,10 @@
 title: Broadway Source Reading (Part 5 - Subscription & Concurrency)
 date: 2021-10-04 21:26:21
 tags:
+  - Elixir
+  - Source Reading
+categories:
+  - Sword
 ---
 
 At the beginning of this interesting [article](https://dockyard.com/blog/2021/06/24/tuning-broadway-rabbitmq-pipelines-for-latency?utm_medium=email&utm_source=elixir-radar) about Broadway's concurrency, it said:
