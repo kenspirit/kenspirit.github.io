@@ -310,7 +310,7 @@ evergrow 脚手架生成的视图用 evergrow 脚手架生成视图相关的文�
 		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
 		  <script>
 		    if (window.mermaid) {
-		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		      mermaid.initialize(JSON.parse('{"startOnload":true}'));
 		    }
 		  </script>
 		

@@ -258,7 +258,7 @@ You guys right now are constructing the person you are going to be for the rest 
 		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
 		  <script>
 		    if (window.mermaid) {
-		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		      mermaid.initialize(JSON.parse('{"startOnload":true}'));
 		    }
 		  </script>
 		

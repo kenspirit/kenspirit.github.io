@@ -282,7 +282,7 @@ SSH Agent Forwarding要把代码部署到服务器的话，首先服务器能拥
 		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
 		  <script>
 		    if (window.mermaid) {
-		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		      mermaid.initialize(JSON.parse('{"startOnload":true}'));
 		    }
 		  </script>
 		

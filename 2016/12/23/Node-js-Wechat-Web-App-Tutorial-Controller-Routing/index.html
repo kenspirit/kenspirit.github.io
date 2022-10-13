@@ -341,7 +341,7 @@ MVC 处理流程和路由http://w">
 		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
 		  <script>
 		    if (window.mermaid) {
-		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		      mermaid.initialize(JSON.parse('{"startOnload":true}'));
 		    }
 		  </script>
 		

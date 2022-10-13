@@ -258,7 +258,7 @@ Boss 使用权威；Leader 使用领导力。Boss 制造畏惧；Le">
 		  <script src='https://unpkg.com/mermaid@8.9.2/dist/mermaid.min.js'></script>
 		  <script>
 		    if (window.mermaid) {
-		      mermaid.initialize({{ JSON.stringify(config.mermaid.options) }});
+		      mermaid.initialize(JSON.parse('{"startOnload":true}'));
 		    }
 		  </script>
 		
