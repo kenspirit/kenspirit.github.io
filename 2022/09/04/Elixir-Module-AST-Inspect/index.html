@@ -92,7 +92,7 @@
     </p>
   <p class="article-time">
     <time datetime="2022-09-04T12:59:26.000Z" itemprop="datePublished">Sep 4 2022</time>
-    Updated:<time datetime="2022-09-04T13:22:50.323Z" itemprop="dateModified">Sep 4 2022</time>
+    Updated:<time datetime="2022-09-11T02:22:20.619Z" itemprop="dateModified">Sep 11 2022</time>
     
   </p>
 </header>
@@ -129,7 +129,7 @@
 <p>It is not difficult to understand the AST for a call statement and how to generate the AST.  How about the AST for a module?  Actually, using the <code>quote</code> approach cannot get a module’s AST.  We can load it from the source file using:</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source_path |&gt; <span class="title class_">File</span>.read!() |&gt; <span class="title class_">Code</span>.string_to_quoted()</span><br></pre></td></tr></table></figure>
 
-<h3 id="Module-AST-structure"><a href="#Module-AST-structure" class="headerlink" title="Module AST structure"></a>Module AST structure</h3><p><img src="https://github.com/kenspirit/blog-cdn-data/raw/master/elixir-module-ast-inspect.png" alt="Elixir Sequence Server Hierchary"></p>
+<h3 id="Module-AST-structure"><a href="#Module-AST-structure" class="headerlink" title="Module AST structure"></a>Module AST structure</h3><p><img src="https://github.com/kenspirit/blog-cdn-data/raw/master/elixir-module-ast-inspect.png" alt="Elixir Module AST structure"></p>
 <p>By comparing the Elixir source code and generated AST structure, we can see that AST of the whole module fulfills the basic structure above.  The argument list is an alias and a do block:</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="symbol">:defmodule</span>, [<span class="symbol">line:</span> <span class="number">1</span>],</span><br><span class="line"> [</span><br><span class="line">   &#123;<span class="symbol">:__aliases__</span>, [<span class="symbol">line:</span> <span class="number">1</span>], [<span class="symbol">:BestBlockHeightGetter</span>]&#125;,</span><br><span class="line">   [</span><br><span class="line">     <span class="symbol">do:</span> &#123;<span class="symbol">:__block__</span>, [], []&#125;</span><br><span class="line">   ]</span><br><span class="line"> ]&#125;</span><br></pre></td></tr></table></figure>
 
@@ -418,6 +418,16 @@ $(document).ready(function(){
 ga('create', 'UA-37378953-1', 'www.thinkingincrowd.me');  
 ga('send', 'pageview');
 </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8DKM4F4KH8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-8DKM4F4KH8');
+</script>
+
 
 <script>
 var _hmt = _hmt || [];
