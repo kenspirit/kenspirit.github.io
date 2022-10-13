@@ -6,20 +6,20 @@ categories:
   - Sword
 ---
 
-One day, I got a requirement of extracting the public function information from the Elixir Module.  I got no clue on how to achieve it at the beginning but it turns out to be an interesting experience afterward.
+One day, I got a requirement of extracting the public function information from the Elixir Module.  I got no clue how to achieve it at the beginning but it turns out to be an interesting experience afterward.
 
 ## Through Documentation
 
-Anyone learns Elixir should be familiar to Hex Docs.  Hence, my first reaction is to see how it works because there should be a way to extract the function signature and documentation.  I found out that I can use `Code.fetch_docs` as below:
+Anyone who learns Elixir should be familiar with Hex Docs.  Hence, my first reaction is to see how it works because there should be a way to extract the function signature and documentation.  I found out that I can use `Code.fetch_docs` as below:
 
 ```elixir
 {:docs_v1, _, _, _, %{"en" => module_doc}, _meta, doc_elements} =
   Code.fetch_docs(module_or_path)
 ```
 
-_Notes: If module name is provided, it must be compiled from file, not directly in Livebook because [this](https://elixirforum.com/t/what-is-the-module-name-compiled-in-livebook/49968/2?u=thinkingincrowd)._
+_Notes: If a module name is provided, it must be compiled from a file, not directly in Livebook because of [this](https://elixirforum.com/t/what-is-the-module-name-compiled-in-livebook/49968/2?u=thinkingincrowd)._
 
-The format of the `doc_elements` contains most of the information I need: the function signature and documentation.  However, as there are multiple implementation for one of the function `get_best_block_height/2`, using `Code.fetch_docs` cannot deal with this scenario.  How to overcome it?
+The format of the `doc_elements` contains most of the information I need: the function signature and documentation.  However, as there are multiple implementations for one of the functions `get_best_block_height/2`, using `Code.fetch_docs` cannot deal with this scenario.  How to overcome it?
 
 ```elixir
 [
@@ -38,11 +38,11 @@ The format of the `doc_elements` contains most of the information I need: the fu
 
 ## Through AST
 
-Anyone who has some years' programming experience should know or heard about AST (Abstract Syntax Tree).  Abstract Syntax Trees are data structures widely used in compilers to represent the structure of program code.
+Anyone who has some years' programming experience should know or hear about AST (Abstract Syntax Tree).  Abstract Syntax Trees are data structures widely used in compilers to represent the structure of program code.
 
-Elixir has great Meta-programming capability and AST can do the job.  I did not come to AST in the fisrt place is due to the deep down scare in me facing this advanced & complicated technique.
+Elixir has great Meta-programming capability and AST can do the job.  I did not come to AST in the first place due to the deep down scare in me facing this advanced & complicated technique.
 
-However, it's actually not that complex as I thought, at least for achieving what I want to do.  According to Elixir's [Documentation](https://hexdocs.pm/elixir/syntax-reference.html#the-elixir-ast):
+However, it's actually not as complex as I thought, at least for achieving what I want to do.  According to Elixir's [Documentation](https://hexdocs.pm/elixir/syntax-reference.html#the-elixir-ast):
 
 > The building block of Elixir's AST is a call, such as:
 > 
@@ -75,9 +75,9 @@ source_path |> File.read!() |> Code.string_to_quoted()
 
 ### Module AST structure
 
-![Elixir Sequence Server Hierchary](https://github.com/kenspirit/blog-cdn-data/raw/master/elixir-module-ast-inspect.png)
+![Elixir Module AST structure](https://github.com/kenspirit/blog-cdn-data/raw/master/elixir-module-ast-inspect.png)
 
-By comparing the Elixir source code and generated AST structure, we can see that AST of the whole module fulfills the baisc structure above.  The argument list is an alias and a do block:
+By comparing the Elixir source code and generated AST structure, we can see that AST of the whole module fulfills the basic structure above.  The argument list is an alias and a do block:
 
 ```elixir
 {:defmodule, [line: 1],
@@ -91,7 +91,7 @@ By comparing the Elixir source code and generated AST structure, we can see that
 
 ### Module Block AST structure
 
-The block AST shows clearly that its argument list contains separate AST for every attribute (starting with `:@` atom) and function (starting with `:def` atom).
+The block AST shows clearly that its argument list contains separate ASTs for every attribute (starting with `:@` atom) and function (starting with `:def` atom).
 
 ### Function AST structure
 
